@@ -1,0 +1,4 @@
+C:\Adit\Work\Private\Klinik\Klinik.BLL\bin\Debug\Klinik.BLL.dll
+C:\Adit\Work\Private\Klinik\Klinik.BLL\bin\Debug\Klinik.BLL.pdb
+C:\Adit\Work\Private\Klinik\Klinik.BLL\obj\Debug\Klinik.BLL.dll
+C:\Adit\Work\Private\Klinik\Klinik.BLL\obj\Debug\Klinik.BLL.pdb
