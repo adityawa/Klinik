@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <!-- Required Stylesheets -->
+     @Styles.Render("~/Content/cssklinik")
+   
+    <!-- jQuery-UI Stylesheet -->
+    @Styles.Render("~/Content/jui")
+
+    <!-- Theme Stylesheet -->
+    @Styles.Render("~/Content/theme")
+    @Scripts.Render("~/bundles/jsklinik")
+
+    <style>
+        li.active {
+            background: #1B1B1B;
+        }
+
+        select:focus {
+            border: 2px solid #1BB5E0;
+        }
+    </style>
+
+    <script>
+            var autoKeyboard = true;
+    </script>
+
+    <title>Sistem Informasi Klinik</title>
+
+</head>
+<body>
+
+    <!-- Themer (Remove if not needed)
+        <div id="mws-themer">
+        <div id="mws-themer-content">
+                <div id="mws-themer-ribbon"></div>
+            <div id="mws-themer-toggle">
+                <i class="icon-bended-arrow-left"></i>
+                <i class="icon-bended-arrow-right"></i>
+            </div>
+                <div id="mws-theme-presets-container" class="mws-themer-section">
+                        <label for="mws-theme-presets">Color Presets</label>
+            </div>
+            <div class="mws-themer-separator"></div>
+                <div id="mws-theme-pattern-container" class="mws-themer-section">
+                        <label for="mws-theme-patterns">Background</label>
+            </div>
+            <div class="mws-themer-separator"></div>
+            <div class="mws-themer-section">
+                <ul>
+                    <li class="clearfix"><span>Base Color</span> <div id="mws-base-cp" class="mws-cp-trigger"></div></li>
+                    <li class="clearfix"><span>Highlight Color</span> <div id="mws-highlight-cp" class="mws-cp-trigger"></div></li>
+                    <li class="clearfix"><span>Text Color</span> <div id="mws-text-cp" class="mws-cp-trigger"></div></li>
+                    <li class="clearfix"><span>Text Glow Color</span> <div id="mws-textglow-cp" class="mws-cp-trigger"></div></li>
+                    <li class="clearfix"><span>Text Glow Opacity</span> <div id="mws-textglow-op"></div></li>
+                </ul>
+            </div>
+            <div class="mws-themer-separator"></div>
+            <div class="mws-themer-section">
+                    <button class="btn btn-danger small" id="mws-themer-getcss">Get CSS</button>
+            </div>
+        </div>
+        <div id="mws-themer-css-dialog">
+                <form class="mws-form">
+                <div class="mws-form-row">
+                                <div class="mws-form-item">
+                        <textarea cols="auto" rows="auto" readonly="readonly"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+        -->
+    <!-- Header -->
+    <div id="mws-header" class="clearfix">
+        <div id="mws-logo-container" style="width: 700px">
+            <div id="mws-logo-wrap" style="width: 700px;text-align: left">
+                <a href="/" style="background: url('/Content/images/mws-logo.png'); background-position-y: 100%;background-repeat: no-repeat;display: block;">
+                    <h1 style="display: inline;padding-left: 63px;font-weight: normal">
+                        SIM Klinik - Super Administrator
+                    </h1>
+                </a>
+            </div>
+        </div>
+
+        <!-- User Tools (notifications, logout, profile, change password) -->
+        <div id="mws-user-tools" class="clearfix">
+            <!-- User Information and functions section -->
+            <div id="mws-user-info" class="mws-inset">
+
+                <!-- User Photo -->
+                <div id="mws-user-photo">
+                    <a href="/profile">
+                        <img src="/content/images/user/default.jpg" alt="User Photo">
+                    </a>
+                </div>
+
+                <!-- Username and Functions -->
+                <div id="mws-user-functions">
+                    <div id="mws-username">
+                        Administrator - Dept. : Sektor A
+                    </div>
+                    <ul>
+                        <li><a href="/profile">Profil</a></li>
+                        <li><a href="/changePassword">Ganti Password</a></li>
+                        <li><a href="/site/logout">Keluar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mws-wrapper">
+        <div id="mws-sidebar-stitch"></div>
+        <div id="mws-sidebar-bg"></div>
+
+        <!-- Sidebar Wrapper -->
+        <div id="mws-sidebar">
+
+            <!-- Hidden Nav Collapse Button -->
+            <div id="mws-nav-collapse">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <!-- Main Navigation -->
+            <div id="mws-navigation">
+                <ul>
+                    <li class='active'>
+                        <a href="/site"><i class="icon-home"></i> Beranda</a>
+                    </li>
+                    <li>
+                        <a href="/loketUtama"><i class="icon-random"></i> Loket</a><ul style='display:none' class='closed'><li><a class='submenu' href='/loketBpjs'>Loket BPJS</a></li><li><a class='submenu' href='/loket'>Loket Rawat Jalan</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="/temukanPasien"><i class="icon-github-4"></i> Telusuri Pasien</a>
+                    </li>
+                    <li>
+                        <a href="/manajemen"><i class="icon-user"></i> Farmasi</a><ul style='display:none' class='closed'><li><a class='submenu' href='/obat'>Obat</a></li><li><a class='submenu' href='/obatJenis'>Jenis Obat</a></li><li><a class='submenu' href='/obatSatuan'>Satuan Obat</a></li><li><a class='submenu' href='/gudangObat'>Gudang Obat</a></li><li><a class='submenu' href='/kartuStok'>Kartu Stok</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="/poliklinik"><i class="icon-flag"></i> Poliklinik</a><ul style='display:none' class='closed'><li><a class='submenu' href='/poliUmum'>Poli Umum</a></li><li><a class='submenu' href='/poliTht'>Poli Mata</a></li><li><a class='submenu' href='/poliKandungan'>Poli Kandungan</a></li><li><a class='submenu' href='/poliGigi'>Poli Gigi</a></li><li><a class='submenu' href='/poliSaraf'>Poli Penyakit Dalam</a></li><li><a class='submenu' href='/poliAnak'>Poli Anak</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="/poliLaborat"><i class="icon-chemical"></i> Laboratorium</a>
+                    </li>
+                    <li>
+                        <a href="/laporan"><i class="icon-file"></i> Laporan</a><ul style='display:none' class='closed'><li><a class='submenu' href='/laporanFarmasi'>Laporan Farmasi</a></li><li><a class='submenu' href='/laporanKasir'>Laporan Kasir</a></li><li><a class='submenu' href='/laporanPoli'>Laporan Poli</a></li><li><a class='submenu' href='/laporanInventaris'>Laporan Inventaris</a></li><li><a class='submenu' href='/laporanLoket'>Laporan Loket</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="/apotek"><i class="icon-plus"></i> Apotek</a><ul style='display:none' class='closed'><li><a class='submenu' href='/ValidasiObat'>Cek Resep</a></li><li><a class='submenu' href='/apotek'>Pengambilan Obat</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="/kasir"><i class="icon-archive"></i> Kasir</a>
+                    </li>
+                    <li>
+                        <a href="/gudang"><i class="icon-database"></i> Aset</a><ul style='display:none' class='closed'><li><a class='submenu' href='/inventarisPengadaanBarang'>Pengadaan Barang</a></li><li><a class='submenu' href='/inventarisPenempatanBarang'>Penempatan Barang</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="/hrd"><i class="icon-users"></i> Kepegawaian</a><ul style='display:none' class='closed'><li><a class='submenu' href='/pegawai'>Pegawai</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="/module"><i class="icon-tasks"></i> Manajemen Modul</a>
+                    </li>
+                    <li>
+                        <a href="/hakAkses"><i class="icon-users"></i> Hak Akses</a>
+                    </li>
+                    <li>
+                        <a href="/departemen"><i class="icon-network"></i> Departemen</a>
+                    </li>
+                    <li>
+                        <a href="/master"><i class="icon-database"></i> Master</a><ul style='display:none' class='closed'><li><a class='submenu' href='/inventarisJenisRuang'>Jenis Ruang</a></li><li><a class='submenu' href='/inventarisGrupBarang'>Jenis Barang</a></li><li><a class='submenu' href='/inventarisRuang'>Ruang</a></li><li><a class='submenu' href='/inventarisBarang'>Barang</a></li><li><a class='submenu' href='/jabatan'>Jabatan</a></li><li><a class='submenu' href='/tunjangan'>Tunjangan</a></li><li><a class='submenu' href='/jasaPelayanan'>Jasa Pelayanan</a></li><li><a class='submenu' href='/laborat'>Laborat</a></li><li><a class='submenu' href='/obat'>Obat</a></li><li><a class='submenu' href='/pasien'>Pasien</a></li><li><a class='submenu' href='/user'>user</a></li><li><a class='submenu' href='/distributor'>Distributor</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="/medical"><i class="icon-chemical"></i> Medical Record</a><ul style='display:none' class='closed'><li><a class='submenu' href='/medicalReport'>RM Validation</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="/setting"><i class="icon-cogs"></i> Pengaturan</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Container Start -->
+        <div id="mws-container" class="clearfix">
+
+            <!-- Inner Container Start -->
+            <div class="container">
+                @RenderBody()
+            </div>
+            <!-- Inner Container End -->
+            <!-- Footer -->
+            <div id="mws-footer">
+                Copyright &copy; 2018. PT Siap Technovation Unggul
+            </div>
+
+        </div>
+        <!-- Main Container End -->
+
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

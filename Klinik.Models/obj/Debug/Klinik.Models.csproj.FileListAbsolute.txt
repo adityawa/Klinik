@@ -1,0 +1,5 @@
+C:\Adit\Work\Private\Klinik\Klinik.Models\bin\Debug\Klinik.Models.dll
+C:\Adit\Work\Private\Klinik\Klinik.Models\bin\Debug\Klinik.Models.pdb
+C:\Adit\Work\Private\Klinik\Klinik.Models\obj\Debug\Klinik.Models.dll
+C:\Adit\Work\Private\Klinik\Klinik.Models\obj\Debug\Klinik.Models.pdb
+C:\Adit\Work\Private\Klinik\Klinik.Models\obj\Debug\Klinik.Models.csprojResolveAssemblyReference.cache
