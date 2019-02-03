@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Clinic">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="varchar" MaxLength="10" />
+    <Property Name="Name" Type="varchar" MaxLength="200" />
+    <Property Name="Address" Type="varchar" MaxLength="500" />
+    <Property Name="LegalNumber" Type="varchar" MaxLength="50" />
+    <Property Name="LegalDate" Type="date" />
+    <Property Name="ContactNumber" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Lat" Type="float" />
+    <Property Name="Long" Type="float" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="ClinicType" Type="smallint" />
+    <Property Name="ReffID" Type="int" />
+    <Property Name="RowStatus" Type="smallint" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+    <Property Name="DateCreated" Type="datetime" />
+    <Property Name="LastUpdateBy" Type="varchar" MaxLength="50" />
+    <Property Name="DateModified" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Start" Type="datetime" Nullable="false" />
+    <Property Name="Module" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Account" Type="bigint" Nullable="false" />
+    <Property Name="Command" Type="text" />
+    <Property Name="OldValue" Type="nvarchar" MaxLength="500" />
+    <Property Name="NewValue" Type="nvarchar" MaxLength="500" />
+    <Property Name="Status" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Organization">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrgCode" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="OrgName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="KlinikID" Type="bigint" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="OrganizationPrivilege">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrgID" Type="bigint" Nullable="false" />
+    <Property Name="PrivilegeID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrganizationRole">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrgID" Type="bigint" Nullable="false" />
+    <Property Name="RoleName" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PasswordHistory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrganizationID" Type="bigint" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Privilege">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Privilege_Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Privilege_Desc" Type="nvarchar" MaxLength="500" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RolePrivilege">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleID" Type="bigint" Nullable="false" />
+    <Property Name="PrivilegeID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrganizationID" Type="bigint" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="EmployeeID" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="ExpiredDate" Type="datetime" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="bigint" Nullable="false" />
+    <Property Name="RoleID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Organization_Clinic">
+    <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+    <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clinic">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Organization">
+        <PropertyRef Name="KlinikID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationPrivilege_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="OrganizationPrivilege" Type="Self.OrganizationPrivilege" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrganizationPrivilege">
+        <PropertyRef Name="OrgID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationPrivilege_Privilege">
+    <End Role="Privilege" Type="Self.Privilege" Multiplicity="1" />
+    <End Role="OrganizationPrivilege" Type="Self.OrganizationPrivilege" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Privilege">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrganizationPrivilege">
+        <PropertyRef Name="PrivilegeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationRole_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="OrganizationRole" Type="Self.OrganizationRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrganizationRole">
+        <PropertyRef Name="OrgID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_OrganizationRole">
+    <End Role="OrganizationRole" Type="Self.OrganizationRole" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrganizationRole">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="KlinikDBModelStoreContainer">
+    <EntitySet Name="Clinic" EntityType="Self.Clinic" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrganizationPrivilege" EntityType="Self.OrganizationPrivilege" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrganizationRole" EntityType="Self.OrganizationRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PasswordHistory" EntityType="Self.PasswordHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Privilege" EntityType="Self.Privilege" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RolePrivilege" EntityType="Self.RolePrivilege" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Organization_Clinic" Association="Self.FK_Organization_Clinic">
+      <End Role="Clinic" EntitySet="Clinic" />
+      <End Role="Organization" EntitySet="Organization" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationPrivilege_Organization" Association="Self.FK_OrganizationPrivilege_Organization">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="OrganizationPrivilege" EntitySet="OrganizationPrivilege" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationPrivilege_Privilege" Association="Self.FK_OrganizationPrivilege_Privilege">
+      <End Role="Privilege" EntitySet="Privilege" />
+      <End Role="OrganizationPrivilege" EntitySet="OrganizationPrivilege" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationRole_Organization" Association="Self.FK_OrganizationRole_Organization">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="OrganizationRole" EntitySet="OrganizationRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Organization" Association="Self.FK_User_Organization">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_OrganizationRole" Association="Self.FK_UserRole_OrganizationRole">
+      <End Role="OrganizationRole" EntitySet="OrganizationRole" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserRole" EntitySet="UserRole" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KlinikDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Clinic">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="LegalNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LegalDate" Type="DateTime" Precision="0" />
+    <Property Name="ContactNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Lat" Type="Double" />
+    <Property Name="Long" Type="Double" />
+    <Property Name="CityID" Type="Int32" />
+    <Property Name="ClinicType" Type="Int16" />
+    <Property Name="ReffID" Type="Int32" />
+    <Property Name="RowStatus" Type="Int16" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateCreated" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateModified" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Organizations" Relationship="Self.FK_Organization_Clinic" FromRole="Clinic" ToRole="Organization" />
+  </EntityType>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Start" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Module" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Account" Type="Int64" Nullable="false" />
+    <Property Name="Command" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="OldValue" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="NewValue" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Organization">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrgCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OrgName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="KlinikID" Type="Int64" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Clinic" Relationship="Self.FK_Organization_Clinic" FromRole="Organization" ToRole="Clinic" />
+    <NavigationProperty Name="OrganizationPrivileges" Relationship="Self.FK_OrganizationPrivilege_Organization" FromRole="Organization" ToRole="OrganizationPrivilege" />
+    <NavigationProperty Name="OrganizationRoles" Relationship="Self.FK_OrganizationRole_Organization" FromRole="Organization" ToRole="OrganizationRole" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_User_Organization" FromRole="Organization" ToRole="User" />
+  </EntityType>
+  <EntityType Name="OrganizationPrivilege">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrgID" Type="Int64" Nullable="false" />
+    <Property Name="PrivilegeID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Organization" Relationship="Self.FK_OrganizationPrivilege_Organization" FromRole="OrganizationPrivilege" ToRole="Organization" />
+    <NavigationProperty Name="Privilege" Relationship="Self.FK_OrganizationPrivilege_Privilege" FromRole="OrganizationPrivilege" ToRole="Privilege" />
+  </EntityType>
+  <EntityType Name="OrganizationRole">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrgID" Type="Int64" Nullable="false" />
+    <Property Name="RoleName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Organization" Relationship="Self.FK_OrganizationRole_Organization" FromRole="OrganizationRole" ToRole="Organization" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_OrganizationRole" FromRole="OrganizationRole" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="PasswordHistory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrganizationID" Type="Int64" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Privilege">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Privilege_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Privilege_Desc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="OrganizationPrivileges" Relationship="Self.FK_OrganizationPrivilege_Privilege" FromRole="Privilege" ToRole="OrganizationPrivilege" />
+  </EntityType>
+  <EntityType Name="RolePrivilege">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleID" Type="Int64" Nullable="false" />
+    <Property Name="PrivilegeID" Type="Int64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrganizationID" Type="Int64" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EmployeeID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ExpiredDate" Type="DateTime" Precision="3" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Organization" Relationship="Self.FK_User_Organization" FromRole="User" ToRole="Organization" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int64" Nullable="false" />
+    <Property Name="RoleID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="OrganizationRole" Relationship="Self.FK_UserRole_OrganizationRole" FromRole="UserRole" ToRole="OrganizationRole" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserRole_User" FromRole="UserRole" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Organization_Clinic">
+    <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+    <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clinic">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Organization">
+        <PropertyRef Name="KlinikID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationPrivilege_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="OrganizationPrivilege" Type="Self.OrganizationPrivilege" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrganizationPrivilege">
+        <PropertyRef Name="OrgID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationRole_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="OrganizationRole" Type="Self.OrganizationRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrganizationRole">
+        <PropertyRef Name="OrgID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrganizationPrivilege_Privilege">
+    <End Role="Privilege" Type="Self.Privilege" Multiplicity="1" />
+    <End Role="OrganizationPrivilege" Type="Self.OrganizationPrivilege" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Privilege">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrganizationPrivilege">
+        <PropertyRef Name="PrivilegeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_OrganizationRole">
+    <End Role="OrganizationRole" Type="Self.OrganizationRole" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrganizationRole">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRole_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="KlinikDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Clinics" EntityType="Self.Clinic" />
+    <EntitySet Name="Logs" EntityType="Self.Log" />
+    <EntitySet Name="Organizations" EntityType="Self.Organization" />
+    <EntitySet Name="OrganizationPrivileges" EntityType="Self.OrganizationPrivilege" />
+    <EntitySet Name="OrganizationRoles" EntityType="Self.OrganizationRole" />
+    <EntitySet Name="PasswordHistories" EntityType="Self.PasswordHistory" />
+    <EntitySet Name="Privileges" EntityType="Self.Privilege" />
+    <EntitySet Name="RolePrivileges" EntityType="Self.RolePrivilege" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+    <AssociationSet Name="FK_Organization_Clinic" Association="Self.FK_Organization_Clinic">
+      <End Role="Clinic" EntitySet="Clinics" />
+      <End Role="Organization" EntitySet="Organizations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationPrivilege_Organization" Association="Self.FK_OrganizationPrivilege_Organization">
+      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="OrganizationPrivilege" EntitySet="OrganizationPrivileges" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationRole_Organization" Association="Self.FK_OrganizationRole_Organization">
+      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="OrganizationRole" EntitySet="OrganizationRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Organization" Association="Self.FK_User_Organization">
+      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrganizationPrivilege_Privilege" Association="Self.FK_OrganizationPrivilege_Privilege">
+      <End Role="Privilege" EntitySet="Privileges" />
+      <End Role="OrganizationPrivilege" EntitySet="OrganizationPrivileges" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_OrganizationRole" Association="Self.FK_UserRole_OrganizationRole">
+      <End Role="OrganizationRole" EntitySet="OrganizationRoles" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
