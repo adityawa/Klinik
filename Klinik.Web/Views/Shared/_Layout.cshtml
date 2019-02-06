@@ -1,174 +1,246 @@
-﻿<!DOCTYPE html>
-<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html lang="en">
-<!--<![endif]-->
+﻿<!doctype html>
+<html class="fixed">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-    <!-- Required Stylesheets -->
-     @Styles.Render("~/Content/cssklinik")
-   
-    <!-- jQuery-UI Stylesheet -->
-    @Styles.Render("~/Content/jui")
+    <!-- Basic -->
+    <meta charset="UTF-8">
 
-    <!-- Theme Stylesheet -->
-    @Styles.Render("~/Content/theme")
-    @Scripts.Render("~/bundles/jsklinik")
+    <title>SIS INFORMASI KLINIK</title>
+    <meta name="keywords" content="HTML5 Admin Template" />
+    <meta name="description" content="JSOFT Admin - Responsive HTML5 Template">
+    <meta name="author" content="JSOFT.net">
 
-    <style>
-        li.active {
-            background: #1B1B1B;
-        }
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-        select:focus {
-            border: 2px solid #1BB5E0;
-        }
-    </style>
+    <!-- Web Fonts  -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
 
-    <script>
-            var autoKeyboard = true;
-    </script>
+    <!-- Vendor CSS -->
+    <link href="~/Content/Octopus/assets/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/Octopus/assets/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" />
+    <link href="~/Content/Octopus/assets/vendor/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" />
 
-    <title>Sistem Informasi Klinik</title>
 
+    <!-- Specific Page Vendor CSS -->
+    <link href="~/Content/Octopus/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
+    <link href="~/Content/Octopus/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" rel="stylesheet" />
+    <link href="~/Content/Octopus/assets/vendor/morris/morris.css" rel="stylesheet" />
+
+
+    <!-- Theme CSS -->
+
+    <link href="~/Content/Octopus/assets/stylesheets/theme.css" rel="stylesheet" />
+    <!-- Skin CSS -->
+
+    <link href="~/Content/Octopus/assets/stylesheets/skins/default.css" rel="stylesheet" />
+    <!-- Theme Custom CSS -->
+
+    <link href="~/Content/Octopus/assets/stylesheets/theme-custom.css" rel="stylesheet" />
+    <!-- Head Libs -->
+    <script src="~/Scripts/jquery-3.0.0.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/Modernizr/modernizr.js"></script>
 </head>
 <body>
+    <section class="body">
 
-  
-        -->
-    <!-- Header -->
-    <div id="mws-header" class="clearfix">
-        <div id="mws-logo-container" style="width: 700px">
-            <div id="mws-logo-wrap" style="width: 700px;text-align: left">
-                <a href="/" style="background: url('/Content/images/mws-logo.png'); background-position-y: 100%;background-repeat: no-repeat;display: block;">
-                    <h1 style="display: inline;padding-left: 63px;font-weight: normal">
-                        SIM Klinik - Super Administrator
-                    </h1>
+        <!-- start: header -->
+        <header class="header">
+            <div class="logo-container">
+                <a href="../" class="logo">
+                    <img src="~/Content/images/logo.png" height="35" alt="JSOFT Admin" />
                 </a>
+                <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+                    <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+                </div>
             </div>
-        </div>
 
-        <!-- User Tools (notifications, logout, profile, change password) -->
-        <div id="mws-user-tools" class="clearfix">
-            <!-- User Information and functions section -->
-            <div id="mws-user-info" class="mws-inset">
+            <div class="header-right">
 
-                <!-- User Photo -->
-                <div id="mws-user-photo">
-                    <a href="/profile">
-                        <img src="/content/images/user/default.jpg" alt="User Photo">
+                <span class="separator"></span>
+
+                <div id="userbox" class="userbox">
+                    <a href="#" data-toggle="dropdown">
+                        <figure class="profile-picture">
+                            <img src="~/Content/Octopus/assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
+                        </figure>
+                        <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@JSOFT.com">
+                            <span class="name">John Doe Junior</span>
+                            <span class="role">administrator</span>
+                        </div>
+
+                        <i class="fa custom-caret"></i>
                     </a>
-                </div>
 
-                <!-- Username and Functions -->
-                <div id="mws-user-functions">
-                    <div id="mws-username">
-                        Administrator - Dept. : Sektor A
+                    <div class="dropdown-menu">
+                        <ul class="list-unstyled">
+                            <li class="divider"></li>
+                            <li>
+                                <a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="fa fa-user"></i> My Profile</a>
+                            </li>
+                            <li>
+                                <a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="fa fa-lock"></i> Lock Screen</a>
+                            </li>
+                            <li>
+                                <a role="menuitem" tabindex="-1" href="pages-signin.html"><i class="fa fa-power-off"></i> Logout</a>
+                            </li>
+                        </ul>
                     </div>
-                    <ul>
-                        <li><a href="/profile">Profil</a></li>
-                        <li><a href="/changePassword">Ganti Password</a></li>
-                        <li><a href="/site/logout">Keluar</a></li>
-                    </ul>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div id="mws-wrapper">
-        <div id="mws-sidebar-stitch"></div>
-        <div id="mws-sidebar-bg"></div>
+        </header>
+        <!-- end: header -->
 
-        <!-- Sidebar Wrapper -->
-        <div id="mws-sidebar">
+        <div class="inner-wrapper">
+            <!-- start: sidebar -->
+            <aside id="sidebar-left" class="sidebar-left">
 
-            <!-- Hidden Nav Collapse Button -->
-            <div id="mws-nav-collapse">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+                <div class="sidebar-header">
+                    <div class="sidebar-title">
+                        Navigation
+                    </div>
+                    <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+                        <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+                    </div>
+                </div>
 
-            <!-- Main Navigation -->
-            <div id="mws-navigation">
-                <ul>
-                    <li class='active'>
-                        <a href="/site"><i class="icon-home"></i> Beranda</a>
-                    </li>
-                    <li>
-                        <a href="/loketUtama"><i class="icon-random"></i> Loket</a><ul style='display:none' class='closed'><li><a class='submenu' href='/loketBpjs'>Loket BPJS</a></li><li><a class='submenu' href='/loket'>Loket Rawat Jalan</a></li></ul>
-                    </li>
-                    <li>
-                        <a href="/temukanPasien"><i class="icon-github-4"></i> Telusuri Pasien</a>
-                    </li>
-                    <li>
-                        <a href="/manajemen"><i class="icon-user"></i> Farmasi</a><ul style='display:none' class='closed'><li><a class='submenu' href='/obat'>Obat</a></li><li><a class='submenu' href='/obatJenis'>Jenis Obat</a></li><li><a class='submenu' href='/obatSatuan'>Satuan Obat</a></li><li><a class='submenu' href='/gudangObat'>Gudang Obat</a></li><li><a class='submenu' href='/kartuStok'>Kartu Stok</a></li></ul>
-                    </li>
-                    <li>
-                        <a href="/poliklinik"><i class="icon-flag"></i> Poliklinik</a><ul style='display:none' class='closed'><li><a class='submenu' href='/poliUmum'>Poli Umum</a></li><li><a class='submenu' href='/poliTht'>Poli Mata</a></li><li><a class='submenu' href='/poliKandungan'>Poli Kandungan</a></li><li><a class='submenu' href='/poliGigi'>Poli Gigi</a></li><li><a class='submenu' href='/poliSaraf'>Poli Penyakit Dalam</a></li><li><a class='submenu' href='/poliAnak'>Poli Anak</a></li></ul>
-                    </li>
-                    <li>
-                        <a href="/poliLaborat"><i class="icon-chemical"></i> Laboratorium</a>
-                    </li>
-                    <li>
-                        <a href="/laporan"><i class="icon-file"></i> Laporan</a><ul style='display:none' class='closed'><li><a class='submenu' href='/laporanFarmasi'>Laporan Farmasi</a></li><li><a class='submenu' href='/laporanKasir'>Laporan Kasir</a></li><li><a class='submenu' href='/laporanPoli'>Laporan Poli</a></li><li><a class='submenu' href='/laporanInventaris'>Laporan Inventaris</a></li><li><a class='submenu' href='/laporanLoket'>Laporan Loket</a></li></ul>
-                    </li>
-                    <li>
-                        <a href="/apotek"><i class="icon-plus"></i> Apotek</a><ul style='display:none' class='closed'><li><a class='submenu' href='/ValidasiObat'>Cek Resep</a></li><li><a class='submenu' href='/apotek'>Pengambilan Obat</a></li></ul>
-                    </li>
-                    <li>
-                        <a href="/kasir"><i class="icon-archive"></i> Kasir</a>
-                    </li>
-                    <li>
-                        <a href="/gudang"><i class="icon-database"></i> Aset</a><ul style='display:none' class='closed'><li><a class='submenu' href='/inventarisPengadaanBarang'>Pengadaan Barang</a></li><li><a class='submenu' href='/inventarisPenempatanBarang'>Penempatan Barang</a></li></ul>
-                    </li>
-                    <li>
-                        <a href="/hrd"><i class="icon-users"></i> Kepegawaian</a><ul style='display:none' class='closed'><li><a class='submenu' href='/pegawai'>Pegawai</a></li></ul>
-                    </li>
-                    <li>
-                        <a href="/module"><i class="icon-tasks"></i> Manajemen Modul</a>
-                    </li>
-                    <li>
-                        <a href="/hakAkses"><i class="icon-users"></i> Hak Akses</a>
-                    </li>
-                    <li>
-                        <a href="/departemen"><i class="icon-network"></i> Departemen</a>
-                    </li>
-                    <li>
-                        <a href="/master"><i class="icon-database"></i> Master</a><ul style='display:none' class='closed'><li><a class='submenu' href='/inventarisJenisRuang'>Jenis Ruang</a></li><li><a class='submenu' href='/inventarisGrupBarang'>Jenis Barang</a></li><li><a class='submenu' href='/inventarisRuang'>Ruang</a></li><li><a class='submenu' href='/inventarisBarang'>Barang</a></li><li><a class='submenu' href='/jabatan'>Jabatan</a></li><li><a class='submenu' href='/tunjangan'>Tunjangan</a></li><li><a class='submenu' href='/jasaPelayanan'>Jasa Pelayanan</a></li><li><a class='submenu' href='/laborat'>Laborat</a></li><li><a class='submenu' href='/obat'>Obat</a></li><li><a class='submenu' href='/pasien'>Pasien</a></li><li><a class='submenu' href='/user'>user</a></li><li><a class='submenu' href='/distributor'>Distributor</a></li></ul>
-                    </li>
-                    <li>
-                        <a href="/medical"><i class="icon-chemical"></i> Medical Record</a><ul style='display:none' class='closed'><li><a class='submenu' href='/medicalReport'>RM Validation</a></li></ul>
-                    </li>
-                    <li>
-                        <a href="/setting"><i class="icon-cogs"></i> Pengaturan</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+                <div class="nano">
+                    <div class="nano-content">
+                        <nav id="menu" class="nav-main" role="navigation">
+                            <ul class="nav nav-main">
+                                <li class="nav-active">
+                                    <a href="index.html">
+                                        <i class="fa fa-home" aria-hidden="true"></i>
+                                        <span>Home</span>
+                                    </a>
+                                </li>
 
-        <!-- Main Container Start -->
-        <div id="mws-container" class="clearfix">
+                                <li class="nav-parent">
+                                    <a>
+                                        <i class="fa fa-copy" aria-hidden="true"></i>
+                                        <span>Master Data</span>
+                                    </a>
+                                    <ul class="nav nav-children">
+                                        <li>
+                                            <a href="@Url.Action("OrganizationList","MasterData")">
+                                                Organization
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="pages-signin.html">
+                                                Privilege
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="pages-recover-password.html">
+                                                Organization Role
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="pages-lock-screen.html">
+                                                User
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
 
-            <!-- Inner Container Start -->
-            <div class="container">
+                            </ul>
+                        </nav>
+                    </div>
+
+                </div>
+
+            </aside>
+            <!-- end: sidebar -->
+
+            <section role="main" class="content-body">
+                <header class="page-header">
+
+
+                    <div class="right-wrapper pull-right">
+                        <ol class="breadcrumbs">
+                            <li>
+                                <a href="index.html">
+                                    <i class="fa fa-home"></i>
+                                </a>
+                            </li>
+                            <li><span>Dashboard</span></li>
+                        </ol>
+
+                        @*<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>*@
+                    </div>
+                </header>
+
                 @RenderBody()
-            </div>
-            <!-- Inner Container End -->
-            <!-- Footer -->
-            <div id="mws-footer">
-                Copyright &copy; 2018. PT Siap Technovation Unggul
-            </div>
-
+            </section>
         </div>
-        <!-- Main Container End -->
 
-    </div>
-    @RenderSection("scripts", required: false)
+
+    </section>
+
+    <!-- Vendor -->
+    
+   
+    <script src="~/Content/Octopus/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.bootstrap4.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/nanoscroller/nanoscroller.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/magnific-popup/magnific-popup.js"></script>
+
+    <script src="~/Content/Octopus/assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+
+
+    <!-- Specific Page Vendor -->
+    <script src="~/Content/Octopus/assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/jquery-appear/jquery.appear.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/jquery-easypiechart/jquery.easypiechart.js"></script>
+
+    <script src="~/Content/Octopus/assets/vendor/flot/jquery.flot.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/flot-tooltip/jquery.flot.tooltip.js"></script>
+
+    <script src="~/Content/Octopus/assets/vendor/flot/jquery.flot.pie.js"></script>
+
+    <script src="~/Content/Octopus/assets/vendor/flot/jquery.flot.categories.js"></script>
+
+    <script src="~/Content/Octopus/assets/vendor/flot/jquery.flot.resize.js"></script>
+
+    <script src="~/Content/Octopus/assets/vendor/jquery-sparkline/jquery.sparkline.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/morris/morris.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/raphael/raphael.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/gauge/gauge.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/snap-svg/snap.svg.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/liquid-meter/liquid.meter.js"></script>
+
+
+    @*<script src="assets/vendor/jqvmap/jquery.vmap.js"></script>
+        <script src="assets/vendor/jqvmap/data/jquery.vmap.sampledata.js"></script>
+        <script src="assets/vendor/jqvmap/maps/jquery.vmap.world.js"></script>
+        <script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.africa.js"></script>
+        <script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.asia.js"></script>
+        <script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.australia.js"></script>
+        <script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.europe.js"></script>
+        <script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js"></script>
+        <script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.south-america.js"></script>*@
+
+    <!-- Theme Base, Components and Settings -->
+
+    <script src="~/Content/Octopus/assets/javascripts/theme.js"></script>
+
+    <!-- Theme Custom -->
+
+    <script src="~/Content/Octopus/assets/javascripts/theme.custom.js"></script>
+    <!-- Theme Initialization Files -->
+
+    <script src="~/Content/Octopus/assets/javascripts/theme.init.js"></script>
+
+    <!-- Examples -->
+
+    <script src="~/Content/Octopus/assets/javascripts/dashboard/examples.dashboard.js"></script>
 </body>
 </html>
-

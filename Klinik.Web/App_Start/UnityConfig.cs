@@ -1,5 +1,6 @@
 using System;
-
+using Klinik.Web.DataAccess.Interfaces;
+using Klinik.Web.DataAccess.Concrete;
 using Unity;
 
 namespace Klinik.Web
@@ -42,8 +43,8 @@ namespace Klinik.Web
 
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
-            
 
+            
         }
     }
 }

@@ -122,4 +122,11 @@ D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\Unity.Configuration.pdb
 D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\Unity.Container.pdb
 D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\Unity.Interception.pdb
 D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\Unity.ServiceLocation.pdb
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\AutoMapper.dll
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\System.ValueTuple.dll
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\AutoMapper.pdb
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\AutoMapper.xml
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\System.ValueTuple.xml
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\LinqKit.dll
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\LinqKit.xml
 D:\Adit\Project\Private\STU\Klinik\Klinik.Web\obj\Debug\Klinik.Web.csprojAssemblyReference.cache

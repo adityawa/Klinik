@@ -7,10 +7,10 @@ namespace Klinik.Web.Models
 {
     public class BaseModel
     {
-        long Id { get; set; }
-        DateTime CreatedDate { get; set; }
-        DateTime ModifiedDate { get; set; }
-        string CreatedBy { get; set; }
-        string ModifiedBy { get; set; }
+        public long Id { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        public string CreatedBy { get; set; }
+        public string ModifiedBy { get; set; }
     }
 }

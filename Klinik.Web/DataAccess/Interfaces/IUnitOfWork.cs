@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Klinik.Web.DataAccess.Interfaces
 {
-    public interface IUnitOfWork<Model>
+    public interface IUnitOfWork<TEntity> where TEntity:class
     {
-        IGenericRepository<Model> ModelRepository { get; }
+        IGenericRepository<TEntity> ModelRepository { get; }
         void Save();
     }
 }

@@ -1,0 +1,41 @@
+﻿@model Klinik.Web.Models.MasterData.OrganizationModel
+
+@{
+    ViewBag.Title = "CreateOrEditOrganization";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+        </div>
+        <h5 class="panel-title">Form Tambah Organisasi</h5>
+    </header>
+    <div class="panel-body">
+        <form class="form-horizontal form-bordered" method="post">
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">Organization Code</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.OrgCode, new { @class = "form-control", @id = "tbOrgCode" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">Organization Name</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.OrgName, new { @class = "form-control", @id = "tbOrgName" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">Organization Name</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(x => x.OrgName, new { @class = "form-control", @id = "tbOrgName" })
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
