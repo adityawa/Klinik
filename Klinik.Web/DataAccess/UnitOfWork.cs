@@ -12,6 +12,7 @@ namespace Klinik.Web.DataAccess
         private readonly KlinikDBEntities _context;
         private IGenericRepository<Clinic> _clinicRepository;
         private IGenericRepository<Organization> _organizationRepository;
+        private IGenericRepository<Privilege> _privilegeRepository;
         private bool disposed = false;
 
         
@@ -39,6 +40,16 @@ namespace Klinik.Web.DataAccess
                 if (_clinicRepository == null)
                     _clinicRepository = new GenericRepository<Clinic>(_context);
                 return _clinicRepository;
+            }
+        }
+
+        public IGenericRepository<Privilege> PrivilegeRepository
+        {
+            get
+            {
+                if (_privilegeRepository == null)
+                    _privilegeRepository = new GenericRepository<Privilege>(_context);
+                return _privilegeRepository;
             }
         }
 

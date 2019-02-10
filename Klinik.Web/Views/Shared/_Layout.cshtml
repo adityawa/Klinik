@@ -28,7 +28,7 @@
     <link href="~/Content/Octopus/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" rel="stylesheet" />
     <link href="~/Content/Octopus/assets/vendor/morris/morris.css" rel="stylesheet" />
 
-
+    <link href="~/Content/toastr.css" rel="stylesheet" />
     <!-- Theme CSS -->
 
     <link href="~/Content/Octopus/assets/stylesheets/theme.css" rel="stylesheet" />
@@ -41,6 +41,8 @@
     <!-- Head Libs -->
     <script src="~/Scripts/jquery-3.0.0.js"></script>
     <script src="~/Content/Octopus/assets/vendor/Modernizr/modernizr.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
+
 </head>
 <body>
     <section class="body">
@@ -129,7 +131,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="pages-signin.html">
+                                            <a href="@Url.Action("PrivilegeList","MasterData")">
                                                 Privilege
                                             </a>
                                         </li>
@@ -242,5 +244,11 @@
     <!-- Examples -->
 
     <script src="~/Content/Octopus/assets/javascripts/dashboard/examples.dashboard.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+           
+        });
+    </script>
 </body>
 </html>

@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Klinik.Web.DataAccess;
 using Klinik.Web.Models.MasterData;
-using Klinik.Web.Features.MasterData.Organization;
 using AutoMapper;
 using LinqKit;
-using System.Web.Mvc;
 using Klinik.Web.Infrastructure;
 namespace Klinik.Web.Features.MasterData.Organization
 {
 
     public class OrganizationHandler : BaseFeatures
     {
-
-
         public OrganizationHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -44,7 +39,7 @@ namespace Klinik.Web.Features.MasterData.Organization
                         case "orgname":
                             qry = _unitOfWork.OrganizationRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.OrgName), includes: x => x.Clinic);
                             break;
-                        case "id":
+                       default:
                             qry = _unitOfWork.OrganizationRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.ID), includes: x => x.Clinic);
                             break;
                     }
@@ -59,8 +54,8 @@ namespace Klinik.Web.Features.MasterData.Organization
                         case "orgname":
                             qry = _unitOfWork.OrganizationRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.OrgName), includes: x => x.Clinic);
                             break;
-                        case "id":
-                            qry = _unitOfWork.OrganizationRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.ID), includes: x => x.Clinic);
+                       default:
+                            qry = _unitOfWork.OrganizationRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID), includes: x => x.Clinic);
                             break;
                     }
                 }
@@ -73,15 +68,6 @@ namespace Klinik.Web.Features.MasterData.Organization
             foreach (var item in qry)
             {
                 var orData = Mapper.Map<Web.Organization, OrganizationData>(item);
-
-                #region ::OBSOLETE::
-                //OrganizationData orData = new OrganizationData();
-                //orData.Id = item.ID;
-                //orData.Klinik = item.Clinic.Name;
-                //orData.OrgCode = item.OrgCode;
-                //orData.OrgName = item.OrgName;
-                #endregion
-
                 lists.Add(orData);
             }
 
@@ -179,8 +165,6 @@ namespace Klinik.Web.Features.MasterData.Organization
 
                 response.Entity = Mapper.Map<Web.Organization, OrganizationData>(qry.FirstOrDefault());
             }
-
-
             return response;
         }
 

@@ -8,12 +8,8 @@ namespace Klinik.Web.Features
     public abstract class BaseFeatures
     {
         public IUnitOfWork _unitOfWork;
+        public IList<string> errorFields = new List<string>();
 
-        //public void DisposeUnitOfWork(ref IUnitOfWork unitOfWork)
-        //{
-        //    unitOfWork.Dispose();
-
-        //    unitOfWork = new UnitOfWork(new KlinikDBEntities());
-        //}
+       
     }
 }

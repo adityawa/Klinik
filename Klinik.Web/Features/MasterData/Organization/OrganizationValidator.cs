@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Klinik.Web;
-using System.Web.Mvc;
+
 using Klinik.Web.DataAccess;
 using Klinik.Web.Enumerations;
 namespace Klinik.Web.Features.MasterData.Organization
@@ -21,7 +19,7 @@ namespace Klinik.Web.Features.MasterData.Organization
 
             response = new OrganizationResponse();
             response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
-            IList<string> errorFields = new List<string>();
+            
             if (request.RequestOrganizationData.KlinikID == 0)
             {
                 errorFields.Add("Klinik Id");

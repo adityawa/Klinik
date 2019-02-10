@@ -7,9 +7,7 @@
 }
 
 <link href="~/Content/css/select2.css" rel="stylesheet" />
-<link href="~/Content/toastr.css" rel="stylesheet" />
 <script src="~/Scripts/select2.js"></script>
-<script src="~/Scripts/toastr.js"></script>
 
 <section class="panel">
     <header class="panel-heading">
@@ -60,15 +58,16 @@
     $('#ddlclinics').select2();
     var _status, _message, _temp;
     var _arrMsg = [];
-     toastr.options = {
-        "closeButton": true,
-        "positionClass": "toast-top-full-width",
-        "onclick": null,
-        "showDuration": "0",
-        "hideDuration": "0",
-        "timeOut": "0",
-        "showMethod": "fadeIn"
-    };
+
+        toastr.options = {
+            "closeButton": true,
+            "positionClass": "toast-top-full-width",
+            "onclick": null,
+            "showDuration": "0",
+            "hideDuration": "0",
+            "timeOut": "0",
+            "showMethod": "fadeIn"
+        };
 
     _temp="@ViewBag.Response";
 

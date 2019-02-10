@@ -220,11 +220,16 @@
     <Compile Include="DataAccess\IUnitOfWork.cs" />
     <Compile Include="Enumerations\ClinicEnums.cs" />
     <Compile Include="Features\BaseFeatures.cs" />
+    <Compile Include="Features\IBaseFeatures.cs" />
     <Compile Include="Features\MasterData\Clinic\ClinicHandler.cs" />
     <Compile Include="Features\MasterData\Organization\OrganizationHandler.cs" />
     <Compile Include="Features\MasterData\Organization\OrganizationRequest.cs" />
     <Compile Include="Features\MasterData\Organization\OrganizationResponse.cs" />
     <Compile Include="Features\MasterData\Organization\OrganizationValidator.cs" />
+    <Compile Include="Features\MasterData\Privileges\PrivilegeHandler.cs" />
+    <Compile Include="Features\MasterData\Privileges\PrivilegeRequest.cs" />
+    <Compile Include="Features\MasterData\Privileges\PrivilegeResponse.cs" />
+    <Compile Include="Features\MasterData\Privileges\PrivilegeValidator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -253,6 +258,7 @@
     <Compile Include="Models\BaseResponse.cs" />
     <Compile Include="Models\MasterData\ClinicModel.cs" />
     <Compile Include="Models\MasterData\OrganizationModel.cs" />
+    <Compile Include="Models\MasterData\PrivilegeModel.cs" />
     <Compile Include="Organization.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -1065,6 +1071,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\MasterData\OrganizationList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditOrganization.cshtml" />
+    <Content Include="Views\MasterData\PrivilegeList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditPrivilege.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
