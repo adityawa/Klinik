@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+
 namespace Klinik.Web.Models.MasterData
 {
     public class OrganizationModel : BaseModel
@@ -17,5 +19,7 @@ namespace Klinik.Web.Models.MasterData
 
         [Display(Name = "Klinik")]
         public int KlinikID { get; set; }
+
+        public IEnumerable<SelectListItem> ClinicLists { get; set; }
     }
 }

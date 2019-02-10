@@ -14,6 +14,7 @@ namespace Klinik.Web
         protected void Application_Start()
         {
             Mapper.Initialize(cfg => cfg.AddProfile<AutomapperProfile>());
+            
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

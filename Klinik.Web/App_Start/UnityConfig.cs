@@ -1,7 +1,8 @@
 using System;
-using Klinik.Web.DataAccess.Interfaces;
-using Klinik.Web.DataAccess.Concrete;
+
 using Unity;
+using Klinik.Web.DataAccess;
+using Unity.Injection;
 
 namespace Klinik.Web
 {
@@ -43,8 +44,9 @@ namespace Klinik.Web
 
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
-
-            
+            container.RegisterType<UnitOfWork>(new InjectionConstructor(new KlinikDBEntities()));
+            container.RegisterType<IUnitOfWork, UnitOfWork>();
+            container.RegisterType<KlinikDBEntities>();
         }
     }
 }

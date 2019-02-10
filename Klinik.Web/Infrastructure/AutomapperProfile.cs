@@ -13,6 +13,8 @@ namespace Klinik.Web.Infrastructure
         public AutomapperProfile()
         {
             CreateMap<Organization, OrganizationModel>();
+            CreateMap<OrganizationModel, Organization>();
+            CreateMap<Clinic, ClinicModel>();
             CreateMap<Organization, Klinik.Web.Features.MasterData.Organization.OrganizationData>()
                 .ForMember(m => m.Klinik, map => map.MapFrom(p => p.Clinic.Name));
                 

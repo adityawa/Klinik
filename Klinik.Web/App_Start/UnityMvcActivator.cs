@@ -1,12 +1,12 @@
-﻿using Klinik.Web;
 using System.Linq;
 using System.Web.Mvc;
-using Unity.Mvc;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(ManageRoles.UnityMvcActivator), nameof(ManageRoles.UnityMvcActivator.Start))]
-[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(ManageRoles.UnityMvcActivator), nameof(ManageRoles.UnityMvcActivator.Shutdown))]
+using Unity.AspNet.Mvc;
 
-namespace ManageRoles
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Klinik.Web.UnityMvcActivator), nameof(Klinik.Web.UnityMvcActivator.Start))]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(Klinik.Web.UnityMvcActivator), nameof(Klinik.Web.UnityMvcActivator.Shutdown))]
+
+namespace Klinik.Web
 {
     /// <summary>
     /// Provides the bootstrapping for integrating Unity with ASP.NET MVC.
@@ -16,10 +16,10 @@ namespace ManageRoles
         /// <summary>
         /// Integrates Unity when the application starts.
         /// </summary>
-        public static void Start()
+        public static void Start() 
         {
             FilterProviders.Providers.Remove(FilterProviders.Providers.OfType<FilterAttributeFilterProvider>().First());
-            FilterProviders.Providers.Add(new Unity.Mvc.UnityFilterAttributeFilterProvider(UnityConfig.Container));
+            FilterProviders.Providers.Add(new UnityFilterAttributeFilterProvider(UnityConfig.Container));
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(UnityConfig.Container));
 

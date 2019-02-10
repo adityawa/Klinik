@@ -129,4 +129,13 @@ D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\AutoMapper.xml
 D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\System.ValueTuple.xml
 D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\LinqKit.dll
 D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\LinqKit.xml
-D:\Adit\Project\Private\STU\Klinik\Klinik.Web\obj\Debug\Klinik.Web.csprojAssemblyReference.cache
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\System.Runtime.CompilerServices.Unsafe.dll
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\System.Runtime.CompilerServices.Unsafe.xml
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\System.Web.Helpers.xml
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\System.Web.Mvc.xml
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\System.Web.Razor.xml
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\System.Web.WebPages.xml
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\System.Web.WebPages.Deployment.xml
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\System.Web.WebPages.Razor.xml
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\Unity.Abstractions.pdb
+D:\Adit\Project\Private\STU\Klinik\Klinik.Web\bin\Unity.Mvc.pdb

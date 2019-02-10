@@ -11,7 +11,8 @@ namespace Klinik.Web.Features.MasterData.Organization
         
     }
 
-    public class OrganizationData : OrganizationModel {
+    public class OrganizationData : OrganizationModel
+    {
         public string Klinik { get; set; }
     }
 

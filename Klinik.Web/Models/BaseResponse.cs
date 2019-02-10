@@ -11,6 +11,8 @@ namespace Klinik.Web.Models
         public int recordsFiltered { get; set; }
         public int recordsTotal { get; set; }
         public List<T> Data { get; set; }
-
+        public T Entity { get; set; }
+        public string Status { get; set; }
+        public string Message { get; set; }
     }
 }
