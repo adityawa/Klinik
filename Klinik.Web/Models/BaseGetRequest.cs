@@ -13,6 +13,7 @@ namespace Klinik.Web.Models
         public string sortColumn { get; set; }
         public string sortColumnDir { get; set; }
         public string searchValue { get; set; }
+        public string action { get; set; }
        
     }
 }

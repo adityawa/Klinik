@@ -87,6 +87,18 @@ namespace Klinik.Web.Features.MasterData.Organization
             return response;
         }
 
+        public List<OrganizationModel> GetOrganizationList()
+        {
+            List<OrganizationModel> lists = new List<OrganizationModel>();
+            var qry = _unitOfWork.OrganizationRepository.Get(null, null, includes: x => x.Clinic);
+            foreach(var item in qry)
+            {
+                lists.Add(Mapper.Map<Web.Organization, OrganizationModel>(item));
+            }
+
+            return lists;
+        }
+
         public OrganizationResponse CreateOrEditOrganization(OrganizationRequest request)
         {
             int resultAffected = 0;

@@ -22,6 +22,9 @@ namespace Klinik.Web.Infrastructure
                 .ForMember(m => m.Privilige_Name, map => map.MapFrom(p => p.Privilege_Name));
             CreateMap<PrivilegeModel, Privilege>()
                 .ForMember(m => m.Privilege_Name, map => map.MapFrom(p => p.Privilige_Name));
+            CreateMap<OrganizationRole, RoleModel>()
+                .ForMember(m => m.OrganizationName, map => map.MapFrom(p => p.Organization.OrgName));
+            CreateMap<RoleModel, OrganizationRole>();
 
         }
 

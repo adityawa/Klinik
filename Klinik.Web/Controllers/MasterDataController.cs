@@ -9,6 +9,7 @@ using Klinik.Web.DataAccess;
 using Klinik.Web.Models.MasterData;
 using Newtonsoft.Json;
 using Klinik.Web.Features.MasterData.Privileges;
+using Klinik.Web.Features.MasterData.Roles;
 
 namespace Klinik.Web.Controllers
 {
@@ -37,6 +38,21 @@ namespace Klinik.Web.Controllers
             }
 
             return _clinicLists;
+        }
+
+        private List<SelectListItem> BindDropDownOrganization()
+        {
+            List<SelectListItem> _organizationLists = new List<SelectListItem>();
+            foreach (var item in new OrganizationHandler(_unitOfWork).GetOrganizationList())
+            {
+                _organizationLists.Add(new SelectListItem
+                {
+                    Text = item.OrgName,
+                    Value = item.Id.ToString()
+                });
+            }
+
+            return _organizationLists;
         }
         #endregion
 
@@ -238,6 +254,103 @@ namespace Klinik.Web.Controllers
             };
 
             _response = new PrivilegeHandler(_unitOfWork).RemoveData(request);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region ::ROLE::
+        public ActionResult RoleList()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateOrEditRole(RoleModel _model)
+        {
+            var request = new RoleRequest
+            {
+                RequestRoleData = _model
+            };
+
+            RoleResponse _response = new RoleResponse();
+
+            new RoleValidator(_unitOfWork).Validate(request, out _response);
+            ViewBag.Response = $"{_response.Status};{_response.Message}";
+            ViewBag.Organisasi = BindDropDownOrganization();
+            return View();
+        }
+
+        public ActionResult CreateOrEditRole()
+        {
+            RoleResponse _response = new RoleResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new RoleRequest
+                {
+                    RequestRoleData = new RoleModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                RoleResponse resp = new RoleHandler(_unitOfWork).GetDetail(request);
+                RoleModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.Organisasi = BindDropDownOrganization();
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.Organisasi = BindDropDownOrganization();
+                return View();
+            }
+
+
+        }
+
+        [HttpPost]
+        public ActionResult GetRoleData()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new RoleRequest
+            {
+                draw = _draw,
+                searchValue = _searchValue,
+                sortColumn = _sortColumn,
+                sortColumnDir = _sortColumnDir,
+                pageSize = _pageSize,
+                skip = _skip
+            };
+
+            var response = new RoleHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteMasterRole(int id)
+        {
+            RoleResponse _response = new RoleResponse();
+            var request = new RoleRequest
+            {
+                RequestRoleData = new RoleModel
+                {
+                    Id = id
+                }
+            };
+
+            _response = new RoleHandler(_unitOfWork).RemoveData(request);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }

@@ -5,26 +5,30 @@ using System.Web;
 using Klinik.Web.DataAccess;
 using Klinik.Web.Enumerations;
 
-namespace Klinik.Web.Features.MasterData.Privileges
+namespace Klinik.Web.Features.MasterData.Roles
 {
-    public class PrivilegeValidator : BaseFeatures
+    public class RoleValidator : BaseFeatures
     {
-
-        public PrivilegeValidator(IUnitOfWork unitOfWork)
+        public RoleValidator(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public void Validate(PrivilegeRequest request, out PrivilegeResponse response)
+        public void Validate(RoleRequest request, out RoleResponse response)
         {
-            response = new PrivilegeResponse
+            response = new RoleResponse
             {
                 Status = ClinicEnums.enumStatus.SUCCESS.ToString()
             };
-           
-            if (request.RequestPrivilegeData.Privilige_Name==null || String.IsNullOrWhiteSpace( request.RequestPrivilegeData.Privilige_Name))
+
+            if (request.RequestRoleData.RoleName == null || String.IsNullOrWhiteSpace( request.RequestRoleData.RoleName))
             {
-                errorFields.Add("Privilege Name");
+                errorFields.Add("Role Name");
+            }
+
+            if (request.RequestRoleData.OrgID == 0 )
+            {
+                errorFields.Add("Organization");
             }
 
             if (errorFields.Any())
@@ -32,14 +36,14 @@ namespace Klinik.Web.Features.MasterData.Privileges
                 response.Status = ClinicEnums.enumStatus.ERROR.ToString();
                 response.Message = $"Validation Error for following fields : {String.Join(",", errorFields)}";
             }
-            else if (request.RequestPrivilegeData.Privilige_Name.Length > 150)
+            else if (request.RequestRoleData.RoleName.Length > 30)
             {
                 response.Status = ClinicEnums.enumStatus.ERROR.ToString();
-                response.Message = $"Maximum Character for Privilege Name is 150";
+                response.Message = $"Maximum Character for Role Name is 30";
             }
 
             if (response.Status == ClinicEnums.enumStatus.SUCCESS.ToString())
-                response = new PrivilegeHandler(_unitOfWork).CreateOrEdit(request);
+                response = new RoleHandler(_unitOfWork).CreateOrEdit(request);
         }
     }
 }

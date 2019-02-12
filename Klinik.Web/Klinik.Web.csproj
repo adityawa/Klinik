@@ -230,6 +230,10 @@
     <Compile Include="Features\MasterData\Privileges\PrivilegeRequest.cs" />
     <Compile Include="Features\MasterData\Privileges\PrivilegeResponse.cs" />
     <Compile Include="Features\MasterData\Privileges\PrivilegeValidator.cs" />
+    <Compile Include="Features\MasterData\Roles\RoleHandler.cs" />
+    <Compile Include="Features\MasterData\Roles\RoleRequest.cs" />
+    <Compile Include="Features\MasterData\Roles\RoleResponse.cs" />
+    <Compile Include="Features\MasterData\Roles\RoleValidator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -259,6 +263,7 @@
     <Compile Include="Models\MasterData\ClinicModel.cs" />
     <Compile Include="Models\MasterData\OrganizationModel.cs" />
     <Compile Include="Models\MasterData\PrivilegeModel.cs" />
+    <Compile Include="Models\MasterData\RoleModel.cs" />
     <Compile Include="Organization.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -1073,6 +1078,8 @@
     <Content Include="Views\MasterData\CreateOrEditOrganization.cshtml" />
     <Content Include="Views\MasterData\PrivilegeList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditPrivilege.cshtml" />
+    <Content Include="Views\MasterData\RoleList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditRole.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
