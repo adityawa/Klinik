@@ -10,6 +10,8 @@ using Klinik.Web.Models.MasterData;
 using Newtonsoft.Json;
 using Klinik.Web.Features.MasterData.Privileges;
 using Klinik.Web.Features.MasterData.Roles;
+using Klinik.Web.Features.MasterData.User;
+using Klinik.Web.Features.MasterData.Employee;
 
 namespace Klinik.Web.Controllers
 {
@@ -53,6 +55,21 @@ namespace Klinik.Web.Controllers
             }
 
             return _organizationLists;
+        }
+
+        private List<SelectListItem> BindDropDownEmployee()
+        {
+            List<SelectListItem> _employeeLists = new List<SelectListItem>();
+            foreach (var item in new EmployeeHandler(_unitOfWork).GetAllEmployee())
+            {
+                _employeeLists.Add(new SelectListItem
+                {
+                    Text = item.EmpName,
+                    Value = item.Id.ToString()
+                });
+            }
+
+            return _employeeLists;
         }
         #endregion
 
@@ -351,6 +368,106 @@ namespace Klinik.Web.Controllers
             };
 
             _response = new RoleHandler(_unitOfWork).RemoveData(request);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region ::USER::
+        public ActionResult UserList()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateOrEditUser(UserModel _model)
+        {
+            var request = new UserRequest
+            {
+                RequestUserData = _model
+            };
+
+            UserResponse _response = new UserResponse();
+
+            new UserValidator(_unitOfWork).Validate(request, out _response);
+            ViewBag.Response = $"{_response.Status};{_response.Message}";
+            ViewBag.Organisasi = BindDropDownOrganization();
+            ViewBag.Employees = BindDropDownEmployee();
+            return View();
+        }
+
+        public ActionResult CreateOrEditUser()
+        {
+            UserResponse _response = new UserResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new UserRequest
+                {
+                    RequestUserData = new UserModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                UserResponse resp = new UserHandler(_unitOfWork).GetDetail(request);
+                UserModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.Employees = BindDropDownEmployee();
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.Employees = BindDropDownEmployee();
+                return View();
+            }
+
+
+        }
+
+        [HttpPost]
+        public ActionResult GetUserData()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new UserRequest
+            {
+                draw = _draw,
+                searchValue = _searchValue,
+                sortColumn = _sortColumn,
+                sortColumnDir = _sortColumnDir,
+                pageSize = _pageSize,
+                skip = _skip
+            };
+
+            var response = new UserHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteMasterUser(int id)
+        {
+            UserResponse _response = new UserResponse();
+            var request = new UserRequest
+            {
+                RequestUserData = new UserModel
+                {
+                    Id = id
+                }
+            };
+
+            _response = new UserHandler(_unitOfWork).RemoveData(request);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }

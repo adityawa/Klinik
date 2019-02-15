@@ -218,10 +218,14 @@
     <Compile Include="DataAccess\UnitOfWork.cs" />
     <Compile Include="DataAccess\IGenericRepository.cs" />
     <Compile Include="DataAccess\IUnitOfWork.cs" />
+    <Compile Include="Employee.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Enumerations\ClinicEnums.cs" />
     <Compile Include="Features\BaseFeatures.cs" />
     <Compile Include="Features\IBaseFeatures.cs" />
     <Compile Include="Features\MasterData\Clinic\ClinicHandler.cs" />
+    <Compile Include="Features\MasterData\Employee\EmployeeHandler.cs" />
     <Compile Include="Features\MasterData\Organization\OrganizationHandler.cs" />
     <Compile Include="Features\MasterData\Organization\OrganizationRequest.cs" />
     <Compile Include="Features\MasterData\Organization\OrganizationResponse.cs" />
@@ -234,12 +238,22 @@
     <Compile Include="Features\MasterData\Roles\RoleRequest.cs" />
     <Compile Include="Features\MasterData\Roles\RoleResponse.cs" />
     <Compile Include="Features\MasterData\Roles\RoleValidator.cs" />
+    <Compile Include="Features\MasterData\User\UserHandler.cs" />
+    <Compile Include="Features\MasterData\User\UserRequest.cs" />
+    <Compile Include="Features\MasterData\User\UserResponse.cs" />
+    <Compile Include="Features\MasterData\User\UserValidator.cs" />
+    <Compile Include="GeneralMaster.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\AutomapperProfile.cs" />
     <Compile Include="Infrastructure\Common.cs" />
     <Compile Include="Log.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Menu.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model1.Context.cs">
@@ -261,9 +275,11 @@
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\BaseResponse.cs" />
     <Compile Include="Models\MasterData\ClinicModel.cs" />
+    <Compile Include="Models\MasterData\EmployeeModel.cs" />
     <Compile Include="Models\MasterData\OrganizationModel.cs" />
     <Compile Include="Models\MasterData\PrivilegeModel.cs" />
     <Compile Include="Models\MasterData\RoleModel.cs" />
+    <Compile Include="Models\MasterData\UserModel.cs" />
     <Compile Include="Organization.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -1080,6 +1096,7 @@
     <Content Include="Views\MasterData\CreateOrEditPrivilege.cshtml" />
     <Content Include="Views\MasterData\RoleList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditRole.cshtml" />
+    <Content Include="Views\MasterData\UserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

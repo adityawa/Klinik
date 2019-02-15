@@ -12,11 +12,14 @@ namespace Klinik.Web
     using System;
     using System.Collections.Generic;
     
-    public partial class RolePrivilege
+    public partial class Menu
     {
-        public long ID { get; set; }
-        public long RoleID { get; set; }
-        public long PrivilegeID { get; set; }
-        public Nullable<long> MenuId { get; set; }
+        public long Id { get; set; }
+        public string Description { get; set; }
+        public Nullable<long> ParentMenuId { get; set; }
+        public string PageLink { get; set; }
+        public int SortIndex { get; set; }
+        public Nullable<bool> HasChild { get; set; }
+        public Nullable<bool> IsMenu { get; set; }
     }
 }

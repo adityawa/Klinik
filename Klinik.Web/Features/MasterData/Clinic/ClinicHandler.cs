@@ -7,9 +7,9 @@ using Klinik.Web.Models.MasterData;
 using AutoMapper;
 namespace Klinik.Web.Features.MasterData.Clinic
 {
-    public class ClinicHandler
+    public class ClinicHandler:BaseFeatures
     {
-        private IUnitOfWork _unitOfWork;
+      
         public ClinicHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;

@@ -17,7 +17,6 @@ namespace Klinik.Web.Infrastructure
             CreateMap<Clinic, ClinicModel>();
             CreateMap<Organization, Klinik.Web.Features.MasterData.Organization.OrganizationData>()
                 .ForMember(m => m.Klinik, map => map.MapFrom(p => p.Clinic.Name));
-
             CreateMap<Privilege, PrivilegeModel>()
                 .ForMember(m => m.Privilige_Name, map => map.MapFrom(p => p.Privilege_Name));
             CreateMap<PrivilegeModel, Privilege>()
@@ -25,6 +24,14 @@ namespace Klinik.Web.Infrastructure
             CreateMap<OrganizationRole, RoleModel>()
                 .ForMember(m => m.OrganizationName, map => map.MapFrom(p => p.Organization.OrgName));
             CreateMap<RoleModel, OrganizationRole>();
+
+            CreateMap<User, UserModel>()
+                .ForMember(x => x.EmployeeName, map => map.MapFrom(p => p.Employee.EmpName))
+                .ForMember(x => x.OrganizationName, map => map.MapFrom(p => p.Organization.OrgName))
+                .ForMember(x => x.StatusDesc, map => map.MapFrom(p => p.Status == true ? "Active" : "Inactive"));
+            CreateMap<UserModel, User>();
+
+            CreateMap<Employee, EmployeeModel>();
 
         }
 

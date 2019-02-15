@@ -12,29 +12,29 @@ namespace Klinik.Web
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public Employee()
         {
-            this.UserRoles = new HashSet<UserRole>();
+            this.Users = new HashSet<User>();
         }
     
-        public long ID { get; set; }
-        public long OrganizationID { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public long EmployeeID { get; set; }
-        public Nullable<System.DateTime> ExpiredDate { get; set; }
-        public Nullable<bool> Status { get; set; }
+        public long id { get; set; }
+        public string EmpID { get; set; }
+        public string EmpName { get; set; }
+        public Nullable<System.DateTime> BirthDate { get; set; }
+        public string Gender { get; set; }
+        public Nullable<int> EmpType { get; set; }
+        public Nullable<int> EmpDept { get; set; }
+        public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
-        public System.DateTime CreatedDate { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public string Email { get; set; }
     
-        public virtual Organization Organization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserRole> UserRoles { get; set; }
-        public virtual Employee Employee { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

@@ -12,11 +12,11 @@ namespace Klinik.Web
     using System;
     using System.Collections.Generic;
     
-    public partial class RolePrivilege
+    public partial class GeneralMaster
     {
-        public long ID { get; set; }
-        public long RoleID { get; set; }
-        public long PrivilegeID { get; set; }
-        public Nullable<long> MenuId { get; set; }
+        public long Id { get; set; }
+        public string Type { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

@@ -23,6 +23,33 @@
     <Property Name="LastUpdateBy" Type="varchar" MaxLength="50" />
     <Property Name="DateModified" Type="datetime" />
   </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" />
+    <Property Name="EmpID" Type="varchar" MaxLength="50" />
+    <Property Name="EmpName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="BirthDate" Type="date" />
+    <Property Name="Gender" Type="char" MaxLength="1" />
+    <Property Name="EmpType" Type="int" />
+    <Property Name="EmpDept" Type="int" />
+    <Property Name="RowStatus" Type="smallint" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="GeneralMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Value" Type="nvarchar" MaxLength="250" />
+  </EntityType>
   <EntityType Name="Log">
     <Key>
       <PropertyRef Name="Id" />
@@ -35,6 +62,18 @@
     <Property Name="OldValue" Type="nvarchar" MaxLength="500" />
     <Property Name="NewValue" Type="nvarchar" MaxLength="500" />
     <Property Name="Status" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Menu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="ParentMenuId" Type="bigint" />
+    <Property Name="PageLink" Type="nvarchar(max)" />
+    <Property Name="SortIndex" Type="int" Nullable="false" />
+    <Property Name="HasChild" Type="bit" />
+    <Property Name="IsMenu" Type="bit" />
   </EntityType>
   <EntityType Name="Organization">
     <Key>
@@ -93,6 +132,7 @@
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RoleID" Type="bigint" Nullable="false" />
     <Property Name="PrivilegeID" Type="bigint" Nullable="false" />
+    <Property Name="MenuId" Type="bigint" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -102,9 +142,8 @@
     <Property Name="OrganizationID" Type="bigint" Nullable="false" />
     <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Password" Type="nvarchar" MaxLength="250" Nullable="false" />
-    <Property Name="EmployeeID" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="EmployeeID" Type="bigint" Nullable="false" />
     <Property Name="ExpiredDate" Type="datetime" />
-    <Property Name="Email" Type="nvarchar" MaxLength="50" />
     <Property Name="Status" Type="bit" />
     <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
@@ -167,6 +206,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_User_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_User_Organization">
     <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
     <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -205,7 +256,10 @@
   </Association>
   <EntityContainer Name="KlinikDBModelStoreContainer">
     <EntitySet Name="Clinic" EntityType="Self.Clinic" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GeneralMaster" EntityType="Self.GeneralMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrganizationPrivilege" EntityType="Self.OrganizationPrivilege" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrganizationRole" EntityType="Self.OrganizationRole" Schema="dbo" store:Type="Tables" />
@@ -229,6 +283,10 @@
     <AssociationSet Name="FK_OrganizationRole_Organization" Association="Self.FK_OrganizationRole_Organization">
       <End Role="Organization" EntitySet="Organization" />
       <End Role="OrganizationRole" EntitySet="OrganizationRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Employee" Association="Self.FK_User_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="User" EntitySet="User" />
     </AssociationSet>
     <AssociationSet Name="FK_User_Organization" Association="Self.FK_User_Organization">
       <End Role="Organization" EntitySet="Organization" />
