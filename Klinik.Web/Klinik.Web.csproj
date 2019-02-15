@@ -546,6 +546,15 @@
     <Content Include="Content\images\skkmigas-logo1.jpg" />
     <Content Include="Content\images\skkmigas-logo2.png" />
     <Content Include="Content\images\skmigas-logo3.jpg" />
+    <Content Include="Content\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.structure.css" />
+    <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="Content\Octopus\assets\images\!happy-face.png" />
     <Content Include="Content\Octopus\assets\images\!logged-user.jpg" />
     <Content Include="Content\Octopus\assets\images\!sample-user.jpg" />
@@ -774,6 +783,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Views\favicon.ico" />
@@ -989,9 +999,9 @@
     <Content Include="Content\Octopus\assets\vendor\flot\NEWS.md" />
     <Content Include="Content\Octopus\assets\vendor\flot\PLUGINS.md" />
     <Content Include="Content\Octopus\assets\vendor\flot\README.md" />
-    <Content Include="DB\Klinik20190206" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    <Content Include="DB\KlinikDB_20190215" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\i18n\af.js" />
     <Content Include="Scripts\i18n\ar.js" />
@@ -1097,6 +1107,7 @@
     <Content Include="Views\MasterData\RoleList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditRole.cshtml" />
     <Content Include="Views\MasterData\UserList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

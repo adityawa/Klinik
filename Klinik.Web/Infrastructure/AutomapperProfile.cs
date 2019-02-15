@@ -29,7 +29,8 @@ namespace Klinik.Web.Infrastructure
                 .ForMember(x => x.EmployeeName, map => map.MapFrom(p => p.Employee.EmpName))
                 .ForMember(x => x.OrganizationName, map => map.MapFrom(p => p.Organization.OrgName))
                 .ForMember(x => x.StatusDesc, map => map.MapFrom(p => p.Status == true ? "Active" : "Inactive"));
-            CreateMap<UserModel, User>();
+            CreateMap<UserModel, User>()
+                .ForMember(x=>x.OrganizationID, map=>map.MapFrom(p=>p.OrgID));
 
             CreateMap<Employee, EmployeeModel>();
 

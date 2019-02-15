@@ -48,7 +48,7 @@ namespace Klinik.Web.Features.MasterData.User
                 response.Status = ClinicEnums.enumStatus.ERROR.ToString();
                 response.Message = $"Validation Error for following fields : {String.Join(",", errorFields)}";
             }
-            else if (request.RequestUserData.Id != 0)
+            else if (request.RequestUserData.Id == 0)
             {
                 //validate is username exist
                 var qry = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName.Equals(request.RequestUserData.UserName) && x.Status==true, includes:x=>x.Employee);
@@ -58,7 +58,7 @@ namespace Klinik.Web.Features.MasterData.User
                     response.Message = $"User name already exist";
                 }
             }
-            else if (request.RequestUserData.Id != 0)
+            else if (request.RequestUserData.Id == 0)
             {
                 //validate is username exist
                 var qry = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName.Equals(request.RequestUserData.EmployeeID) && x.Status == true, includes: x => x.Employee);
@@ -71,7 +71,7 @@ namespace Klinik.Web.Features.MasterData.User
 
             if (response.Status == ClinicEnums.enumStatus.SUCCESS.ToString())
             {
-
+                response = new UserHandler(_unitOfWork).CreateOrEdit(request);
             }
         }
     }

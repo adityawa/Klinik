@@ -59,7 +59,8 @@ namespace Klinik.Web.Features.MasterData.User
                     request.RequestUserData.Password = Common.Encryptor(request.RequestUserData.Password, Common.KeyEncryptor);
                    
                     var UserEntity = Mapper.Map<UserModel, Web.User>(request.RequestUserData);
-                    
+                    UserEntity.CreatedBy = request.RequestUserData.CreatedBy ?? "SYSTEM";
+                    UserEntity.CreatedDate = DateTime.Now;
                     _unitOfWork.UserRepository.Insert(UserEntity);
                     resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)

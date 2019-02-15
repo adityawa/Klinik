@@ -26,7 +26,7 @@ namespace Klinik.Web.Models.MasterData
 
         [DataType(DataType.Date)]
         [Display(Name ="Expired Date")]
-        public DateTime ExpiredDate { get; set; }
+        public DateTime? ExpiredDate { get; set; }
 
         public string ExpiredDateStr { get; set; }
 
