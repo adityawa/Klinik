@@ -12,5 +12,11 @@ namespace Klinik.Web.Enumerations
             SUCCESS,
             ERROR
         }
+
+        public enum enumMasterTypes
+        {
+            EmploymentType,
+            Department
+        }
     }
 }

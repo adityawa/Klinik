@@ -32,13 +32,13 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmpID" Type="varchar" MaxLength="50" />
           <Property Name="EmpName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="BirthDate" Type="date" />
           <Property Name="Gender" Type="char" MaxLength="1" />
-          <Property Name="EmpType" Type="int" />
-          <Property Name="EmpDept" Type="int" />
+          <Property Name="EmpType" Type="bigint" />
+          <Property Name="EmpDept" Type="bigint" />
           <Property Name="RowStatus" Type="smallint" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -163,6 +163,18 @@
           <Property Name="UserID" Type="bigint" Nullable="false" />
           <Property Name="RoleID" Type="bigint" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Employee_GeneralMaster">
+          <End Role="GeneralMaster" Type="Self.GeneralMaster" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GeneralMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="EmpType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Organization_Clinic">
           <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
           <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
@@ -273,6 +285,10 @@
           <EntitySet Name="RolePrivilege" EntityType="Self.RolePrivilege" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employee_GeneralMaster" Association="Self.FK_Employee_GeneralMaster">
+            <End Role="GeneralMaster" EntitySet="GeneralMaster" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
           <AssociationSet Name="FK_Organization_Clinic" Association="Self.FK_Organization_Clinic">
             <End Role="Clinic" EntitySet="Clinic" />
             <End Role="Organization" EntitySet="Organization" />
@@ -527,6 +543,10 @@
           </AssociationSet>
           <EntitySet Name="Employees" EntityType="KlinikDBModel.Employee" />
           <EntitySet Name="GeneralMasters" EntityType="KlinikDBModel.GeneralMaster" />
+          <AssociationSet Name="FK_Employee_GeneralMaster" Association="KlinikDBModel.FK_Employee_GeneralMaster">
+            <End Role="GeneralMaster" EntitySet="GeneralMasters" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_Employee" Association="KlinikDBModel.FK_User_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="User" EntitySet="Users" />
@@ -591,19 +611,20 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EmpName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="BirthDate" Type="DateTime" Precision="0" />
           <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="EmpType" Type="Int32" />
-          <Property Name="EmpDept" Type="Int32" />
+          <Property Name="EmpType" Type="Int64" />
+          <Property Name="EmpDept" Type="Int64" />
           <Property Name="RowStatus" Type="Int16" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GeneralMaster" Relationship="KlinikDBModel.FK_Employee_GeneralMaster" FromRole="Employee" ToRole="GeneralMaster" />
           <NavigationProperty Name="Users" Relationship="KlinikDBModel.FK_User_Employee" FromRole="Employee" ToRole="User" />
         </EntityType>
         <EntityType Name="GeneralMaster">
@@ -614,7 +635,20 @@
           <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Value" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employees" Relationship="KlinikDBModel.FK_Employee_GeneralMaster" FromRole="GeneralMaster" ToRole="Employee" />
         </EntityType>
+        <Association Name="FK_Employee_GeneralMaster">
+          <End Type="KlinikDBModel.GeneralMaster" Role="GeneralMaster" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GeneralMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="EmpType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_Employee">
           <End Type="KlinikDBModel.Employee" Role="Employee" Multiplicity="1" />
           <End Type="KlinikDBModel.User" Role="User" Multiplicity="*" />
@@ -804,7 +838,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

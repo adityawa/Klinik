@@ -30,7 +30,7 @@ namespace Klinik.Web.Features.MasterData.User
                     if (qry != null)
                     {
                         qry.OrganizationID = request.RequestUserData.OrgID;
-                        qry.ExpiredDate = request.RequestUserData.ExpiredDate;
+                        qry.ExpiredDate = request.RequestUserData.ExpiredDate??DateTime.Now.AddDays(100);
                         qry.Status = request.RequestUserData.Status;
                         qry.ModifiedBy = request.RequestUserData.ModifiedBy;
                         qry.ModifiedDate = DateTime.Now;
@@ -57,7 +57,7 @@ namespace Klinik.Web.Features.MasterData.User
                 else
                 {
                     request.RequestUserData.Password = Common.Encryptor(request.RequestUserData.Password, Common.KeyEncryptor);
-                   
+                    request.RequestUserData.ExpiredDate = request.RequestUserData.ExpiredDate ?? DateTime.Now.AddDays(100);
                     var UserEntity = Mapper.Map<UserModel, Web.User>(request.RequestUserData);
                     UserEntity.CreatedBy = request.RequestUserData.CreatedBy ?? "SYSTEM";
                     UserEntity.CreatedDate = DateTime.Now;

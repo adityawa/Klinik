@@ -23,10 +23,11 @@
         <EntityTypeShape EntityType="KlinikDBModel.User" Width="1.5" PointX="5.25" PointY="9.125" />
         <AssociationConnector Association="KlinikDBModel.FK_User_Organization" />
         <AssociationConnector Association="KlinikDBModel.FK_UserRole_User" />
-        <EntityTypeShape EntityType="KlinikDBModel.Employee" Width="1.5" PointX="10.375" PointY="4" />
-        <EntityTypeShape EntityType="KlinikDBModel.GeneralMaster" Width="1.5" PointX="7.375" PointY="10.75" />
+        <EntityTypeShape EntityType="KlinikDBModel.Employee" Width="1.5" PointX="3" PointY="13" />
+        <EntityTypeShape EntityType="KlinikDBModel.GeneralMaster" Width="1.5" PointX="0.75" PointY="14" />
+        <AssociationConnector Association="KlinikDBModel.FK_Employee_GeneralMaster" />
         <AssociationConnector Association="KlinikDBModel.FK_User_Employee" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

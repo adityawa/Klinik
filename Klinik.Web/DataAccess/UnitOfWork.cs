@@ -16,6 +16,8 @@ namespace Klinik.Web.DataAccess
         private IGenericRepository<OrganizationRole> _roleRepository;
         private IGenericRepository<User> _userRepository;
         private IGenericRepository<Employee> _employeeRepository;
+        private IGenericRepository<GeneralMaster> _masterRepository;
+        private IGenericRepository<OrganizationPrivilege> _orgprivRepository;
         private bool disposed = false;
 
         
@@ -84,6 +86,28 @@ namespace Klinik.Web.DataAccess
                     _employeeRepository = new GenericRepository<Employee>(_context);
 
                 return _employeeRepository;
+            }
+        }
+
+        public IGenericRepository<GeneralMaster> MasterRepository
+        {
+            get
+            {
+                if (_masterRepository == null)
+                    _masterRepository = new GenericRepository<GeneralMaster>(_context);
+
+                return _masterRepository;
+            }
+        }
+
+        public IGenericRepository<OrganizationPrivilege> OrgPrivRepository
+        {
+            get
+            {
+                if (_orgprivRepository == null)
+                    _orgprivRepository = new GenericRepository<OrganizationPrivilege>(_context);
+
+                return _orgprivRepository;
             }
         }
 

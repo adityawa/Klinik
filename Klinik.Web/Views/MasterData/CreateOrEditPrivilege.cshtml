@@ -39,6 +39,10 @@
 </section>
 
 <script type="text/javascript">
+    function clearFields() {
+        $('#tbPrivilege').val('');
+        $('#tbDesc').val('');
+    }
     $(document).ready(function () {
         $('#btnreset').click(function (e) {
             window.location.href = "/MasterData/PrivilegeList";
@@ -64,6 +68,7 @@
 
     if (_arrMsg[0] == "SUCCESS") {
         toastr.success(_arrMsg[1]);
+        clearFields();
     }
     else if (_arrMsg[0] == "ERROR") {
         toastr.error(_arrMsg[1]);

@@ -27,13 +27,13 @@
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="bigint" Nullable="false" />
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EmpID" Type="varchar" MaxLength="50" />
     <Property Name="EmpName" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="BirthDate" Type="date" />
     <Property Name="Gender" Type="char" MaxLength="1" />
-    <Property Name="EmpType" Type="int" />
-    <Property Name="EmpDept" Type="int" />
+    <Property Name="EmpType" Type="bigint" />
+    <Property Name="EmpDept" Type="bigint" />
     <Property Name="RowStatus" Type="smallint" />
     <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
     <Property Name="CreatedDate" Type="datetime" />
@@ -158,6 +158,18 @@
     <Property Name="UserID" Type="bigint" Nullable="false" />
     <Property Name="RoleID" Type="bigint" Nullable="false" />
   </EntityType>
+  <Association Name="FK_Employee_GeneralMaster">
+    <End Role="GeneralMaster" Type="Self.GeneralMaster" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GeneralMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="EmpType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Organization_Clinic">
     <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
     <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
@@ -268,6 +280,10 @@
     <EntitySet Name="RolePrivilege" EntityType="Self.RolePrivilege" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Employee_GeneralMaster" Association="Self.FK_Employee_GeneralMaster">
+      <End Role="GeneralMaster" EntitySet="GeneralMaster" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
     <AssociationSet Name="FK_Organization_Clinic" Association="Self.FK_Organization_Clinic">
       <End Role="Clinic" EntitySet="Clinic" />
       <End Role="Organization" EntitySet="Organization" />

@@ -12,5 +12,6 @@ namespace Klinik.Web.Models
         public DateTime? ModifiedDate { get; set; }
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
+        
     }
 }

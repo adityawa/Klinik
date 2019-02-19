@@ -6,10 +6,12 @@ using System.Configuration;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using Klinik.Web.DataAccess;
 namespace Klinik.Web.Infrastructure
 {
     public static class Common
     {
+        
         private const string _keyEncryptor = "Klinik2019";
         public static string KeyEncryptor
         {
@@ -147,5 +149,7 @@ namespace Klinik.Web.Infrastructure
 
             return decryptedBytes;
         }
+
+        
     }
 }

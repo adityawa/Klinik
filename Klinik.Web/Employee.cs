@@ -25,8 +25,8 @@ namespace Klinik.Web
         public string EmpName { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
         public string Gender { get; set; }
-        public Nullable<int> EmpType { get; set; }
-        public Nullable<int> EmpDept { get; set; }
+        public Nullable<long> EmpType { get; set; }
+        public Nullable<long> EmpDept { get; set; }
         public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -34,6 +34,7 @@ namespace Klinik.Web
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string Email { get; set; }
     
+        public virtual GeneralMaster GeneralMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
     }

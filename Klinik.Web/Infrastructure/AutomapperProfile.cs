@@ -5,6 +5,9 @@ using System.Web;
 using AutoMapper;
 using Klinik.Web.Models.MasterData;
 using Klinik.Web.Features.MasterData.Organization;
+using Klinik.Web.Features;
+using Klinik.Web.Features.MasterData.Employee;
+using Klinik.Web.Enumerations;
 
 namespace Klinik.Web.Infrastructure
 {
@@ -12,6 +15,7 @@ namespace Klinik.Web.Infrastructure
     {
         public AutomapperProfile()
         {
+
             CreateMap<Organization, OrganizationModel>();
             CreateMap<OrganizationModel, Organization>();
             CreateMap<Clinic, ClinicModel>();
@@ -28,11 +32,24 @@ namespace Klinik.Web.Infrastructure
             CreateMap<User, UserModel>()
                 .ForMember(x => x.EmployeeName, map => map.MapFrom(p => p.Employee.EmpName))
                 .ForMember(x => x.OrganizationName, map => map.MapFrom(p => p.Organization.OrgName))
-                .ForMember(x => x.StatusDesc, map => map.MapFrom(p => p.Status == true ? "Active" : "Inactive"));
+                .ForMember(x => x.StatusDesc, map => map.MapFrom(p => p.Status == true ? "Active" : "Inactive"))
+                .ForMember(x => x.ExpiredDateStr, map => map.MapFrom(p => p.ExpiredDate == null ? "" : p.ExpiredDate.Value.ToString("MM/dd/yyyy")));
             CreateMap<UserModel, User>()
-                .ForMember(x=>x.OrganizationID, map=>map.MapFrom(p=>p.OrgID));
+                .ForMember(x => x.OrganizationID, map => map.MapFrom(p => p.OrgID));
 
-            CreateMap<Employee, EmployeeModel>();
+            CreateMap<Employee, EmployeeModel>()
+                .ForMember(x => x.BirthdateStr, map => map.MapFrom(p => p.BirthDate == null ? "" : p.BirthDate.Value.ToString("MM/dd/yyyy")))
+                .ForMember(x => x.EmpTypeDesc, map => map.MapFrom(p => p.GeneralMaster.Name));
+            CreateMap<EmployeeModel, Employee>();
+                
+
+
+
+
+
+
+
+
 
         }
 

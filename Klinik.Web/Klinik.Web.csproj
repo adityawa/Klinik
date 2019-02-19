@@ -213,6 +213,7 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MappingMasterController.cs" />
     <Compile Include="Controllers\MasterDataController.cs" />
     <Compile Include="DataAccess\GenericRepository.cs" />
     <Compile Include="DataAccess\UnitOfWork.cs" />
@@ -226,6 +227,10 @@
     <Compile Include="Features\IBaseFeatures.cs" />
     <Compile Include="Features\MasterData\Clinic\ClinicHandler.cs" />
     <Compile Include="Features\MasterData\Employee\EmployeeHandler.cs" />
+    <Compile Include="Features\MasterData\Employee\EmployeeRequest.cs" />
+    <Compile Include="Features\MasterData\Employee\EmployeeResponse.cs" />
+    <Compile Include="Features\MasterData\Employee\EmployeeValidator.cs" />
+    <Compile Include="Features\MasterData\GeneralMaster\MasterHandler.cs" />
     <Compile Include="Features\MasterData\Organization\OrganizationHandler.cs" />
     <Compile Include="Features\MasterData\Organization\OrganizationRequest.cs" />
     <Compile Include="Features\MasterData\Organization\OrganizationResponse.cs" />
@@ -1108,10 +1113,13 @@
     <Content Include="Views\MasterData\CreateOrEditRole.cshtml" />
     <Content Include="Views\MasterData\UserList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditUser.cshtml" />
+    <Content Include="Views\MasterData\EmployeeList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Interfaces\" />
+    <Folder Include="Views\MappingMaster\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -14,9 +14,18 @@ namespace Klinik.Web
     
     public partial class GeneralMaster
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public GeneralMaster()
+        {
+            this.Employees = new HashSet<Employee>();
+        }
+    
         public long Id { get; set; }
         public string Type { get; set; }
         public string Name { get; set; }
         public string Value { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

@@ -12,6 +12,8 @@ using Klinik.Web.Features.MasterData.Privileges;
 using Klinik.Web.Features.MasterData.Roles;
 using Klinik.Web.Features.MasterData.User;
 using Klinik.Web.Features.MasterData.Employee;
+using Klinik.Web.Features.MasterData.GeneralMaster;
+using Klinik.Web.Enumerations;
 
 namespace Klinik.Web.Controllers
 {
@@ -70,6 +72,36 @@ namespace Klinik.Web.Controllers
             }
 
             return _employeeLists;
+        }
+
+        private List<SelectListItem> BindDropDownEmployementType()
+        {
+            List<SelectListItem> _empTypes = new List<SelectListItem>();
+            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.enumMasterTypes.EmploymentType.ToString()).ToList()) 
+            {
+                _empTypes.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                });
+            }
+
+            return _empTypes;
+        }
+
+        private List<SelectListItem> BindDropDownDepartment()
+        {
+            List<SelectListItem> _departments = new List<SelectListItem>();
+            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.enumMasterTypes.Department.ToString()).ToList())
+            {
+                _departments.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                });
+            }
+
+            return _departments;
         }
         #endregion
 
@@ -473,5 +505,104 @@ namespace Klinik.Web.Controllers
         }
         #endregion
 
+        #region ::EMPLOYEE::
+        public ActionResult EmployeeList()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateOrEditEmployee(EmployeeModel _model)
+        {
+            var request = new EmployeeRequest
+            {
+                RequestEmployeeData = _model
+            };
+
+            EmployeeResponse _response = new EmployeeResponse();
+
+            new EmployeeValidator(_unitOfWork).Validate(request, out _response);
+            ViewBag.Response = $"{_response.Status};{_response.Message}";
+            ViewBag.EmpTypes = BindDropDownEmployementType();
+            ViewBag.Departments = BindDropDownDepartment();
+            return View();
+        }
+
+        public ActionResult CreateOrEditEmployee()
+        {
+            EmployeeResponse _response = new EmployeeResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new EmployeeRequest
+                {
+                    RequestEmployeeData = new EmployeeModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                EmployeeResponse resp = new EmployeeHandler(_unitOfWork).GetDetail(request);
+                EmployeeModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.EmpTypes = BindDropDownEmployementType();
+                ViewBag.Departments = BindDropDownDepartment();
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.EmpTypes = BindDropDownEmployementType();
+                ViewBag.Departments = BindDropDownDepartment();
+                return View();
+            }
+
+
+        }
+
+        [HttpPost]
+        public ActionResult GetEmployee()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new EmployeeRequest
+            {
+                draw = _draw,
+                searchValue = _searchValue,
+                sortColumn = _sortColumn,
+                sortColumnDir = _sortColumnDir,
+                pageSize = _pageSize,
+                skip = _skip
+            };
+
+            var response = new EmployeeHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteMasterEmployee(int id)
+        {
+            EmployeeResponse _response = new EmployeeResponse();
+            var request = new EmployeeRequest
+            {
+                RequestEmployeeData = new EmployeeModel
+                {
+                    Id = id
+                }
+            };
+
+            _response = new EmployeeHandler(_unitOfWork).RemoveData(request);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }
