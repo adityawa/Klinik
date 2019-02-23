@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Klinik.Web.DataAccess;
+
 using Klinik.Web.Models.MasterData;
 using AutoMapper;
 namespace Klinik.Web.Features.MasterData.Clinic
@@ -21,7 +22,7 @@ namespace Klinik.Web.Features.MasterData.Clinic
             IList<ClinicModel> clinics = new List<ClinicModel>();
             foreach(var item in qry)
             {
-                var _clinic = Mapper.Map<Web.Clinic, ClinicModel>(item);
+                var _clinic = Mapper.Map<Web.DataAccess.DataRepository.Clinic, ClinicModel>(item);
                 clinics.Add(_clinic);
             }
 

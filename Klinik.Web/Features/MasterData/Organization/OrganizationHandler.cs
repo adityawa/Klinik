@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Klinik.Web.DataAccess;
+using Klinik.Web.DataAccess.DataRepository;
 using Klinik.Web.Models.MasterData;
 using AutoMapper;
 using LinqKit;
 using Klinik.Web.Infrastructure;
+
 namespace Klinik.Web.Features.MasterData.Organization
 {
 
@@ -20,7 +22,7 @@ namespace Klinik.Web.Features.MasterData.Organization
         {
             List<OrganizationData> lists = new List<OrganizationData>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.True<Klinik.Web.Organization>();
+            var searchPredicate = PredicateBuilder.True<Klinik.Web.DataAccess.DataRepository.Organization>();
             if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.OrgCode.Contains(request.searchValue) || p.OrgName.Contains(request.searchValue) || p.Clinic.Name.Contains(request.searchValue));
@@ -67,7 +69,7 @@ namespace Klinik.Web.Features.MasterData.Organization
             }
             foreach (var item in qry)
             {
-                var orData = Mapper.Map<Web.Organization, OrganizationData>(item);
+                var orData = Mapper.Map<Web.DataAccess.DataRepository.Organization, OrganizationData>(item);
                 lists.Add(orData);
             }
 
@@ -93,7 +95,7 @@ namespace Klinik.Web.Features.MasterData.Organization
             var qry = _unitOfWork.OrganizationRepository.Get(null, null, includes: x => x.Clinic);
             foreach(var item in qry)
             {
-                lists.Add(Mapper.Map<Web.Organization, OrganizationModel>(item));
+                lists.Add(Mapper.Map<Web.DataAccess.DataRepository.Organization, OrganizationModel>(item));
             }
 
             return lists;
@@ -139,7 +141,7 @@ namespace Klinik.Web.Features.MasterData.Organization
                 }
                 else
                 {
-                    var OrganizationEntity = Mapper.Map<OrganizationModel, Web.Organization>(request.RequestOrganizationData);
+                    var OrganizationEntity = Mapper.Map<OrganizationModel, Web.DataAccess.DataRepository.Organization>(request.RequestOrganizationData);
                     OrganizationEntity.CreatedBy = request.RequestOrganizationData.CreatedBy;
                     OrganizationEntity.CreatedDate = DateTime.Now;
                     _unitOfWork.OrganizationRepository.Insert(OrganizationEntity);
@@ -175,7 +177,7 @@ namespace Klinik.Web.Features.MasterData.Organization
             if (qry.FirstOrDefault() != null)
             {
 
-                response.Entity = Mapper.Map<Web.Organization, OrganizationData>(qry.FirstOrDefault());
+                response.Entity = Mapper.Map<Web.DataAccess.DataRepository.Organization, OrganizationData>(qry.FirstOrDefault());
             }
             return response;
         }

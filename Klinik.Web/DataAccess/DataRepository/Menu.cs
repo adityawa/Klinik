@@ -7,18 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Klinik.Web
+namespace Klinik.Web.DataAccess.DataRepository
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class UserRole
+    public partial class Menu
     {
         public long Id { get; set; }
-        public long UserID { get; set; }
-        public long RoleID { get; set; }
-    
-        public virtual OrganizationRole OrganizationRole { get; set; }
-        public virtual User User { get; set; }
+        public string Description { get; set; }
+        public Nullable<long> ParentMenuId { get; set; }
+        public string PageLink { get; set; }
+        public int SortIndex { get; set; }
+        public Nullable<bool> HasChild { get; set; }
+        public Nullable<bool> IsMenu { get; set; }
     }
 }

@@ -7,19 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Klinik.Web
+namespace Klinik.Web.DataAccess.DataRepository
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Menu
+    public partial class PasswordHistory
     {
-        public long Id { get; set; }
-        public string Description { get; set; }
-        public Nullable<long> ParentMenuId { get; set; }
-        public string PageLink { get; set; }
-        public int SortIndex { get; set; }
-        public Nullable<bool> HasChild { get; set; }
-        public Nullable<bool> IsMenu { get; set; }
+        public long ID { get; set; }
+        public long OrganizationID { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
     }
 }

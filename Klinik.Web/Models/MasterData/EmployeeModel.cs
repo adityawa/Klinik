@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
-
+using Klinik.Web.DataAccess.DataRepository;
 namespace Klinik.Web.Models.MasterData
 {
     public class EmployeeModel : BaseModel

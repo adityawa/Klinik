@@ -4,10 +4,10 @@ using System.Linq;
 using System.Web;
 using AutoMapper;
 using Klinik.Web.Models.MasterData;
-using Klinik.Web.Features.MasterData.Organization;
-using Klinik.Web.Features;
-using Klinik.Web.Features.MasterData.Employee;
-using Klinik.Web.Enumerations;
+using Klinik.Web.DataAccess.DataRepository;
+
+using Klinik.Web.Models.MappingMaster;
+using Klinik.Web.DataAccess;
 
 namespace Klinik.Web.Infrastructure
 {
@@ -41,15 +41,20 @@ namespace Klinik.Web.Infrastructure
                 .ForMember(x => x.BirthdateStr, map => map.MapFrom(p => p.BirthDate == null ? "" : p.BirthDate.Value.ToString("MM/dd/yyyy")))
                 .ForMember(x => x.EmpTypeDesc, map => map.MapFrom(p => p.GeneralMaster.Name));
             CreateMap<EmployeeModel, Employee>();
-                
 
+            CreateMap<OrganizationPrivilege, OrganizationPrivilegeModel>()
+                .ForMember(x => x.OrganizationName, map => map.MapFrom(p => p.Organization.OrgName))
+                .ForMember(x=>x.PrivileveName, map=>map.MapFrom(p=>p.Privilege.Privilege_Name))
+                .ForMember(x=>x.PrivilegeDesc, map=>map.MapFrom(p=>p.Privilege.Privilege_Desc));
 
+            CreateMap<OrganizationPrivilegeModel, OrganizationPrivilege>();
 
+            CreateMap<RolePrivilege, RolePrivilegeModel>()
+               .ForMember(x => x.RoleDesc, map => map.MapFrom(p => p.OrganizationRole.RoleName))
+               .ForMember(x => x.PrivilegeDesc, map => map.MapFrom(p => p.Privilege.Privilege_Name));
+              
 
-
-
-
-
+            CreateMap<RolePrivilegeModel, RolePrivilege>();
 
         }
 

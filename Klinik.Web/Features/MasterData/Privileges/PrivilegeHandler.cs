@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Klinik.Web.DataAccess;
+using Klinik.Web.DataAccess.DataRepository;
 using Klinik.Web.Models.MasterData;
 using AutoMapper;
 using LinqKit;
@@ -56,7 +57,7 @@ namespace Klinik.Web.Features.MasterData.Privileges
                 }
                 else
                 {
-                    var PrivilegeEntity = Mapper.Map<PrivilegeModel, Web.Privilege>(request.RequestPrivilegeData);
+                    var PrivilegeEntity = Mapper.Map<PrivilegeModel, Web.DataAccess.DataRepository.Privilege>(request.RequestPrivilegeData);
                     PrivilegeEntity.CreatedBy = request.RequestPrivilegeData.CreatedBy??"SYSTEM";
                     PrivilegeEntity.CreatedDate = DateTime.Now;
                     _unitOfWork.PrivilegeRepository.Insert(PrivilegeEntity);
@@ -92,7 +93,7 @@ namespace Klinik.Web.Features.MasterData.Privileges
             if (qry.FirstOrDefault() != null)
             {
 
-                response.Entity = Mapper.Map<Web.Privilege, PrivilegeModel>(qry.FirstOrDefault());
+                response.Entity = Mapper.Map<Privilege, PrivilegeModel>(qry.FirstOrDefault());
             }
             return response;
         }
@@ -101,7 +102,7 @@ namespace Klinik.Web.Features.MasterData.Privileges
         {
             List<PrivilegeModel> lists = new List<PrivilegeModel>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.True<Klinik.Web.Privilege>();
+            var searchPredicate = PredicateBuilder.True<Privilege>();
             if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.Privilege_Name.Contains(request.searchValue) || p.Privilege_Desc.Contains(request.searchValue));
@@ -143,7 +144,7 @@ namespace Klinik.Web.Features.MasterData.Privileges
             }
             foreach (var item in qry)
             {
-                var prData = Mapper.Map<Web.Privilege, PrivilegeModel>(item);
+                var prData = Mapper.Map<Privilege, PrivilegeModel>(item);
 
                 lists.Add(prData);
             }

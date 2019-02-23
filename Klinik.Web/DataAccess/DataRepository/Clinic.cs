@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Klinik.Web
+namespace Klinik.Web.DataAccess.DataRepository
 {
     using System;
     using System.Collections.Generic;

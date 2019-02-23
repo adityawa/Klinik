@@ -1,4 +1,5 @@
 ﻿
+using Klinik.Web.DataAccess.DataRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Klinik.Web.DataAccess
         private IGenericRepository<Employee> _employeeRepository;
         private IGenericRepository<GeneralMaster> _masterRepository;
         private IGenericRepository<OrganizationPrivilege> _orgprivRepository;
+        private IGenericRepository<RolePrivilege> _roleprivRepository;
         private bool disposed = false;
 
         
@@ -108,6 +110,17 @@ namespace Klinik.Web.DataAccess
                     _orgprivRepository = new GenericRepository<OrganizationPrivilege>(_context);
 
                 return _orgprivRepository;
+            }
+        }
+
+        public IGenericRepository<RolePrivilege> RolePrivRepository
+        {
+            get
+            {
+                if (_roleprivRepository == null)
+                    _roleprivRepository = new GenericRepository<RolePrivilege>(_context);
+
+                return _roleprivRepository;
             }
         }
 

@@ -83,7 +83,7 @@
                 { "data": "OrganizationName", "name": "OrganizationName", "autoWidth": true },
                 { "data": "RoleName", "name": "RoleName", "autoWidth": true },
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditRole?id=' + full.Id + '">Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >Delete</button>"; }
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditRole?id=' + full.Id + '">Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >Delete</button>" + ' | <a class="btn btn-info" href="/MappingMaster/RolePrivilegeList?roleid=' + full.Id + '">Set Role Privilege</a>'; }
                 }
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Klinik.Web.DataAccess;
+using Klinik.Web.DataAccess.DataRepository;
 using Klinik.Web.Models.MasterData;
 using AutoMapper;
 using LinqKit;
@@ -55,7 +56,7 @@ namespace Klinik.Web.Features.MasterData.Roles
                 }
                 else
                 {
-                    var RoleEntity = Mapper.Map<RoleModel, Web.OrganizationRole>(request.RequestRoleData);
+                    var RoleEntity = Mapper.Map<RoleModel, OrganizationRole>(request.RequestRoleData);
                 
                     _unitOfWork.RoleRepository.Insert(RoleEntity);
                     resultAffected = _unitOfWork.Save();
@@ -90,7 +91,7 @@ namespace Klinik.Web.Features.MasterData.Roles
             if (qry.FirstOrDefault() != null)
             {
 
-                response.Entity = Mapper.Map<Web.OrganizationRole, RoleModel>(qry.FirstOrDefault());
+                response.Entity = Mapper.Map<OrganizationRole, RoleModel>(qry.FirstOrDefault());
             }
             return response;
         }
@@ -99,7 +100,7 @@ namespace Klinik.Web.Features.MasterData.Roles
         {
             List<RoleModel> lists = new List<RoleModel>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.True<Klinik.Web.OrganizationRole>();
+            var searchPredicate = PredicateBuilder.True<OrganizationRole>();
             if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.RoleName.Contains(request.searchValue) || p.Organization.OrgName.Contains(request.searchValue));
@@ -140,7 +141,7 @@ namespace Klinik.Web.Features.MasterData.Roles
             }
             foreach (var item in qry)
             {
-                var prData = Mapper.Map<Web.OrganizationRole, RoleModel>(item);
+                var prData = Mapper.Map<OrganizationRole, RoleModel>(item);
 
                 lists.Add(prData);
             }

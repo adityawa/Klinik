@@ -7,34 +7,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Klinik.Web
+namespace Klinik.Web.DataAccess.DataRepository
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Privilege
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public Privilege()
         {
-            this.UserRoles = new HashSet<UserRole>();
+            this.OrganizationPrivileges = new HashSet<OrganizationPrivilege>();
+            this.RolePrivileges = new HashSet<RolePrivilege>();
         }
     
         public long ID { get; set; }
-        public long OrganizationID { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public long EmployeeID { get; set; }
-        public Nullable<System.DateTime> ExpiredDate { get; set; }
-        public Nullable<bool> Status { get; set; }
+        public string Privilege_Name { get; set; }
+        public string Privilege_Desc { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual Organization Organization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserRole> UserRoles { get; set; }
-        public virtual Employee Employee { get; set; }
+        public virtual ICollection<OrganizationPrivilege> OrganizationPrivileges { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RolePrivilege> RolePrivileges { get; set; }
     }
 }

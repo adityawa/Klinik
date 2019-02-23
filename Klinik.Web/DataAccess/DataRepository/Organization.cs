@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Klinik.Web
+namespace Klinik.Web.DataAccess.DataRepository
 {
     using System;
     using System.Collections.Generic;
@@ -18,8 +18,8 @@ namespace Klinik.Web
         public Organization()
         {
             this.OrganizationPrivileges = new HashSet<OrganizationPrivilege>();
-            this.OrganizationRoles = new HashSet<OrganizationRole>();
             this.Users = new HashSet<User>();
+            this.OrganizationRoles = new HashSet<OrganizationRole>();
         }
     
         public long ID { get; set; }
@@ -35,8 +35,8 @@ namespace Klinik.Web
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrganizationPrivilege> OrganizationPrivileges { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrganizationRole> OrganizationRoles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrganizationRole> OrganizationRoles { get; set; }
     }
 }

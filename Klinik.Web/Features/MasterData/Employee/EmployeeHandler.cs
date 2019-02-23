@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Klinik.Web.DataAccess;
+using Klinik.Web.DataAccess.DataRepository;
 using Klinik.Web.Models.MasterData;
 using Klinik.Web.Infrastructure;
 using AutoMapper;
@@ -61,7 +62,7 @@ namespace Klinik.Web.Features.MasterData.Employee
                 else
                 {
                    
-                    var EmployeeEntity = Mapper.Map<EmployeeModel, Web.Employee>(request.RequestEmployeeData);
+                    var EmployeeEntity = Mapper.Map<EmployeeModel, Web.DataAccess.DataRepository.Employee>(request.RequestEmployeeData);
                     EmployeeEntity.CreatedBy = request.RequestEmployeeData.CreatedBy ?? "SYSTEM";
                     EmployeeEntity.CreatedDate = DateTime.Now;
                     _unitOfWork.EmployeeRepository.Insert(EmployeeEntity);
@@ -95,7 +96,7 @@ namespace Klinik.Web.Features.MasterData.Employee
             IList<EmployeeModel> employees = new List<EmployeeModel>();
             foreach (var item in qry)
             {
-                var _clinic = Mapper.Map<Web.Employee, EmployeeModel>(item);
+                var _clinic = Mapper.Map<Web.DataAccess.DataRepository.Employee, EmployeeModel>(item);
                 employees.Add(_clinic);
             }
 
@@ -110,7 +111,7 @@ namespace Klinik.Web.Features.MasterData.Employee
             if (qry.FirstOrDefault() != null)
             {
 
-                response.Entity = Mapper.Map<Web.Employee, EmployeeModel>(qry.FirstOrDefault());
+                response.Entity = Mapper.Map<Web.DataAccess.DataRepository.Employee, EmployeeModel>(qry.FirstOrDefault());
             }
             return response;
         }
@@ -119,7 +120,7 @@ namespace Klinik.Web.Features.MasterData.Employee
         {
             List<EmployeeModel> lists = new List<EmployeeModel>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.True<Klinik.Web.Employee>();
+            var searchPredicate = PredicateBuilder.True<Klinik.Web.DataAccess.DataRepository.Employee>();
             if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.EmpID.Contains(request.searchValue) || p.EmpName.Contains(request.searchValue));
@@ -166,7 +167,7 @@ namespace Klinik.Web.Features.MasterData.Employee
             }
             foreach (var item in qry)
             {
-                var prData = Mapper.Map<Web.Employee, EmployeeModel>(item);
+                var prData = Mapper.Map<Web.DataAccess.DataRepository.Employee, EmployeeModel>(item);
                 long _empDeptId = prData.EmpDept??0;
                 prData.EmpDeptDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _empDeptId && x.Type==ClinicEnums.enumMasterTypes.Department.ToString()).Name ?? "";
                 lists.Add(prData);

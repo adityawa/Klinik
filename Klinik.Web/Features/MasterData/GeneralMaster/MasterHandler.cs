@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Klinik.Web.DataAccess;
+
 using Klinik.Web.Models.MasterData;
 using AutoMapper;
 using Klinik.Web.Enumerations;
@@ -15,7 +16,7 @@ namespace Klinik.Web.Features.MasterData.GeneralMaster
         {
             _unitOfWork = unitOfWork;
         }
-        public IQueryable<Web.GeneralMaster> GetMasterDataByType(string type)
+        public IQueryable<Web.DataAccess.DataRepository.GeneralMaster> GetMasterDataByType(string type)
         {
             return _unitOfWork.MasterRepository.Query(x => x.Type.Equals(type));
         }

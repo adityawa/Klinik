@@ -7,25 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Klinik.Web
+namespace Klinik.Web.DataAccess.DataRepository
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class OrganizationRole
+    public partial class GeneralMaster
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OrganizationRole()
+        public GeneralMaster()
         {
-            this.UserRoles = new HashSet<UserRole>();
+            this.Employees = new HashSet<Employee>();
         }
     
-        public long ID { get; set; }
-        public long OrgID { get; set; }
-        public string RoleName { get; set; }
+        public long Id { get; set; }
+        public string Type { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
     
-        public virtual Organization Organization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserRole> UserRoles { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

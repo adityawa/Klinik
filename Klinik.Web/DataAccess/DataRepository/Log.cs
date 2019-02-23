@@ -7,16 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Klinik.Web
+namespace Klinik.Web.DataAccess.DataRepository
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class PasswordHistory
+    public partial class Log
     {
-        public long ID { get; set; }
-        public long OrganizationID { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
+        public long Id { get; set; }
+        public System.DateTime Start { get; set; }
+        public string Module { get; set; }
+        public long Account { get; set; }
+        public string Command { get; set; }
+        public string OldValue { get; set; }
+        public string NewValue { get; set; }
+        public string Status { get; set; }
     }
 }

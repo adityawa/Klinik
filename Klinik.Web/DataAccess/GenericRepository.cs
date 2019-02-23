@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using Klinik.Web.DataAccess;
+using Klinik.Web.DataAccess.DataRepository;
 namespace Klinik.Web.DataAccess
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class

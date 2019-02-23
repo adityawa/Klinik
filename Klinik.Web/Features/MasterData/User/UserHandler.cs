@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Klinik.Web.DataAccess;
+using Klinik.Web.DataAccess.DataRepository;
 using Klinik.Web.Models.MasterData;
 using AutoMapper;
 using LinqKit;
@@ -58,7 +59,7 @@ namespace Klinik.Web.Features.MasterData.User
                 {
                     request.RequestUserData.Password = Common.Encryptor(request.RequestUserData.Password, Common.KeyEncryptor);
                     request.RequestUserData.ExpiredDate = request.RequestUserData.ExpiredDate ?? DateTime.Now.AddDays(100);
-                    var UserEntity = Mapper.Map<UserModel, Web.User>(request.RequestUserData);
+                    var UserEntity = Mapper.Map<UserModel, Web.DataAccess.DataRepository.User>(request.RequestUserData);
                     UserEntity.CreatedBy = request.RequestUserData.CreatedBy ?? "SYSTEM";
                     UserEntity.CreatedDate = DateTime.Now;
                     _unitOfWork.UserRepository.Insert(UserEntity);
@@ -94,7 +95,7 @@ namespace Klinik.Web.Features.MasterData.User
             if (qry.FirstOrDefault() != null)
             {
 
-                response.Entity = Mapper.Map<Web.User, UserModel>(qry.FirstOrDefault());
+                response.Entity = Mapper.Map<Web.DataAccess.DataRepository.User, UserModel>(qry.FirstOrDefault());
             }
             return response;
         }
@@ -103,7 +104,7 @@ namespace Klinik.Web.Features.MasterData.User
         {
             List<UserModel> lists = new List<UserModel>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.True<Klinik.Web.User>();
+            var searchPredicate = PredicateBuilder.True<Web.DataAccess.DataRepository.User>();
             if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.UserName.Contains(request.searchValue) || p.Organization.OrgName.Contains(request.searchValue)|| p.Employee.EmpName.Contains(request.searchValue));
@@ -156,7 +157,7 @@ namespace Klinik.Web.Features.MasterData.User
             }
             foreach (var item in qry)
             {
-                var prData = Mapper.Map<Web.User, UserModel>(item);
+                var prData = Mapper.Map<Web.DataAccess.DataRepository.User, UserModel>(item);
 
                 lists.Add(prData);
             }

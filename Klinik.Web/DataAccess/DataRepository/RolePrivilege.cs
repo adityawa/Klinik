@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Klinik.Web
+namespace Klinik.Web.DataAccess.DataRepository
 {
     using System;
     using System.Collections.Generic;
@@ -18,5 +18,8 @@ namespace Klinik.Web
         public long RoleID { get; set; }
         public long PrivilegeID { get; set; }
         public Nullable<long> MenuId { get; set; }
+    
+        public virtual OrganizationRole OrganizationRole { get; set; }
+        public virtual Privilege Privilege { get; set; }
     }
 }

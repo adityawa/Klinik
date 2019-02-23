@@ -7,20 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Klinik.Web
+namespace Klinik.Web.DataAccess.DataRepository
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Log
+    public partial class UserRole
     {
         public long Id { get; set; }
-        public System.DateTime Start { get; set; }
-        public string Module { get; set; }
-        public long Account { get; set; }
-        public string Command { get; set; }
-        public string OldValue { get; set; }
-        public string NewValue { get; set; }
-        public string Status { get; set; }
+        public long UserID { get; set; }
+        public long RoleID { get; set; }
+    
+        public virtual User User { get; set; }
+        public virtual OrganizationRole OrganizationRole { get; set; }
     }
 }
