@@ -17,6 +17,7 @@ namespace Klinik.Web.DataAccess
         IGenericRepository<GeneralMaster> MasterRepository { get; }
         IGenericRepository<OrganizationPrivilege> OrgPrivRepository { get; }
         IGenericRepository<RolePrivilege> RolePrivRepository { get; }
+        IGenericRepository<UserRole> UserRoleRepository { get; }
         int Save();
     }
 }

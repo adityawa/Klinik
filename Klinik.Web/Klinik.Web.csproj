@@ -283,6 +283,10 @@
     <Compile Include="Features\MapMasterData\RolePrivilege\RolePrivilegeRequest.cs" />
     <Compile Include="Features\MapMasterData\RolePrivilege\RolePrivilegeResponse.cs" />
     <Compile Include="Features\MapMasterData\RolePrivilege\RolePrivilegeValidator.cs" />
+    <Compile Include="Features\MapMasterData\UserRole\UserRoleHandler.cs" />
+    <Compile Include="Features\MapMasterData\UserRole\UserRoleRequest.cs" />
+    <Compile Include="Features\MapMasterData\UserRole\UserRoleResponse.cs" />
+    <Compile Include="Features\MapMasterData\UserRole\UserRoleValidator.cs" />
     <Compile Include="Features\MasterData\Clinic\ClinicHandler.cs" />
     <Compile Include="Features\MasterData\Employee\EmployeeHandler.cs" />
     <Compile Include="Features\MasterData\Employee\EmployeeRequest.cs" />
@@ -315,6 +319,7 @@
     <Compile Include="Models\BaseResponse.cs" />
     <Compile Include="Models\MappingMaster\OrganizationPrivilegeModel.cs" />
     <Compile Include="Models\MappingMaster\RolePrivilegeModel.cs" />
+    <Compile Include="Models\MappingMaster\UserRoleModel.cs" />
     <Compile Include="Models\MasterData\ClinicModel.cs" />
     <Compile Include="Models\MasterData\EmployeeModel.cs" />
     <Compile Include="Models\MasterData\OrganizationModel.cs" />
@@ -1135,6 +1140,7 @@
     <Content Include="Views\MasterData\CreateOrEditEmployee.cshtml" />
     <Content Include="Views\MappingMaster\OrgPrivilegeList.cshtml" />
     <Content Include="Views\MappingMaster\RolePrivilegeList.cshtml" />
+    <Content Include="Views\MappingMaster\UserRoleList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

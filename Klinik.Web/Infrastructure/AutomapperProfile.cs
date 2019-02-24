@@ -53,8 +53,13 @@ namespace Klinik.Web.Infrastructure
                .ForMember(x => x.RoleDesc, map => map.MapFrom(p => p.OrganizationRole.RoleName))
                .ForMember(x => x.PrivilegeDesc, map => map.MapFrom(p => p.Privilege.Privilege_Name));
               
-
             CreateMap<RolePrivilegeModel, RolePrivilege>();
+
+            CreateMap<UserRole, UserRoleModel>()
+                .ForMember(x => x.UserName, map => map.MapFrom(p => p.User.UserName))
+                .ForMember(x => x.RoleName, map => map.MapFrom(p => p.OrganizationRole.RoleName));
+
+            CreateMap<UserRoleModel, UserRole>();
 
         }
 

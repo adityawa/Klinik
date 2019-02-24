@@ -105,7 +105,7 @@
                 { "data": "ExpiredDateStr", "name": "ExpiredDateStr", "autoWidth": true },
                 { "data": "StatusDesc", "name": "StatusDesc", "autoWidth": true },
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditUser?id=' + full.Id + '">Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >Delete</button>"; }
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditUser?id=' + full.Id + '">Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >Delete</button>" + ' | <a class="btn btn-info" href="/MappingMaster/UserRoleList?userid=' + full.Id + '">Assign Role</a>'; }
                 }
 
 

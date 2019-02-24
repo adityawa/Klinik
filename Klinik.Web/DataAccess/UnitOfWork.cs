@@ -20,6 +20,7 @@ namespace Klinik.Web.DataAccess
         private IGenericRepository<GeneralMaster> _masterRepository;
         private IGenericRepository<OrganizationPrivilege> _orgprivRepository;
         private IGenericRepository<RolePrivilege> _roleprivRepository;
+        private IGenericRepository<UserRole> _userroleRepository;
         private bool disposed = false;
 
         
@@ -121,6 +122,17 @@ namespace Klinik.Web.DataAccess
                     _roleprivRepository = new GenericRepository<RolePrivilege>(_context);
 
                 return _roleprivRepository;
+            }
+        }
+
+        public IGenericRepository<UserRole> UserRoleRepository
+        {
+            get
+            {
+                if (_userroleRepository == null)
+                    _userroleRepository = new GenericRepository<UserRole>(_context);
+
+                return _userroleRepository;
             }
         }
 
