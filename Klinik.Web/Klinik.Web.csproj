@@ -1045,6 +1045,7 @@
     <Content Include="DataAccess\DataRepository\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\i18n\af.js" />
     <Content Include="Scripts\i18n\ar.js" />
@@ -1162,6 +1163,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Interfaces\" />
+    <Folder Include="Publish\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

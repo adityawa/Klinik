@@ -1,0 +1,84 @@
+﻿@model Klinik.Web.Models.MasterData.OrganizationModel
+
+
+@{
+    ViewBag.Title = "CreateOrEditOrganization";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/select2.css" rel="stylesheet" />
+<script src="~/Scripts/select2.js"></script>
+
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+        </div>
+        <h5 class="panel-title">Form Tambah Organisasi</h5>
+    </header>
+    <div class="panel-body">
+        <form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditOrganization">
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">Organization Code</label>
+                <div class="col-md-4">
+                    @Html.HiddenFor(x=>x.Id)
+                    @Html.TextBoxFor(x => x.OrgCode, new { @class = "form-control", @id = "tbOrgCode" })
+                    @Html.ValidationMessageFor(m => m.OrgCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">Organization Name</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.OrgName, new { @class = "form-control", @id = "tbOrgName" })
+                    @Html.ValidationMessageFor(m => m.OrgName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">Organization Name</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(p => p.KlinikID, (IEnumerable<SelectListItem>)ViewBag.clinics, new { @class = "form-control", @id = "ddlclinics" })
+                </div>
+            </div>
+            <br />
+            <footer class="panel-footer">
+                <button type="submit" class="btn btn-primary">Simpan </button>
+                <button type="reset" id="btnreset" class="btn btn-default">Kembali</button>
+            </footer>
+        </form>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnreset').click(function (e) {
+             window.location.href = "/MasterData/OrganizationList";
+        });
+
+    $('#ddlclinics').select2();
+    var _status, _message, _temp;
+    var _arrMsg = [];
+
+        toastr.options = {
+            "closeButton": true,
+            "positionClass": "toast-top-full-width",
+            "onclick": null,
+            "showDuration": "0",
+            "hideDuration": "0",
+            "timeOut": "0",
+            "showMethod": "fadeIn"
+        };
+
+    _temp="@ViewBag.Response";
+
+    _arrMsg = _temp.split(";");
+
+    if (_arrMsg[0] == "SUCCESS") {
+        toastr.success(_arrMsg[1]);
+    }
+    else if (_arrMsg[0] == "ERROR") {
+        toastr.error(_arrMsg[1]);
+    }
+    });
+
+</script>
