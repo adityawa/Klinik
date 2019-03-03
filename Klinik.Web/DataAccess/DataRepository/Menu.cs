@@ -14,6 +14,12 @@ namespace Klinik.Web.DataAccess.DataRepository
     
     public partial class Menu
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Menu()
+        {
+            this.Privileges = new HashSet<Privilege>();
+        }
+    
         public long Id { get; set; }
         public string Description { get; set; }
         public Nullable<long> ParentMenuId { get; set; }
@@ -21,5 +27,13 @@ namespace Klinik.Web.DataAccess.DataRepository
         public int SortIndex { get; set; }
         public Nullable<bool> HasChild { get; set; }
         public Nullable<bool> IsMenu { get; set; }
+        public string Name { get; set; }
+        public string Controller { get; set; }
+        public string Action { get; set; }
+        public Nullable<int> Level { get; set; }
+        public string icon { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Privilege> Privileges { get; set; }
     }
 }

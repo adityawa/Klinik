@@ -18,5 +18,16 @@ namespace Klinik.Web.Enumerations
             EmploymentType,
             Department
         }
+
+        public enum enumAuthResult
+        {
+            SUCCESS,
+            UNRECOGNIZED
+        }
+
+        public enum enumAction
+        {
+            DELETE
+        }
     }
 }

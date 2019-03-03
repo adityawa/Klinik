@@ -214,6 +214,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MappingMasterController.cs" />
     <Compile Include="Controllers\MasterDataController.cs" />
+    <Compile Include="Controllers\PasswordHistoryController.cs" />
+    <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="DataAccess\DataRepository\Clinic.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -273,6 +275,14 @@
     <Compile Include="DataAccess\IGenericRepository.cs" />
     <Compile Include="DataAccess\IUnitOfWork.cs" />
     <Compile Include="Enumerations\ClinicEnums.cs" />
+    <Compile Include="Features\Account\AccountHandler.cs" />
+    <Compile Include="Features\Account\AccountRequest.cs" />
+    <Compile Include="Features\Account\AccountResponse.cs" />
+    <Compile Include="Features\Account\AccountValidator.cs" />
+    <Compile Include="Features\Account\PasswordHistory\PasswordHistoryHandler.cs" />
+    <Compile Include="Features\Account\PasswordHistory\PasswordHistoryRequest.cs" />
+    <Compile Include="Features\Account\PasswordHistory\PasswordHistoryResponse.cs" />
+    <Compile Include="Features\Account\PasswordHistory\PasswordHistoryValidator.cs" />
     <Compile Include="Features\BaseFeatures.cs" />
     <Compile Include="Features\IBaseFeatures.cs" />
     <Compile Include="Features\MapMasterData\OrganizationPrivilege\OrganizationPrivilegeHandler.cs" />
@@ -293,6 +303,7 @@
     <Compile Include="Features\MasterData\Employee\EmployeeResponse.cs" />
     <Compile Include="Features\MasterData\Employee\EmployeeValidator.cs" />
     <Compile Include="Features\MasterData\GeneralMaster\MasterHandler.cs" />
+    <Compile Include="Features\MasterData\Menu\MenuHandler.cs" />
     <Compile Include="Features\MasterData\Organization\OrganizationHandler.cs" />
     <Compile Include="Features\MasterData\Organization\OrganizationRequest.cs" />
     <Compile Include="Features\MasterData\Organization\OrganizationResponse.cs" />
@@ -314,6 +325,9 @@
     </Compile>
     <Compile Include="Infrastructure\AutomapperProfile.cs" />
     <Compile Include="Infrastructure\Common.cs" />
+    <Compile Include="Infrastructure\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Models\Account\AccountModel.cs" />
+    <Compile Include="Models\Account\PasswordHistoryModel.cs" />
     <Compile Include="Models\BaseGetRequest.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\BaseResponse.cs" />
@@ -322,6 +336,7 @@
     <Compile Include="Models\MappingMaster\UserRoleModel.cs" />
     <Compile Include="Models\MasterData\ClinicModel.cs" />
     <Compile Include="Models\MasterData\EmployeeModel.cs" />
+    <Compile Include="Models\MasterData\MenuModel.cs" />
     <Compile Include="Models\MasterData\OrganizationModel.cs" />
     <Compile Include="Models\MasterData\PrivilegeModel.cs" />
     <Compile Include="Models\MasterData\RoleModel.cs" />
@@ -1141,6 +1156,8 @@
     <Content Include="Views\MappingMaster\OrgPrivilegeList.cshtml" />
     <Content Include="Views\MappingMaster\RolePrivilegeList.cshtml" />
     <Content Include="Views\MappingMaster\UserRoleList.cshtml" />
+    <Content Include="Views\PasswordHistory\ChangePassword.cshtml" />
+    <Content Include="Views\Unauthorized\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

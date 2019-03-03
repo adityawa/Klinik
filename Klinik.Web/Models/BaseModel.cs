@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Klinik.Web.Models.Account;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,6 @@ namespace Klinik.Web.Models
         public DateTime? ModifiedDate { get; set; }
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
-        
+        public AccountModel Account { get; set; }
     }
 }

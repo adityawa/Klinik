@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Klinik.Web.Models.Account.AccountModel
+
+@{
     Layout = null;
 }
 <html class="fixed">
@@ -29,8 +31,10 @@
     <link href="~/Content/Octopus/assets/stylesheets/skins/default.css" rel="stylesheet" />
     <!-- Theme Custom CSS -->
     <link href="~/Content/Octopus/assets/stylesheets/theme-custom.css" rel="stylesheet" />
+    <link href="~/Content/toastr.css" rel="stylesheet" />
     <!-- Head Libs -->
     <script src="~/Content/Octopus/assets/vendor/Modernizr/modernizr.js"></script>
+
 </head>
 <body>
     <!-- start: page -->
@@ -54,7 +58,8 @@
                             <div class="form-group mb-lg">
                                 <label>Username</label>
                                 <div class="input-group input-group-icon">
-                                    <input name="username" type="text" class="form-control input-lg" />
+                                    @Html.TextBoxFor(x => x.UserName, null, new { @class = "form-control", @id = "tbUserName" })
+                                    @*<input name="username" type="text" class="form-control input-lg" />*@
                                     <span class="input-group-addon">
                                         <span class="icon icon-lg">
                                             <i class="fa fa-user"></i>
@@ -69,7 +74,8 @@
                                     <a href="pages-recover-password.html" class="pull-right">Lost Password?</a>
                                 </div>
                                 <div class="input-group input-group-icon">
-                                    <input name="pwd" type="password" class="form-control input-lg" />
+                                    @Html.TextBoxFor(x => x.Password, null, new { @class = "form-control", @id = "tbPassword", @type = "password" })
+                                    @*<input name="pwd" type="password" class="form-control input-lg" />*@
                                     <span class="input-group-addon">
                                         <span class="icon icon-lg">
                                             <i class="fa fa-lock"></i>
@@ -101,6 +107,7 @@
     <!-- Vendor -->
 
     <script src="~/Content/Octopus/assets/vendor/jquery/jquery.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
     <script src="~/Content/Octopus/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
     <script src="~/Content/Octopus/assets/vendor/bootstrap/js/bootstrap.js"></script>
     <script src="~/Content/Octopus/assets/vendor/nanoscroller/nanoscroller.js"></script>
@@ -116,3 +123,25 @@
     <script src="~/Content/Octopus/assets/javascripts/theme.init.js"></script>
 </body>
 </html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var _status, _message, _temp;
+        toastr.options = {
+            "closeButton": true,
+            "positionClass": "toast-top-full-width",
+            "onclick": null,
+            "showDuration": "0",
+            "hideDuration": "0",
+            "timeOut": "0",
+            "showMethod": "fadeIn"
+        };
+
+        _status = "@ViewBag.Status";
+        _message = "@ViewBag.Message"
+        if (_status != '') {
+            toastr.error(_message);
+        }
+       
+    });
+</script>

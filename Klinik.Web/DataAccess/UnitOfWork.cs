@@ -3,6 +3,7 @@ using Klinik.Web.DataAccess.DataRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 
@@ -21,6 +22,8 @@ namespace Klinik.Web.DataAccess
         private IGenericRepository<OrganizationPrivilege> _orgprivRepository;
         private IGenericRepository<RolePrivilege> _roleprivRepository;
         private IGenericRepository<UserRole> _userroleRepository;
+        private IGenericRepository<Menu> _menuRepository;
+        private IGenericRepository<PasswordHistory> _passwordHistRepostiory;
         private bool disposed = false;
 
         
@@ -133,6 +136,28 @@ namespace Klinik.Web.DataAccess
                     _userroleRepository = new GenericRepository<UserRole>(_context);
 
                 return _userroleRepository;
+            }
+        }
+
+        public   IGenericRepository<Menu> MenuRepository
+        {
+            get
+            {
+                if (_menuRepository == null)
+                    _menuRepository = new GenericRepository<Menu>(_context);
+
+                return _menuRepository;
+            }
+        }
+
+        public IGenericRepository<PasswordHistory> PasswordHistoryRepository
+        {
+            get
+            {
+                if (_passwordHistRepostiory == null)
+                    _passwordHistRepostiory = new GenericRepository<PasswordHistory>(_context);
+
+                return _passwordHistRepostiory;
             }
         }
 

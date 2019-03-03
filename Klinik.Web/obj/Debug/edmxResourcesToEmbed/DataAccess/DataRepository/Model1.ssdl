@@ -74,6 +74,11 @@
     <Property Name="SortIndex" Type="int" Nullable="false" />
     <Property Name="HasChild" Type="bit" />
     <Property Name="IsMenu" Type="bit" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Controller" Type="varchar" MaxLength="50" />
+    <Property Name="Action" Type="varchar" MaxLength="50" />
+    <Property Name="Level" Type="int" />
+    <Property Name="icon" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Organization">
     <Key>
@@ -124,6 +129,7 @@
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
     <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="MenuID" Type="bigint" />
   </EntityType>
   <EntityType Name="RolePrivilege">
     <Key>
@@ -215,6 +221,18 @@
       </Principal>
       <Dependent Role="OrganizationRole">
         <PropertyRef Name="OrgID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Privilege_Menu">
+    <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
+    <End Role="Privilege" Type="Self.Privilege" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Menu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Privilege">
+        <PropertyRef Name="MenuID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -323,6 +341,10 @@
     <AssociationSet Name="FK_OrganizationRole_Organization" Association="Self.FK_OrganizationRole_Organization">
       <End Role="Organization" EntitySet="Organization" />
       <End Role="OrganizationRole" EntitySet="OrganizationRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Privilege_Menu" Association="Self.FK_Privilege_Menu">
+      <End Role="Menu" EntitySet="Menu" />
+      <End Role="Privilege" EntitySet="Privilege" />
     </AssociationSet>
     <AssociationSet Name="FK_RolePrivilege_OrganizationRole" Association="Self.FK_RolePrivilege_OrganizationRole">
       <End Role="OrganizationRole" EntitySet="OrganizationRole" />

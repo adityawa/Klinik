@@ -4,6 +4,8 @@
     ViewBag.Title = "CreateOrEditPrivilege";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/css/select2.css" rel="stylesheet" />
+<script src="~/Scripts/select2.js"></script>
 
 <section class="panel">
     <header class="panel-heading">
@@ -29,6 +31,12 @@
                     @Html.ValidationMessageFor(m => m.Privilege_Desc, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">Menu</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(x=>x.MenuID, (IEnumerable<SelectListItem>)ViewBag.Menu, new { @class = "form-control", @id = "ddlMenu" })
+                </div>
+            </div>
             <br />
             <footer class="panel-footer">
                 <button type="submit" class="btn btn-primary">Simpan </button>
@@ -48,7 +56,7 @@
             window.location.href = "/MasterData/PrivilegeList";
         });
 
-   
+        $('#ddlMenu').select2();
     var _status, _message, _temp;
     var _arrMsg = [];
 

@@ -26,6 +26,7 @@
                         <th>Id</th>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Navigation</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -74,6 +75,11 @@
                     "targets": [3],
                     "searchable": false,
                     "orderable": false
+                },
+                {
+                    "targets": [4],
+                    "searchable": false,
+                    "orderable": false
                 }
                 ],
 
@@ -81,7 +87,7 @@
                 { "data": "Id", "name": "Id", "autoWidth": false },
                 { "data": "Privilige_Name", "name": "Privilige_Name", "autoWidth": true },
                 { "data": "Privilege_Desc", "name": "Privilege_Desc", "autoWidth": true },
-                
+                { "data": "MenuDesc", "name": "MenuDesc", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditPrivilege?id=' + full.Id + '">Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >Delete</button>"; }
                 }
@@ -100,7 +106,7 @@
         "showMethod": "fadeIn"
     };
 
- 
+
     var Delete = function (ID) {
         var txt;
         var r = confirm("Apakah anda yakin akan menghapus Privilege dengan code " + ID);
@@ -113,9 +119,9 @@
     function DeletePrivilege(Id) {
         $.ajax({
             url: '/MasterData/DeleteMasterPrivilege?id=' + Id,
-            type:'POST',
+            type: 'POST',
             success: function (result) {
-                if (result.Status == "SUCCESS" ) {
+                if (result.Status == "SUCCESS") {
 
                     location.reload();
                     toastr.success(result.Message);

@@ -21,10 +21,15 @@ namespace Klinik.Web.Infrastructure
             CreateMap<Clinic, ClinicModel>();
             CreateMap<Organization, Klinik.Web.Features.MasterData.Organization.OrganizationData>()
                 .ForMember(m => m.Klinik, map => map.MapFrom(p => p.Clinic.Name));
+
             CreateMap<Privilege, PrivilegeModel>()
-                .ForMember(m => m.Privilige_Name, map => map.MapFrom(p => p.Privilege_Name));
+                .ForMember(m => m.Privilige_Name, map => map.MapFrom(p => p.Privilege_Name))
+                .ForMember(m => m.MenuDesc, map => map.MapFrom(p => p.Menu.Description))
+            .ForMember(m => m.MenuID, map => map.MapFrom(p => p.MenuID??0));
+
             CreateMap<PrivilegeModel, Privilege>()
-                .ForMember(m => m.Privilege_Name, map => map.MapFrom(p => p.Privilige_Name));
+                .ForMember(m => m.Privilege_Name, map => map.MapFrom(p => p.Privilige_Name))
+                .ForMember(m => m.MenuID, map => map.MapFrom(p => p.MenuID));
             CreateMap<OrganizationRole, RoleModel>()
                 .ForMember(m => m.OrganizationName, map => map.MapFrom(p => p.Organization.OrgName));
             CreateMap<RoleModel, OrganizationRole>();
@@ -44,15 +49,15 @@ namespace Klinik.Web.Infrastructure
 
             CreateMap<OrganizationPrivilege, OrganizationPrivilegeModel>()
                 .ForMember(x => x.OrganizationName, map => map.MapFrom(p => p.Organization.OrgName))
-                .ForMember(x=>x.PrivileveName, map=>map.MapFrom(p=>p.Privilege.Privilege_Name))
-                .ForMember(x=>x.PrivilegeDesc, map=>map.MapFrom(p=>p.Privilege.Privilege_Desc));
+                .ForMember(x => x.PrivileveName, map => map.MapFrom(p => p.Privilege.Privilege_Name))
+                .ForMember(x => x.PrivilegeDesc, map => map.MapFrom(p => p.Privilege.Privilege_Desc));
 
             CreateMap<OrganizationPrivilegeModel, OrganizationPrivilege>();
 
             CreateMap<RolePrivilege, RolePrivilegeModel>()
                .ForMember(x => x.RoleDesc, map => map.MapFrom(p => p.OrganizationRole.RoleName))
                .ForMember(x => x.PrivilegeDesc, map => map.MapFrom(p => p.Privilege.Privilege_Name));
-              
+
             CreateMap<RolePrivilegeModel, RolePrivilege>();
 
             CreateMap<UserRole, UserRoleModel>()
@@ -61,6 +66,7 @@ namespace Klinik.Web.Infrastructure
 
             CreateMap<UserRoleModel, UserRole>();
 
+            CreateMap<Menu, MenuModel>();
         }
 
 

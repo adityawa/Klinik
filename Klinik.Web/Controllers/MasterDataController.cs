@@ -7,13 +7,15 @@ using Klinik.Web.Features.MasterData.Organization;
 using Klinik.Web.Features.MasterData.Clinic;
 using Klinik.Web.DataAccess;
 using Klinik.Web.Models.MasterData;
-using Newtonsoft.Json;
+using Klinik.Web.Infrastructure;
 using Klinik.Web.Features.MasterData.Privileges;
 using Klinik.Web.Features.MasterData.Roles;
 using Klinik.Web.Features.MasterData.User;
 using Klinik.Web.Features.MasterData.Employee;
 using Klinik.Web.Features.MasterData.GeneralMaster;
 using Klinik.Web.Enumerations;
+using Klinik.Web.Features.MasterData.Menu;
+using Klinik.Web.Models.Account;
 
 namespace Klinik.Web.Controllers
 {
@@ -77,7 +79,7 @@ namespace Klinik.Web.Controllers
         private List<SelectListItem> BindDropDownEmployementType()
         {
             List<SelectListItem> _empTypes = new List<SelectListItem>();
-            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.enumMasterTypes.EmploymentType.ToString()).ToList()) 
+            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.enumMasterTypes.EmploymentType.ToString()).ToList())
             {
                 _empTypes.Add(new SelectListItem
                 {
@@ -103,6 +105,26 @@ namespace Klinik.Web.Controllers
 
             return _departments;
         }
+
+        private List<SelectListItem> BindDropDownMenu()
+        {
+            List<SelectListItem> _menus = new List<SelectListItem>();
+            _menus.Insert(0, new SelectListItem
+            {
+                Value = "0",
+                Text = ""
+            });
+            foreach (var item in new MenuHandler(_unitOfWork).GetVisibleMenu().ToList())
+            {
+                _menus.Add(new SelectListItem
+                {
+                    Text = item.Description,
+                    Value = item.Id.ToString()
+                });
+            }
+
+            return _menus;
+        }
         #endregion
 
         // GET: MasterData
@@ -112,17 +134,19 @@ namespace Klinik.Web.Controllers
         }
 
         #region ::ORGANIZATION::
-        public ActionResult OrganizationList()
-        {
-            return View();
-        }
+        [CustomAuthorize("VIEW_M_ORG")]
+        public ActionResult OrganizationList() => View();
 
         [HttpPost]
         public ActionResult CreateOrEditOrganization(OrganizationModel _model)
         {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
             var request = new OrganizationRequest
             {
-                RequestOrganizationData = _model
+                RequestOrganizationData = _model,
+
             };
 
             OrganizationResponse _response = new OrganizationResponse();
@@ -134,6 +158,7 @@ namespace Klinik.Web.Controllers
             return View();
         }
 
+        [CustomAuthorize("ADD_M_ORG", "EDIT_M_ORG")]
         public ActionResult CreateOrEditOrganization()
         {
             OrganizationResponse _response = new OrganizationResponse();
@@ -194,25 +219,26 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public JsonResult DeleteMasterOrganisasi(int id)
         {
-            //long _id = 0;
-            //if (Request.QueryString["id"] != null)
-            //    _id = Convert.ToInt64(Request.QueryString["id"].ToString());
+            
             OrganizationResponse _response = new OrganizationResponse();
             var request = new OrganizationRequest
             {
                 RequestOrganizationData = new OrganizationModel
                 {
-                    Id = id
-                }
+                    Id = id,
+                    Account=Session["UserLogon"]==null?new AccountModel():(AccountModel)Session["UserLogon"]
+                },
+                action = ClinicEnums.enumAction.DELETE.ToString()
             };
 
-            _response = new OrganizationHandler(_unitOfWork).RemoveOrganization(request);
+            new OrganizationValidator(_unitOfWork).Validate(request, out _response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
         #region ::PRIVILEGE::
+        [CustomAuthorize("VIEW_M_PRIVILEGE")]
         public ActionResult PrivilegeList()
         {
             return View();
@@ -221,6 +247,9 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public ActionResult CreateOrEditPrivilege(PrivilegeModel _model)
         {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
             var request = new PrivilegeRequest
             {
                 RequestPrivilegeData = _model
@@ -230,9 +259,11 @@ namespace Klinik.Web.Controllers
 
             new PrivilegeValidator(_unitOfWork).Validate(request, out _response);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
+            ViewBag.Menu = BindDropDownMenu();
             return View();
         }
 
+        [CustomAuthorize("ADD_M_PRIVILEGE", "EDIT_M_PRIVILEGE")]
         public ActionResult CreateOrEditPrivilege()
         {
             PrivilegeResponse _response = new PrivilegeResponse();
@@ -249,13 +280,13 @@ namespace Klinik.Web.Controllers
                 PrivilegeResponse resp = new PrivilegeHandler(_unitOfWork).GetDetail(request);
                 PrivilegeModel _model = resp.Entity;
                 ViewBag.Response = _response;
-              
+                ViewBag.Menu = BindDropDownMenu();
                 return View(_model);
             }
             else
             {
                 ViewBag.Response = _response;
-               
+                ViewBag.Menu = BindDropDownMenu();
                 return View();
             }
 
@@ -298,17 +329,20 @@ namespace Klinik.Web.Controllers
             {
                 RequestPrivilegeData = new PrivilegeModel
                 {
-                    Id = id
-                }
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                action = ClinicEnums.enumAction.DELETE.ToString()
             };
 
-            _response = new PrivilegeHandler(_unitOfWork).RemoveData(request);
+            new PrivilegeValidator(_unitOfWork).Validate(request, out _response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
         #region ::ROLE::
+        [CustomAuthorize("VIEW_M_ROLE")]
         public ActionResult RoleList()
         {
             return View();
@@ -317,6 +351,9 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public ActionResult CreateOrEditRole(RoleModel _model)
         {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
             var request = new RoleRequest
             {
                 RequestRoleData = _model
@@ -330,6 +367,7 @@ namespace Klinik.Web.Controllers
             return View();
         }
 
+        [CustomAuthorize("ADD_M_ROLE", "EDIT_M_ROLE")]
         public ActionResult CreateOrEditRole()
         {
             RoleResponse _response = new RoleResponse();
@@ -355,8 +393,6 @@ namespace Klinik.Web.Controllers
                 ViewBag.Organisasi = BindDropDownOrganization();
                 return View();
             }
-
-
         }
 
         [HttpPost]
@@ -395,17 +431,20 @@ namespace Klinik.Web.Controllers
             {
                 RequestRoleData = new RoleModel
                 {
-                    Id = id
-                }
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                action = ClinicEnums.enumAction.DELETE.ToString()
             };
 
-            _response = new RoleHandler(_unitOfWork).RemoveData(request);
+           new RoleValidator(_unitOfWork).Validate(request, out _response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
         #region ::USER::
+        [CustomAuthorize("VIEW_M_USER")]
         public ActionResult UserList()
         {
             return View();
@@ -414,6 +453,9 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public ActionResult CreateOrEditUser(UserModel _model)
         {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
             var request = new UserRequest
             {
                 RequestUserData = _model
@@ -428,6 +470,7 @@ namespace Klinik.Web.Controllers
             return View();
         }
 
+        [CustomAuthorize("ADD_M_USER", "EDIT_M_USER")]
         public ActionResult CreateOrEditUser()
         {
             UserResponse _response = new UserResponse();
@@ -437,7 +480,8 @@ namespace Klinik.Web.Controllers
                 {
                     RequestUserData = new UserModel
                     {
-                        Id = long.Parse(Request.QueryString["id"].ToString())
+                        Id = long.Parse(Request.QueryString["id"].ToString()),
+                       
                     }
                 };
 
@@ -495,17 +539,20 @@ namespace Klinik.Web.Controllers
             {
                 RequestUserData = new UserModel
                 {
-                    Id = id
-                }
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                action = ClinicEnums.enumAction.DELETE.ToString()
             };
 
-            _response = new UserHandler(_unitOfWork).RemoveData(request);
+           new UserValidator(_unitOfWork).Validate(request, out _response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
         #region ::EMPLOYEE::
+        [CustomAuthorize("VIEW_M_EMPLOYEE")]
         public ActionResult EmployeeList()
         {
             return View();
@@ -514,6 +561,9 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public ActionResult CreateOrEditEmployee(EmployeeModel _model)
         {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
             var request = new EmployeeRequest
             {
                 RequestEmployeeData = _model
@@ -528,6 +578,7 @@ namespace Klinik.Web.Controllers
             return View();
         }
 
+        [CustomAuthorize("ADD_M_EMPLOYEE", "EDIT_M_EMPLOYEE")]
         public ActionResult CreateOrEditEmployee()
         {
             EmployeeResponse _response = new EmployeeResponse();
@@ -595,11 +646,13 @@ namespace Klinik.Web.Controllers
             {
                 RequestEmployeeData = new EmployeeModel
                 {
-                    Id = id
-                }
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                action = ClinicEnums.enumAction.DELETE.ToString()
             };
 
-            _response = new EmployeeHandler(_unitOfWork).RemoveData(request);
+           new EmployeeValidator(_unitOfWork).Validate(request, out _response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }

@@ -13,5 +13,9 @@ namespace Klinik.Web.Models.MasterData
         public string Privilige_Name { get; set; }
         [Display(Name = "Privilege Desc")]
         public string Privilege_Desc { get; set; }
+
+        public long MenuID { get; set; }
+
+        public string MenuDesc { get; set; }
     }
 }

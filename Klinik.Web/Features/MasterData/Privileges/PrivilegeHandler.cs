@@ -32,7 +32,7 @@ namespace Klinik.Web.Features.MasterData.Privileges
                     {
                         qry.Privilege_Name = request.RequestPrivilegeData.Privilige_Name;
                         qry.Privilege_Desc = request.RequestPrivilegeData.Privilege_Desc;
-                      
+                        qry.MenuID = request.RequestPrivilegeData.MenuID;
                         qry.ModifiedBy = request.RequestPrivilegeData.ModifiedBy;
                         qry.ModifiedDate = DateTime.Now;
                         _unitOfWork.PrivilegeRepository.Update(qry);
@@ -200,5 +200,7 @@ namespace Klinik.Web.Features.MasterData.Privileges
             }
             return response;
         }
+
+        
     }
 }

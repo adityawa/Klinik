@@ -68,19 +68,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Menus">
-      <EntityTypeMapping TypeName="KlinikDBModel.Menu">
-        <MappingFragment StoreEntitySet="Menu">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="ParentMenuId" ColumnName="ParentMenuId" />
-          <ScalarProperty Name="PageLink" ColumnName="PageLink" />
-          <ScalarProperty Name="SortIndex" ColumnName="SortIndex" />
-          <ScalarProperty Name="HasChild" ColumnName="HasChild" />
-          <ScalarProperty Name="IsMenu" ColumnName="IsMenu" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Organizations">
       <EntityTypeMapping TypeName="KlinikDBModel.Organization">
         <MappingFragment StoreEntitySet="Organization">
@@ -149,9 +136,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="RolePrivileges">
+      <EntityTypeMapping TypeName="KlinikDBModel.RolePrivilege">
+        <MappingFragment StoreEntitySet="RolePrivilege">
+          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+          <ScalarProperty Name="PrivilegeID" ColumnName="PrivilegeID" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Privileges">
       <EntityTypeMapping TypeName="KlinikDBModel.Privilege">
         <MappingFragment StoreEntitySet="Privilege">
+          <ScalarProperty Name="MenuID" ColumnName="MenuID" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -162,13 +160,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="RolePrivileges">
-      <EntityTypeMapping TypeName="KlinikDBModel.RolePrivilege">
-        <MappingFragment StoreEntitySet="RolePrivilege">
-          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
-          <ScalarProperty Name="PrivilegeID" ColumnName="PrivilegeID" />
-          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
+    <EntitySetMapping Name="Menus">
+      <EntityTypeMapping TypeName="KlinikDBModel.Menu">
+        <MappingFragment StoreEntitySet="Menu">
+          <ScalarProperty Name="icon" ColumnName="icon" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="Action" ColumnName="Action" />
+          <ScalarProperty Name="Controller" ColumnName="Controller" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsMenu" ColumnName="IsMenu" />
+          <ScalarProperty Name="HasChild" ColumnName="HasChild" />
+          <ScalarProperty Name="SortIndex" ColumnName="SortIndex" />
+          <ScalarProperty Name="PageLink" ColumnName="PageLink" />
+          <ScalarProperty Name="ParentMenuId" ColumnName="ParentMenuId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

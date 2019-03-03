@@ -9,6 +9,9 @@ namespace Klinik.Web.Features.MasterData.Privileges
 {
     public class PrivilegeValidator : BaseFeatures
     {
+        private const string ADD_PRIVILEGE_NAME = "ADD_M_PRIVILEGE";
+        private const string EDIT_PRIVILEGE_NAME = "EDIT_M_PRIVILEGE";
+        private const string DELETE_PRIVILEGE_NAME = "DELETE_M_PRIVILEGE";
 
         public PrivilegeValidator(IUnitOfWork unitOfWork)
         {
@@ -17,29 +20,79 @@ namespace Klinik.Web.Features.MasterData.Privileges
 
         public void Validate(PrivilegeRequest request, out PrivilegeResponse response)
         {
+            bool isHavePrivilege = true;
             response = new PrivilegeResponse
             {
                 Status = ClinicEnums.enumStatus.SUCCESS.ToString()
             };
-           
-            if (request.RequestPrivilegeData.Privilige_Name==null || String.IsNullOrWhiteSpace( request.RequestPrivilegeData.Privilige_Name))
+
+            if (request.action != null && request.action.Equals(ClinicEnums.enumAction.DELETE.ToString()))
             {
-                errorFields.Add("Privilege Name");
+                ValidateForDelete(request, out response);
+            }
+            else
+            {
+                if (request.RequestPrivilegeData.Privilige_Name == null || String.IsNullOrWhiteSpace(request.RequestPrivilegeData.Privilige_Name))
+                {
+                    errorFields.Add("Privilege Name");
+                }
+
+                if (errorFields.Any())
+                {
+                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Message = $"Validation Error for following fields : {String.Join(",", errorFields)}";
+                }
+                else if (request.RequestPrivilegeData.Privilige_Name.Length > 150)
+                {
+                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Message = $"Maximum Character for Privilege Name is 150";
+                }
+
+                if (request.RequestPrivilegeData.Id == 0)
+                {
+
+                    isHavePrivilege = IsHaveAuthorization(ADD_PRIVILEGE_NAME, request.RequestPrivilegeData.Account.Privileges.PrivilegeIDs);
+                }
+                else
+                {
+                    isHavePrivilege = IsHaveAuthorization(EDIT_PRIVILEGE_NAME, request.RequestPrivilegeData.Account.Privileges.PrivilegeIDs);
+                }
+
+                if (!isHavePrivilege)
+                {
+                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Message = $"Unauthorized Access!";
+                }
+
+                if (response.Status == ClinicEnums.enumStatus.SUCCESS.ToString())
+                    response = new PrivilegeHandler(_unitOfWork).CreateOrEdit(request);
             }
 
-            if (errorFields.Any())
+           
+        }
+
+        private void ValidateForDelete(PrivilegeRequest request, out PrivilegeResponse response)
+        {
+            response = new PrivilegeResponse();
+            response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+
+            bool isHavePrivilege = true;
+
+            if (request.action == ClinicEnums.enumAction.DELETE.ToString())
             {
-                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
-                response.Message = $"Validation Error for following fields : {String.Join(",", errorFields)}";
+                isHavePrivilege = IsHaveAuthorization(DELETE_PRIVILEGE_NAME, request.RequestPrivilegeData.Account.Privileges.PrivilegeIDs);
             }
-            else if (request.RequestPrivilegeData.Privilige_Name.Length > 150)
+
+            if (!isHavePrivilege)
             {
                 response.Status = ClinicEnums.enumStatus.ERROR.ToString();
-                response.Message = $"Maximum Character for Privilege Name is 150";
+                response.Message = $"Unauthorized Access!";
             }
 
             if (response.Status == ClinicEnums.enumStatus.SUCCESS.ToString())
-                response = new PrivilegeHandler(_unitOfWork).CreateOrEdit(request);
+            {
+                response = new PrivilegeHandler(_unitOfWork).RemoveData(request);
+            }
         }
     }
 }

@@ -29,14 +29,14 @@ namespace Klinik.Web.DataAccess.DataRepository
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<GeneralMaster> GeneralMasters { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
-        public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<Organization> Organizations { get; set; }
         public virtual DbSet<OrganizationPrivilege> OrganizationPrivileges { get; set; }
         public virtual DbSet<PasswordHistory> PasswordHistories { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<OrganizationRole> OrganizationRoles { get; set; }
-        public virtual DbSet<Privilege> Privileges { get; set; }
         public virtual DbSet<RolePrivilege> RolePrivileges { get; set; }
+        public virtual DbSet<Privilege> Privileges { get; set; }
+        public virtual DbSet<Menu> Menus { get; set; }
     }
 }
