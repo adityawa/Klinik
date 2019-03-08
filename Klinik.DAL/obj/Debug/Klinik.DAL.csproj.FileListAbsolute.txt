@@ -1,9 +1,0 @@
-C:\Adit\Work\Private\Klinik\Klinik.DAL\bin\Debug\Klinik.DAL.dll.config
-C:\Adit\Work\Private\Klinik\Klinik.DAL\bin\Debug\Klinik.DAL.dll
-C:\Adit\Work\Private\Klinik\Klinik.DAL\bin\Debug\Klinik.DAL.pdb
-C:\Adit\Work\Private\Klinik\Klinik.DAL\bin\Debug\EntityFramework.dll
-C:\Adit\Work\Private\Klinik\Klinik.DAL\bin\Debug\EntityFramework.SqlServer.dll
-C:\Adit\Work\Private\Klinik\Klinik.DAL\bin\Debug\EntityFramework.xml
-C:\Adit\Work\Private\Klinik\Klinik.DAL\bin\Debug\EntityFramework.SqlServer.xml
-C:\Adit\Work\Private\Klinik\Klinik.DAL\obj\Debug\Klinik.DAL.dll
-C:\Adit\Work\Private\Klinik\Klinik.DAL\obj\Debug\Klinik.DAL.pdb
