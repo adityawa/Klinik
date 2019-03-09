@@ -29,8 +29,8 @@ namespace Klinik.Features
         public EmployeeResponse CreateOrEdit(EmployeeRequest request)
         {
             int resultAffected = 0;
-
             EmployeeResponse response = new EmployeeResponse();
+
             try
             {
                 if (request.RequestEmployeeData.Id > 0)
@@ -43,26 +43,29 @@ namespace Klinik.Features
                         qry.Gender = request.RequestEmployeeData.Gender;
                         qry.EmpType = request.RequestEmployeeData.EmpType;
                         qry.EmpDept = request.RequestEmployeeData.EmpDept;
+                        qry.Email = request.RequestEmployeeData.Email;
                         qry.ModifiedBy = request.RequestEmployeeData.ModifiedBy ?? "SYSTEM";
                         qry.ModifiedDate = DateTime.Now;
+
+                        // update
                         _unitOfWork.EmployeeRepository.Update(qry);
                         resultAffected = _unitOfWork.Save();
 
                         if (resultAffected > 0)
                         {
                             response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
-                            response.Message = $"Success Update Employee {qry.EmpName} with Id {qry.id}";
+                            response.Message = $"Employee {qry.EmpName} with ID {qry.id} has been successfully updated";
                         }
                         else
                         {
                             response.Status = ClinicEnums.enumStatus.ERROR.ToString();
-                            response.Message = "Update Data Failed";
+                            response.Message = "Employee Update Failed";
                         }
                     }
                     else
                     {
                         response.Status = ClinicEnums.enumStatus.ERROR.ToString();
-                        response.Message = "Update Data Failed";
+                        response.Message = "Employee Update Failed";
                     }
                 }
                 else
@@ -70,17 +73,20 @@ namespace Klinik.Features
                     var EmployeeEntity = Mapper.Map<EmployeeModel, Employee>(request.RequestEmployeeData);
                     EmployeeEntity.CreatedBy = request.RequestEmployeeData.CreatedBy ?? "SYSTEM";
                     EmployeeEntity.CreatedDate = DateTime.Now;
+
+                    // insert 
                     _unitOfWork.EmployeeRepository.Insert(EmployeeEntity);
                     resultAffected = _unitOfWork.Save();
+
                     if (resultAffected > 0)
                     {
                         response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
-                        response.Message = $"Success Add new User {EmployeeEntity.EmpName} with Id {EmployeeEntity.id}";
+                        response.Message = $"Employee {EmployeeEntity.EmpName} with ID {EmployeeEntity.id} has been successfully added";
                     }
                     else
                     {
                         response.Status = ClinicEnums.enumStatus.ERROR.ToString();
-                        response.Message = "Add Data Failed";
+                        response.Message = "Employee Add Failed";
                     }
                 }
             }
@@ -223,18 +229,18 @@ namespace Klinik.Features
                     if (resultAffected > 0)
                     {
                         response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
-                        response.Message = $"Success remove Employee {isExist.EmpName} with Id {isExist.id}";
+                        response.Message = $"Employee {isExist.EmpName} with ID {isExist.id} has been successfully removed";
                     }
                     else
                     {
                         response.Status = ClinicEnums.enumStatus.ERROR.ToString();
-                        response.Message = $"Remove User Failed!";
+                        response.Message = $"Employee Removal Failed!";
                     }
                 }
                 else
                 {
                     response.Status = ClinicEnums.enumStatus.ERROR.ToString();
-                    response.Message = $"Remove User Failed!";
+                    response.Message = $"Employee Removal Failed!";
                 }
             }
             catch
