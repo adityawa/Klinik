@@ -60,7 +60,7 @@ namespace Klinik.Features
                     response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
                     response.Message = "Data Successfully Saved";
                 }
-                catch (Exception ex)
+                catch
                 {
                     transaction.Rollback();
                     response.Status = ClinicEnums.enumStatus.ERROR.ToString();
@@ -108,7 +108,7 @@ namespace Klinik.Features
 
             List<RoleModel> lists = new List<RoleModel>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.True<OrganizationRole>();
+            var searchPredicate = PredicateBuilder.New<OrganizationRole>(true);
             searchPredicate = searchPredicate.And(x => x.OrgID == _orgId);
             if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
             {

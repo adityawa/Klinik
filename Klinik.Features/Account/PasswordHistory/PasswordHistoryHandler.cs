@@ -56,7 +56,7 @@ namespace Klinik.Features
                     response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
                     response.Message = "Password has been changed successfully";
                 }
-                catch (Exception ex)
+                catch
                 {
                     transaction.Rollback();
                     response.Status = ClinicEnums.enumStatus.ERROR.ToString();

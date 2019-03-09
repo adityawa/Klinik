@@ -35,7 +35,7 @@ namespace Klinik.Features
         public IList<MenuModel> GetVisibleMenu(int level = 0, int parentmenuid = 0)
         {
             IList<MenuModel> menus = new List<MenuModel>();
-            var qryPredicate = PredicateBuilder.True<Menu>();
+            var qryPredicate = PredicateBuilder.New<Menu>(true);
             qryPredicate = qryPredicate.And(x => x.IsMenu == true);
             if (level > 0)
                 qryPredicate = qryPredicate.And(x => x.Level == level);

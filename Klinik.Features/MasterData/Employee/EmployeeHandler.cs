@@ -84,7 +84,7 @@ namespace Klinik.Features
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 response.Status = ClinicEnums.enumStatus.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg();
@@ -137,7 +137,7 @@ namespace Klinik.Features
         {
             List<EmployeeModel> lists = new List<EmployeeModel>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.True<Employee>();
+            var searchPredicate = PredicateBuilder.New<Employee>(true);
             if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.EmpID.Contains(request.searchValue) || p.EmpName.Contains(request.searchValue));
@@ -237,7 +237,7 @@ namespace Klinik.Features
                     response.Message = $"Remove User Failed!";
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 response.Status = ClinicEnums.enumStatus.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;

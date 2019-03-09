@@ -2,8 +2,6 @@
 using Klinik.Data.DataRepository;
 using Klinik.Entities.MappingMaster;
 using Klinik.Entities.MasterData;
-using Klinik.Entities.MappingMaster;
-using Klinik.Entities.MasterData;
 
 namespace Klinik.Common
 {
