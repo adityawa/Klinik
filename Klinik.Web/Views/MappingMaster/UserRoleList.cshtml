@@ -1,4 +1,4 @@
-﻿@model Klinik.Web.Models.MappingMaster.UserRoleModel
+﻿@model Klinik.Entities.MappingMaster.UserRoleModel
 
 @{
     ViewBag.Title = "UserRoleList";
@@ -214,21 +214,21 @@
         var $chkbox_checked = $('tbody input[type="checkbox"]:checked', $table);
         var chkbox_select_all = $('thead input[name="select_all"]', $table).get(0);
 
-       
+
         if ($chkbox_checked.length === 0) {
             chkbox_select_all.checked = false;
             if ('indeterminate' in chkbox_select_all) {
                 chkbox_select_all.indeterminate = false;
             }
 
-          
+
         } else if ($chkbox_checked.length === $chkbox_all.length) {
             chkbox_select_all.checked = true;
             if ('indeterminate' in chkbox_select_all) {
                 chkbox_select_all.indeterminate = false;
             }
 
-           
+
         } else {
             chkbox_select_all.checked = true;
             if ('indeterminate' in chkbox_select_all) {

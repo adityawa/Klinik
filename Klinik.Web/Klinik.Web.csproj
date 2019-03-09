@@ -216,131 +216,9 @@
     <Compile Include="Controllers\MasterDataController.cs" />
     <Compile Include="Controllers\PasswordHistoryController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
-    <Compile Include="DataAccess\DataRepository\Clinic.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\DataRepository\Employee.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\DataRepository\GeneralMaster.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\DataRepository\Log.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\DataRepository\Menu.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\DataRepository\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\DataRepository\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\DataRepository\Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\DataRepository\Organization.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\DataRepository\OrganizationPrivilege.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\DataRepository\OrganizationRole.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\DataRepository\PasswordHistory.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\DataRepository\Privilege.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\DataRepository\RolePrivilege.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\DataRepository\User.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\DataRepository\UserRole.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\GenericRepository.cs" />
-    <Compile Include="DataAccess\UnitOfWork.cs" />
-    <Compile Include="DataAccess\IGenericRepository.cs" />
-    <Compile Include="DataAccess\IUnitOfWork.cs" />
-    <Compile Include="Enumerations\ClinicEnums.cs" />
-    <Compile Include="Features\Account\AccountHandler.cs" />
-    <Compile Include="Features\Account\AccountRequest.cs" />
-    <Compile Include="Features\Account\AccountResponse.cs" />
-    <Compile Include="Features\Account\AccountValidator.cs" />
-    <Compile Include="Features\Account\PasswordHistory\PasswordHistoryHandler.cs" />
-    <Compile Include="Features\Account\PasswordHistory\PasswordHistoryRequest.cs" />
-    <Compile Include="Features\Account\PasswordHistory\PasswordHistoryResponse.cs" />
-    <Compile Include="Features\Account\PasswordHistory\PasswordHistoryValidator.cs" />
-    <Compile Include="Features\BaseFeatures.cs" />
-    <Compile Include="Features\IBaseFeatures.cs" />
-    <Compile Include="Features\MapMasterData\OrganizationPrivilege\OrganizationPrivilegeHandler.cs" />
-    <Compile Include="Features\MapMasterData\OrganizationPrivilege\OrganizationPrivilegeRequest.cs" />
-    <Compile Include="Features\MapMasterData\OrganizationPrivilege\OrganizationPrivilegeResponse.cs" />
-    <Compile Include="Features\MapMasterData\OrganizationPrivilege\OrganizationPrivilegeValidator.cs" />
-    <Compile Include="Features\MapMasterData\RolePrivilege\RolePrivilegeHandler.cs" />
-    <Compile Include="Features\MapMasterData\RolePrivilege\RolePrivilegeRequest.cs" />
-    <Compile Include="Features\MapMasterData\RolePrivilege\RolePrivilegeResponse.cs" />
-    <Compile Include="Features\MapMasterData\RolePrivilege\RolePrivilegeValidator.cs" />
-    <Compile Include="Features\MapMasterData\UserRole\UserRoleHandler.cs" />
-    <Compile Include="Features\MapMasterData\UserRole\UserRoleRequest.cs" />
-    <Compile Include="Features\MapMasterData\UserRole\UserRoleResponse.cs" />
-    <Compile Include="Features\MapMasterData\UserRole\UserRoleValidator.cs" />
-    <Compile Include="Features\MasterData\Clinic\ClinicHandler.cs" />
-    <Compile Include="Features\MasterData\Employee\EmployeeHandler.cs" />
-    <Compile Include="Features\MasterData\Employee\EmployeeRequest.cs" />
-    <Compile Include="Features\MasterData\Employee\EmployeeResponse.cs" />
-    <Compile Include="Features\MasterData\Employee\EmployeeValidator.cs" />
-    <Compile Include="Features\MasterData\GeneralMaster\MasterHandler.cs" />
-    <Compile Include="Features\MasterData\Menu\MenuHandler.cs" />
-    <Compile Include="Features\MasterData\Organization\OrganizationHandler.cs" />
-    <Compile Include="Features\MasterData\Organization\OrganizationRequest.cs" />
-    <Compile Include="Features\MasterData\Organization\OrganizationResponse.cs" />
-    <Compile Include="Features\MasterData\Organization\OrganizationValidator.cs" />
-    <Compile Include="Features\MasterData\Privileges\PrivilegeHandler.cs" />
-    <Compile Include="Features\MasterData\Privileges\PrivilegeRequest.cs" />
-    <Compile Include="Features\MasterData\Privileges\PrivilegeResponse.cs" />
-    <Compile Include="Features\MasterData\Privileges\PrivilegeValidator.cs" />
-    <Compile Include="Features\MasterData\Roles\RoleHandler.cs" />
-    <Compile Include="Features\MasterData\Roles\RoleRequest.cs" />
-    <Compile Include="Features\MasterData\Roles\RoleResponse.cs" />
-    <Compile Include="Features\MasterData\Roles\RoleValidator.cs" />
-    <Compile Include="Features\MasterData\User\UserHandler.cs" />
-    <Compile Include="Features\MasterData\User\UserRequest.cs" />
-    <Compile Include="Features\MasterData\User\UserResponse.cs" />
-    <Compile Include="Features\MasterData\User\UserValidator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\AutomapperProfile.cs" />
-    <Compile Include="Infrastructure\Common.cs" />
-    <Compile Include="Infrastructure\CustomAuthorizeAttribute.cs" />
-    <Compile Include="Models\Account\AccountModel.cs" />
-    <Compile Include="Models\Account\PasswordHistoryModel.cs" />
-    <Compile Include="Models\BaseGetRequest.cs" />
-    <Compile Include="Models\BaseModel.cs" />
-    <Compile Include="Models\BaseResponse.cs" />
-    <Compile Include="Models\MappingMaster\OrganizationPrivilegeModel.cs" />
-    <Compile Include="Models\MappingMaster\RolePrivilegeModel.cs" />
-    <Compile Include="Models\MappingMaster\UserRoleModel.cs" />
-    <Compile Include="Models\MasterData\ClinicModel.cs" />
-    <Compile Include="Models\MasterData\EmployeeModel.cs" />
-    <Compile Include="Models\MasterData\MenuModel.cs" />
-    <Compile Include="Models\MasterData\OrganizationModel.cs" />
-    <Compile Include="Models\MasterData\PrivilegeModel.cs" />
-    <Compile Include="Models\MasterData\RoleModel.cs" />
-    <Compile Include="Models\MasterData\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -862,17 +740,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
-    <Content Include="DataAccess\DataRepository\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DataAccess\DataRepository\Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
-    <Content Include="DB\script_DB_23022019.sql" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
@@ -1080,13 +947,6 @@
     <Content Include="Content\Octopus\assets\vendor\flot\README.md" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
-    <EntityDeploy Include="DataAccess\DataRepository\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="DataAccess\DataRepository\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\Login\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\Login\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\Login\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
@@ -1265,8 +1125,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Publish\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1281,6 +1139,24 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Klinik.Common\Klinik.Common.csproj">
+      <Project>{e5c9d610-f530-4d0e-8d9e-2a729ccbff23}</Project>
+      <Name>Klinik.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
+      <Project>{53291442-9a4c-4416-8871-8c94d7636404}</Project>
+      <Name>Klinik.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Klinik.Entities\Klinik.Entities.csproj">
+      <Project>{0a81b9b4-7d64-412d-8e86-8ae9d22cf53f}</Project>
+      <Name>Klinik.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Klinik.Features\Klinik.Features.csproj">
+      <Project>{7db62f9c-5428-484f-ae2d-8831d92ea816}</Project>
+      <Name>Klinik.Features</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

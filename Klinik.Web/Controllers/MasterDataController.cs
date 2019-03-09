@@ -1,32 +1,21 @@
-﻿using System;
+﻿using Klinik.Common;
+using Klinik.Data;
+using Klinik.Entities.Account;
+using Klinik.Entities.MasterData;
+using Klinik.Features;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Klinik.Web.Features.MasterData.Organization;
-using Klinik.Web.Features.MasterData.Clinic;
-using Klinik.Web.DataAccess;
-using Klinik.Web.Models.MasterData;
-using Klinik.Web.Infrastructure;
-using Klinik.Web.Features.MasterData.Privileges;
-using Klinik.Web.Features.MasterData.Roles;
-using Klinik.Web.Features.MasterData.User;
-using Klinik.Web.Features.MasterData.Employee;
-using Klinik.Web.Features.MasterData.GeneralMaster;
-using Klinik.Web.Enumerations;
-using Klinik.Web.Features.MasterData.Menu;
-using Klinik.Web.Models.Account;
 
 namespace Klinik.Web.Controllers
 {
     public class MasterDataController : Controller
     {
-
         private IUnitOfWork _unitOfWork;
 
         public MasterDataController(IUnitOfWork unitOfWork)
         {
-
             _unitOfWork = unitOfWork;
         }
 
@@ -184,8 +173,6 @@ namespace Klinik.Web.Controllers
                 ViewBag.clinics = BindDropDownKlinik();
                 return View();
             }
-
-
         }
 
         [HttpPost]
@@ -219,14 +206,13 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public JsonResult DeleteMasterOrganisasi(int id)
         {
-            
             OrganizationResponse _response = new OrganizationResponse();
             var request = new OrganizationRequest
             {
                 RequestOrganizationData = new OrganizationModel
                 {
                     Id = id,
-                    Account=Session["UserLogon"]==null?new AccountModel():(AccountModel)Session["UserLogon"]
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
                 },
                 action = ClinicEnums.enumAction.DELETE.ToString()
             };
@@ -289,8 +275,6 @@ namespace Klinik.Web.Controllers
                 ViewBag.Menu = BindDropDownMenu();
                 return View();
             }
-
-
         }
 
         [HttpPost]
@@ -437,7 +421,7 @@ namespace Klinik.Web.Controllers
                 action = ClinicEnums.enumAction.DELETE.ToString()
             };
 
-           new RoleValidator(_unitOfWork).Validate(request, out _response);
+            new RoleValidator(_unitOfWork).Validate(request, out _response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
@@ -481,7 +465,7 @@ namespace Klinik.Web.Controllers
                     RequestUserData = new UserModel
                     {
                         Id = long.Parse(Request.QueryString["id"].ToString()),
-                       
+
                     }
                 };
 
@@ -499,8 +483,6 @@ namespace Klinik.Web.Controllers
                 ViewBag.Employees = BindDropDownEmployee();
                 return View();
             }
-
-
         }
 
         [HttpPost]
@@ -545,7 +527,7 @@ namespace Klinik.Web.Controllers
                 action = ClinicEnums.enumAction.DELETE.ToString()
             };
 
-           new UserValidator(_unitOfWork).Validate(request, out _response);
+            new UserValidator(_unitOfWork).Validate(request, out _response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
@@ -606,8 +588,6 @@ namespace Klinik.Web.Controllers
                 ViewBag.Departments = BindDropDownDepartment();
                 return View();
             }
-
-
         }
 
         [HttpPost]
@@ -652,7 +632,7 @@ namespace Klinik.Web.Controllers
                 action = ClinicEnums.enumAction.DELETE.ToString()
             };
 
-           new EmployeeValidator(_unitOfWork).Validate(request, out _response);
+            new EmployeeValidator(_unitOfWork).Validate(request, out _response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }

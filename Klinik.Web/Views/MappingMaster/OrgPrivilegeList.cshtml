@@ -1,4 +1,4 @@
-﻿@model Klinik.Web.Models.MappingMaster.OrganizationPrivilegeModel
+﻿@model Klinik.Entities.MappingMaster.OrganizationPrivilegeModel
 
 @{
     ViewBag.Title = "OrgPrivilegeList";
@@ -75,7 +75,7 @@
                 rows_selected.push(array[i]);
             }
         }
-      
+
 
         var table = $('#tbOrgPriv').DataTable({
             "processing": true,
@@ -173,7 +173,7 @@
             e.stopPropagation();
         });
 
-       
+
         table.on('draw', function () {
             // Update state of "Select all" control
             updateDataTableSelectAllCtrl(table);

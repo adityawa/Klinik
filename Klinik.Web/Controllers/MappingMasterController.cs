@@ -1,20 +1,13 @@
-﻿using Klinik.Web.DataAccess;
-using Klinik.Web.Features.MapMasterData.OrganizationPrivilege;
-using Klinik.Web.Features.MasterData.Organization;
-using Klinik.Web.Features.MasterData.Privileges;
-using Klinik.Web.Models.MappingMaster;
-using Klinik.Web.Models.MasterData;
+﻿using Klinik.Data;
+using Klinik.Data.DataRepository;
+using Klinik.Entities.MappingMaster;
+using Klinik.Entities.MasterData;
+using Klinik.Features;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Newtonsoft.Json;
-using Klinik.Web.DataAccess.DataRepository;
-using Klinik.Web.Features.MasterData.Roles;
-using Klinik.Web.Features.MapMasterData.RolePrivilege;
-using Klinik.Web.Features.MapMasterData.UserRole;
-using Klinik.Web.Features.MasterData.User;
 
 namespace Klinik.Web.Controllers
 {
@@ -22,11 +15,13 @@ namespace Klinik.Web.Controllers
     {
         private IUnitOfWork _unitOfWork;
         private KlinikDBEntities _context;
+
         public MappingMasterController(IUnitOfWork unitOfWork, KlinikDBEntities context)
         {
             _unitOfWork = unitOfWork;
             _context = context;
         }
+
         // GET: MappingMaster
         #region ::Organization Role::
         public ActionResult OrgPrivilegeList()
@@ -34,7 +29,6 @@ namespace Klinik.Web.Controllers
             OrganizationPrivilegeModel opmodel = new OrganizationPrivilegeModel();
             if (Request.QueryString["orgid"] != null)
             {
-
                 var reqOrg = new OrganizationRequest
                 {
                     RequestOrganizationData = new OrganizationModel
@@ -106,7 +100,6 @@ namespace Klinik.Web.Controllers
 
             var response = new PrivilegeHandler(_unitOfWork).GetListData(request);
 
-
             return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -117,7 +110,6 @@ namespace Klinik.Web.Controllers
             RolePrivilegeModel rpmodel = new RolePrivilegeModel();
             if (Request.QueryString["roleid"] != null)
             {
-
                 var reqOrg = new RoleRequest
                 {
                     RequestRoleData = new RoleModel
@@ -179,7 +171,7 @@ namespace Klinik.Web.Controllers
 
             var _model = new RolePrivilegeModel
             {
-                RoleID = long.Parse( roleid)
+                RoleID = long.Parse(roleid)
             };
 
             var request = new RolePrivilegeRequest
@@ -190,11 +182,10 @@ namespace Klinik.Web.Controllers
                 sortColumnDir = _sortColumnDir,
                 pageSize = _pageSize,
                 skip = _skip,
-                RequestRolePrivData=_model
+                RequestRolePrivData = _model
             };
 
             var response = new RolePrivilegeHandler(_unitOfWork, _context).GetPrivilegeBasedOnOrganization(request);
-
 
             return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
         }
@@ -206,7 +197,6 @@ namespace Klinik.Web.Controllers
             UserRoleModel rpmodel = new UserRoleModel();
             if (Request.QueryString["userid"] != null)
             {
-
                 var reqOrg = new UserRequest
                 {
                     RequestUserData = new UserModel
@@ -283,7 +273,6 @@ namespace Klinik.Web.Controllers
             };
 
             var response = new UserRoleHandler(_unitOfWork, _context).GetRoleBasedOnOrganization(request);
-
 
             return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
         }

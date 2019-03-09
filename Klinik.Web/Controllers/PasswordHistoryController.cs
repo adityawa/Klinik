@@ -1,12 +1,9 @@
-﻿using Klinik.Web.DataAccess;
-using Klinik.Web.Features.Account.PasswordHistory;
-using Klinik.Web.Models.Account;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Klinik.Data;
+using Klinik.Data.DataRepository;
+using Klinik.Entities.Account;
+using Klinik.Features;
 using System.Web.Mvc;
-using Klinik.Web.DataAccess.DataRepository;
+
 namespace Klinik.Web.Controllers
 {
     public class PasswordHistoryController : Controller
@@ -19,6 +16,7 @@ namespace Klinik.Web.Controllers
             _context = context;
             _unitOfWork = unitOfWork;
         }
+
         // GET: PasswordHistory
         public ActionResult ChangePassword()
         {
@@ -35,6 +33,7 @@ namespace Klinik.Web.Controllers
                 return RedirectToAction("Login", "Account");
             }
         }
+
         [HttpPost]
         public ActionResult ChangeUserPassword(PasswordHistoryModel _model)
         {
@@ -51,7 +50,7 @@ namespace Klinik.Web.Controllers
 
             PasswordHistoryResponse response = new PasswordHistoryResponse();
             response = new PasswordHistoryValidator(_unitOfWork, _context).Validate(request);
-            ViewBag.Response = $"{response.Status};{response.Message}" ;
+            ViewBag.Response = $"{response.Status};{response.Message}";
             return View("ChangePassword");
         }
     }

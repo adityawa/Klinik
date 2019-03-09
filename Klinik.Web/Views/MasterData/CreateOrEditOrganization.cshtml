@@ -1,4 +1,4 @@
-﻿@model Klinik.Web.Models.MasterData.OrganizationModel
+﻿@model Klinik.Entities.MasterData.OrganizationModel
 
 
 @{
@@ -21,7 +21,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">Organization Code</label>
                 <div class="col-md-4">
-                    @Html.HiddenFor(x=>x.Id)
+                    @Html.HiddenFor(x => x.Id)
                     @Html.TextBoxFor(x => x.OrgCode, new { @class = "form-control", @id = "tbOrgCode" })
                     @Html.ValidationMessageFor(m => m.OrgCode, "", new { @class = "text-danger" })
                 </div>

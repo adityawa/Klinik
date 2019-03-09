@@ -1,8 +1,8 @@
+using Klinik.Data;
+using Klinik.Data.DataRepository;
 using System;
 using Unity;
-using Klinik.Web.DataAccess;
 using Unity.Injection;
-using Klinik.Web.DataAccess.DataRepository;
 
 namespace Klinik.Web
 {

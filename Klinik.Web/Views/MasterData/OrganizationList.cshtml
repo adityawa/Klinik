@@ -1,4 +1,4 @@
-﻿@model Klinik.Web.Models.MasterData.OrganizationModel
+﻿@model Klinik.Entities.MasterData.OrganizationModel
 
 @{
     ViewBag.Title = "OrganizationList";
@@ -91,7 +91,7 @@
                 { "data": "Klinik", "name": "Klinik", "autoWidth": true },
 
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditOrganization?id=' + full.Id + '">Edit</a>' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >Delete</button>" +  ' | <a class="btn btn-info" href="/MappingMaster/OrgPrivilegeList?orgid=' + full.Id + '">Set Privilege</a>'; }
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditOrganization?id=' + full.Id + '">Edit</a>' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >Delete</button>" + ' | <a class="btn btn-info" href="/MappingMaster/OrgPrivilegeList?orgid=' + full.Id + '">Set Privilege</a>'; }
                 }
 
 
@@ -110,23 +110,23 @@
         "showMethod": "fadeIn"
     };
 
-  
+
     var Delete = function (ID) {
         var txt;
         var r = confirm("Apakah anda yakin akan menghapus Organisasi dengan Id " + ID);
         if (r == true) {
             DeleteOrganization(ID);
-        } 
+        }
         return false;
     }
 
     function DeleteOrganization(Id) {
         $.ajax({
             url: '/MasterData/DeleteMasterOrganisasi?id=' + Id,
-            type:'POST',
+            type: 'POST',
             success: function (result) {
-                if (result.Status == "SUCCESS" ) {
-                   
+                if (result.Status == "SUCCESS") {
+
                     location.reload();
                     toastr.success(result.Message);
                 }

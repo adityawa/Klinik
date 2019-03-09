@@ -1,4 +1,4 @@
-﻿@model Klinik.Web.Models.MasterData.UserModel
+﻿@model Klinik.Entities.MasterData.UserModel
 
 @{
     ViewBag.Title = "CreateOrEditUser";
@@ -60,7 +60,7 @@
                 </label>
                 <div class="col-md-4">
                     @Html.TextBoxFor(x => x.ExpiredDate, new { @class = "form-control", @id = "tbExpDate" })
-                  
+
                 </div>
             </div>
 
@@ -70,7 +70,7 @@
                 </label>
                 <div class="col-md-4">
                     @Html.CheckBoxFor(x => x.Status, new { @class = "form-check-input", @id = "cbStatus" })
-                    
+
                 </div>
             </div>
 

@@ -1,14 +1,12 @@
-﻿using Klinik.Web.Models.Account;
+﻿using Klinik.Common;
+using Klinik.Data;
+using Klinik.Entities.Account;
+using Klinik.Entities.MasterData;
+using Klinik.Features;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Klinik.Web.Features.Account;
-using Klinik.Web.DataAccess;
-using Klinik.Web.Enumerations;
-using Klinik.Web.Models.MasterData;
-using Klinik.Web.Features.MasterData.Menu;
 
 namespace Klinik.Web.Controllers
 {
@@ -33,7 +31,7 @@ namespace Klinik.Web.Controllers
                 RequestAccountModel = new AccountModel
                 {
                     UserName = _model.UserName,
-                    Password=_model.Password
+                    Password = _model.Password
                 }
             };
             AccountResponse response = new AccountResponse();
@@ -41,7 +39,7 @@ namespace Klinik.Web.Controllers
             if (response.Status == ClinicEnums.enumAuthResult.SUCCESS.ToString())
             {
                 Session["UserLogon"] = response.Entity;
-                if (response.Entity.Privileges.PrivilegeIDs!= null)
+                if (response.Entity.Privileges.PrivilegeIDs != null)
                 {
                     IList<MenuModel> Menu = new MenuHandler(_unitOfWork).GetMenuBasedOnPrivilege(response.Entity.Privileges.PrivilegeIDs);
                     Session["AuthMenu"] = Menu;
@@ -55,16 +53,13 @@ namespace Klinik.Web.Controllers
                 ViewBag.Message = response.Message.ToString();
                 return View("Login");
             }
-           
         }
 
         [HttpGet]
         public ActionResult Logout()
         {
-
             try
             {
-                
                 HttpContext.Session.Clear();
                 Session.Abandon();
                 return RedirectToAction("Login", "Account");
@@ -80,7 +75,6 @@ namespace Klinik.Web.Controllers
         {
             try
             {
-
                 if (Request.Cookies["WebTime"] != null)
                 {
                     var option = new HttpCookie("WebTime");
@@ -90,11 +84,8 @@ namespace Klinik.Web.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-
-        
     }
 }

@@ -1,4 +1,4 @@
-﻿@model Klinik.Web.Models.MasterData.RoleModel
+﻿@model Klinik.Entities.MasterData.RoleModel
 
 @{
     ViewBag.Title = "RoleList";
@@ -115,9 +115,9 @@
     function DeleteRole(Id) {
         $.ajax({
             url: '/MasterData/DeleteMasterRole?id=' + Id,
-            type:'POST',
+            type: 'POST',
             success: function (result) {
-                if (result.Status == "SUCCESS" ) {
+                if (result.Status == "SUCCESS") {
 
                     location.reload();
                     toastr.success(result.Message);

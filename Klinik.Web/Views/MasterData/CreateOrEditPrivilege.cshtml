@@ -1,4 +1,4 @@
-﻿@model Klinik.Web.Models.MasterData.PrivilegeModel
+﻿@model Klinik.Entities.MasterData.PrivilegeModel
 
 @{
     ViewBag.Title = "CreateOrEditPrivilege";
@@ -34,7 +34,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">Menu</label>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(x=>x.MenuID, (IEnumerable<SelectListItem>)ViewBag.Menu, new { @class = "form-control", @id = "ddlMenu" })
+                    @Html.DropDownListFor(x => x.MenuID, (IEnumerable<SelectListItem>)ViewBag.Menu, new { @class = "form-control", @id = "ddlMenu" })
                 </div>
             </div>
             <br />
