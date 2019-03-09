@@ -33,29 +33,35 @@ namespace Klinik.Common
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             var account = (AccountModel)filterContext.HttpContext.Session["UserLogon"];
-            List<long> PrivilegeIds = account.Privileges.PrivilegeIDs;
-            bool IsAuthorized = false;
-            var _getPrivilegeName = _context.Privileges.Where(x => PrivilegeIds.Contains(x.ID)).Select(x => x.Privilege_Name);
-
-            var cek_authorizes = _getPrivilegeName.Where(p => _privilege_names.Contains(p.ToString()));
-
-            if (cek_authorizes.Any())
+            if (account == null)
             {
-                IsAuthorized = true;
+                // redirect to login page if user not logged in  
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary { { "action", "Login" }, { "controller", "Account" } });
             }
-
-            //foreach (var item in _getPrivilegeName)
-            //{
-            //    if (this._privilege_name == item.Privilege_Name)
-            //    {
-            //        IsAuthorized = true;
-            //    }
-
-            //}
-
-            if (!IsAuthorized)
+            else
             {
-                this.HandleUnauthorizedRequest(filterContext);
+                bool IsAuthorized = false;
+                List<long> PrivilegeIds = account.Privileges.PrivilegeIDs;
+                var _getPrivilegeName = _context.Privileges.Where(x => PrivilegeIds.Contains(x.ID)).Select(x => x.Privilege_Name);
+
+                var cek_authorizes = _getPrivilegeName.Where(p => _privilege_names.Contains(p.ToString()));
+                if (cek_authorizes.Any())
+                {
+                    IsAuthorized = true;
+                }
+
+                //foreach (var item in _getPrivilegeName)
+                //{
+                //    if (this._privilege_name == item.Privilege_Name)
+                //    {
+                //        IsAuthorized = true;
+                //    }
+                //}
+
+                if (!IsAuthorized)
+                {
+                    this.HandleUnauthorizedRequest(filterContext);
+                }
             }
         }
 
@@ -65,12 +71,7 @@ namespace Klinik.Common
         /// <param name="filterContext"></param>
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            filterContext.Result = new RedirectToRouteResult(
-                                       new RouteValueDictionary
-                                       {
-                                           { "action", "Index" },
-                                           { "controller", "Unauthorized" }
-                                       });
+            filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary { { "action", "Index" }, { "controller", "Unauthorized" } });
         }
     }
 }
