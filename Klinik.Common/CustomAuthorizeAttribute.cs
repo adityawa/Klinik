@@ -1,5 +1,6 @@
 ﻿using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -33,25 +34,25 @@ namespace Klinik.Common
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             var account = (AccountModel)filterContext.HttpContext.Session["UserLogon"];
-            List<long> PrivilegeIds = account.Privileges.PrivilegeIDs;
+            
             bool IsAuthorized = false;
-            var _getPrivilegeName = _context.Privileges.Where(x => PrivilegeIds.Contains(x.ID)).Select(x => x.Privilege_Name);
-
-            var cek_authorizes = _getPrivilegeName.Where(p => _privilege_names.Contains(p.ToString()));
-
-            if (cek_authorizes.Any())
+            try
             {
-                IsAuthorized = true;
+                List<long> PrivilegeIds = account.Privileges.PrivilegeIDs;
+                var _getPrivilegeName = _context.Privileges.Where(x => PrivilegeIds.Contains(x.ID)).Select(x => x.Privilege_Name);
+                var cek_authorizes = _getPrivilegeName.Where(p => _privilege_names.Contains(p.ToString()));
+                if (cek_authorizes.Any())
+                {
+                    IsAuthorized = true;
+                }
             }
+            catch(Exception ex)
+            {
+                IsAuthorized = false;
+            }
+           
 
-            //foreach (var item in _getPrivilegeName)
-            //{
-            //    if (this._privilege_name == item.Privilege_Name)
-            //    {
-            //        IsAuthorized = true;
-            //    }
-
-            //}
+          
 
             if (!IsAuthorized)
             {

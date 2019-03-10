@@ -56,7 +56,7 @@ namespace Klinik.Features
                         qry.LegalNumber = request.RequestClinicModel.LegalNumber;
                         qry.LegalDate = request.RequestClinicModel.LegalDate;
                         qry.ContactNumber = request.RequestClinicModel.ContactNumber;
-                        qry.Email = request.RequestClinicModel.Email ;
+                        qry.Email = request.RequestClinicModel.Email;
                         qry.Lat = request.RequestClinicModel.Lat;
                         qry.Long = request.RequestClinicModel.Long;
                         qry.CityID = request.RequestClinicModel.CityId;
@@ -115,7 +115,7 @@ namespace Klinik.Features
         /// Get all employee list
         /// </summary>
         /// <returns></returns>
-        
+
         /// <summary>
         /// Get employee details
         /// </summary>
@@ -193,8 +193,12 @@ namespace Klinik.Features
                 var clinicData = Mapper.Map<Clinic, ClinicModel>(item);
                 long _cityId = clinicData.CityId ?? 0;
                 long _clinicTypeId = clinicData.ClinicType ?? 0;
-                clinicData.CityDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _cityId && x.Type == ClinicEnums.enumMasterTypes.City.ToString()).Name ?? "";
-                clinicData.ClinicType = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _cityId && x.Type == ClinicEnums.enumMasterTypes.ClinicType.ToString()).Name ?? "";
+                var getCityDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _cityId && x.Type == ClinicEnums.enumMasterTypes.City.ToString());
+                var getClinicTypeDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _clinicTypeId && x.Type == ClinicEnums.enumMasterTypes.ClinicType.ToString());
+                if (getCityDesc != null)
+                    clinicData.CityDesc = getCityDesc.Name ?? "";
+                if (getClinicTypeDesc != null)
+                    clinicData.ClinicTypeDesc = getClinicTypeDesc.Name ?? "";
                 lists.Add(clinicData);
             }
 

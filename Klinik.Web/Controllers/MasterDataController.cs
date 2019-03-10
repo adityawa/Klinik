@@ -3,6 +3,7 @@ using Klinik.Data;
 using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
 using Klinik.Features;
+using Klinik.Features.MasterData.Clinic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -669,7 +670,108 @@ namespace Klinik.Web.Controllers
         #endregion
 
         #region ::CLINIC::
+        [CustomAuthorize("VIEW_M_CLINIC")]
+        public ActionResult ClinicList()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult CreateOrEditClinic(ClinicModel _model)
+        {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new ClinicRequest
+            {
+                RequestClinicModel = _model
+            };
+
+            ClinicResponse _response = new ClinicResponse();
+
+            new ClinicValidator(_unitOfWork).Validate(request, out _response);
+            ViewBag.Response = $"{_response.Status};{_response.Message}";
+            ViewBag.Cities = BindDropDownCity();
+            ViewBag.ClinicTypes = BindDropDownClinicType();
+            return View();
+        }
+
+        [CustomAuthorize("ADD_M_CLINIC", "EDIT_M_CLINIC")]
+        public ActionResult CreateOrEditClinic()
+        {
+            ClinicResponse _response = new ClinicResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new ClinicRequest
+                {
+                    RequestClinicModel = new ClinicModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                ClinicResponse resp = new ClinicHandler(_unitOfWork).GetDetail(request);
+                ClinicModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.Cities = BindDropDownCity();
+                ViewBag.ClinicTypes = BindDropDownClinicType();
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.Cities = BindDropDownCity();
+                ViewBag.ClinicTypes = BindDropDownClinicType();
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetClinic()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new ClinicRequest
+            {
+                draw = _draw,
+                searchValue = _searchValue,
+                sortColumn = _sortColumn,
+                sortColumnDir = _sortColumnDir,
+                pageSize = _pageSize,
+                skip = _skip
+            };
+
+            var response = new ClinicHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteMasterClinic(int id)
+        {
+            ClinicResponse _response = new ClinicResponse();
+            var request = new ClinicRequest
+            {
+                RequestClinicModel = new ClinicModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                action = ClinicEnums.enumAction.DELETE.ToString()
+            };
+
+            new ClinicValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

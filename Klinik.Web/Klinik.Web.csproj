@@ -1122,6 +1122,8 @@
     <Content Include="Views\MappingMaster\UserRoleList.cshtml" />
     <Content Include="Views\PasswordHistory\ChangePassword.cshtml" />
     <Content Include="Views\Unauthorized\Index.cshtml" />
+    <Content Include="Views\MasterData\ClinicList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditClinic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

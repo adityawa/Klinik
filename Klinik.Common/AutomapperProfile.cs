@@ -15,7 +15,7 @@ namespace Klinik.Common
             CreateMap<OrganizationModel, Organization>();
             CreateMap<Clinic, ClinicModel>()
                 .ForMember(m => m.LegalDateDesc, map => map.MapFrom(p => p.LegalDate == null ? "" : p.LegalDate.Value.ToString("MM/dd/yyyy")));
-
+                
 
             CreateMap<ClinicModel, Clinic>()
                 .ForMember(m => m.DateCreated, map => map.MapFrom(p => p.CreatedDate))

@@ -1,0 +1,173 @@
+﻿@model Klinik.Entities.MasterData.ClinicModel
+
+@{
+    ViewBag.Title = "ClinicList";
+}
+
+<link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/DataTables/css/responsive.bootstrap.css" rel="stylesheet" />
+
+
+<button id="btnAdd" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Data</button>
+
+<br /><br />
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+        </div>
+        <h5 class="panel-title">List Clinic</h5>
+    </header>
+    <div class="panel-body">
+        <div style="width:100%; margin:0 auto">
+            <table id="tbClinic" class="table table-striped table-bordered dt-responsive" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Legal No</th>
+                        <th>Legal Date</th>
+                        <th>Contact No</th>
+                        <th>City</th>
+                        <th>Clinic Type</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#btnAdd').click(function (e) {
+            window.location.href = "/MasterData/CreateOrEditClinic";
+        });
+
+        $('#tbClinic').dataTable({
+            "processing": true,
+            "serverSide": true,
+            "filter": true,
+            "orderMulti": false,
+            "pageLength": 10,
+            "ajax": {
+                "url": "/MasterData/GetClinic",
+                "type": "POST",
+                "datatype": "json"
+            },
+
+            "columnDefs":
+                [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false,
+
+                },
+                {
+                    "targets": [1],
+                    "searchable": true,
+                    "orderable": true
+                },
+                {
+                    "targets": [2],
+                    "searchable": true,
+                    "orderable": true
+                },
+                {
+                    "targets": [3],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [4],
+                    "searchable": false,
+                    "orderable": false
+
+                },
+                {
+                    "targets": [5],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [6],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [7],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [8],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [9],
+                    "searchable": false,
+                    "orderable": false
+                }
+                ],
+
+            "columns": [
+                { "data": "Id", "name": "Id", "autoWidth": false },
+                { "data": "Code", "name": "Code", "autoWidth": true },
+                { "data": "Name", "name": "Name", "autoWidth": true },
+                { "data": "LegalNumber", "name": "LegalNumber", "autoWidth": true },
+                { "data": "LegalDateDesc", "name": "LegalDateDesc", "autoWidth": true },
+                { "data": "ContactNumber", "name": "ContactNumber", "autoWidth": true },
+                { "data": "CityDesc", "name": "CityDesc", "autoWidth": true },
+                { "data": "ClinicTypeDesc", "name": "ClinicTypeDesc", "autoWidth": true },
+                { "data": "Email", "name": "Email", "autoWidth": true },
+                {
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditClinic?id=' + full.Id + '">Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >Delete</button>"; }
+                }
+
+
+            ]
+        });
+    });
+    var _status, _message, _temp;
+    var _arrMsg = [];
+    toastr.options = {
+        "closeButton": true,
+        "positionClass": "toast-top-full-width",
+        "onclick": null,
+        "showDuration": "0",
+        "hideDuration": "0",
+        "timeOut": "0",
+        "showMethod": "fadeIn"
+    };
+
+
+    var Delete = function (ID) {
+        var txt;
+        var r = confirm("Apakah anda yakin akan menghapus Clinic dengan Id " + ID);
+        if (r == true) {
+            DeleteClinic(ID);
+        }
+        return false;
+    }
+
+    function DeleteClinic(Id) {
+        $.ajax({
+            url: '/MasterData/DeleteMasterClinic?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status == "SUCCESS") {
+
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+    }
+</script>

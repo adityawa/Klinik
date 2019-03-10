@@ -21,7 +21,7 @@ namespace Klinik.Entities.MasterData
         public float Long { get; set; }
         public float Lat { get; set; }
         public long CityId { get; set; }
-        public int CityDesc { get; set; }
+        public string CityDesc { get; set; }
         public long ClinicType { get; set; }
 
         public string ClinicTypeDesc { get; set; }
