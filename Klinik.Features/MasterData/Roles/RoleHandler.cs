@@ -79,7 +79,7 @@ namespace Klinik.Features
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 response.Status = ClinicEnums.enumStatus.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg();
@@ -115,7 +115,7 @@ namespace Klinik.Features
         {
             List<RoleModel> lists = new List<RoleModel>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.True<OrganizationRole>();
+            var searchPredicate = PredicateBuilder.New<OrganizationRole>(true);
             if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.RoleName.Contains(request.searchValue) || p.Organization.OrgName.Contains(request.searchValue));
@@ -208,7 +208,7 @@ namespace Klinik.Features
                     response.Message = $"Remove Role Failed!";
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 response.Status = ClinicEnums.enumStatus.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;

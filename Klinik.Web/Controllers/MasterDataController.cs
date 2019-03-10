@@ -196,10 +196,12 @@ namespace Klinik.Web.Controllers
                 OrganizationModel _model = resp.Entity;
                 ViewBag.Response = _response;
                 ViewBag.clinics = BindDropDownKlinik();
+                ViewBag.ActionType = ClinicEnums.enumAction.Edit;
                 return View(_model);
             }
             else
             {
+                ViewBag.ActionType = ClinicEnums.enumAction.Add;
                 ViewBag.Response = _response;
                 ViewBag.clinics = BindDropDownKlinik();
                 return View();
@@ -298,12 +300,14 @@ namespace Klinik.Web.Controllers
                 PrivilegeModel _model = resp.Entity;
                 ViewBag.Response = _response;
                 ViewBag.Menu = BindDropDownMenu();
+                ViewBag.ActionType = ClinicEnums.enumAction.Edit;
                 return View(_model);
             }
             else
             {
                 ViewBag.Response = _response;
                 ViewBag.Menu = BindDropDownMenu();
+                ViewBag.ActionType = ClinicEnums.enumAction.Add;
                 return View();
             }
         }
@@ -400,12 +404,14 @@ namespace Klinik.Web.Controllers
                 RoleModel _model = resp.Entity;
                 ViewBag.Response = _response;
                 ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.ActionType = ClinicEnums.enumAction.Edit;
                 return View(_model);
             }
             else
             {
                 ViewBag.Response = _response;
                 ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.ActionType = ClinicEnums.enumAction.Add;
                 return View();
             }
         }
@@ -505,6 +511,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.Response = _response;
                 ViewBag.Organisasi = BindDropDownOrganization();
                 ViewBag.Employees = BindDropDownEmployee();
+                ViewBag.ActionType = ClinicEnums.enumAction.Edit;
                 return View(_model);
             }
             else
@@ -512,6 +519,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.Response = _response;
                 ViewBag.Organisasi = BindDropDownOrganization();
                 ViewBag.Employees = BindDropDownEmployee();
+                ViewBag.ActionType = ClinicEnums.enumAction.Add;
                 return View();
             }
         }
@@ -610,10 +618,12 @@ namespace Klinik.Web.Controllers
                 ViewBag.Response = _response;
                 ViewBag.EmpTypes = BindDropDownEmployementType();
                 ViewBag.Departments = BindDropDownDepartment();
+                ViewBag.ActionType = ClinicEnums.enumAction.Edit;
                 return View(_model);
             }
             else
             {
+                ViewBag.ActionType = ClinicEnums.enumAction.Add;
                 ViewBag.Response = _response;
                 ViewBag.EmpTypes = BindDropDownEmployementType();
                 ViewBag.Departments = BindDropDownDepartment();

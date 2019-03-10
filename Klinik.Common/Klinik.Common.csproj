@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutomapperProfile.cs" />
-    <Compile Include="Common.cs" />
+    <Compile Include="CommonUtils.cs" />
     <Compile Include="CustomAuthorizeAttribute.cs" />
     <Compile Include="Enumerations\ClinicEnums.cs" />
     <Compile Include="OrganizationData.cs" />

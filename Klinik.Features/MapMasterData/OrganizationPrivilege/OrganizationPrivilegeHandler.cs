@@ -56,7 +56,7 @@ namespace Klinik.Features
                     response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
                     response.Message = "Data Successfully Saved";
                 }
-                catch (Exception ex)
+                catch
                 {
                     transaction.Rollback();
                     response.Status = ClinicEnums.enumStatus.ERROR.ToString();

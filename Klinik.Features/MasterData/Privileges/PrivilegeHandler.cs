@@ -83,7 +83,7 @@ namespace Klinik.Features
 
               
             }
-            catch (Exception ex)
+            catch
             {
               
                 response.Status = ClinicEnums.enumStatus.ERROR.ToString();
@@ -120,7 +120,7 @@ namespace Klinik.Features
         {
             List<PrivilegeModel> lists = new List<PrivilegeModel>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.True<Privilege>();
+            var searchPredicate = PredicateBuilder.New<Privilege>(true);
 
             if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
             {
@@ -216,7 +216,7 @@ namespace Klinik.Features
                     response.Message = $"Remove Privilege Failed!";
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 response.Status = ClinicEnums.enumStatus.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;

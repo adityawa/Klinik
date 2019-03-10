@@ -34,44 +34,44 @@ namespace Klinik.Common
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             var account = (AccountModel)filterContext.HttpContext.Session["UserLogon"];
-            
-            bool IsAuthorized = false;
-            try
+            if (account == null)
             {
+                // redirect to login page if user not logged in  
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary { { "action", "Login" }, { "controller", "Account" } });
+            }
+            else
+            {
+                bool IsAuthorized = false;
                 List<long> PrivilegeIds = account.Privileges.PrivilegeIDs;
                 var _getPrivilegeName = _context.Privileges.Where(x => PrivilegeIds.Contains(x.ID)).Select(x => x.Privilege_Name);
+
                 var cek_authorizes = _getPrivilegeName.Where(p => _privilege_names.Contains(p.ToString()));
                 if (cek_authorizes.Any())
                 {
                     IsAuthorized = true;
                 }
-            }
-            catch(Exception ex)
-            {
-                IsAuthorized = false;
-            }
-           
 
-          
+                //foreach (var item in _getPrivilegeName)
+                //{
+                //    if (this._privilege_name == item.Privilege_Name)
+                //    {
+                //        IsAuthorized = true;
+                //    }
+                //}
 
-            if (!IsAuthorized)
-            {
-                this.HandleUnauthorizedRequest(filterContext);
+                if (!IsAuthorized)
+                {
+                    this.HandleUnauthorizedRequest(filterContext);
+                }
             }
         }
-
         /// <summary>
         /// Override the Handle of unauthorized request
         /// </summary>
         /// <param name="filterContext"></param>
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            filterContext.Result = new RedirectToRouteResult(
-                                       new RouteValueDictionary
-                                       {
-                                           { "action", "Index" },
-                                           { "controller", "Unauthorized" }
-                                       });
+            filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary { { "action", "Index" }, { "controller", "Unauthorized" } });
         }
     }
 }

@@ -27,6 +27,8 @@
 
         public enum enumAction
         {
+            Add,
+            Edit,
             DELETE
         }
     }

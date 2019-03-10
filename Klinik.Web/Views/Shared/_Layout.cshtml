@@ -4,14 +4,13 @@
 <!doctype html>
 <html class="fixed">
 <head>
-
     <!-- Basic -->
     <meta charset="UTF-8">
 
-    <title>SIS INFORMASI KLINIK</title>
-    <meta name="keywords" content="HTML5 Admin Template" />
-    <meta name="description" content="JSOFT Admin - Responsive HTML5 Template">
-    <meta name="author" content="JSOFT.net">
+    <title>Sistem Informasi Klinik</title>
+    <meta name="keywords" content="Sistem Klinik" />
+    <meta name="description" content="Medical Management System">
+    <meta name="author" content="CV Mandiri">
 
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -22,30 +21,31 @@
     <!-- Vendor CSS -->
     <link href="~/Content/Octopus/assets/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="~/Content/images/favicon.ico" />
     <link href="~/Content/Octopus/assets/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" />
     <link href="~/Content/Octopus/assets/vendor/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" />
-
 
     <!-- Specific Page Vendor CSS -->
     <link href="~/Content/Octopus/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
     <link href="~/Content/Octopus/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" rel="stylesheet" />
     <link href="~/Content/Octopus/assets/vendor/morris/morris.css" rel="stylesheet" />
 
+    <!-- Toastr CSS -->
     <link href="~/Content/toastr.css" rel="stylesheet" />
+
     <!-- Theme CSS -->
-
     <link href="~/Content/Octopus/assets/stylesheets/theme.css" rel="stylesheet" />
+
     <!-- Skin CSS -->
-
     <link href="~/Content/Octopus/assets/stylesheets/skins/default.css" rel="stylesheet" />
-    <!-- Theme Custom CSS -->
 
+    <!-- Theme Custom CSS -->
     <link href="~/Content/Octopus/assets/stylesheets/theme-custom.css" rel="stylesheet" />
+
     <!-- Head Libs -->
     <script src="~/Scripts/jquery-3.0.0.js"></script>
     <script src="~/Content/Octopus/assets/vendor/Modernizr/modernizr.js"></script>
     <script src="~/Scripts/toastr.js"></script>
-
 </head>
 <body>
     <section class="body">
@@ -53,16 +53,16 @@
         <!-- start: header -->
         <header class="header">
             <div class="logo-container">
-                <a href="../" class="logo">
-                    <img src="~/Content/images/logo.png" height="35" alt="JSOFT Admin" />
+                <a href="/Home/Index" class="logo">
+                    <img src="~/Content/images/logo-medica.png" height="35" alt="JSOFT Admin" />
                 </a>
+
                 <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
                     <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
                 </div>
             </div>
 
             <div class="header-right">
-
                 <span class="separator"></span>
 
                 <div id="userbox" class="userbox">
@@ -72,14 +72,12 @@
                         </figure>
                         <div class="profile-info">
                             @{
-
                                 if (Session["UserLogon"] != null)
                                 {
                                     AccountModel account = (AccountModel)Session["UserLogon"];
                                     <span class="name">@account.UserName</span>
                                 }
                             }
-
                         </div>
 
                         <i class="fa custom-caret"></i>
@@ -153,62 +151,17 @@
                                                                     </a>
                                                                 </li>
                                                             }
-
                                                         </ul>
                                                     </li>
                                                 }
                                             }
-
                                         }
                                     }
                                 }
-                                @*<li class="nav-active">
-                                        <a href="index.html">
-                                            <i class="fa fa-home" aria-hidden="true"></i>
-                                            <span>Home</span>
-                                        </a>
-                                    </li>
-
-                                    <li class="nav-parent">
-                                        <a>
-                                            <i class="fa fa-copy" aria-hidden="true"></i>
-                                            <span>Master Data</span>
-                                        </a>
-                                        <ul class="nav nav-children">
-                                            <li>
-                                                <a href="@Url.Action("OrganizationList","MasterData")">
-                                                    Organization
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("PrivilegeList","MasterData")">
-                                                    Privilege
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("RoleList","MasterData")">
-                                                    Organization Role
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("UserList","MasterData")">
-                                                    User
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("EmployeeList","MasterData")">
-                                                    Employee
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>*@
-
                             </ul>
                         </nav>
                     </div>
-
                 </div>
-
             </aside>
             <!-- end: sidebar -->
 
@@ -217,29 +170,22 @@
                     <div class="right-wrapper pull-right">
                         <ol class="breadcrumbs">
                             <li>
-                                <a href="index.html">
+                                <a href="/Home/Index">
                                     <i class="fa fa-home"></i>
                                 </a>
                             </li>
                             <li><span>Dashboard</span></li>
                         </ol>
-
-                        @*<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>*@
                     </div>
                 </header>
                 <div>
                     @RenderBody()
                 </div>
-
             </section>
         </div>
-
-
     </section>
 
     <!-- Vendor -->
-
-
     <script src="~/Content/Octopus/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
     <script src="~/Content/Octopus/assets/vendor/bootstrap/js/bootstrap.js"></script>
     <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
@@ -247,9 +193,7 @@
     <script src="~/Content/Octopus/assets/vendor/nanoscroller/nanoscroller.js"></script>
     <script src="~/Content/Octopus/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="~/Content/Octopus/assets/vendor/magnific-popup/magnific-popup.js"></script>
-
     <script src="~/Content/Octopus/assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
-
 
     <!-- Specific Page Vendor -->
     <script src="~/Content/Octopus/assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
@@ -257,16 +201,11 @@
     <script src="~/Content/Octopus/assets/vendor/jquery-appear/jquery.appear.js"></script>
     <script src="~/Content/Octopus/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
     <script src="~/Content/Octopus/assets/vendor/jquery-easypiechart/jquery.easypiechart.js"></script>
-
     <script src="~/Content/Octopus/assets/vendor/flot/jquery.flot.js"></script>
     <script src="~/Content/Octopus/assets/vendor/flot-tooltip/jquery.flot.tooltip.js"></script>
-
     <script src="~/Content/Octopus/assets/vendor/flot/jquery.flot.pie.js"></script>
-
     <script src="~/Content/Octopus/assets/vendor/flot/jquery.flot.categories.js"></script>
-
     <script src="~/Content/Octopus/assets/vendor/flot/jquery.flot.resize.js"></script>
-
     <script src="~/Content/Octopus/assets/vendor/jquery-sparkline/jquery.sparkline.js"></script>
     <script src="~/Content/Octopus/assets/vendor/morris/morris.js"></script>
     <script src="~/Content/Octopus/assets/vendor/raphael/raphael.js"></script>
@@ -274,35 +213,19 @@
     <script src="~/Content/Octopus/assets/vendor/snap-svg/snap.svg.js"></script>
     <script src="~/Content/Octopus/assets/vendor/liquid-meter/liquid.meter.js"></script>
 
-
-    @*<script src="assets/vendor/jqvmap/jquery.vmap.js"></script>
-        <script src="assets/vendor/jqvmap/data/jquery.vmap.sampledata.js"></script>
-        <script src="assets/vendor/jqvmap/maps/jquery.vmap.world.js"></script>
-        <script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.africa.js"></script>
-        <script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.asia.js"></script>
-        <script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.australia.js"></script>
-        <script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.europe.js"></script>
-        <script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js"></script>
-        <script src="assets/vendor/jqvmap/maps/continents/jquery.vmap.south-america.js"></script>*@
-
     <!-- Theme Base, Components and Settings -->
-
     <script src="~/Content/Octopus/assets/javascripts/theme.js"></script>
 
     <!-- Theme Custom -->
-
     <script src="~/Content/Octopus/assets/javascripts/theme.custom.js"></script>
+
     <!-- Theme Initialization Files -->
-
     <script src="~/Content/Octopus/assets/javascripts/theme.init.js"></script>
-
-    <!-- Examples -->
-
-    <script src="~/Content/Octopus/assets/javascripts/dashboard/examples.dashboard.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
-
+            var url = window.location;
+            $('ul.nav a').filter(function () { return this.href == url; }).parent().addClass('nav-active').parent().closest('li').addClass('nav-expanded');
         });
     </script>
 </body>

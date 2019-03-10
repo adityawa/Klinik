@@ -3,7 +3,6 @@ using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.MappingMaster;
-using Klinik.Entities.MappingMaster;
 using LinqKit;
 using System;
 using System.Collections.Generic;
@@ -59,7 +58,7 @@ namespace Klinik.Features
                     response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
                     response.Message = "Data Successfully Saved";
                 }
-                catch (Exception ex)
+                catch
                 {
                     transaction.Rollback();
                     response.Status = ClinicEnums.enumStatus.ERROR.ToString();
@@ -107,7 +106,7 @@ namespace Klinik.Features
 
             List<OrganizationPrivilegeModel> lists = new List<OrganizationPrivilegeModel>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.True<OrganizationPrivilege>();
+            var searchPredicate = PredicateBuilder.New<OrganizationPrivilege>(true);
             searchPredicate = searchPredicate.And(x => x.OrgID == _orgId);
             if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
             {

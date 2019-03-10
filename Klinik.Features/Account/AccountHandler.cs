@@ -1,8 +1,10 @@
 ﻿using Klinik.Common;
 using Klinik.Data;
+using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MappingMaster;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Klinik.Features
@@ -16,9 +18,11 @@ namespace Klinik.Features
         /// Constructor
         /// </summary>
         /// <param name="unitOfWork"></param>
-        public AccountHandler(IUnitOfWork unitOfWork)
+        /// <param name="context"></param>
+        public AccountHandler(IUnitOfWork unitOfWork, KlinikDBEntities context)
         {
             _unitOfWork = unitOfWork;
+            _context = context;
         }
 
         /// <summary>
@@ -79,6 +83,126 @@ namespace Klinik.Features
             {
                 response.Status = ClinicEnums.enumAuthResult.UNRECOGNIZED.ToString();
                 response.Message = "User Name or Password Incorrect";
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Set user reset password code
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public AccountResponse SetResetPasswordCode(AccountRequest request)
+        {
+            // init response
+            AccountResponse response = new AccountResponse();
+
+            // get employee by its email
+            var employee = _unitOfWork.EmployeeRepository.GetFirstOrDefault(x => x.Email == request.RequestAccountModel.Email);
+            if (employee != null)
+            {
+                try
+                {
+                    // get user based on employee ID
+                    var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.EmployeeID == employee.id);
+
+                    // set reset password code
+                    user.ResetPasswordCode = request.RequestAccountModel.ResetPasswordCode;
+
+                    // update user                    
+                    _unitOfWork.UserRepository.Update(user);
+
+                    // save it
+                    int resultAffected = _unitOfWork.Save();
+
+                    // update response
+                    response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                    response.Message = "Data Successfully Updated";
+                }
+                catch (Exception ex)
+                {
+                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Message = CommonUtils.GetGeneralErrorMesg();
+                }
+            }
+            else
+            {
+                response.Status = ClinicEnums.enumAuthResult.UNRECOGNIZED.ToString();
+                response.Message = "User Name or Password Incorrect";
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Validate user reset password code
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public AccountResponse ValidateResetPasswordCode(AccountRequest request)
+        {
+            // init response
+            AccountResponse response = new AccountResponse();
+
+            // check if user with passed reset password code exist
+            var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.ResetPasswordCode == request.RequestAccountModel.ResetPasswordCode);
+            if (user != null)
+            {
+                // update response
+                response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+            }
+            else
+            {
+                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                response.Message = CommonUtils.GetGeneralErrorMesg();
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Update user password 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public AccountResponse UpdateUserPassword(AccountRequest request)
+        {
+            // init response
+            AccountResponse response = new AccountResponse();
+
+            // get user by its reset password code
+            var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.ResetPasswordCode == request.RequestAccountModel.ResetPasswordCode);
+            if (user != null)
+            {
+                try
+                {
+                    // update password
+                    user.Password = CommonUtils.Encryptor(request.RequestAccountModel.Password, CommonUtils.KeyEncryptor);
+
+                    // clear the resert password code
+                    user.ResetPasswordCode = null;
+
+                    // update user
+                    _unitOfWork.UserRepository.Update(user);
+
+                    // save it
+                    int resultAffected = _unitOfWork.Save();
+
+                    // update response
+                    response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                    response.Message = "User Password Successfully Updated";
+                }
+                catch
+                {
+                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Message = CommonUtils.GetGeneralErrorMesg();
+                }
+            }
+            else
+            {
+                response.Status = ClinicEnums.enumAuthResult.UNRECOGNIZED.ToString();
+                response.Message = "Reset Code Incorrect";
             }
 
             return response;

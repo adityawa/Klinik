@@ -30,7 +30,7 @@ namespace Klinik.Features
         {
             List<OrganizationData> lists = new List<OrganizationData>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.True<Organization>();
+            var searchPredicate = PredicateBuilder.New<Organization>(true);
             if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.OrgCode.Contains(request.searchValue) || p.OrgName.Contains(request.searchValue) || p.Clinic.Name.Contains(request.searchValue));
@@ -170,7 +170,7 @@ namespace Klinik.Features
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 response.Status = ClinicEnums.enumStatus.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg();
@@ -230,7 +230,7 @@ namespace Klinik.Features
                     response.Message = $"Remove Organization Failed!";
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 response.Status = ClinicEnums.enumStatus.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;
