@@ -207,22 +207,27 @@ namespace Klinik.Web.Controllers
             {
                 var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, "/Account/ResetPassword/" + resetCode);
 
-                var fromEmail = new MailAddress("verifikasi.klinik@gmail.com", "Medical Management Sistem");
+                var emailSender = System.Configuration.ConfigurationManager.AppSettings["SmtpSender"].ToString();
+                var emailSenderPassword = System.Configuration.ConfigurationManager.AppSettings["SmtpSenderPassword"].ToString();
+                var emailSenderDisplayName = System.Configuration.ConfigurationManager.AppSettings["SmtpSenderDisplay"].ToString();
+                var smtpHost = System.Configuration.ConfigurationManager.AppSettings["SmtpHost"].ToString();
+                var smtpPort = int.Parse(System.Configuration.ConfigurationManager.AppSettings["SmtpPort"].ToString());
+
+                var fromEmail = new MailAddress(emailSender, emailSenderDisplayName);
                 var toEmail = new MailAddress(emailID);
-                var fromEmailPassword = "Klinik2019";
 
                 string subject = "Reset Password";
                 string body = "Hi,<br/><br/>We got request for reset your account password. Please click on the below link to reset your password" +
-                    "<br/><br/><a href=" + link + ">Reset Password link</a>";
+                    "<br/><br/><a href=" + link + ">Reset Password link</a><br/><br/>Regards,<br/>Administrator";
 
                 var smtp = new SmtpClient
                 {
-                    Host = "smtp.gmail.com",
-                    Port = 587,
+                    Host = smtpHost,
+                    Port = smtpPort,
                     EnableSsl = true,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+                    Credentials = new NetworkCredential(fromEmail.Address, emailSenderPassword)
                 };
 
                 using (var message = new MailMessage(fromEmail, toEmail)
