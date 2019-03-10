@@ -10,6 +10,8 @@ namespace Klinik.Entities.Account
         public string UserName { get; set; }
         [Required(ErrorMessage = "Please Fill Password")]
         public string Password { get; set; }
+        public string Email { get; set; }
+        public string ResetPasswordCode { get; set; }
         public long UserID { get; set; }
         public long EmployeeID { get; set; }
         public List<long> Roles { get; set; }

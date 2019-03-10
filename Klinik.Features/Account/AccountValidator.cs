@@ -32,7 +32,7 @@ namespace Klinik.Features
 
             if (response.Status == ClinicEnums.enumStatus.SUCCESS.ToString())
             {
-                response = new AccountHandler(_unitOfWork).AuthenticateUser(request);
+                response = new AccountHandler(_unitOfWork, _context).AuthenticateUser(request);
             }
 
             return response;
