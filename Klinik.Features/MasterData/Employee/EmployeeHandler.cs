@@ -41,6 +41,7 @@ namespace Klinik.Features
                         qry.EmpName = request.RequestEmployeeData.EmpName;
                         qry.BirthDate = request.RequestEmployeeData.Birthdate;
                         qry.Gender = request.RequestEmployeeData.Gender;
+                        qry.Email = request.RequestEmployeeData.Email;
                         qry.EmpType = request.RequestEmployeeData.EmpType;
                         qry.EmpDept = request.RequestEmployeeData.EmpDept;
                         qry.ModifiedBy = request.RequestEmployeeData.ModifiedBy ?? "SYSTEM";
