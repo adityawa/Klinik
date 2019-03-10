@@ -452,6 +452,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\bg-login.jpg" />
     <Content Include="Content\images\favicon-login.ico" />
+    <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\garuda.png" />
     <Content Include="Content\images\inpex-logo.png" />
     <Content Include="Content\images\inpex-logo1.png" />
