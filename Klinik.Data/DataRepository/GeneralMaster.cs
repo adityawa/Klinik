@@ -17,6 +17,7 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public GeneralMaster()
         {
+            this.Clinics = new HashSet<Clinic>();
             this.Employees = new HashSet<Employee>();
         }
     
@@ -25,6 +26,8 @@ namespace Klinik.Data.DataRepository
         public string Name { get; set; }
         public string Value { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Clinic> Clinics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
     }

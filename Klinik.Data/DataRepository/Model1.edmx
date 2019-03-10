@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Clinic">
           <Key>
             <PropertyRef Name="ID" />
@@ -19,8 +19,8 @@
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="Lat" Type="float" />
           <Property Name="Long" Type="float" />
-          <Property Name="CityID" Type="int" />
-          <Property Name="ClinicType" Type="smallint" />
+          <Property Name="CityID" Type="bigint" />
+          <Property Name="ClinicType" Type="bigint" />
           <Property Name="ReffID" Type="int" />
           <Property Name="RowStatus" Type="smallint" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
@@ -64,8 +64,8 @@
           <Property Name="Module" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Account" Type="bigint" Nullable="false" />
           <Property Name="Command" Type="text" />
-          <Property Name="OldValue" Type="nvarchar" MaxLength="500" />
-          <Property Name="NewValue" Type="nvarchar" MaxLength="500" />
+          <Property Name="OldValue" Type="nvarchar(max)" />
+          <Property Name="NewValue" Type="nvarchar(max)" />
           <Property Name="Status" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Menu">
@@ -169,6 +169,18 @@
           <Property Name="UserID" Type="bigint" Nullable="false" />
           <Property Name="RoleID" Type="bigint" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Clinic_Clinic">
+          <End Role="GeneralMaster" Type="Self.GeneralMaster" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GeneralMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clinic">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_GeneralMaster">
           <End Role="GeneralMaster" Type="Self.GeneralMaster" Multiplicity="0..1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -327,6 +339,10 @@
           <EntitySet Name="RolePrivilege" EntityType="Self.RolePrivilege" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Clinic_Clinic" Association="Self.FK_Clinic_Clinic">
+            <End Role="GeneralMaster" EntitySet="GeneralMaster" />
+            <End Role="Clinic" EntitySet="Clinic" />
+          </AssociationSet>
           <AssociationSet Name="FK_Employee_GeneralMaster" Association="Self.FK_Employee_GeneralMaster">
             <End Role="GeneralMaster" EntitySet="GeneralMaster" />
             <End Role="Employee" EntitySet="Employee" />
@@ -376,7 +392,8 @@
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KlinikDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -394,14 +411,15 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Lat" Type="Double" />
           <Property Name="Long" Type="Double" />
-          <Property Name="CityID" Type="Int32" />
-          <Property Name="ClinicType" Type="Int16" />
+          <Property Name="CityID" Type="Int64" />
+          <Property Name="ClinicType" Type="Int64" />
           <Property Name="ReffID" Type="Int32" />
           <Property Name="RowStatus" Type="Int16" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="GeneralMaster" Relationship="Self.FK_Clinic_Clinic" FromRole="Clinic" ToRole="GeneralMaster" />
           <NavigationProperty Name="Organizations" Relationship="Self.FK_Organization_Clinic" FromRole="Clinic" ToRole="Organization" />
         </EntityType>
         <EntityType Name="Employee">
@@ -432,6 +450,7 @@
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Value" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Clinics" Relationship="Self.FK_Clinic_Clinic" FromRole="GeneralMaster" ToRole="Clinic" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_GeneralMaster" FromRole="GeneralMaster" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Log">
@@ -443,9 +462,27 @@
           <Property Name="Module" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Account" Type="Int64" Nullable="false" />
           <Property Name="Command" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="OldValue" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="NewValue" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="OldValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ParentMenuId" Type="Int64" />
+          <Property Name="PageLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SortIndex" Type="Int32" Nullable="false" />
+          <Property Name="HasChild" Type="Boolean" />
+          <Property Name="IsMenu" Type="Boolean" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Controller" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Level" Type="Int32" />
+          <Property Name="icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Privileges" Relationship="Self.FK_Privilege_Menu" FromRole="Menu" ToRole="Privilege" />
         </EntityType>
         <EntityType Name="Organization">
           <Key>
@@ -461,8 +498,8 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Clinic" Relationship="Self.FK_Organization_Clinic" FromRole="Organization" ToRole="Clinic" />
           <NavigationProperty Name="OrganizationPrivileges" Relationship="Self.FK_OrganizationPrivilege_Organization" FromRole="Organization" ToRole="OrganizationPrivilege" />
+          <NavigationProperty Name="OrganizationRoles" Relationship="Self.FK_OrganizationRole_Organization" FromRole="Organization" ToRole="OrganizationRole" />
           <NavigationProperty Name="Users" Relationship="Self.FK_User_Organization" FromRole="Organization" ToRole="User" />
-          <NavigationProperty Name="OrganizationRoles" Relationship="KlinikDBModel.FK_OrganizationRole_Organization" FromRole="Organization" ToRole="OrganizationRole" />
         </EntityType>
         <EntityType Name="OrganizationPrivilege">
           <Key>
@@ -472,7 +509,18 @@
           <Property Name="OrgID" Type="Int64" Nullable="false" />
           <Property Name="PrivilegeID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Organization" Relationship="Self.FK_OrganizationPrivilege_Organization" FromRole="OrganizationPrivilege" ToRole="Organization" />
-          <NavigationProperty Name="Privilege" Relationship="KlinikDBModel.FK_OrganizationPrivilege_Privilege" FromRole="OrganizationPrivilege" ToRole="Privilege" />
+          <NavigationProperty Name="Privilege" Relationship="Self.FK_OrganizationPrivilege_Privilege" FromRole="OrganizationPrivilege" ToRole="Privilege" />
+        </EntityType>
+        <EntityType Name="OrganizationRole">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrgID" Type="Int64" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_OrganizationRole_Organization" FromRole="OrganizationRole" ToRole="Organization" />
+          <NavigationProperty Name="RolePrivileges" Relationship="Self.FK_RolePrivilege_OrganizationRole" FromRole="OrganizationRole" ToRole="RolePrivilege" />
+          <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_OrganizationRole" FromRole="OrganizationRole" ToRole="UserRole" />
         </EntityType>
         <EntityType Name="PasswordHistory">
           <Key>
@@ -482,6 +530,33 @@
           <Property Name="OrganizationID" Type="Int64" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Privilege">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Privilege_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Privilege_Desc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="MenuID" Type="Int64" />
+          <NavigationProperty Name="Menu" Relationship="Self.FK_Privilege_Menu" FromRole="Privilege" ToRole="Menu" />
+          <NavigationProperty Name="OrganizationPrivileges" Relationship="Self.FK_OrganizationPrivilege_Privilege" FromRole="Privilege" ToRole="OrganizationPrivilege" />
+          <NavigationProperty Name="RolePrivileges" Relationship="Self.FK_RolePrivilege_Privilege" FromRole="Privilege" ToRole="RolePrivilege" />
+        </EntityType>
+        <EntityType Name="RolePrivilege">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleID" Type="Int64" Nullable="false" />
+          <Property Name="PrivilegeID" Type="Int64" Nullable="false" />
+          <Property Name="MenuId" Type="Int64" />
+          <NavigationProperty Name="OrganizationRole" Relationship="Self.FK_RolePrivilege_OrganizationRole" FromRole="RolePrivilege" ToRole="OrganizationRole" />
+          <NavigationProperty Name="Privilege" Relationship="Self.FK_RolePrivilege_Privilege" FromRole="RolePrivilege" ToRole="Privilege" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -509,9 +584,21 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int64" Nullable="false" />
           <Property Name="RoleID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="OrganizationRole" Relationship="Self.FK_UserRole_OrganizationRole" FromRole="UserRole" ToRole="OrganizationRole" />
           <NavigationProperty Name="User" Relationship="Self.FK_UserRole_User" FromRole="UserRole" ToRole="User" />
-          <NavigationProperty Name="OrganizationRole" Relationship="KlinikDBModel.FK_UserRole_OrganizationRole" FromRole="UserRole" ToRole="OrganizationRole" />
         </EntityType>
+        <Association Name="FK_Clinic_Clinic">
+          <End Role="GeneralMaster" Type="Self.GeneralMaster" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GeneralMaster">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clinic">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Organization_Clinic">
           <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
           <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
@@ -548,6 +635,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Privilege_Menu">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
+          <End Role="Privilege" Type="Self.Privilege" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Privilege">
+              <PropertyRef Name="MenuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrganizationPrivilege_Organization">
           <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
           <End Role="OrganizationPrivilege" Type="Self.OrganizationPrivilege" Multiplicity="*" />
@@ -556,6 +655,18 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="OrganizationPrivilege">
+              <PropertyRef Name="OrgID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganizationRole_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="OrganizationRole" Type="Self.OrganizationRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrganizationRole">
               <PropertyRef Name="OrgID" />
             </Dependent>
           </ReferentialConstraint>
@@ -569,6 +680,54 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="OrganizationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganizationPrivilege_Privilege">
+          <End Role="Privilege" Type="Self.Privilege" Multiplicity="1" />
+          <End Role="OrganizationPrivilege" Type="Self.OrganizationPrivilege" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Privilege">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrganizationPrivilege">
+              <PropertyRef Name="PrivilegeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RolePrivilege_OrganizationRole">
+          <End Role="OrganizationRole" Type="Self.OrganizationRole" Multiplicity="1" />
+          <End Role="RolePrivilege" Type="Self.RolePrivilege" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganizationRole">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RolePrivilege">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_OrganizationRole">
+          <End Role="OrganizationRole" Type="Self.OrganizationRole" Multiplicity="1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganizationRole">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RolePrivilege_Privilege">
+          <End Role="Privilege" Type="Self.Privilege" Multiplicity="1" />
+          <End Role="RolePrivilege" Type="Self.RolePrivilege" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Privilege">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RolePrivilege">
+              <PropertyRef Name="PrivilegeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -589,11 +748,19 @@
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="GeneralMasters" EntityType="Self.GeneralMaster" />
           <EntitySet Name="Logs" EntityType="Self.Log" />
+          <EntitySet Name="Menus" EntityType="Self.Menu" />
           <EntitySet Name="Organizations" EntityType="Self.Organization" />
           <EntitySet Name="OrganizationPrivileges" EntityType="Self.OrganizationPrivilege" />
+          <EntitySet Name="OrganizationRoles" EntityType="Self.OrganizationRole" />
           <EntitySet Name="PasswordHistories" EntityType="Self.PasswordHistory" />
+          <EntitySet Name="Privileges" EntityType="Self.Privilege" />
+          <EntitySet Name="RolePrivileges" EntityType="Self.RolePrivilege" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+          <AssociationSet Name="FK_Clinic_Clinic" Association="Self.FK_Clinic_Clinic">
+            <End Role="GeneralMaster" EntitySet="GeneralMasters" />
+            <End Role="Clinic" EntitySet="Clinics" />
+          </AssociationSet>
           <AssociationSet Name="FK_Organization_Clinic" Association="Self.FK_Organization_Clinic">
             <End Role="Clinic" EntitySet="Clinics" />
             <End Role="Organization" EntitySet="Organizations" />
@@ -606,175 +773,43 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_Privilege_Menu" Association="Self.FK_Privilege_Menu">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="Privilege" EntitySet="Privileges" />
+          </AssociationSet>
           <AssociationSet Name="FK_OrganizationPrivilege_Organization" Association="Self.FK_OrganizationPrivilege_Organization">
             <End Role="Organization" EntitySet="Organizations" />
             <End Role="OrganizationPrivilege" EntitySet="OrganizationPrivileges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrganizationRole_Organization" Association="Self.FK_OrganizationRole_Organization">
+            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="OrganizationRole" EntitySet="OrganizationRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Organization" Association="Self.FK_User_Organization">
             <End Role="Organization" EntitySet="Organizations" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_OrganizationPrivilege_Privilege" Association="Self.FK_OrganizationPrivilege_Privilege">
+            <End Role="Privilege" EntitySet="Privileges" />
+            <End Role="OrganizationPrivilege" EntitySet="OrganizationPrivileges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RolePrivilege_OrganizationRole" Association="Self.FK_RolePrivilege_OrganizationRole">
+            <End Role="OrganizationRole" EntitySet="OrganizationRoles" />
+            <End Role="RolePrivilege" EntitySet="RolePrivileges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_OrganizationRole" Association="Self.FK_UserRole_OrganizationRole">
+            <End Role="OrganizationRole" EntitySet="OrganizationRoles" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RolePrivilege_Privilege" Association="Self.FK_RolePrivilege_Privilege">
+            <End Role="Privilege" EntitySet="Privileges" />
+            <End Role="RolePrivilege" EntitySet="RolePrivileges" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-          <EntitySet Name="OrganizationRoles" EntityType="KlinikDBModel.OrganizationRole" />
-          <EntitySet Name="RolePrivileges" EntityType="KlinikDBModel.RolePrivilege" />
-          <AssociationSet Name="FK_OrganizationRole_Organization" Association="KlinikDBModel.FK_OrganizationRole_Organization">
-            <End Role="Organization" EntitySet="Organizations" />
-            <End Role="OrganizationRole" EntitySet="OrganizationRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RolePrivilege_OrganizationRole" Association="KlinikDBModel.FK_RolePrivilege_OrganizationRole">
-            <End Role="OrganizationRole" EntitySet="OrganizationRoles" />
-            <End Role="RolePrivilege" EntitySet="RolePrivileges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserRole_OrganizationRole" Association="KlinikDBModel.FK_UserRole_OrganizationRole">
-            <End Role="OrganizationRole" EntitySet="OrganizationRoles" />
-            <End Role="UserRole" EntitySet="UserRoles" />
-          </AssociationSet>
-          <EntitySet Name="Privileges" EntityType="KlinikDBModel.Privilege" />
-          <AssociationSet Name="FK_OrganizationPrivilege_Privilege" Association="KlinikDBModel.FK_OrganizationPrivilege_Privilege">
-            <End Role="Privilege" EntitySet="Privileges" />
-            <End Role="OrganizationPrivilege" EntitySet="OrganizationPrivileges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RolePrivilege_Privilege" Association="KlinikDBModel.FK_RolePrivilege_Privilege">
-            <End Role="Privilege" EntitySet="Privileges" />
-            <End Role="RolePrivilege" EntitySet="RolePrivileges" />
-          </AssociationSet>
-          <EntitySet Name="Menus" EntityType="KlinikDBModel.Menu" />
-          <AssociationSet Name="FK_Privilege_Menu" Association="KlinikDBModel.FK_Privilege_Menu">
-            <End Role="Menu" EntitySet="Menus" />
-            <End Role="Privilege" EntitySet="Privileges" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="OrganizationRole">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrgID" Type="Int64" Nullable="false" />
-          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Organization" Relationship="KlinikDBModel.FK_OrganizationRole_Organization" FromRole="OrganizationRole" ToRole="Organization" />
-          <NavigationProperty Name="RolePrivileges" Relationship="KlinikDBModel.FK_RolePrivilege_OrganizationRole" FromRole="OrganizationRole" ToRole="RolePrivilege" />
-          <NavigationProperty Name="UserRoles" Relationship="KlinikDBModel.FK_UserRole_OrganizationRole" FromRole="OrganizationRole" ToRole="UserRole" />
-        </EntityType>
-        <EntityType Name="RolePrivilege">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleID" Type="Int64" Nullable="false" />
-          <Property Name="PrivilegeID" Type="Int64" Nullable="false" />
-          <Property Name="MenuId" Type="Int64" />
-          <NavigationProperty Name="OrganizationRole" Relationship="KlinikDBModel.FK_RolePrivilege_OrganizationRole" FromRole="RolePrivilege" ToRole="OrganizationRole" />
-          <NavigationProperty Name="Privilege" Relationship="KlinikDBModel.FK_RolePrivilege_Privilege" FromRole="RolePrivilege" ToRole="Privilege" />
-        </EntityType>
-        <Association Name="FK_OrganizationRole_Organization">
-          <End Type="KlinikDBModel.Organization" Role="Organization" Multiplicity="1" />
-          <End Type="KlinikDBModel.OrganizationRole" Role="OrganizationRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Organization">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="OrganizationRole">
-              <PropertyRef Name="OrgID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RolePrivilege_OrganizationRole">
-          <End Type="KlinikDBModel.OrganizationRole" Role="OrganizationRole" Multiplicity="1" />
-          <End Type="KlinikDBModel.RolePrivilege" Role="RolePrivilege" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OrganizationRole">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="RolePrivilege">
-              <PropertyRef Name="RoleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserRole_OrganizationRole">
-          <End Type="KlinikDBModel.OrganizationRole" Role="OrganizationRole" Multiplicity="1" />
-          <End Type="KlinikDBModel.UserRole" Role="UserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OrganizationRole">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserRole">
-              <PropertyRef Name="RoleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Privilege">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Privilege_Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Privilege_Desc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="MenuID" Type="Int64" />
-          <NavigationProperty Name="OrganizationPrivileges" Relationship="KlinikDBModel.FK_OrganizationPrivilege_Privilege" FromRole="Privilege" ToRole="OrganizationPrivilege" />
-          <NavigationProperty Name="RolePrivileges" Relationship="KlinikDBModel.FK_RolePrivilege_Privilege" FromRole="Privilege" ToRole="RolePrivilege" />
-          <NavigationProperty Name="Menu" Relationship="KlinikDBModel.FK_Privilege_Menu" FromRole="Privilege" ToRole="Menu" />
-        </EntityType>
-        <Association Name="FK_OrganizationPrivilege_Privilege">
-          <End Type="KlinikDBModel.Privilege" Role="Privilege" Multiplicity="1" />
-          <End Type="KlinikDBModel.OrganizationPrivilege" Role="OrganizationPrivilege" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Privilege">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="OrganizationPrivilege">
-              <PropertyRef Name="PrivilegeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RolePrivilege_Privilege">
-          <End Type="KlinikDBModel.Privilege" Role="Privilege" Multiplicity="1" />
-          <End Type="KlinikDBModel.RolePrivilege" Role="RolePrivilege" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Privilege">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="RolePrivilege">
-              <PropertyRef Name="PrivilegeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Menu">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ParentMenuId" Type="Int64" />
-          <Property Name="PageLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SortIndex" Type="Int32" Nullable="false" />
-          <Property Name="HasChild" Type="Boolean" />
-          <Property Name="IsMenu" Type="Boolean" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Controller" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Level" Type="Int32" />
-          <Property Name="icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Privileges" Relationship="KlinikDBModel.FK_Privilege_Menu" FromRole="Menu" ToRole="Privilege" />
-        </EntityType>
-        <Association Name="FK_Privilege_Menu">
-          <End Type="KlinikDBModel.Menu" Role="Menu" Multiplicity="0..1" />
-          <End Type="KlinikDBModel.Privilege" Role="Privilege" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Menu">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Privilege">
-              <PropertyRef Name="MenuID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -848,6 +883,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Menus">
+            <EntityTypeMapping TypeName="KlinikDBModel.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ParentMenuId" ColumnName="ParentMenuId" />
+                <ScalarProperty Name="PageLink" ColumnName="PageLink" />
+                <ScalarProperty Name="SortIndex" ColumnName="SortIndex" />
+                <ScalarProperty Name="HasChild" ColumnName="HasChild" />
+                <ScalarProperty Name="IsMenu" ColumnName="IsMenu" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Organizations">
             <EntityTypeMapping TypeName="KlinikDBModel.Organization">
               <MappingFragment StoreEntitySet="Organization">
@@ -871,6 +924,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="OrganizationRoles">
+            <EntityTypeMapping TypeName="KlinikDBModel.OrganizationRole">
+              <MappingFragment StoreEntitySet="OrganizationRole">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PasswordHistories">
             <EntityTypeMapping TypeName="KlinikDBModel.PasswordHistory">
               <MappingFragment StoreEntitySet="PasswordHistory">
@@ -878,6 +940,30 @@
                 <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Privileges">
+            <EntityTypeMapping TypeName="KlinikDBModel.Privilege">
+              <MappingFragment StoreEntitySet="Privilege">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Privilege_Name" ColumnName="Privilege_Name" />
+                <ScalarProperty Name="Privilege_Desc" ColumnName="Privilege_Desc" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RolePrivileges">
+            <EntityTypeMapping TypeName="KlinikDBModel.RolePrivilege">
+              <MappingFragment StoreEntitySet="RolePrivilege">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="PrivilegeID" ColumnName="PrivilegeID" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -904,57 +990,6 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrganizationRoles">
-            <EntityTypeMapping TypeName="KlinikDBModel.OrganizationRole">
-              <MappingFragment StoreEntitySet="OrganizationRole">
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RolePrivileges">
-            <EntityTypeMapping TypeName="KlinikDBModel.RolePrivilege">
-              <MappingFragment StoreEntitySet="RolePrivilege">
-                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
-                <ScalarProperty Name="PrivilegeID" ColumnName="PrivilegeID" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Privileges">
-            <EntityTypeMapping TypeName="KlinikDBModel.Privilege">
-              <MappingFragment StoreEntitySet="Privilege">
-                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Privilege_Desc" ColumnName="Privilege_Desc" />
-                <ScalarProperty Name="Privilege_Name" ColumnName="Privilege_Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Menus">
-            <EntityTypeMapping TypeName="KlinikDBModel.Menu">
-              <MappingFragment StoreEntitySet="Menu">
-                <ScalarProperty Name="icon" ColumnName="icon" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
-                <ScalarProperty Name="Action" ColumnName="Action" />
-                <ScalarProperty Name="Controller" ColumnName="Controller" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IsMenu" ColumnName="IsMenu" />
-                <ScalarProperty Name="HasChild" ColumnName="HasChild" />
-                <ScalarProperty Name="SortIndex" ColumnName="SortIndex" />
-                <ScalarProperty Name="PageLink" ColumnName="PageLink" />
-                <ScalarProperty Name="ParentMenuId" ColumnName="ParentMenuId" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

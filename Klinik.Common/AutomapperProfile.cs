@@ -13,7 +13,15 @@ namespace Klinik.Common
         {
             CreateMap<Organization, OrganizationModel>();
             CreateMap<OrganizationModel, Organization>();
-            CreateMap<Clinic, ClinicModel>();
+            CreateMap<Clinic, ClinicModel>()
+                .ForMember(m => m.LegalDateDesc, map => map.MapFrom(p => p.LegalDate == null ? "" : p.LegalDate.Value.ToString("MM/dd/yyyy")));
+
+
+            CreateMap<ClinicModel, Clinic>()
+                .ForMember(m => m.DateCreated, map => map.MapFrom(p => p.CreatedDate))
+                .ForMember(m => m.DateModified, map => map.MapFrom(p => p.ModifiedDate))
+                .ForMember(m => m.LastUpdateBy, map => map.MapFrom(p => p.ModifiedBy));
+
             CreateMap<Organization, OrganizationData>()
                 .ForMember(m => m.Klinik, map => map.MapFrom(p => p.Clinic.Name));
 

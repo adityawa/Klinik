@@ -80,6 +80,9 @@
     <Compile Include="MapMasterData\UserRole\UserRoleResponse.cs" />
     <Compile Include="MapMasterData\UserRole\UserRoleValidator.cs" />
     <Compile Include="MasterData\Clinic\ClinicHandler.cs" />
+    <Compile Include="MasterData\Clinic\ClinicRequest.cs" />
+    <Compile Include="MasterData\Clinic\ClinicResponse.cs" />
+    <Compile Include="MasterData\Clinic\ClinicValidator.cs" />
     <Compile Include="MasterData\Employee\EmployeeHandler.cs" />
     <Compile Include="MasterData\Employee\EmployeeRequest.cs" />
     <Compile Include="MasterData\Employee\EmployeeResponse.cs" />

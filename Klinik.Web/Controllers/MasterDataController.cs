@@ -95,6 +95,36 @@ namespace Klinik.Web.Controllers
             return _departments;
         }
 
+        private List<SelectListItem> BindDropDownCity()
+        {
+            List<SelectListItem> _cities = new List<SelectListItem>();
+            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.enumMasterTypes.City.ToString()).ToList())
+            {
+                _cities.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                });
+            }
+
+            return _cities;
+        }
+
+        private List<SelectListItem> BindDropDownClinicType()
+        {
+            List<SelectListItem> _clinicTypes = new List<SelectListItem>();
+            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.enumMasterTypes.ClinicType.ToString()).ToList())
+            {
+                _clinicTypes.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                });
+            }
+
+            return _clinicTypes;
+        }
+
         private List<SelectListItem> BindDropDownMenu()
         {
             List<SelectListItem> _menus = new List<SelectListItem>();

@@ -75,7 +75,7 @@ namespace Klinik.Features
                     if (resultAffected > 0)
                     {
                         response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
-                        response.Message = $"Success Add new User {EmployeeEntity.EmpName} with Id {EmployeeEntity.id}";
+                        response.Message = $"Success Add new Employee {EmployeeEntity.EmpName} with Id {EmployeeEntity.id}";
                     }
                     else
                     {

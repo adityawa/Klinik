@@ -30,8 +30,8 @@ namespace Klinik.Data.DataRepository
         public string Email { get; set; }
         public Nullable<double> Lat { get; set; }
         public Nullable<double> Long { get; set; }
-        public Nullable<int> CityID { get; set; }
-        public Nullable<short> ClinicType { get; set; }
+        public Nullable<long> CityID { get; set; }
+        public Nullable<long> ClinicType { get; set; }
         public Nullable<int> ReffID { get; set; }
         public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
@@ -39,6 +39,7 @@ namespace Klinik.Data.DataRepository
         public string LastUpdateBy { get; set; }
         public Nullable<System.DateTime> DateModified { get; set; }
     
+        public virtual GeneralMaster GeneralMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Organization> Organizations { get; set; }
     }

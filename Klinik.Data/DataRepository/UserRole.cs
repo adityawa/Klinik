@@ -18,7 +18,7 @@ namespace Klinik.Data.DataRepository
         public long UserID { get; set; }
         public long RoleID { get; set; }
     
-        public virtual User User { get; set; }
         public virtual OrganizationRole OrganizationRole { get; set; }
+        public virtual User User { get; set; }
     }
 }

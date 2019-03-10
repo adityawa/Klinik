@@ -18,8 +18,8 @@ namespace Klinik.Data.DataRepository
         public Organization()
         {
             this.OrganizationPrivileges = new HashSet<OrganizationPrivilege>();
-            this.Users = new HashSet<User>();
             this.OrganizationRoles = new HashSet<OrganizationRole>();
+            this.Users = new HashSet<User>();
         }
     
         public long ID { get; set; }
@@ -35,8 +35,8 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrganizationPrivilege> OrganizationPrivileges { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrganizationRole> OrganizationRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> Users { get; set; }
     }
 }

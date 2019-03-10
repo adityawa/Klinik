@@ -14,7 +14,9 @@
         public enum enumMasterTypes
         {
             EmploymentType,
-            Department
+            Department,
+            City,
+            ClinicType
         }
 
         public enum enumAuthResult
