@@ -3,6 +3,7 @@ using Klinik.Data.DataRepository;
 using System;
 using Unity;
 using Unity.Injection;
+using Unity.Lifetime;
 
 namespace Klinik.Web
 {
@@ -45,8 +46,8 @@ namespace Klinik.Web
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<UnitOfWork>(new InjectionConstructor(new KlinikDBEntities()));
-            container.RegisterType<IUnitOfWork, UnitOfWork>();
-            container.RegisterType<KlinikDBEntities,KlinikDBEntities>();
+            container.RegisterType<IUnitOfWork, UnitOfWork>(new PerResolveLifetimeManager());
+            container.RegisterType<KlinikDBEntities,KlinikDBEntities>(new PerResolveLifetimeManager());
         }
     }
 }

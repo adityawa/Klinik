@@ -80,13 +80,16 @@ namespace Klinik.Features
                         response.Message = "Add Data Failed";
                     }
                 }
+
+              
             }
             catch (Exception ex)
             {
+              
                 response.Status = ClinicEnums.enumStatus.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg();
             }
-
+          
             return response;
         }
 

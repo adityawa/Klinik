@@ -667,5 +667,9 @@ namespace Klinik.Web.Controllers
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        #region ::CLINIC::
+
+        #endregion
     }
 }
