@@ -37,52 +37,61 @@ namespace Klinik.Features
         public AccountResponse AuthenticateUser(AccountRequest request)
         {
             AccountResponse response = new AccountResponse();
-            long _orgId = 0;
+
             //get Org ID
             var _getOrganization = _unitOfWork.OrganizationRepository.GetFirstOrDefault(x => x.OrgCode == request.RequestAccountModel.Organization);
             if (_getOrganization != null)
-                _orgId = _getOrganization.ID;
-            var _getByUname = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName == request.RequestAccountModel.UserName && x.Status == true && x.ExpiredDate > DateTime.Now && x.OrganizationID == _orgId);
-            if (_getByUname != null)
             {
-                var _decryptedPassword = CommonUtils.Decryptor(_getByUname.Password, CommonUtils.KeyEncryptor);
-                if (_decryptedPassword == request.RequestAccountModel.Password)
+                var _getByUname = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName == request.RequestAccountModel.UserName && x.Status == true && x.ExpiredDate > DateTime.Now && x.OrganizationID == _getOrganization.ID);
+                if (_getByUname != null)
                 {
-                    if (response.Entity == null)
-                        response.Entity = new AccountModel();
-
-                    response.Entity.UserName = _getByUname.UserName;
-                    response.Entity.UserID = _getByUname.ID;
-                    response.Entity.EmployeeID = _getByUname.EmployeeID;
-
-                    var _getRoles = _unitOfWork.UserRoleRepository.Get(x => x.UserID == response.Entity.UserID);
-
-                    response.Entity.Roles = new List<long>();
-                    foreach (var role in _getRoles)
+                    var _decryptedPassword = CommonUtils.Decryptor(_getByUname.Password, CommonUtils.KeyEncryptor);
+                    if (_decryptedPassword == request.RequestAccountModel.Password)
                     {
-                        response.Entity.Roles.Add(role.RoleID);
+                        if (response.Entity == null)
+                            response.Entity = new AccountModel();
+
+                        response.Entity.UserName = _getByUname.UserName;
+                        response.Entity.UserID = _getByUname.ID;
+                        response.Entity.EmployeeID = _getByUname.EmployeeID;
+                        response.Entity.Organization = _getOrganization.OrgCode;
+
+                        var _getRoles = _unitOfWork.UserRoleRepository.Get(x => x.UserID == response.Entity.UserID);
+
+                        response.Entity.Roles = new List<long>();
+                        foreach (var role in _getRoles)
+                        {
+                            response.Entity.Roles.Add(role.RoleID);
+                        }
+
+                        var _getRolePrivileges = _unitOfWork.RolePrivRepository.Get(x => response.Entity.Roles.Contains(x.RoleID));
+                        if (response.Entity.Privileges == null)
+                            response.Entity.Privileges = new RolePrivilegeModel();
+
+                        foreach (var rp in _getRolePrivileges)
+                        {
+                            if (response.Entity.Privileges.PrivilegeIDs == null)
+                                response.Entity.Privileges.PrivilegeIDs = new List<long>();
+                            response.Entity.Privileges.PrivilegeIDs.Add(rp.PrivilegeID);
+                        }
+
+                        response.Status = ClinicEnums.AuthResult.SUCCESS.ToString();
+                        response.Message = "";
+
+                        CommandLog(ClinicEnums.Module.LOGIN, ClinicEnums.Status.SUCCESS, Constants.Command.LOGIN_TO_SYSTEM, request.RequestAccountModel);
                     }
-
-                    var _getRolePrivileges = _unitOfWork.RolePrivRepository.Get(x => response.Entity.Roles.Contains(x.RoleID));
-                    if (response.Entity.Privileges == null)
-                        response.Entity.Privileges = new RolePrivilegeModel();
-
-                    foreach (var rp in _getRolePrivileges)
+                    else
                     {
-                        if (response.Entity.Privileges.PrivilegeIDs == null)
-                            response.Entity.Privileges.PrivilegeIDs = new List<long>();
-                        response.Entity.Privileges.PrivilegeIDs.Add(rp.PrivilegeID);
+                        response.Status = ClinicEnums.AuthResult.UNRECOGNIZED.ToString();
+                        response.Message = "Password Incorrect";
+
+                        CommandLog(ClinicEnums.Module.LOGIN, ClinicEnums.Status.UNRECOGNIZED, Constants.Command.LOGIN_TO_SYSTEM, request.RequestAccountModel);
                     }
-
-                    response.Status = ClinicEnums.AuthResult.SUCCESS.ToString();
-                    response.Message = "";
-
-                    CommandLog(ClinicEnums.Module.LOGIN, ClinicEnums.Status.SUCCESS, Constants.Command.LOGIN_TO_SYSTEM, request.RequestAccountModel);
                 }
                 else
                 {
                     response.Status = ClinicEnums.AuthResult.UNRECOGNIZED.ToString();
-                    response.Message = "Password Incorrect";
+                    response.Message = "User Name or Password Incorrect";
 
                     CommandLog(ClinicEnums.Module.LOGIN, ClinicEnums.Status.UNRECOGNIZED, Constants.Command.LOGIN_TO_SYSTEM, request.RequestAccountModel);
                 }
@@ -90,7 +99,7 @@ namespace Klinik.Features
             else
             {
                 response.Status = ClinicEnums.AuthResult.UNRECOGNIZED.ToString();
-                response.Message = "User Name or Password Incorrect";
+                response.Message = "Invalid Organization Code";
 
                 CommandLog(ClinicEnums.Module.LOGIN, ClinicEnums.Status.UNRECOGNIZED, Constants.Command.LOGIN_TO_SYSTEM, request.RequestAccountModel);
             }
