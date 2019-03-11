@@ -39,6 +39,11 @@ namespace Klinik.Features
             return clinics;
         }
 
+        /// <summary>
+        /// Create or edit a clinic
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public ClinicResponse CreateOrEdit(ClinicRequest request)
         {
             int resultAffected = 0;
@@ -112,11 +117,6 @@ namespace Klinik.Features
         }
 
         /// <summary>
-        /// Get all employee list
-        /// </summary>
-        /// <returns></returns>
-
-        /// <summary>
         /// Get employee details
         /// </summary>
         /// <param name="request"></param>
@@ -143,7 +143,7 @@ namespace Klinik.Features
         {
             List<ClinicModel> lists = new List<ClinicModel>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.True<Clinic>();
+            var searchPredicate = PredicateBuilder.New<Clinic>(true);
             if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.Code.Contains(request.searchValue) || p.Name.Contains(request.searchValue));
