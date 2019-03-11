@@ -1,9 +1,13 @@
 ﻿using AutoMapper;
+using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Entities.Account;
 using Klinik.Entities.Administration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Klinik.Features
 {
@@ -52,17 +56,43 @@ namespace Klinik.Features
             return IsAuthorized;
         }
 
-        public static void CommandLogging(LogModel log)
+        /// <summary>
+        /// Log any executed command by user
+        /// </summary>
+        /// <param name="module"></param>
+        /// <param name="status"></param>
+        /// <param name="command"></param>
+        /// <param name="account"></param>
+        /// <param name="newValue"></param>
+        /// <param name="oldValue"></param>
+        public static void CommandLog(ClinicEnums.Module module, ClinicEnums.Status status, string command, AccountModel account, object newValue = null, object oldValue = null)
         {
             try
             {
+                var log = new LogModel
+                {
+                    Start = DateTime.Now,
+                    Module = module.ToString(),
+                    Status = status.ToString(),
+                    Command = command,
+                    UserName = account.UserName,
+                    Organization = account.Organization,
+                    OldValue = oldValue is null ? null : JsonConvert.SerializeObject(oldValue),
+                    NewValue = newValue is null ? null : JsonConvert.SerializeObject(newValue)
+                };
+
                 var _entity = Mapper.Map<LogModel, Log>(log);
+
                 _unitOfWork.LogRepository.Insert(_entity);
                 _unitOfWork.Save();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-
+                using (EventLog eventLog = new EventLog("Application"))
+                {
+                    eventLog.Source = "Application";
+                    eventLog.WriteEntry(ex.GetAllMessages(), EventLogEntryType.Error, 101, 1);
+                }
             }
         }
     }

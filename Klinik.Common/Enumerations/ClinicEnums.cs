@@ -8,7 +8,8 @@
         public enum Status
         {
             SUCCESS,
-            ERROR
+            ERROR,
+            UNRECOGNIZED
         }
 
         public enum MasterTypes

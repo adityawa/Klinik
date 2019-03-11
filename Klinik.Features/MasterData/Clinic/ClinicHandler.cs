@@ -107,7 +107,7 @@ namespace Klinik.Features
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg();
@@ -249,7 +249,7 @@ namespace Klinik.Features
                     response.Message = $"Remove Clinic Failed!";
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;

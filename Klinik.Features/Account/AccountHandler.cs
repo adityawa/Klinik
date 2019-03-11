@@ -4,9 +4,7 @@ using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MappingMaster;
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using Klinik.Entities.Administration;
 
 namespace Klinik.Features
 {
@@ -79,50 +77,22 @@ namespace Klinik.Features
                     response.Status = ClinicEnums.AuthResult.SUCCESS.ToString();
                     response.Message = "";
 
-                    var logging = new LogModel
-                    {
-                        Start = DateTime.Now,
-                        Module = ClinicEnums.Module.LOGIN.ToString(),
-                        UserName = response.Entity.UserName,
-                        Organization = request.RequestAccountModel.Organization,
-                        Command = "Login To System",
-                        Status = ClinicEnums.Status.SUCCESS.ToString()
-                    };
-
-                    CommandLogging(logging);
+                    CommandLog(ClinicEnums.Module.LOGIN, ClinicEnums.Status.SUCCESS, Constants.Command.LOGIN_TO_SYSTEM, request.RequestAccountModel);
                 }
                 else
                 {
                     response.Status = ClinicEnums.AuthResult.UNRECOGNIZED.ToString();
                     response.Message = "Password Incorrect";
-                    var logging = new LogModel
-                    {
-                        Start = DateTime.Now,
-                        Module = ClinicEnums.Module.LOGIN.ToString(),
-                        UserName = request.RequestAccountModel.UserName,
-                        Organization = request.RequestAccountModel.Organization,
-                        Command = "Login To System",
-                        Status = ClinicEnums.AuthResult.UNRECOGNIZED.ToString()
-                    };
 
-                    CommandLogging(logging);
+                    CommandLog(ClinicEnums.Module.LOGIN, ClinicEnums.Status.UNRECOGNIZED, Constants.Command.LOGIN_TO_SYSTEM, request.RequestAccountModel);
                 }
             }
             else
             {
                 response.Status = ClinicEnums.AuthResult.UNRECOGNIZED.ToString();
                 response.Message = "User Name or Password Incorrect";
-                var logging = new LogModel
-                {
-                    Start = DateTime.Now,
-                    Module = ClinicEnums.Module.LOGIN.ToString(),
-                    UserName = request.RequestAccountModel.UserName,
-                    Organization = request.RequestAccountModel.Organization,
-                    Command = "Login To System",
-                    Status = ClinicEnums.AuthResult.UNRECOGNIZED.ToString()
-                };
 
-                CommandLogging(logging);
+                CommandLog(ClinicEnums.Module.LOGIN, ClinicEnums.Status.UNRECOGNIZED, Constants.Command.LOGIN_TO_SYSTEM, request.RequestAccountModel);
             }
 
             return response;
@@ -160,7 +130,7 @@ namespace Klinik.Features
                     response.Status = ClinicEnums.Status.SUCCESS.ToString();
                     response.Message = "Data Successfully Updated";
                 }
-                catch (Exception ex)
+                catch
                 {
                     response.Status = ClinicEnums.Status.ERROR.ToString();
                     response.Message = CommonUtils.GetGeneralErrorMesg();

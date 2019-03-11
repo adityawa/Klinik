@@ -121,7 +121,10 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="DB\script_DB_03032019.sql" />
+    <Content Include="DB\script_db_10032019.sql" />
     <Content Include="DB\script_DB_23022019.sql" />
+    <Content Include="DB\script_db_klinik_11032019.sql" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
