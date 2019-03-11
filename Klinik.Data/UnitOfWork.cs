@@ -18,6 +18,8 @@ namespace Klinik.Data
         private IGenericRepository<UserRole> _userroleRepository;
         private IGenericRepository<Menu> _menuRepository;
         private IGenericRepository<PasswordHistory> _passwordHistRepostiory;
+        private IGenericRepository<Log> _logRepository;
+
         private bool disposed = false;
 
 
@@ -150,6 +152,17 @@ namespace Klinik.Data
                     _passwordHistRepostiory = new GenericRepository<PasswordHistory>(_context);
 
                 return _passwordHistRepostiory;
+            }
+        }
+
+        public IGenericRepository<Log> LogRepository
+        {
+            get
+            {
+                if (_logRepository == null)
+                    _logRepository = new GenericRepository<Log>(_context);
+
+                return _logRepository;
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Klinik.Data.DataRepository;
+using Klinik.Entities.Administration;
 using Klinik.Entities.MappingMaster;
 using Klinik.Entities.MasterData;
 
@@ -68,6 +69,13 @@ namespace Klinik.Common
             CreateMap<UserRoleModel, UserRole>();
 
             CreateMap<Menu, MenuModel>();
+
+            CreateMap<Log, LogModel>()
+                .ForMember(x => x.strStart, map => map.MapFrom(p => p.Start.ToString("MM/dd/yyyy")));
+
+
+            CreateMap<LogModel, Log>();
+                
         }
     }
 }

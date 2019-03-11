@@ -25,6 +25,11 @@
             UNRECOGNIZED
         }
 
+        public enum enumModule
+        {
+          LOGIN
+        }
+
         public enum enumAction
         {
             Add,

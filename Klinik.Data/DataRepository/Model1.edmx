@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Clinic">
           <Key>
             <PropertyRef Name="ID" />
@@ -62,7 +62,8 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Start" Type="datetime" Nullable="false" />
           <Property Name="Module" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Account" Type="bigint" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Organization" Type="varchar" MaxLength="20" />
           <Property Name="Command" Type="text" />
           <Property Name="OldValue" Type="nvarchar(max)" />
           <Property Name="NewValue" Type="nvarchar(max)" />
@@ -149,7 +150,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="OrganizationID" Type="bigint" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="250" Nullable="false" />
@@ -160,7 +161,7 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="ResetPasswordCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="ResetPasswordCode" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -393,8 +394,7 @@
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KlinikDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -453,19 +453,6 @@
           <Property Name="Value" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Clinics" Relationship="Self.FK_Clinic_Clinic" FromRole="GeneralMaster" ToRole="Clinic" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_GeneralMaster" FromRole="GeneralMaster" ToRole="Employee" />
-        </EntityType>
-        <EntityType Name="Log">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Start" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Module" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Account" Type="Int64" Nullable="false" />
-          <Property Name="Command" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="OldValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NewValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -577,8 +564,8 @@
           <NavigationProperty Name="Employee" Relationship="Self.FK_User_Employee" FromRole="User" ToRole="Employee" />
           <NavigationProperty Name="Organization" Relationship="Self.FK_User_Organization" FromRole="User" ToRole="Organization" />
           <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
-          <Property Name="ResetPasswordCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
+          <Property Name="ResetPasswordCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          </EntityType>
         <EntityType Name="UserRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -749,7 +736,6 @@
           <EntitySet Name="Clinics" EntityType="Self.Clinic" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="GeneralMasters" EntityType="Self.GeneralMaster" />
-          <EntitySet Name="Logs" EntityType="Self.Log" />
           <EntitySet Name="Menus" EntityType="Self.Menu" />
           <EntitySet Name="Organizations" EntityType="Self.Organization" />
           <EntitySet Name="OrganizationPrivileges" EntityType="Self.OrganizationPrivilege" />
@@ -811,8 +797,23 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-        </EntityContainer>
-      </Schema>
+          <EntitySet Name="Logs" EntityType="KlinikDBModel.Log" />
+          </EntityContainer>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Start" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Module" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Organization" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Command" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="OldValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -868,20 +869,6 @@
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Logs">
-            <EntityTypeMapping TypeName="KlinikDBModel.Log">
-              <MappingFragment StoreEntitySet="Log">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Start" ColumnName="Start" />
-                <ScalarProperty Name="Module" ColumnName="Module" />
-                <ScalarProperty Name="Account" ColumnName="Account" />
-                <ScalarProperty Name="Command" ColumnName="Command" />
-                <ScalarProperty Name="OldValue" ColumnName="OldValue" />
-                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -993,6 +980,21 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="KlinikDBModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+                <ScalarProperty Name="OldValue" ColumnName="OldValue" />
+                <ScalarProperty Name="Command" ColumnName="Command" />
+                <ScalarProperty Name="Organization" ColumnName="Organization" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Module" ColumnName="Module" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

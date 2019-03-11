@@ -53,6 +53,12 @@
                         <span class="focus-inputMMS"></span>
                     </div>
 
+                    <div class="wrap-inputMMS validate-input m-b-26" data-validate="Organization is required">
+                        <span class="label-inputMMS">Organization</span>
+                        @Html.TextBoxFor(x => x.Organization, null, new { @class = "inputMMS", @id = "tbOrganization", @placeholder = "Enter Organization" })
+                        <span class="focus-inputMMS"></span>
+                    </div>
+
                     <div class="flex-sb-m w-full p-b-30">
                         <div class="contact100-form-checkbox">
                             <input class="input-checkboxMMS" id="ckb1" type="checkbox" name="remember-me">
