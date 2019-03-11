@@ -142,7 +142,8 @@ namespace Klinik.Web.Controllers
                 RequestAccountModel = new AccountModel
                 {
                     UserName = _model.UserName,
-                    Password = _model.Password
+                    Password = _model.Password,
+                    Organization=_model.Organization
                 }
             };
 

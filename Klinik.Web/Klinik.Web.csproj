@@ -1084,7 +1084,9 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1124,13 +1126,10 @@
     <Content Include="Views\MappingMaster\UserRoleList.cshtml" />
     <Content Include="Views\PasswordHistory\ChangePassword.cshtml" />
     <Content Include="Views\Unauthorized\Index.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\MasterData\ClinicList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditClinic.cshtml" />
-=======
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
->>>>>>> 8ca7eb049cd0a77e4746c7a959696f0c884011a0
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

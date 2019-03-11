@@ -17,7 +17,8 @@ namespace Klinik.Data.DataRepository
         public long Id { get; set; }
         public System.DateTime Start { get; set; }
         public string Module { get; set; }
-        public long Account { get; set; }
+        public string UserName { get; set; }
+        public string Organization { get; set; }
         public string Command { get; set; }
         public string OldValue { get; set; }
         public string NewValue { get; set; }

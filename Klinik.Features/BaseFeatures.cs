@@ -1,5 +1,8 @@
-﻿using Klinik.Data;
+﻿using AutoMapper;
+using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Entities.Administration;
+using System;
 using System.Collections.Generic;
 
 namespace Klinik.Features
@@ -9,7 +12,7 @@ namespace Klinik.Features
     /// </summary>
     public abstract class BaseFeatures
     {
-        public IUnitOfWork _unitOfWork;
+        public static IUnitOfWork _unitOfWork { get; set; }
         public KlinikDBEntities _context;
         public IList<string> errorFields = new List<string>();
 
@@ -47,6 +50,20 @@ namespace Klinik.Features
             }
 
             return IsAuthorized;
+        }
+
+        public static void CommandLogging(LogModel log)
+        {
+            try
+            {
+                var _entity = Mapper.Map<LogModel, Log>(log);
+                _unitOfWork.LogRepository.Insert(_entity);
+                _unitOfWork.Save();
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
     }
 }
