@@ -16,7 +16,7 @@ namespace Klinik.Features
         {
             response = new AccountResponse
             {
-                Status = ClinicEnums.enumStatus.SUCCESS.ToString()
+                Status = ClinicEnums.Status.SUCCESS.ToString()
             };
 
             if (String.IsNullOrEmpty(request.RequestAccountModel.UserName))
@@ -26,11 +26,11 @@ namespace Klinik.Features
 
             if (errorFields.Any())
             {
-                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = $"Following Fields must be filled : {String.Join(",", errorFields)}";
             }
 
-            if (response.Status == ClinicEnums.enumStatus.SUCCESS.ToString())
+            if (response.Status == ClinicEnums.Status.SUCCESS.ToString())
             {
                 response = new AccountHandler(_unitOfWork, _context).AuthenticateUser(request);
             }

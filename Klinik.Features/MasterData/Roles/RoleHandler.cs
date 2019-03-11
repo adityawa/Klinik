@@ -46,18 +46,18 @@ namespace Klinik.Features
                         resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                            response.Status = ClinicEnums.Status.SUCCESS.ToString();
                             response.Message = $"Success Update Role {qry.RoleName} with Id {qry.ID}";
                         }
                         else
                         {
-                            response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                            response.Status = ClinicEnums.Status.ERROR.ToString();
                             response.Message = "Update Data Failed";
                         }
                     }
                     else
                     {
-                        response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                        response.Status = ClinicEnums.Status.ERROR.ToString();
                         response.Message = "Update Data Failed";
                     }
                 }
@@ -69,19 +69,19 @@ namespace Klinik.Features
                     resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success Add new Role {RoleEntity.RoleName} with Id {RoleEntity.ID}";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                        response.Status = ClinicEnums.Status.ERROR.ToString();
                         response.Message = "Add Data Failed";
                     }
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg();
             }
 
@@ -193,24 +193,24 @@ namespace Klinik.Features
                     resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success remove Role {isExist.RoleName} with Id {isExist.ID}";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                        response.Status = ClinicEnums.Status.ERROR.ToString();
                         response.Message = $"Remove Role Failed!";
                     }
                 }
                 else
                 {
-                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Status = ClinicEnums.Status.ERROR.ToString();
                     response.Message = $"Remove Role Failed!";
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;
             }
             return response;

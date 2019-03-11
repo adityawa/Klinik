@@ -5,13 +5,13 @@
     /// </summary>
     public class ClinicEnums
     {
-        public enum enumStatus
+        public enum Status
         {
             SUCCESS,
             ERROR
         }
 
-        public enum enumMasterTypes
+        public enum MasterTypes
         {
             EmploymentType,
             Department,
@@ -19,19 +19,19 @@
             ClinicType
         }
 
-        public enum enumAuthResult
+        public enum AuthResult
         {
             SUCCESS,
             UNRECOGNIZED
         }
 
-        public enum enumModule
+        public enum Module
         {
-          LOGIN,
-          MASTER_ORGANIZATION
+            LOGIN,
+            MASTER_ORGANIZATION
         }
 
-        public enum enumAction
+        public enum Action
         {
             Add,
             Edit,

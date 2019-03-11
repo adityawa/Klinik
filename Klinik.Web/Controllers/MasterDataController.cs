@@ -69,7 +69,7 @@ namespace Klinik.Web.Controllers
         private List<SelectListItem> BindDropDownEmployementType()
         {
             List<SelectListItem> _empTypes = new List<SelectListItem>();
-            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.enumMasterTypes.EmploymentType.ToString()).ToList())
+            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.MasterTypes.EmploymentType.ToString()).ToList())
             {
                 _empTypes.Add(new SelectListItem
                 {
@@ -84,7 +84,7 @@ namespace Klinik.Web.Controllers
         private List<SelectListItem> BindDropDownDepartment()
         {
             List<SelectListItem> _departments = new List<SelectListItem>();
-            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.enumMasterTypes.Department.ToString()).ToList())
+            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.MasterTypes.Department.ToString()).ToList())
             {
                 _departments.Add(new SelectListItem
                 {
@@ -99,7 +99,7 @@ namespace Klinik.Web.Controllers
         private List<SelectListItem> BindDropDownCity()
         {
             List<SelectListItem> _cities = new List<SelectListItem>();
-            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.enumMasterTypes.City.ToString()).ToList())
+            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.MasterTypes.City.ToString()).ToList())
             {
                 _cities.Add(new SelectListItem
                 {
@@ -114,7 +114,7 @@ namespace Klinik.Web.Controllers
         private List<SelectListItem> BindDropDownClinicType()
         {
             List<SelectListItem> _clinicTypes = new List<SelectListItem>();
-            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.enumMasterTypes.ClinicType.ToString()).ToList())
+            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.MasterTypes.ClinicType.ToString()).ToList())
             {
                 _clinicTypes.Add(new SelectListItem
                 {
@@ -196,12 +196,12 @@ namespace Klinik.Web.Controllers
                 OrganizationModel _model = resp.Entity;
                 ViewBag.Response = _response;
                 ViewBag.clinics = BindDropDownKlinik();
-                ViewBag.ActionType = ClinicEnums.enumAction.Edit;
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }
             else
             {
-                ViewBag.ActionType = ClinicEnums.enumAction.Add;
+                ViewBag.ActionType = ClinicEnums.Action.Add;
                 ViewBag.Response = _response;
                 ViewBag.clinics = BindDropDownKlinik();
                 return View();
@@ -247,7 +247,7 @@ namespace Klinik.Web.Controllers
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
                 },
-                action = ClinicEnums.enumAction.DELETE.ToString()
+                action = ClinicEnums.Action.DELETE.ToString()
             };
 
             new OrganizationValidator(_unitOfWork).Validate(request, out _response);
@@ -300,14 +300,14 @@ namespace Klinik.Web.Controllers
                 PrivilegeModel _model = resp.Entity;
                 ViewBag.Response = _response;
                 ViewBag.Menu = BindDropDownMenu();
-                ViewBag.ActionType = ClinicEnums.enumAction.Edit;
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }
             else
             {
                 ViewBag.Response = _response;
                 ViewBag.Menu = BindDropDownMenu();
-                ViewBag.ActionType = ClinicEnums.enumAction.Add;
+                ViewBag.ActionType = ClinicEnums.Action.Add;
                 return View();
             }
         }
@@ -351,7 +351,7 @@ namespace Klinik.Web.Controllers
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
                 },
-                action = ClinicEnums.enumAction.DELETE.ToString()
+                action = ClinicEnums.Action.DELETE.ToString()
             };
 
             new PrivilegeValidator(_unitOfWork).Validate(request, out _response);
@@ -404,14 +404,14 @@ namespace Klinik.Web.Controllers
                 RoleModel _model = resp.Entity;
                 ViewBag.Response = _response;
                 ViewBag.Organisasi = BindDropDownOrganization();
-                ViewBag.ActionType = ClinicEnums.enumAction.Edit;
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }
             else
             {
                 ViewBag.Response = _response;
                 ViewBag.Organisasi = BindDropDownOrganization();
-                ViewBag.ActionType = ClinicEnums.enumAction.Add;
+                ViewBag.ActionType = ClinicEnums.Action.Add;
                 return View();
             }
         }
@@ -455,7 +455,7 @@ namespace Klinik.Web.Controllers
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
                 },
-                action = ClinicEnums.enumAction.DELETE.ToString()
+                action = ClinicEnums.Action.DELETE.ToString()
             };
 
             new RoleValidator(_unitOfWork).Validate(request, out _response);
@@ -511,7 +511,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.Response = _response;
                 ViewBag.Organisasi = BindDropDownOrganization();
                 ViewBag.Employees = BindDropDownEmployee();
-                ViewBag.ActionType = ClinicEnums.enumAction.Edit;
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }
             else
@@ -519,7 +519,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.Response = _response;
                 ViewBag.Organisasi = BindDropDownOrganization();
                 ViewBag.Employees = BindDropDownEmployee();
-                ViewBag.ActionType = ClinicEnums.enumAction.Add;
+                ViewBag.ActionType = ClinicEnums.Action.Add;
                 return View();
             }
         }
@@ -563,7 +563,7 @@ namespace Klinik.Web.Controllers
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
                 },
-                action = ClinicEnums.enumAction.DELETE.ToString()
+                action = ClinicEnums.Action.DELETE.ToString()
             };
 
             new UserValidator(_unitOfWork).Validate(request, out _response);
@@ -618,12 +618,12 @@ namespace Klinik.Web.Controllers
                 ViewBag.Response = _response;
                 ViewBag.EmpTypes = BindDropDownEmployementType();
                 ViewBag.Departments = BindDropDownDepartment();
-                ViewBag.ActionType = ClinicEnums.enumAction.Edit;
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }
             else
             {
-                ViewBag.ActionType = ClinicEnums.enumAction.Add;
+                ViewBag.ActionType = ClinicEnums.Action.Add;
                 ViewBag.Response = _response;
                 ViewBag.EmpTypes = BindDropDownEmployementType();
                 ViewBag.Departments = BindDropDownDepartment();
@@ -670,7 +670,7 @@ namespace Klinik.Web.Controllers
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
                 },
-                action = ClinicEnums.enumAction.DELETE.ToString()
+                action = ClinicEnums.Action.DELETE.ToString()
             };
 
             new EmployeeValidator(_unitOfWork).Validate(request, out _response);
@@ -775,7 +775,7 @@ namespace Klinik.Web.Controllers
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
                 },
-                action = ClinicEnums.enumAction.DELETE.ToString()
+                action = ClinicEnums.Action.DELETE.ToString()
             };
 
             new ClinicValidator(_unitOfWork).Validate(request, out _response);

@@ -53,13 +53,13 @@ namespace Klinik.Features
                     result = _context.SaveChanges();
 
                     transaction.Commit();
-                    response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                    response.Status = ClinicEnums.Status.SUCCESS.ToString();
                     response.Message = "Password has been changed successfully";
                 }
                 catch
                 {
                     transaction.Rollback();
-                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Status = ClinicEnums.Status.ERROR.ToString();
                     response.Message = CommonUtils.GetGeneralErrorMesg();
                 }
             }

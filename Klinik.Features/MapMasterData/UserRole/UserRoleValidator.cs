@@ -28,7 +28,7 @@ namespace Klinik.Features
         {
             response = new UserRoleResponse
             {
-                Status = ClinicEnums.enumStatus.SUCCESS.ToString()
+                Status = ClinicEnums.Status.SUCCESS.ToString()
             };
 
             if (request.RequestUserRoleData.UserID == 0)
@@ -42,11 +42,11 @@ namespace Klinik.Features
 
             if (errorFields.Any())
             {
-                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = $"Validation Error for following fields : {String.Join(",", errorFields)}";
             }
 
-            if (response.Status == ClinicEnums.enumStatus.SUCCESS.ToString())
+            if (response.Status == ClinicEnums.Status.SUCCESS.ToString())
             {
                 response = new UserRoleHandler(_unitOfWork, _context).CreateOrEdit(request);
             }

@@ -28,7 +28,7 @@ namespace Klinik.Features
         {
             response = new OrganizationPrivilegeResponse
             {
-                Status = ClinicEnums.enumStatus.SUCCESS.ToString()
+                Status = ClinicEnums.Status.SUCCESS.ToString()
             };
 
             if (request.RequestOrgPrivData.OrgID == 0)
@@ -43,11 +43,11 @@ namespace Klinik.Features
 
             if (errorFields.Any())
             {
-                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = $"Validation Error for following fields : {String.Join(",", errorFields)}";
             }
 
-            if (response.Status == ClinicEnums.enumStatus.SUCCESS.ToString())
+            if (response.Status == ClinicEnums.Status.SUCCESS.ToString())
             {
                 response = new OrganizationPrivilegeHandler(_unitOfWork, _context).CreateOrEdit(request);
             }

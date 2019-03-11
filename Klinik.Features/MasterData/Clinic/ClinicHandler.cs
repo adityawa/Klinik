@@ -73,18 +73,18 @@ namespace Klinik.Features
 
                         if (resultAffected > 0)
                         {
-                            response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                            response.Status = ClinicEnums.Status.SUCCESS.ToString();
                             response.Message = $"Success Update Clinic {qry.Name} with Id {qry.Code}";
                         }
                         else
                         {
-                            response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                            response.Status = ClinicEnums.Status.ERROR.ToString();
                             response.Message = "Update Data Failed";
                         }
                     }
                     else
                     {
-                        response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                        response.Status = ClinicEnums.Status.ERROR.ToString();
                         response.Message = "Update Data Failed";
                     }
                 }
@@ -97,19 +97,19 @@ namespace Klinik.Features
                     resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success Add new Clinic {clinicEntity.Name} with Id {clinicEntity.Code}";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                        response.Status = ClinicEnums.Status.ERROR.ToString();
                         response.Message = "Add Data Failed";
                     }
                 }
             }
             catch (Exception ex)
             {
-                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg();
             }
 
@@ -193,8 +193,8 @@ namespace Klinik.Features
                 var clinicData = Mapper.Map<Clinic, ClinicModel>(item);
                 long _cityId = clinicData.CityId ?? 0;
                 long _clinicTypeId = clinicData.ClinicType ?? 0;
-                var getCityDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _cityId && x.Type == ClinicEnums.enumMasterTypes.City.ToString());
-                var getClinicTypeDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _clinicTypeId && x.Type == ClinicEnums.enumMasterTypes.ClinicType.ToString());
+                var getCityDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _cityId && x.Type == ClinicEnums.MasterTypes.City.ToString());
+                var getClinicTypeDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _clinicTypeId && x.Type == ClinicEnums.MasterTypes.ClinicType.ToString());
                 if (getCityDesc != null)
                     clinicData.CityDesc = getCityDesc.Name ?? "";
                 if (getClinicTypeDesc != null)
@@ -234,24 +234,24 @@ namespace Klinik.Features
                     resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success remove Clinic {isExist.Name} with Id {isExist.Code}";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                        response.Status = ClinicEnums.Status.ERROR.ToString();
                         response.Message = $"Remove Clinic Failed!";
                     }
                 }
                 else
                 {
-                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Status = ClinicEnums.Status.ERROR.ToString();
                     response.Message = $"Remove Clinic Failed!";
                 }
             }
             catch (Exception ex)
             {
-                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;
             }
 

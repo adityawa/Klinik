@@ -47,18 +47,18 @@ namespace Klinik.Features
                         resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                            response.Status = ClinicEnums.Status.SUCCESS.ToString();
                             response.Message = $"Success Update Privilege {qry.Privilege_Name} with Id {qry.ID}";
                         }
                         else
                         {
-                            response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                            response.Status = ClinicEnums.Status.ERROR.ToString();
                             response.Message = "Update Data Failed";
                         }
                     }
                     else
                     {
-                        response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                        response.Status = ClinicEnums.Status.ERROR.ToString();
                         response.Message = "Update Data Failed";
                     }
                 }
@@ -71,12 +71,12 @@ namespace Klinik.Features
                     resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success Add new Privilege {PrivilegeEntity.Privilege_Name} with Id {PrivilegeEntity.ID}";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                        response.Status = ClinicEnums.Status.ERROR.ToString();
                         response.Message = "Add Data Failed";
                     }
                 }
@@ -86,7 +86,7 @@ namespace Klinik.Features
             catch
             {
               
-                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg();
             }
           
@@ -201,24 +201,24 @@ namespace Klinik.Features
                     resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success remove Privilege {isExist.Privilege_Name} with Id {isExist.ID}";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                        response.Status = ClinicEnums.Status.ERROR.ToString();
                         response.Message = $"Remove Privilege Failed!";
                     }
                 }
                 else
                 {
-                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Status = ClinicEnums.Status.ERROR.ToString();
                     response.Message = $"Remove Privilege Failed!";
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;
             }
             return response;

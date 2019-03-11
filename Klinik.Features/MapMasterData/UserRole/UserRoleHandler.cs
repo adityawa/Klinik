@@ -57,13 +57,13 @@ namespace Klinik.Features
                     resultAffected = _context.SaveChanges();
 
                     transaction.Commit();
-                    response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                    response.Status = ClinicEnums.Status.SUCCESS.ToString();
                     response.Message = "Data Successfully Saved";
                 }
                 catch
                 {
                     transaction.Rollback();
-                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Status = ClinicEnums.Status.ERROR.ToString();
                     response.Message = CommonUtils.GetGeneralErrorMesg();
                 }
             }

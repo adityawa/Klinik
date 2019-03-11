@@ -44,7 +44,7 @@ namespace Klinik.Features
             var _getOrganization = _unitOfWork.OrganizationRepository.GetFirstOrDefault(x => x.OrgCode == request.RequestAccountModel.Organization);
             if (_getOrganization != null)
                 _orgId = _getOrganization.ID;
-            var _getByUname = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName == request.RequestAccountModel.UserName && x.Status == true && x.ExpiredDate > DateTime.Now && x.OrganizationID==_orgId);
+            var _getByUname = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName == request.RequestAccountModel.UserName && x.Status == true && x.ExpiredDate > DateTime.Now && x.OrganizationID == _orgId);
             if (_getByUname != null)
             {
                 var _decryptedPassword = CommonUtils.Decryptor(_getByUname.Password, CommonUtils.KeyEncryptor);
@@ -76,33 +76,33 @@ namespace Klinik.Features
                         response.Entity.Privileges.PrivilegeIDs.Add(rp.PrivilegeID);
                     }
 
-                    response.Status = ClinicEnums.enumAuthResult.SUCCESS.ToString();
+                    response.Status = ClinicEnums.AuthResult.SUCCESS.ToString();
                     response.Message = "";
 
                     var logging = new LogModel
                     {
                         Start = DateTime.Now,
-                        Module = ClinicEnums.enumModule.LOGIN.ToString(),
+                        Module = ClinicEnums.Module.LOGIN.ToString(),
                         UserName = response.Entity.UserName,
-                        Organization=request.RequestAccountModel.Organization,
+                        Organization = request.RequestAccountModel.Organization,
                         Command = "Login To System",
-                        Status = ClinicEnums.enumStatus.SUCCESS.ToString()
+                        Status = ClinicEnums.Status.SUCCESS.ToString()
                     };
 
                     CommandLogging(logging);
                 }
                 else
                 {
-                    response.Status = ClinicEnums.enumAuthResult.UNRECOGNIZED.ToString();
+                    response.Status = ClinicEnums.AuthResult.UNRECOGNIZED.ToString();
                     response.Message = "Password Incorrect";
                     var logging = new LogModel
                     {
                         Start = DateTime.Now,
-                        Module = ClinicEnums.enumModule.LOGIN.ToString(),
+                        Module = ClinicEnums.Module.LOGIN.ToString(),
                         UserName = request.RequestAccountModel.UserName,
                         Organization = request.RequestAccountModel.Organization,
                         Command = "Login To System",
-                        Status = ClinicEnums.enumAuthResult.UNRECOGNIZED.ToString()
+                        Status = ClinicEnums.AuthResult.UNRECOGNIZED.ToString()
                     };
 
                     CommandLogging(logging);
@@ -110,16 +110,16 @@ namespace Klinik.Features
             }
             else
             {
-                response.Status = ClinicEnums.enumAuthResult.UNRECOGNIZED.ToString();
+                response.Status = ClinicEnums.AuthResult.UNRECOGNIZED.ToString();
                 response.Message = "User Name or Password Incorrect";
                 var logging = new LogModel
                 {
                     Start = DateTime.Now,
-                    Module = ClinicEnums.enumModule.LOGIN.ToString(),
+                    Module = ClinicEnums.Module.LOGIN.ToString(),
                     UserName = request.RequestAccountModel.UserName,
                     Organization = request.RequestAccountModel.Organization,
                     Command = "Login To System",
-                    Status = ClinicEnums.enumAuthResult.UNRECOGNIZED.ToString()
+                    Status = ClinicEnums.AuthResult.UNRECOGNIZED.ToString()
                 };
 
                 CommandLogging(logging);
@@ -157,18 +157,18 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
 
                     // update response
-                    response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                    response.Status = ClinicEnums.Status.SUCCESS.ToString();
                     response.Message = "Data Successfully Updated";
                 }
                 catch (Exception ex)
                 {
-                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Status = ClinicEnums.Status.ERROR.ToString();
                     response.Message = CommonUtils.GetGeneralErrorMesg();
                 }
             }
             else
             {
-                response.Status = ClinicEnums.enumAuthResult.UNRECOGNIZED.ToString();
+                response.Status = ClinicEnums.AuthResult.UNRECOGNIZED.ToString();
                 response.Message = "User Name or Password Incorrect";
             }
 
@@ -190,11 +190,11 @@ namespace Klinik.Features
             if (user != null)
             {
                 // update response
-                response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                response.Status = ClinicEnums.Status.SUCCESS.ToString();
             }
             else
             {
-                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg();
             }
 
@@ -230,18 +230,18 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
 
                     // update response
-                    response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                    response.Status = ClinicEnums.Status.SUCCESS.ToString();
                     response.Message = "User Password Successfully Updated";
                 }
                 catch
                 {
-                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Status = ClinicEnums.Status.ERROR.ToString();
                     response.Message = CommonUtils.GetGeneralErrorMesg();
                 }
             }
             else
             {
-                response.Status = ClinicEnums.enumAuthResult.UNRECOGNIZED.ToString();
+                response.Status = ClinicEnums.AuthResult.UNRECOGNIZED.ToString();
                 response.Message = "Reset Code Incorrect";
             }
 

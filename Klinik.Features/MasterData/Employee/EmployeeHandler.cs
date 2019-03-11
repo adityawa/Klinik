@@ -54,18 +54,18 @@ namespace Klinik.Features
 
                         if (resultAffected > 0)
                         {
-                            response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                            response.Status = ClinicEnums.Status.SUCCESS.ToString();
                             response.Message = $"Employee {qry.EmpName} with ID {qry.id} has been successfully updated";
                         }
                         else
                         {
-                            response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                            response.Status = ClinicEnums.Status.ERROR.ToString();
                             response.Message = "Employee Update Failed";
                         }
                     }
                     else
                     {
-                        response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                        response.Status = ClinicEnums.Status.ERROR.ToString();
                         response.Message = "Employee Update Failed";
                     }
                 }
@@ -81,21 +81,21 @@ namespace Klinik.Features
 
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
 
                         response.Message = $"Employee {EmployeeEntity.EmpName} with ID {EmployeeEntity.id} has been successfully added";
 
                     }
                     else
                     {
-                        response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                        response.Status = ClinicEnums.Status.ERROR.ToString();
                         response.Message = "Employee Add Failed";
                     }
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg();
             }
 
@@ -195,7 +195,7 @@ namespace Klinik.Features
             {
                 var prData = Mapper.Map<Employee, EmployeeModel>(item);
                 long _empDeptId = prData.EmpDept ?? 0;
-                prData.EmpDeptDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _empDeptId && x.Type == ClinicEnums.enumMasterTypes.Department.ToString()).Name ?? "";
+                prData.EmpDeptDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _empDeptId && x.Type == ClinicEnums.MasterTypes.Department.ToString()).Name ?? "";
                 lists.Add(prData);
             }
 
@@ -231,24 +231,24 @@ namespace Klinik.Features
                     resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Employee {isExist.EmpName} with ID {isExist.id} has been successfully removed";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                        response.Status = ClinicEnums.Status.ERROR.ToString();
                         response.Message = $"Employee Removal Failed!";
                     }
                 }
                 else
                 {
-                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Status = ClinicEnums.Status.ERROR.ToString();
                     response.Message = $"Employee Removal Failed!";
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;
             }
 

@@ -25,10 +25,10 @@ namespace Klinik.Features.MasterData.Clinic
 
             response = new ClinicResponse
             {
-                Status = ClinicEnums.enumStatus.SUCCESS.ToString()
+                Status = ClinicEnums.Status.SUCCESS.ToString()
             };
 
-            if (request.action != null && request.action.Equals(ClinicEnums.enumAction.DELETE.ToString()))
+            if (request.action != null && request.action.Equals(ClinicEnums.Action.DELETE.ToString()))
             {
                 ValidateForDelete(request, out response);
             }
@@ -54,7 +54,7 @@ namespace Klinik.Features.MasterData.Clinic
 
                 if (errorFields.Any())
                 {
-                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Status = ClinicEnums.Status.ERROR.ToString();
                     response.Message = $"Validation Error for following fields : {String.Join(",", errorFields)}";
                 }
 
@@ -70,11 +70,11 @@ namespace Klinik.Features.MasterData.Clinic
 
                 if (!isHavePrivilege)
                 {
-                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Status = ClinicEnums.Status.ERROR.ToString();
                     response.Message = $"Unauthorized Access!";
                 }
 
-                if (response.Status == ClinicEnums.enumStatus.SUCCESS.ToString())
+                if (response.Status == ClinicEnums.Status.SUCCESS.ToString())
                 {
                     response = new ClinicHandler(_unitOfWork).CreateOrEdit(request);
                 }
@@ -89,22 +89,22 @@ namespace Klinik.Features.MasterData.Clinic
         private void ValidateForDelete(ClinicRequest request, out ClinicResponse response)
         {
             response = new ClinicResponse();
-            response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+            response.Status = ClinicEnums.Status.SUCCESS.ToString();
 
             bool isHavePrivilege = true;
 
-            if (request.action == ClinicEnums.enumAction.DELETE.ToString())
+            if (request.action == ClinicEnums.Action.DELETE.ToString())
             {
                 isHavePrivilege = IsHaveAuthorization(DELETE_PRIVILEGE_NAME, request.RequestClinicModel.Account.Privileges.PrivilegeIDs);
             }
 
             if (!isHavePrivilege)
             {
-                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = $"Unauthorized Access!";
             }
 
-            if (response.Status == ClinicEnums.enumStatus.SUCCESS.ToString())
+            if (response.Status == ClinicEnums.Status.SUCCESS.ToString())
             {
                 response = new ClinicHandler(_unitOfWork).RemoveData(request);
             }

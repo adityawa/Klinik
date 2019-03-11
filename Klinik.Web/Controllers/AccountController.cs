@@ -53,7 +53,7 @@ namespace Klinik.Web.Controllers
 
             // set reset password code
             var response = new AccountHandler(_unitOfWork, _context).SetResetPasswordCode(request);
-            if (response.Status == ClinicEnums.enumAuthResult.SUCCESS.ToString())
+            if (response.Status == ClinicEnums.AuthResult.SUCCESS.ToString())
             {
                 // send verification email
                 SendVerificationLinkEmail(EmailID, resetCode);
@@ -87,7 +87,7 @@ namespace Klinik.Web.Controllers
 
             // validate reset password code
             var response = new AccountHandler(_unitOfWork, _context).ValidateResetPasswordCode(request);
-            if (response.Status == ClinicEnums.enumAuthResult.SUCCESS.ToString())
+            if (response.Status == ClinicEnums.AuthResult.SUCCESS.ToString())
             {
                 ResetPasswordModel model = new ResetPasswordModel();
                 model.ResetCode = id;
@@ -118,7 +118,7 @@ namespace Klinik.Web.Controllers
 
                 // update user password 
                 var response = new AccountHandler(_unitOfWork, _context).UpdateUserPassword(request);
-                if (response.Status == ClinicEnums.enumAuthResult.SUCCESS.ToString())
+                if (response.Status == ClinicEnums.AuthResult.SUCCESS.ToString())
                 {
                     ViewBag.Message = "User password has been successfully updated";
                 }
@@ -149,7 +149,7 @@ namespace Klinik.Web.Controllers
 
             AccountResponse response = new AccountResponse();
             new AccountValidator(_unitOfWork).Validate(request, out response);
-            if (response.Status == ClinicEnums.enumAuthResult.SUCCESS.ToString())
+            if (response.Status == ClinicEnums.AuthResult.SUCCESS.ToString())
             {
                 Session["UserLogon"] = response.Entity;
                 if (response.Entity.Privileges.PrivilegeIDs != null)

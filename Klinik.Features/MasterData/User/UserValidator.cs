@@ -30,10 +30,10 @@ namespace Klinik.Features
             bool isHavePrivilege = true;
             response = new UserResponse
             {
-                Status = ClinicEnums.enumStatus.SUCCESS.ToString()
+                Status = ClinicEnums.Status.SUCCESS.ToString()
             };
 
-            if (request.action != null && request.action.Equals(ClinicEnums.enumAction.DELETE.ToString()))
+            if (request.action != null && request.action.Equals(ClinicEnums.Action.DELETE.ToString()))
             {
                 ValidateForDelete(request, out response);
             }
@@ -61,7 +61,7 @@ namespace Klinik.Features
 
                 if (errorFields.Any())
                 {
-                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Status = ClinicEnums.Status.ERROR.ToString();
                     response.Message = $"Validation Error for following fields : {String.Join(",", errorFields)}";
                 }
                 else if (request.RequestUserData.Id == 0)
@@ -70,7 +70,7 @@ namespace Klinik.Features
                     var qry = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName.Equals(request.RequestUserData.UserName) && x.Status == true, includes: x => x.Employee);
                     if (qry != null)
                     {
-                        response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                        response.Status = ClinicEnums.Status.ERROR.ToString();
                         response.Message = $"User name already exist";
                     }
                 }
@@ -80,7 +80,7 @@ namespace Klinik.Features
                     var qry = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName.Equals(request.RequestUserData.EmployeeID) && x.Status == true, includes: x => x.Employee);
                     if (qry != null)
                     {
-                        response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                        response.Status = ClinicEnums.Status.ERROR.ToString();
                         response.Message = $"one employee cannot have more than one user Id";
                     }
                 }
@@ -97,11 +97,11 @@ namespace Klinik.Features
 
                 if (!isHavePrivilege)
                 {
-                    response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                    response.Status = ClinicEnums.Status.ERROR.ToString();
                     response.Message = $"Unauthorized Access!";
                 }
 
-                if (response.Status == ClinicEnums.enumStatus.SUCCESS.ToString())
+                if (response.Status == ClinicEnums.Status.SUCCESS.ToString())
                 {
                     response = new UserHandler(_unitOfWork).CreateOrEdit(request);
                 }
@@ -116,22 +116,22 @@ namespace Klinik.Features
         private void ValidateForDelete(UserRequest request, out UserResponse response)
         {
             response = new UserResponse();
-            response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
+            response.Status = ClinicEnums.Status.SUCCESS.ToString();
 
             bool isHavePrivilege = true;
 
-            if (request.action == ClinicEnums.enumAction.DELETE.ToString())
+            if (request.action == ClinicEnums.Action.DELETE.ToString())
             {
                 isHavePrivilege = IsHaveAuthorization(DELETE_PRIVILEGE_NAME, request.RequestUserData.Account.Privileges.PrivilegeIDs);
             }
 
             if (!isHavePrivilege)
             {
-                response.Status = ClinicEnums.enumStatus.ERROR.ToString();
+                response.Status = ClinicEnums.Status.ERROR.ToString();
                 response.Message = $"Unauthorized Access!";
             }
 
-            if (response.Status == ClinicEnums.enumStatus.SUCCESS.ToString())
+            if (response.Status == ClinicEnums.Status.SUCCESS.ToString())
             {
                 response = new UserHandler(_unitOfWork).RemoveData(request);
             }
