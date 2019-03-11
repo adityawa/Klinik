@@ -7,6 +7,8 @@ using LinqKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using Klinik.Entities.Administration;
 
 namespace Klinik.Features
 {
@@ -119,7 +121,7 @@ namespace Klinik.Features
         {
             int resultAffected = 0;
             OrganizationResponse response = new OrganizationResponse();
-
+            var _oldentity=new OrganizationModel { };
             try
             {
                 if (request.RequestOrganizationData.Id > 0)
@@ -127,6 +129,7 @@ namespace Klinik.Features
                     var qry = _unitOfWork.OrganizationRepository.GetById(request.RequestOrganizationData.Id);
                     if (qry != null)
                     {
+                       _oldentity  = MappingEntityToModel(qry);
                         qry.OrgCode = request.RequestOrganizationData.OrgCode;
                         qry.OrgName = request.RequestOrganizationData.OrgName;
                         qry.KlinikID = request.RequestOrganizationData.KlinikID;
@@ -138,17 +141,57 @@ namespace Klinik.Features
                         {
                             response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
                             response.Message = $"Success Update organization {qry.OrgName} with Id {qry.ID}";
+                            var logging = new LogModel
+                            {
+                                Start = DateTime.Now,
+                                Module = ClinicEnums.enumModule.MASTER_ORGANIZATION.ToString(),
+                                UserName = request.RequestOrganizationData.Account.UserName.ToString(),
+                                Organization = request.RequestOrganizationData.Account.Organization,
+                                Command = "Add New Organization",
+                                NewValue = JsonConvert.SerializeObject(request.RequestOrganizationData),
+                                OldValue = JsonConvert.SerializeObject(_oldentity),
+                                Status = ClinicEnums.enumStatus.SUCCESS.ToString()
+                            };
+
+                            CommandLogging(logging);
                         }
                         else
                         {
                             response.Status = ClinicEnums.enumStatus.ERROR.ToString();
                             response.Message = "Update Data Failed";
+                            var logging = new LogModel
+                            {
+                                Start = DateTime.Now,
+                                Module = ClinicEnums.enumModule.MASTER_ORGANIZATION.ToString(),
+                                UserName = request.RequestOrganizationData.Account.UserName.ToString(),
+                                Organization = request.RequestOrganizationData.Account.Organization,
+                                Command = "Add New Organization",
+                                NewValue = JsonConvert.SerializeObject(request.RequestOrganizationData),
+                                OldValue = JsonConvert.SerializeObject(_oldentity),
+                                Status = ClinicEnums.enumStatus.ERROR.ToString()
+                            };
+
+                            CommandLogging(logging);
                         }
                     }
                     else
                     {
                         response.Status = ClinicEnums.enumStatus.ERROR.ToString();
                         response.Message = "Update Data Failed";
+
+                        var logging = new LogModel
+                        {
+                            Start = DateTime.Now,
+                            Module = ClinicEnums.enumModule.MASTER_ORGANIZATION.ToString(),
+                            UserName = request.RequestOrganizationData.Account.UserName.ToString(),
+                            Organization = request.RequestOrganizationData.Account.Organization,
+                            Command = "Add New Organization",
+                            NewValue = JsonConvert.SerializeObject(request.RequestOrganizationData),
+                            OldValue = JsonConvert.SerializeObject(_oldentity),
+                            Status = ClinicEnums.enumStatus.ERROR.ToString()
+                        };
+
+                        CommandLogging(logging);
                     }
                 }
                 else
@@ -162,18 +205,55 @@ namespace Klinik.Features
                     {
                         response.Status = ClinicEnums.enumStatus.SUCCESS.ToString();
                         response.Message = $"Success Add new organization {OrganizationEntity.OrgName} with Id {OrganizationEntity.ID}";
+                        var logging = new LogModel
+                        {
+                            Start = DateTime.Now,
+                            Module = ClinicEnums.enumModule.MASTER_ORGANIZATION.ToString(),
+                            UserName = request.RequestOrganizationData.Account.UserName.ToString(),
+                            Organization = request.RequestOrganizationData.Account.Organization,
+                            Command = "Add New Organization",
+                            NewValue = JsonConvert.SerializeObject(OrganizationEntity),
+                            Status = ClinicEnums.enumStatus.SUCCESS.ToString()
+                        };
+
+                        CommandLogging(logging);
                     }
                     else
                     {
                         response.Status = ClinicEnums.enumStatus.ERROR.ToString();
                         response.Message = "Add Data Failed";
+                        var logging = new LogModel
+                        {
+                            Start = DateTime.Now,
+                            Module = ClinicEnums.enumModule.MASTER_ORGANIZATION.ToString(),
+                            UserName = request.RequestOrganizationData.Account.UserName.ToString(),
+                            Organization = request.RequestOrganizationData.Account.Organization,
+                            Command = "Add New Organization",
+                            NewValue = JsonConvert.SerializeObject(OrganizationEntity),
+                            Status = ClinicEnums.enumStatus.ERROR.ToString()
+                        };
+
+                        CommandLogging(logging);
                     }
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 response.Status = ClinicEnums.enumStatus.ERROR.ToString();
                 response.Message = CommonUtils.GetGeneralErrorMesg();
+
+                var logging = new LogModel
+                {
+                    Start = DateTime.Now,
+                    Module = ClinicEnums.enumModule.MASTER_ORGANIZATION.ToString(),
+                    UserName = request.RequestOrganizationData.Account.UserName.ToString(),
+                    Organization = request.RequestOrganizationData.Account.Organization,
+                    Command = "Add New Organization",
+                    NewValue = JsonConvert.SerializeObject(request.RequestOrganizationData),
+                    Status = ClinicEnums.enumStatus.ERROR.ToString()
+                };
+
+                CommandLogging(logging);
             }
 
             return response;
@@ -237,6 +317,12 @@ namespace Klinik.Features
             }
 
             return response;
+        }
+
+        public OrganizationModel MappingEntityToModel(Organization entity)
+        {
+            var _entity = Mapper.Map<Organization, OrganizationModel>(entity);
+            return _entity;
         }
     }
 }

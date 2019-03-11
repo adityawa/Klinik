@@ -245,5 +245,7 @@ namespace Klinik.Web.Controllers
                 throw;
             }
         }
+
+       
     }
 }

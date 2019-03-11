@@ -27,7 +27,8 @@
 
         public enum enumModule
         {
-          LOGIN
+          LOGIN,
+          MASTER_ORGANIZATION
         }
 
         public enum enumAction

@@ -99,7 +99,7 @@ namespace Klinik.Features
                     {
                         Start = DateTime.Now,
                         Module = ClinicEnums.enumModule.LOGIN.ToString(),
-                        UserName = response.Entity.UserName,
+                        UserName = request.RequestAccountModel.UserName,
                         Organization = request.RequestAccountModel.Organization,
                         Command = "Login To System",
                         Status = ClinicEnums.enumAuthResult.UNRECOGNIZED.ToString()
@@ -116,7 +116,7 @@ namespace Klinik.Features
                 {
                     Start = DateTime.Now,
                     Module = ClinicEnums.enumModule.LOGIN.ToString(),
-                    UserName = response.Entity.UserName,
+                    UserName = request.RequestAccountModel.UserName,
                     Organization = request.RequestAccountModel.Organization,
                     Command = "Login To System",
                     Status = ClinicEnums.enumAuthResult.UNRECOGNIZED.ToString()
