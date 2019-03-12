@@ -7,7 +7,7 @@
     <!-- Basic -->
     <meta charset="UTF-8">
 
-    <title>Sistem Informasi Klinik</title>
+    <title>@Klinik.Resources.UIMessages.HomepageTitle</title>
     <meta name="keywords" content="Sistem Klinik" />
     <meta name="description" content="Medical Management System">
     <meta name="author" content="CV Mandiri">
@@ -87,10 +87,10 @@
                         <ul class="list-unstyled">
                             <li class="divider"></li>
                             <li>
-                                <a role="menuitem" tabindex="-1" href="@Url.Action("ChangePassword","PasswordHistory")"><i class="fa fa-key"></i> Change Password </a>
+                                <a role="menuitem" tabindex="-1" href="@Url.Action("ChangePassword","PasswordHistory")"><i class="fa fa-key"></i>@Klinik.Resources.UIMessages.ChangePassword </a>
                             </li>
                             <li>
-                                <a role="menuitem" tabindex="-1" href="@Url.Action("Logout","Account")"><i class="fa fa-power-off"></i> Logout</a>
+                                <a role="menuitem" tabindex="-1" href="@Url.Action("Logout","Account")"><i class="fa fa-power-off"></i>@Klinik.Resources.UIMessages.Logout</a>
                             </li>
                         </ul>
                     </div>
@@ -106,7 +106,7 @@
 
                 <div class="sidebar-header">
                     <div class="sidebar-title">
-                        Navigation
+                        @Klinik.Resources.UIMessages.Navigation
                     </div>
                     <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
                         <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
@@ -174,7 +174,7 @@
                                     <i class="fa fa-home"></i>
                                 </a>
                             </li>
-                            <li><span>Dashboard</span></li>
+                            <li><span>@Klinik.Resources.UIMessages.Dashboard</span></li>
                         </ol>
                     </div>
                 </header>

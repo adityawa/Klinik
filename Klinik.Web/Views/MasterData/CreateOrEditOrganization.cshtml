@@ -1,6 +1,5 @@
 ﻿@model Klinik.Entities.MasterData.OrganizationModel
 
-
 @{
     ViewBag.Title = "CreateOrEditOrganization";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,7 +18,7 @@
     <div class="panel-body">
         <form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditOrganization">
             <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">Organization Code</label>
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.OrganizationCode</label>
                 <div class="col-md-4">
                     @Html.HiddenFor(x => x.Id)
                     @Html.TextBoxFor(x => x.OrgCode, new { @class = "form-control", @id = "tbOrgCode" })
@@ -27,23 +26,22 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">Organization Name</label>
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.OrganizationName</label>
                 <div class="col-md-4">
                     @Html.TextBoxFor(x => x.OrgName, new { @class = "form-control", @id = "tbOrgName" })
                     @Html.ValidationMessageFor(m => m.OrgName, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">Clinic Name</label>
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.ClinicName</label>
                 <div class="col-md-4">
                     @Html.DropDownListFor(p => p.KlinikID, (IEnumerable<SelectListItem>)ViewBag.clinics, new { @class = "form-control", @id = "ddlclinics" })
                 </div>
             </div>
             <br />
             <footer class="panel-footer">
-                <button type="submit" class="btn btn-primary">Simpan </button>
-                <button type="reset" id="btnreset" class="btn btn-default">Kembali</button>
+                <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
+                <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
             </footer>
         </form>
     </div>

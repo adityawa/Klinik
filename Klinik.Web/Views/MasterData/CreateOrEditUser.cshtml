@@ -20,7 +20,7 @@
     <div class="panel-body">
         <form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditUser">
             <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">Organization</label>
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Organization</label>
                 <div class="col-md-4">
                     @Html.HiddenFor(x => x.Id)
                     @Html.DropDownListFor(p => p.OrgID, (IEnumerable<SelectListItem>)ViewBag.Organisasi, new { @class = "form-control", @id = "ddlorganisasi" })
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">Employee</label>
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Employee</label>
                 <div class="col-md-4">
 
                     @Html.DropDownListFor(p => p.EmployeeID, (IEnumerable<SelectListItem>)ViewBag.Employees, new { @class = "form-control", @id = "ddlemployee" })
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">UserName</label>
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Username</label>
                 <div class="col-md-4">
                     @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", @id = "tbUsrName" })
                     @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
@@ -44,7 +44,7 @@
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">
-                    Password
+                    @Klinik.Resources.UIMessages.Password
                 </label>
                 <div class="col-md-4">
                     @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @id = "tbUsrName", @type = "password" })
@@ -53,16 +53,15 @@
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">
-                    Expired Date
+                    @Klinik.Resources.UIMessages.ExpiredDate
                 </label>
                 <div class="col-md-4">
                     @Html.TextBoxFor(x => x.ExpiredDate, new { @class = "form-control", @id = "tbExpDate" })
-
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">
-                    Status
+                    @Klinik.Resources.UIMessages.Status
                 </label>
                 <div class="col-md-4">
                     @Html.CheckBoxFor(x => x.Status, new { @class = "form-check-input", @id = "cbStatus" })
@@ -71,8 +70,8 @@
             </div>
             <br />
             <footer class="panel-footer">
-                <button type="submit" class="btn btn-primary">Simpan </button>
-                <button type="reset" id="btnreset" class="btn btn-default">Kembali</button>
+                <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
+                <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
             </footer>
         </form>
     </div>

@@ -14,7 +14,7 @@
     }
 </style>
 
-<button id="btnSave" class="btn btn-primary"><i class="fa fa-save"></i> Simpan </button>
+<button id="btnSave" class="btn btn-primary"><i class="fa fa-save"></i> @Klinik.Resources.UIMessages.AddNew </button>
 
 <br /><br />
 
@@ -23,11 +23,11 @@
         <div class="panel-actions">
             <a href="#" class="fa fa-caret-down"></a>
         </div>
-        <h5 class="panel-title">Role Privileges</h5>
+        <h5 class="panel-title">@Klinik.Resources.UIMessages.RolePrivilege</h5>
     </header>
     <div class="panel-body">
         <div class="form-group">
-            <label class="col-md-2 control-label" for="inputDefault">Role</label>
+            <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Role</label>
             <div class="col-md-4">
                 @Html.TextBoxFor(x => x.RoleDesc, new { @class = "form-control", @disabled = "Disabled" })
                 @Html.HiddenFor(x => x.RoleID, new { @Id = "hdRoleId" })
@@ -39,9 +39,9 @@
                 <thead>
                     <tr>
                         <th><input name="select_all" value="1" type="checkbox"></th>
-                        <th>Id</th>
-                        <th>Code</th>
-                        <th>Privilege</th>
+                        <th>@Klinik.Resources.UIMessages.ID</th>
+                        <th>@Klinik.Resources.UIMessages.Code</th>
+                        <th>@Klinik.Resources.UIMessages.Privilege</th>
                     </tr>
                 </thead>
             </table>

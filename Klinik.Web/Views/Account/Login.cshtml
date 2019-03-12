@@ -6,7 +6,7 @@
 
 <html lang="en">
 <head>
-    <title>Medica Login</title>
+    <title>@Klinik.Resources.UIMessages.LoginTitle</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -42,20 +42,20 @@
                 @using (Html.BeginForm("SignIn", "Account", FormMethod.Post, new { @class = "loginMMS-form validate-form" }))
                 {
                     <div class="wrap-inputMMS validate-input m-b-26" data-validate="Username is required">
-                        <span class="label-inputMMS">Username</span>
-                        @Html.TextBoxFor(x => x.UserName, null, new { @class = "inputMMS", @id = "tbUserName", @placeholder = "Enter username" })
+                        <span class="label-inputMMS">@Klinik.Resources.UIMessages.Username</span>
+                        @Html.TextBoxFor(x => x.UserName, null, new { @class = "inputMMS", @id = "tbUserName", @placeholder = @Klinik.Resources.UIMessages.EnterUsername })
                         <span class="focus-inputMMS"></span>
                     </div>
 
                     <div class="wrap-inputMMS validate-input m-b-18" data-validate="Password is required">
-                        <span class="label-inputMMS">Password</span>
-                        @Html.TextBoxFor(x => x.Password, null, new { @class = "inputMMS", @id = "tbPassword", @type = "password", @placeholder = "Enter password" })
+                        <span class="label-inputMMS">@Klinik.Resources.UIMessages.Password</span>
+                        @Html.TextBoxFor(x => x.Password, null, new { @class = "inputMMS", @id = "tbPassword", @type = "password", @placeholder = @Klinik.Resources.UIMessages.EnterPassword })
                         <span class="focus-inputMMS"></span>
                     </div>
 
                     <div class="wrap-inputMMS validate-input m-b-26" data-validate="Organization is required">
-                        <span class="label-inputMMS">Organization</span>
-                        @Html.TextBoxFor(x => x.Organization, null, new { @class = "inputMMS", @id = "tbOrganization", @placeholder = "Enter Organization Code" })
+                        <span class="label-inputMMS">@Klinik.Resources.UIMessages.Organization</span>
+                        @Html.TextBoxFor(x => x.Organization, null, new { @class = "inputMMS", @id = "tbOrganization", @placeholder = @Klinik.Resources.UIMessages.EnterOrganizationCode })
                         <span class="focus-inputMMS"></span>
                     </div>
 
@@ -63,12 +63,12 @@
                         <div class="contact100-form-checkbox">
                             <input class="input-checkboxMMS" id="ckb1" type="checkbox" name="remember-me">
                             <label class="label-checkboxMMS" for="ckb1">
-                                Remember me
+                                @Klinik.Resources.UIMessages.RememberMe
                             </label>
                         </div>
                         <div>
                             <a href="@Url.Action("ForgotPassword","Account")" class="txt1">
-                                Forgot Password?
+                                @Klinik.Resources.UIMessages.ForgotPassword
                             </a>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
 
                     <div class="container-loginMMS-form-btn">
                         <button class="loginMMS-form-btn">
-                            Login
+                            @Klinik.Resources.UIMessages.Login
                         </button>
                     </div>
                 }

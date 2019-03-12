@@ -18,7 +18,7 @@
     <div class="panel-body">
         <form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditRole">
             <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">Role</label>
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Role</label>
                 <div class="col-md-4">
                     @Html.HiddenFor(x => x.Id)
                     @Html.TextBoxFor(x => x.RoleName, new { @class = "form-control", @id = "tbOrgCode" })
@@ -26,15 +26,15 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">Organization</label>
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Organization</label>
                 <div class="col-md-4">
                     @Html.DropDownListFor(p => p.OrgID, (IEnumerable<SelectListItem>)ViewBag.Organisasi, new { @class = "form-control", @id = "ddlorganisasi" })
                 </div>
             </div>
             <br />
             <footer class="panel-footer">
-                <button type="submit" class="btn btn-primary">Simpan </button>
-                <button type="reset" id="btnreset" class="btn btn-default">Kembali</button>
+                <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
+                <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
             </footer>
         </form>
     </div>
