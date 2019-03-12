@@ -55,6 +55,10 @@ namespace Klinik.Features
                     var qry = _unitOfWork.ClinicRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
+                        // save the old data
+                        var _oldentity = Mapper.Map<Clinic, ClinicModel>(qry);
+
+                        // update data
                         qry.Name = request.Data.Name;
                         qry.Address = request.Data.Address;
                         qry.LegalNumber = request.Data.LegalNumber;
@@ -73,17 +77,23 @@ namespace Klinik.Features
                         if (resultAffected > 0)
                         {
                             response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Clinic", qry.Name, qry.Code);
+
+                            CommandLog(true, ClinicEnums.Module.MASTER_CLINIC, Constants.Command.EDIT_CLINIC, request.Data.Account, request.Data, _oldentity);
                         }
                         else
                         {
                             response.Status = false;
                             response.Message = string.Format(Messages.UpdateObjectFailed, "Clinic");
+
+                            CommandLog(false, ClinicEnums.Module.MASTER_CLINIC, Constants.Command.EDIT_CLINIC, request.Data.Account, request.Data, _oldentity);
                         }
                     }
                     else
                     {
                         response.Status = false;
                         response.Message = string.Format(Messages.UpdateObjectFailed, "Clinic");
+
+                        CommandLog(false, ClinicEnums.Module.MASTER_CLINIC, Constants.Command.EDIT_CLINIC, request.Data.Account, request.Data);
                     }
                 }
                 else
@@ -98,11 +108,15 @@ namespace Klinik.Features
                     if (resultAffected > 0)
                     {
                         response.Message = string.Format(Messages.ObjectHasBeenAdded, "Clinic", clinicEntity.Name, clinicEntity.Code);
+
+                        CommandLog(true, ClinicEnums.Module.MASTER_CLINIC, Constants.Command.ADD_NEW_CLINIC, request.Data.Account, request.Data);
                     }
                     else
                     {
                         response.Status = false;
                         response.Message = string.Format(Messages.AddObjectFailed, "Clinic");
+
+                        CommandLog(false, ClinicEnums.Module.MASTER_CLINIC, Constants.Command.ADD_NEW_CLINIC, request.Data.Account, request.Data);
                     }
                 }
             }
@@ -110,6 +124,14 @@ namespace Klinik.Features
             {
                 response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg();
+
+                if (request.Data != null)
+                {
+                    if (request.Data.Id > 0)
+                        CommandLog(false, ClinicEnums.Module.MASTER_CLINIC, Constants.Command.EDIT_CLINIC, request.Data.Account, request.Data);
+                    else
+                        CommandLog(false, ClinicEnums.Module.MASTER_CLINIC, Constants.Command.ADD_NEW_CLINIC, request.Data.Account, request.Data);
+                }
             }
 
             return response;

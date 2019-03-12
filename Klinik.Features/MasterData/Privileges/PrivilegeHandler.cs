@@ -37,6 +37,10 @@ namespace Klinik.Features
                     var qry = _unitOfWork.PrivilegeRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
+                        // save the old data
+                        var _oldentity = Mapper.Map<Privilege, PrivilegeModel>(qry);
+
+                        // update data
                         qry.Privilege_Name = request.Data.Privilige_Name;
                         qry.Privilege_Desc = request.Data.Privilege_Desc;
                         qry.MenuID = request.Data.MenuID;
@@ -48,17 +52,23 @@ namespace Klinik.Features
                         if (resultAffected > 0)
                         {
                             response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Privilege", qry.Privilege_Name, qry.ID);
+
+                            CommandLog(true, ClinicEnums.Module.MASTER_PRIVILEGE, Constants.Command.EDIT_PRIVILEGE, request.Data.Account, request.Data, _oldentity);
                         }
                         else
                         {
                             response.Status = false;
                             response.Message = string.Format(Messages.UpdateObjectFailed, "Privilege");
+
+                            CommandLog(false, ClinicEnums.Module.MASTER_PRIVILEGE, Constants.Command.EDIT_PRIVILEGE, request.Data.Account, request.Data, _oldentity);
                         }
                     }
                     else
                     {
                         response.Status = false;
                         response.Message = string.Format(Messages.UpdateObjectFailed, "Privilege");
+
+                        CommandLog(false, ClinicEnums.Module.MASTER_PRIVILEGE, Constants.Command.EDIT_PRIVILEGE, request.Data.Account, request.Data);
                     }
                 }
                 else
@@ -72,11 +82,15 @@ namespace Klinik.Features
                     if (resultAffected > 0)
                     {
                         response.Message = string.Format(Messages.ObjectHasBeenAdded, "Privilege", PrivilegeEntity.Privilege_Name, PrivilegeEntity.ID);
+
+                        CommandLog(true, ClinicEnums.Module.MASTER_PRIVILEGE, Constants.Command.ADD_NEW_PRIVILEGE, request.Data.Account, request.Data);
                     }
                     else
                     {
                         response.Status = false;
                         response.Message = string.Format(Messages.AddObjectFailed, "Privilege");
+
+                        CommandLog(false, ClinicEnums.Module.MASTER_PRIVILEGE, Constants.Command.ADD_NEW_PRIVILEGE, request.Data.Account, request.Data);
                     }
                 }
             }
@@ -84,6 +98,14 @@ namespace Klinik.Features
             {
                 response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg();
+
+                if (request.Data != null)
+                {
+                    if (request.Data.Id > 0)
+                        CommandLog(false, ClinicEnums.Module.MASTER_PRIVILEGE, Constants.Command.EDIT_PRIVILEGE, request.Data.Account, request.Data);
+                    else
+                        CommandLog(false, ClinicEnums.Module.MASTER_PRIVILEGE, Constants.Command.ADD_NEW_PRIVILEGE, request.Data.Account, request.Data);
+                }
             }
 
             return response;
@@ -156,6 +178,7 @@ namespace Klinik.Features
             {
                 qry = _unitOfWork.PrivilegeRepository.Get(searchPredicate, null);
             }
+
             foreach (var item in qry)
             {
                 var prData = Mapper.Map<Privilege, PrivilegeModel>(item);

@@ -106,7 +106,6 @@ namespace Klinik.Data
                 query = query.Include(include);
 
             return query.FirstOrDefault(filter);
-
         }
 
         /// <summary>
@@ -122,6 +121,7 @@ namespace Klinik.Data
             {
                 query = query.Include(includeProperty);
             }
+
             return query.Where(predicate).FirstOrDefault();
         }
 

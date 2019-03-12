@@ -29,7 +29,12 @@
         public enum Module
         {
             LOGIN,
-            MASTER_ORGANIZATION
+            MASTER_ORGANIZATION,
+            MASTER_CLINIC,
+            MASTER_EMPLOYEE,
+            MASTER_PRIVILEGE,
+            MASTER_ROLE,
+            MASTER_USER
         }
 
         public enum Action

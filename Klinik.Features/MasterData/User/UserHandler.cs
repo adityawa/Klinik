@@ -38,6 +38,10 @@ namespace Klinik.Features
                     var qry = _unitOfWork.UserRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
+                        // save the old data
+                        var _oldentity = Mapper.Map<User, UserModel>(qry);
+
+                        // update data
                         qry.OrganizationID = request.Data.OrgID;
                         qry.ExpiredDate = request.Data.ExpiredDate ?? DateTime.Now.AddDays(100);
                         qry.Status = request.Data.Status;
@@ -49,17 +53,23 @@ namespace Klinik.Features
                         if (resultAffected > 0)
                         {
                             response.Message = string.Format(Messages.ObjectHasBeenUpdated, "User", qry.UserName, qry.ID);
+
+                            CommandLog(true, ClinicEnums.Module.MASTER_USER, Constants.Command.EDIT_USER, request.Data.Account, request.Data, _oldentity);
                         }
                         else
                         {
                             response.Status = false;
                             response.Message = string.Format(Messages.UpdateObjectFailed, "User");
+
+                            CommandLog(false, ClinicEnums.Module.MASTER_USER, Constants.Command.EDIT_USER, request.Data.Account, request.Data, _oldentity);
                         }
                     }
                     else
                     {
                         response.Status = false;
                         response.Message = string.Format(Messages.UpdateObjectFailed, "User");
+
+                        CommandLog(false, ClinicEnums.Module.MASTER_USER, Constants.Command.EDIT_USER, request.Data.Account, request.Data);
                     }
                 }
                 else
@@ -75,11 +85,15 @@ namespace Klinik.Features
                     if (resultAffected > 0)
                     {
                         response.Message = string.Format(Messages.ObjectHasBeenAdded, "User", UserEntity.UserName, UserEntity.ID);
+
+                        CommandLog(true, ClinicEnums.Module.MASTER_USER, Constants.Command.ADD_NEW_USER, request.Data.Account, request.Data);
                     }
                     else
                     {
                         response.Status = false;
                         response.Message = string.Format(Messages.AddObjectFailed, "User");
+
+                        CommandLog(false, ClinicEnums.Module.MASTER_USER, Constants.Command.ADD_NEW_USER, request.Data.Account, request.Data);
                     }
                 }
             }
@@ -87,6 +101,14 @@ namespace Klinik.Features
             {
                 response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg();
+
+                if (request.Data != null)
+                {
+                    if (request.Data.Id > 0)
+                        CommandLog(false, ClinicEnums.Module.MASTER_USER, Constants.Command.EDIT_USER, request.Data.Account, request.Data);
+                    else
+                        CommandLog(false, ClinicEnums.Module.MASTER_USER, Constants.Command.ADD_NEW_USER, request.Data.Account, request.Data);
+                }
             }
 
             return response;

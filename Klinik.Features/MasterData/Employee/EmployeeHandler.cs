@@ -38,6 +38,10 @@ namespace Klinik.Features
                     var qry = _unitOfWork.EmployeeRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
+                        // save the old data
+                        var _oldentity = Mapper.Map<Employee, EmployeeModel>(qry);
+
+                        // update data
                         qry.EmpName = request.Data.EmpName;
                         qry.BirthDate = request.Data.Birthdate;
                         qry.Gender = request.Data.Gender;
@@ -54,17 +58,23 @@ namespace Klinik.Features
                         if (resultAffected > 0)
                         {
                             response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Employee", qry.EmpName, qry.id);
+
+                            CommandLog(true, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data, _oldentity);
                         }
                         else
                         {
                             response.Status = false;
                             response.Message = string.Format(Messages.UpdateObjectFailed, "Employee");
+
+                            CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data, _oldentity);
                         }
                     }
                     else
                     {
                         response.Status = false;
                         response.Message = string.Format(Messages.UpdateObjectFailed, "Employee");
+
+                        CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data);
                     }
                 }
                 else
@@ -79,11 +89,15 @@ namespace Klinik.Features
                     if (resultAffected > 0)
                     {
                         response.Message = string.Format(Messages.ObjectHasBeenAdded, "Employee", EmployeeEntity.EmpName, EmployeeEntity.id);
+
+                        CommandLog(true, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.ADD_NEW_EMPLOYEE, request.Data.Account, request.Data);
                     }
                     else
                     {
                         response.Status = false;
                         response.Message = string.Format(Messages.AddObjectFailed, "Employee");
+
+                        CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.ADD_NEW_EMPLOYEE, request.Data.Account, request.Data);
                     }
                 }
             }
@@ -91,6 +105,14 @@ namespace Klinik.Features
             {
                 response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg();
+
+                if (request.Data != null)
+                {
+                    if (request.Data.Id > 0)
+                        CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data);
+                    else
+                        CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.ADD_NEW_EMPLOYEE, request.Data.Account, request.Data);
+                }
             }
 
             return response;

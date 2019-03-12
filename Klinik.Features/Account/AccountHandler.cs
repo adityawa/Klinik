@@ -68,14 +68,14 @@ namespace Klinik.Features
                             response.Entity.Privileges.PrivilegeIDs.Add(rp.PrivilegeID);
                         }
 
-                        CommandLog(ClinicEnums.Module.LOGIN, ClinicEnums.Status.SUCCESS, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
+                        CommandLog(true, ClinicEnums.Module.LOGIN, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
                     }
                     else
                     {
                         response.Status = false;
                         response.Message = Messages.InvalidPassword;
 
-                        CommandLog(ClinicEnums.Module.LOGIN, ClinicEnums.Status.UNRECOGNIZED, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
+                        CommandLog(false, ClinicEnums.Module.LOGIN, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
                     }
                 }
                 else
@@ -83,7 +83,7 @@ namespace Klinik.Features
                     response.Status = false;
                     response.Message = Messages.InvalidUsernamePassword;
 
-                    CommandLog(ClinicEnums.Module.LOGIN, ClinicEnums.Status.UNRECOGNIZED, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
+                    CommandLog(false, ClinicEnums.Module.LOGIN, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
                 }
             }
             else
@@ -91,7 +91,7 @@ namespace Klinik.Features
                 response.Status = false;
                 response.Message = Messages.InvalidOrganizationCode;
 
-                CommandLog(ClinicEnums.Module.LOGIN, ClinicEnums.Status.UNRECOGNIZED, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
+                CommandLog(false, ClinicEnums.Module.LOGIN, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
             }
 
             return response;

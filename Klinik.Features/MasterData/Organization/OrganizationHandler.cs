@@ -127,7 +127,10 @@ namespace Klinik.Features
                     var qry = _unitOfWork.OrganizationRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
-                        var _oldentity = MappingEntityToModel(qry);
+                        // save the old data
+                        var _oldentity = Mapper.Map<Organization, OrganizationModel>(qry);
+
+                        // update data
                         qry.OrgCode = request.Data.OrgCode;
                         qry.OrgName = request.Data.OrgName;
                         qry.KlinikID = request.Data.KlinikID;
@@ -140,14 +143,14 @@ namespace Klinik.Features
                         {
                             response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Organization", qry.OrgName, qry.ID);
 
-                            CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.SUCCESS, Constants.Command.ADD_NEW_ORG, request.Data.Account, request.Data, _oldentity);
+                            CommandLog(true, ClinicEnums.Module.MASTER_ORGANIZATION, Constants.Command.EDIT_ORG, request.Data.Account, request.Data, _oldentity);
                         }
                         else
                         {
                             response.Status = false;
                             response.Message = string.Format(Messages.UpdateObjectFailed, "Orgnization");
 
-                            CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.ERROR, Constants.Command.ADD_NEW_ORG, request.Data.Account, request.Data, _oldentity);
+                            CommandLog(false, ClinicEnums.Module.MASTER_ORGANIZATION, Constants.Command.EDIT_ORG, request.Data.Account, request.Data, _oldentity);
                         }
                     }
                     else
@@ -155,7 +158,7 @@ namespace Klinik.Features
                         response.Status = false;
                         response.Message = string.Format(Messages.UpdateObjectFailed, "Orgnization");
 
-                        CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.ERROR, Constants.Command.ADD_NEW_ORG, request.Data.Account, request.Data);
+                        CommandLog(false, ClinicEnums.Module.MASTER_ORGANIZATION, Constants.Command.EDIT_ORG, request.Data.Account, request.Data);
                     }
                 }
                 else
@@ -170,14 +173,14 @@ namespace Klinik.Features
                     {
                         response.Message = string.Format(Messages.ObjectHasBeenAdded, "Orgnization", OrganizationEntity.OrgName, OrganizationEntity.ID);
 
-                        CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.SUCCESS, Constants.Command.ADD_NEW_ORG, request.Data.Account, OrganizationEntity);
+                        CommandLog(true, ClinicEnums.Module.MASTER_ORGANIZATION, Constants.Command.ADD_NEW_ORG, request.Data.Account, OrganizationEntity);
                     }
                     else
                     {
                         response.Status = false;
                         response.Message = string.Format(Messages.AddObjectFailed, "Orgnization");
 
-                        CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.ERROR, Constants.Command.ADD_NEW_ORG, request.Data.Account, OrganizationEntity);
+                        CommandLog(false, ClinicEnums.Module.MASTER_ORGANIZATION, Constants.Command.ADD_NEW_ORG, request.Data.Account, OrganizationEntity);
                     }
                 }
             }
@@ -186,7 +189,13 @@ namespace Klinik.Features
                 response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg();
 
-                CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.ERROR, Constants.Command.ADD_NEW_ORG, request.Data.Account, request.Data);
+                if (request.Data != null)
+                {
+                    if (request.Data.Id > 0)
+                        CommandLog(false, ClinicEnums.Module.MASTER_ORGANIZATION, Constants.Command.EDIT_ORG, request.Data.Account, request.Data);
+                    else
+                        CommandLog(false, ClinicEnums.Module.MASTER_ORGANIZATION, Constants.Command.ADD_NEW_ORG, request.Data.Account, request.Data);
+                }
             }
 
             return response;
@@ -249,17 +258,6 @@ namespace Klinik.Features
             }
 
             return response;
-        }
-
-        /// <summary>
-        /// Mapping entity to model
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        public OrganizationModel MappingEntityToModel(Organization entity)
-        {
-            var _entity = Mapper.Map<Organization, OrganizationModel>(entity);
-            return _entity;
         }
     }
 }

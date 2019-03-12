@@ -38,6 +38,10 @@ namespace Klinik.Features
                     var qry = _unitOfWork.RoleRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
+                        // save the old data
+                        var _oldentity = Mapper.Map<OrganizationRole, RoleModel>(qry);
+
+                        // update data
                         qry.RoleName = request.Data.RoleName;
                         qry.OrgID = request.Data.OrgID;
 
@@ -46,17 +50,23 @@ namespace Klinik.Features
                         if (resultAffected > 0)
                         {
                             response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Role", qry.RoleName, qry.ID);
+
+                            CommandLog(true, ClinicEnums.Module.MASTER_ROLE, Constants.Command.EDIT_ROLE, request.Data.Account, request.Data, _oldentity);
                         }
                         else
                         {
                             response.Status = false;
                             response.Message = string.Format(Messages.UpdateObjectFailed, "Role");
+
+                            CommandLog(false, ClinicEnums.Module.MASTER_ROLE, Constants.Command.EDIT_ROLE, request.Data.Account, request.Data, _oldentity);
                         }
                     }
                     else
                     {
                         response.Status = false;
                         response.Message = string.Format(Messages.UpdateObjectFailed, "Role");
+
+                        CommandLog(false, ClinicEnums.Module.MASTER_ROLE, Constants.Command.EDIT_ROLE, request.Data.Account, request.Data);
                     }
                 }
                 else
@@ -68,11 +78,15 @@ namespace Klinik.Features
                     if (resultAffected > 0)
                     {
                         response.Message = string.Format(Messages.ObjectHasBeenAdded, "Role", RoleEntity.RoleName, RoleEntity.ID);
+
+                        CommandLog(true, ClinicEnums.Module.MASTER_ROLE, Constants.Command.ADD_NEW_ROLE, request.Data.Account, request.Data);
                     }
                     else
                     {
                         response.Status = false;
                         response.Message = string.Format(Messages.AddObjectFailed, "Role");
+
+                        CommandLog(false, ClinicEnums.Module.MASTER_ROLE, Constants.Command.ADD_NEW_ROLE, request.Data.Account, request.Data);
                     }
                 }
             }
@@ -80,6 +94,14 @@ namespace Klinik.Features
             {
                 response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg();
+
+                if (request.Data != null)
+                {
+                    if (request.Data.Id > 0)
+                        CommandLog(false, ClinicEnums.Module.MASTER_ROLE, Constants.Command.EDIT_ROLE, request.Data.Account, request.Data);
+                    else
+                        CommandLog(false, ClinicEnums.Module.MASTER_PRIVILEGE, Constants.Command.ADD_NEW_ROLE, request.Data.Account, request.Data);
+                }
             }
 
             return response;
@@ -97,7 +119,6 @@ namespace Klinik.Features
             var qry = _unitOfWork.RoleRepository.Query(x => x.ID == request.Data.Id, null);
             if (qry.FirstOrDefault() != null)
             {
-
                 response.Entity = Mapper.Map<OrganizationRole, RoleModel>(qry.FirstOrDefault());
             }
 
@@ -152,6 +173,7 @@ namespace Klinik.Features
             {
                 qry = _unitOfWork.RoleRepository.Get(searchPredicate, null);
             }
+
             foreach (var item in qry)
             {
                 var prData = Mapper.Map<OrganizationRole, RoleModel>(item);

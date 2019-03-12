@@ -65,7 +65,7 @@ namespace Klinik.Features
         /// <param name="account"></param>
         /// <param name="newValue"></param>
         /// <param name="oldValue"></param>
-        public static void CommandLog(ClinicEnums.Module module, ClinicEnums.Status status, string command, AccountModel account, object newValue = null, object oldValue = null)
+        public static void CommandLog(bool status, ClinicEnums.Module module, string command, AccountModel account, object newValue = null, object oldValue = null)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace Klinik.Features
                 {
                     Start = DateTime.Now,
                     Module = module.ToString(),
-                    Status = status.ToString(),
+                    Status = status ? "SUCCESS" : "ERROR",
                     Command = command,
                     UserName = account.UserName,
                     Organization = account.Organization,
