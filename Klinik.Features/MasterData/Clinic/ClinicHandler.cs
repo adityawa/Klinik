@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using LinqKit;
+using Klinik.Resources;
 
 namespace Klinik.Features
 {
@@ -71,18 +72,18 @@ namespace Klinik.Features
                         int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Message = $"Success Update Clinic {qry.Name} with Id {qry.Code}";
+                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Clinic", qry.Name, qry.Code);
                         }
                         else
                         {
                             response.Status = false;
-                            response.Message = "Update Data Failed";
+                            response.Message = string.Format(Messages.UpdateObjectFailed, "Clinic");
                         }
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = "Update Data Failed";
+                        response.Message = string.Format(Messages.UpdateObjectFailed, "Clinic");
                     }
                 }
                 else
@@ -96,12 +97,12 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = $"Success Add new Clinic {clinicEntity.Name} with Id {clinicEntity.Code}";
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "Clinic", clinicEntity.Name, clinicEntity.Code);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = "Add Data Failed";
+                        response.Message = string.Format(Messages.AddObjectFailed, "Clinic");
                     }
                 }
             }
@@ -233,18 +234,18 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = $"Success remove Clinic {isExist.Name} with Id {isExist.Code}";
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Clinic", isExist.Name, isExist.Code);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = $"Remove Clinic Failed!";
+                        response.Message = string.Format(Messages.RemoveObjectFailed, "Clinic");
                     }
                 }
                 else
                 {
                     response.Status = false;
-                    response.Message = $"Remove Clinic Failed!";
+                    response.Message = string.Format(Messages.RemoveObjectFailed, "Clinic");
                 }
             }
             catch

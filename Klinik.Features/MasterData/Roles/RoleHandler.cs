@@ -3,6 +3,7 @@ using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.MasterData;
+using Klinik.Resources;
 using LinqKit;
 using System;
 using System.Collections.Generic;
@@ -44,18 +45,18 @@ namespace Klinik.Features
                         int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Message = $"Success Update Role {qry.RoleName} with Id {qry.ID}";
+                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Role", qry.RoleName, qry.ID);
                         }
                         else
                         {
                             response.Status = false;
-                            response.Message = "Update Data Failed";
+                            response.Message = string.Format(Messages.UpdateObjectFailed, "Role");
                         }
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = "Update Data Failed";
+                        response.Message = string.Format(Messages.UpdateObjectFailed, "Role");
                     }
                 }
                 else
@@ -66,12 +67,12 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = $"Success Add new Role {RoleEntity.RoleName} with Id {RoleEntity.ID}";
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "Role", RoleEntity.RoleName, RoleEntity.ID);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = "Add Data Failed";
+                        response.Message = string.Format(Messages.AddObjectFailed, "Role");
                     }
                 }
             }
@@ -99,6 +100,7 @@ namespace Klinik.Features
 
                 response.Entity = Mapper.Map<OrganizationRole, RoleModel>(qry.FirstOrDefault());
             }
+
             return response;
         }
 
@@ -189,18 +191,18 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = $"Success remove Role {isExist.RoleName} with Id {isExist.ID}";
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Role", isExist.RoleName, isExist.ID);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = $"Remove Role Failed!";
+                        response.Message = string.Format(Messages.RemoveObjectFailed, "Role");
                     }
                 }
                 else
                 {
                     response.Status = false;
-                    response.Message = $"Remove Role Failed!";
+                    response.Message = string.Format(Messages.RemoveObjectFailed, "Role");
                 }
             }
             catch

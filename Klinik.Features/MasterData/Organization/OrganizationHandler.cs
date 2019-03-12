@@ -3,6 +3,7 @@ using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.MasterData;
+using Klinik.Resources;
 using LinqKit;
 using System;
 using System.Collections.Generic;
@@ -137,14 +138,14 @@ namespace Klinik.Features
                         int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Message = $"Success Update organization {qry.OrgName} with Id {qry.ID}";
+                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Organization", qry.OrgName, qry.ID);
 
                             CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.SUCCESS, Constants.Command.ADD_NEW_ORG, request.Data.Account, request.Data, _oldentity);
                         }
                         else
                         {
                             response.Status = false;
-                            response.Message = "Update Data Failed";
+                            response.Message = string.Format(Messages.UpdateObjectFailed, "Orgnization");
 
                             CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.ERROR, Constants.Command.ADD_NEW_ORG, request.Data.Account, request.Data, _oldentity);
                         }
@@ -152,7 +153,7 @@ namespace Klinik.Features
                     else
                     {
                         response.Status = false;
-                        response.Message = "Update Data Failed";
+                        response.Message = string.Format(Messages.UpdateObjectFailed, "Orgnization");
 
                         CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.ERROR, Constants.Command.ADD_NEW_ORG, request.Data.Account, request.Data);
                     }
@@ -167,14 +168,14 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = $"Success Add new organization {OrganizationEntity.OrgName} with Id {OrganizationEntity.ID}";
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "Orgnization", OrganizationEntity.OrgName, OrganizationEntity.ID);
 
                         CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.SUCCESS, Constants.Command.ADD_NEW_ORG, request.Data.Account, OrganizationEntity);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = "Add Data Failed";
+                        response.Message = string.Format(Messages.AddObjectFailed, "Orgnization");
 
                         CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.ERROR, Constants.Command.ADD_NEW_ORG, request.Data.Account, OrganizationEntity);
                     }
@@ -227,18 +228,18 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = $"Success remove organization {isExist.OrgName} with Id {isExist.ID}";
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Orgnization", isExist.OrgName, isExist.ID);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = $"Remove Organization Failed!";
+                        response.Message = string.Format(Messages.RemoveObjectFailed, "Orgnization");
                     }
                 }
                 else
                 {
                     response.Status = false;
-                    response.Message = $"Remove Organization Failed!";
+                    response.Message = string.Format(Messages.RemoveObjectFailed, "Orgnization");
                 }
             }
             catch

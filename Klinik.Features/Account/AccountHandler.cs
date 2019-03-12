@@ -3,6 +3,7 @@ using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MappingMaster;
+using Klinik.Resources;
 using System;
 using System.Collections.Generic;
 
@@ -72,7 +73,7 @@ namespace Klinik.Features
                     else
                     {
                         response.Status = false;
-                        response.Message = "Password Incorrect";
+                        response.Message = Messages.InvalidPassword;
 
                         CommandLog(ClinicEnums.Module.LOGIN, ClinicEnums.Status.UNRECOGNIZED, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
                     }
@@ -80,7 +81,7 @@ namespace Klinik.Features
                 else
                 {
                     response.Status = false;
-                    response.Message = "User Name or Password Incorrect";
+                    response.Message = Messages.InvalidUsernamePassword;
 
                     CommandLog(ClinicEnums.Module.LOGIN, ClinicEnums.Status.UNRECOGNIZED, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
                 }
@@ -88,7 +89,7 @@ namespace Klinik.Features
             else
             {
                 response.Status = false;
-                response.Message = "Invalid Organization Code";
+                response.Message = Messages.InvalidOrganizationCode;
 
                 CommandLog(ClinicEnums.Module.LOGIN, ClinicEnums.Status.UNRECOGNIZED, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
             }
@@ -125,7 +126,7 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
 
                     // update response                    
-                    response.Message = "Data Successfully Updated";
+                    response.Message = Messages.DataUpdated;
                 }
                 catch
                 {
@@ -136,7 +137,7 @@ namespace Klinik.Features
             else
             {
                 response.Status = false;
-                response.Message = "User Name or Password Incorrect";
+                response.Message = Messages.InvalidUsernamePassword;
             }
 
             return response;
@@ -192,7 +193,7 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
 
                     // update response                    
-                    response.Message = "User Password Successfully Updated";
+                    response.Message = Messages.UserPasswordUpdated;
                 }
                 catch
                 {
@@ -203,7 +204,7 @@ namespace Klinik.Features
             else
             {
                 response.Status = false;
-                response.Message = "Reset Code Incorrect";
+                response.Message = Messages.InvalidResetPasswordCode;
             }
 
             return response;

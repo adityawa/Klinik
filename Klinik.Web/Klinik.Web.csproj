@@ -1165,6 +1165,10 @@
       <Project>{7db62f9c-5428-484f-ae2d-8831d92ea816}</Project>
       <Name>Klinik.Features</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Klinik.Resources\Klinik.Resources.csproj">
+      <Project>{3d1a8222-cc25-4bb0-8820-f26c53aa9e8d}</Project>
+      <Name>Klinik.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

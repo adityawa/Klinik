@@ -3,6 +3,7 @@ using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.MasterData;
+using Klinik.Resources;
 using LinqKit;
 using System;
 using System.Collections.Generic;
@@ -46,18 +47,18 @@ namespace Klinik.Features
                         int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Message = $"Success Update Privilege {qry.Privilege_Name} with Id {qry.ID}";
+                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Privilege", qry.Privilege_Name, qry.ID);
                         }
                         else
                         {
                             response.Status = false;
-                            response.Message = "Update Data Failed";
+                            response.Message = string.Format(Messages.UpdateObjectFailed, "Privilege");
                         }
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = "Update Data Failed";
+                        response.Message = string.Format(Messages.UpdateObjectFailed, "Privilege");
                     }
                 }
                 else
@@ -70,18 +71,17 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = $"Success Add new Privilege {PrivilegeEntity.Privilege_Name} with Id {PrivilegeEntity.ID}";
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "Privilege", PrivilegeEntity.Privilege_Name, PrivilegeEntity.ID);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = "Add Data Failed";
+                        response.Message = string.Format(Messages.AddObjectFailed, "Privilege");
                     }
                 }
             }
             catch
             {
-
                 response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg();
             }
@@ -195,18 +195,18 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = $"Success remove Privilege {isExist.Privilege_Name} with Id {isExist.ID}";
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Privilege", isExist.Privilege_Name, isExist.ID);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = $"Remove Privilege Failed!";
+                        response.Message = string.Format(Messages.RemoveObjectFailed, "Privilege");
                     }
                 }
                 else
                 {
                     response.Status = false;
-                    response.Message = $"Remove Privilege Failed!";
+                    response.Message = string.Format(Messages.RemoveObjectFailed, "Privilege");
                 }
             }
             catch
@@ -214,6 +214,7 @@ namespace Klinik.Features
                 response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;
             }
+
             return response;
         }
     }

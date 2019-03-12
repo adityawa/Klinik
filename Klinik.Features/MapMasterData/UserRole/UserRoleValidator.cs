@@ -1,6 +1,7 @@
 ﻿using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Resources;
 using System;
 using System.Linq;
 
@@ -40,7 +41,7 @@ namespace Klinik.Features
             if (errorFields.Any())
             {
                 response.Status = false;
-                response.Message = $"Validation Error for following fields : {String.Join(",", errorFields)}";
+                response.Message = string.Format(Messages.ValidationErrorFields, String.Join(",", errorFields));
             }
 
             if (response.Status)

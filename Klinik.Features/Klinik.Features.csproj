@@ -123,6 +123,10 @@
       <Project>{0a81b9b4-7d64-412d-8e86-8ae9d22cf53f}</Project>
       <Name>Klinik.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Klinik.Resources\Klinik.Resources.csproj">
+      <Project>{3d1a8222-cc25-4bb0-8820-f26c53aa9e8d}</Project>
+      <Name>Klinik.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

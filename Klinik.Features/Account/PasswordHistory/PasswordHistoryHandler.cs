@@ -1,6 +1,7 @@
 ﻿using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Resources;
 using System;
 using System.Linq;
 
@@ -54,7 +55,7 @@ namespace Klinik.Features
 
                     transaction.Commit();
 
-                    response.Message = "Password has been changed successfully";
+                    response.Message = Messages.UserPasswordUpdated;
                 }
                 catch
                 {

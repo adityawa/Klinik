@@ -1,5 +1,6 @@
 ﻿using Klinik.Common;
 using Klinik.Data;
+using Klinik.Resources;
 using System;
 using System.Linq;
 
@@ -45,7 +46,7 @@ namespace Klinik.Features
                 if (errorFields.Any())
                 {
                     response.Status = false;
-                    response.Message = $"Validation Error for following fields : {String.Join(",", errorFields)}";
+                    response.Message = string.Format(Messages.ValidationErrorFields, String.Join(",", errorFields));
                 }
                 else if (request.Data.Privilige_Name.Length > 150)
                 {
@@ -66,7 +67,7 @@ namespace Klinik.Features
                 if (!isHavePrivilege)
                 {
                     response.Status = false;
-                    response.Message = $"Unauthorized Access!";
+                    response.Message = Messages.UnauthorizedAccess;
                 }
 
                 if (response.Status)
@@ -89,7 +90,7 @@ namespace Klinik.Features
                 if (!isHavePrivilege)
                 {
                     response.Status = false;
-                    response.Message = $"Unauthorized Access!";
+                    response.Message = Messages.UnauthorizedAccess;
                 }
             }
 

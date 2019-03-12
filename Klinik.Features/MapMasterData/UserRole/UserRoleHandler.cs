@@ -8,6 +8,7 @@ using LinqKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Klinik.Resources;
 
 namespace Klinik.Features
 {
@@ -56,7 +57,7 @@ namespace Klinik.Features
                     int resultAffected = _context.SaveChanges();
                     transaction.Commit();
 
-                    response.Message = "Data Successfully Saved";
+                    response.Message = Messages.DataSaved;
                 }
                 catch
                 {

@@ -3,6 +3,7 @@ using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.MasterData;
+using Klinik.Resources;
 using LinqKit;
 using System;
 using System.Collections.Generic;
@@ -52,18 +53,18 @@ namespace Klinik.Features
 
                         if (resultAffected > 0)
                         {
-                            response.Message = $"Employee {qry.EmpName} with ID {qry.id} has been successfully updated";
+                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Employee", qry.EmpName, qry.id);
                         }
                         else
                         {
                             response.Status = false;
-                            response.Message = "Employee Update Failed";
+                            response.Message = string.Format(Messages.UpdateObjectFailed, "Employee");
                         }
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = "Employee Update Failed";
+                        response.Message = string.Format(Messages.UpdateObjectFailed, "Employee");
                     }
                 }
                 else
@@ -77,13 +78,12 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = $"Employee {EmployeeEntity.EmpName} with ID {EmployeeEntity.id} has been successfully added";
-
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "Employee", EmployeeEntity.EmpName, EmployeeEntity.id);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = "Employee Add Failed";
+                        response.Message = string.Format(Messages.AddObjectFailed, "Employee");
                     }
                 }
             }
@@ -125,9 +125,9 @@ namespace Klinik.Features
             var qry = _unitOfWork.EmployeeRepository.Query(x => x.id == request.Data.Id, null);
             if (qry.FirstOrDefault() != null)
             {
-
                 response.Entity = Mapper.Map<Employee, EmployeeModel>(qry.FirstOrDefault());
             }
+
             return response;
         }
 
@@ -185,6 +185,7 @@ namespace Klinik.Features
             {
                 qry = _unitOfWork.EmployeeRepository.Get(searchPredicate, null, includes: x => x.GeneralMaster);
             }
+
             foreach (var item in qry)
             {
                 var prData = Mapper.Map<Employee, EmployeeModel>(item);
@@ -225,18 +226,18 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = $"Employee {isExist.EmpName} with ID {isExist.id} has been successfully removed";
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Employee", isExist.EmpName, isExist.id);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = $"Employee Removal Failed!";
+                        response.Message = string.Format(Messages.RemoveObjectFailed, "Employee");
                     }
                 }
                 else
                 {
                     response.Status = false;
-                    response.Message = $"Employee Removal Failed!";
+                    response.Message = string.Format(Messages.RemoveObjectFailed, "Employee");
                 }
             }
             catch

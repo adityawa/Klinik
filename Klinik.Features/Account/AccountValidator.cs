@@ -1,5 +1,5 @@
-﻿using Klinik.Common;
-using Klinik.Data;
+﻿using Klinik.Data;
+using Klinik.Resources;
 using System;
 using System.Linq;
 
@@ -24,7 +24,7 @@ namespace Klinik.Features
             if (errorFields.Any())
             {
                 response.Status = false;
-                response.Message = $"Following Fields must be filled : {String.Join(",", errorFields)}";
+                response.Message = string.Format(Messages.RequiredFieldsMissing, String.Join(",", errorFields));
             }
 
             if (response.Status)

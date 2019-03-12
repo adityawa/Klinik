@@ -3,6 +3,7 @@ using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.MasterData;
+using Klinik.Resources;
 using LinqKit;
 using System;
 using System.Collections.Generic;
@@ -47,18 +48,18 @@ namespace Klinik.Features
                         int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Message = $"Success Update User {qry.UserName} with Id {qry.ID}";
+                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, "User", qry.UserName, qry.ID);
                         }
                         else
                         {
                             response.Status = false;
-                            response.Message = "Update Data Failed";
+                            response.Message = string.Format(Messages.UpdateObjectFailed, "User");
                         }
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = "Update Data Failed";
+                        response.Message = string.Format(Messages.UpdateObjectFailed, "User");
                     }
                 }
                 else
@@ -73,12 +74,12 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = $"Success Add new User {UserEntity.UserName} with Id {UserEntity.ID}";
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "User", UserEntity.UserName, UserEntity.ID);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = "Add Data Failed";
+                        response.Message = string.Format(Messages.AddObjectFailed, "User");
                     }
                 }
             }
@@ -210,18 +211,18 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = $"Success remove User {isExist.UserName} with Id {isExist.ID}";
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "User", isExist.UserName, isExist.ID);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = $"Remove User Failed!";
+                        response.Message = string.Format(Messages.RemoveObjectFailed, "User");
                     }
                 }
                 else
                 {
                     response.Status = false;
-                    response.Message = $"Remove User Failed!";
+                    response.Message = string.Format(Messages.RemoveObjectFailed, "User");
                 }
             }
             catch

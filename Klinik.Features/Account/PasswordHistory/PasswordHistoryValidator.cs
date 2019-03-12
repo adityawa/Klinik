@@ -1,6 +1,7 @@
 ﻿using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Resources;
 using System;
 using System.Linq;
 
@@ -38,21 +39,21 @@ namespace Klinik.Features
             if (errorFields.Any())
             {
                 response.Status = false;
-                response.Message = $"Following Fields must be filled : {String.Join(",", errorFields)}";
+                response.Message = string.Format(Messages.RequiredFieldsMissing, String.Join(",", errorFields));
             }
 
             var cekIsExpired = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName == request.Data.UserName);
             if (cekIsExpired == null)
             {
                 response.Status = false;
-                response.Message = $"User Not Found";
+                response.Message = Messages.UserNotFound;
             }
             else
             {
                 if (cekIsExpired.Status == false || cekIsExpired.ExpiredDate < DateTime.Now)
                 {
                     response.Status = false;
-                    response.Message = $"Password cannot be changed for non-active user";
+                    response.Message = Messages.CannotChangePasswordForInactiveUser;
                 }
             }
 
@@ -62,7 +63,7 @@ namespace Klinik.Features
                 if (request.Data.Password != CommonUtils.Decryptor(validateCurrentUser.Password, CommonUtils.KeyEncryptor))
                 {
                     response.Status = false;
-                    response.Message = $"Password cannot be changed because user name and password not match";
+                    response.Message = Messages.UpdateFailedUsernamePasswordNotMatch;
                 }
             }
 
@@ -72,7 +73,7 @@ namespace Klinik.Features
                 if (request.Data.NewPassword == CommonUtils.Decryptor(p, CommonUtils.KeyEncryptor))
                 {
                     response.Status = false;
-                    response.Message = $"Password already used in the past, please use another";
+                    response.Message = Messages.PasswordHasBeenUsedBefore;
                     break;
                 }
             }
@@ -80,7 +81,7 @@ namespace Klinik.Features
             if (request.Data.Password.Equals(request.Data.NewPassword))
             {
                 response.Status = false;
-                response.Message = $"New Password cannot same with Old Password";
+                response.Message = Messages.PasswordHasBeenUsedBefore;
             }
 
             if (response.Status)

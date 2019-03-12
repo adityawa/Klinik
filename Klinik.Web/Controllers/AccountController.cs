@@ -3,6 +3,7 @@ using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
 using Klinik.Features;
+using Klinik.Resources;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -57,11 +58,11 @@ namespace Klinik.Web.Controllers
                 // send verification email
                 SendVerificationLinkEmail(EmailID, resetCode);
 
-                ViewBag.Message = "Reset password link has been sent to your email address.";
+                ViewBag.Message = Messages.ResetPasswordLinkSent;
             }
             else
             {
-                ViewBag.Message = "Employee with an email " + EmailID + " does not exist";
+                ViewBag.Message = string.Format(Messages.EmployeeWithEmailNotExist, EmailID);
             }
 
             return View();
@@ -119,11 +120,11 @@ namespace Klinik.Web.Controllers
                 var response = new AccountHandler(_unitOfWork, _context).UpdateUserPassword(request);
                 if (response.Status)
                 {
-                    ViewBag.Message = "User password has been successfully updated";
+                    ViewBag.Message = Messages.UserPasswordUpdated;
                 }
                 else
                 {
-                    ViewBag.Message = "Failed update user password";
+                    ViewBag.Message = Messages.UserPasswordUpdateFailed;
                 }
 
                 ViewBag.Status = response.Status.ToString();
@@ -156,7 +157,6 @@ namespace Klinik.Web.Controllers
                 {
                     IList<MenuModel> Menu = new MenuHandler(_unitOfWork).GetMenuBasedOnPrivilege(response.Entity.Privileges.PrivilegeIDs);
                     Session["AuthMenu"] = Menu;
-                    //Get
                 }
 
                 return RedirectToAction("Index", "Home");
@@ -218,9 +218,7 @@ namespace Klinik.Web.Controllers
                 var fromEmail = new MailAddress(emailSender, emailSenderDisplayName);
                 var toEmail = new MailAddress(emailID);
 
-                string subject = "Reset Password";
-                string body = "Hi,<br/><br/>We got request for reset your account password. Please click on the below link to reset your password" +
-                    "<br/><br/><a href=" + link + ">Reset Password link</a><br/><br/>Regards,<br/>Administrator";
+                string body = string.Format(Messages.EmailBodyResetPassword, link);
 
                 var smtp = new SmtpClient
                 {
@@ -234,7 +232,7 @@ namespace Klinik.Web.Controllers
 
                 using (var message = new MailMessage(fromEmail, toEmail)
                 {
-                    Subject = subject,
+                    Subject = Messages.ResetPassword,
                     Body = body,
                     IsBodyHtml = true
                 })
@@ -246,7 +244,5 @@ namespace Klinik.Web.Controllers
                 throw;
             }
         }
-
-
     }
 }

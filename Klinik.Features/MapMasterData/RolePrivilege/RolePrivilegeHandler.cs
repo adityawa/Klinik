@@ -3,6 +3,7 @@ using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.MappingMaster;
+using Klinik.Resources;
 using LinqKit;
 using System;
 using System.Collections.Generic;
@@ -56,7 +57,7 @@ namespace Klinik.Features
 
                     transaction.Commit();
 
-                    response.Message = "Data Successfully Saved";
+                    response.Message = Messages.DataSaved;
                 }
                 catch
                 {
