@@ -51,58 +51,58 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataRepository\Clinic.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\Employee.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\GeneralMaster.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataRepository\KlinikModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KlinikModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataRepository\KlinikModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataRepository\KlinikModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KlinikModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\Log.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\Menu.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
+      <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\Organization.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\OrganizationPrivilege.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\OrganizationRole.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\PasswordHistory.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\Privilege.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\RolePrivilege.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\User.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\UserRole.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GenericRepository.cs" />
     <Compile Include="Interfaces\IGenericRepository.cs" />
@@ -111,15 +111,15 @@
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataRepository\Model1.Context.tt">
+    <Content Include="DataRepository\KlinikModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+      <DependentUpon>KlinikModel.edmx</DependentUpon>
+      <LastGenOutput>KlinikModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DataRepository\Model1.tt">
+    <Content Include="DataRepository\KlinikModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>KlinikModel.edmx</DependentUpon>
+      <LastGenOutput>KlinikModel.cs</LastGenOutput>
     </Content>
     <Content Include="DB\script_DB_03032019.sql" />
     <Content Include="DB\script_db_10032019.sql" />
@@ -130,12 +130,12 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="DataRepository\Model1.edmx">
+    <EntityDeploy Include="DataRepository\KlinikModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+      <LastGenOutput>KlinikModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DataRepository\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
+    <None Include="DataRepository\KlinikModel.edmx.diagram">
+      <DependentUpon>KlinikModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
