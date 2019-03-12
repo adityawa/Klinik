@@ -88,6 +88,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assign Role.
+        /// </summary>
+        public static string AssignRole {
+            get {
+                return ResourceManager.GetString("AssignRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
         public static string Back {
@@ -124,11 +133,29 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clinic.
+        /// </summary>
+        public static string Clinic {
+            get {
+                return ResourceManager.GetString("Clinic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clinic Code.
         /// </summary>
         public static string ClinicCode {
             get {
                 return ResourceManager.GetString("ClinicCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clinic List.
+        /// </summary>
+        public static string ClinicList {
+            get {
+                return ResourceManager.GetString("ClinicList", resourceCulture);
             }
         }
         
@@ -196,6 +223,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this data ( ID : .
+        /// </summary>
+        public static string DeleteConfirmation {
+            get {
+                return ResourceManager.GetString("DeleteConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Department.
         /// </summary>
         public static string Department {
@@ -214,11 +259,29 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employee ID.
+        /// </summary>
+        public static string EmpID {
+            get {
+                return ResourceManager.GetString("EmpID", resourceCulture);
             }
         }
         
@@ -241,11 +304,29 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Employee List.
+        /// </summary>
+        public static string EmployeeList {
+            get {
+                return ResourceManager.GetString("EmployeeList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Employee Type.
         /// </summary>
         public static string EmployeeType {
             get {
                 return ResourceManager.GetString("EmployeeType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employee Type.
+        /// </summary>
+        public static string EmpType {
+            get {
+                return ResourceManager.GetString("EmpType", resourceCulture);
             }
         }
         
@@ -493,6 +574,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Organization List.
+        /// </summary>
+        public static string OrganizationList {
+            get {
+                return ResourceManager.GetString("OrganizationList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Organization Name.
         /// </summary>
         public static string OrganizationName {
@@ -525,6 +615,15 @@ namespace Klinik.Resources {
         public static string Privilege {
             get {
                 return ResourceManager.GetString("Privilege", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privilege List.
+        /// </summary>
+        public static string PrivilegeList {
+            get {
+                return ResourceManager.GetString("PrivilegeList", resourceCulture);
             }
         }
         
@@ -601,6 +700,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Role List.
+        /// </summary>
+        public static string RoleList {
+            get {
+                return ResourceManager.GetString("RoleList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Role Privilege.
         /// </summary>
         public static string RolePrivilege {
@@ -615,6 +723,24 @@ namespace Klinik.Resources {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Privilege.
+        /// </summary>
+        public static string SetPrivilege {
+            get {
+                return ResourceManager.GetString("SetPrivilege", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Role Privilege.
+        /// </summary>
+        public static string SetRolePrivilege {
+            get {
+                return ResourceManager.GetString("SetRolePrivilege", resourceCulture);
             }
         }
         
@@ -651,6 +777,15 @@ namespace Klinik.Resources {
         public static string Update {
             get {
                 return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User List.
+        /// </summary>
+        public static string UserList {
+            get {
+                return ResourceManager.GetString("UserList", resourceCulture);
             }
         }
         

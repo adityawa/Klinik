@@ -7,8 +7,7 @@
 <link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
 <link href="~/Content/DataTables/css/responsive.bootstrap.css" rel="stylesheet" />
 
-
-<button id="btnAdd" class="btn btn-primary"><i class="fa fa-plus"></i>>@Klinik.Resources.UIMessages.AddNew</button>
+<button id="btnAdd" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;@Klinik.Resources.UIMessages.AddNew</button>
 
 <br /><br />
 <section class="panel">
@@ -16,22 +15,22 @@
         <div class="panel-actions">
             <a href="#" class="fa fa-caret-down"></a>
         </div>
-        <h5 class="panel-title">List Clinic</h5>
+        <h5 class="panel-title">@Klinik.Resources.UIMessages.ClinicList</h5>
     </header>
     <div class="panel-body">
         <div style="width:100%; margin:0 auto">
             <table id="tbClinic" class="table table-striped table-bordered dt-responsive" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Code</th>
-                        <th>Name</th>
-                        <th>Legal No</th>
-                        <th>Legal Date</th>
-                        <th>Contact No</th>
-                        <th>City</th>
-                        <th>Clinic Type</th>
-                        <th>Email</th>
+                        <th>@Klinik.Resources.UIMessages.ID</th>
+                        <th>@Klinik.Resources.UIMessages.Code</th>
+                        <th>@Klinik.Resources.UIMessages.Name</th>
+                        <th>@Klinik.Resources.UIMessages.LegalNO</th>
+                        <th>@Klinik.Resources.UIMessages.LegalDate</th>
+                        <th>@Klinik.Resources.UIMessages.ContactNo</th>
+                        <th>@Klinik.Resources.UIMessages.City</th>
+                        <th>@Klinik.Resources.UIMessages.ClinicType</th>
+                        <th>@Klinik.Resources.UIMessages.Email</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -125,7 +124,7 @@
                 { "data": "ClinicTypeDesc", "name": "ClinicTypeDesc", "autoWidth": true },
                 { "data": "Email", "name": "Email", "autoWidth": true },
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditClinic?id=' + full.Id + '">Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >Delete</button>"; }
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditClinic?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>"; }
                 }
 
 
@@ -144,10 +143,8 @@
         "showMethod": "fadeIn"
     };
 
-
     var Delete = function (ID) {
-        var txt;
-        var r = confirm("Apakah anda yakin akan menghapus Clinic dengan Id " + ID);
+        var r = confirm("@Klinik.Resources.UIMessages.DeleteConfirmation" + ID + " ) ?");
         if (r == true) {
             DeleteClinic(ID);
         }
@@ -159,8 +156,9 @@
             url: '/MasterData/DeleteMasterClinic?id=' + Id,
             type: 'POST',
             success: function (result) {
-                if (result.Status == "SUCCESS") {
-
+                if (result.Status == "True") {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
                     location.reload();
                     toastr.success(result.Message);
                 }
