@@ -1,5 +1,4 @@
-﻿using Klinik.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Klinik.Entities.MappingMaster
 {
@@ -10,7 +9,11 @@ namespace Klinik.Entities.MappingMaster
         public string RoleDesc { get; set; }
         public string PrivilegeName { get; set; }
         public string PrivilegeDesc { get; set; }
-
         public List<long> PrivilegeIDs { get; set; }
+
+        public RolePrivilegeModel()
+        {
+            PrivilegeIDs = new List<long>();
+        }
     }
 }

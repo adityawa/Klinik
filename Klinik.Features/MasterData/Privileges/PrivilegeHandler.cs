@@ -28,68 +28,64 @@ namespace Klinik.Features
         /// <returns></returns>
         public PrivilegeResponse CreateOrEdit(PrivilegeRequest request)
         {
-            int resultAffected = 0;
-
             PrivilegeResponse response = new PrivilegeResponse();
             try
             {
-                if (request.RequestPrivilegeData.Id > 0)
+                if (request.Data.Id > 0)
                 {
-                    var qry = _unitOfWork.PrivilegeRepository.GetById(request.RequestPrivilegeData.Id);
+                    var qry = _unitOfWork.PrivilegeRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
-                        qry.Privilege_Name = request.RequestPrivilegeData.Privilige_Name;
-                        qry.Privilege_Desc = request.RequestPrivilegeData.Privilege_Desc;
-                        qry.MenuID = request.RequestPrivilegeData.MenuID;
-                        qry.ModifiedBy = request.RequestPrivilegeData.ModifiedBy;
+                        qry.Privilege_Name = request.Data.Privilige_Name;
+                        qry.Privilege_Desc = request.Data.Privilege_Desc;
+                        qry.MenuID = request.Data.MenuID;
+                        qry.ModifiedBy = request.Data.ModifiedBy;
                         qry.ModifiedDate = DateTime.Now;
+
                         _unitOfWork.PrivilegeRepository.Update(qry);
-                        resultAffected = _unitOfWork.Save();
+                        int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Status = ClinicEnums.Status.SUCCESS.ToString();
                             response.Message = $"Success Update Privilege {qry.Privilege_Name} with Id {qry.ID}";
                         }
                         else
                         {
-                            response.Status = ClinicEnums.Status.ERROR.ToString();
+                            response.Status = false;
                             response.Message = "Update Data Failed";
                         }
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = "Update Data Failed";
                     }
                 }
                 else
                 {
-                    var PrivilegeEntity = Mapper.Map<PrivilegeModel, Privilege>(request.RequestPrivilegeData);
-                    PrivilegeEntity.CreatedBy = request.RequestPrivilegeData.CreatedBy ?? "SYSTEM";
+                    var PrivilegeEntity = Mapper.Map<PrivilegeModel, Privilege>(request.Data);
+                    PrivilegeEntity.CreatedBy = request.Data.CreatedBy ?? "SYSTEM";
                     PrivilegeEntity.CreatedDate = DateTime.Now;
+
                     _unitOfWork.PrivilegeRepository.Insert(PrivilegeEntity);
-                    resultAffected = _unitOfWork.Save();
+                    int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success Add new Privilege {PrivilegeEntity.Privilege_Name} with Id {PrivilegeEntity.ID}";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = "Add Data Failed";
                     }
                 }
-
-              
             }
             catch
             {
-              
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+
+                response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg();
             }
-          
+
             return response;
         }
 
@@ -102,12 +98,12 @@ namespace Klinik.Features
         {
             PrivilegeResponse response = new PrivilegeResponse();
 
-            var qry = _unitOfWork.PrivilegeRepository.Query(x => x.ID == request.RequestPrivilegeData.Id, null);
+            var qry = _unitOfWork.PrivilegeRepository.Query(x => x.ID == request.Data.Id, null);
             if (qry.FirstOrDefault() != null)
             {
-
                 response.Entity = Mapper.Map<Privilege, PrivilegeModel>(qry.FirstOrDefault());
             }
+
             return response;
         }
 
@@ -122,16 +118,16 @@ namespace Klinik.Features
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<Privilege>(true);
 
-            if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
+            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
-                searchPredicate = searchPredicate.And(p => p.Privilege_Name.Contains(request.searchValue) || p.Privilege_Desc.Contains(request.searchValue));
+                searchPredicate = searchPredicate.And(p => p.Privilege_Name.Contains(request.SearchValue) || p.Privilege_Desc.Contains(request.SearchValue));
             }
 
-            if (!(string.IsNullOrEmpty(request.sortColumn) && string.IsNullOrEmpty(request.sortColumnDir)))
+            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
             {
-                if (request.sortColumnDir == "asc")
+                if (request.SortColumnDir == "asc")
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "privilige_name":
                             qry = _unitOfWork.PrivilegeRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Privilege_Name));
@@ -144,7 +140,7 @@ namespace Klinik.Features
                 }
                 else
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "privilige_name":
                             qry = _unitOfWork.PrivilegeRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Privilege_Name));
@@ -167,16 +163,14 @@ namespace Klinik.Features
                 lists.Add(prData);
             }
 
-
             int totalRequest = lists.Count();
-            var data = lists.Skip(request.skip).Take(request.pageSize).ToList();
-
+            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
 
             var response = new PrivilegeResponse
             {
-                draw = request.draw,
-                recordsFiltered = totalRequest,
-                recordsTotal = totalRequest,
+                Draw = request.Draw,
+                RecordsFiltered = totalRequest,
+                RecordsTotal = totalRequest,
                 Data = data
             };
 
@@ -191,34 +185,33 @@ namespace Klinik.Features
         public PrivilegeResponse RemoveData(PrivilegeRequest request)
         {
             PrivilegeResponse response = new PrivilegeResponse();
-            int resultAffected = 0;
+
             try
             {
-                var isExist = _unitOfWork.PrivilegeRepository.GetById(request.RequestPrivilegeData.Id);
+                var isExist = _unitOfWork.PrivilegeRepository.GetById(request.Data.Id);
                 if (isExist.ID > 0)
                 {
                     _unitOfWork.PrivilegeRepository.Delete(isExist.ID);
-                    resultAffected = _unitOfWork.Save();
+                    int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success remove Privilege {isExist.Privilege_Name} with Id {isExist.ID}";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = $"Remove Privilege Failed!";
                     }
                 }
                 else
                 {
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = $"Remove Privilege Failed!";
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;
             }
             return response;

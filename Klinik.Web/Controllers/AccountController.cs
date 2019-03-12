@@ -1,5 +1,4 @@
-﻿using Klinik.Common;
-using Klinik.Data;
+﻿using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
@@ -44,7 +43,7 @@ namespace Klinik.Web.Controllers
             // define request
             AccountRequest request = new AccountRequest
             {
-                RequestAccountModel = new AccountModel
+                Data = new AccountModel
                 {
                     Email = EmailID,
                     ResetPasswordCode = resetCode
@@ -53,7 +52,7 @@ namespace Klinik.Web.Controllers
 
             // set reset password code
             var response = new AccountHandler(_unitOfWork, _context).SetResetPasswordCode(request);
-            if (response.Status == ClinicEnums.AuthResult.SUCCESS.ToString())
+            if (response.Status)
             {
                 // send verification email
                 SendVerificationLinkEmail(EmailID, resetCode);
@@ -79,7 +78,7 @@ namespace Klinik.Web.Controllers
             // define request
             AccountRequest request = new AccountRequest
             {
-                RequestAccountModel = new AccountModel
+                Data = new AccountModel
                 {
                     ResetPasswordCode = id
                 }
@@ -87,7 +86,7 @@ namespace Klinik.Web.Controllers
 
             // validate reset password code
             var response = new AccountHandler(_unitOfWork, _context).ValidateResetPasswordCode(request);
-            if (response.Status == ClinicEnums.AuthResult.SUCCESS.ToString())
+            if (response.Status)
             {
                 ResetPasswordModel model = new ResetPasswordModel();
                 model.ResetCode = id;
@@ -109,7 +108,7 @@ namespace Klinik.Web.Controllers
                 // define request
                 AccountRequest request = new AccountRequest
                 {
-                    RequestAccountModel = new AccountModel
+                    Data = new AccountModel
                     {
                         Password = model.NewPassword,
                         ResetPasswordCode = model.ResetCode
@@ -118,7 +117,7 @@ namespace Klinik.Web.Controllers
 
                 // update user password 
                 var response = new AccountHandler(_unitOfWork, _context).UpdateUserPassword(request);
-                if (response.Status == ClinicEnums.AuthResult.SUCCESS.ToString())
+                if (response.Status)
                 {
                     ViewBag.Message = "User password has been successfully updated";
                 }
@@ -139,25 +138,27 @@ namespace Klinik.Web.Controllers
         {
             AccountRequest request = new AccountRequest
             {
-                RequestAccountModel = new AccountModel
+                Data = new AccountModel
                 {
                     UserName = _model.UserName,
                     Password = _model.Password,
-                    Organization=_model.Organization
+                    Organization = _model.Organization
                 }
             };
 
             AccountResponse response = new AccountResponse();
             new AccountValidator(_unitOfWork).Validate(request, out response);
-            if (response.Status == ClinicEnums.AuthResult.SUCCESS.ToString())
+            if (response.Status)
             {
                 Session["UserLogon"] = response.Entity;
+
                 if (response.Entity.Privileges.PrivilegeIDs != null)
                 {
                     IList<MenuModel> Menu = new MenuHandler(_unitOfWork).GetMenuBasedOnPrivilege(response.Entity.Privileges.PrivilegeIDs);
                     Session["AuthMenu"] = Menu;
                     //Get
                 }
+
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -246,6 +247,6 @@ namespace Klinik.Web.Controllers
             }
         }
 
-       
+
     }
 }

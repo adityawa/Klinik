@@ -3,8 +3,7 @@ using Klinik.Entities.MappingMaster;
 
 namespace Klinik.Features
 {
-    public class RolePrivilegeRequest : BaseGetRequest
+    public class RolePrivilegeRequest : BaseRequest<RolePrivilegeModel>
     {
-        public RolePrivilegeModel RequestRolePrivData { get; set; }
     }
 }

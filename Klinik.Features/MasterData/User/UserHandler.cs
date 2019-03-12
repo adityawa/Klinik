@@ -28,65 +28,63 @@ namespace Klinik.Features
         /// <returns></returns>
         public UserResponse CreateOrEdit(UserRequest request)
         {
-            int resultAffected = 0;
             UserResponse response = new UserResponse();
 
             try
             {
-                if (request.RequestUserData.Id > 0)
+                if (request.Data.Id > 0)
                 {
-                    var qry = _unitOfWork.UserRepository.GetById(request.RequestUserData.Id);
+                    var qry = _unitOfWork.UserRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
-                        qry.OrganizationID = request.RequestUserData.OrgID;
-                        qry.ExpiredDate = request.RequestUserData.ExpiredDate ?? DateTime.Now.AddDays(100);
-                        qry.Status = request.RequestUserData.Status;
-                        qry.ModifiedBy = request.RequestUserData.ModifiedBy;
+                        qry.OrganizationID = request.Data.OrgID;
+                        qry.ExpiredDate = request.Data.ExpiredDate ?? DateTime.Now.AddDays(100);
+                        qry.Status = request.Data.Status;
+                        qry.ModifiedBy = request.Data.ModifiedBy;
                         qry.ModifiedDate = DateTime.Now;
+
                         _unitOfWork.UserRepository.Update(qry);
-                        resultAffected = _unitOfWork.Save();
+                        int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Status = ClinicEnums.Status.SUCCESS.ToString();
                             response.Message = $"Success Update User {qry.UserName} with Id {qry.ID}";
                         }
                         else
                         {
-                            response.Status = ClinicEnums.Status.ERROR.ToString();
+                            response.Status = false;
                             response.Message = "Update Data Failed";
                         }
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = "Update Data Failed";
                     }
                 }
                 else
                 {
-                    request.RequestUserData.Password = CommonUtils.Encryptor(request.RequestUserData.Password, CommonUtils.KeyEncryptor);
-                    request.RequestUserData.ExpiredDate = request.RequestUserData.ExpiredDate ?? DateTime.Now.AddDays(100);
-                    var UserEntity = Mapper.Map<UserModel, User>(request.RequestUserData);
-                    UserEntity.CreatedBy = request.RequestUserData.CreatedBy ?? "SYSTEM";
+                    request.Data.Password = CommonUtils.Encryptor(request.Data.Password, CommonUtils.KeyEncryptor);
+                    request.Data.ExpiredDate = request.Data.ExpiredDate ?? DateTime.Now.AddDays(100);
+                    var UserEntity = Mapper.Map<UserModel, User>(request.Data);
+                    UserEntity.CreatedBy = request.Data.CreatedBy ?? "SYSTEM";
                     UserEntity.CreatedDate = DateTime.Now;
-                    _unitOfWork.UserRepository.Insert(UserEntity);
-                    resultAffected = _unitOfWork.Save();
 
+                    _unitOfWork.UserRepository.Insert(UserEntity);
+                    int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success Add new User {UserEntity.UserName} with Id {UserEntity.ID}";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = "Add Data Failed";
                     }
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg();
             }
 
@@ -102,12 +100,13 @@ namespace Klinik.Features
         {
             UserResponse response = new UserResponse();
 
-            var qry = _unitOfWork.UserRepository.Query(x => x.ID == request.RequestUserData.Id, null);
+            var qry = _unitOfWork.UserRepository.Query(x => x.ID == request.Data.Id, null);
             if (qry.FirstOrDefault() != null)
             {
 
                 response.Entity = Mapper.Map<User, UserModel>(qry.FirstOrDefault());
             }
+
             return response;
         }
 
@@ -121,16 +120,16 @@ namespace Klinik.Features
             List<UserModel> lists = new List<UserModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<User>(true);
-            if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
+            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
-                searchPredicate = searchPredicate.And(p => p.UserName.Contains(request.searchValue) || p.Organization.OrgName.Contains(request.searchValue) || p.Employee.EmpName.Contains(request.searchValue));
+                searchPredicate = searchPredicate.And(p => p.UserName.Contains(request.SearchValue) || p.Organization.OrgName.Contains(request.SearchValue) || p.Employee.EmpName.Contains(request.SearchValue));
             }
 
-            if (!(string.IsNullOrEmpty(request.sortColumn) && string.IsNullOrEmpty(request.sortColumnDir)))
+            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
             {
-                if (request.sortColumnDir == "asc")
+                if (request.SortColumnDir == "asc")
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "username":
                             qry = _unitOfWork.UserRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.UserName));
@@ -149,7 +148,7 @@ namespace Klinik.Features
                 }
                 else
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "username":
                             qry = _unitOfWork.UserRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.UserName));
@@ -171,6 +170,7 @@ namespace Klinik.Features
             {
                 qry = _unitOfWork.UserRepository.Get(searchPredicate, null);
             }
+
             foreach (var item in qry)
             {
                 var prData = Mapper.Map<User, UserModel>(item);
@@ -179,13 +179,13 @@ namespace Klinik.Features
             }
 
             int totalRequest = lists.Count();
-            var data = lists.Skip(request.skip).Take(request.pageSize).ToList();
+            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
 
             var response = new UserResponse
             {
-                draw = request.draw,
-                recordsFiltered = totalRequest,
-                recordsTotal = totalRequest,
+                Draw = request.Draw,
+                RecordsFiltered = totalRequest,
+                RecordsTotal = totalRequest,
                 Data = data
             };
 
@@ -200,35 +200,33 @@ namespace Klinik.Features
         public UserResponse RemoveData(UserRequest request)
         {
             UserResponse response = new UserResponse();
-            int resultAffected = 0;
 
             try
             {
-                var isExist = _unitOfWork.UserRepository.GetById(request.RequestUserData.Id);
+                var isExist = _unitOfWork.UserRepository.GetById(request.Data.Id);
                 if (isExist.ID > 0)
                 {
                     _unitOfWork.UserRepository.Delete(isExist.ID);
-                    resultAffected = _unitOfWork.Save();
+                    int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success remove User {isExist.UserName} with Id {isExist.ID}";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = $"Remove User Failed!";
                     }
                 }
                 else
                 {
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = $"Remove User Failed!";
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;
             }
             return response;

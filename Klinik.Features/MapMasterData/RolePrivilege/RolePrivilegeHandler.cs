@@ -30,38 +30,39 @@ namespace Klinik.Features
         /// <returns></returns>
         public RolePrivilegeResponse CreateOrEdit(RolePrivilegeRequest request)
         {
-            int resultAffected = 0;
             RolePrivilegeResponse response = new RolePrivilegeResponse();
 
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    var toberemove = _context.RolePrivileges.Where(x => x.RoleID == request.RequestRolePrivData.RoleID);
+                    var toberemove = _context.RolePrivileges.Where(x => x.RoleID == request.Data.RoleID);
                     _context.RolePrivileges.RemoveRange(toberemove);
                     _context.SaveChanges();
 
                     //insert new
-                    foreach (long _privid in request.RequestRolePrivData.PrivilegeIDs)
+                    foreach (long _privid in request.Data.PrivilegeIDs)
                     {
                         var rolepprivilege = new RolePrivilege
                         {
-                            RoleID = request.RequestRolePrivData.RoleID,
+                            RoleID = request.Data.RoleID,
                             PrivilegeID = _privid
                         };
+
                         _context.RolePrivileges.Add(rolepprivilege);
                     }
 
-                    resultAffected = _context.SaveChanges();
+                    int resultAffected = _context.SaveChanges();
 
                     transaction.Commit();
-                    response.Status = ClinicEnums.Status.SUCCESS.ToString();
+
                     response.Message = "Data Successfully Saved";
                 }
                 catch
                 {
                     transaction.Rollback();
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+
+                    response.Status = false;
                     response.Message = CommonUtils.GetGeneralErrorMesg();
                 }
             }
@@ -76,22 +77,22 @@ namespace Klinik.Features
         /// <returns></returns>
         public RolePrivilegeResponse GetListData(RolePrivilegeRequest request)
         {
-            var qry = _unitOfWork.RolePrivRepository.Get(x => x.RoleID == request.RequestRolePrivData.RoleID);
+            var qry = _unitOfWork.RolePrivRepository.Get(x => x.RoleID == request.Data.RoleID);
             RolePrivilegeModel _model = new RolePrivilegeModel();
 
             if (qry.Count > 0)
                 _model.RoleID = qry.FirstOrDefault().RoleID;
 
-            if (_model.PrivilegeIDs == null)
-                _model.PrivilegeIDs = new List<long>();
             foreach (var item in qry)
             {
                 _model.PrivilegeIDs.Add(item.PrivilegeID);
             }
+
             var response = new RolePrivilegeResponse
             {
                 Entity = _model
             };
+
             return response;
         }
 
@@ -102,22 +103,22 @@ namespace Klinik.Features
         /// <returns></returns>
         public OrganizationPrivilegeResponse GetPrivilegeBasedOnOrganization(RolePrivilegeRequest request)
         {
-            var _orgId = _unitOfWork.RoleRepository.GetById(request.RequestRolePrivData.RoleID) == null ? 0 : _unitOfWork.RoleRepository.GetById(request.RequestRolePrivData.RoleID).OrgID;
+            var _orgId = _unitOfWork.RoleRepository.GetById(request.Data.RoleID) == null ? 0 : _unitOfWork.RoleRepository.GetById(request.Data.RoleID).OrgID;
 
             List<OrganizationPrivilegeModel> lists = new List<OrganizationPrivilegeModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<OrganizationPrivilege>(true);
             searchPredicate = searchPredicate.And(x => x.OrgID == _orgId);
-            if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
+            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
-                searchPredicate = searchPredicate.And(p => p.Privilege.Privilege_Name.Contains(request.searchValue) || p.Privilege.Privilege_Desc.Contains(request.searchValue));
+                searchPredicate = searchPredicate.And(p => p.Privilege.Privilege_Name.Contains(request.SearchValue) || p.Privilege.Privilege_Desc.Contains(request.SearchValue));
             }
 
-            if (!(string.IsNullOrEmpty(request.sortColumn) && string.IsNullOrEmpty(request.sortColumnDir)))
+            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
             {
-                if (request.sortColumnDir == "asc")
+                if (request.SortColumnDir == "asc")
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "privilevename":
                             qry = _unitOfWork.OrgPrivRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Privilege.Privilege_Name));
@@ -130,7 +131,7 @@ namespace Klinik.Features
                 }
                 else
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "privilevename":
                             qry = _unitOfWork.OrgPrivRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Privilege.Privilege_Name));
@@ -155,13 +156,13 @@ namespace Klinik.Features
             }
 
             int totalRequest = lists.Count();
-            var data = lists.Skip(request.skip).Take(request.pageSize).ToList();
+            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
 
             var response = new OrganizationPrivilegeResponse
             {
-                draw = request.draw,
-                recordsFiltered = totalRequest,
-                recordsTotal = totalRequest,
+                Draw = request.Draw,
+                RecordsFiltered = totalRequest,
+                RecordsTotal = totalRequest,
                 Data = data
             };
 

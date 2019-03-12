@@ -5,5 +5,9 @@ namespace Klinik.Features
 {
     public class AccountResponse : BaseResponse<AccountModel>
     {
+        public AccountResponse()
+        {
+            Entity = new AccountModel();
+        }
     }
 }

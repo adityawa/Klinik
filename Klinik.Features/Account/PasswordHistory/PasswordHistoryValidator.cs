@@ -27,63 +27,63 @@ namespace Klinik.Features
         public PasswordHistoryResponse Validate(PasswordHistoryRequest request)
         {
             PasswordHistoryResponse response = new PasswordHistoryResponse();
-            response.Status = ClinicEnums.Status.SUCCESS.ToString();
-            if (String.IsNullOrEmpty(request.RequestPassHistData.UserName) || String.IsNullOrWhiteSpace(request.RequestPassHistData.UserName))
+
+            if (String.IsNullOrEmpty(request.Data.UserName) || String.IsNullOrWhiteSpace(request.Data.UserName))
                 errorFields.Add("User Name");
-            if (String.IsNullOrEmpty(request.RequestPassHistData.Password) || String.IsNullOrWhiteSpace(request.RequestPassHistData.Password))
+            if (String.IsNullOrEmpty(request.Data.Password) || String.IsNullOrWhiteSpace(request.Data.Password))
                 errorFields.Add("Password");
-            if (String.IsNullOrEmpty(request.RequestPassHistData.NewPassword) || String.IsNullOrWhiteSpace(request.RequestPassHistData.NewPassword))
+            if (String.IsNullOrEmpty(request.Data.NewPassword) || String.IsNullOrWhiteSpace(request.Data.NewPassword))
                 errorFields.Add("New Password");
 
             if (errorFields.Any())
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = $"Following Fields must be filled : {String.Join(",", errorFields)}";
             }
 
-            var cekIsExpired = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName == request.RequestPassHistData.UserName);
+            var cekIsExpired = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName == request.Data.UserName);
             if (cekIsExpired == null)
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = $"User Not Found";
             }
             else
             {
                 if (cekIsExpired.Status == false || cekIsExpired.ExpiredDate < DateTime.Now)
                 {
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = $"Password cannot be changed for non-active user";
                 }
             }
 
-            var validateCurrentUser = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName == request.RequestPassHistData.UserName);
+            var validateCurrentUser = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName == request.Data.UserName);
             if (validateCurrentUser != null)
             {
-                if (request.RequestPassHistData.Password != CommonUtils.Decryptor(validateCurrentUser.Password, CommonUtils.KeyEncryptor))
+                if (request.Data.Password != CommonUtils.Decryptor(validateCurrentUser.Password, CommonUtils.KeyEncryptor))
                 {
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = $"Password cannot be changed because user name and password not match";
                 }
             }
 
-            var IsExistPassinHist = _unitOfWork.PasswordHistoryRepository.Get(x => x.OrganizationID == request.RequestPassHistData.OrganizationID && x.UserName == request.RequestPassHistData.UserName).Select(x => x.Password);
+            var IsExistPassinHist = _unitOfWork.PasswordHistoryRepository.Get(x => x.OrganizationID == request.Data.OrganizationID && x.UserName == request.Data.UserName).Select(x => x.Password);
             foreach (string p in IsExistPassinHist)
             {
-                if (request.RequestPassHistData.NewPassword == CommonUtils.Decryptor(p, CommonUtils.KeyEncryptor))
+                if (request.Data.NewPassword == CommonUtils.Decryptor(p, CommonUtils.KeyEncryptor))
                 {
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = $"Password already used in the past, please use another";
                     break;
                 }
             }
 
-            if (request.RequestPassHistData.Password.Equals(request.RequestPassHistData.NewPassword))
+            if (request.Data.Password.Equals(request.Data.NewPassword))
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = $"New Password cannot same with Old Password";
             }
 
-            if (response.Status == ClinicEnums.Status.SUCCESS.ToString())
+            if (response.Status)
             {
                 response = new PasswordHistoryHandler(_unitOfWork, _context).ChangePassword(request);
             }

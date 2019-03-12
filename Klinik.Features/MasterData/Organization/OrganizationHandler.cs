@@ -7,8 +7,6 @@ using LinqKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using Klinik.Entities.Administration;
 
 namespace Klinik.Features
 {
@@ -33,16 +31,16 @@ namespace Klinik.Features
             List<OrganizationData> lists = new List<OrganizationData>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<Organization>(true);
-            if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
+            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
-                searchPredicate = searchPredicate.And(p => p.OrgCode.Contains(request.searchValue) || p.OrgName.Contains(request.searchValue) || p.Clinic.Name.Contains(request.searchValue));
+                searchPredicate = searchPredicate.And(p => p.OrgCode.Contains(request.SearchValue) || p.OrgName.Contains(request.SearchValue) || p.Clinic.Name.Contains(request.SearchValue));
             }
 
-            if (!(string.IsNullOrEmpty(request.sortColumn) && string.IsNullOrEmpty(request.sortColumnDir)))
+            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
             {
-                if (request.sortColumnDir == "asc")
+                if (request.SortColumnDir == "asc")
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "orgcode":
                             qry = _unitOfWork.OrganizationRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.OrgCode), includes: x => x.Clinic);
@@ -57,7 +55,7 @@ namespace Klinik.Features
                 }
                 else
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "orgcode":
                             qry = _unitOfWork.OrganizationRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.OrgCode), includes: x => x.Clinic);
@@ -83,13 +81,13 @@ namespace Klinik.Features
             }
 
             int totalRequest = lists.Count();
-            var data = lists.Skip(request.skip).Take(request.pageSize).ToList();
+            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
 
             var response = new OrganizationResponse
             {
-                draw = request.draw,
-                recordsFiltered = totalRequest,
-                recordsTotal = totalRequest,
+                Draw = request.Draw,
+                RecordsFiltered = totalRequest,
+                RecordsTotal = totalRequest,
                 Data = data
             };
 
@@ -119,76 +117,75 @@ namespace Klinik.Features
         /// <returns></returns>
         public OrganizationResponse CreateOrEditOrganization(OrganizationRequest request)
         {
-            int resultAffected = 0;
             OrganizationResponse response = new OrganizationResponse();
-            var _oldentity = new OrganizationModel { };
+
             try
             {
-                if (request.RequestOrganizationData.Id > 0)
+                if (request.Data.Id > 0)
                 {
-                    var qry = _unitOfWork.OrganizationRepository.GetById(request.RequestOrganizationData.Id);
+                    var qry = _unitOfWork.OrganizationRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
-                        _oldentity = MappingEntityToModel(qry);
-                        qry.OrgCode = request.RequestOrganizationData.OrgCode;
-                        qry.OrgName = request.RequestOrganizationData.OrgName;
-                        qry.KlinikID = request.RequestOrganizationData.KlinikID;
-                        qry.ModifiedBy = request.RequestOrganizationData.ModifiedBy;
+                        var _oldentity = MappingEntityToModel(qry);
+                        qry.OrgCode = request.Data.OrgCode;
+                        qry.OrgName = request.Data.OrgName;
+                        qry.KlinikID = request.Data.KlinikID;
+                        qry.ModifiedBy = request.Data.ModifiedBy;
                         qry.ModifiedDate = DateTime.Now;
+
                         _unitOfWork.OrganizationRepository.Update(qry);
-                        resultAffected = _unitOfWork.Save();
+                        int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Status = ClinicEnums.Status.SUCCESS.ToString();
                             response.Message = $"Success Update organization {qry.OrgName} with Id {qry.ID}";
 
-                            CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.SUCCESS, Constants.Command.ADD_NEW_ORG, request.RequestOrganizationData.Account, request.RequestOrganizationData, _oldentity);
+                            CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.SUCCESS, Constants.Command.ADD_NEW_ORG, request.Data.Account, request.Data, _oldentity);
                         }
                         else
                         {
-                            response.Status = ClinicEnums.Status.ERROR.ToString();
+                            response.Status = false;
                             response.Message = "Update Data Failed";
 
-                            CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.ERROR, Constants.Command.ADD_NEW_ORG, request.RequestOrganizationData.Account, request.RequestOrganizationData, _oldentity);
+                            CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.ERROR, Constants.Command.ADD_NEW_ORG, request.Data.Account, request.Data, _oldentity);
                         }
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = "Update Data Failed";
 
-                        CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.ERROR, Constants.Command.ADD_NEW_ORG, request.RequestOrganizationData.Account, request.RequestOrganizationData, _oldentity);
+                        CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.ERROR, Constants.Command.ADD_NEW_ORG, request.Data.Account, request.Data);
                     }
                 }
                 else
                 {
-                    var OrganizationEntity = Mapper.Map<OrganizationModel, Organization>(request.RequestOrganizationData);
-                    OrganizationEntity.CreatedBy = request.RequestOrganizationData.CreatedBy;
+                    var OrganizationEntity = Mapper.Map<OrganizationModel, Organization>(request.Data);
+                    OrganizationEntity.CreatedBy = request.Data.CreatedBy;
                     OrganizationEntity.CreatedDate = DateTime.Now;
+
                     _unitOfWork.OrganizationRepository.Insert(OrganizationEntity);
-                    resultAffected = _unitOfWork.Save();
+                    int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success Add new organization {OrganizationEntity.OrgName} with Id {OrganizationEntity.ID}";
 
-                        CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.SUCCESS, Constants.Command.ADD_NEW_ORG, request.RequestOrganizationData.Account, OrganizationEntity);
+                        CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.SUCCESS, Constants.Command.ADD_NEW_ORG, request.Data.Account, OrganizationEntity);
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = "Add Data Failed";
 
-                        CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.ERROR, Constants.Command.ADD_NEW_ORG, request.RequestOrganizationData.Account, OrganizationEntity);
+                        CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.ERROR, Constants.Command.ADD_NEW_ORG, request.Data.Account, OrganizationEntity);
                     }
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg();
 
-                CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.ERROR, Constants.Command.ADD_NEW_ORG, request.RequestOrganizationData.Account, request.RequestOrganizationData);
+                CommandLog(ClinicEnums.Module.MASTER_ORGANIZATION, ClinicEnums.Status.ERROR, Constants.Command.ADD_NEW_ORG, request.Data.Account, request.Data);
             }
 
             return response;
@@ -203,12 +200,12 @@ namespace Klinik.Features
         {
             OrganizationResponse response = new OrganizationResponse();
 
-            var qry = _unitOfWork.OrganizationRepository.Query(x => x.ID == request.RequestOrganizationData.Id, null, includes: x => x.Clinic);
+            var qry = _unitOfWork.OrganizationRepository.Query(x => x.ID == request.Data.Id, null, includes: x => x.Clinic);
             if (qry.FirstOrDefault() != null)
             {
-
                 response.Entity = Mapper.Map<Organization, OrganizationData>(qry.FirstOrDefault());
             }
+
             return response;
         }
 
@@ -220,40 +217,44 @@ namespace Klinik.Features
         public OrganizationResponse RemoveOrganization(OrganizationRequest request)
         {
             OrganizationResponse response = new OrganizationResponse();
-            int resultAffected = 0;
+
             try
             {
-                var isExist = _unitOfWork.OrganizationRepository.GetById(request.RequestOrganizationData.Id);
+                var isExist = _unitOfWork.OrganizationRepository.GetById(request.Data.Id);
                 if (isExist.ID > 0)
                 {
                     _unitOfWork.OrganizationRepository.Delete(isExist.ID);
-                    resultAffected = _unitOfWork.Save();
+                    int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success remove organization {isExist.OrgName} with Id {isExist.ID}";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = $"Remove Organization Failed!";
                     }
                 }
                 else
                 {
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = $"Remove Organization Failed!";
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;
             }
 
             return response;
         }
 
+        /// <summary>
+        /// Mapping entity to model
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public OrganizationModel MappingEntityToModel(Organization entity)
         {
             var _entity = Mapper.Map<Organization, OrganizationModel>(entity);

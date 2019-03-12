@@ -47,7 +47,7 @@
     <Compile Include="Account\PasswordHistoryModel.cs" />
     <Compile Include="Account\ResetPasswordModel.cs" />
     <Compile Include="Administration\LogModel.cs" />
-    <Compile Include="BaseGetRequest.cs" />
+    <Compile Include="BaseRequest.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="BaseResponse.cs" />
     <Compile Include="MappingMaster\OrganizationPrivilegeModel.cs" />

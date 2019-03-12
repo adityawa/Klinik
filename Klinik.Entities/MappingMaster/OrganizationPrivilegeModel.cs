@@ -20,5 +20,10 @@ namespace Klinik.Entities.MappingMaster
         public string PrivileveName { get; set; }
 
         public string PrivilegeDesc { get; set; }
+
+        public OrganizationPrivilegeModel()
+        {
+            PrivilegeIDs = new List<long>();
+        }
     }
 }

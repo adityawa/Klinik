@@ -27,58 +27,57 @@ namespace Klinik.Features
         /// <param name="response"></param>
         public void Validate(RoleRequest request, out RoleResponse response)
         {
-            bool isHavePrivilege = true;
+            response = new RoleResponse();
 
-            response = new RoleResponse
-            {
-                Status = ClinicEnums.Status.SUCCESS.ToString()
-            };
-
-            if (request.action != null && request.action.Equals(ClinicEnums.Action.DELETE.ToString()))
+            if (request.Action != null && request.Action.Equals(ClinicEnums.Action.DELETE.ToString()))
             {
                 ValidateForDelete(request, out response);
             }
             else
             {
-                if (request.RequestRoleData.RoleName == null || String.IsNullOrWhiteSpace(request.RequestRoleData.RoleName))
+                bool isHavePrivilege = true;
+
+                if (request.Data.RoleName == null || String.IsNullOrWhiteSpace(request.Data.RoleName))
                 {
                     errorFields.Add("Role Name");
                 }
 
-                if (request.RequestRoleData.OrgID == 0)
+                if (request.Data.OrgID == 0)
                 {
                     errorFields.Add("Organization");
                 }
 
                 if (errorFields.Any())
                 {
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = $"Validation Error for following fields : {String.Join(",", errorFields)}";
                 }
-                else if (request.RequestRoleData.RoleName.Length > 30)
+                else if (request.Data.RoleName.Length > 30)
                 {
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = $"Maximum Character for Role Name is 30";
                 }
 
-                if (request.RequestRoleData.Id == 0)
+                if (request.Data.Id == 0)
                 {
 
-                    isHavePrivilege = IsHaveAuthorization(ADD_PRIVILEGE_NAME, request.RequestRoleData.Account.Privileges.PrivilegeIDs);
+                    isHavePrivilege = IsHaveAuthorization(ADD_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
                 }
                 else
                 {
-                    isHavePrivilege = IsHaveAuthorization(EDIT_PRIVILEGE_NAME, request.RequestRoleData.Account.Privileges.PrivilegeIDs);
+                    isHavePrivilege = IsHaveAuthorization(EDIT_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
                 }
 
                 if (!isHavePrivilege)
                 {
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = $"Unauthorized Access!";
                 }
 
-                if (response.Status == ClinicEnums.Status.SUCCESS.ToString())
+                if (response.Status)
+                {
                     response = new RoleHandler(_unitOfWork).CreateOrEdit(request);
+                }
             }
         }
 
@@ -90,22 +89,18 @@ namespace Klinik.Features
         private void ValidateForDelete(RoleRequest request, out RoleResponse response)
         {
             response = new RoleResponse();
-            response.Status = ClinicEnums.Status.SUCCESS.ToString();
 
-            bool isHavePrivilege = true;
-
-            if (request.action == ClinicEnums.Action.DELETE.ToString())
+            if (request.Action == ClinicEnums.Action.DELETE.ToString())
             {
-                isHavePrivilege = IsHaveAuthorization(DELETE_PRIVILEGE_NAME, request.RequestRoleData.Account.Privileges.PrivilegeIDs);
+                bool isHavePrivilege = IsHaveAuthorization(DELETE_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
+                if (!isHavePrivilege)
+                {
+                    response.Status = false;
+                    response.Message = $"Unauthorized Access!";
+                }
             }
 
-            if (!isHavePrivilege)
-            {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
-                response.Message = $"Unauthorized Access!";
-            }
-
-            if (response.Status == ClinicEnums.Status.SUCCESS.ToString())
+            if (response.Status)
             {
                 response = new RoleHandler(_unitOfWork).RemoveData(request);
             }

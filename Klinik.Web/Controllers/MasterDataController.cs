@@ -165,16 +165,16 @@ namespace Klinik.Web.Controllers
 
             var request = new OrganizationRequest
             {
-                RequestOrganizationData = _model,
-
+                Data = _model,
             };
 
             OrganizationResponse _response = new OrganizationResponse();
 
             new OrganizationValidator(_unitOfWork).Validate(request, out _response);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
-
             ViewBag.clinics = BindDropDownKlinik();
+            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
             return View();
         }
 
@@ -186,7 +186,7 @@ namespace Klinik.Web.Controllers
             {
                 var request = new OrganizationRequest
                 {
-                    RequestOrganizationData = new OrganizationModel
+                    Data = new OrganizationModel
                     {
                         Id = long.Parse(Request.QueryString["id"].ToString())
                     }
@@ -223,17 +223,17 @@ namespace Klinik.Web.Controllers
 
             var request = new OrganizationRequest
             {
-                draw = _draw,
-                searchValue = _searchValue,
-                sortColumn = _sortColumn,
-                sortColumnDir = _sortColumnDir,
-                pageSize = _pageSize,
-                skip = _skip
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
             };
 
             var response = new OrganizationHandler(_unitOfWork).GetOrganizationData(request);
 
-            return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -242,12 +242,12 @@ namespace Klinik.Web.Controllers
             OrganizationResponse _response = new OrganizationResponse();
             var request = new OrganizationRequest
             {
-                RequestOrganizationData = new OrganizationModel
+                Data = new OrganizationModel
                 {
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
                 },
-                action = ClinicEnums.Action.DELETE.ToString()
+                Action = ClinicEnums.Action.DELETE.ToString()
             };
 
             new OrganizationValidator(_unitOfWork).Validate(request, out _response);
@@ -271,7 +271,7 @@ namespace Klinik.Web.Controllers
 
             var request = new PrivilegeRequest
             {
-                RequestPrivilegeData = _model
+                Data = _model
             };
 
             PrivilegeResponse _response = new PrivilegeResponse();
@@ -279,6 +279,8 @@ namespace Klinik.Web.Controllers
             new PrivilegeValidator(_unitOfWork).Validate(request, out _response);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
             ViewBag.Menu = BindDropDownMenu();
+            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
             return View();
         }
 
@@ -290,7 +292,7 @@ namespace Klinik.Web.Controllers
             {
                 var request = new PrivilegeRequest
                 {
-                    RequestPrivilegeData = new PrivilegeModel
+                    Data = new PrivilegeModel
                     {
                         Id = long.Parse(Request.QueryString["id"].ToString())
                     }
@@ -327,17 +329,17 @@ namespace Klinik.Web.Controllers
 
             var request = new PrivilegeRequest
             {
-                draw = _draw,
-                searchValue = _searchValue,
-                sortColumn = _sortColumn,
-                sortColumnDir = _sortColumnDir,
-                pageSize = _pageSize,
-                skip = _skip
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
             };
 
             var response = new PrivilegeHandler(_unitOfWork).GetListData(request);
 
-            return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -346,12 +348,12 @@ namespace Klinik.Web.Controllers
             PrivilegeResponse _response = new PrivilegeResponse();
             var request = new PrivilegeRequest
             {
-                RequestPrivilegeData = new PrivilegeModel
+                Data = new PrivilegeModel
                 {
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
                 },
-                action = ClinicEnums.Action.DELETE.ToString()
+                Action = ClinicEnums.Action.DELETE.ToString()
             };
 
             new PrivilegeValidator(_unitOfWork).Validate(request, out _response);
@@ -375,7 +377,7 @@ namespace Klinik.Web.Controllers
 
             var request = new RoleRequest
             {
-                RequestRoleData = _model
+                Data = _model
             };
 
             RoleResponse _response = new RoleResponse();
@@ -383,6 +385,8 @@ namespace Klinik.Web.Controllers
             new RoleValidator(_unitOfWork).Validate(request, out _response);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
             ViewBag.Organisasi = BindDropDownOrganization();
+            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
             return View();
         }
 
@@ -394,7 +398,7 @@ namespace Klinik.Web.Controllers
             {
                 var request = new RoleRequest
                 {
-                    RequestRoleData = new RoleModel
+                    Data = new RoleModel
                     {
                         Id = long.Parse(Request.QueryString["id"].ToString())
                     }
@@ -431,17 +435,17 @@ namespace Klinik.Web.Controllers
 
             var request = new RoleRequest
             {
-                draw = _draw,
-                searchValue = _searchValue,
-                sortColumn = _sortColumn,
-                sortColumnDir = _sortColumnDir,
-                pageSize = _pageSize,
-                skip = _skip
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
             };
 
             var response = new RoleHandler(_unitOfWork).GetListData(request);
 
-            return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -450,12 +454,12 @@ namespace Klinik.Web.Controllers
             RoleResponse _response = new RoleResponse();
             var request = new RoleRequest
             {
-                RequestRoleData = new RoleModel
+                Data = new RoleModel
                 {
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
                 },
-                action = ClinicEnums.Action.DELETE.ToString()
+                Action = ClinicEnums.Action.DELETE.ToString()
             };
 
             new RoleValidator(_unitOfWork).Validate(request, out _response);
@@ -479,7 +483,7 @@ namespace Klinik.Web.Controllers
 
             var request = new UserRequest
             {
-                RequestUserData = _model
+                Data = _model
             };
 
             UserResponse _response = new UserResponse();
@@ -488,6 +492,8 @@ namespace Klinik.Web.Controllers
             ViewBag.Response = $"{_response.Status};{_response.Message}";
             ViewBag.Organisasi = BindDropDownOrganization();
             ViewBag.Employees = BindDropDownEmployee();
+            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
             return View();
         }
 
@@ -499,7 +505,7 @@ namespace Klinik.Web.Controllers
             {
                 var request = new UserRequest
                 {
-                    RequestUserData = new UserModel
+                    Data = new UserModel
                     {
                         Id = long.Parse(Request.QueryString["id"].ToString()),
 
@@ -539,17 +545,17 @@ namespace Klinik.Web.Controllers
 
             var request = new UserRequest
             {
-                draw = _draw,
-                searchValue = _searchValue,
-                sortColumn = _sortColumn,
-                sortColumnDir = _sortColumnDir,
-                pageSize = _pageSize,
-                skip = _skip
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
             };
 
             var response = new UserHandler(_unitOfWork).GetListData(request);
 
-            return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -558,12 +564,12 @@ namespace Klinik.Web.Controllers
             UserResponse _response = new UserResponse();
             var request = new UserRequest
             {
-                RequestUserData = new UserModel
+                Data = new UserModel
                 {
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
                 },
-                action = ClinicEnums.Action.DELETE.ToString()
+                Action = ClinicEnums.Action.DELETE.ToString()
             };
 
             new UserValidator(_unitOfWork).Validate(request, out _response);
@@ -587,7 +593,7 @@ namespace Klinik.Web.Controllers
 
             var request = new EmployeeRequest
             {
-                RequestEmployeeData = _model
+                Data = _model
             };
 
             EmployeeResponse _response = new EmployeeResponse();
@@ -596,6 +602,8 @@ namespace Klinik.Web.Controllers
             ViewBag.Response = $"{_response.Status};{_response.Message}";
             ViewBag.EmpTypes = BindDropDownEmployementType();
             ViewBag.Departments = BindDropDownDepartment();
+            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
             return View();
         }
 
@@ -607,7 +615,7 @@ namespace Klinik.Web.Controllers
             {
                 var request = new EmployeeRequest
                 {
-                    RequestEmployeeData = new EmployeeModel
+                    Data = new EmployeeModel
                     {
                         Id = long.Parse(Request.QueryString["id"].ToString())
                     }
@@ -646,17 +654,17 @@ namespace Klinik.Web.Controllers
 
             var request = new EmployeeRequest
             {
-                draw = _draw,
-                searchValue = _searchValue,
-                sortColumn = _sortColumn,
-                sortColumnDir = _sortColumnDir,
-                pageSize = _pageSize,
-                skip = _skip
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
             };
 
             var response = new EmployeeHandler(_unitOfWork).GetListData(request);
 
-            return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -665,12 +673,12 @@ namespace Klinik.Web.Controllers
             EmployeeResponse _response = new EmployeeResponse();
             var request = new EmployeeRequest
             {
-                RequestEmployeeData = new EmployeeModel
+                Data = new EmployeeModel
                 {
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
                 },
-                action = ClinicEnums.Action.DELETE.ToString()
+                Action = ClinicEnums.Action.DELETE.ToString()
             };
 
             new EmployeeValidator(_unitOfWork).Validate(request, out _response);
@@ -694,7 +702,7 @@ namespace Klinik.Web.Controllers
 
             var request = new ClinicRequest
             {
-                RequestClinicModel = _model
+                Data = _model
             };
 
             ClinicResponse _response = new ClinicResponse();
@@ -703,6 +711,8 @@ namespace Klinik.Web.Controllers
             ViewBag.Response = $"{_response.Status};{_response.Message}";
             ViewBag.Cities = BindDropDownCity();
             ViewBag.ClinicTypes = BindDropDownClinicType();
+            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
             return View();
         }
 
@@ -714,7 +724,7 @@ namespace Klinik.Web.Controllers
             {
                 var request = new ClinicRequest
                 {
-                    RequestClinicModel = new ClinicModel
+                    Data = new ClinicModel
                     {
                         Id = long.Parse(Request.QueryString["id"].ToString())
                     }
@@ -725,6 +735,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.Response = _response;
                 ViewBag.Cities = BindDropDownCity();
                 ViewBag.ClinicTypes = BindDropDownClinicType();
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }
             else
@@ -732,6 +743,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.Response = _response;
                 ViewBag.Cities = BindDropDownCity();
                 ViewBag.ClinicTypes = BindDropDownClinicType();
+                ViewBag.ActionType = ClinicEnums.Action.Add;
                 return View();
             }
         }
@@ -751,17 +763,17 @@ namespace Klinik.Web.Controllers
 
             var request = new ClinicRequest
             {
-                draw = _draw,
-                searchValue = _searchValue,
-                sortColumn = _sortColumn,
-                sortColumnDir = _sortColumnDir,
-                pageSize = _pageSize,
-                skip = _skip
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
             };
 
             var response = new ClinicHandler(_unitOfWork).GetListData(request);
 
-            return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -770,12 +782,12 @@ namespace Klinik.Web.Controllers
             ClinicResponse _response = new ClinicResponse();
             var request = new ClinicRequest
             {
-                RequestClinicModel = new ClinicModel
+                Data = new ClinicModel
                 {
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
                 },
-                action = ClinicEnums.Action.DELETE.ToString()
+                Action = ClinicEnums.Action.DELETE.ToString()
             };
 
             new ClinicValidator(_unitOfWork).Validate(request, out _response);

@@ -28,60 +28,56 @@ namespace Klinik.Features
         /// <returns></returns>
         public RoleResponse CreateOrEdit(RoleRequest request)
         {
-            int resultAffected = 0;
-
             RoleResponse response = new RoleResponse();
+
             try
             {
-
-                if (request.RequestRoleData.Id > 0)
+                if (request.Data.Id > 0)
                 {
-                    var qry = _unitOfWork.RoleRepository.GetById(request.RequestRoleData.Id);
+                    var qry = _unitOfWork.RoleRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
-                        qry.RoleName = request.RequestRoleData.RoleName;
-                        qry.OrgID = request.RequestRoleData.OrgID;
+                        qry.RoleName = request.Data.RoleName;
+                        qry.OrgID = request.Data.OrgID;
 
                         _unitOfWork.RoleRepository.Update(qry);
-                        resultAffected = _unitOfWork.Save();
+                        int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Status = ClinicEnums.Status.SUCCESS.ToString();
                             response.Message = $"Success Update Role {qry.RoleName} with Id {qry.ID}";
                         }
                         else
                         {
-                            response.Status = ClinicEnums.Status.ERROR.ToString();
+                            response.Status = false;
                             response.Message = "Update Data Failed";
                         }
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = "Update Data Failed";
                     }
                 }
                 else
                 {
-                    var RoleEntity = Mapper.Map<RoleModel, OrganizationRole>(request.RequestRoleData);
+                    var RoleEntity = Mapper.Map<RoleModel, OrganizationRole>(request.Data);
 
                     _unitOfWork.RoleRepository.Insert(RoleEntity);
-                    resultAffected = _unitOfWork.Save();
+                    int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success Add new Role {RoleEntity.RoleName} with Id {RoleEntity.ID}";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = "Add Data Failed";
                     }
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg();
             }
 
@@ -97,7 +93,7 @@ namespace Klinik.Features
         {
             RoleResponse response = new RoleResponse();
 
-            var qry = _unitOfWork.RoleRepository.Query(x => x.ID == request.RequestRoleData.Id, null);
+            var qry = _unitOfWork.RoleRepository.Query(x => x.ID == request.Data.Id, null);
             if (qry.FirstOrDefault() != null)
             {
 
@@ -116,16 +112,16 @@ namespace Klinik.Features
             List<RoleModel> lists = new List<RoleModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<OrganizationRole>(true);
-            if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
+            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
-                searchPredicate = searchPredicate.And(p => p.RoleName.Contains(request.searchValue) || p.Organization.OrgName.Contains(request.searchValue));
+                searchPredicate = searchPredicate.And(p => p.RoleName.Contains(request.SearchValue) || p.Organization.OrgName.Contains(request.SearchValue));
             }
 
-            if (!(string.IsNullOrEmpty(request.sortColumn) && string.IsNullOrEmpty(request.sortColumnDir)))
+            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
             {
-                if (request.sortColumnDir == "asc")
+                if (request.SortColumnDir == "asc")
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "rolename":
                             qry = _unitOfWork.RoleRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.RoleName));
@@ -138,7 +134,7 @@ namespace Klinik.Features
                 }
                 else
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "rolename":
                             qry = _unitOfWork.RoleRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.RoleName));
@@ -162,13 +158,13 @@ namespace Klinik.Features
             }
 
             int totalRequest = lists.Count();
-            var data = lists.Skip(request.skip).Take(request.pageSize).ToList();
+            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
 
             var response = new RoleResponse
             {
-                draw = request.draw,
-                recordsFiltered = totalRequest,
-                recordsTotal = totalRequest,
+                Draw = request.Draw,
+                RecordsFiltered = totalRequest,
+                RecordsTotal = totalRequest,
                 Data = data
             };
 
@@ -183,36 +179,36 @@ namespace Klinik.Features
         public RoleResponse RemoveData(RoleRequest request)
         {
             RoleResponse response = new RoleResponse();
-            int resultAffected = 0;
+
             try
             {
-                var isExist = _unitOfWork.RoleRepository.GetById(request.RequestRoleData.Id);
+                var isExist = _unitOfWork.RoleRepository.GetById(request.Data.Id);
                 if (isExist.ID > 0)
                 {
                     _unitOfWork.RoleRepository.Delete(isExist.ID);
-                    resultAffected = _unitOfWork.Save();
+                    int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success remove Role {isExist.RoleName} with Id {isExist.ID}";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = $"Remove Role Failed!";
                     }
                 }
                 else
                 {
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = $"Remove Role Failed!";
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;
             }
+
             return response;
         }
     }

@@ -14,23 +14,20 @@ namespace Klinik.Features
 
         public AccountResponse Validate(AccountRequest request, out AccountResponse response)
         {
-            response = new AccountResponse
-            {
-                Status = ClinicEnums.Status.SUCCESS.ToString()
-            };
+            response = new AccountResponse();
 
-            if (String.IsNullOrEmpty(request.RequestAccountModel.UserName))
+            if (String.IsNullOrEmpty(request.Data.UserName))
                 errorFields.Add("User Name");
-            if (String.IsNullOrEmpty(request.RequestAccountModel.Password))
+            if (String.IsNullOrEmpty(request.Data.Password))
                 errorFields.Add("Password");
 
             if (errorFields.Any())
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = $"Following Fields must be filled : {String.Join(",", errorFields)}";
             }
 
-            if (response.Status == ClinicEnums.Status.SUCCESS.ToString())
+            if (response.Status)
             {
                 response = new AccountHandler(_unitOfWork, _context).AuthenticateUser(request);
             }

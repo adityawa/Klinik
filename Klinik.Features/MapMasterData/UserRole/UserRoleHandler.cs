@@ -31,39 +31,37 @@ namespace Klinik.Features
         /// <returns></returns>
         public UserRoleResponse CreateOrEdit(UserRoleRequest request)
         {
-            int resultAffected = 0;
-
             UserRoleResponse response = new UserRoleResponse();
 
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    var toberemove = _context.UserRoles.Where(x => x.UserID == request.RequestUserRoleData.UserID);
+                    var toberemove = _context.UserRoles.Where(x => x.UserID == request.Data.UserID);
                     _context.UserRoles.RemoveRange(toberemove);
                     _context.SaveChanges();
 
                     //insert new
-                    foreach (long _roleid in request.RequestUserRoleData.RoleIds)
+                    foreach (long _roleid in request.Data.RoleIds)
                     {
                         var _userrole = new UserRole
                         {
-                            UserID = request.RequestUserRoleData.UserID,
+                            UserID = request.Data.UserID,
                             RoleID = _roleid
                         };
+
                         _context.UserRoles.Add(_userrole);
                     }
 
-                    resultAffected = _context.SaveChanges();
-
+                    int resultAffected = _context.SaveChanges();
                     transaction.Commit();
-                    response.Status = ClinicEnums.Status.SUCCESS.ToString();
+
                     response.Message = "Data Successfully Saved";
                 }
                 catch
                 {
                     transaction.Rollback();
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = CommonUtils.GetGeneralErrorMesg();
                 }
             }
@@ -78,22 +76,22 @@ namespace Klinik.Features
         /// <returns></returns>
         public UserRoleResponse GetListData(UserRoleRequest request)
         {
-            var qry = _unitOfWork.UserRoleRepository.Get(x => x.UserID == request.RequestUserRoleData.UserID);
+            var qry = _unitOfWork.UserRoleRepository.Get(x => x.UserID == request.Data.UserID);
             UserRoleModel _model = new UserRoleModel();
 
             if (qry.Count > 0)
                 _model.UserID = qry.FirstOrDefault().UserID;
 
-            if (_model.RoleIds == null)
-                _model.RoleIds = new List<long>();
             foreach (var item in qry)
             {
                 _model.RoleIds.Add(item.RoleID);
             }
+
             var response = new UserRoleResponse
             {
                 Entity = _model
             };
+
             return response;
         }
 
@@ -104,23 +102,22 @@ namespace Klinik.Features
         /// <returns></returns>
         public RoleResponse GetRoleBasedOnOrganization(UserRoleRequest request)
         {
-            var _orgId = _unitOfWork.UserRepository.GetById(request.RequestUserRoleData.UserID) == null ? 0 : _unitOfWork.UserRepository.GetById(request.RequestUserRoleData.UserID).OrganizationID;
+            var _orgId = _unitOfWork.UserRepository.GetById(request.Data.UserID) == null ? 0 : _unitOfWork.UserRepository.GetById(request.Data.UserID).OrganizationID;
 
             List<RoleModel> lists = new List<RoleModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<OrganizationRole>(true);
             searchPredicate = searchPredicate.And(x => x.OrgID == _orgId);
-            if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
+            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
-                searchPredicate = searchPredicate.And(p => p.RoleName.Contains(request.searchValue));
+                searchPredicate = searchPredicate.And(p => p.RoleName.Contains(request.SearchValue));
             }
 
-
-            if (!(string.IsNullOrEmpty(request.sortColumn) && string.IsNullOrEmpty(request.sortColumnDir)))
+            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
             {
-                if (request.sortColumnDir == "asc")
+                if (request.SortColumnDir == "asc")
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "rolename":
                             qry = _unitOfWork.RoleRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.RoleName));
@@ -133,7 +130,7 @@ namespace Klinik.Features
                 }
                 else
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "rolename":
                             qry = _unitOfWork.RoleRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.RoleName));
@@ -158,13 +155,13 @@ namespace Klinik.Features
             }
 
             int totalRequest = lists.Count();
-            var data = lists.Skip(request.skip).Take(request.pageSize).ToList();
+            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
 
             var response = new RoleResponse
             {
-                draw = request.draw,
-                recordsFiltered = totalRequest,
-                recordsTotal = totalRequest,
+                Draw = request.Draw,
+                RecordsFiltered = totalRequest,
+                RecordsTotal = totalRequest,
                 Data = data
             };
 

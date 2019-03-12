@@ -28,74 +28,68 @@ namespace Klinik.Features
         /// <returns></returns>
         public EmployeeResponse CreateOrEdit(EmployeeRequest request)
         {
-            int resultAffected = 0;
             EmployeeResponse response = new EmployeeResponse();
 
             try
             {
-                if (request.RequestEmployeeData.Id > 0)
+                if (request.Data.Id > 0)
                 {
-                    var qry = _unitOfWork.EmployeeRepository.GetById(request.RequestEmployeeData.Id);
+                    var qry = _unitOfWork.EmployeeRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
-                        qry.EmpName = request.RequestEmployeeData.EmpName;
-                        qry.BirthDate = request.RequestEmployeeData.Birthdate;
-                        qry.Gender = request.RequestEmployeeData.Gender;
-                        qry.Email = request.RequestEmployeeData.Email;
-                        qry.EmpType = request.RequestEmployeeData.EmpType;
-                        qry.EmpDept = request.RequestEmployeeData.EmpDept;
-                      
-                        qry.ModifiedBy = request.RequestEmployeeData.ModifiedBy ?? "SYSTEM";
+                        qry.EmpName = request.Data.EmpName;
+                        qry.BirthDate = request.Data.Birthdate;
+                        qry.Gender = request.Data.Gender;
+                        qry.Email = request.Data.Email;
+                        qry.EmpType = request.Data.EmpType;
+                        qry.EmpDept = request.Data.EmpDept;
+                        qry.ModifiedBy = request.Data.ModifiedBy ?? "SYSTEM";
                         qry.ModifiedDate = DateTime.Now;
 
                         // update
                         _unitOfWork.EmployeeRepository.Update(qry);
-                        resultAffected = _unitOfWork.Save();
+                        int resultAffected = _unitOfWork.Save();
 
                         if (resultAffected > 0)
                         {
-                            response.Status = ClinicEnums.Status.SUCCESS.ToString();
                             response.Message = $"Employee {qry.EmpName} with ID {qry.id} has been successfully updated";
                         }
                         else
                         {
-                            response.Status = ClinicEnums.Status.ERROR.ToString();
+                            response.Status = false;
                             response.Message = "Employee Update Failed";
                         }
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = "Employee Update Failed";
                     }
                 }
                 else
                 {
-                    var EmployeeEntity = Mapper.Map<EmployeeModel, Employee>(request.RequestEmployeeData);
-                    EmployeeEntity.CreatedBy = request.RequestEmployeeData.CreatedBy ?? "SYSTEM";
+                    var EmployeeEntity = Mapper.Map<EmployeeModel, Employee>(request.Data);
+                    EmployeeEntity.CreatedBy = request.Data.CreatedBy ?? "SYSTEM";
                     EmployeeEntity.CreatedDate = DateTime.Now;
 
                     // insert 
                     _unitOfWork.EmployeeRepository.Insert(EmployeeEntity);
-                    resultAffected = _unitOfWork.Save();
-
+                    int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
-
                         response.Message = $"Employee {EmployeeEntity.EmpName} with ID {EmployeeEntity.id} has been successfully added";
 
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = "Employee Add Failed";
                     }
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg();
             }
 
@@ -128,7 +122,7 @@ namespace Klinik.Features
         {
             EmployeeResponse response = new EmployeeResponse();
 
-            var qry = _unitOfWork.EmployeeRepository.Query(x => x.id == request.RequestEmployeeData.Id, null);
+            var qry = _unitOfWork.EmployeeRepository.Query(x => x.id == request.Data.Id, null);
             if (qry.FirstOrDefault() != null)
             {
 
@@ -147,16 +141,16 @@ namespace Klinik.Features
             List<EmployeeModel> lists = new List<EmployeeModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<Employee>(true);
-            if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
+            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
-                searchPredicate = searchPredicate.And(p => p.EmpID.Contains(request.searchValue) || p.EmpName.Contains(request.searchValue));
+                searchPredicate = searchPredicate.And(p => p.EmpID.Contains(request.SearchValue) || p.EmpName.Contains(request.SearchValue));
             }
 
-            if (!(string.IsNullOrEmpty(request.sortColumn) && string.IsNullOrEmpty(request.sortColumnDir)))
+            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
             {
-                if (request.sortColumnDir == "asc")
+                if (request.SortColumnDir == "asc")
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "empid":
                             qry = _unitOfWork.EmployeeRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.EmpID), includes: x => x.GeneralMaster);
@@ -172,7 +166,7 @@ namespace Klinik.Features
                 }
                 else
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "empid":
                             qry = _unitOfWork.EmployeeRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.EmpID), includes: x => x.GeneralMaster);
@@ -200,13 +194,13 @@ namespace Klinik.Features
             }
 
             int totalRequest = lists.Count();
-            var data = lists.Skip(request.skip).Take(request.pageSize).ToList();
+            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
 
             var response = new EmployeeResponse
             {
-                draw = request.draw,
-                recordsFiltered = totalRequest,
-                recordsTotal = totalRequest,
+                Draw = request.Draw,
+                RecordsFiltered = totalRequest,
+                RecordsTotal = totalRequest,
                 Data = data
             };
 
@@ -221,34 +215,33 @@ namespace Klinik.Features
         public EmployeeResponse RemoveData(EmployeeRequest request)
         {
             EmployeeResponse response = new EmployeeResponse();
-            int resultAffected = 0;
+
             try
             {
-                var isExist = _unitOfWork.EmployeeRepository.GetById(request.RequestEmployeeData.Id);
+                var isExist = _unitOfWork.EmployeeRepository.GetById(request.Data.Id);
                 if (isExist.id > 0)
                 {
                     _unitOfWork.EmployeeRepository.Delete(isExist.id);
-                    resultAffected = _unitOfWork.Save();
+                    int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Employee {isExist.EmpName} with ID {isExist.id} has been successfully removed";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = $"Employee Removal Failed!";
                     }
                 }
                 else
                 {
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = $"Employee Removal Failed!";
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;
             }
 

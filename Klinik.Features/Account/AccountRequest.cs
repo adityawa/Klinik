@@ -4,6 +4,6 @@ namespace Klinik.Features
 {
     public class AccountRequest
     {
-        public AccountModel RequestAccountModel { get; set; }
+        public AccountModel Data { get; set; }
     }
 }

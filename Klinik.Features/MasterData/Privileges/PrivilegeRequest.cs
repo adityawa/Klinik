@@ -3,8 +3,7 @@ using Klinik.Entities.MasterData;
 
 namespace Klinik.Features
 {
-    public class PrivilegeRequest : BaseGetRequest
+    public class PrivilegeRequest : BaseRequest<PrivilegeModel>
     {
-        public PrivilegeModel RequestPrivilegeData { get; set; }
     }
 }

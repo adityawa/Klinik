@@ -39,7 +39,7 @@ namespace Klinik.Web.Controllers
         {
             PasswordHistoryRequest request = new PasswordHistoryRequest
             {
-                RequestPassHistData = new PasswordHistoryModel
+                Data = new PasswordHistoryModel
                 {
                     UserID = _model.UserID,
                     UserName = _model.UserName,

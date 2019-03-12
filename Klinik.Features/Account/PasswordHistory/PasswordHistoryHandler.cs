@@ -29,37 +29,37 @@ namespace Klinik.Features
         /// <returns></returns>
         public PasswordHistoryResponse ChangePassword(PasswordHistoryRequest request)
         {
-            int result = 0;
             PasswordHistoryResponse response = new PasswordHistoryResponse();
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    var toBeUpdate = _context.Users.SingleOrDefault(x => x.ID == request.RequestPassHistData.UserID);
+                    var toBeUpdate = _context.Users.SingleOrDefault(x => x.ID == request.Data.UserID);
                     if (toBeUpdate != null)
                     {
-                        toBeUpdate.Password = CommonUtils.Encryptor(request.RequestPassHistData.NewPassword, CommonUtils.KeyEncryptor);
+                        toBeUpdate.Password = CommonUtils.Encryptor(request.Data.NewPassword, CommonUtils.KeyEncryptor);
                         _context.SaveChanges();
                     }
 
                     var _passHistoryEntity = new PasswordHistory
                     {
-                        OrganizationID = request.RequestPassHistData.OrganizationID,
-                        UserName = request.RequestPassHistData.UserName,
-                        Password = CommonUtils.Encryptor(request.RequestPassHistData.Password, CommonUtils.KeyEncryptor)
+                        OrganizationID = request.Data.OrganizationID,
+                        UserName = request.Data.UserName,
+                        Password = CommonUtils.Encryptor(request.Data.Password, CommonUtils.KeyEncryptor)
                     };
 
                     _context.PasswordHistories.Add(_passHistoryEntity);
-                    result = _context.SaveChanges();
+
+                    _context.SaveChanges();
 
                     transaction.Commit();
-                    response.Status = ClinicEnums.Status.SUCCESS.ToString();
+
                     response.Message = "Password has been changed successfully";
                 }
                 catch
                 {
                     transaction.Rollback();
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = CommonUtils.GetGeneralErrorMesg();
                 }
             }

@@ -28,38 +28,39 @@ namespace Klinik.Features
         /// <returns></returns>
         public OrganizationPrivilegeResponse CreateOrEdit(OrganizationPrivilegeRequest request)
         {
-            int resultAffected = 0;
             OrganizationPrivilegeResponse response = new OrganizationPrivilegeResponse();
 
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    var toberemove = _context.OrganizationPrivileges.Where(x => x.OrgID == request.RequestOrgPrivData.OrgID);
+                    var toberemove = _context.OrganizationPrivileges.Where(x => x.OrgID == request.Data.OrgID);
                     _context.OrganizationPrivileges.RemoveRange(toberemove);
                     _context.SaveChanges();
 
                     //insert new
-                    foreach (long _privId in request.RequestOrgPrivData.PrivilegeIDs)
+                    foreach (long _privId in request.Data.PrivilegeIDs)
                     {
                         var orgpprivilege = new OrganizationPrivilege
                         {
-                            OrgID = request.RequestOrgPrivData.OrgID,
+                            OrgID = request.Data.OrgID,
                             PrivilegeID = _privId
                         };
+
                         _context.OrganizationPrivileges.Add(orgpprivilege);
                     }
 
-                    resultAffected = _context.SaveChanges();
+                    int resultAffected = _context.SaveChanges();
 
                     transaction.Commit();
-                    response.Status = ClinicEnums.Status.SUCCESS.ToString();
+
                     response.Message = "Data Successfully Saved";
                 }
                 catch
                 {
                     transaction.Rollback();
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+
+                    response.Status = false;
                     response.Message = CommonUtils.GetGeneralErrorMesg();
                 }
             }
@@ -74,18 +75,17 @@ namespace Klinik.Features
         /// <returns></returns>
         public OrganizationPrivilegeResponse GetListData(OrganizationPrivilegeRequest request)
         {
-            var qry = _unitOfWork.OrgPrivRepository.Get(x => x.OrgID == request.RequestOrgPrivData.OrgID);
+            var qry = _unitOfWork.OrgPrivRepository.Get(x => x.OrgID == request.Data.OrgID);
             OrganizationPrivilegeModel _model = new OrganizationPrivilegeModel();
 
             if (qry.Count > 0)
                 _model.OrgID = qry.FirstOrDefault().OrgID;
 
-            if (_model.PrivilegeIDs == null)
-                _model.PrivilegeIDs = new List<long>();
             foreach (var item in qry)
             {
                 _model.PrivilegeIDs.Add(item.PrivilegeID);
             }
+
             var response = new OrganizationPrivilegeResponse
             {
                 Entity = _model

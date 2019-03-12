@@ -3,8 +3,7 @@ using Klinik.Entities.MasterData;
 
 namespace Klinik.Features
 {
-    public class UserRequest : BaseGetRequest
+    public class UserRequest : BaseRequest<UserModel>
     {
-        public UserModel RequestUserData { get; set; }
     }
 }

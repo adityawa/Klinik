@@ -30,61 +30,58 @@ namespace Klinik.Features
         {
             bool isHavePrivilege = true;
 
-            response = new EmployeeResponse
-            {
-                Status = ClinicEnums.Status.SUCCESS.ToString()
-            };
+            response = new EmployeeResponse();
 
-            if (request.action != null && request.action.Equals(ClinicEnums.Action.DELETE.ToString()))
+            if (request.Action != null && request.Action.Equals(ClinicEnums.Action.DELETE.ToString()))
             {
                 ValidateForDelete(request, out response);
             }
             else
             {
-                if (request.RequestEmployeeData.EmpID == null || String.IsNullOrEmpty(request.RequestEmployeeData.EmpID) || String.IsNullOrWhiteSpace(request.RequestEmployeeData.EmpID))
+                if (request.Data.EmpID == null || String.IsNullOrEmpty(request.Data.EmpID) || String.IsNullOrWhiteSpace(request.Data.EmpID))
                 {
                     errorFields.Add("Employee ID");
                 }
 
-                if (request.RequestEmployeeData.EmpName == null || String.IsNullOrEmpty(request.RequestEmployeeData.EmpName) || String.IsNullOrWhiteSpace(request.RequestEmployeeData.EmpName))
+                if (request.Data.EmpName == null || String.IsNullOrEmpty(request.Data.EmpName) || String.IsNullOrWhiteSpace(request.Data.EmpName))
                 {
                     errorFields.Add("Employee Name");
                 }
 
-                if (request.RequestEmployeeData.Birthdate == null)
+                if (request.Data.Birthdate == null)
                 {
                     errorFields.Add("Birhdate");
                 }
 
-                if (!String.IsNullOrEmpty(request.RequestEmployeeData.Email))
+                if (!String.IsNullOrEmpty(request.Data.Email))
                 {
-                    if (!Regex.IsMatch(request.RequestEmployeeData.Email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$|^\+?\d{0,2}\-?\d{4,5}\-?\d{5,6}"))
+                    if (!Regex.IsMatch(request.Data.Email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$|^\+?\d{0,2}\-?\d{4,5}\-?\d{5,6}"))
                         errorFields.Add("Email");
                 }
 
                 if (errorFields.Any())
                 {
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = $"Validation Error for following fields : {String.Join(",", errorFields)}";
                 }
 
-                if (request.RequestEmployeeData.Id == 0)
+                if (request.Data.Id == 0)
                 {
 
-                    isHavePrivilege = IsHaveAuthorization(ADD_PRIVILEGE_NAME, request.RequestEmployeeData.Account.Privileges.PrivilegeIDs);
+                    isHavePrivilege = IsHaveAuthorization(ADD_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
                 }
                 else
                 {
-                    isHavePrivilege = IsHaveAuthorization(EDIT_PRIVILEGE_NAME, request.RequestEmployeeData.Account.Privileges.PrivilegeIDs);
+                    isHavePrivilege = IsHaveAuthorization(EDIT_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
                 }
 
                 if (!isHavePrivilege)
                 {
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = $"Unauthorized Access!";
                 }
 
-                if (response.Status == ClinicEnums.Status.SUCCESS.ToString())
+                if (response.Status)
                 {
                     response = new EmployeeHandler(_unitOfWork).CreateOrEdit(request);
                 }
@@ -99,22 +96,18 @@ namespace Klinik.Features
         private void ValidateForDelete(EmployeeRequest request, out EmployeeResponse response)
         {
             response = new EmployeeResponse();
-            response.Status = ClinicEnums.Status.SUCCESS.ToString();
 
-            bool isHavePrivilege = true;
-
-            if (request.action == ClinicEnums.Action.DELETE.ToString())
+            if (request.Action == ClinicEnums.Action.DELETE.ToString())
             {
-                isHavePrivilege = IsHaveAuthorization(DELETE_PRIVILEGE_NAME, request.RequestEmployeeData.Account.Privileges.PrivilegeIDs);
+                bool isHavePrivilege = IsHaveAuthorization(DELETE_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
+                if (!isHavePrivilege)
+                {
+                    response.Status = false;
+                    response.Message = $"Unauthorized Access!";
+                }
             }
 
-            if (!isHavePrivilege)
-            {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
-                response.Message = $"Unauthorized Access!";
-            }
-
-            if (response.Status == ClinicEnums.Status.SUCCESS.ToString())
+            if (response.Status)
             {
                 response = new EmployeeHandler(_unitOfWork).RemoveData(request);
             }

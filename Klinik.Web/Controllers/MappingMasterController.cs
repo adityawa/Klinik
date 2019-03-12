@@ -31,7 +31,7 @@ namespace Klinik.Web.Controllers
             {
                 var reqOrg = new OrganizationRequest
                 {
-                    RequestOrganizationData = new OrganizationModel
+                    Data = new OrganizationModel
                     {
                         Id = Convert.ToInt64(Request.QueryString["orgid"].ToString())
                     }
@@ -44,7 +44,7 @@ namespace Klinik.Web.Controllers
 
                 var _request = new OrganizationPrivilegeRequest
                 {
-                    RequestOrgPrivData = new OrganizationPrivilegeModel
+                    Data = new OrganizationPrivilegeModel
                     {
                         OrgID = Convert.ToInt64(Request.QueryString["orgid"].ToString())
                     }
@@ -69,7 +69,7 @@ namespace Klinik.Web.Controllers
                 _model.PrivilegeIDs = JsonConvert.DeserializeObject<List<long>>(Request.Form["Privileges"]);
             var request = new OrganizationPrivilegeRequest
             {
-                RequestOrgPrivData = _model
+                Data = _model
             };
             new OrganizationPrivilegeValidator(_unitOfWork, _context).Validate(request, out response);
             return Json(new { Status = response.Status, Message = response.Message }, JsonRequestBehavior.AllowGet);
@@ -90,17 +90,17 @@ namespace Klinik.Web.Controllers
 
             var request = new PrivilegeRequest
             {
-                draw = _draw,
-                searchValue = _searchValue,
-                sortColumn = _sortColumn,
-                sortColumnDir = _sortColumnDir,
-                pageSize = _pageSize,
-                skip = _skip
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
             };
 
             var response = new PrivilegeHandler(_unitOfWork).GetListData(request);
 
-            return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -112,7 +112,7 @@ namespace Klinik.Web.Controllers
             {
                 var reqOrg = new RoleRequest
                 {
-                    RequestRoleData = new RoleModel
+                    Data = new RoleModel
                     {
                         Id = Convert.ToInt64(Request.QueryString["roleid"].ToString())
                     }
@@ -125,7 +125,7 @@ namespace Klinik.Web.Controllers
 
                 var _request = new RolePrivilegeRequest
                 {
-                    RequestRolePrivData = new RolePrivilegeModel
+                    Data = new RolePrivilegeModel
                     {
                         RoleID = Convert.ToInt64(Request.QueryString["roleid"].ToString())
                     }
@@ -150,7 +150,7 @@ namespace Klinik.Web.Controllers
                 _model.PrivilegeIDs = JsonConvert.DeserializeObject<List<long>>(Request.Form["Privileges"]);
             var request = new RolePrivilegeRequest
             {
-                RequestRolePrivData = _model
+                Data = _model
             };
             new RolePrivilegeValidator(_unitOfWork, _context).Validate(request, out response);
             return Json(new { Status = response.Status, Message = response.Message }, JsonRequestBehavior.AllowGet);
@@ -176,18 +176,18 @@ namespace Klinik.Web.Controllers
 
             var request = new RolePrivilegeRequest
             {
-                draw = _draw,
-                searchValue = _searchValue,
-                sortColumn = _sortColumn,
-                sortColumnDir = _sortColumnDir,
-                pageSize = _pageSize,
-                skip = _skip,
-                RequestRolePrivData = _model
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip,
+                Data = _model
             };
 
             var response = new RolePrivilegeHandler(_unitOfWork, _context).GetPrivilegeBasedOnOrganization(request);
 
-            return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -199,7 +199,7 @@ namespace Klinik.Web.Controllers
             {
                 var reqOrg = new UserRequest
                 {
-                    RequestUserData = new UserModel
+                    Data = new UserModel
                     {
                         Id = Convert.ToInt64(Request.QueryString["userid"].ToString())
                     }
@@ -212,11 +212,12 @@ namespace Klinik.Web.Controllers
 
                 var _request = new UserRoleRequest
                 {
-                    RequestUserRoleData = new UserRoleModel
+                    Data = new UserRoleModel
                     {
                         UserID = Convert.ToInt64(Request.QueryString["userid"].ToString())
                     }
                 };
+
                 //get Privilege Ids for organization
                 var selRoles = new UserRoleHandler(_unitOfWork, _context).GetListData(_request);
                 if (selRoles.Entity.RoleIds != null && selRoles.Entity.RoleIds.Count > 0)
@@ -237,7 +238,7 @@ namespace Klinik.Web.Controllers
                 _model.RoleIds = JsonConvert.DeserializeObject<List<long>>(Request.Form["Roles"]);
             var request = new UserRoleRequest
             {
-                RequestUserRoleData = _model
+                Data = _model
             };
             new UserRoleValidator(_unitOfWork, _context).Validate(request, out response);
             return Json(new { Status = response.Status, Message = response.Message }, JsonRequestBehavior.AllowGet);
@@ -263,18 +264,18 @@ namespace Klinik.Web.Controllers
 
             var request = new UserRoleRequest
             {
-                draw = _draw,
-                searchValue = _searchValue,
-                sortColumn = _sortColumn,
-                sortColumnDir = _sortColumnDir,
-                pageSize = _pageSize,
-                skip = _skip,
-                RequestUserRoleData = _model
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip,
+                Data = _model
             };
 
             var response = new UserRoleHandler(_unitOfWork, _context).GetRoleBasedOnOrganization(request);
 
-            return Json(new { data = response.Data, recordsFiltered = response.recordsFiltered, recordsTotal = response.recordsTotal, draw = response.draw }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

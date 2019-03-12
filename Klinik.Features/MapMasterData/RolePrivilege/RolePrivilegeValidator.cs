@@ -26,27 +26,24 @@ namespace Klinik.Features
         /// <param name="response"></param>
         public void Validate(RolePrivilegeRequest request, out RolePrivilegeResponse response)
         {
-            response = new RolePrivilegeResponse
-            {
-                Status = ClinicEnums.Status.SUCCESS.ToString()
-            };
+            response = new RolePrivilegeResponse();
 
-            if (request.RequestRolePrivData.RoleID == 0)
+            if (request.Data.RoleID == 0)
             {
                 errorFields.Add("Role");
             }
-            if (request.RequestRolePrivData.PrivilegeIDs.Count == 0)
+            if (request.Data.PrivilegeIDs.Count == 0)
             {
                 errorFields.Add("Privileges");
             }
 
             if (errorFields.Any())
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = $"Validation Error for following fields : {String.Join(",", errorFields)}";
             }
 
-            if (response.Status == ClinicEnums.Status.SUCCESS.ToString())
+            if (response.Status)
             {
                 response = new RolePrivilegeHandler(_unitOfWork, _context).CreateOrEdit(request);
             }

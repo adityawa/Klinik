@@ -26,28 +26,25 @@ namespace Klinik.Features
         /// <param name="response"></param>
         public void Validate(OrganizationPrivilegeRequest request, out OrganizationPrivilegeResponse response)
         {
-            response = new OrganizationPrivilegeResponse
-            {
-                Status = ClinicEnums.Status.SUCCESS.ToString()
-            };
+            response = new OrganizationPrivilegeResponse();
 
-            if (request.RequestOrgPrivData.OrgID == 0)
+            if (request.Data.OrgID == 0)
             {
                 errorFields.Add("Organization");
             }
 
-            if (request.RequestOrgPrivData.PrivilegeIDs.Count == 0)
+            if (request.Data.PrivilegeIDs.Count == 0)
             {
                 errorFields.Add("Privileges");
             }
 
             if (errorFields.Any())
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = $"Validation Error for following fields : {String.Join(",", errorFields)}";
             }
 
-            if (response.Status == ClinicEnums.Status.SUCCESS.ToString())
+            if (response.Status)
             {
                 response = new OrganizationPrivilegeHandler(_unitOfWork, _context).CreateOrEdit(request);
             }

@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace Klinik.Features.MasterData.Clinic
 {
-    public class ClinicRequest : BaseGetRequest
+    public class ClinicRequest : BaseRequest<ClinicModel>
     {
-        public ClinicModel RequestClinicModel { get; set; }
     }
 }

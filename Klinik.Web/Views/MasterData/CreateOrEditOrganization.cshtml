@@ -55,30 +55,31 @@
              window.location.href = "/MasterData/OrganizationList";
         });
 
-    $('#ddlclinics').select2();
-    var _status, _message, _temp;
-    var _arrMsg = [];
+        $('#ddlclinics').select2();
 
         toastr.options = {
-            "closeButton": true,
+            "closeButton": false,
             "positionClass": "toast-top-full-width",
             "onclick": null,
             "showDuration": "0",
             "hideDuration": "0",
-            "timeOut": "0",
+            "timeOut": "2000",
             "showMethod": "fadeIn"
         };
 
-    _temp="@ViewBag.Response";
+        var _temp="@ViewBag.Response";
+        var _arrMsg = _temp.split(";");
 
-    _arrMsg = _temp.split(";");
-
-    if (_arrMsg[0] == "SUCCESS") {
-        toastr.success(_arrMsg[1]);
-    }
-    else if (_arrMsg[0] == "ERROR") {
-        toastr.error(_arrMsg[1]);
-    }
+        if (_arrMsg.length > 1) {
+            if (_arrMsg[0] == "True") {
+                toastr.success(_arrMsg[1]);
+            }
+            else {
+                toastr.options.closeButton = true;
+                toastr.options.timeOut = 0;
+                toastr.error(_arrMsg[1]);
+            }
+        }
     });
 
 </script>

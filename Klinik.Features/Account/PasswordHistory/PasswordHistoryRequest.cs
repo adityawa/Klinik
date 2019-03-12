@@ -3,8 +3,7 @@ using Klinik.Entities.Account;
 
 namespace Klinik.Features
 {
-    public class PasswordHistoryRequest : BaseGetRequest
+    public class PasswordHistoryRequest : BaseRequest<PasswordHistoryModel>
     {
-        public PasswordHistoryModel RequestPassHistData { get; set; }
     }
 }

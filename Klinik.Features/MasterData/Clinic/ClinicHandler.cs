@@ -46,70 +46,68 @@ namespace Klinik.Features
         /// <returns></returns>
         public ClinicResponse CreateOrEdit(ClinicRequest request)
         {
-            int resultAffected = 0;
-
             ClinicResponse response = new ClinicResponse();
             try
             {
-                if (request.RequestClinicModel.Id > 0)
+                if (request.Data.Id > 0)
                 {
-                    var qry = _unitOfWork.ClinicRepository.GetById(request.RequestClinicModel.Id);
+                    var qry = _unitOfWork.ClinicRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
-                        qry.Name = request.RequestClinicModel.Name;
-                        qry.Address = request.RequestClinicModel.Address;
-                        qry.LegalNumber = request.RequestClinicModel.LegalNumber;
-                        qry.LegalDate = request.RequestClinicModel.LegalDate;
-                        qry.ContactNumber = request.RequestClinicModel.ContactNumber;
-                        qry.Email = request.RequestClinicModel.Email;
-                        qry.Lat = request.RequestClinicModel.Lat;
-                        qry.Long = request.RequestClinicModel.Long;
-                        qry.CityID = request.RequestClinicModel.CityId;
-                        qry.ClinicType = request.RequestClinicModel.ClinicType;
+                        qry.Name = request.Data.Name;
+                        qry.Address = request.Data.Address;
+                        qry.LegalNumber = request.Data.LegalNumber;
+                        qry.LegalDate = request.Data.LegalDate;
+                        qry.ContactNumber = request.Data.ContactNumber;
+                        qry.Email = request.Data.Email;
+                        qry.Lat = request.Data.Lat;
+                        qry.Long = request.Data.Long;
+                        qry.CityID = request.Data.CityId;
+                        qry.ClinicType = request.Data.ClinicType;
                         qry.DateModified = DateTime.Now;
-                        qry.LastUpdateBy = request.RequestClinicModel.ModifiedBy ?? "SYSTEM";
-                        _unitOfWork.ClinicRepository.Update(qry);
-                        resultAffected = _unitOfWork.Save();
+                        qry.LastUpdateBy = request.Data.ModifiedBy ?? "SYSTEM";
 
+                        _unitOfWork.ClinicRepository.Update(qry);
+                        int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Status = ClinicEnums.Status.SUCCESS.ToString();
                             response.Message = $"Success Update Clinic {qry.Name} with Id {qry.Code}";
                         }
                         else
                         {
-                            response.Status = ClinicEnums.Status.ERROR.ToString();
+                            response.Status = false;
                             response.Message = "Update Data Failed";
                         }
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = "Update Data Failed";
                     }
                 }
                 else
                 {
-                    var clinicEntity = Mapper.Map<ClinicModel, Clinic>(request.RequestClinicModel);
-                    clinicEntity.CreatedBy = request.RequestClinicModel.CreatedBy ?? "SYSTEM";
+                    var clinicEntity = Mapper.Map<ClinicModel, Clinic>(request.Data);
+                    clinicEntity.CreatedBy = request.Data.CreatedBy ?? "SYSTEM";
                     clinicEntity.DateCreated = DateTime.Now;
+
                     _unitOfWork.ClinicRepository.Insert(clinicEntity);
-                    resultAffected = _unitOfWork.Save();
+
+                    int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success Add new Clinic {clinicEntity.Name} with Id {clinicEntity.Code}";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = "Add Data Failed";
                     }
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg();
             }
 
@@ -125,12 +123,12 @@ namespace Klinik.Features
         {
             ClinicResponse response = new ClinicResponse();
 
-            var qry = _unitOfWork.ClinicRepository.Query(x => x.ID == request.RequestClinicModel.Id);
+            var qry = _unitOfWork.ClinicRepository.Query(x => x.ID == request.Data.Id);
             if (qry.FirstOrDefault() != null)
             {
-
                 response.Entity = Mapper.Map<Clinic, ClinicModel>(qry.FirstOrDefault());
             }
+
             return response;
         }
 
@@ -144,16 +142,16 @@ namespace Klinik.Features
             List<ClinicModel> lists = new List<ClinicModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<Clinic>(true);
-            if (!String.IsNullOrEmpty(request.searchValue) && !String.IsNullOrWhiteSpace(request.searchValue))
+            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
-                searchPredicate = searchPredicate.And(p => p.Code.Contains(request.searchValue) || p.Name.Contains(request.searchValue));
+                searchPredicate = searchPredicate.And(p => p.Code.Contains(request.SearchValue) || p.Name.Contains(request.SearchValue));
             }
 
-            if (!(string.IsNullOrEmpty(request.sortColumn) && string.IsNullOrEmpty(request.sortColumnDir)))
+            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
             {
-                if (request.sortColumnDir == "asc")
+                if (request.SortColumnDir == "asc")
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "code":
                             qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Code), includes: x => x.GeneralMaster);
@@ -169,7 +167,7 @@ namespace Klinik.Features
                 }
                 else
                 {
-                    switch (request.sortColumn.ToLower())
+                    switch (request.SortColumn.ToLower())
                     {
                         case "code":
                             qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Code), includes: x => x.GeneralMaster);
@@ -188,6 +186,7 @@ namespace Klinik.Features
             {
                 qry = _unitOfWork.ClinicRepository.Get(searchPredicate, null, includes: x => x.GeneralMaster);
             }
+
             foreach (var item in qry)
             {
                 var clinicData = Mapper.Map<Clinic, ClinicModel>(item);
@@ -199,17 +198,18 @@ namespace Klinik.Features
                     clinicData.CityDesc = getCityDesc.Name ?? "";
                 if (getClinicTypeDesc != null)
                     clinicData.ClinicTypeDesc = getClinicTypeDesc.Name ?? "";
+
                 lists.Add(clinicData);
             }
 
             int totalRequest = lists.Count();
-            var data = lists.Skip(request.skip).Take(request.pageSize).ToList();
+            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
 
             var response = new ClinicResponse
             {
-                draw = request.draw,
-                recordsFiltered = totalRequest,
-                recordsTotal = totalRequest,
+                Draw = request.Draw,
+                RecordsFiltered = totalRequest,
+                RecordsTotal = totalRequest,
                 Data = data
             };
 
@@ -224,34 +224,32 @@ namespace Klinik.Features
         public ClinicResponse RemoveData(ClinicRequest request)
         {
             ClinicResponse response = new ClinicResponse();
-            int resultAffected = 0;
             try
             {
-                var isExist = _unitOfWork.ClinicRepository.GetById(request.RequestClinicModel.Id);
+                var isExist = _unitOfWork.ClinicRepository.GetById(request.Data.Id);
                 if (isExist.ID > 0)
                 {
                     _unitOfWork.ClinicRepository.Delete(isExist.ID);
-                    resultAffected = _unitOfWork.Save();
+                    int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Status = ClinicEnums.Status.SUCCESS.ToString();
                         response.Message = $"Success remove Clinic {isExist.Name} with Id {isExist.Code}";
                     }
                     else
                     {
-                        response.Status = ClinicEnums.Status.ERROR.ToString();
+                        response.Status = false;
                         response.Message = $"Remove Clinic Failed!";
                     }
                 }
                 else
                 {
-                    response.Status = ClinicEnums.Status.ERROR.ToString();
+                    response.Status = false;
                     response.Message = $"Remove Clinic Failed!";
                 }
             }
             catch
             {
-                response.Status = ClinicEnums.Status.ERROR.ToString();
+                response.Status = false;
                 response.Message = CommonUtils.GetGeneralErrorMesg(); ;
             }
 
