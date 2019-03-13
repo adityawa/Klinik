@@ -27,11 +27,11 @@ namespace Klinik.Features
         /// </summary>
         /// <param name="request"></param>
         /// <param name="response"></param>
-        public void Validate(EmployeeRequest request, out EmployeeResponse response)
+        public EmployeeResponse Validate(EmployeeRequest request, bool isFromApi = false)
         {
             bool isHavePrivilege = true;
 
-            response = new EmployeeResponse();
+            var response = new EmployeeResponse();
 
             if (request.Action != null && request.Action.Equals(ClinicEnums.Action.DELETE.ToString()))
             {
@@ -66,20 +66,23 @@ namespace Klinik.Features
                     response.Message = string.Format(Messages.ValidationErrorFields, String.Join(",", errorFields));
                 }
 
-                if (request.Data.Id == 0)
+                // skip the authorization for temporary
+                if (!isFromApi)
                 {
+                    if (request.Data.Id == 0)
+                    {
+                        isHavePrivilege = IsHaveAuthorization(ADD_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
+                    }
+                    else
+                    {
+                        isHavePrivilege = IsHaveAuthorization(EDIT_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
+                    }
 
-                    isHavePrivilege = IsHaveAuthorization(ADD_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
-                }
-                else
-                {
-                    isHavePrivilege = IsHaveAuthorization(EDIT_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
-                }
-
-                if (!isHavePrivilege)
-                {
-                    response.Status = false;
-                    response.Message = Messages.UnauthorizedAccess;
+                    if (!isHavePrivilege)
+                    {
+                        response.Status = false;
+                        response.Message = Messages.UnauthorizedAccess;
+                    }
                 }
 
                 if (response.Status)
@@ -87,6 +90,8 @@ namespace Klinik.Features
                     response = new EmployeeHandler(_unitOfWork).CreateOrEdit(request);
                 }
             }
+
+            return response;
         }
 
         /// <summary>

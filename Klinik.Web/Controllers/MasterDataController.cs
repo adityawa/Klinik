@@ -596,9 +596,7 @@ namespace Klinik.Web.Controllers
                 Data = _model
             };
 
-            EmployeeResponse _response = new EmployeeResponse();
-
-            new EmployeeValidator(_unitOfWork).Validate(request, out _response);
+            EmployeeResponse _response = new EmployeeValidator(_unitOfWork).Validate(request);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
             ViewBag.EmpTypes = BindDropDownEmployementType();
             ViewBag.Departments = BindDropDownDepartment();
@@ -670,7 +668,6 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public JsonResult DeleteMasterEmployee(int id)
         {
-            EmployeeResponse _response = new EmployeeResponse();
             var request = new EmployeeRequest
             {
                 Data = new EmployeeModel
@@ -681,7 +678,7 @@ namespace Klinik.Web.Controllers
                 Action = ClinicEnums.Action.DELETE.ToString()
             };
 
-            new EmployeeValidator(_unitOfWork).Validate(request, out _response);
+            EmployeeResponse _response = new EmployeeValidator(_unitOfWork).Validate(request);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }

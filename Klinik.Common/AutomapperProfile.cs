@@ -14,7 +14,7 @@ namespace Klinik.Common
             CreateMap<OrganizationModel, Organization>();
             CreateMap<Clinic, ClinicModel>()
                 .ForMember(m => m.LegalDateDesc, map => map.MapFrom(p => p.LegalDate == null ? "" : p.LegalDate.Value.ToString("MM/dd/yyyy")));
-                
+
 
             CreateMap<ClinicModel, Clinic>()
                 .ForMember(m => m.DateCreated, map => map.MapFrom(p => p.CreatedDate))
@@ -46,7 +46,7 @@ namespace Klinik.Common
 
             CreateMap<Employee, EmployeeModel>()
                 .ForMember(x => x.BirthdateStr, map => map.MapFrom(p => p.BirthDate == null ? "" : p.BirthDate.Value.ToString("MM/dd/yyyy")))
-                .ForMember(x => x.EmpTypeDesc, map => map.MapFrom(p => p.GeneralMaster.Name));
+                .ForMember(x => x.EmpTypeDesc, map => map.MapFrom(p => p.GeneralMaster == null ? "" : p.GeneralMaster.Name));
             CreateMap<EmployeeModel, Employee>();
 
             CreateMap<OrganizationPrivilege, OrganizationPrivilegeModel>()
@@ -75,7 +75,7 @@ namespace Klinik.Common
 
 
             CreateMap<LogModel, Log>();
-                
+
         }
     }
 }

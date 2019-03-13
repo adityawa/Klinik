@@ -97,7 +97,7 @@ namespace Klinik.Features
             catch
             {
                 response.Status = false;
-                response.Message = CommonUtils.GetGeneralErrorMesg();
+                response.Message = Messages.GeneralError;
 
                 if (request.Data != null)
                 {
@@ -235,7 +235,7 @@ namespace Klinik.Features
             catch
             {
                 response.Status = false;
-                response.Message = CommonUtils.GetGeneralErrorMesg(); ;
+                response.Message = Messages.GeneralError; ;
             }
 
             return response;

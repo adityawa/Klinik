@@ -131,7 +131,7 @@ namespace Klinik.Features
                 catch
                 {
                     response.Status = false;
-                    response.Message = CommonUtils.GetGeneralErrorMesg();
+                    response.Message = Messages.GeneralError;
                 }
             }
             else
@@ -158,7 +158,7 @@ namespace Klinik.Features
             if (user == null)
             {
                 response.Status = false;
-                response.Message = CommonUtils.GetGeneralErrorMesg();
+                response.Message = Messages.GeneralError;
             }
 
             return response;
@@ -198,7 +198,7 @@ namespace Klinik.Features
                 catch
                 {
                     response.Status = false;
-                    response.Message = CommonUtils.GetGeneralErrorMesg();
+                    response.Message = Messages.GeneralError;
                 }
             }
             else

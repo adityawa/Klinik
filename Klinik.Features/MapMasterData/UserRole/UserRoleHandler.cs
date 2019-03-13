@@ -63,7 +63,7 @@ namespace Klinik.Features
                 {
                     transaction.Rollback();
                     response.Status = false;
-                    response.Message = CommonUtils.GetGeneralErrorMesg();
+                    response.Message = Messages.GeneralError;
                 }
             }
 

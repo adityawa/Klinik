@@ -204,9 +204,6 @@
   <data name="EmployeeType" xml:space="preserve">
     <value>Employee Type</value>
   </data>
-  <data name="EmpType" xml:space="preserve">
-    <value>Employee Type</value>
-  </data>
   <data name="EnterEmailInstruction" xml:space="preserve">
     <value>Enter your e-mail below and we will send you reset instructions!</value>
   </data>
@@ -362,5 +359,8 @@
   </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>
+  </data>
+  <data name="EmploymentType" xml:space="preserve">
+    <value>Employment Type</value>
   </data>
 </root>

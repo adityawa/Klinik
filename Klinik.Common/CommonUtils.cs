@@ -14,15 +14,6 @@ namespace Klinik.Common
         public static string KeyEncryptor { get { return _keyEncryptor; } }
 
         /// <summary>
-        /// General error message
-        /// </summary>
-        /// <returns></returns>
-        public static string GetGeneralErrorMesg()
-        {
-            return System.Configuration.ConfigurationManager.AppSettings["GeneralError"].ToString();
-        }
-
-        /// <summary>
         /// Encrypt a string.
         /// </summary>
         /// <param name="plainText">String to be encrypted</param>

@@ -122,6 +122,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oops.. Something went wrong. Please check the Error Log or Contact customer support.
+        /// </summary>
+        public static string GeneralError {
+            get {
+                return ResourceManager.GetString("GeneralError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Organization Code.
         /// </summary>
         public static string InvalidOrganizationCode {

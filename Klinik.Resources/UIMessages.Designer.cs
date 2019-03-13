@@ -322,11 +322,11 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employee Type.
+        ///   Looks up a localized string similar to Employment Type.
         /// </summary>
-        public static string EmpType {
+        public static string EmploymentType {
             get {
-                return ResourceManager.GetString("EmpType", resourceCulture);
+                return ResourceManager.GetString("EmploymentType", resourceCulture);
             }
         }
         
