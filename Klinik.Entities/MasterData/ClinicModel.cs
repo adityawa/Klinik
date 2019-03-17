@@ -20,9 +20,9 @@ namespace Klinik.Entities.MasterData
         public string ContactNumber { get; set; }
         public float Long { get; set; }
         public float Lat { get; set; }
-        public long CityId { get; set; }
+        public short CityId { get; set; }
         public string CityDesc { get; set; }
-        public long ClinicType { get; set; }
+        public short ClinicType { get; set; }
 
         public string ClinicTypeDesc { get; set; }
         public int ReffID { get; set; }

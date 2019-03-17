@@ -599,7 +599,7 @@ namespace Klinik.Web.Controllers
             EmployeeResponse _response = new EmployeeValidator(_unitOfWork).Validate(request);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
             ViewBag.EmpTypes = BindDropDownEmployementType();
-            ViewBag.Departments = BindDropDownDepartment();
+            
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
 
             return View();

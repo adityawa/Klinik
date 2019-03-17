@@ -12,31 +12,39 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Collections.Generic;
     
-    public partial class Organization
+    public partial class Patient
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Organization()
+        public Patient()
         {
-            this.OrganizationPrivileges = new HashSet<OrganizationPrivilege>();
-            this.OrganizationRoles = new HashSet<OrganizationRole>();
-            this.Users = new HashSet<User>();
+            this.PatientClinics = new HashSet<PatientClinic>();
+            this.QueuePolis = new HashSet<QueuePoli>();
         }
     
         public long ID { get; set; }
-        public string OrgCode { get; set; }
-        public string OrgName { get; set; }
-        public Nullable<long> KlinikID { get; set; }
+        public Nullable<long> EmployeeID { get; set; }
+        public Nullable<short> FamilyRelationshipID { get; set; }
+        public string MRNumber { get; set; }
+        public string Name { get; set; }
+        public string Gender { get; set; }
+        public string MaritalStatus { get; set; }
+        public Nullable<System.DateTime> BirthDate { get; set; }
+        public string KTPNumber { get; set; }
+        public string Address { get; set; }
+        public Nullable<int> CityID { get; set; }
+        public Nullable<short> Type { get; set; }
+        public string BPJSNumber { get; set; }
+        public string BloodType { get; set; }
+        public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
+        public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrganizationPrivilege> OrganizationPrivileges { get; set; }
+        public virtual ICollection<PatientClinic> PatientClinics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrganizationRole> OrganizationRoles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
-        public virtual Clinic Clinic { get; set; }
+        public virtual ICollection<QueuePoli> QueuePolis { get; set; }
     }
 }

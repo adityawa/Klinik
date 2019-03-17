@@ -20,21 +20,54 @@ namespace Klinik.Entities.MasterData
         [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$|^\+?\d{0,2}\-?\d{4,5}\-?\d{5,6}", ErrorMessage = "Please enter a valid email address")]
         public string Email { get; set; }
 
+        [Required(ErrorMessage ="Please Fill BirthDate")]
         [DataType(DataType.Date)]
         public DateTime Birthdate { get; set; }
         public string BirthdateStr { get; set; }
 
+        public string ReffEmpID { get; set; }
+
         public string Gender { get; set; }
 
         [Required(ErrorMessage = "Please enter Employment Type")]
-        public long EmpType { get; set; }
+        public short EmpType { get; set; }
 
         public string EmpTypeDesc { get; set; }
 
-        public long EmpDept { get; set; }
+        public string KTPNumber { get; set; }
+        public string HPNumber { get; set; }
 
-        public string EmpDeptDesc { get; set; }
+        public string LastEmpID { get; set; }
 
-        public List<GeneralMaster> lsMaster { get; set; }
+        public string StatusCode { get; set; }
+
+        public short Status { get; set; }
+
+        //employee assignment
+
+        [Required(ErrorMessage = "Please Fill Join Date")]
+        [DataType(DataType.Date)]
+        public DateTime StartDate { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime EndDate { get; set; }
+
+        public string StartDateStr { get; set; }
+        public string EndDateStr { get; set; }
+
+        public string Department { get; set; }
+
+        public string Region { get; set; }
+
+        public string BussinesUnit { get; set; }
+
+        public short EmpStatus { get; set; }
+
+        public string EmpStatusDesc { get; set; }
+
+        public string LastEmpId { get; set; }
+
+        public int Grade { get; set; }
+
     }
 }

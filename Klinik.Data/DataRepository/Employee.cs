@@ -17,6 +17,9 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
+            this.Appointments = new HashSet<Appointment>();
+            this.EmployeeAssignments = new HashSet<EmployeeAssignment>();
+            this.Patients = new HashSet<Patient>();
             this.Users = new HashSet<User>();
         }
     
@@ -24,18 +27,30 @@ namespace Klinik.Data.DataRepository
         public string EmpID { get; set; }
         public string EmpName { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
+        public string ReffEmpID { get; set; }
         public string Gender { get; set; }
-        public Nullable<long> EmpType { get; set; }
-        public Nullable<long> EmpDept { get; set; }
+        public Nullable<short> EmpType { get; set; }
+        public string KTPNumber { get; set; }
+        public string HPNumber { get; set; }
+        public string Email { get; set; }
+        public string LastEmpID { get; set; }
+        public Nullable<short> Status { get; set; }
         public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public string Email { get; set; }
     
-        public virtual GeneralMaster GeneralMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Appointment> Appointments { get; set; }
+        public virtual EmployeeStatu EmployeeStatu { get; set; }
+        public virtual FamilyRelationship FamilyRelationship { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeAssignment> EmployeeAssignments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Patient> Patients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
+        public virtual GeneralMaster GeneralMaster { get; set; }
     }
 }

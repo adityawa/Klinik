@@ -277,7 +277,7 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employee ID.
+        ///   Looks up a localized string similar to Emp ID.
         /// </summary>
         public static string EmpID {
             get {
@@ -322,7 +322,7 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employment Type.
+        ///   Looks up a localized string similar to Relation.
         /// </summary>
         public static string EmploymentType {
             get {
@@ -381,6 +381,15 @@ namespace Klinik.Resources {
         public static string ExpiredDate {
             get {
                 return ResourceManager.GetString("ExpiredDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relation.
+        /// </summary>
+        public static string FamilyRelationship {
+            get {
+                return ResourceManager.GetString("FamilyRelationship", resourceCulture);
             }
         }
         

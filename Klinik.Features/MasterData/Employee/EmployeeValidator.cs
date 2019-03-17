@@ -54,6 +54,11 @@ namespace Klinik.Features
                     errorFields.Add("Birhdate");
                 }
 
+                if (request.Data.StartDate == null)
+                {
+                    errorFields.Add("Join Date");
+                }
+
                 if (!String.IsNullOrEmpty(request.Data.Email))
                 {
                     if (!Regex.IsMatch(request.Data.Email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$|^\+?\d{0,2}\-?\d{4,5}\-?\d{5,6}"))
@@ -87,7 +92,7 @@ namespace Klinik.Features
 
                 if (response.Status)
                 {
-                    response = new EmployeeHandler(_unitOfWork).CreateOrEdit(request);
+                    response = new EmployeeHandler(_unitOfWork, _context).CreateOrEdit(request);
                 }
             }
 

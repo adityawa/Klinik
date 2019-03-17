@@ -12,15 +12,16 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Collections.Generic;
     
-    public partial class Log
+    public partial class PoliFlowTemplate
     {
-        public long Id { get; set; }
-        public System.DateTime Start { get; set; }
-        public string Module { get; set; }
-        public long Account { get; set; }
-        public string Command { get; set; }
-        public string OldValue { get; set; }
-        public string NewValue { get; set; }
-        public string Status { get; set; }
+        public long ID { get; set; }
+        public string Code { get; set; }
+        public Nullable<short> PoliTypeID { get; set; }
+        public Nullable<short> PoliTypeIDTo { get; set; }
+        public Nullable<short> RowStatus { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     }
 }

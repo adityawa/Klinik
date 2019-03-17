@@ -34,7 +34,8 @@
             MASTER_EMPLOYEE,
             MASTER_PRIVILEGE,
             MASTER_ROLE,
-            MASTER_USER
+            MASTER_USER,
+            EMPLOYEE_ASSIGNMENT
         }
 
         public enum Action

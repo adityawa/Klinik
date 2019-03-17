@@ -20,7 +20,9 @@ namespace Klinik.Data
         IGenericRepository<UserRole> UserRoleRepository { get; }
         IGenericRepository<Menu> MenuRepository { get; }
         IGenericRepository<PasswordHistory> PasswordHistoryRepository { get; }
-
+        IGenericRepository<EmployeeAssignment> EmployeeAssignmentRepository { get; }
+        IGenericRepository<EmployeeStatu> EmployeeStatusRepository { get; }
+        IGenericRepository<FamilyRelationship> FamilyRelationshipRepository { get; }
         IGenericRepository<Log> LogRepository { get; }
         int Save();
     }

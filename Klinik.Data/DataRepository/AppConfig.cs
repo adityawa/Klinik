@@ -12,15 +12,10 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Collections.Generic;
     
-    public partial class Log
+    public partial class AppConfig
     {
-        public long Id { get; set; }
-        public System.DateTime Start { get; set; }
-        public string Module { get; set; }
-        public long Account { get; set; }
-        public string Command { get; set; }
-        public string OldValue { get; set; }
-        public string NewValue { get; set; }
-        public string Status { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

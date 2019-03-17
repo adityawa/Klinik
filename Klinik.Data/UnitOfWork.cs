@@ -19,7 +19,9 @@ namespace Klinik.Data
         private IGenericRepository<Menu> _menuRepository;
         private IGenericRepository<PasswordHistory> _passwordHistRepostiory;
         private IGenericRepository<Log> _logRepository;
-
+        private IGenericRepository<EmployeeAssignment> _employeeAssignmentRepository;
+        private IGenericRepository<EmployeeStatu> _employeeStatusRepository;
+        public IGenericRepository<FamilyRelationship> _familyRelationshipRepository;
         private bool disposed = false;
 
 
@@ -163,6 +165,39 @@ namespace Klinik.Data
                     _logRepository = new GenericRepository<Log>(_context);
 
                 return _logRepository;
+            }
+        }
+
+        public IGenericRepository<EmployeeAssignment> EmployeeAssignmentRepository
+        {
+            get
+            {
+                if (_employeeAssignmentRepository == null)
+                    _employeeAssignmentRepository = new GenericRepository<EmployeeAssignment>(_context);
+
+                return _employeeAssignmentRepository;
+            }
+        }
+
+        public IGenericRepository<EmployeeStatu> EmployeeStatusRepository
+        {
+            get
+            {
+                if (_employeeStatusRepository == null)
+                    _employeeStatusRepository = new GenericRepository<EmployeeStatu>(_context);
+
+                return _employeeStatusRepository;
+            }
+        }
+
+        public IGenericRepository<FamilyRelationship> FamilyRelationshipRepository
+        {
+            get
+            {
+                if (_familyRelationshipRepository == null)
+                    _familyRelationshipRepository = new GenericRepository<FamilyRelationship>(_context);
+
+                return _familyRelationshipRepository;
             }
         }
 

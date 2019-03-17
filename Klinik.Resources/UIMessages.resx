@@ -190,7 +190,7 @@
     <value>Email</value>
   </data>
   <data name="EmpID" xml:space="preserve">
-    <value>Employee ID</value>
+    <value>Emp ID</value>
   </data>
   <data name="Employee" xml:space="preserve">
     <value>Employee</value>
@@ -361,6 +361,9 @@
     <value>Username</value>
   </data>
   <data name="EmploymentType" xml:space="preserve">
-    <value>Employment Type</value>
+    <value>Relation</value>
+  </data>
+  <data name="FamilyRelationship" xml:space="preserve">
+    <value>Relation</value>
   </data>
 </root>
