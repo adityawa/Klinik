@@ -7,9 +7,8 @@ using Klinik.Resources;
 using LinqKit;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Klinik.Features.Registration
 {
@@ -85,6 +84,7 @@ namespace Klinik.Features.Registration
                     regEntity.Status = (int)RegistrationStatusEnum.New;
                     regEntity.ClinicID = 1;
                     regEntity.PoliFrom = 1;
+                    regEntity.SortNumber = GenerateSortNumber(request.Data.PoliToID);
 
                     _unitOfWork.RegistrationRepository.Insert(regEntity);
                     int resultAffected = _unitOfWork.Save();
@@ -118,6 +118,23 @@ namespace Klinik.Features.Registration
             }
 
             return response;
+        }
+
+        /// <summary>
+        /// Generate the sort number
+        /// </summary>
+        /// <param name="poliID"></param>
+        /// <returns></returns>
+        private int? GenerateSortNumber(int poliID)
+        {
+            var currentQueueList = _unitOfWork.RegistrationRepository.Get(x => x.PoliTo.Value == poliID &&
+            x.TransactionDate.Value.Year == DateTime.Today.Year &&
+            x.TransactionDate.Value.Month == DateTime.Today.Month &&
+            x.TransactionDate.Value.Day == DateTime.Today.Day);
+
+            int sortNumber = currentQueueList.Count + 1;
+
+            return sortNumber;
         }
 
         /// <summary>
