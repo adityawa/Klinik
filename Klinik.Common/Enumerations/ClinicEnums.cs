@@ -45,7 +45,10 @@
         {
             Add,
             Edit,
-            DELETE
+            DELETE,
+            Process,
+            Hold,
+            Finish
         }
     }
 }

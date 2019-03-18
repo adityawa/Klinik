@@ -303,5 +303,143 @@ namespace Klinik.Features.Registration
 
             return response;
         }
+
+        /// <summary>
+        /// Process the selected registration queue
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public RegistrationResponse ProcessRegistration(RegistrationRequest request)
+        {
+            RegistrationResponse response = new RegistrationResponse();
+            try
+            {
+                var currentRegistration = _unitOfWork.RegistrationRepository.GetById(request.Data.Id);
+                if (currentRegistration != null)
+                {
+                    // get previous registration with status new
+                    var previousRegistrationList = _unitOfWork.RegistrationRepository.Get(x => x.ID != currentRegistration.ID &&
+                    x.ClinicID == currentRegistration.ClinicID &&
+                    x.PoliTo == currentRegistration.PoliTo &&
+                    x.Status == 0 &&
+                    x.TransactionDate.Value.Year == currentRegistration.TransactionDate.Value.Year &&
+                    x.TransactionDate.Value.Month == currentRegistration.TransactionDate.Value.Month &&
+                    x.TransactionDate.Value.Day == currentRegistration.TransactionDate.Value.Day);
+
+                    foreach (var item in previousRegistrationList)
+                    {
+                        item.Status = (int)RegistrationStatusEnum.Hold;
+
+                        _unitOfWork.RegistrationRepository.Update(item);
+
+                        _unitOfWork.Save();
+                    }
+
+                    currentRegistration.Status = (int)RegistrationStatusEnum.Process;
+                    int resultAffected = _unitOfWork.Save();
+                    if (resultAffected > 0)
+                    {
+                        response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Registration", Messages.Patient, currentRegistration.ID);
+                    }
+                    else
+                    {
+                        response.Status = false;
+                        response.Message = string.Format(Messages.UpdateObjectFailed, "Registration");
+                    }
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = string.Format(Messages.UpdateObjectFailed, "Registration");
+                }
+            }
+            catch
+            {
+                response.Status = false;
+                response.Message = Messages.GeneralError; ;
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Hold the selected registration queue
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public RegistrationResponse HoldRegistration(RegistrationRequest request)
+        {
+            RegistrationResponse response = new RegistrationResponse();
+            try
+            {
+                var currentRegistration = _unitOfWork.RegistrationRepository.GetById(request.Data.Id);
+                if (currentRegistration != null)
+                {
+                    currentRegistration.Status = (int)RegistrationStatusEnum.Hold;
+                    int resultAffected = _unitOfWork.Save();
+                    if (resultAffected > 0)
+                    {
+                        response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Registration", Messages.Patient, currentRegistration.ID);
+                    }
+                    else
+                    {
+                        response.Status = false;
+                        response.Message = string.Format(Messages.UpdateObjectFailed, "Registration");
+                    }
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = string.Format(Messages.UpdateObjectFailed, "Registration");
+                }
+            }
+            catch
+            {
+                response.Status = false;
+                response.Message = Messages.GeneralError; ;
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Finish the selected registration queue
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public RegistrationResponse FinishRegistration(RegistrationRequest request)
+        {
+            RegistrationResponse response = new RegistrationResponse();
+            try
+            {
+                var currentRegistration = _unitOfWork.RegistrationRepository.GetById(request.Data.Id);
+                if (currentRegistration != null)
+                {
+                    currentRegistration.Status = (int)RegistrationStatusEnum.Finish;
+                    int resultAffected = _unitOfWork.Save();
+                    if (resultAffected > 0)
+                    {
+                        response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Registration", Messages.Patient, currentRegistration.ID);
+                    }
+                    else
+                    {
+                        response.Status = false;
+                        response.Message = string.Format(Messages.UpdateObjectFailed, "Registration");
+                    }
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = string.Format(Messages.UpdateObjectFailed, "Registration");
+                }
+            }
+            catch
+            {
+                response.Status = false;
+                response.Message = Messages.GeneralError; ;
+            }
+
+            return response;
+        }
     }
 }

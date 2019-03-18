@@ -22,6 +22,7 @@
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PatientName</label>
                 <div class="col-md-4">
                     @Html.HiddenFor(x => x.Id)
+                    @Html.HiddenFor(x => x.Status)
                     @if (((int)ViewBag.ActionType) == 0)
                     {
                         @Html.DropDownListFor(p => p.PatientID, (IEnumerable<SelectListItem>)ViewBag.PatientList, new { @class = "form-control", @id = "ddlpatientlist" })

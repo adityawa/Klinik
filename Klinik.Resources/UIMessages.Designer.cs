@@ -493,6 +493,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finish.
+        /// </summary>
+        public static string Finish {
+            get {
+                return ResourceManager.GetString("Finish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to finish this patient queue?.
+        /// </summary>
+        public static string FinishConfirmation {
+            get {
+                return ResourceManager.GetString("FinishConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forgot Password ?.
         /// </summary>
         public static string ForgotPassword {
@@ -520,6 +538,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hold.
+        /// </summary>
+        public static string Hold {
+            get {
+                return ResourceManager.GetString("Hold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to hold this patient queue ?.
+        /// </summary>
+        public static string HoldConfirmation {
+            get {
+                return ResourceManager.GetString("HoldConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Medica System.
         /// </summary>
         public static string HomepageTitle {
@@ -530,9 +566,6 @@ namespace Klinik.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to No HP.
-
-        ///   Looks up a localized string similar to HP Number.
-
         /// </summary>
         public static string HPNumber {
             get {
@@ -552,7 +585,6 @@ namespace Klinik.Resources {
         /// <summary>
         ///   Looks up a localized string similar to KTP No.
         /// </summary>
-
         public static string KTP {
             get {
                 return ResourceManager.GetString("KTP", resourceCulture);
@@ -560,19 +592,20 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last Emp ID.
+        ///   Looks up a localized string similar to KTP No.
         /// </summary>
-        public static string LastEmpID
-        {
-            get
-            {
-                return ResourceManager.GetString("LastEmpID", resourceCulture);
-            }
-        }
         public static string KTPNumber {
             get {
                 return ResourceManager.GetString("KTPNumber", resourceCulture);
-
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Emp ID.
+        /// </summary>
+        public static string LastEmpID {
+            get {
+                return ResourceManager.GetString("LastEmpID", resourceCulture);
             }
         }
         
@@ -802,6 +835,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Process.
+        /// </summary>
+        public static string Process {
+            get {
+                return ResourceManager.GetString("Process", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to process this patient queue?.
+        /// </summary>
+        public static string ProcessConfirmation {
+            get {
+                return ResourceManager.GetString("ProcessConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recover Password.
         /// </summary>
         public static string RecoverPassword {
@@ -811,22 +862,20 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
-
-        ///   Looks up a localized string similar to Region.
-        /// </summary>
-        public static string Region
-        {
-            get
-            {
-                return ResourceManager.GetString("Region", resourceCulture);
-            }
-        }
-
         ///   Looks up a localized string similar to Reff ID.
         /// </summary>
         public static string ReffID {
             get {
                 return ResourceManager.GetString("ReffID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Region.
+        /// </summary>
+        public static string Region {
+            get {
+                return ResourceManager.GetString("Region", resourceCulture);
             }
         }
         

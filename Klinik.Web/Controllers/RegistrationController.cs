@@ -246,5 +246,59 @@ namespace Klinik.Web.Controllers
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult ProcessRegistration(int id)
+        {
+            var request = new RegistrationRequest
+            {
+                Data = new RegistrationModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.Process.ToString()
+            };
+
+            RegistrationResponse _response = new RegistrationValidator(_unitOfWork).Validate(request);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult HoldRegistration(int id)
+        {
+            var request = new RegistrationRequest
+            {
+                Data = new RegistrationModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.Hold.ToString()
+            };
+
+            RegistrationResponse _response = new RegistrationValidator(_unitOfWork).Validate(request);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult FinishRegistration(int id)
+        {
+            var request = new RegistrationRequest
+            {
+                Data = new RegistrationModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.Finish.ToString()
+            };
+
+            RegistrationResponse _response = new RegistrationValidator(_unitOfWork).Validate(request);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
