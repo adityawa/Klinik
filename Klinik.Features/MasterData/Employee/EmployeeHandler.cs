@@ -8,7 +8,7 @@ using LinqKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Data.SqlTypes;
 namespace Klinik.Features
 {
     public class EmployeeHandler : BaseFeatures, IBaseFeatures<EmployeeResponse, EmployeeRequest>
@@ -18,8 +18,8 @@ namespace Klinik.Features
         /// </summary>
         /// <param name="unitOfWork"></param>
         /// 
-        private const string EmployeeRelationshipCode = "E";
-        public EmployeeHandler(IUnitOfWork unitOfWork, KlinikDBEntities context=null)
+        
+        public EmployeeHandler(IUnitOfWork unitOfWork, KlinikDBEntities context = null)
         {
             _unitOfWork = unitOfWork;
             _context = context;
@@ -33,157 +33,167 @@ namespace Klinik.Features
         public EmployeeResponse CreateOrEdit(EmployeeRequest request)
         {
             EmployeeResponse response = new EmployeeResponse();
-           
-                #region ::OLD::
-                //var qry = _unitOfWork.EmployeeRepository.GetById(request.Data.EmpID);
-                //if (qry != null)
-                //{
-                //    // save the old data
-                //    var _oldentity = Mapper.Map<Employee, EmployeeModel>(qry);
 
-                //    // update data
-                //    qry.EmpName = request.Data.EmpName;
-                //    qry.BirthDate = request.Data.Birthdate;
-                //    qry.Gender = request.Data.Gender;
-                //    qry.Email = request.Data.Email;
-                //    qry.EmpType = request.Data.EmpType;
-                //    qry.KTPNumber = request.Data.KTPNumber;
-                //    qry.HPNumber = request.Data.HPNumber;
-                //    qry.ReffEmpID = request.Data.ReffEmpID;
-                //    qry.LastEmpID = request.Data.LastEmpID;
-                //    qry.ModifiedBy = request.Data.ModifiedBy ?? "SYSTEM";
-                //    qry.ModifiedDate = DateTime.Now;
+            #region ::OLD::
+            //var qry = _unitOfWork.EmployeeRepository.GetById(request.Data.EmpID);
+            //if (qry != null)
+            //{
+            //    // save the old data
+            //    var _oldentity = Mapper.Map<Employee, EmployeeModel>(qry);
 
-                //    // update
-                //    _unitOfWork.EmployeeRepository.Update(qry);
-                //    int resultAffected = _unitOfWork.Save();
+            //    // update data
+            //    qry.EmpName = request.Data.EmpName;
+            //    qry.BirthDate = request.Data.Birthdate;
+            //    qry.Gender = request.Data.Gender;
+            //    qry.Email = request.Data.Email;
+            //    qry.EmpType = request.Data.EmpType;
+            //    qry.KTPNumber = request.Data.KTPNumber;
+            //    qry.HPNumber = request.Data.HPNumber;
+            //    qry.ReffEmpID = request.Data.ReffEmpID;
+            //    qry.LastEmpID = request.Data.LastEmpID;
+            //    qry.ModifiedBy = request.Data.ModifiedBy ?? "SYSTEM";
+            //    qry.ModifiedDate = DateTime.Now;
 
-                //    if (resultAffected > 0)
-                //    {
-                //        response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Employee", qry.EmpName, qry.id);
+            //    // update
+            //    _unitOfWork.EmployeeRepository.Update(qry);
+            //    int resultAffected = _unitOfWork.Save();
 
-                //        CommandLog(true, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data, _oldentity);
-                //    }
-                //    else
-                //    {
-                //        response.Status = false;
-                //        response.Message = string.Format(Messages.UpdateObjectFailed, "Employee");
+            //    if (resultAffected > 0)
+            //    {
+            //        response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Employee", qry.EmpName, qry.id);
 
-                //        CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data, _oldentity);
-                //    }
-                //}
-                //else
-                //{
-                //    response.Status = false;
-                //    response.Message = string.Format(Messages.UpdateObjectFailed, "Employee");
+            //        CommandLog(true, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data, _oldentity);
+            //    }
+            //    else
+            //    {
+            //        response.Status = false;
+            //        response.Message = string.Format(Messages.UpdateObjectFailed, "Employee");
 
-                //    CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data);
-                //}
-                #endregion
-                using (var transaction = _context.Database.BeginTransaction())
+            //        CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data, _oldentity);
+            //    }
+            //}
+            //else
+            //{
+            //    response.Status = false;
+            //    response.Message = string.Format(Messages.UpdateObjectFailed, "Employee");
+
+            //    CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data);
+            //}
+            #endregion
+
+            var _empTypeDesc = _unitOfWork.FamilyRelationshipRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpType) == null ? "" : _unitOfWork.FamilyRelationshipRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpType).Code;
+            var _statusDesc = _unitOfWork.EmployeeStatusRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpStatus) == null ? "" : _unitOfWork.EmployeeStatusRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpStatus).Code;
+            request.Data.EmpTypeDesc = _empTypeDesc;
+
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                int _resultAffected = 0;
+                try
                 {
-                    int _resultAffected = 0;
-                    try
+                    var _qry = _context.Employees.SingleOrDefault(x => x.EmpID == request.Data.EmpID);
+                    if (_qry != null)
                     {
-                        var _qry = _context.Employees.SingleOrDefault(x => x.EmpID == request.Data.EmpID);
-                        if (_qry != null)
+                        // save the old data
+                        var _oldentity = Mapper.Map<Employee, EmployeeModel>(_qry);
+                        // update data
+                        _qry.EmpName = request.Data.EmpName;
+                        _qry.BirthDate = request.Data.Birthdate;
+                        _qry.Gender = request.Data.Gender;
+                        _qry.Email = request.Data.Email;
+                        _qry.EmpType = request.Data.EmpType;
+                        _qry.Status = request.Data.EmpStatus;
+                        _qry.KTPNumber = request.Data.KTPNumber;
+                        _qry.HPNumber = request.Data.HPNumber;
+                        _qry.ReffEmpID = request.Data.ReffEmpID;
+                        _qry.LastEmpID = request.Data.LastEmpId;
+                        _qry.ModifiedBy = request.Data.ModifiedBy ?? "SYSTEM";
+                        _qry.ModifiedDate = DateTime.Now;
+                        _resultAffected = _context.SaveChanges();
+
+                        if (_resultAffected > 0)
+                            CommandLog(true, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data, _oldentity);
+
+                        //cek employee assignment, if empid exist with joint date
+                        long _emplId = GetEmployeeNo(request.Data.EmpID);
+                        if (_emplId == 0 && !String.IsNullOrEmpty(request.Data.LastEmpId))
+                            _emplId = GetEmployeeNo(request.Data.LastEmpId);
+
+                        var _qryEmpAss = _context.EmployeeAssignments.FirstOrDefault(x => x.EmployeeID == _emplId && x.StartDate == request.Data.StartDate);
+                        if (_qryEmpAss != null)
                         {
-                            // save the old data
-                            var _oldentity = Mapper.Map<Employee, EmployeeModel>(_qry);
-                            // update data
-                            _qry.EmpName = request.Data.EmpName;
-                            _qry.BirthDate = request.Data.Birthdate;
-                            _qry.Gender = request.Data.Gender;
-                            _qry.Email = request.Data.Email;
-                            _qry.EmpType = request.Data.EmpType;
-                            _qry.KTPNumber = request.Data.KTPNumber;
-                            _qry.HPNumber = request.Data.HPNumber;
-                            _qry.ReffEmpID = request.Data.ReffEmpID;
-                            _qry.LastEmpID = request.Data.LastEmpID;
-                            _qry.ModifiedBy = request.Data.ModifiedBy ?? "SYSTEM";
-                            _qry.ModifiedDate = DateTime.Now;
+                            _resultAffected = 0;
+                            _qryEmpAss.StartDate = request.Data.StartDate;
+                            _qryEmpAss.EndDate = request.Data.EndDate.Value.ToString().Contains("1/1/0001")?(DateTime)SqlDateTime.Null: request.Data.EndDate.Value;
+                            _qryEmpAss.Department = request.Data.Department;
+                            _qryEmpAss.Region = request.Data.Region;
+                            _qryEmpAss.BusinessUnit = request.Data.BussinesUnit;
+                            _qryEmpAss.EmpStatus = request.Data.EmpStatus;
+                            _qryEmpAss.LastEmpID = request.Data.LastEmpId;
+                            _qryEmpAss.ModifiedBy = request.Data.ModifiedBy ?? "SYSTEM";
+                            _qryEmpAss.ModifiedDate = DateTime.Now;
                             _resultAffected = _context.SaveChanges();
 
+                            var newEmployeeAssignment = new EmployeeAssignment
+                            {
+                                EmployeeID = _qry.id,
+                                BusinessUnit = request.Data.BussinesUnit,
+                                Department = request.Data.Department,
+                                StartDate = request.Data.StartDate,
+                                EndDate = request.Data.EndDate,
+                                Region = request.Data.Region,
+                                EmpStatus = request.Data.EmpStatus,
+                                LastEmpID = request.Data.LastEmpId
+                            };
                             if (_resultAffected > 0)
-                                CommandLog(true, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data, _oldentity);
-
-                            //cek employee assignment, if empid exist with joint date
-                            long _emplId = GetEmployeeNo(request.Data.EmpID);
-                            if (_emplId == 0 && !String.IsNullOrEmpty(request.Data.LastEmpId))
-                                _emplId = GetEmployeeNo(request.Data.LastEmpId);
-
-                            var _qryEmpAss = _context.EmployeeAssignments.FirstOrDefault(x => x.EmployeeID == _emplId && x.StartDate == request.Data.StartDate);
-                            if (_qryEmpAss != null)
-                            {
-                                _resultAffected = 0;
-                                _qryEmpAss.StartDate = request.Data.StartDate;
-                                _qryEmpAss.EndDate = request.Data.EndDate;
-                                _qryEmpAss.Department = request.Data.Department;
-                                _qryEmpAss.Region = request.Data.Region;
-                                _qryEmpAss.BusinessUnit = request.Data.BussinesUnit;
-                                _qryEmpAss.EmpStatus = request.Data.EmpStatus;
-                                _qryEmpAss.LastEmpID = request.Data.LastEmpId;
-                                _qryEmpAss.ModifiedBy = request.Data.ModifiedBy ?? "SYSTEM";
-                                _qryEmpAss.ModifiedDate = DateTime.Now;
-                                _resultAffected = _context.SaveChanges();
-
-                                var newEmployeeAssignment = new EmployeeAssignment
-                                {
-                                    EmployeeID = _qry.id,
-                                    BusinessUnit = request.Data.BussinesUnit,
-                                    Department = request.Data.Department,
-                                    StartDate = request.Data.StartDate,
-                                    EndDate = request.Data.EndDate,
-                                    Region = request.Data.Region,
-                                    EmpStatus = request.Data.EmpStatus,
-                                    LastEmpID = request.Data.LastEmpID
-                                };
-                                if(_resultAffected>0)
-                                    CommandLog(true, ClinicEnums.Module.EMPLOYEE_ASSIGNMENT, Constants.Command.EDIT_EMPLOYEEASSIGNMENT, request.Data.Account, newEmployeeAssignment, _qryEmpAss);
-                            }
-                            else
-                            {
-                                var _qryLastEmployee = _context.EmployeeAssignments.SingleOrDefault(p => p.LastEmpID == request.Data.LastEmpID);
-                                if (_qryLastEmployee != null)
-                                {
-                                    _qryLastEmployee.EndDate = request.Data.StartDate;
-                                    _resultAffected = _context.SaveChanges();
-                                    if(_resultAffected>0)
-                                        CommandLog(true, ClinicEnums.Module.EMPLOYEE_ASSIGNMENT, $"Edit end date in employee assignment from {_qryLastEmployee.EndDate.Value.ToString()} to {request.Data.StartDate.ToString()}", request.Data.Account);
-                                }
-
-                                //insert new employee assignment
-                                var _entityEmpAssignment = new EmployeeAssignment
-                                {
-                                    EmployeeID = _qry.id,
-                                    BusinessUnit = request.Data.BussinesUnit,
-                                    Department = request.Data.Department,
-                                    StartDate = request.Data.StartDate,
-                                    EndDate = request.Data.EndDate,
-                                    Region = request.Data.Region,
-                                    EmpStatus = request.Data.EmpStatus,
-                                    LastEmpID = request.Data.LastEmpID
-                                };
-                                _context.EmployeeAssignments.Add(_entityEmpAssignment);
-                                _resultAffected = _context.SaveChanges();
-                            }
-
-
-                            //cek is empstatus in employee table == empstatus in employee assignment
+                                CommandLog(true, ClinicEnums.Module.EMPLOYEE_ASSIGNMENT, Constants.Command.EDIT_EMPLOYEEASSIGNMENT, request.Data.Account, newEmployeeAssignment, _qryEmpAss);
                         }
                         else
                         {
-                            //insert new employee
-                            if (request.Data.EmpTypeDesc != EmployeeRelationshipCode)
+                            var _qryLastEmployee = _context.EmployeeAssignments.SingleOrDefault(p => p.LastEmpID == request.Data.LastEmpId);
+                            if (_qryLastEmployee != null)
                             {
-                                request.Data.EmpID = string.Format("{0}-{1}", request.Data.EmpID, request.Data.StatusCode);
+                                _qryLastEmployee.EndDate = request.Data.StartDate;
+                                _resultAffected = _context.SaveChanges();
+                                if (_resultAffected > 0)
+                                    CommandLog(true, ClinicEnums.Module.EMPLOYEE_ASSIGNMENT, $"Edit end date in employee assignment from {_qryLastEmployee.EndDate.Value.ToString()} to {request.Data.StartDate.ToString()}", request.Data.Account);
                             }
 
-                            var _employeeEntity = Mapper.Map<EmployeeModel, Employee>(request.Data);
-                            _context.Employees.Add(_employeeEntity);
+                            //insert new employee assignment
+                            var _entityEmpAssignment = new EmployeeAssignment
+                            {
+                                EmployeeID = _qry.id,
+                                BusinessUnit = request.Data.BussinesUnit,
+                                Department = request.Data.Department,
+                                StartDate = request.Data.StartDate,
+                                EndDate = request.Data.EndDate,
+                                Region = request.Data.Region,
+                                EmpStatus = request.Data.EmpStatus,
+                                LastEmpID = request.Data.LastEmpId
+                            };
+                            _context.EmployeeAssignments.Add(_entityEmpAssignment);
                             _resultAffected = _context.SaveChanges();
-                            if(_resultAffected>0)
-                                CommandLog(true, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.ADD_NEW_EMPLOYEE, request.Data.Account, _employeeEntity);
+                        }
+
+                        response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Employee", _qry.EmpName, _qry.EmpID);
+                        //cek is empstatus in employee table == empstatus in employee assignment
+                    }
+                    else
+                    {
+                        //insert new employee
+                        if (request.Data.EmpTypeDesc.Trim() != Constants.Command.EmployeeRelationshipCode)
+                        {
+                            request.Data.EmpID = string.Format("{0}-{1}", request.Data.ReffEmpID, request.Data.EmpTypeDesc);
+                        }
+
+                        var _employeeEntity = Mapper.Map<EmployeeModel, Employee>(request.Data);
+                        _employeeEntity.CreatedDate = DateTime.Now;
+                        _employeeEntity.CreatedBy = request.Data.Account.UserName ?? "SYSTEM";
+                        _context.Employees.Add(_employeeEntity);
+                        _resultAffected = _context.SaveChanges();
+                        if (_resultAffected > 0)
+                            CommandLog(true, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.ADD_NEW_EMPLOYEE, request.Data.Account, _employeeEntity);
+                        if(request.Data.EmpTypeDesc.Trim() == Constants.Command.EmployeeRelationshipCode)
+                        {
                             var _employeeAssignmentEntity = new EmployeeAssignment
                             {
                                 EmployeeID = _employeeEntity.id,
@@ -193,32 +203,37 @@ namespace Klinik.Features
                                 EndDate = request.Data.EndDate,
                                 Region = request.Data.Region,
                                 EmpStatus = request.Data.EmpStatus,
-                                LastEmpID = request.Data.LastEmpID
+                                LastEmpID = request.Data.LastEmpId,
+                                Grade = request.Data.Grade,
+                                CreatedDate = DateTime.Now,
+                                CreatedBy = request.Data.Account.UserName ?? "System"
                             };
 
                             _context.EmployeeAssignments.Add(_employeeAssignmentEntity);
 
                             _resultAffected = _context.SaveChanges();
-                            if(_resultAffected>0)
+                            if (_resultAffected > 0)
                                 CommandLog(true, ClinicEnums.Module.EMPLOYEE_ASSIGNMENT, Constants.Command.ADD_EMPLOYEEASSIGNMENT, request.Data.Account, _employeeAssignmentEntity);
-
                         }
 
-                        transaction.Commit();
-                        response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Employee", _qry.EmpName, _qry.EmpID);
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "Employee", request.Data.EmpName, request.Data.EmpID);
                     }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-                        response.Status = false;
-                        response.Message = string.Format(Messages.UpdateObjectFailed, "Employee");
+                    
+                    transaction.Commit();
+                    
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    response.Status = false;
+                    response.Message = string.Format(Messages.UpdateObjectFailed, "Employee");
 
-                        CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data);
-                    }
-
+                    CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data);
                 }
 
-           
+            }
+
+
 
 
             return response;
@@ -234,8 +249,24 @@ namespace Klinik.Features
             IList<EmployeeModel> employees = new List<EmployeeModel>();
             foreach (var item in qry)
             {
-                var _clinic = Mapper.Map<Employee, EmployeeModel>(item);
-                employees.Add(_clinic);
+                var _emp = Mapper.Map<Employee, EmployeeModel>(item);
+                employees.Add(_emp);
+            }
+
+            return employees;
+        }
+
+        public IList<EmployeeModel> GetActiveEmployee()
+        {
+            //Get from EmployeeAssignment
+            DateTime minTime = (DateTime)SqlDateTime.Null;
+            var _idActiveEmp = _unitOfWork.EmployeeAssignmentRepository.Get(x=>(x.EndDate==null ||x.EndDate==minTime)  && x.EmployeeStatu.Status == "A").Select(x=>x.EmployeeID);
+            var qry = _unitOfWork.EmployeeRepository.Get(x=>_idActiveEmp.Contains(x.id));
+            IList<EmployeeModel> employees = new List<EmployeeModel>();
+            foreach (var item in qry)
+            {
+                var _activeEmp = Mapper.Map<Employee, EmployeeModel>(item);
+                employees.Add(_activeEmp);
             }
 
             return employees;
@@ -254,6 +285,18 @@ namespace Klinik.Features
             if (qry.FirstOrDefault() != null)
             {
                 response.Entity = Mapper.Map<Employee, EmployeeModel>(qry.FirstOrDefault());
+                //get from employee assignment
+                var qryEmpAssignment = _unitOfWork.EmployeeAssignmentRepository.GetFirstOrDefault(x => x.EmployeeID == response.Entity.Id);
+                if (qryEmpAssignment != null)
+                {
+                    response.Entity.Department = qryEmpAssignment.Department;
+                    response.Entity.BussinesUnit = qryEmpAssignment.BusinessUnit;
+                    response.Entity.Region = qryEmpAssignment.Region;
+                    response.Entity.StartDate = qryEmpAssignment.StartDate==null?Convert.ToDateTime("0001-01-01"):qryEmpAssignment.StartDate.Value;
+                    response.Entity.EndDate = qryEmpAssignment.EndDate == null ? Convert.ToDateTime("0001-01-01") : qryEmpAssignment.EndDate.Value;
+                    response.Entity.Grade = qryEmpAssignment.Grade;
+                    response.Entity.LastEmpId = qryEmpAssignment.LastEmpID;
+                }
             }
 
             return response;
@@ -288,8 +331,8 @@ namespace Klinik.Features
                             break;
 
                         default:
-                            
-                            qry = _unitOfWork.EmployeeRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.id),  p=>p.EmployeeAssignments, p=>p.FamilyRelationship, prop=>prop.EmployeeStatu);
+
+                            qry = _unitOfWork.EmployeeRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.id), p => p.EmployeeAssignments, p => p.FamilyRelationship, prop => prop.EmployeeStatu);
                             break;
                     }
                 }
@@ -318,7 +361,9 @@ namespace Klinik.Features
             foreach (var item in qry)
             {
                 var prData = Mapper.Map<Employee, EmployeeModel>(item);
-                
+                long _idEmp = prData.Id ?? 0;
+                var _dept = _unitOfWork.EmployeeAssignmentRepository.GetFirstOrDefault(x => x.EmployeeID == _idEmp)==null?"": _unitOfWork.EmployeeAssignmentRepository.GetFirstOrDefault(x => x.EmployeeID == _idEmp).Department;
+                prData.Department = _dept;
                 lists.Add(prData);
             }
 
@@ -391,7 +436,7 @@ namespace Klinik.Features
                             var temp = isExistEmpAssignment;
                             _context.EmployeeAssignments.Remove(isExistEmpAssignment);
                             result_affected = _context.SaveChanges();
-                            if(result_affected>0)
+                            if (result_affected > 0)
                                 CommandLog(true, ClinicEnums.Module.EMPLOYEE_ASSIGNMENT, Constants.Command.DELETE_EMPLOYEE, request.Data.Account, null, temp);
                         }
 
@@ -406,7 +451,7 @@ namespace Klinik.Features
                             if (result_affected > 0)
                                 CommandLog(true, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.DELETE_EMPLOYEE, request.Data.Account, null, oldEmployee);
                         }
-                       
+
                     }
 
                     else
@@ -428,8 +473,8 @@ namespace Klinik.Features
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                      response.Status = false;
-                     response.Message = Messages.GeneralError;
+                    response.Status = false;
+                    response.Message = Messages.GeneralError;
                 }
             }
             return response;

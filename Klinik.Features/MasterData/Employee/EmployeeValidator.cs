@@ -4,7 +4,7 @@ using Klinik.Resources;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-
+using Klinik.Data.DataRepository;
 namespace Klinik.Features
 {
     public class EmployeeValidator : BaseFeatures
@@ -20,6 +20,13 @@ namespace Klinik.Features
         public EmployeeValidator(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+
+
+        public EmployeeValidator(IUnitOfWork unitOfWork, KlinikDBEntities context)
+        {
+            _unitOfWork = unitOfWork;
+            _context = context;
         }
 
         /// <summary>
@@ -41,7 +48,9 @@ namespace Klinik.Features
             {
                 if (request.Data.EmpID == null || String.IsNullOrEmpty(request.Data.EmpID) || String.IsNullOrWhiteSpace(request.Data.EmpID))
                 {
-                    errorFields.Add("Employee ID");
+                    var cekEmpType = _unitOfWork.FamilyRelationshipRepository.GetById(request.Data.EmpType) == null ? "" : _unitOfWork.FamilyRelationshipRepository.GetById(request.Data.EmpType).Code;
+                    if (cekEmpType.ToString().Trim() == "E")
+                        errorFields.Add("Employee ID");
                 }
 
                 if (request.Data.EmpName == null || String.IsNullOrEmpty(request.Data.EmpName) || String.IsNullOrWhiteSpace(request.Data.EmpName))

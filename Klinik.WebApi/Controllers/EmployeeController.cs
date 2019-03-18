@@ -2,7 +2,11 @@
 using Klinik.Entities.MasterData;
 using Klinik.Features;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Web.Http;
+using Klinik.Common;
+using System.Net;
+using Klinik.Data.DataRepository;
 
 namespace Klinik.WebApi.Controllers
 {
@@ -12,14 +16,15 @@ namespace Klinik.WebApi.Controllers
     public class EmployeeController : ApiController
     {
         private IUnitOfWork _unitOfWork;
-
+        private KlinikDBEntities _context;
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="unitOfWork"></param>
-        public EmployeeController(IUnitOfWork unitOfWork)
+        public EmployeeController(IUnitOfWork unitOfWork, KlinikDBEntities context)
         {
             _unitOfWork = unitOfWork;
+            _context = context;
         }
 
         /// <summary>
@@ -45,14 +50,22 @@ namespace Klinik.WebApi.Controllers
         /// Create a new employee
         /// </summary>
         /// <param name="model"></param>
-        public void Post([FromBody]EmployeeModel model)
+        public HttpResponseMessage Post([FromBody]EmployeeModel model)
         {
             var request = new EmployeeRequest
             {
                 Data = model
             };
 
-            EmployeeResponse _response = new EmployeeValidator(_unitOfWork).Validate(request, true);
+            EmployeeResponse _response = new EmployeeValidator(_unitOfWork, _context).Validate(request, true);
+            if (_response.Status ==true)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, _response.Message);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotAcceptable, _response.Message);
+            }
         }
 
         /// <summary>

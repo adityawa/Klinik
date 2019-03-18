@@ -59,6 +59,12 @@
     <Compile Include="DataRepository\Clinic.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataRepository\Doctor.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataRepository\DoctorClinic.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataRepository\Employee.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
@@ -69,6 +75,9 @@
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\FamilyRelationship.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataRepository\FileArchieve.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\GeneralMaster.cs">
@@ -126,6 +135,9 @@
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\PoliSchedule.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataRepository\PoliScheduleMaster.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\Privilege.cs">

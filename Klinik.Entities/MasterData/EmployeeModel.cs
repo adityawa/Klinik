@@ -8,7 +8,7 @@ namespace Klinik.Entities.MasterData
 {
     public class EmployeeModel : BaseModel
     {
-        [Required(ErrorMessage = "Please enter Employee ID"), MaxLength(50)]
+        
         [Display(Name = "Employee ID")]
         public string EmpID { get; set; }
         [Required(ErrorMessage = "Please enter Employee Name"), MaxLength(100)]
@@ -37,7 +37,7 @@ namespace Klinik.Entities.MasterData
         public string KTPNumber { get; set; }
         public string HPNumber { get; set; }
 
-        public string LastEmpID { get; set; }
+       
 
         public string StatusCode { get; set; }
 
@@ -46,11 +46,11 @@ namespace Klinik.Entities.MasterData
         //employee assignment
 
         [Required(ErrorMessage = "Please Fill Join Date")]
-        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime StartDate { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public string StartDateStr { get; set; }
         public string EndDateStr { get; set; }
@@ -67,7 +67,7 @@ namespace Klinik.Entities.MasterData
 
         public string LastEmpId { get; set; }
 
-        public int Grade { get; set; }
+        public string Grade { get; set; }
 
     }
 }

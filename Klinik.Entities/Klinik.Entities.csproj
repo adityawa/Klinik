@@ -76,6 +76,8 @@
     <Compile Include="MasterData\ClinicModel.cs" />
     <Compile Include="MasterData\EmployeeAssignmentModel.cs" />
     <Compile Include="MasterData\EmployeeModel.cs" />
+    <Compile Include="MasterData\EmployeeStatusModel.cs" />
+    <Compile Include="MasterData\FamilyRelationshipModel.cs" />
     <Compile Include="MasterData\MenuModel.cs" />
     <Compile Include="MasterData\OrganizationModel.cs" />
     <Compile Include="MasterData\PrivilegeModel.cs" />

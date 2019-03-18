@@ -19,7 +19,7 @@
             public const string EDIT_ROLE = "Edit Role";
             public const string EDIT_PRIVILEGE = "Edit Privilege";
             public const string EDIT_EMPLOYEEASSIGNMENT = "Edit Employee Assignment";
-
+            public const string EmployeeRelationshipCode = "E";
             public const string DELETE_EMPLOYEE = "Remove Employee";
         }
     }

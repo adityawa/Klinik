@@ -4,20 +4,24 @@ using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
 using Klinik.Features;
 using Klinik.Features.MasterData.Clinic;
+using Klinik.Features.MasterData.EmployeeStatus;
+using Klinik.Features.MasterData.FamilyRelationship;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-
+using Klinik.Data.DataRepository;
 namespace Klinik.Web.Controllers
 {
     public class MasterDataController : Controller
     {
         private IUnitOfWork _unitOfWork;
+        private KlinikDBEntities _context;
 
-        public MasterDataController(IUnitOfWork unitOfWork)
+        public MasterDataController(IUnitOfWork unitOfWork, KlinikDBEntities context)
         {
             _unitOfWork = unitOfWork;
+            _context = context;
         }
 
         #region ::MISC::
@@ -66,10 +70,31 @@ namespace Klinik.Web.Controllers
             return _employeeLists;
         }
 
+        private List<SelectListItem> BindDropDownEmployeeReff()
+        {
+            List<SelectListItem> _employeeActiveLists = new List<SelectListItem>();
+            _employeeActiveLists.Insert(0, new SelectListItem
+            {
+                Text = "",
+                Value = "0"
+            });
+            foreach (var item in new EmployeeHandler(_unitOfWork).GetActiveEmployee())
+            {
+                _employeeActiveLists.Add(new SelectListItem
+                {
+                    Text = item.EmpName,
+                    Value = item.Id.ToString()
+                });
+            }
+
+            return _employeeActiveLists;
+        }
+
         private List<SelectListItem> BindDropDownEmployementType()
         {
             List<SelectListItem> _empTypes = new List<SelectListItem>();
-            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.MasterTypes.EmploymentType.ToString()).ToList())
+           
+            foreach (var item in new FamilyStatusHandler(_unitOfWork).GetAllFamilyStatus().ToList())
             {
                 _empTypes.Add(new SelectListItem
                 {
@@ -81,19 +106,24 @@ namespace Klinik.Web.Controllers
             return _empTypes;
         }
 
-        private List<SelectListItem> BindDropDownDepartment()
+        private List<SelectListItem> BindDropDownEmployeeStatus()
         {
-            List<SelectListItem> _departments = new List<SelectListItem>();
-            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.MasterTypes.Department.ToString()).ToList())
+            List<SelectListItem> _empStatus = new List<SelectListItem>();
+            _empStatus.Insert(0, new SelectListItem
             {
-                _departments.Add(new SelectListItem
+                Text = "",
+                Value = "0"
+            });
+            foreach (var item in new EmployeeStatusHandler(_unitOfWork).GetAllEmployeeStatus())
+            {
+                _empStatus.Add(new SelectListItem
                 {
-                    Text = item.Name,
+                    Text = item.Description,
                     Value = item.Id.ToString()
                 });
             }
 
-            return _departments;
+            return _empStatus;
         }
 
         private List<SelectListItem> BindDropDownCity()
@@ -145,6 +175,8 @@ namespace Klinik.Web.Controllers
 
             return _menus;
         }
+
+        
         #endregion
 
         // GET: MasterData
@@ -596,10 +628,11 @@ namespace Klinik.Web.Controllers
                 Data = _model
             };
 
-            EmployeeResponse _response = new EmployeeValidator(_unitOfWork).Validate(request);
+            EmployeeResponse _response = new EmployeeValidator(_unitOfWork, _context).Validate(request);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
             ViewBag.EmpTypes = BindDropDownEmployementType();
-            
+            ViewBag.EmpStatus = BindDropDownEmployeeStatus();
+            ViewBag.EmpActive = BindDropDownEmployeeReff();
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
 
             return View();
@@ -623,7 +656,8 @@ namespace Klinik.Web.Controllers
                 EmployeeModel _model = resp.Entity;
                 ViewBag.Response = _response;
                 ViewBag.EmpTypes = BindDropDownEmployementType();
-                ViewBag.Departments = BindDropDownDepartment();
+                ViewBag.EmplStatus = BindDropDownEmployeeStatus();
+                ViewBag.EmpActive = BindDropDownEmployeeReff();
                 ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }
@@ -632,7 +666,8 @@ namespace Klinik.Web.Controllers
                 ViewBag.ActionType = ClinicEnums.Action.Add;
                 ViewBag.Response = _response;
                 ViewBag.EmpTypes = BindDropDownEmployementType();
-                ViewBag.Departments = BindDropDownDepartment();
+                ViewBag.EmplStatus = BindDropDownEmployeeStatus();
+                ViewBag.EmpActive = BindDropDownEmployeeReff();
                 return View();
             }
         }

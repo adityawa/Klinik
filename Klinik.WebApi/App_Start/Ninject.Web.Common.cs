@@ -7,7 +7,7 @@ using Ninject;
 using Ninject.Web.Common;
 using Ninject.Web.Common.WebHost;
 using Ninject.Web.WebApi;
-
+using Klinik.Data.DataRepository;
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Klinik.WebApi.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Klinik.WebApi.App_Start.NinjectWebCommon), "Stop")]
 
@@ -64,6 +64,7 @@ namespace Klinik.WebApi.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IUnitOfWork>().To<UnitOfWork>();
+            kernel.Bind<KlinikDBEntities>().To<KlinikDBEntities>();
         }
     }
 }
