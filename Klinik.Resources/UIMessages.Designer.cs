@@ -124,6 +124,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Business Unit.
+        /// </summary>
+        public static string BusinessUnit {
+            get {
+                return ResourceManager.GetString("BusinessUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change Password.
         /// </summary>
         public static string ChangePassword {
@@ -313,11 +322,38 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End Date.
+        /// </summary>
+        public static string EmpEndDate {
+            get {
+                return ResourceManager.GetString("EmpEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grade.
+        /// </summary>
+        public static string EmpGrade {
+            get {
+                return ResourceManager.GetString("EmpGrade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Emp ID.
         /// </summary>
         public static string EmpID {
             get {
                 return ResourceManager.GetString("EmpID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Join Date.
+        /// </summary>
+        public static string EmpJoinDate {
+            get {
+                return ResourceManager.GetString("EmpJoinDate", resourceCulture);
             }
         }
         
@@ -363,6 +399,24 @@ namespace Klinik.Resources {
         public static string EmploymentType {
             get {
                 return ResourceManager.GetString("EmploymentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emp Reff.
+        /// </summary>
+        public static string EmpReffID {
+            get {
+                return ResourceManager.GetString("EmpReffID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emp Status.
+        /// </summary>
+        public static string EmpStatus {
+            get {
+                return ResourceManager.GetString("EmpStatus", resourceCulture);
             }
         }
         
@@ -475,7 +529,10 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No HP.
+
         ///   Looks up a localized string similar to HP Number.
+
         /// </summary>
         public static string HPNumber {
             get {
@@ -495,9 +552,27 @@ namespace Klinik.Resources {
         /// <summary>
         ///   Looks up a localized string similar to KTP No.
         /// </summary>
+
+        public static string KTP {
+            get {
+                return ResourceManager.GetString("KTP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Emp ID.
+        /// </summary>
+        public static string LastEmpID
+        {
+            get
+            {
+                return ResourceManager.GetString("LastEmpID", resourceCulture);
+            }
+        }
         public static string KTPNumber {
             get {
                 return ResourceManager.GetString("KTPNumber", resourceCulture);
+
             }
         }
         
@@ -736,6 +811,17 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+
+        ///   Looks up a localized string similar to Region.
+        /// </summary>
+        public static string Region
+        {
+            get
+            {
+                return ResourceManager.GetString("Region", resourceCulture);
+            }
+        }
+
         ///   Looks up a localized string similar to Reff ID.
         /// </summary>
         public static string ReffID {

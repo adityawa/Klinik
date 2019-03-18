@@ -97,6 +97,7 @@
     <Compile Include="MasterData\Employee\EmployeeRequest.cs" />
     <Compile Include="MasterData\Employee\EmployeeResponse.cs" />
     <Compile Include="MasterData\Employee\EmployeeValidator.cs" />
+    <Compile Include="MasterData\FamilyRelationship\FamilyStatusHandler.cs" />
     <Compile Include="MasterData\GeneralMaster\MasterHandler.cs" />
     <Compile Include="MasterData\Menu\MenuHandler.cs" />
     <Compile Include="MasterData\Organization\OrganizationHandler.cs" />
@@ -143,8 +144,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MasterData\FamilyRelationship\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -47,10 +47,13 @@ namespace Klinik.Common
 
             CreateMap<Employee, EmployeeModel>()
                 .ForMember(x => x.BirthdateStr, map => map.MapFrom(p => p.BirthDate == null ? "" : p.BirthDate.Value.ToString("MM/dd/yyyy")))
+                .ForMember(x => x.EmpTypeDesc, map => map.MapFrom(p => p.FamilyRelationship.Name))
+                .ForMember(x => x.EmpStatusDesc, map => map.MapFrom(p => p.EmployeeStatu.Name))
                 .ForMember(x => x.EmpTypeDesc, map => map.MapFrom(p => p.FamilyRelationship.Name));
 
-
-            CreateMap<EmployeeModel, Employee>();
+            CreateMap<EmployeeModel, Employee>()
+                .ForMember(x => x.EmpType, map => map.MapFrom(p => p.EmpType))
+                .ForMember(x => x.Status, map => map.MapFrom(p => p.EmpStatus));
 
             CreateMap<OrganizationPrivilege, OrganizationPrivilegeModel>()
                 .ForMember(x => x.OrganizationName, map => map.MapFrom(p => p.Organization.OrgName))
@@ -75,9 +78,12 @@ namespace Klinik.Common
 
             CreateMap<Log, LogModel>()
                 .ForMember(x => x.strStart, map => map.MapFrom(p => p.Start.ToString("MM/dd/yyyy")));
-
-
             CreateMap<LogModel, Log>();
+
+            CreateMap<EmployeeStatu, EmployeeStatusModel>()
+               .ForMember(x => x.Description, map => map.MapFrom(p => p.Name + " - " + p.Status));
+
+            CreateMap<FamilyRelationship, FamilyRelationshipModel>();
 
             CreateMap<RegistrationModel, QueuePoli>()
                 .ForMember(m => m.PoliFrom, map => map.MapFrom(p => p.PoliFromID))

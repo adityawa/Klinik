@@ -43,6 +43,8 @@ namespace Klinik.Data.DataRepository
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointments { get; set; }
+        public virtual Employee Employee1 { get; set; }
+        public virtual Employee Employee2 { get; set; }
         public virtual EmployeeStatu EmployeeStatu { get; set; }
         public virtual FamilyRelationship FamilyRelationship { get; set; }
         public virtual GeneralMaster GeneralMaster { get; set; }
