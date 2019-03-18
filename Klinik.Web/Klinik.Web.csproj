@@ -215,6 +215,7 @@
     <Compile Include="Controllers\MappingMasterController.cs" />
     <Compile Include="Controllers\MasterDataController.cs" />
     <Compile Include="Controllers\PasswordHistoryController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1130,6 +1131,10 @@
     <Content Include="Views\MasterData\CreateOrEditClinic.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Registration\CreateOrEditRegistration.cshtml" />
+    <Content Include="Views\Registration\Index.cshtml" />
+    <Content Include="Views\MasterData\DoctorList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditDoctor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

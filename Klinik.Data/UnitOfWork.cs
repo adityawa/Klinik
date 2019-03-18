@@ -22,12 +22,68 @@ namespace Klinik.Data
         private IGenericRepository<EmployeeAssignment> _employeeAssignmentRepository;
         private IGenericRepository<EmployeeStatu> _employeeStatusRepository;
         public IGenericRepository<FamilyRelationship> _familyRelationshipRepository;
+        private IGenericRepository<QueuePoli> _registrationRepository;
+        private IGenericRepository<Poli> _poliRepository;
+        private IGenericRepository<Patient> _patientRepository;
+        private IGenericRepository<PoliFlowTemplate> _poliFlowTemplateRepository;
+        private IGenericRepository<Doctor> _doctorRepository;
         private bool disposed = false;
-
 
         public UnitOfWork(KlinikDBEntities context)
         {
             _context = context;
+        }
+
+        public IGenericRepository<Doctor> DoctorRepository
+        {
+            get
+            {
+                if (_doctorRepository == null)
+                    _doctorRepository = new GenericRepository<Doctor>(_context);
+                return _doctorRepository;
+            }
+        }
+
+        public IGenericRepository<PoliFlowTemplate> PoliFlowTemplateRepository
+        {
+            get
+            {
+                if (_poliFlowTemplateRepository == null)
+                    _poliFlowTemplateRepository = new GenericRepository<PoliFlowTemplate>(_context);
+                return _poliFlowTemplateRepository;
+            }
+        }
+
+        public IGenericRepository<Patient> PatientRepository
+        {
+            get
+            {
+                if (_patientRepository == null)
+                    _patientRepository = new GenericRepository<Patient>(_context);
+                return _patientRepository;
+            }
+        }
+
+        public IGenericRepository<QueuePoli> RegistrationRepository
+        {
+            get
+            {
+                if (_registrationRepository == null)
+                    _registrationRepository = new GenericRepository<QueuePoli>(_context);
+
+                return _registrationRepository;
+            }
+        }
+
+        public IGenericRepository<Poli> PoliRepository
+        {
+            get
+            {
+                if (_poliRepository == null)
+                    _poliRepository = new GenericRepository<Poli>(_context);
+
+                return _poliRepository;
+            }
         }
 
         public IGenericRepository<Organization> OrganizationRepository

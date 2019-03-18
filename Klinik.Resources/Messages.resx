@@ -208,4 +208,7 @@ Administrator</value>
   <data name="GeneralError" xml:space="preserve">
     <value>Oops.. Something went wrong. Please check the Error Log or Contact customer support</value>
   </data>
+  <data name="Patient" xml:space="preserve">
+    <value>Patient</value>
+  </data>
 </root>

@@ -27,10 +27,15 @@ namespace Klinik.Data.DataRepository
     
         public virtual DbSet<AppConfig> AppConfigs { get; set; }
         public virtual DbSet<Appointment> Appointments { get; set; }
+        public virtual DbSet<Clinic> Clinics { get; set; }
+        public virtual DbSet<Doctor> Doctors { get; set; }
+        public virtual DbSet<DoctorClinic> DoctorClinics { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeAssignment> EmployeeAssignments { get; set; }
         public virtual DbSet<EmployeeStatu> EmployeeStatus { get; set; }
         public virtual DbSet<FamilyRelationship> FamilyRelationships { get; set; }
+        public virtual DbSet<FileArchieve> FileArchieves { get; set; }
+        public virtual DbSet<GeneralMaster> GeneralMasters { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<MCUPackage> MCUPackages { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
@@ -44,12 +49,12 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<PoliClinic> PoliClinics { get; set; }
         public virtual DbSet<PoliFlowTemplate> PoliFlowTemplates { get; set; }
         public virtual DbSet<PoliSchedule> PoliSchedules { get; set; }
+        public virtual DbSet<PoliScheduleMaster> PoliScheduleMasters { get; set; }
         public virtual DbSet<Privilege> Privileges { get; set; }
         public virtual DbSet<QueuePoli> QueuePolis { get; set; }
         public virtual DbSet<RolePrivilege> RolePrivileges { get; set; }
-        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<GeneralMaster> GeneralMasters { get; set; }
-        public virtual DbSet<Clinic> Clinics { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
     }
 }

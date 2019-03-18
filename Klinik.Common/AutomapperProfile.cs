@@ -3,6 +3,7 @@ using Klinik.Data.DataRepository;
 using Klinik.Entities.Administration;
 using Klinik.Entities.MappingMaster;
 using Klinik.Entities.MasterData;
+using Klinik.Entities.Registration;
 
 namespace Klinik.Common
 {
@@ -47,8 +48,8 @@ namespace Klinik.Common
             CreateMap<Employee, EmployeeModel>()
                 .ForMember(x => x.BirthdateStr, map => map.MapFrom(p => p.BirthDate == null ? "" : p.BirthDate.Value.ToString("MM/dd/yyyy")))
                 .ForMember(x => x.EmpTypeDesc, map => map.MapFrom(p => p.FamilyRelationship.Name))
-                .ForMember(x => x.EmpStatusDesc, map => map.MapFrom(p => p.EmployeeStatu.Name));
-                
+                .ForMember(x => x.EmpStatusDesc, map => map.MapFrom(p => p.EmployeeStatu.Name))
+                .ForMember(x => x.EmpTypeDesc, map => map.MapFrom(p => p.FamilyRelationship.Name));
 
             CreateMap<EmployeeModel, Employee>()
                 .ForMember(x => x.EmpType, map => map.MapFrom(p => p.EmpType))
@@ -84,6 +85,35 @@ namespace Klinik.Common
 
             CreateMap<FamilyRelationship, FamilyRelationshipModel>();
 
+            CreateMap<RegistrationModel, QueuePoli>()
+                .ForMember(m => m.PoliFrom, map => map.MapFrom(p => p.PoliFromID))
+                .ForMember(m => m.PoliTo, map => map.MapFrom(p => p.PoliToID));
+            CreateMap<QueuePoli, RegistrationModel>()
+                .ForMember(m => m.PoliFromID, map => map.MapFrom(p => p.PoliFrom))
+                .ForMember(m => m.PoliToID, map => map.MapFrom(p => p.PoliTo))
+                .ForMember(m => m.PatientName, map => map.MapFrom(p => p.Patient.Name))
+                .ForMember(m => m.PoliFromName, map => map.MapFrom(p => p.Poli.Name))
+                .ForMember(m => m.PoliToName, map => map.MapFrom(p => p.Poli1.Name))
+                .ForMember(m => m.StatusStr, map => map.MapFrom(p => ((RegistrationStatusEnum)p.Status.Value).ToString()))
+                .ForMember(m => m.TypeStr, map => map.MapFrom(p => ((RegistrationTypeEnum)p.Type.Value).ToString()))
+                .ForMember(m => m.TransactionDateStr, map => map.MapFrom(p => p.TransactionDate.Value.ToString("MM/dd/yyyy hh:mm:ss")))
+                .ForMember(m => m.TransactionDate, map => map.MapFrom(p => p.TransactionDate.Value));
+
+            CreateMap<PoliModel, Poli>();
+            CreateMap<Poli, PoliModel>();
+
+            CreateMap<PatientModel, Patient>();
+            CreateMap<Patient, PatientModel>();
+
+            CreateMap<PoliFlowTemplateModel, PoliFlowTemplate>();
+            CreateMap<PoliFlowTemplate, PoliFlowTemplateModel>()
+                .ForMember(m => m.PoliTypeIDTo, map => map.MapFrom(p => p.PoliTypeIDTo.Value))
+                .ForMember(m => m.PoliTypeID, map => map.MapFrom(p => p.PoliTypeID.Value));
+
+            CreateMap<DoctorModel, Doctor>();
+            CreateMap<Doctor, DoctorModel>()
+                .ForMember(m => m.STRValidFromStr, map => map.MapFrom(p => p.STRValidFrom.Value.ToString("MM/dd/yyyy")))
+                .ForMember(m => m.STRValidToStr, map => map.MapFrom(p => p.STRValidTo.Value.ToString("MM/dd/yyyy")));
         }
     }
 }

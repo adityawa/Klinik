@@ -23,7 +23,12 @@ namespace Klinik.Data
         IGenericRepository<EmployeeAssignment> EmployeeAssignmentRepository { get; }
         IGenericRepository<EmployeeStatu> EmployeeStatusRepository { get; }
         IGenericRepository<FamilyRelationship> FamilyRelationshipRepository { get; }
+        IGenericRepository<QueuePoli> RegistrationRepository { get; }
+        IGenericRepository<Poli> PoliRepository { get; }
         IGenericRepository<Log> LogRepository { get; }
+        IGenericRepository<Patient> PatientRepository { get; }
+        IGenericRepository<PoliFlowTemplate> PoliFlowTemplateRepository { get; }
+        IGenericRepository<Doctor> DoctorRepository { get; }
         int Save();
     }
 }

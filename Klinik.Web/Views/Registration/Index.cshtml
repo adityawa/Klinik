@@ -1,0 +1,184 @@
+﻿@model Klinik.Entities.Registration.RegistrationModel
+
+@{
+    ViewBag.Title = "RegistrationList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/DataTables/css/responsive.bootstrap.css" rel="stylesheet" />
+
+<button id="btnAdd" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;@Klinik.Resources.UIMessages.AddNew</button>
+
+<br /><br />
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+        </div>
+        <h5 class="panel-title">@Klinik.Resources.UIMessages.RegistrationList</h5>
+    </header>
+    <div class="panel-body">
+        <div style="width:100%; margin:0 auto">
+            <table id="tbRegistration" class="table table-striped table-bordered dt-responsive" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>@Klinik.Resources.UIMessages.ID</th>
+                        <th>@Klinik.Resources.UIMessages.PatientName</th>
+                        <th>@Klinik.Resources.UIMessages.PoliFrom</th>
+                        <th>@Klinik.Resources.UIMessages.PoliTo</th>
+                        <th>@Klinik.Resources.UIMessages.Doctor</th>
+                        <th>@Klinik.Resources.UIMessages.SortNumber</th>
+                        <th>@Klinik.Resources.UIMessages.RegistrationType</th>
+                        <th>@Klinik.Resources.UIMessages.ReffID</th>
+                        <th>@Klinik.Resources.UIMessages.Remark</th>
+                        <th>@Klinik.Resources.UIMessages.TransactionDate</th>
+                        <th>@Klinik.Resources.UIMessages.RegistrationStatus</th>
+                        <th>@Klinik.Resources.UIMessages.Action</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#btnAdd').click(function (e) {
+            window.location.href = "/Registration/CreateOrEditRegistration";
+        });
+
+        $('#tbRegistration').dataTable({
+            "processing": true,
+            "serverSide": true,
+            "filter": true,
+            "orderMulti": false,
+            "pageLength": 10,
+            "ajax": {
+                "url": "/Registration/GetRegistrationData",
+                "type": "POST",
+                "datatype": "json"
+            },
+
+            "columnDefs":
+                [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false,
+                },
+                {
+                    "targets": [1],
+                    "searchable": true,
+                    "orderable": true
+                },
+                {
+                    "targets": [2],
+                    "searchable": true,
+                    "orderable": true
+                },
+                {
+                    "targets": [3],
+                    "searchable": true,
+                    "orderable": true
+                },
+                {
+                    "targets": [4],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [5],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [6],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [7],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [8],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [9],
+                    "searchable": true,
+                    "orderable": true
+                },
+                {
+                    "targets": [10],
+                    "searchable": true,
+                    "orderable": true
+                },
+                {
+                    "targets": [11],
+                    "searchable": true,
+                    "orderable": true
+                },
+                ],
+
+            "columns": [
+                { "data": "Id", "name": "Id", "autoWidth": false },
+                { "data": "PatientName", "name": "PatientName", "autoWidth": true },
+                { "data": "PoliFromName", "name": "PoliFromName", "autoWidth": true },
+                { "data": "PoliToName", "name": "PoliToName", "autoWidth": true },
+                { "data": "DoctorStr", "name": "DoctorStr", "autoWidth": true },
+                { "data": "SortNumber", "name": "SortNumber", "autoWidth": true },
+                { "data": "TypeStr", "name": "TypeStr", "autoWidth": true },
+                { "data": "ReffID", "name": "ReffID", "autoWidth": true },
+                { "data": "Remark", "name": "Remark", "autoWidth": true },
+                { "data": "TransactionDateStr", "name": "TransactionDateStr", "autoWidth": true },
+                { "data": "StatusStr", "name": "StatusStr", "autoWidth": true },
+                {
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Registration/CreateOrEditRegistration?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>"; }
+                }
+            ]
+        });
+    });
+    var _status, _message, _temp;
+    var _arrMsg = [];
+    toastr.options = {
+        "closeButton": true,
+        "positionClass": "toast-top-full-width",
+        "onclick": null,
+        "showDuration": "0",
+        "hideDuration": "0",
+        "timeOut": "0",
+        "showMethod": "fadeIn"
+    };
+
+    var Delete = function (ID) {
+        var r = confirm("@Klinik.Resources.UIMessages.DeleteConfirmation" + ID + " ) ?");
+        if (r == true) {
+            DeleteUser(ID);
+        }
+        return false;
+    }
+
+    function DeleteUser(Id) {
+        $.ajax({
+            url: '/Registration/DeleteRegistration?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status == "True") {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+    }
+</script>
+
+

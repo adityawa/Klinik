@@ -1,0 +1,128 @@
+﻿@model Klinik.Entities.Registration.RegistrationModel
+
+@{
+    ViewBag.Title = "CreateOrEditRegistration";
+}
+
+<link href="~/Content/css/select2.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/select2.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+        </div>
+        <h5 class="panel-title">Form @ViewBag.ActionType Registration</h5>
+    </header>
+    <div class="panel-body">
+        <form class="form-horizontal form-bordered" method="post" action="/Registration/CreateOrEditRegistration">
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PatientName</label>
+                <div class="col-md-4">
+                    @Html.HiddenFor(x => x.Id)
+                    @if (((int)ViewBag.ActionType) == 0)
+                    {
+                        @Html.DropDownListFor(p => p.PatientID, (IEnumerable<SelectListItem>)ViewBag.PatientList, new { @class = "form-control", @id = "ddlpatientlist" })
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(x => x.PatientName, new { @class = "form-control", @id = "tbPoliFrom", @readonly = "readonly" })
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">
+                    @Klinik.Resources.UIMessages.PoliFrom
+                </label>
+                <div class="col-md-4">
+                    @Html.HiddenFor(x => x.PoliFromID)
+                    @Html.TextBoxFor(x => x.PoliFromName, new { @class = "form-control", @id = "tbPoliFrom", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">
+                    @Klinik.Resources.UIMessages.PoliTo
+                </label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(p => p.PoliToID, (IEnumerable<SelectListItem>)ViewBag.PoliList, new { @class = "form-control", @id = "ddlpolilist" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">
+                    @Klinik.Resources.UIMessages.Doctor
+                </label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(p => p.Doctor, (IEnumerable<SelectListItem>)ViewBag.DoctorList, new { @class = "form-control", @id = "ddldoctorlist" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">
+                    @Klinik.Resources.UIMessages.RegistrationType
+                </label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(p => p.Type, (IEnumerable<SelectListItem>)ViewBag.RegistrationTypeList, new { @class = "form-control", @id = "ddlregistertype" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">
+                    @Klinik.Resources.UIMessages.ReffID
+                </label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.ReffID, new { @class = "form-control", @id = "tbReffID" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">
+                    @Klinik.Resources.UIMessages.Remark
+                </label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.Remark, new { @class = "form-control", @id = "tbRemark" })
+                </div>
+            </div>
+            <br />
+            <footer class="panel-footer">
+                <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
+                <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+            </footer>
+        </form>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnreset').click(function (e) {
+             window.location.href = "/Registration/Index";
+        });
+
+        $('#ddlregistertype').select2();
+        $('#ddlpolilist').select2();
+        $('#ddldoctorlist').select2();
+        $('#ddlpatientlist').select2();
+
+        toastr.options = {
+            "closeButton": false,
+            "positionClass": "toast-top-full-width",
+            "onclick": null,
+            "showDuration": "0",
+            "hideDuration": "0",
+            "timeOut": "2000",
+            "showMethod": "fadeIn"
+        };
+
+        var _temp="@ViewBag.Response";
+        var _arrMsg = _temp.split(";");
+
+        if (_arrMsg.length > 1) {
+            if (_arrMsg[0] == "True") {
+                toastr.success(_arrMsg[1]);
+            }
+            else {
+                toastr.options.closeButton = true;
+                toastr.options.timeOut = 0;
+                toastr.error(_arrMsg[1]);
+            }
+        }
+    });
+</script>

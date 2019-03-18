@@ -177,14 +177,14 @@ namespace Klinik.Features
                     switch (request.SortColumn.ToLower())
                     {
                         case "code":
-                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Code), includes: x => x.GeneralMaster);
+                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Code));
                             break;
                         case "name":
-                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Name), includes: x => x.GeneralMaster);
+                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Name));
                             break;
 
                         default:
-                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.ID), includes: x => x.GeneralMaster);
+                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.ID));
                             break;
                     }
                 }
@@ -193,21 +193,21 @@ namespace Klinik.Features
                     switch (request.SortColumn.ToLower())
                     {
                         case "code":
-                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Code), includes: x => x.GeneralMaster);
+                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Code));
                             break;
                         case "name":
-                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Name), includes: x => x.GeneralMaster);
+                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Name));
                             break;
 
                         default:
-                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID), includes: x => x.GeneralMaster);
+                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID));
                             break;
                     }
                 }
             }
             else
             {
-                qry = _unitOfWork.ClinicRepository.Get(searchPredicate, null, includes: x => x.GeneralMaster);
+                qry = _unitOfWork.ClinicRepository.Get(searchPredicate, null);
             }
 
             foreach (var item in qry)
