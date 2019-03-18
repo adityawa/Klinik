@@ -74,6 +74,7 @@
     <Compile Include="MappingMaster\RolePrivilegeModel.cs" />
     <Compile Include="MappingMaster\UserRoleModel.cs" />
     <Compile Include="MasterData\ClinicModel.cs" />
+    <Compile Include="MasterData\DoctorModel.cs" />
     <Compile Include="MasterData\EmployeeAssignmentModel.cs" />
     <Compile Include="MasterData\EmployeeModel.cs" />
     <Compile Include="MasterData\MenuModel.cs" />

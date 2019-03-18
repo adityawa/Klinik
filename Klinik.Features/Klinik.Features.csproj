@@ -88,6 +88,10 @@
     <Compile Include="MasterData\Clinic\ClinicRequest.cs" />
     <Compile Include="MasterData\Clinic\ClinicResponse.cs" />
     <Compile Include="MasterData\Clinic\ClinicValidator.cs" />
+    <Compile Include="MasterData\Doctor\DoctorHandler.cs" />
+    <Compile Include="MasterData\Doctor\DoctorRequest.cs" />
+    <Compile Include="MasterData\Doctor\DoctorResponse.cs" />
+    <Compile Include="MasterData\Doctor\DoctorValidator.cs" />
     <Compile Include="MasterData\EmployeeStatus\EmployeeStatusHandler.cs" />
     <Compile Include="MasterData\Employee\EmployeeHandler.cs" />
     <Compile Include="MasterData\Employee\EmployeeRequest.cs" />

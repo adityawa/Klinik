@@ -277,6 +277,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Doctor List.
+        /// </summary>
+        public static string DoctorList {
+            get {
+                return ResourceManager.GetString("DoctorList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Doctor Type.
+        /// </summary>
+        public static string DoctorType {
+            get {
+                return ResourceManager.GetString("DoctorType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -457,11 +475,29 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HP Number.
+        /// </summary>
+        public static string HPNumber {
+            get {
+                return ResourceManager.GetString("HPNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID.
         /// </summary>
         public static string ID {
             get {
                 return ResourceManager.GetString("ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KTP No.
+        /// </summary>
+        public static string KTPNumber {
+            get {
+                return ResourceManager.GetString("KTPNumber", resourceCulture);
             }
         }
         
@@ -871,6 +907,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to STR No.
+        /// </summary>
+        public static string STRNumber {
+            get {
+                return ResourceManager.GetString("STRNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This account has been locked out, please try again later..
         /// </summary>
         public static string ThisAccountLocked {
@@ -921,6 +966,24 @@ namespace Klinik.Resources {
         public static string Username {
             get {
                 return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valid From.
+        /// </summary>
+        public static string ValidFrom {
+            get {
+                return ResourceManager.GetString("ValidFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valid To.
+        /// </summary>
+        public static string ValidTo {
+            get {
+                return ResourceManager.GetString("ValidTo", resourceCulture);
             }
         }
     }

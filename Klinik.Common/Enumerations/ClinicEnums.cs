@@ -17,7 +17,8 @@
             EmploymentType,
             Department,
             City,
-            ClinicType
+            ClinicType,
+            DoctorType
         }
 
         public enum AuthResult
@@ -35,6 +36,7 @@
             MASTER_PRIVILEGE,
             MASTER_ROLE,
             MASTER_USER,
+            MASTER_DOCTOR,
             EMPLOYEE_ASSIGNMENT,
             REGISTRATION
         }

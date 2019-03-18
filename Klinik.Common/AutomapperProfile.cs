@@ -103,6 +103,11 @@ namespace Klinik.Common
             CreateMap<PoliFlowTemplate, PoliFlowTemplateModel>()
                 .ForMember(m => m.PoliTypeIDTo, map => map.MapFrom(p => p.PoliTypeIDTo.Value))
                 .ForMember(m => m.PoliTypeID, map => map.MapFrom(p => p.PoliTypeID.Value));
+
+            CreateMap<DoctorModel, Doctor>();
+            CreateMap<Doctor, DoctorModel>()
+                .ForMember(m => m.STRValidFromStr, map => map.MapFrom(p => p.STRValidFrom.Value.ToString("MM/dd/yyyy")))
+                .ForMember(m => m.STRValidToStr, map => map.MapFrom(p => p.STRValidTo.Value.ToString("MM/dd/yyyy")));
         }
     }
 }
