@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AppConfig">
           <Key>
             <PropertyRef Name="ID" />
@@ -125,7 +125,7 @@
           <Property Name="Department" Type="varchar" MaxLength="100" />
           <Property Name="BusinessUnit" Type="varchar" MaxLength="100" />
           <Property Name="Region" Type="varchar" MaxLength="100" />
-          <Property Name="Grade" Type="int" />
+          <Property Name="Grade" Type="nvarchar" MaxLength="50" />
           <Property Name="EmpStatus" Type="smallint" />
           <Property Name="LastEmpID" Type="varchar" MaxLength="50" />
           <Property Name="RowStatus" Type="smallint" />
@@ -1103,8 +1103,7 @@
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KlinikDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1252,7 +1251,7 @@
           <Property Name="Department" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="BusinessUnit" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Region" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Grade" Type="Int32" />
+          <Property Name="Grade" Type="String" />
           <Property Name="EmpStatus" Type="Int16" />
           <Property Name="LastEmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RowStatus" Type="Int16" />

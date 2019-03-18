@@ -97,12 +97,40 @@ namespace Klinik.Web.Controllers
             return _typeList;
         }
 
-        private List<SelectListItem> BindDropDownDoctorList()
+        private List<SelectListItem> BindDropDownDoctorList(int poliID)
         {
             List<SelectListItem> _typeList = new List<SelectListItem>();
-            _typeList.Add(new SelectListItem { Text = "Dr Robert", Value = "1" });
-            _typeList.Add(new SelectListItem { Text = "Dr Boyke", Value = "2" });
+            List<PoliSchedule> scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID);
+            foreach (var item in scheduleList)
+            {
+                var doctor = _unitOfWork.DoctorRepository.GetFirstOrDefault(x => x.ID == item.DoctorID);
+                if (doctor != null)
+                {
+                    _typeList.Add(new SelectListItem
+                    {
+                        Text = doctor.Name,
+                        Value = doctor.ID.ToString()
+                    });
+                }
+            }
+
             return _typeList;
+        }
+
+        public JsonResult GetDoctorList(int poliID)
+        {
+            List<Doctor> doctorList = new List<Doctor>();
+            List<PoliSchedule> scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID);
+            foreach (var item in scheduleList)
+            {
+                var doctor = _unitOfWork.DoctorRepository.GetFirstOrDefault(x => x.ID == item.DoctorID);
+                if (doctor != null)
+                {
+                    doctorList.Add(new Doctor { ID = doctor.ID, Name = doctor.Name });
+                }
+            }
+
+            return Json(doctorList, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -126,7 +154,7 @@ namespace Klinik.Web.Controllers
             ViewBag.PoliList = BindDropDownPoliList();
             ViewBag.PatientList = BindDropDownPatientList();
             ViewBag.RegistrationTypeList = BindDropDownTypeList();
-            ViewBag.DoctorList = BindDropDownDoctorList();
+            ViewBag.DoctorList = BindDropDownDoctorList(2);
             return View();
         }
 
@@ -151,7 +179,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.PatientList = BindDropDownPatientList();
                 ViewBag.RegistrationTypeList = BindDropDownTypeList();
                 ViewBag.ActionType = ClinicEnums.Action.Edit;
-                ViewBag.DoctorList = BindDropDownDoctorList();
+                ViewBag.DoctorList = BindDropDownDoctorList(2);
                 return View(_model);
             }
             else
@@ -168,8 +196,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.PoliList = BindDropDownPoliList();
                 ViewBag.PatientList = BindDropDownPatientList();
                 ViewBag.RegistrationTypeList = BindDropDownTypeList();
-                ViewBag.DoctorList = BindDropDownDoctorList();
-
+                ViewBag.DoctorList = BindDropDownDoctorList(2);
                 return View(model);
             }
         }

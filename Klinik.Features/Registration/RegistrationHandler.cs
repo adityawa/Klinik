@@ -82,7 +82,7 @@ namespace Klinik.Features.Registration
                     regEntity.CreatedDate = DateTime.Now;
                     regEntity.TransactionDate = DateTime.Now;
                     regEntity.Status = (int)RegistrationStatusEnum.New;
-                    regEntity.ClinicID = 1;
+                    regEntity.ClinicID = GetClinicID(request.Data.Account.Organization);
                     regEntity.PoliFrom = 1;
                     regEntity.SortNumber = GenerateSortNumber(request.Data.PoliToID);
 
@@ -118,6 +118,17 @@ namespace Klinik.Features.Registration
             }
 
             return response;
+        }
+
+        /// <summary>
+        /// Get klinik ID
+        /// </summary>
+        /// <param name="organizationCode"></param>
+        /// <returns></returns>
+        private long? GetClinicID(string organizationCode)
+        {
+            Organization organization = _unitOfWork.OrganizationRepository.GetFirstOrDefault(x => x.OrgCode == organizationCode);
+            return organization.KlinikID;
         }
 
         /// <summary>
