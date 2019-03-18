@@ -18,7 +18,6 @@ namespace Klinik.Data.DataRepository
         public GeneralMaster()
         {
             this.Employees = new HashSet<Employee>();
-            this.Clinics = new HashSet<Clinic>();
         }
     
         public short Id { get; set; }
@@ -28,7 +27,5 @@ namespace Klinik.Data.DataRepository
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Clinic> Clinics { get; set; }
     }
 }

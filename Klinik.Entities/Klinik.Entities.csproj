@@ -78,10 +78,13 @@
     <Compile Include="MasterData\EmployeeModel.cs" />
     <Compile Include="MasterData\MenuModel.cs" />
     <Compile Include="MasterData\OrganizationModel.cs" />
+    <Compile Include="MasterData\PatientModel.cs" />
+    <Compile Include="MasterData\PoliModel.cs" />
     <Compile Include="MasterData\PrivilegeModel.cs" />
     <Compile Include="MasterData\RoleModel.cs" />
     <Compile Include="MasterData\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registration\RegistrationModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">

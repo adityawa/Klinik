@@ -12,25 +12,21 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Collections.Generic;
     
-    public partial class Appointment
+    public partial class DoctorClinic
     {
         public long ID { get; set; }
-        public Nullable<long> EmployeeID { get; set; }
+        public string Code { get; set; }
         public Nullable<long> ClinicID { get; set; }
         public Nullable<int> DoctorID { get; set; }
-        public Nullable<int> RequirementID { get; set; }
-        public Nullable<System.DateTime> AppointmentDate { get; set; }
-        public Nullable<int> MCUPackageID { get; set; }
-        public Nullable<int> PoliID { get; set; }
-        public Nullable<short> Status { get; set; }
+        public Nullable<long> PhotoID { get; set; }
         public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<System.DateTime> MidifiedDate { get; set; }
     
         public virtual Clinic Clinic { get; set; }
-        public virtual Employee Employee { get; set; }
-        public virtual MCUPackage MCUPackage { get; set; }
+        public virtual Doctor Doctor { get; set; }
+        public virtual FileArchieve FileArchieve { get; set; }
     }
 }

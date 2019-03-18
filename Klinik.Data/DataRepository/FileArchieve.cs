@@ -12,27 +12,29 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Collections.Generic;
     
-    public partial class MCUPackage
+    public partial class FileArchieve
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MCUPackage()
+        public FileArchieve()
         {
-            this.Appointments = new HashSet<Appointment>();
+            this.DoctorClinics = new HashSet<DoctorClinic>();
+            this.PatientClinics = new HashSet<PatientClinic>();
         }
     
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Gender { get; set; }
-        public Nullable<int> AgeStart { get; set; }
-        public Nullable<int> AgeEnd { get; set; }
-        public Nullable<int> GradeID { get; set; }
+        public long ID { get; set; }
+        public string SourceTable { get; set; }
+        public string ActualPath { get; set; }
+        public string ActualName { get; set; }
+        public string TypeDoc { get; set; }
         public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
-        public Nullable<System.DateTime> NodifiedDate { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Appointment> Appointments { get; set; }
+        public virtual ICollection<DoctorClinic> DoctorClinics { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PatientClinic> PatientClinics { get; set; }
     }
 }

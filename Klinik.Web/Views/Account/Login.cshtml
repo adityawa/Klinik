@@ -43,19 +43,19 @@
                 {
                     <div class="wrap-inputMMS validate-input m-b-26" data-validate="Username is required">
                         <span class="label-inputMMS">@Klinik.Resources.UIMessages.Username</span>
-                        @Html.TextBoxFor(x => x.UserName, null, new { @class = "inputMMS", @id = "tbUserName", @placeholder = @Klinik.Resources.UIMessages.EnterUsername })
+                        @Html.TextBoxFor(x => x.UserName, null, new { @class = "inputMMS", @id = "tbUserName", @placeholder = @Klinik.Resources.UIMessages.EnterUsername, @Value = "adminsuper" })
                         <span class="focus-inputMMS"></span>
                     </div>
 
                     <div class="wrap-inputMMS validate-input m-b-18" data-validate="Password is required">
                         <span class="label-inputMMS">@Klinik.Resources.UIMessages.Password</span>
-                        @Html.TextBoxFor(x => x.Password, null, new { @class = "inputMMS", @id = "tbPassword", @type = "password", @placeholder = @Klinik.Resources.UIMessages.EnterPassword })
+                        @Html.TextBoxFor(x => x.Password, null, new { @class = "inputMMS", @id = "tbPassword", @type = "password", @placeholder = @Klinik.Resources.UIMessages.EnterPassword, @Value = "admin" })
                         <span class="focus-inputMMS"></span>
                     </div>
 
                     <div class="wrap-inputMMS validate-input m-b-26" data-validate="Organization is required">
                         <span class="label-inputMMS">@Klinik.Resources.UIMessages.Organization</span>
-                        @Html.TextBoxFor(x => x.Organization, null, new { @class = "inputMMS", @id = "tbOrganization", @placeholder = @Klinik.Resources.UIMessages.EnterOrganizationCode })
+                        @Html.TextBoxFor(x => x.Organization, null, new { @class = "inputMMS", @id = "tbOrganization", @placeholder = @Klinik.Resources.UIMessages.EnterOrganizationCode, @Value = "M008" })
                         <span class="focus-inputMMS"></span>
                     </div>
 

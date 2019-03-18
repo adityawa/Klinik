@@ -12,37 +12,39 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Collections.Generic;
     
-    public partial class Poli
+    public partial class Doctor
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Poli()
+        public Doctor()
         {
-            this.PoliClinics = new HashSet<PoliClinic>();
+            this.DoctorClinics = new HashSet<DoctorClinic>();
             this.PoliSchedules = new HashSet<PoliSchedule>();
             this.PoliScheduleMasters = new HashSet<PoliScheduleMaster>();
-            this.QueuePolis = new HashSet<QueuePoli>();
-            this.QueuePolis1 = new HashSet<QueuePoli>();
         }
     
         public int ID { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public Nullable<short> Type { get; set; }
-        public Nullable<short> Rowstatus { get; set; }
+        public Nullable<int> SpesialisID { get; set; }
+        public string KTPNumber { get; set; }
+        public string STRNumber { get; set; }
+        public Nullable<System.DateTime> STRValidFrom { get; set; }
+        public Nullable<System.DateTime> STRValidTo { get; set; }
+        public string Address { get; set; }
+        public string HPNumber { get; set; }
+        public string Email { get; set; }
+        public string Remark { get; set; }
+        public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PoliClinic> PoliClinics { get; set; }
+        public virtual ICollection<DoctorClinic> DoctorClinics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PoliSchedule> PoliSchedules { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PoliScheduleMaster> PoliScheduleMasters { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<QueuePoli> QueuePolis { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<QueuePoli> QueuePolis1 { get; set; }
     }
 }
