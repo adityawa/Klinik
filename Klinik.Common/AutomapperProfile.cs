@@ -99,6 +99,10 @@ namespace Klinik.Common
             CreateMap<PatientModel, Patient>();
             CreateMap<Patient, PatientModel>();
 
+            CreateMap<PoliFlowTemplateModel, PoliFlowTemplate>();
+            CreateMap<PoliFlowTemplate, PoliFlowTemplateModel>()
+                .ForMember(m => m.PoliTypeIDTo, map => map.MapFrom(p => p.PoliTypeIDTo.Value))
+                .ForMember(m => m.PoliTypeID, map => map.MapFrom(p => p.PoliTypeID.Value));
         }
     }
 }

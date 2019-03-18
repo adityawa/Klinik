@@ -16,6 +16,9 @@ namespace Klinik.Web.Controllers
 {
     public class RegistrationController : Controller
     {
+        private const int CURRENT_POLI_ID = 1;
+        private const string CURRENT_POLI_NAME = "Loket";
+
         // GET: Account
         private IUnitOfWork _unitOfWork;
 
@@ -25,17 +28,22 @@ namespace Klinik.Web.Controllers
         }
 
         #region DropDown methods
-        private List<SelectListItem> BindDropDownPoliList()
+        private List<SelectListItem> BindDropDownPoliList(short poliType = 0)
         {
+            // get valid poli from type
+            var filteredPoliList = _unitOfWork.PoliFlowTemplateRepository.Get(x => x.PoliTypeID.Value == poliType);
+
+            // get all poli
             var qry = _unitOfWork.PoliRepository.Get();
+
             IList<PoliModel> _poliListModel = new List<PoliModel>();
             foreach (var item in qry)
             {
-                if (item.Name.Equals("Loket"))
-                    continue;
-
-                var _poli = Mapper.Map<Poli, PoliModel>(item);
-                _poliListModel.Add(_poli);
+                if (filteredPoliList.Any(x => x.PoliTypeIDTo == item.Type))
+                {
+                    var _poli = Mapper.Map<Poli, PoliModel>(item);
+                    _poliListModel.Add(_poli);
+                }
             }
 
             List<SelectListItem> _poliList = new List<SelectListItem>();
@@ -81,7 +89,7 @@ namespace Klinik.Web.Controllers
             {
                 _typeList.Add(new SelectListItem
                 {
-                    Text = item.ToString(),
+                    Text = item.ToString().Replace("WalkIn", "Walk-In"),
                     Value = ((int)item).ToString()
                 });
             }
@@ -148,13 +156,21 @@ namespace Klinik.Web.Controllers
             }
             else
             {
+                // hardcoded for now
+                var model = new RegistrationModel
+                {
+                    PoliFromID = CURRENT_POLI_ID,
+                    PoliFromName = CURRENT_POLI_NAME
+                };
+
                 ViewBag.ActionType = ClinicEnums.Action.Add;
                 ViewBag.Response = _response;
                 ViewBag.PoliList = BindDropDownPoliList();
                 ViewBag.PatientList = BindDropDownPatientList();
                 ViewBag.RegistrationTypeList = BindDropDownTypeList();
                 ViewBag.DoctorList = BindDropDownDoctorList();
-                return View();
+
+                return View(model);
             }
         }
 

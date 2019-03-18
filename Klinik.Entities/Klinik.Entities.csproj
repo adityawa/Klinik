@@ -79,6 +79,7 @@
     <Compile Include="MasterData\MenuModel.cs" />
     <Compile Include="MasterData\OrganizationModel.cs" />
     <Compile Include="MasterData\PatientModel.cs" />
+    <Compile Include="MasterData\PoliFlowTemplateModel.cs" />
     <Compile Include="MasterData\PoliModel.cs" />
     <Compile Include="MasterData\PrivilegeModel.cs" />
     <Compile Include="MasterData\RoleModel.cs" />

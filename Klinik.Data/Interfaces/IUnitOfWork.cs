@@ -27,6 +27,7 @@ namespace Klinik.Data
         IGenericRepository<Poli> PoliRepository { get; }
         IGenericRepository<Log> LogRepository { get; }
         IGenericRepository<Patient> PatientRepository { get; }
+        IGenericRepository<PoliFlowTemplate> PoliFlowTemplateRepository { get; }
         int Save();
     }
 }

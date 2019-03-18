@@ -25,11 +25,22 @@ namespace Klinik.Data
         private IGenericRepository<QueuePoli> _registrationRepository;
         private IGenericRepository<Poli> _poliRepository;
         private IGenericRepository<Patient> _patientRepository;
+        private IGenericRepository<PoliFlowTemplate> _poliFlowTemplateRepository;
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
         {
             _context = context;
+        }
+
+        public IGenericRepository<PoliFlowTemplate> PoliFlowTemplateRepository
+        {
+            get
+            {
+                if (_poliFlowTemplateRepository == null)
+                    _poliFlowTemplateRepository = new GenericRepository<PoliFlowTemplate>(_context);
+                return _poliFlowTemplateRepository;
+            }
         }
 
         public IGenericRepository<Patient> PatientRepository
