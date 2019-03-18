@@ -235,7 +235,17 @@ namespace Klinik.Features.Registration
             foreach (var item in qry)
             {
                 RegistrationModel prData = Mapper.Map<QueuePoli, RegistrationModel>(item);
-                prData.DoctorStr = prData.Doctor == 1 ? "Dr Robert" : "Dr Boyke";
+
+                // get the doctor name
+                if (prData.Doctor != 0)
+                {
+                    Doctor doctor = _unitOfWork.DoctorRepository.GetById(prData.Doctor);
+                    if (doctor != null)
+                        prData.DoctorStr = doctor.Name;
+                }
+
+                // format the registration type
+                prData.TypeStr = prData.TypeStr.Replace("WalkIn", "Walk-In");
 
                 lists.Add(prData);
             }
