@@ -412,7 +412,7 @@
     <value>Doctor Type</value>
   </data>
   <data name="HPNumber" xml:space="preserve">
-    <value>HP Number</value>
+    <value>No HP</value>
   </data>
   <data name="KTPNumber" xml:space="preserve">
     <value>KTP No</value>
@@ -431,9 +431,6 @@
   </data>
   <data name="EmpStatus" xml:space="preserve">
     <value>Emp Status</value>
-  </data>
-  <data name="HPNumber" xml:space="preserve">
-    <value>No HP</value>
   </data>
   <data name="KTP" xml:space="preserve">
     <value>KTP No</value>
@@ -455,5 +452,23 @@
   </data>
   <data name="EmpReffID" xml:space="preserve">
     <value>Emp Reff</value>
+  </data>
+  <data name="Process" xml:space="preserve">
+    <value>Process</value>
+  </data>
+  <data name="Finish" xml:space="preserve">
+    <value>Finish</value>
+  </data>
+  <data name="FinishConfirmation" xml:space="preserve">
+    <value>Are you sure you want to finish this patient queue?</value>
+  </data>
+  <data name="Hold" xml:space="preserve">
+    <value>Hold</value>
+  </data>
+  <data name="HoldConfirmation" xml:space="preserve">
+    <value>Are you sure you want to hold this patient queue ?</value>
+  </data>
+  <data name="ProcessConfirmation" xml:space="preserve">
+    <value>Are you sure you want to process this patient queue?</value>
   </data>
 </root>

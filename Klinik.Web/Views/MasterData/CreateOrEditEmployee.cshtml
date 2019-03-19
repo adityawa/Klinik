@@ -6,9 +6,7 @@
 }
 
 <link href="~/Content/css/select2.css" rel="stylesheet" />
-<link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/select2.js"></script>
-<script src="~/Scripts/jquery-ui.js"></script>
 
 <section class="panel">
     <header class="panel-heading">
@@ -47,7 +45,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Birthdate</label>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(x => x.Birthdate, "{0:MM/dd/yyyy}", new { @class = "form-control", @id = "tbBirthDate" })
+                    @Html.TextBoxFor(x => x.Birthdate, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "tbBirthDate" })
                 </div>
             </div>
             <div class="form-group">
@@ -67,7 +65,7 @@
                 </label>
                 <div class="col-md-4">
                     @Html.DropDownListFor(p => p.ReffEmpID, (IEnumerable<SelectListItem>)ViewBag.EmpActive, new { @class = "form-control", @id = "ddlEmpReff" })
-                   
+
 
                 </div>
             </div>
@@ -102,14 +100,14 @@
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.EmpJoinDate</label>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(x => x.StartDate, "{0:MM/dd/yyyy}", new { @class = "form-control", @id = "tbStartDate" })
+                    @Html.TextBoxFor(x => x.StartDate, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "tbStartDate" })
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.EmpEndDate</label>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(x => x.EndDate, "{0:MM/dd/yyyy}", new { @class = "form-control", @id = "tbEndDate" })
+                    @Html.TextBoxFor(x => x.EndDate, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "tbEndDate" })
                 </div>
             </div>
 
@@ -185,16 +183,19 @@
         $('#ddlEmpReff').select2();
 
         $('#tbBirthDate').datepicker({
+            format: "dd/mm/yyyy",
             changeMonth: true,
             changeYear: true
         });
 
         $('#tbStartDate').datepicker({
+            format: "dd/mm/yyyy",
             changeMonth: true,
             changeYear: true
         });
 
         $('#tbEndDate').datepicker({
+            format: "dd/mm/yyyy",
             changeMonth: true,
             changeYear: true
         });

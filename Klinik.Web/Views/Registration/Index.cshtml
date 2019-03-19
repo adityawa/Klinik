@@ -126,7 +126,9 @@
 
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": false },
-                { "data": "PatientName", "name": "PatientName", "autoWidth": true },
+                {
+                    "render": function (data, type, full, meta) {return '<a href="/Registration/CreateOrEditRegistration?id=' + full.Id + '">'+ full.PatientName+'</a>'; }
+                },
                 { "data": "PoliFromName", "name": "PoliFromName", "autoWidth": true },
                 { "data": "PoliToName", "name": "PoliToName", "autoWidth": true },
                 { "data": "DoctorStr", "name": "DoctorStr", "autoWidth": true },
@@ -137,7 +139,11 @@
                 { "data": "TransactionDateStr", "name": "TransactionDateStr", "autoWidth": true },
                 { "data": "StatusStr", "name": "StatusStr", "autoWidth": true },
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Registration/CreateOrEditRegistration?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>"; }
+                    "render": function (data, type, full, meta) {
+                        return "<button class='btn btn-success' onclick='Process(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Process</button>" +
+                            " | <button class='btn btn-warning' onclick='Hold(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Hold</button>" +
+                            " | <button class='btn btn-danger' onclick='Finish(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Finish</button>";
+                    }
                 }
             ]
         });
@@ -154,20 +160,72 @@
         "showMethod": "fadeIn"
     };
 
-    var Delete = function (ID) {
-        var r = confirm("@Klinik.Resources.UIMessages.DeleteConfirmation" + ID + " ) ?");
+    var Process = function (ID) {
+        var r = confirm("@Klinik.Resources.UIMessages.ProcessConfirmation");
         if (r == true) {
-            DeleteUser(ID);
+            ProcessPatient(ID);
         }
         return false;
     }
 
-    function DeleteUser(Id) {
+    function ProcessPatient(Id) {
         $.ajax({
-            url: '/Registration/DeleteRegistration?id=' + Id,
+            url: '/Registration/ProcessRegistration?id=' + Id,
             type: 'POST',
             success: function (result) {
-                if (result.Status == "True") {
+                if (result.Status) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+    }
+
+    var Hold = function (ID) {
+        var r = confirm("@Klinik.Resources.UIMessages.HoldConfirmation");
+        if (r == true) {
+            HoldPatient(ID);
+        }
+        return false;
+    }
+
+    function HoldPatient(Id) {
+        $.ajax({
+            url: '/Registration/HoldRegistration?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+    }
+
+    var Finish = function (ID) {
+        var r = confirm("@Klinik.Resources.UIMessages.FinishConfirmation");
+        if (r == true) {
+            FinishPatient(ID);
+        }
+        return false;
+    }
+
+    function FinishPatient(Id) {
+        $.ajax({
+            url: '/Registration/FinishRegistration?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status) {
                     toastr.options.closeButton = false;
                     toastr.options.timeOut = 2000;
                     location.reload();
