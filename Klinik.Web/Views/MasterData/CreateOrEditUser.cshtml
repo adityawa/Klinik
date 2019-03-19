@@ -6,9 +6,7 @@
 }
 
 <link href="~/Content/css/select2.css" rel="stylesheet" />
-<link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/select2.js"></script>
-<script src="~/Scripts/jquery-ui.js"></script>
 
 <section class="panel">
     <header class="panel-heading">
@@ -86,6 +84,7 @@
         $('#ddlorganisasi').select2();
         $('#ddlemployee').select2();
         $('#tbExpDate').datepicker({
+            format: "dd/mm/yyyy",
             changeMonth: true,
             changeYear: true
         });

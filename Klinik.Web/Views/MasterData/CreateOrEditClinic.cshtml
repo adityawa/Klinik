@@ -5,9 +5,7 @@
 }
 
 <link href="~/Content/css/select2.css" rel="stylesheet" />
-<link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/select2.js"></script>
-<script src="~/Scripts/jquery-ui.js"></script>
 
 <section class="panel">
     <header class="panel-heading">
@@ -122,6 +120,7 @@
         $('#ddlcity').select2();
         $('#ddlclinicType').select2();
         $('#tbLegalDate').datepicker({
+            format: "dd/mm/yyyy",
             changeMonth: true,
             changeYear: true
         });

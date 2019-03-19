@@ -2,12 +2,11 @@
 
 @{
     ViewBag.Title = "CreateOrEditDoctor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link href="~/Content/css/select2.css" rel="stylesheet" />
-<link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/select2.js"></script>
-<script src="~/Scripts/jquery-ui.js"></script>
 
 <section class="panel">
     <header class="panel-heading">
@@ -60,7 +59,7 @@
                     @Klinik.Resources.UIMessages.ValidFrom
                 </label>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(x => x.STRValidFrom, new { @class = "form-control", @id = "tbValidFrom" })
+                    @Html.TextBoxFor(x => x.STRValidFrom, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "tbValidFrom" })
                 </div>
             </div>
             <div class="form-group">
@@ -68,7 +67,7 @@
                     @Klinik.Resources.UIMessages.ValidTo
                 </label>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(x => x.STRValidTo, new { @class = "form-control", @id = "tbValidTo" })
+                    @Html.TextBoxFor(x => x.STRValidTo, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "tbValidTo" })
                 </div>
             </div>
             <div class="form-group">
@@ -117,16 +116,19 @@
              window.location.href = "/MasterData/DoctorList";
         });
 
-        $('#ddldoctortype').select2();
         $('#tbValidFrom').datepicker({
+            format: "dd/mm/yyyy",
             changeMonth: true,
             changeYear: true
         });
 
         $('#tbValidTo').datepicker({
+            format: "dd/mm/yyyy",
             changeMonth: true,
             changeYear: true
         });
+
+        $('#ddldoctortype').select2();
 
         toastr.options = {
             "closeButton": false,
