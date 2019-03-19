@@ -211,6 +211,12 @@ Administrator</value>
   <data name="Patient" xml:space="preserve">
     <value>Patient</value>
   </data>
+  <data name="UnrecognizedEmployee" xml:space="preserve">
+    <value>Employee {0} is not recognized</value>
+  </data>
+  <data name="ValidationUnrecognizedFields" xml:space="preserve">
+    <value>Following fields are not recognized : {0}</value>
+  </data>
   <data name="ObjectHasBeenUpdated2" xml:space="preserve">
     <value>{0} with ID {1} has been successfully updated</value>
   </data>

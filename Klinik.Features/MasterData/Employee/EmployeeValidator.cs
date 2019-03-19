@@ -5,6 +5,9 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Klinik.Data.DataRepository;
+using System.Collections;
+using System.Collections.Generic;
+
 namespace Klinik.Features
 {
     public class EmployeeValidator : BaseFeatures
@@ -99,8 +102,37 @@ namespace Klinik.Features
                     }
                 }
 
+                if (isFromApi)
+                {
+                    errorFields = new List<string>();
+                    if (!String.IsNullOrEmpty(request.Data.ReffEmpID))
+                    {
+                        var _nip = _context.Employees.SingleOrDefault(x => x.EmpID == request.Data.ReffEmpID && x.EmployeeStatu.Status != "F");
+                        if (_nip == null)
+                            errorFields.Add("Employee Reference");
+                    }
+
+                    var _type = _context.FamilyRelationships.SingleOrDefault(x => x.Code == request.Data.EmpTypeDesc);
+                    if (_type == null)
+                        errorFields.Add("Employee Type");
+
+                    if (request.Data.EmpTypeDesc.ToLower() == Constants.Command.EmployeeRelationshipCode.ToLower())
+                    {
+                        var _status = _context.EmployeeStatus.SingleOrDefault(x => x.Code == request.Data.EmpStatusDesc);
+                        if (_status == null)
+                            errorFields.Add("Employee Status");
+                    }
+
+                    if (errorFields.Any())
+                    {
+                        response.Status = false;
+                        response.Message = string.Format(Messages.ValidationUnrecognizedFields, String.Join(",", errorFields));
+                    }
+                }
+
                 if (response.Status)
                 {
+                    request.Data.IsFromAPI = isFromApi;
                     response = new EmployeeHandler(_unitOfWork, _context).CreateOrEdit(request);
                 }
             }

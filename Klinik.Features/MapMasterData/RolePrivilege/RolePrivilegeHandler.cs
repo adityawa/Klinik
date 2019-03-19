@@ -56,7 +56,7 @@ namespace Klinik.Features
                     int resultAffected = _context.SaveChanges();
 
                     transaction.Commit();
-
+                    response.Status = true;
                     response.Message = Messages.DataSaved;
                 }
                 catch

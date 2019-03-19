@@ -24,6 +24,7 @@
             public const string EDIT_EMPLOYEEASSIGNMENT = "Edit Employee Assignment";
             public const string EDIT_POLISCHEDULE = "Edit Poli Schedule";
             public const string EmployeeRelationshipCode = "E";
+            public const string NotActiveCode = "Na";
             public const string EDIT_REGISTRATION = "Edit Registration";
             public const string EDIT_DOCTOR = "Edit Doctor";
             public const string DELETE_EMPLOYEE = "Remove Employee";

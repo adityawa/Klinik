@@ -198,7 +198,7 @@
                         data: form_data,
                         async: "true",
                         success: function (result) {
-                            if (result.Status == "SUCCESS") {
+                            if (result.Status == true) {
                                 toastr.success(result.Message);
                             }
                             else {
