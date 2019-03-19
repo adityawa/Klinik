@@ -54,7 +54,7 @@
                     @Klinik.Resources.UIMessages.ExpiredDate
                 </label>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(x => x.ExpiredDate, new { @class = "form-control", @id = "tbExpDate" })
+                    @Html.TextBoxFor(x => x.ExpiredDate, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "tbExpDate" })
                 </div>
             </div>
             <div class="form-group">

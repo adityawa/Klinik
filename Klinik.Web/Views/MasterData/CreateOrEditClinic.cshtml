@@ -44,7 +44,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.LegalDate</label>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(x => x.LegalDate, new { @class = "form-control", @id = "tbLegalDate" })
+                    @Html.TextBoxFor(x => x.LegalDate, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "tbLegalDate" })
                 </div>
             </div>
             <div class="form-group">
