@@ -22,12 +22,11 @@
             <table id="tbOrganization" class="table table-striped table-bordered dt-responsive" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>>@Klinik.Resources.UIMessages.ID</th>
-                        <th>>@Klinik.Resources.UIMessages.OrganizationCode</th>
-                        <th>>@Klinik.Resources.UIMessages.OrganizationName</th>
-                        <th>>@Klinik.Resources.UIMessages.Clinic</th>
-                        <th></th>
-
+                        <th>@Klinik.Resources.UIMessages.ID</th>
+                        <th>@Klinik.Resources.UIMessages.OrganizationCode</th>
+                        <th>@Klinik.Resources.UIMessages.OrganizationName</th>
+                        <th>@Klinik.Resources.UIMessages.Clinic</th>
+                        <th>@Klinik.Resources.UIMessages.Action</th>
                     </tr>
                 </thead>
             </table>
@@ -90,7 +89,7 @@
                 { "data": "Klinik", "name": "Klinik", "autoWidth": true },
 
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditOrganization?id=' + full.Id + '">>@Klinik.Resources.UIMessages.Edit</a>' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >>@Klinik.Resources.UIMessages.Delete</button>" + ' | <a class="btn btn-info" href="/MappingMaster/OrgPrivilegeList?orgid=' + full.Id + '">>@Klinik.Resources.UIMessages.SetPrivilege</a>'; }
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditOrganization?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" + ' | <a class="btn btn-info" href="/MappingMaster/OrgPrivilegeList?orgid=' + full.Id + '">@Klinik.Resources.UIMessages.SetPrivilege</a>'; }
                 }
 
 
