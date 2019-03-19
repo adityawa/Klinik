@@ -215,6 +215,7 @@
     <Compile Include="Controllers\MappingMasterController.cs" />
     <Compile Include="Controllers\MasterDataController.cs" />
     <Compile Include="Controllers\PasswordHistoryController.cs" />
+    <Compile Include="Controllers\PoliScheduleController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1135,6 +1136,8 @@
     <Content Include="Views\Registration\Index.cshtml" />
     <Content Include="Views\MasterData\DoctorList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditDoctor.cshtml" />
+    <Content Include="Views\PoliSchedule\Index.cshtml" />
+    <Content Include="Views\PoliSchedule\CreateOrEditPoliSchedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

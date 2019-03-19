@@ -100,7 +100,7 @@ namespace Klinik.Features
                     if (request.Data.Id > 0)
                         CommandLog(false, ClinicEnums.Module.MASTER_ROLE, Constants.Command.EDIT_ROLE, request.Data.Account, request.Data);
                     else
-                        CommandLog(false, ClinicEnums.Module.MASTER_PRIVILEGE, Constants.Command.ADD_NEW_ROLE, request.Data.Account, request.Data);
+                        CommandLog(false, ClinicEnums.Module.MASTER_ROLE, Constants.Command.ADD_NEW_ROLE, request.Data.Account, request.Data);
                 }
             }
 

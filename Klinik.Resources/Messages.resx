@@ -211,4 +211,13 @@ Administrator</value>
   <data name="Patient" xml:space="preserve">
     <value>Patient</value>
   </data>
+  <data name="ObjectHasBeenUpdated2" xml:space="preserve">
+    <value>{0} with ID {1} has been successfully updated</value>
+  </data>
+  <data name="ObjectHasBeenAdded2" xml:space="preserve">
+    <value>{0} with ID {1} has been successfully added</value>
+  </data>
+  <data name="ObjectHasBeenRemoved2" xml:space="preserve">
+    <value>{0} with ID {1} has been successfully removed</value>
+  </data>
 </root>

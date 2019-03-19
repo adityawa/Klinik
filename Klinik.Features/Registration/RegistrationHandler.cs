@@ -55,7 +55,7 @@ namespace Klinik.Features.Registration
                         int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Registration", Messages.Patient, qry.ID);
+                            response.Message = string.Format(Messages.ObjectHasBeenUpdated2, "Registration", qry.ID);
 
                             CommandLog(true, ClinicEnums.Module.REGISTRATION, Constants.Command.EDIT_REGISTRATION, request.Data.Account, request.Data, _oldentity);
                         }
@@ -111,9 +111,9 @@ namespace Klinik.Features.Registration
                 if (request.Data != null)
                 {
                     if (request.Data.Id > 0)
-                        CommandLog(false, ClinicEnums.Module.MASTER_ROLE, Constants.Command.EDIT_REGISTRATION, request.Data.Account, request.Data);
+                        CommandLog(false, ClinicEnums.Module.REGISTRATION, Constants.Command.EDIT_REGISTRATION, request.Data.Account, request.Data);
                     else
-                        CommandLog(false, ClinicEnums.Module.MASTER_PRIVILEGE, Constants.Command.ADD_NEW_REGISTRATION, request.Data.Account, request.Data);
+                        CommandLog(false, ClinicEnums.Module.REGISTRATION, Constants.Command.ADD_NEW_REGISTRATION, request.Data.Account, request.Data);
                 }
             }
 
@@ -285,7 +285,7 @@ namespace Klinik.Features.Registration
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Registration", Messages.Patient, isExist.ID);
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved2, "Registration", isExist.ID);
                     }
                     else
                     {

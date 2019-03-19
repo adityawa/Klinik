@@ -176,6 +176,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} with ID {1} has been successfully added.
+        /// </summary>
+        public static string ObjectHasBeenAdded2 {
+            get {
+                return ResourceManager.GetString("ObjectHasBeenAdded2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} {1} with ID {2} has been successfully removed.
         /// </summary>
         public static string ObjectHasBeenRemoved {
@@ -185,11 +194,29 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} with ID {1} has been successfully removed.
+        /// </summary>
+        public static string ObjectHasBeenRemoved2 {
+            get {
+                return ResourceManager.GetString("ObjectHasBeenRemoved2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} {1} with ID {2} has been successfully updated.
         /// </summary>
         public static string ObjectHasBeenUpdated {
             get {
                 return ResourceManager.GetString("ObjectHasBeenUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} with ID {1} has been successfully updated.
+        /// </summary>
+        public static string ObjectHasBeenUpdated2 {
+            get {
+                return ResourceManager.GetString("ObjectHasBeenUpdated2", resourceCulture);
             }
         }
         

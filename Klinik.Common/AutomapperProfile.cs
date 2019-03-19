@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Klinik.Data.DataRepository;
+using Klinik.Entities;
 using Klinik.Entities.Administration;
 using Klinik.Entities.MappingMaster;
 using Klinik.Entities.MasterData;
+using Klinik.Entities.PoliSchedules;
 using Klinik.Entities.Registration;
 
 namespace Klinik.Common
@@ -14,7 +16,7 @@ namespace Klinik.Common
             CreateMap<Organization, OrganizationModel>();
             CreateMap<OrganizationModel, Organization>();
             CreateMap<Clinic, ClinicModel>()
-                .ForMember(m => m.LegalDateDesc, map => map.MapFrom(p => p.LegalDate == null ? "" : p.LegalDate.Value.ToString("MM/dd/yyyy")));
+                .ForMember(m => m.LegalDateDesc, map => map.MapFrom(p => p.LegalDate == null ? "" : p.LegalDate.Value.ToString("dd/MM/yyyy")));
 
 
             CreateMap<ClinicModel, Clinic>()
@@ -41,12 +43,12 @@ namespace Klinik.Common
                 .ForMember(x => x.EmployeeName, map => map.MapFrom(p => p.Employee.EmpName))
                 .ForMember(x => x.OrganizationName, map => map.MapFrom(p => p.Organization.OrgName))
                 .ForMember(x => x.StatusDesc, map => map.MapFrom(p => p.Status == true ? "Active" : "Inactive"))
-                .ForMember(x => x.ExpiredDateStr, map => map.MapFrom(p => p.ExpiredDate == null ? "" : p.ExpiredDate.Value.ToString("MM/dd/yyyy")));
+                .ForMember(x => x.ExpiredDateStr, map => map.MapFrom(p => p.ExpiredDate == null ? "" : p.ExpiredDate.Value.ToString("dd/MM/yyyy")));
             CreateMap<UserModel, User>()
                 .ForMember(x => x.OrganizationID, map => map.MapFrom(p => p.OrgID));
 
             CreateMap<Employee, EmployeeModel>()
-                .ForMember(x => x.BirthdateStr, map => map.MapFrom(p => p.BirthDate == null ? "" : p.BirthDate.Value.ToString("MM/dd/yyyy")))
+                .ForMember(x => x.BirthdateStr, map => map.MapFrom(p => p.BirthDate == null ? "" : p.BirthDate.Value.ToString("dd/MM/yyyy")))
                 .ForMember(x => x.EmpTypeDesc, map => map.MapFrom(p => p.FamilyRelationship.Name))
                 .ForMember(x => x.EmpStatusDesc, map => map.MapFrom(p => p.EmployeeStatu.Name))
                 .ForMember(x => x.EmpTypeDesc, map => map.MapFrom(p => p.FamilyRelationship.Name));
@@ -77,7 +79,7 @@ namespace Klinik.Common
             CreateMap<Menu, MenuModel>();
 
             CreateMap<Log, LogModel>()
-                .ForMember(x => x.strStart, map => map.MapFrom(p => p.Start.ToString("MM/dd/yyyy")));
+                .ForMember(x => x.strStart, map => map.MapFrom(p => p.Start.ToString("dd/MM/yyyy")));
             CreateMap<LogModel, Log>();
 
             CreateMap<EmployeeStatu, EmployeeStatusModel>()
@@ -96,7 +98,7 @@ namespace Klinik.Common
                 .ForMember(m => m.PoliToName, map => map.MapFrom(p => p.Poli1.Name))
                 .ForMember(m => m.StatusStr, map => map.MapFrom(p => ((RegistrationStatusEnum)p.Status.Value).ToString()))
                 .ForMember(m => m.TypeStr, map => map.MapFrom(p => ((RegistrationTypeEnum)p.Type.Value).ToString()))
-                .ForMember(m => m.TransactionDateStr, map => map.MapFrom(p => p.TransactionDate.Value.ToString("MM/dd/yyyy hh:mm:ss")))
+                .ForMember(m => m.TransactionDateStr, map => map.MapFrom(p => p.TransactionDate.Value.ToString("dd/MM/yyyy hh:mm:ss")))
                 .ForMember(m => m.TransactionDate, map => map.MapFrom(p => p.TransactionDate.Value));
 
             CreateMap<PoliModel, Poli>();
@@ -112,8 +114,13 @@ namespace Klinik.Common
 
             CreateMap<DoctorModel, Doctor>();
             CreateMap<Doctor, DoctorModel>()
-                .ForMember(m => m.STRValidFromStr, map => map.MapFrom(p => p.STRValidFrom.Value.ToString("MM/dd/yyyy")))
-                .ForMember(m => m.STRValidToStr, map => map.MapFrom(p => p.STRValidTo.Value.ToString("MM/dd/yyyy")));
+                .ForMember(m => m.STRValidFromStr, map => map.MapFrom(p => p.STRValidFrom.Value.ToString("dd/MM/yyyy")))
+                .ForMember(m => m.STRValidToStr, map => map.MapFrom(p => p.STRValidTo.Value.ToString("dd/MM/yyyy")));
+
+            CreateMap<PoliScheduleModel, PoliSchedule>();
+            CreateMap<PoliSchedule, PoliScheduleModel>()
+                .ForMember(m => m.StartDateStr, map => map.MapFrom(p => p.StartDate.Value.ToString("dd/MM/yyyy hh:mm:ss")))
+                .ForMember(m => m.EndDateStr, map => map.MapFrom(p => p.EndDate.Value.ToString("dd/MM/yyyy hh:mm:ss")));
         }
     }
 }

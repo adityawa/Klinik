@@ -70,6 +70,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aktif.
+        /// </summary>
+        public static string Active {
+            get {
+                return ResourceManager.GetString("Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string AddNew {
@@ -295,6 +304,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Doctor Name.
+        /// </summary>
+        public static string DoctorName {
+            get {
+                return ResourceManager.GetString("DoctorName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Doctor Type.
         /// </summary>
         public static string DoctorType {
@@ -417,6 +435,15 @@ namespace Klinik.Resources {
         public static string EmpStatus {
             get {
                 return ResourceManager.GetString("EmpStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End Date.
+        /// </summary>
+        public static string EndDate {
+            get {
+                return ResourceManager.GetString("EndDate", resourceCulture);
             }
         }
         
@@ -736,6 +763,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tidak Aktif.
+        /// </summary>
+        public static string NonActive {
+            get {
+                return ResourceManager.GetString("NonActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Organization.
         /// </summary>
         public static string Organization {
@@ -799,11 +835,38 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Poli.
+        /// </summary>
+        public static string Poli {
+            get {
+                return ResourceManager.GetString("Poli", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Poli From.
         /// </summary>
         public static string PoliFrom {
             get {
                 return ResourceManager.GetString("PoliFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Poli Name.
+        /// </summary>
+        public static string PoliName {
+            get {
+                return ResourceManager.GetString("PoliName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Poli Schedule List.
+        /// </summary>
+        public static string PoliScheduleList {
+            get {
+                return ResourceManager.GetString("PoliScheduleList", resourceCulture);
             }
         }
         
@@ -1029,6 +1092,15 @@ namespace Klinik.Resources {
         public static string SortNumber {
             get {
                 return ResourceManager.GetString("SortNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Date.
+        /// </summary>
+        public static string StartDate {
+            get {
+                return ResourceManager.GetString("StartDate", resourceCulture);
             }
         }
         

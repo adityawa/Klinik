@@ -471,4 +471,28 @@
   <data name="ProcessConfirmation" xml:space="preserve">
     <value>Are you sure you want to process this patient queue?</value>
   </data>
+  <data name="DoctorName" xml:space="preserve">
+    <value>Doctor Name</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="PoliName" xml:space="preserve">
+    <value>Poli Name</value>
+  </data>
+  <data name="PoliScheduleList" xml:space="preserve">
+    <value>Poli Schedule List</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Aktif</value>
+  </data>
+  <data name="NonActive" xml:space="preserve">
+    <value>Tidak Aktif</value>
+  </data>
+  <data name="Poli" xml:space="preserve">
+    <value>Poli</value>
+  </data>
 </root>

@@ -18,7 +18,9 @@
             Department,
             City,
             ClinicType,
-            DoctorType
+            DoctorType,
+            PoliScheduleStatus,
+            ParamedicType
         }
 
         public enum AuthResult
@@ -38,7 +40,8 @@
             MASTER_USER,
             MASTER_DOCTOR,
             EMPLOYEE_ASSIGNMENT,
-            REGISTRATION
+            REGISTRATION,
+            POLI_SCHEDULE
         }
 
         public enum Action

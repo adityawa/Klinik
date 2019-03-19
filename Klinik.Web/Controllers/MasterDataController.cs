@@ -93,7 +93,7 @@ namespace Klinik.Web.Controllers
         private List<SelectListItem> BindDropDownEmployementType()
         {
             List<SelectListItem> _empTypes = new List<SelectListItem>();
-           
+
             foreach (var item in new FamilyStatusHandler(_unitOfWork).GetAllFamilyStatus().ToList())
             {
                 _empTypes.Add(new SelectListItem
@@ -143,17 +143,17 @@ namespace Klinik.Web.Controllers
 
         private List<SelectListItem> BindDropDownDoctorType()
         {
-            List<SelectListItem> _cities = new List<SelectListItem>();
+            List<SelectListItem> _doctorTypes = new List<SelectListItem>();
             foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.MasterTypes.DoctorType.ToString()).ToList())
             {
-                _cities.Add(new SelectListItem
+                _doctorTypes.Add(new SelectListItem
                 {
                     Text = item.Name,
                     Value = item.Id.ToString()
                 });
             }
 
-            return _cities;
+            return _doctorTypes;
         }
 
         private List<SelectListItem> BindDropDownClinicType()
@@ -191,7 +191,7 @@ namespace Klinik.Web.Controllers
             return _menus;
         }
 
-        
+
         #endregion
 
         // GET: MasterData

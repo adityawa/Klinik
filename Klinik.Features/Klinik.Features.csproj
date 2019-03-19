@@ -116,6 +116,10 @@
     <Compile Include="MasterData\User\UserRequest.cs" />
     <Compile Include="MasterData\User\UserResponse.cs" />
     <Compile Include="MasterData\User\UserValidator.cs" />
+    <Compile Include="PoliSchedules\PoliScheduleHandler.cs" />
+    <Compile Include="PoliSchedules\PoliScheduleRequest.cs" />
+    <Compile Include="PoliSchedules\PoliScheduleResponse.cs" />
+    <Compile Include="PoliSchedules\PoliScheduleValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\RegistrationHandler.cs" />
     <Compile Include="Registration\RegistrationRequest.cs" />
