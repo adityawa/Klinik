@@ -53,7 +53,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<Privilege> Privileges { get; set; }
         public virtual DbSet<QueuePoli> QueuePolis { get; set; }
         public virtual DbSet<RolePrivilege> RolePrivileges { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
     }

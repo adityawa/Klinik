@@ -14,7 +14,7 @@
     }
 </style>
 
-<button id="btnSave" class="btn btn-primary"><i class="fa fa-save"></i> @Klinik.Resources.UIMessages.AddNew </button>
+<button id="btnSave" class="btn btn-primary"><i class="fa fa-save"></i> @Klinik.Resources.UIMessages.Save </button>
 
 <br /><br />
 
@@ -194,7 +194,7 @@
                         data: form_data,
                         async: "true",
                         success: function (result) {
-                            if (result.Status == "SUCCESS") {
+                            if (result.Status == true) {
                                 toastr.success(result.Message);
                             }
                             else {

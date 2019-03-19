@@ -266,6 +266,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Employee {0} is not recognized.
+        /// </summary>
+        public static string UnrecognizedEmployee {
+            get {
+                return ResourceManager.GetString("UnrecognizedEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password cannot be changed because user name and password not match.
         /// </summary>
         public static string UpdateFailedUsernamePasswordNotMatch {
@@ -325,6 +334,15 @@ namespace Klinik.Resources {
         public static string ValidationErrorFields {
             get {
                 return ResourceManager.GetString("ValidationErrorFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Following fields are not recognized : {0}.
+        /// </summary>
+        public static string ValidationUnrecognizedFields {
+            get {
+                return ResourceManager.GetString("ValidationUnrecognizedFields", resourceCulture);
             }
         }
     }

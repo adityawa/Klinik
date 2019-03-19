@@ -82,7 +82,7 @@ namespace Klinik.Web.Controllers
             {
                 _employeeActiveLists.Add(new SelectListItem
                 {
-                    Text = item.EmpName,
+                    Text =$"{item.EmpID} - {item.EmpName}",
                     Value = item.Id.ToString()
                 });
             }

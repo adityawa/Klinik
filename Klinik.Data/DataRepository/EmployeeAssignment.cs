@@ -15,7 +15,7 @@ namespace Klinik.Data.DataRepository
     public partial class EmployeeAssignment
     {
         public long ID { get; set; }
-        public long EmployeeID { get; set; }
+        public Nullable<long> EmployeeID { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public string Department { get; set; }

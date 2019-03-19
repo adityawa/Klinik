@@ -69,5 +69,7 @@ namespace Klinik.Entities.MasterData
 
         public string Grade { get; set; }
 
+        public bool IsFromAPI { get; set; }
+
     }
 }

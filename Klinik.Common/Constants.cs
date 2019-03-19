@@ -22,6 +22,7 @@
             public const string EDIT_PRIVILEGE = "Edit Privilege";
             public const string EDIT_EMPLOYEEASSIGNMENT = "Edit Employee Assignment";
             public const string EmployeeRelationshipCode = "E";
+            public const string NotActiveCode = "Na";
             public const string EDIT_REGISTRATION = "Edit Registration";
             public const string EDIT_DOCTOR = "Edit Doctor";
             public const string DELETE_EMPLOYEE = "Remove Employee";
