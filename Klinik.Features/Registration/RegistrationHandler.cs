@@ -193,6 +193,10 @@ namespace Klinik.Features.Registration
             List<RegistrationModel> lists = new List<RegistrationModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<QueuePoli>(true);
+
+            // add default filter to show today queue only
+            searchPredicate = searchPredicate.And(p => p.TransactionDate.Value.Year == DateTime.Today.Year && p.TransactionDate.Value.Month == DateTime.Today.Month && p.TransactionDate.Value.Day == DateTime.Today.Day);
+
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.Patient.Name.Contains(request.SearchValue));
