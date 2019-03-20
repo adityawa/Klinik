@@ -6,6 +6,7 @@ using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
 using Klinik.Entities.Registration;
 using Klinik.Features.Registration;
+using Klinik.Web.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -148,6 +149,12 @@ namespace Klinik.Web.Controllers
             };
 
             RegistrationResponse _response = new RegistrationValidator(_unitOfWork).Validate(request);
+            if (_response.Status)
+            {
+                // Notify to all
+                RegistrationHub.BroadcastDataToAllClients();
+            }
+
             ViewBag.Response = $"{_response.Status};{_response.Message}";
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
             ViewBag.PoliList = BindDropDownPoliList();
@@ -203,15 +210,15 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public ActionResult GetRegistrationData()
         {
-            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
-            var _start = Request.Form.GetValues("start").FirstOrDefault();
-            var _length = Request.Form.GetValues("length").FirstOrDefault();
-            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
-            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
-            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+            string _draw = Request.Form.Count > 0 ? Request.Form.GetValues("draw").FirstOrDefault() : string.Empty;
+            string _start = Request.Form.Count > 0 ? Request.Form.GetValues("start").FirstOrDefault() : string.Empty;
+            string _length = Request.Form.Count > 0 ? Request.Form.GetValues("length").FirstOrDefault() : string.Empty;
+            string _sortColumn = Request.Form.Count > 0 ? Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault() : string.Empty;
+            string _sortColumnDir = Request.Form.Count > 0 ? Request.Form.GetValues("order[0][dir]").FirstOrDefault() : string.Empty;
+            string _searchValue = Request.Form.Count > 0 ? Request.Form.GetValues("search[value]").FirstOrDefault() : string.Empty;
 
-            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
-            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+            int _pageSize = string.IsNullOrEmpty(_length) ? 0 : Convert.ToInt32(_length);
+            int _skip = string.IsNullOrEmpty(_start) ? 0 : Convert.ToInt32(_start);
 
             var request = new RegistrationRequest
             {
@@ -225,7 +232,7 @@ namespace Klinik.Web.Controllers
 
             var response = new RegistrationHandler(_unitOfWork).GetListData(request);
 
-            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw, Status = response.Status }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -242,6 +249,10 @@ namespace Klinik.Web.Controllers
             };
 
             RegistrationResponse _response = new RegistrationValidator(_unitOfWork).Validate(request);
+            if (_response.Status)
+            {
+                RegistrationHub.BroadcastDataToAllClients();
+            }
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
@@ -260,6 +271,10 @@ namespace Klinik.Web.Controllers
             };
 
             RegistrationResponse _response = new RegistrationValidator(_unitOfWork).Validate(request);
+            if (_response.Status)
+            {
+                RegistrationHub.BroadcastDataToAllClients();
+            }
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
@@ -278,6 +293,10 @@ namespace Klinik.Web.Controllers
             };
 
             RegistrationResponse _response = new RegistrationValidator(_unitOfWork).Validate(request);
+            if (_response.Status)
+            {
+                RegistrationHub.BroadcastDataToAllClients();
+            }
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
@@ -296,6 +315,10 @@ namespace Klinik.Web.Controllers
             };
 
             RegistrationResponse _response = new RegistrationValidator(_unitOfWork).Validate(request);
+            if (_response.Status)
+            {
+                RegistrationHub.BroadcastDataToAllClients();
+            }
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }

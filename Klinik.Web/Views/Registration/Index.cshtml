@@ -42,9 +42,30 @@
     </div>
 </section>
 
-<script type="text/javascript">
-    $(document).ready(function () {
+<script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
+<script src="~/signalr/hubs"></script>
 
+<script type="text/javascript">
+    $(function () {
+        // Reference the hub.
+        var notifFromHub = $.connection.registrationHub;
+
+        // Start the connection.
+        $.connection.hub.start().done(function () {
+            //ReloadData();
+        });
+
+        // Notify while anyChanges.
+        notifFromHub.client.updatedClients = function () {
+            ReloadData();
+        };
+    });
+
+    function ReloadData() {
+        location.reload(true);
+    }
+
+    $(document).ready(function () {
         $('#btnAdd').click(function (e) {
             window.location.href = "/Registration/CreateOrEditRegistration";
         });
@@ -148,6 +169,7 @@
             ]
         });
     });
+
     var _status, _message, _temp;
     var _arrMsg = [];
     toastr.options = {
