@@ -1147,6 +1147,7 @@
     <Content Include="Views\MasterData\CreateOrEditDoctor.cshtml" />
     <Content Include="Views\PoliSchedule\Index.cshtml" />
     <Content Include="Views\PoliSchedule\CreateOrEditPoliSchedule.cshtml" />
+    <Content Include="Views\Registration\PoliUmum.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

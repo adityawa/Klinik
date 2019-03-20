@@ -135,7 +135,30 @@ namespace Klinik.Web.Controllers
         #endregion
 
         [CustomAuthorize("VIEW_REGISTRATION")]
-        public ActionResult Index() => View();
+        public ActionResult Index()
+        {
+            if (Session["UserLogon"] != null)
+            {
+                AccountModel account = (AccountModel)Session["UserLogon"];
+                bool isHasPrivilege = IsHaveAuthorization("ADD_REGISTRATION", account.Privileges.PrivilegeIDs);
+                ViewBag.IsHasAddPrivilege = isHasPrivilege;
+            }
+
+            return View();
+        }
+
+        [CustomAuthorize("VIEW_REGISTRATION_UMUM")]
+        public ActionResult PoliUmum()
+        {
+            if (Session["UserLogon"] != null)
+            {
+                AccountModel account = (AccountModel)Session["UserLogon"];
+                bool isHasPrivilege = IsHaveAuthorization("ADD_REGISTRATION", account.Privileges.PrivilegeIDs);
+                ViewBag.IsHasAddPrivilege = isHasPrivilege;
+            }
+
+            return View();
+        }
 
         [HttpPost]
         public ActionResult CreateOrEditRegistration(RegistrationModel model)
@@ -236,6 +259,35 @@ namespace Klinik.Web.Controllers
         }
 
         [HttpPost]
+        public ActionResult GetRegistrationDataUmum()
+        {
+            string _draw = Request.Form.Count > 0 ? Request.Form.GetValues("draw").FirstOrDefault() : string.Empty;
+            string _start = Request.Form.Count > 0 ? Request.Form.GetValues("start").FirstOrDefault() : string.Empty;
+            string _length = Request.Form.Count > 0 ? Request.Form.GetValues("length").FirstOrDefault() : string.Empty;
+            string _sortColumn = Request.Form.Count > 0 ? Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault() : string.Empty;
+            string _sortColumnDir = Request.Form.Count > 0 ? Request.Form.GetValues("order[0][dir]").FirstOrDefault() : string.Empty;
+            string _searchValue = Request.Form.Count > 0 ? Request.Form.GetValues("search[value]").FirstOrDefault() : string.Empty;
+
+            int _pageSize = string.IsNullOrEmpty(_length) ? 0 : Convert.ToInt32(_length);
+            int _skip = string.IsNullOrEmpty(_start) ? 0 : Convert.ToInt32(_start);
+
+            var request = new RegistrationRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            // get poli umum (2) registration list
+            var response = new RegistrationHandler(_unitOfWork).GetListData(request, 2);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw, Status = response.Status }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public JsonResult DeleteRegistration(int id)
         {
             var request = new RegistrationRequest
@@ -321,6 +373,17 @@ namespace Klinik.Web.Controllers
             }
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [NonAction]
+        public bool IsHaveAuthorization(string privilege_name, List<long> PrivilegeIds)
+        {
+            bool IsAuthorized = false;
+            var privilegeNameList = _unitOfWork.PrivilegeRepository.Get(x => PrivilegeIds.Contains(x.ID));
+
+            IsAuthorized = privilegeNameList.Any(x => x.Privilege_Name == privilege_name);
+
+            return IsAuthorized;
         }
     }
 }

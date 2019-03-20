@@ -190,12 +190,35 @@ namespace Klinik.Features.Registration
         /// <returns></returns>
         public RegistrationResponse GetListData(RegistrationRequest request)
         {
+            return GetListData(request, 0);
+        }
+
+        /// <summary>
+        /// Get registration list
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="poliID"></param>
+        /// <returns></returns>
+        public RegistrationResponse GetListData(RegistrationRequest request, int poliID = 0)
+        {
             List<RegistrationModel> lists = new List<RegistrationModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<QueuePoli>(true);
 
             // add default filter to show today queue only
-            searchPredicate = searchPredicate.And(p => p.TransactionDate.Value.Year == DateTime.Today.Year && p.TransactionDate.Value.Month == DateTime.Today.Month && p.TransactionDate.Value.Day == DateTime.Today.Day);
+            if (poliID == 0)
+            {
+                searchPredicate = searchPredicate.And(p => p.TransactionDate.Value.Year == DateTime.Today.Year &&
+                                                           p.TransactionDate.Value.Month == DateTime.Today.Month &&
+                                                           p.TransactionDate.Value.Day == DateTime.Today.Day);
+            }
+            else
+            {
+                searchPredicate = searchPredicate.And(p => p.TransactionDate.Value.Year == DateTime.Today.Year &&
+                                           p.TransactionDate.Value.Month == DateTime.Today.Month &&
+                                           p.TransactionDate.Value.Day == DateTime.Today.Day &&
+                                           p.PoliTo.Value == poliID);
+            }
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
