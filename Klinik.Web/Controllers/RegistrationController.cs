@@ -100,7 +100,8 @@ namespace Klinik.Web.Controllers
         private List<SelectListItem> BindDropDownDoctorList(int poliID)
         {
             List<SelectListItem> _typeList = new List<SelectListItem>();
-            List<PoliSchedule> scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID);
+            long ClinicID = GetClinicID();
+            List<PoliSchedule> scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID && x.ClinicID == ClinicID);
             foreach (var item in scheduleList)
             {
                 var doctor = _unitOfWork.DoctorRepository.GetFirstOrDefault(x => x.ID == item.DoctorID);
@@ -120,7 +121,8 @@ namespace Klinik.Web.Controllers
         public JsonResult GetDoctorList(int poliID)
         {
             List<Doctor> doctorList = new List<Doctor>();
-            List<PoliSchedule> scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID);
+            long ClinicID = GetClinicID();
+            List<PoliSchedule> scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID && x.ClinicID == ClinicID);
             foreach (var item in scheduleList)
             {
                 var doctor = _unitOfWork.DoctorRepository.GetFirstOrDefault(x => x.ID == item.DoctorID);
@@ -132,6 +134,24 @@ namespace Klinik.Web.Controllers
 
             return Json(doctorList, JsonRequestBehavior.AllowGet);
         }
+
+        /// <summary>
+        /// Get klinik ID
+        /// </summary>
+        /// <param name="organizationCode"></param>
+        /// <returns></returns>
+        private long GetClinicID()
+        {
+            if (Session["UserLogon"] != null)
+            {
+                AccountModel account = (AccountModel)Session["UserLogon"];
+                Organization organization = _unitOfWork.OrganizationRepository.GetFirstOrDefault(x => x.OrgCode == account.Organization);
+                return organization.Clinic.ID;
+            }
+
+            return 1;
+        }
+
         #endregion
 
         [CustomAuthorize("VIEW_REGISTRATION")]
