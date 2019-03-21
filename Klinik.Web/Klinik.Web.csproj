@@ -1148,6 +1148,8 @@
     <Content Include="Views\PoliSchedule\Index.cshtml" />
     <Content Include="Views\PoliSchedule\CreateOrEditPoliSchedule.cshtml" />
     <Content Include="Views\Registration\PoliUmum.cshtml" />
+    <Content Include="Views\MasterData\ParamedicList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditParamedic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

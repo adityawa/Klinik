@@ -1,7 +1,7 @@
 ﻿@model Klinik.Entities.MasterData.DoctorModel
 
 @{
-    ViewBag.Title = "CreateOrEditDoctor";
+    ViewBag.Title = "CreateOrEditParamedic";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,10 +13,10 @@
         <div class="panel-actions">
             <a href="#" class="fa fa-caret-down"></a>
         </div>
-        <h5 class="panel-title">Form @ViewBag.ActionType Doctor</h5>
+        <h5 class="panel-title">Form @ViewBag.ActionType Paramedic</h5>
     </header>
     <div class="panel-body">
-        <form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditDoctor">
+        <form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditParamedic">
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Code</label>
                 <div class="col-md-4">
@@ -34,10 +34,10 @@
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">
-                    @Klinik.Resources.UIMessages.DoctorType
+                    @Klinik.Resources.UIMessages.ParamedicType
                 </label>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(p => p.SpecialistID, (IEnumerable<SelectListItem>)ViewBag.DoctorTypes, new { @class = "form-control", @id = "ddldoctortype" })
+                    @Html.DropDownListFor(p => p.SpecialistID, (IEnumerable<SelectListItem>)ViewBag.ParamedicTypes, new { @class = "form-control", @id = "ddlparamedictype" })
                 </div>
             </div>
             <div class="form-group">
@@ -113,7 +113,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#btnreset').click(function (e) {
-             window.location.href = "/MasterData/DoctorList";
+             window.location.href = "/MasterData/ParamedicList";
         });
 
         $('#tbValidFrom').datepicker({
@@ -128,7 +128,7 @@
             changeYear: true
         });
 
-        $('#ddldoctortype').select2();
+        $('#ddlparamedictype').select2();
 
         toastr.options = {
             "closeButton": false,

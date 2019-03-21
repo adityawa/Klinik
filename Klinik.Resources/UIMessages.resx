@@ -507,4 +507,10 @@
   <data name="ParamedicType" xml:space="preserve">
     <value>Paramedic Type</value>
   </data>
+  <data name="ParamedicList" xml:space="preserve">
+    <value>Paramedic List</value>
+  </data>
+  <data name="PoliType" xml:space="preserve">
+    <value>Poli Type</value>
+  </data>
 </root>

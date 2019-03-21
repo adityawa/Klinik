@@ -27,13 +27,13 @@ namespace Klinik.Features
         /// </summary>
         /// <param name="request"></param>
         /// <param name="response"></param>
-        public void Validate(DoctorRequest request, out DoctorResponse response)
+        public DoctorResponse Validate(DoctorRequest request)
         {
-            response = new DoctorResponse();
+            DoctorResponse response = new DoctorResponse();
 
             if (request.Action != null && request.Action.Equals(ClinicEnums.Action.DELETE.ToString()))
             {
-                ValidateForDelete(request, out response);
+                response = ValidateForDelete(request);
             }
             else
             {
@@ -63,11 +63,15 @@ namespace Klinik.Features
 
                 if (request.Data.Id == 0)
                 {
-                    isHavePrivilege = IsHaveAuthorization(ADD_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
+                    string privilegeName = request.Data.TypeID == 0 ? ADD_PRIVILEGE_NAME : "ADD_M_PARAMEDIC";
+
+                    isHavePrivilege = IsHaveAuthorization(privilegeName, request.Data.Account.Privileges.PrivilegeIDs);
                 }
                 else
                 {
-                    isHavePrivilege = IsHaveAuthorization(EDIT_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
+                    string privilegeName = request.Data.TypeID == 0 ? EDIT_PRIVILEGE_NAME : "EDIT_M_PARAMEDIC";
+
+                    isHavePrivilege = IsHaveAuthorization(privilegeName, request.Data.Account.Privileges.PrivilegeIDs);
                 }
 
                 if (!isHavePrivilege)
@@ -81,6 +85,8 @@ namespace Klinik.Features
                     response = new DoctorHandler(_unitOfWork).CreateOrEdit(request);
                 }
             }
+
+            return response;
         }
 
         /// <summary>
@@ -88,13 +94,13 @@ namespace Klinik.Features
         /// </summary>
         /// <param name="request"></param>
         /// <param name="response"></param>
-        private void ValidateForDelete(DoctorRequest request, out DoctorResponse response)
+        private DoctorResponse ValidateForDelete(DoctorRequest request)
         {
-            response = new DoctorResponse();
-
+            DoctorResponse response = new DoctorResponse();
+            string privilegeName = request.Data.TypeID == 0 ? DELETE_PRIVILEGE_NAME : "DELETE_M_PARAMEDIC";
             if (request.Action == ClinicEnums.Action.DELETE.ToString())
             {
-                bool isHavePrivilege = IsHaveAuthorization(DELETE_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
+                bool isHavePrivilege = IsHaveAuthorization(privilegeName, request.Data.Account.Privileges.PrivilegeIDs);
                 if (!isHavePrivilege)
                 {
                     response.Status = false;
@@ -104,8 +110,10 @@ namespace Klinik.Features
 
             if (response.Status)
             {
-                response = new DoctorHandler(_unitOfWork).RemoveData(request);
+                response = new DoctorHandler(_unitOfWork).RemoveData(request, request.Data.TypeID == 0);
             }
+
+            return response;
         }
     }
 }

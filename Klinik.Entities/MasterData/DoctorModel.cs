@@ -6,10 +6,10 @@ namespace Klinik.Entities.MasterData
     {
         public string Code { get; set; }
         public string Name { get; set; }
-        public int? SpesialisID { get; set; }
+        public int? SpecialistID { get; set; }
         public int? TypeID { get; set; }
         public string TypeName { get; set; }
-        public string SpesialisName { get; set; }
+        public string SpecialistName { get; set; }
         public string KTPNumber { get; set; }
         public string STRNumber { get; set; }
         public DateTime? STRValidFrom { get; set; }

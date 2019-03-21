@@ -25,7 +25,7 @@ namespace Klinik.Data.DataRepository
         public int ID { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public Nullable<int> SpesialisID { get; set; }
+        public Nullable<int> SpecialistID { get; set; }
         public Nullable<int> TypeID { get; set; }
         public string KTPNumber { get; set; }
         public string STRNumber { get; set; }

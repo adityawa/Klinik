@@ -49,6 +49,7 @@ namespace Klinik.Features
             DoctorResponse response = new DoctorResponse();
             try
             {
+                string type = request.Data.TypeID == 0 ? Messages.Doctor : Messages.Paramedic;
                 if (request.Data.Id > 0)
                 {
                     var qry = _unitOfWork.DoctorRepository.GetById(request.Data.Id);
@@ -67,7 +68,8 @@ namespace Klinik.Features
                         qry.Email = request.Data.Email;
                         qry.HPNumber = request.Data.HPNumber;
                         qry.Remark = request.Data.Remark;
-                        qry.SpesialisID = request.Data.SpesialisID;
+                        qry.SpecialistID = request.Data.SpecialistID;
+                        qry.TypeID = request.Data.TypeID;
                         qry.ModifiedDate = DateTime.Now;
                         qry.ModifiedBy = request.Data.ModifiedBy ?? "SYSTEM";
 
@@ -75,14 +77,14 @@ namespace Klinik.Features
                         int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Doctor", qry.Name, qry.Code);
+                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, type, qry.Name, qry.Code);
 
                             CommandLog(true, ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.EDIT_DOCTOR, request.Data.Account, request.Data, _oldentity);
                         }
                         else
                         {
                             response.Status = false;
-                            response.Message = string.Format(Messages.UpdateObjectFailed, "Doctor");
+                            response.Message = string.Format(Messages.UpdateObjectFailed, type);
 
                             CommandLog(false, ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.EDIT_DOCTOR, request.Data.Account, request.Data, _oldentity);
                         }
@@ -90,7 +92,7 @@ namespace Klinik.Features
                     else
                     {
                         response.Status = false;
-                        response.Message = string.Format(Messages.UpdateObjectFailed, "Doctor");
+                        response.Message = string.Format(Messages.UpdateObjectFailed, type);
 
                         CommandLog(false, ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.EDIT_DOCTOR, request.Data.Account, request.Data);
                     }
@@ -106,14 +108,14 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "Doctor", doctorEntity.Name, doctorEntity.Code);
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, type, doctorEntity.Name, doctorEntity.Code);
 
                         CommandLog(true, ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.ADD_NEW_DOCTOR, request.Data.Account, request.Data);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = string.Format(Messages.AddObjectFailed, "Doctor");
+                        response.Message = string.Format(Messages.AddObjectFailed, type);
 
                         CommandLog(false, ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.ADD_NEW_DOCTOR, request.Data.Account, request.Data);
                     }
@@ -155,15 +157,30 @@ namespace Klinik.Features
         }
 
         /// <summary>
-        /// Get employee list of data
+        /// Get list data
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         public DoctorResponse GetListData(DoctorRequest request)
         {
+            return GetListData(request, true);
+        }
+
+        /// <summary>
+        /// Get employee list of data
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="isDoctor"></param>
+        /// <returns></returns>
+        public DoctorResponse GetListData(DoctorRequest request, bool isDoctor)
+        {
             List<DoctorModel> lists = new List<DoctorModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<Doctor>(true);
+
+            // add default filter to show doctor or paramedic list            
+            searchPredicate = searchPredicate.And(p => p.TypeID == (isDoctor ? 0 : 1));
+
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.Code.Contains(request.SearchValue) || p.Name.Contains(request.SearchValue));
@@ -212,18 +229,19 @@ namespace Klinik.Features
             foreach (var item in qry)
             {
                 DoctorModel doctorData = Mapper.Map<Doctor, DoctorModel>(item);
-                bool isDoctor = doctorData.TypeID == (int)ParamedicTypeEnum.Doctor;
                 doctorData.TypeName = isDoctor ? Messages.Doctor : Messages.Paramedic;
+
                 if (isDoctor)
                 {
-                    long _doctorTypeId = doctorData.SpesialisID ?? 0;
-                    var getDoctorTypeDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _doctorTypeId && x.Type == ClinicEnums.MasterTypes.DoctorType.ToString());
-                    if (getDoctorTypeDesc != null)
-                        doctorData.SpesialisName = getDoctorTypeDesc.Name ?? "";
+                    var doctor = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Value == doctorData.SpecialistID.ToString() && x.Type == ClinicEnums.MasterTypes.DoctorType.ToString());
+                    if (doctor != null)
+                        doctorData.SpecialistName = doctor.Name;
                 }
                 else
                 {
-                    doctorData.SpesialisName = "-";
+                    var paramedic = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Value == doctorData.SpecialistID.ToString() && x.Type == ClinicEnums.MasterTypes.ParamedicType.ToString());
+                    if (paramedic != null)
+                        doctorData.SpecialistName = paramedic.Name;
                 }
 
                 lists.Add(doctorData);
@@ -250,9 +268,21 @@ namespace Klinik.Features
         /// <returns></returns>
         public DoctorResponse RemoveData(DoctorRequest request)
         {
+            return RemoveData(request, true);
+        }
+
+        /// <summary>
+        /// Remove employee data
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="isDoctor"></param>
+        /// <returns></returns>
+        public DoctorResponse RemoveData(DoctorRequest request, bool isDoctor)
+        {
             DoctorResponse response = new DoctorResponse();
             try
             {
+                string type = isDoctor ? Messages.Doctor : Messages.Paramedic;
                 var isExist = _unitOfWork.DoctorRepository.GetById(request.Data.Id);
                 if (isExist.ID > 0)
                 {
@@ -260,18 +290,18 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Doctor", isExist.Name, isExist.Code);
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, type, isExist.Name, isExist.Code);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = string.Format(Messages.RemoveObjectFailed, "Doctor");
+                        response.Message = string.Format(Messages.RemoveObjectFailed, type);
                     }
                 }
                 else
                 {
                     response.Status = false;
-                    response.Message = string.Format(Messages.RemoveObjectFailed, "Doctor");
+                    response.Message = string.Format(Messages.RemoveObjectFailed, type);
                 }
             }
             catch

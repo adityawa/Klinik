@@ -41,7 +41,8 @@
             MASTER_DOCTOR,
             EMPLOYEE_ASSIGNMENT,
             REGISTRATION,
-            POLI_SCHEDULE
+            POLI_SCHEDULE,
+            MASTER_PARAMEDIC
         }
 
         public enum Action

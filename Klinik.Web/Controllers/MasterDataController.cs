@@ -82,7 +82,7 @@ namespace Klinik.Web.Controllers
             {
                 _employeeActiveLists.Add(new SelectListItem
                 {
-                    Text =$"{item.EmpID} - {item.EmpName}",
+                    Text = $"{item.EmpID} - {item.EmpName}",
                     Value = item.Id.ToString()
                 });
             }
@@ -149,7 +149,22 @@ namespace Klinik.Web.Controllers
                 _doctorTypes.Add(new SelectListItem
                 {
                     Text = item.Name,
-                    Value = item.Id.ToString()
+                    Value = item.Value
+                });
+            }
+
+            return _doctorTypes;
+        }
+
+        private List<SelectListItem> BindDropDownParamedicType()
+        {
+            List<SelectListItem> _doctorTypes = new List<SelectListItem>();
+            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.MasterTypes.ParamedicType.ToString()).ToList())
+            {
+                _doctorTypes.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Value
                 });
             }
 
@@ -843,6 +858,109 @@ namespace Klinik.Web.Controllers
         }
         #endregion
 
+        #region ::PARAMEDIC::
+        [CustomAuthorize("VIEW_M_PARAMEDIC")]
+        public ActionResult ParamedicList()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateOrEditParamedic(DoctorModel _model)
+        {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new DoctorRequest
+            {
+                Data = _model
+            };
+
+            DoctorResponse _response = new DoctorValidator(_unitOfWork).Validate(request);
+            ViewBag.Response = $"{_response.Status};{_response.Message}";
+            ViewBag.ParamedicTypes = BindDropDownParamedicType();
+            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
+            return View();
+        }
+
+        [CustomAuthorize("ADD_M_PARAMEDIC", "EDIT_M_PARAMEDIC")]
+        public ActionResult CreateOrEditParamedic()
+        {
+            DoctorResponse _response = new DoctorResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new DoctorRequest
+                {
+                    Data = new DoctorModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                DoctorResponse resp = new DoctorHandler(_unitOfWork).GetDetail(request);
+                DoctorModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.ParamedicTypes = BindDropDownParamedicType();
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.ParamedicTypes = BindDropDownParamedicType();
+                ViewBag.ActionType = ClinicEnums.Action.Add;
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetParamedic()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new DoctorRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            var response = new DoctorHandler(_unitOfWork).GetListData(request, false);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteMasterParamedic(int id)
+        {
+            var request = new DoctorRequest
+            {
+                Data = new DoctorModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            DoctorResponse _response = new DoctorValidator(_unitOfWork).Validate(request);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
         #region ::DOCTOR::
         [CustomAuthorize("VIEW_M_DOCTOR")]
         public ActionResult DoctorList()
@@ -861,9 +979,7 @@ namespace Klinik.Web.Controllers
                 Data = _model
             };
 
-            DoctorResponse _response = new DoctorResponse();
-
-            new DoctorValidator(_unitOfWork).Validate(request, out _response);
+            DoctorResponse _response = new DoctorValidator(_unitOfWork).Validate(request);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
             ViewBag.DoctorTypes = BindDropDownDoctorType();
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
@@ -932,7 +1048,6 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public JsonResult DeleteMasterDoctor(int id)
         {
-            DoctorResponse _response = new DoctorResponse();
             var request = new DoctorRequest
             {
                 Data = new DoctorModel
@@ -943,7 +1058,7 @@ namespace Klinik.Web.Controllers
                 Action = ClinicEnums.Action.DELETE.ToString()
             };
 
-            new DoctorValidator(_unitOfWork).Validate(request, out _response);
+            DoctorResponse _response = new DoctorValidator(_unitOfWork).Validate(request);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }

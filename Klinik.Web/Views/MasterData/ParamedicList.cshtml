@@ -1,7 +1,7 @@
 ﻿@model Klinik.Entities.MasterData.DoctorModel
 
 @{
-    ViewBag.Title = "DoctorList";
+    ViewBag.Title = "ParamedicList";
 }
 
 <link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
@@ -15,7 +15,7 @@
         <div class="panel-actions">
             <a href="#" class="fa fa-caret-down"></a>
         </div>
-        <h5 class="panel-title">@Klinik.Resources.UIMessages.DoctorList</h5>
+        <h5 class="panel-title">@Klinik.Resources.UIMessages.ParamedicList</h5>
     </header>
     <div class="panel-body">
         <div style="width:100%; margin:0 auto">
@@ -46,7 +46,7 @@
     $(document).ready(function () {
 
         $('#btnAdd').click(function (e) {
-            window.location.href = "/MasterData/CreateOrEditDoctor";
+            window.location.href = "/MasterData/CreateOrEditParamedic";
         });
 
         $('#tbDoctor').dataTable({
@@ -56,7 +56,7 @@
             "orderMulti": false,
             "pageLength": 10,
             "ajax": {
-                "url": "/MasterData/GetDoctor",
+                "url": "/MasterData/GetParamedic",
                 "type": "POST",
                 "datatype": "json"
             },
@@ -144,7 +144,7 @@
                 { "data": "HPNumber", "name": "HPNumber", "autoWidth": true },
                 { "data": "Remark", "name": "Remark", "autoWidth": true },
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditDoctor?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>"; }
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditParamedic?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>"; }
                 }
             ]
         });
@@ -172,7 +172,7 @@
 
     function DeleteDoctor(Id) {
         $.ajax({
-            url: '/MasterData/DeleteMasterDoctor?id=' + Id,
+            url: '/MasterData/DeleteMasterParamedic?id=' + Id,
             type: 'POST',
             success: function (result) {
                 if (result.Status == "True") {

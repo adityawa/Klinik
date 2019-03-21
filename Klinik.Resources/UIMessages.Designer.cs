@@ -835,6 +835,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Paramedic List.
+        /// </summary>
+        public static string ParamedicList {
+            get {
+                return ResourceManager.GetString("ParamedicList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paramedic Type.
         /// </summary>
         public static string ParamedicType {
@@ -903,6 +912,15 @@ namespace Klinik.Resources {
         public static string PoliTo {
             get {
                 return ResourceManager.GetString("PoliTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Poli Type.
+        /// </summary>
+        public static string PoliType {
+            get {
+                return ResourceManager.GetString("PoliType", resourceCulture);
             }
         }
         
