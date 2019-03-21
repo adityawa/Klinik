@@ -495,4 +495,16 @@
   <data name="Poli" xml:space="preserve">
     <value>Poli</value>
   </data>
+  <data name="Paramedic" xml:space="preserve">
+    <value>Paramedic</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="DoctorOrParamedic" xml:space="preserve">
+    <value>Doctor / Paramedic</value>
+  </data>
+  <data name="ParamedicType" xml:space="preserve">
+    <value>Paramedic Type</value>
+  </data>
 </root>

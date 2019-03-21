@@ -97,6 +97,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Doctor.
+        /// </summary>
+        public static string Doctor {
+            get {
+                return ResourceManager.GetString("Doctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hi,
         ///
         ///We got request for reset your account password. Please click on the below link to reset your password 
@@ -226,6 +235,15 @@ namespace Klinik.Resources {
         public static string OneEmpOneUserID {
             get {
                 return ResourceManager.GetString("OneEmpOneUserID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paramedic.
+        /// </summary>
+        public static string Paramedic {
+            get {
+                return ResourceManager.GetString("Paramedic", resourceCulture);
             }
         }
         

@@ -25,6 +25,7 @@
                         <th>@Klinik.Resources.UIMessages.ID</th>
                         <th>@Klinik.Resources.UIMessages.Code</th>
                         <th>@Klinik.Resources.UIMessages.Name</th>
+                        <th>@Klinik.Resources.UIMessages.ParamedicType</th>
                         <th>@Klinik.Resources.UIMessages.DoctorType</th>
                         <th>@Klinik.Resources.UIMessages.KTPNumber</th>
                         <th>@Klinik.Resources.UIMessages.STRNumber</th>
@@ -127,6 +128,11 @@
                     "targets": [12],
                     "searchable": false,
                     "orderable": false
+                },
+                {
+                    "targets": [13],
+                    "searchable": false,
+                    "orderable": false
                 }
                 ],
 
@@ -134,7 +140,8 @@
                 { "data": "Id", "name": "Id", "autoWidth": false },
                 { "data": "Code", "name": "Code", "autoWidth": true },
                 { "data": "Name", "name": "Name", "autoWidth": true },
-                { "data": "SpesialisName", "name": "Name", "autoWidth": true },
+                { "data": "TypeName", "name": "TypeID", "autoWidth": true },
+                { "data": "SpesialisName", "name": "SpesialisID", "autoWidth": true },
                 { "data": "KTPNumber", "name": "KTPNumber", "autoWidth": true },
                 { "data": "STRNumber", "name": "STRNumber", "autoWidth": true },
                 { "data": "STRValidFromStr", "name": "STRValidFrom", "autoWidth": true },

@@ -212,10 +212,19 @@ namespace Klinik.Features
             foreach (var item in qry)
             {
                 DoctorModel doctorData = Mapper.Map<Doctor, DoctorModel>(item);
-                long _doctorTypeId = doctorData.SpesialisID ?? 0;
-                var getDoctorTypeDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _doctorTypeId && x.Type == ClinicEnums.MasterTypes.DoctorType.ToString());
-                if (getDoctorTypeDesc != null)
-                    doctorData.SpesialisName = getDoctorTypeDesc.Name ?? "";
+                bool isDoctor = doctorData.TypeID == (int)ParamedicTypeEnum.Doctor;
+                doctorData.TypeName = isDoctor ? Messages.Doctor : Messages.Paramedic;
+                if (isDoctor)
+                {
+                    long _doctorTypeId = doctorData.SpesialisID ?? 0;
+                    var getDoctorTypeDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _doctorTypeId && x.Type == ClinicEnums.MasterTypes.DoctorType.ToString());
+                    if (getDoctorTypeDesc != null)
+                        doctorData.SpesialisName = getDoctorTypeDesc.Name ?? "";
+                }
+                else
+                {
+                    doctorData.SpesialisName = "-";
+                }
 
                 lists.Add(doctorData);
             }

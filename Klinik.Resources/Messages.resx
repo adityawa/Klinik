@@ -226,4 +226,10 @@ Administrator</value>
   <data name="ObjectHasBeenRemoved2" xml:space="preserve">
     <value>{0} with ID {1} has been successfully removed</value>
   </data>
+  <data name="Doctor" xml:space="preserve">
+    <value>Doctor</value>
+  </data>
+  <data name="Paramedic" xml:space="preserve">
+    <value>Paramedic</value>
+  </data>
 </root>

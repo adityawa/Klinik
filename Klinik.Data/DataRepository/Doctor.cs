@@ -26,6 +26,7 @@ namespace Klinik.Data.DataRepository
         public string Code { get; set; }
         public string Name { get; set; }
         public Nullable<int> SpesialisID { get; set; }
+        public Nullable<int> TypeID { get; set; }
         public string KTPNumber { get; set; }
         public string STRNumber { get; set; }
         public Nullable<System.DateTime> STRValidFrom { get; set; }

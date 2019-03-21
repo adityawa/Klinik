@@ -313,6 +313,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Doctor / Paramedic.
+        /// </summary>
+        public static string DoctorOrParamedic {
+            get {
+                return ResourceManager.GetString("DoctorOrParamedic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Doctor Type.
         /// </summary>
         public static string DoctorType {
@@ -817,6 +826,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Paramedic.
+        /// </summary>
+        public static string Paramedic {
+            get {
+                return ResourceManager.GetString("Paramedic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paramedic Type.
+        /// </summary>
+        public static string ParamedicType {
+            get {
+                return ResourceManager.GetString("ParamedicType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string Password {
@@ -1137,6 +1164,15 @@ namespace Klinik.Resources {
         public static string TransactionDate {
             get {
                 return ResourceManager.GetString("TransactionDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
             }
         }
         
