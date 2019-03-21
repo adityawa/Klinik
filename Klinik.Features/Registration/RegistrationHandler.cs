@@ -78,7 +78,7 @@ namespace Klinik.Features.Registration
                 else
                 {
                     var regEntity = Mapper.Map<RegistrationModel, QueuePoli>(request.Data);
-                    regEntity.CreatedBy = request.Data.CreatedBy ?? "SYSTEM";
+                    regEntity.CreatedBy = request.Data.Account.UserName;
                     regEntity.CreatedDate = DateTime.Now;
                     regEntity.TransactionDate = DateTime.Now;
                     regEntity.Status = (int)RegistrationStatusEnum.New;

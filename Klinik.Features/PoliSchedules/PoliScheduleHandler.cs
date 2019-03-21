@@ -79,7 +79,7 @@ namespace Klinik.Features.PoliSchedules
                 else
                 {
                     var regEntity = Mapper.Map<PoliScheduleModel, PoliSchedule>(request.Data);
-                    regEntity.CreatedBy = request.Data.CreatedBy ?? "SYSTEM";
+                    regEntity.CreatedBy = request.Data.Account.UserName;
                     regEntity.CreatedDate = DateTime.Now;
 
                     _unitOfWork.PoliScheduleRepository.Insert(regEntity);

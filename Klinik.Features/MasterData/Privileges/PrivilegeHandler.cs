@@ -74,7 +74,7 @@ namespace Klinik.Features
                 else
                 {
                     var PrivilegeEntity = Mapper.Map<PrivilegeModel, Privilege>(request.Data);
-                    PrivilegeEntity.CreatedBy = request.Data.CreatedBy ?? "SYSTEM";
+                    PrivilegeEntity.CreatedBy = request.Data.Account.UserName;
                     PrivilegeEntity.CreatedDate = DateTime.Now;
 
                     _unitOfWork.PrivilegeRepository.Insert(PrivilegeEntity);
