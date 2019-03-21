@@ -46,7 +46,7 @@ namespace Klinik.Features.Registration
                         qry.Status = request.Data.Status;
                         qry.PoliFrom = request.Data.PoliFromID;
                         qry.PoliTo = request.Data.PoliToID;
-                        qry.Doctor = request.Data.Doctor;
+                        qry.DoctorID = request.Data.DoctorID;
                         qry.Type = (short)request.Data.Type;
                         qry.ReffID = request.Data.ReffID;
                         qry.Remark = request.Data.Remark;
@@ -264,9 +264,9 @@ namespace Klinik.Features.Registration
                 RegistrationModel prData = Mapper.Map<QueuePoli, RegistrationModel>(item);
 
                 // get the doctor name
-                if (prData.Doctor != 0)
+                if (prData.DoctorID != 0)
                 {
-                    Doctor doctor = _unitOfWork.DoctorRepository.GetById(prData.Doctor);
+                    Doctor doctor = _unitOfWork.DoctorRepository.GetById(prData.DoctorID);
                     if (doctor != null)
                         prData.DoctorStr = doctor.Name;
                 }

@@ -513,4 +513,16 @@
   <data name="PoliType" xml:space="preserve">
     <value>Poli Type</value>
   </data>
+  <data name="Day" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>End Time</value>
+  </data>
+  <data name="PoliScheduleMasterList" xml:space="preserve">
+    <value>Poli Schedule Master List</value>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Start Time</value>
+  </data>
 </root>

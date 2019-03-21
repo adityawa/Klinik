@@ -232,4 +232,7 @@ Administrator</value>
   <data name="Paramedic" xml:space="preserve">
     <value>Paramedic</value>
   </data>
+  <data name="InvalidModelState" xml:space="preserve">
+    <value>Invalid Model State. Please check your input.</value>
+  </data>
 </root>

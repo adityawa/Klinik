@@ -20,7 +20,8 @@
             ClinicType,
             DoctorType,
             PoliScheduleStatus,
-            ParamedicType
+            ParamedicType,
+            Day
         }
 
         public enum AuthResult

@@ -116,6 +116,10 @@
     <Compile Include="MasterData\User\UserRequest.cs" />
     <Compile Include="MasterData\User\UserResponse.cs" />
     <Compile Include="MasterData\User\UserValidator.cs" />
+    <Compile Include="PoliScheduleMaster\PoliScheduleMasterHandler.cs" />
+    <Compile Include="PoliScheduleMaster\PoliScheduleMasterRequest.cs" />
+    <Compile Include="PoliScheduleMaster\PoliScheduleMasterResponse.cs" />
+    <Compile Include="PoliScheduleMaster\PoliScheduleMasterValidator.cs" />
     <Compile Include="PoliSchedules\PoliScheduleHandler.cs" />
     <Compile Include="PoliSchedules\PoliScheduleRequest.cs" />
     <Compile Include="PoliSchedules\PoliScheduleResponse.cs" />
@@ -145,7 +149,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

@@ -17,6 +17,7 @@ namespace Klinik.Data.DataRepository
         public long ID { get; set; }
         public Nullable<long> ClinicID { get; set; }
         public Nullable<long> PatientID { get; set; }
+        public Nullable<int> DoctorID { get; set; }
         public Nullable<System.DateTime> TransactionDate { get; set; }
         public Nullable<short> Type { get; set; }
         public Nullable<long> AppointmentID { get; set; }
@@ -30,9 +31,9 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<int> Doctor { get; set; }
     
         public virtual Clinic Clinic { get; set; }
+        public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual Poli Poli { get; set; }
         public virtual Poli Poli1 { get; set; }

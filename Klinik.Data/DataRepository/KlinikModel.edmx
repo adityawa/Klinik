@@ -404,6 +404,7 @@
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ClinicID" Type="bigint" />
           <Property Name="PatientID" Type="bigint" />
+          <Property Name="DoctorID" Type="int" />
           <Property Name="TransactionDate" Type="datetime" />
           <Property Name="Type" Type="smallint" />
           <Property Name="AppointmentID" Type="bigint" />
@@ -417,7 +418,6 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="Doctor" Type="int" />
         </EntityType>
         <EntityType Name="RolePrivilege">
           <Key>
@@ -811,6 +811,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_QueuePoli_Doctor">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+          <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QueuePoli">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_QueuePoli_Patient">
           <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
           <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
@@ -823,7 +835,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_QueuePoli_Poli">
+        <Association Name="FK_QueuePoli_PoliFrom">
           <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
           <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
           <ReferentialConstraint>
@@ -835,7 +847,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_QueuePoli_Poli1">
+        <Association Name="FK_QueuePoli_PoliTo">
           <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
           <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1067,15 +1079,19 @@
             <End Role="Clinic" EntitySet="Clinic" />
             <End Role="QueuePoli" EntitySet="QueuePoli" />
           </AssociationSet>
+          <AssociationSet Name="FK_QueuePoli_Doctor" Association="Self.FK_QueuePoli_Doctor">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="QueuePoli" EntitySet="QueuePoli" />
+          </AssociationSet>
           <AssociationSet Name="FK_QueuePoli_Patient" Association="Self.FK_QueuePoli_Patient">
             <End Role="Patient" EntitySet="Patient" />
             <End Role="QueuePoli" EntitySet="QueuePoli" />
           </AssociationSet>
-          <AssociationSet Name="FK_QueuePoli_Poli" Association="Self.FK_QueuePoli_Poli">
+          <AssociationSet Name="FK_QueuePoli_PoliFrom" Association="Self.FK_QueuePoli_PoliFrom">
             <End Role="Poli" EntitySet="Poli" />
             <End Role="QueuePoli" EntitySet="QueuePoli" />
           </AssociationSet>
-          <AssociationSet Name="FK_QueuePoli_Poli1" Association="Self.FK_QueuePoli_Poli1">
+          <AssociationSet Name="FK_QueuePoli_PoliTo" Association="Self.FK_QueuePoli_PoliTo">
             <End Role="Poli" EntitySet="Poli" />
             <End Role="QueuePoli" EntitySet="QueuePoli" />
           </AssociationSet>
@@ -1195,6 +1211,7 @@
           <NavigationProperty Name="DoctorClinics" Relationship="Self.FK_DoctorClinic_Doctor" FromRole="Doctor" ToRole="DoctorClinic" />
           <NavigationProperty Name="PoliSchedules" Relationship="Self.FK_PoliSchedule_Doctor" FromRole="Doctor" ToRole="PoliSchedule" />
           <NavigationProperty Name="PoliScheduleMasters" Relationship="Self.FK_PoliScheduleMaster_Doctor" FromRole="Doctor" ToRole="PoliScheduleMaster" />
+          <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_Doctor" FromRole="Doctor" ToRole="QueuePoli" />
         </EntityType>
         <EntityType Name="DoctorClinic">
           <Key>
@@ -1477,8 +1494,8 @@
           <NavigationProperty Name="PoliClinics" Relationship="Self.FK_PoliClinic_Poli" FromRole="Poli" ToRole="PoliClinic" />
           <NavigationProperty Name="PoliSchedules" Relationship="Self.FK_PoliSchedule_Poli" FromRole="Poli" ToRole="PoliSchedule" />
           <NavigationProperty Name="PoliScheduleMasters" Relationship="Self.FK_PoliScheduleMaster_Poli" FromRole="Poli" ToRole="PoliScheduleMaster" />
-          <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_Poli" FromRole="Poli" ToRole="QueuePoli" />
-          <NavigationProperty Name="QueuePolis1" Relationship="Self.FK_QueuePoli_Poli1" FromRole="Poli" ToRole="QueuePoli" />
+          <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_PoliFrom" FromRole="Poli" ToRole="QueuePoli" />
+          <NavigationProperty Name="QueuePolis1" Relationship="Self.FK_QueuePoli_PoliTo" FromRole="Poli" ToRole="QueuePoli" />
         </EntityType>
         <EntityType Name="PoliClinic">
           <Key>
@@ -1573,6 +1590,7 @@
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ClinicID" Type="Int64" />
           <Property Name="PatientID" Type="Int64" />
+          <Property Name="DoctorID" Type="Int32" />
           <Property Name="TransactionDate" Type="DateTime" Precision="3" />
           <Property Name="Type" Type="Int16" />
           <Property Name="AppointmentID" Type="Int64" />
@@ -1586,11 +1604,11 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="Doctor" Type="Int32" />
           <NavigationProperty Name="Clinic" Relationship="Self.FK_QueuePoli_Clinic" FromRole="QueuePoli" ToRole="Clinic" />
+          <NavigationProperty Name="Doctor" Relationship="Self.FK_QueuePoli_Doctor" FromRole="QueuePoli" ToRole="Doctor" />
           <NavigationProperty Name="Patient" Relationship="Self.FK_QueuePoli_Patient" FromRole="QueuePoli" ToRole="Patient" />
-          <NavigationProperty Name="Poli" Relationship="Self.FK_QueuePoli_Poli" FromRole="QueuePoli" ToRole="Poli" />
-          <NavigationProperty Name="Poli1" Relationship="Self.FK_QueuePoli_Poli1" FromRole="QueuePoli" ToRole="Poli" />
+          <NavigationProperty Name="Poli" Relationship="Self.FK_QueuePoli_PoliFrom" FromRole="QueuePoli" ToRole="Poli" />
+          <NavigationProperty Name="Poli1" Relationship="Self.FK_QueuePoli_PoliTo" FromRole="QueuePoli" ToRole="Poli" />
         </EntityType>
         <EntityType Name="RolePrivilege">
           <Key>
@@ -1795,6 +1813,18 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="PoliScheduleMaster">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QueuePoli_Doctor">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+          <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QueuePoli">
               <PropertyRef Name="DoctorID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2051,7 +2081,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_QueuePoli_Poli">
+        <Association Name="FK_QueuePoli_PoliFrom">
           <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
           <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2063,7 +2093,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_QueuePoli_Poli1">
+        <Association Name="FK_QueuePoli_PoliTo">
           <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
           <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2183,6 +2213,10 @@
             <End Role="Doctor" EntitySet="Doctors" />
             <End Role="PoliScheduleMaster" EntitySet="PoliScheduleMasters" />
           </AssociationSet>
+          <AssociationSet Name="FK_QueuePoli_Doctor" Association="Self.FK_QueuePoli_Doctor">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="QueuePoli" EntitySet="QueuePolis" />
+          </AssociationSet>
           <AssociationSet Name="FK_DoctorClinic_FileArchieve" Association="Self.FK_DoctorClinic_FileArchieve">
             <End Role="FileArchieve" EntitySet="FileArchieves" />
             <End Role="DoctorClinic" EntitySet="DoctorClinics" />
@@ -2267,11 +2301,11 @@
             <End Role="Poli" EntitySet="Polis" />
             <End Role="PoliScheduleMaster" EntitySet="PoliScheduleMasters" />
           </AssociationSet>
-          <AssociationSet Name="FK_QueuePoli_Poli" Association="Self.FK_QueuePoli_Poli">
+          <AssociationSet Name="FK_QueuePoli_PoliFrom" Association="Self.FK_QueuePoli_PoliFrom">
             <End Role="Poli" EntitySet="Polis" />
             <End Role="QueuePoli" EntitySet="QueuePolis" />
           </AssociationSet>
-          <AssociationSet Name="FK_QueuePoli_Poli1" Association="Self.FK_QueuePoli_Poli1">
+          <AssociationSet Name="FK_QueuePoli_PoliTo" Association="Self.FK_QueuePoli_PoliTo">
             <End Role="Poli" EntitySet="Polis" />
             <End Role="QueuePoli" EntitySet="QueuePolis" />
           </AssociationSet>
@@ -2714,6 +2748,7 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
                 <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
                 <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="AppointmentID" ColumnName="AppointmentID" />
@@ -2727,7 +2762,6 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="Doctor" ColumnName="Doctor" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

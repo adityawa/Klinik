@@ -87,6 +87,7 @@
     <Compile Include="MasterData\PrivilegeModel.cs" />
     <Compile Include="MasterData\RoleModel.cs" />
     <Compile Include="MasterData\UserModel.cs" />
+    <Compile Include="PoliSchedule\PoliScheduleMasterModel.cs" />
     <Compile Include="PoliSchedule\PoliScheduleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\RegistrationModel.cs" />

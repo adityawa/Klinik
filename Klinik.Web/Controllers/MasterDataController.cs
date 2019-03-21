@@ -158,17 +158,17 @@ namespace Klinik.Web.Controllers
 
         private List<SelectListItem> BindDropDownParamedicType()
         {
-            List<SelectListItem> _doctorTypes = new List<SelectListItem>();
+            List<SelectListItem> _paramedicTypes = new List<SelectListItem>();
             foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.MasterTypes.ParamedicType.ToString()).ToList())
             {
-                _doctorTypes.Add(new SelectListItem
+                _paramedicTypes.Add(new SelectListItem
                 {
                     Text = item.Name,
                     Value = item.Value
                 });
             }
 
-            return _doctorTypes;
+            return _paramedicTypes;
         }
 
         private List<SelectListItem> BindDropDownClinicType()

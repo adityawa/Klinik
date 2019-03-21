@@ -140,6 +140,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Model State. Please check your input..
+        /// </summary>
+        public static string InvalidModelState {
+            get {
+                return ResourceManager.GetString("InvalidModelState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Organization Code.
         /// </summary>
         public static string InvalidOrganizationCode {

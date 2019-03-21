@@ -28,11 +28,22 @@ namespace Klinik.Data
         private IGenericRepository<PoliFlowTemplate> _poliFlowTemplateRepository;
         private IGenericRepository<Doctor> _doctorRepository;
         private IGenericRepository<PoliSchedule> _poliScheduleRepository;
+        private IGenericRepository<PoliScheduleMaster> _poliScheduleMasterRepository;
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
         {
             _context = context;
+        }
+
+        public IGenericRepository<PoliScheduleMaster> PoliScheduleMasterRepository
+        {
+            get
+            {
+                if (_poliScheduleMasterRepository == null)
+                    _poliScheduleMasterRepository = new GenericRepository<PoliScheduleMaster>(_context);
+                return _poliScheduleMasterRepository;
+            }
         }
 
         public IGenericRepository<PoliSchedule> PoliScheduleRepository

@@ -5,9 +5,12 @@ using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
 using Klinik.Entities.PoliSchedules;
+using Klinik.Features;
 using Klinik.Features.PoliSchedules;
+using Klinik.Resources;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -85,8 +88,140 @@ namespace Klinik.Web.Controllers
 
             return _typeList;
         }
+
+        private List<SelectListItem> BindDropDownDay()
+        {
+            List<SelectListItem> _dayList = new List<SelectListItem>();
+            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.MasterTypes.Day.ToString()).ToList())
+            {
+                _dayList.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Value
+                });
+            }
+
+            return _dayList;
+        }
         #endregion
 
+        #region ::POLISCHEDULEMASTER::
+        [CustomAuthorize("VIEW_M_POLISCHEDULE_M")]
+        public ActionResult Master() => View();
+
+        [HttpPost]
+        public ActionResult CreateOrEditPoliScheduleMaster(PoliScheduleMasterModel _model)
+        {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            // convert the time
+            DateTime startDate = DateTime.ParseExact(_model.StartTimeStr, "hh:mm tt", CultureInfo.InvariantCulture);
+            _model.StartTime = startDate.TimeOfDay;
+
+            DateTime endDate = DateTime.ParseExact(_model.EndTimeStr, "hh:mm tt", CultureInfo.InvariantCulture);
+            _model.EndTime = endDate.TimeOfDay;
+
+            var request = new PoliScheduleMasterRequest
+            {
+                Data = _model,
+            };
+
+            PoliScheduleMasterResponse _response = new PoliScheduleMasterValidator(_unitOfWork).Validate(request);
+            ViewBag.Response = $"{_response.Status};{_response.Message}";
+            ViewBag.Clinics = BindDropDownClinic();
+            ViewBag.Doctors = BindDropDownDoctor();
+            ViewBag.Polis = BindDropDownPoli();
+            ViewBag.Days = BindDropDownDay();
+            ViewBag.ActionType = _model.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
+            return View();
+        }
+
+        [CustomAuthorize("ADD_M_POLISCHEDULE_M", "EDIT_M_POLISCHEDULE_M")]
+        public ActionResult CreateOrEditPoliScheduleMaster()
+        {
+            PoliScheduleMasterResponse _response = new PoliScheduleMasterResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new PoliScheduleMasterRequest
+                {
+                    Data = new PoliScheduleMasterModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                PoliScheduleMasterResponse resp = new PoliScheduleMasterHandler(_unitOfWork).GetDetail(request);
+                PoliScheduleMasterModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.Clinics = BindDropDownClinic();
+                ViewBag.Doctors = BindDropDownDoctor();
+                ViewBag.Polis = BindDropDownPoli();
+                ViewBag.Days = BindDropDownDay();
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.ActionType = ClinicEnums.Action.Add;
+                ViewBag.Response = _response;
+                ViewBag.Clinics = BindDropDownClinic();
+                ViewBag.Doctors = BindDropDownDoctor();
+                ViewBag.Polis = BindDropDownPoli();
+                ViewBag.Days = BindDropDownDay();
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetListDataMaster()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new PoliScheduleMasterRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            var response = new PoliScheduleMasterHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DeletePoliScheduleMaster(int id)
+        {
+            var request = new PoliScheduleMasterRequest
+            {
+                Data = new PoliScheduleMasterModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            PoliScheduleMasterResponse _response = new PoliScheduleMasterValidator(_unitOfWork).Validate(request);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region ::POLISCHEDULE::
         [CustomAuthorize("VIEW_M_POLISCHEDULE")]
         public ActionResult Index() => View();
 
@@ -190,5 +325,6 @@ namespace Klinik.Web.Controllers
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
+        #endregion
     }
 }

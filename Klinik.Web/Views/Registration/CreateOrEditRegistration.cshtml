@@ -55,7 +55,7 @@
                     @Klinik.Resources.UIMessages.Doctor
                 </label>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(p => p.Doctor, (IEnumerable<SelectListItem>)ViewBag.DoctorList, new { @class = "form-control" })
+                    @Html.DropDownListFor(p => p.DoctorID, (IEnumerable<SelectListItem>)ViewBag.DoctorList, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">

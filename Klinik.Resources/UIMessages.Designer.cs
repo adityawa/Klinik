@@ -250,6 +250,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Day.
+        /// </summary>
+        public static string Day {
+            get {
+                return ResourceManager.GetString("Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -453,6 +462,15 @@ namespace Klinik.Resources {
         public static string EndDate {
             get {
                 return ResourceManager.GetString("EndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End Time.
+        /// </summary>
+        public static string EndTime {
+            get {
+                return ResourceManager.GetString("EndTime", resourceCulture);
             }
         }
         
@@ -907,6 +925,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Poli Schedule Master List.
+        /// </summary>
+        public static string PoliScheduleMasterList {
+            get {
+                return ResourceManager.GetString("PoliScheduleMasterList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Poli To.
         /// </summary>
         public static string PoliTo {
@@ -1146,6 +1173,15 @@ namespace Klinik.Resources {
         public static string StartDate {
             get {
                 return ResourceManager.GetString("StartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Time.
+        /// </summary>
+        public static string StartTime {
+            get {
+                return ResourceManager.GetString("StartTime", resourceCulture);
             }
         }
         

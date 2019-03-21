@@ -22,7 +22,7 @@ namespace Klinik.Entities.Registration
         public int ReffID { get; set; }
         public int Status { get; set; }
         public string StatusStr { get; set; }
-        public int Doctor { get; set; }
+        public int DoctorID { get; set; }
         public string DoctorStr { get; set; }
     }
 }
