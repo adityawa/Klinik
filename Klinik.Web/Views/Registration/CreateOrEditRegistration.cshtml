@@ -99,9 +99,9 @@
 
         $("#PoliToID").change(function () {
             $.get("/Registration/GetDoctorList", { PoliId: $("#PoliToID").val() }, function (data) {
-                $("#Doctor").empty();
+                $("#DoctorID").empty();
                 $.each(data, function (index, row) {
-                    $("#Doctor").append('<option value="' + row.ID + '">' + row.Name + '</option>');
+                    $("#DoctorID").append('<option value="' + row.ID + '">' + row.Name + '</option>');
                 });
             });
         });
