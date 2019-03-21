@@ -15,20 +15,21 @@ namespace Klinik.Data.DataRepository
     public partial class QueuePoli
     {
         public long ID { get; set; }
-        public Nullable<long> ClinicID { get; set; }
-        public Nullable<long> PatientID { get; set; }
+        public long ClinicID { get; set; }
+        public long PatientID { get; set; }
         public Nullable<int> DoctorID { get; set; }
-        public Nullable<System.DateTime> TransactionDate { get; set; }
-        public Nullable<short> Type { get; set; }
+        public System.DateTime TransactionDate { get; set; }
+        public short Type { get; set; }
         public Nullable<long> AppointmentID { get; set; }
-        public Nullable<int> SortNumber { get; set; }
-        public Nullable<int> PoliFrom { get; set; }
-        public Nullable<int> PoliTo { get; set; }
+        public int SortNumber { get; set; }
+        public int PoliFrom { get; set; }
+        public int PoliTo { get; set; }
         public string Remark { get; set; }
         public Nullable<long> ReffID { get; set; }
         public Nullable<int> Status { get; set; }
+        public short RowStatus { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     

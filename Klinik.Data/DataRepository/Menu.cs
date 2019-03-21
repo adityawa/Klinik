@@ -20,7 +20,7 @@ namespace Klinik.Data.DataRepository
             this.Privileges = new HashSet<Privilege>();
         }
     
-        public long Id { get; set; }
+        public long ID { get; set; }
         public string Description { get; set; }
         public Nullable<long> ParentMenuId { get; set; }
         public string PageLink { get; set; }
@@ -31,7 +31,12 @@ namespace Klinik.Data.DataRepository
         public string Controller { get; set; }
         public string Action { get; set; }
         public Nullable<int> Level { get; set; }
-        public string icon { get; set; }
+        public string Icon { get; set; }
+        public short RowStatus { get; set; }
+        public string CreatedBy { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Privilege> Privileges { get; set; }

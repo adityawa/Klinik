@@ -28,16 +28,16 @@ namespace Klinik.Data.DataRepository
         public string Name { get; set; }
         public string Gender { get; set; }
         public string MaritalStatus { get; set; }
-        public Nullable<System.DateTime> BirthDate { get; set; }
+        public System.DateTime BirthDate { get; set; }
         public string KTPNumber { get; set; }
         public string Address { get; set; }
         public Nullable<int> CityID { get; set; }
         public Nullable<short> Type { get; set; }
         public string BPJSNumber { get; set; }
         public string BloodType { get; set; }
-        public Nullable<short> RowStatus { get; set; }
+        public short RowStatus { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     

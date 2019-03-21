@@ -26,9 +26,9 @@ namespace Klinik.Data.DataRepository
         public Nullable<int> AgeStart { get; set; }
         public Nullable<int> AgeEnd { get; set; }
         public Nullable<int> GradeID { get; set; }
-        public Nullable<short> RowStatus { get; set; }
+        public short RowStatus { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> NodifiedDate { get; set; }
     

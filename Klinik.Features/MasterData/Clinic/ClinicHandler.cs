@@ -69,8 +69,8 @@ namespace Klinik.Features
                         qry.Long = request.Data.Long;
                         qry.CityID = request.Data.CityId;
                         qry.ClinicType = request.Data.ClinicType;
-                        qry.DateModified = DateTime.Now;
-                        qry.LastUpdateBy = request.Data.ModifiedBy ?? "SYSTEM";
+                        qry.ModifiedDate = DateTime.Now;
+                        qry.ModifiedBy = request.Data.ModifiedBy ?? "SYSTEM";
 
                         _unitOfWork.ClinicRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
@@ -100,7 +100,7 @@ namespace Klinik.Features
                 {
                     var clinicEntity = Mapper.Map<ClinicModel, Clinic>(request.Data);
                     clinicEntity.CreatedBy = request.Data.Account.UserName;
-                    clinicEntity.DateCreated = DateTime.Now;
+                    clinicEntity.CreatedDate = DateTime.Now;
 
                     _unitOfWork.ClinicRepository.Insert(clinicEntity);
 
@@ -215,8 +215,8 @@ namespace Klinik.Features
                 var clinicData = Mapper.Map<Clinic, ClinicModel>(item);
                 long _cityId = clinicData.CityId ?? 0;
                 long _clinicTypeId = clinicData.ClinicType ?? 0;
-                var getCityDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _cityId && x.Type == ClinicEnums.MasterTypes.City.ToString());
-                var getClinicTypeDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.Id == _clinicTypeId && x.Type == ClinicEnums.MasterTypes.ClinicType.ToString());
+                var getCityDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.ID == _cityId && x.Type == ClinicEnums.MasterTypes.City.ToString());
+                var getClinicTypeDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.ID == _clinicTypeId && x.Type == ClinicEnums.MasterTypes.ClinicType.ToString());
                 if (getCityDesc != null)
                     clinicData.CityDesc = getCityDesc.Name ?? "";
                 if (getClinicTypeDesc != null)

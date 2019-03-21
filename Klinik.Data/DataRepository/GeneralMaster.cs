@@ -20,10 +20,15 @@ namespace Klinik.Data.DataRepository
             this.Employees = new HashSet<Employee>();
         }
     
-        public short Id { get; set; }
+        public short ID { get; set; }
         public string Type { get; set; }
         public string Name { get; set; }
         public string Value { get; set; }
+        public short RowStatus { get; set; }
+        public string CreatedBy { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }

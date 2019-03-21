@@ -134,7 +134,7 @@ namespace Klinik.Web.Controllers
                 _cities.Add(new SelectListItem
                 {
                     Text = item.Name,
-                    Value = item.Id.ToString()
+                    Value = item.ID.ToString()
                 });
             }
 
@@ -179,7 +179,7 @@ namespace Klinik.Web.Controllers
                 _clinicTypes.Add(new SelectListItem
                 {
                     Text = item.Name,
-                    Value = item.Id.ToString()
+                    Value = item.ID.ToString()
                 });
             }
 

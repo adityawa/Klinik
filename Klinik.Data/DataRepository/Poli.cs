@@ -27,10 +27,10 @@ namespace Klinik.Data.DataRepository
         public int ID { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public Nullable<short> Type { get; set; }
-        public Nullable<short> Rowstatus { get; set; }
+        public short Type { get; set; }
+        public short Rowstatus { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     

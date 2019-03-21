@@ -16,14 +16,14 @@ namespace Klinik.Data.DataRepository
     {
         public long ID { get; set; }
         public Nullable<long> EmployeeID { get; set; }
-        public Nullable<long> ClinicID { get; set; }
+        public long ClinicID { get; set; }
         public Nullable<int> DoctorID { get; set; }
         public Nullable<int> RequirementID { get; set; }
-        public Nullable<System.DateTime> AppointmentDate { get; set; }
+        public System.DateTime AppointmentDate { get; set; }
         public Nullable<int> MCUPackageID { get; set; }
         public Nullable<int> PoliID { get; set; }
         public Nullable<short> Status { get; set; }
-        public Nullable<short> RowStatus { get; set; }
+        public short RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }

@@ -15,16 +15,17 @@ namespace Klinik.Data.DataRepository
     public partial class PoliSchedule
     {
         public long ID { get; set; }
-        public Nullable<long> ClinicID { get; set; }
-        public Nullable<int> DoctorID { get; set; }
-        public Nullable<int> PoliID { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
+        public long ClinicID { get; set; }
+        public int DoctorID { get; set; }
+        public int PoliID { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public System.DateTime EndDate { get; set; }
         public Nullable<long> ReffID { get; set; }
-        public Nullable<int> Status { get; set; }
-        public Nullable<short> RowStatus { get; set; }
+        public string Remark { get; set; }
+        public int Status { get; set; }
+        public short RowStatus { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     

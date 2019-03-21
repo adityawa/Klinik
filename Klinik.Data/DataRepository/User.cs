@@ -26,12 +26,13 @@ namespace Klinik.Data.DataRepository
         public string Password { get; set; }
         public long EmployeeID { get; set; }
         public Nullable<System.DateTime> ExpiredDate { get; set; }
+        public string ResetPasswordCode { get; set; }
         public Nullable<bool> Status { get; set; }
+        public short RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public string ResetPasswordCode { get; set; }
     
         public virtual Employee Employee { get; set; }
         public virtual Organization Organization { get; set; }

@@ -125,10 +125,10 @@ namespace Klinik.Features.Registration
         /// </summary>
         /// <param name="organizationCode"></param>
         /// <returns></returns>
-        private long? GetClinicID(string organizationCode)
+        private long GetClinicID(string organizationCode)
         {
             Organization organization = _unitOfWork.OrganizationRepository.GetFirstOrDefault(x => x.OrgCode == organizationCode);
-            return organization.KlinikID;
+            return organization.KlinikID.Value;
         }
 
         /// <summary>
@@ -136,12 +136,12 @@ namespace Klinik.Features.Registration
         /// </summary>
         /// <param name="poliID"></param>
         /// <returns></returns>
-        private int? GenerateSortNumber(int poliID)
+        private int GenerateSortNumber(int poliID)
         {
-            var currentQueueList = _unitOfWork.RegistrationRepository.Get(x => x.PoliTo.Value == poliID &&
-            x.TransactionDate.Value.Year == DateTime.Today.Year &&
-            x.TransactionDate.Value.Month == DateTime.Today.Month &&
-            x.TransactionDate.Value.Day == DateTime.Today.Day);
+            var currentQueueList = _unitOfWork.RegistrationRepository.Get(x => x.PoliTo == poliID &&
+            x.TransactionDate.Year == DateTime.Today.Year &&
+            x.TransactionDate.Month == DateTime.Today.Month &&
+            x.TransactionDate.Day == DateTime.Today.Day);
 
             int sortNumber = currentQueueList.Count + 1;
 
@@ -208,16 +208,16 @@ namespace Klinik.Features.Registration
             // add default filter to show today queue only
             if (poliID == 0)
             {
-                searchPredicate = searchPredicate.And(p => p.TransactionDate.Value.Year == DateTime.Today.Year &&
-                                                           p.TransactionDate.Value.Month == DateTime.Today.Month &&
-                                                           p.TransactionDate.Value.Day == DateTime.Today.Day);
+                searchPredicate = searchPredicate.And(p => p.TransactionDate.Year == DateTime.Today.Year &&
+                                                           p.TransactionDate.Month == DateTime.Today.Month &&
+                                                           p.TransactionDate.Day == DateTime.Today.Day);
             }
             else
             {
-                searchPredicate = searchPredicate.And(p => p.TransactionDate.Value.Year == DateTime.Today.Year &&
-                                           p.TransactionDate.Value.Month == DateTime.Today.Month &&
-                                           p.TransactionDate.Value.Day == DateTime.Today.Day &&
-                                           p.PoliTo.Value == poliID);
+                searchPredicate = searchPredicate.And(p => p.TransactionDate.Year == DateTime.Today.Year &&
+                                           p.TransactionDate.Month == DateTime.Today.Month &&
+                                           p.TransactionDate.Day == DateTime.Today.Day &&
+                                           p.PoliTo == poliID);
             }
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
@@ -349,9 +349,9 @@ namespace Klinik.Features.Registration
                     x.ClinicID == currentRegistration.ClinicID &&
                     x.PoliTo == currentRegistration.PoliTo &&
                     x.Status == 0 &&
-                    x.TransactionDate.Value.Year == currentRegistration.TransactionDate.Value.Year &&
-                    x.TransactionDate.Value.Month == currentRegistration.TransactionDate.Value.Month &&
-                    x.TransactionDate.Value.Day == currentRegistration.TransactionDate.Value.Day);
+                    x.TransactionDate.Year == currentRegistration.TransactionDate.Year &&
+                    x.TransactionDate.Month == currentRegistration.TransactionDate.Month &&
+                    x.TransactionDate.Day == currentRegistration.TransactionDate.Day);
 
                     foreach (var item in previousRegistrationList)
                     {

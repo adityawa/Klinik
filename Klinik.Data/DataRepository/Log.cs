@@ -14,7 +14,7 @@ namespace Klinik.Data.DataRepository
     
     public partial class Log
     {
-        public long Id { get; set; }
+        public long ID { get; set; }
         public System.DateTime Start { get; set; }
         public string Module { get; set; }
         public long Account { get; set; }
@@ -22,5 +22,10 @@ namespace Klinik.Data.DataRepository
         public string OldValue { get; set; }
         public string NewValue { get; set; }
         public string Status { get; set; }
+        public short RowStatus { get; set; }
+        public string CreatedBy { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     }
 }

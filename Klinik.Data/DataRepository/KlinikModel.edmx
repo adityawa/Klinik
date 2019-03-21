@@ -10,8 +10,13 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-          <Property Name="Value" Type="varchar" MaxLength="200" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Value" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Appointment">
           <Key>
@@ -19,17 +24,17 @@
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeID" Type="bigint" />
-          <Property Name="ClinicID" Type="bigint" />
+          <Property Name="ClinicID" Type="bigint" Nullable="false" />
           <Property Name="DoctorID" Type="int" />
           <Property Name="RequirementID" Type="int" />
-          <Property Name="AppointmentDate" Type="datetime" />
+          <Property Name="AppointmentDate" Type="datetime" Nullable="false" />
           <Property Name="MCUPackageID" Type="int" />
           <Property Name="PoliID" Type="int" />
           <Property Name="Status" Type="smallint" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Clinic">
@@ -49,11 +54,11 @@
           <Property Name="CityID" Type="int" />
           <Property Name="ClinicType" Type="smallint" />
           <Property Name="ReffID" Type="int" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="DateCreated" Type="datetime" />
-          <Property Name="LastUpdateBy" Type="varchar" MaxLength="50" />
-          <Property Name="DateModified" Type="datetime" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Doctor">
           <Key>
@@ -72,10 +77,10 @@
           <Property Name="HPNumber" Type="varchar" MaxLength="20" />
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="Remark" Type="varchar" MaxLength="300" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="DoctorClinic">
@@ -84,20 +89,20 @@
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Code" Type="char" MaxLength="10" />
-          <Property Name="ClinicID" Type="bigint" />
-          <Property Name="DoctorID" Type="int" />
+          <Property Name="ClinicID" Type="bigint" Nullable="false" />
+          <Property Name="DoctorID" Type="int" Nullable="false" />
           <Property Name="PhotoID" Type="bigint" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
-          <Property Name="MidifiedDate" Type="datetime" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmpID" Type="varchar" MaxLength="50" />
           <Property Name="EmpName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="BirthDate" Type="date" />
@@ -109,10 +114,10 @@
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="LastEmpID" Type="varchar" MaxLength="50" />
           <Property Name="Status" Type="smallint" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="EmployeeAssignment">
@@ -129,10 +134,10 @@
           <Property Name="Grade" Type="nvarchar" MaxLength="50" />
           <Property Name="EmpStatus" Type="smallint" />
           <Property Name="LastEmpID" Type="varchar" MaxLength="50" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="EmployeeStatus">
@@ -143,10 +148,10 @@
           <Property Name="Code" Type="char" MaxLength="10" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="Status" Type="char" MaxLength="1" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="FamilyRelationship">
@@ -156,10 +161,10 @@
           <Property Name="ID" Type="smallint" Nullable="false" />
           <Property Name="Code" Type="char" MaxLength="3" />
           <Property Name="Name" Type="varchar" MaxLength="10" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="FileArchieve">
@@ -171,26 +176,31 @@
           <Property Name="ActualPath" Type="varchar" MaxLength="300" />
           <Property Name="ActualName" Type="varchar" MaxLength="50" />
           <Property Name="TypeDoc" Type="varchar" MaxLength="10" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="GeneralMaster">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="Value" Type="nvarchar" MaxLength="250" />
+          <Property Name="Value" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Start" Type="datetime" Nullable="false" />
           <Property Name="Module" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Account" Type="bigint" Nullable="false" />
@@ -198,6 +208,11 @@
           <Property Name="OldValue" Type="nvarchar(max)" />
           <Property Name="NewValue" Type="nvarchar(max)" />
           <Property Name="Status" Type="varchar" MaxLength="50" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="MCUPackage">
           <Key>
@@ -209,17 +224,17 @@
           <Property Name="AgeStart" Type="int" />
           <Property Name="AgeEnd" Type="int" />
           <Property Name="GradeID" Type="int" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="NodifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="ParentMenuId" Type="bigint" />
           <Property Name="PageLink" Type="nvarchar(max)" />
@@ -230,7 +245,12 @@
           <Property Name="Controller" Type="varchar" MaxLength="50" />
           <Property Name="Action" Type="varchar" MaxLength="50" />
           <Property Name="Level" Type="int" />
-          <Property Name="icon" Type="nvarchar" MaxLength="50" />
+          <Property Name="Icon" Type="nvarchar" MaxLength="50" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Organization">
           <Key>
@@ -240,9 +260,10 @@
           <Property Name="OrgCode" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="OrgName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="KlinikID" Type="bigint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="OrganizationPrivilege">
@@ -252,6 +273,11 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrgID" Type="bigint" Nullable="false" />
           <Property Name="PrivilegeID" Type="bigint" Nullable="false" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="OrganizationRole">
           <Key>
@@ -260,6 +286,11 @@
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrgID" Type="bigint" Nullable="false" />
           <Property Name="RoleName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="PasswordHistory">
           <Key>
@@ -269,6 +300,11 @@
           <Property Name="OrganizationID" Type="bigint" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Patient">
           <Key>
@@ -278,20 +314,20 @@
           <Property Name="EmployeeID" Type="bigint" />
           <Property Name="FamilyRelationshipID" Type="smallint" />
           <Property Name="MRNumber" Type="varchar" MaxLength="50" />
-          <Property Name="Name" Type="varchar" MaxLength="100" />
-          <Property Name="Gender" Type="char" MaxLength="1" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="MaritalStatus" Type="char" MaxLength="1" />
-          <Property Name="BirthDate" Type="datetime" />
+          <Property Name="BirthDate" Type="datetime" Nullable="false" />
           <Property Name="KTPNumber" Type="varchar" MaxLength="20" />
-          <Property Name="Address" Type="varchar" MaxLength="100" />
+          <Property Name="Address" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="CityID" Type="int" />
           <Property Name="Type" Type="smallint" />
           <Property Name="BPJSNumber" Type="varchar" MaxLength="50" />
           <Property Name="BloodType" Type="char" MaxLength="2" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="PatientClinic">
@@ -299,13 +335,18 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PatientID" Type="bigint" />
-          <Property Name="ClinicID" Type="bigint" />
+          <Property Name="PatientID" Type="bigint" Nullable="false" />
+          <Property Name="ClinicID" Type="bigint" Nullable="false" />
+          <Property Name="TempAddress" Type="varchar" MaxLength="100" />
+          <Property Name="TempCityID" Type="int" />
+          <Property Name="RefferencePerson" Type="varchar" MaxLength="50" />
+          <Property Name="RefferenceNumber" Type="varchar" MaxLength="20" />
+          <Property Name="RefferenceRelation" Type="int" />
           <Property Name="PhotoID" Type="bigint" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Poli">
@@ -313,13 +354,13 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Code" Type="char" MaxLength="2" />
-          <Property Name="Name" Type="varchar" MaxLength="100" />
-          <Property Name="Type" Type="smallint" />
-          <Property Name="Rowstatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="Code" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Type" Type="smallint" Nullable="false" />
+          <Property Name="Rowstatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="PoliClinic">
@@ -327,12 +368,12 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClinicID" Type="bigint" />
-          <Property Name="PoliID" Type="int" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="Createddate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ClinicID" Type="bigint" Nullable="false" />
+          <Property Name="PoliID" Type="int" Nullable="false" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Createddate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="PoliFlowTemplate">
@@ -340,13 +381,13 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Code" Type="varchar" MaxLength="10" />
-          <Property Name="PoliTypeID" Type="smallint" />
-          <Property Name="PoliTypeIDTo" Type="smallint" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="PoliTypeID" Type="smallint" Nullable="false" />
+          <Property Name="PoliTypeIDTo" Type="smallint" Nullable="false" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="PoliSchedule">
@@ -354,17 +395,18 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClinicID" Type="bigint" />
-          <Property Name="DoctorID" Type="int" />
-          <Property Name="PoliID" Type="int" />
-          <Property Name="StartDate" Type="datetime" />
-          <Property Name="EndDate" Type="datetime" />
+          <Property Name="ClinicID" Type="bigint" Nullable="false" />
+          <Property Name="DoctorID" Type="int" Nullable="false" />
+          <Property Name="PoliID" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
           <Property Name="ReffID" Type="bigint" />
-          <Property Name="Status" Type="int" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="Remark" Type="varchar" MaxLength="150" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="PoliScheduleMaster">
@@ -372,16 +414,16 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClinicID" Type="bigint" />
-          <Property Name="DoctorID" Type="int" />
-          <Property Name="PoliID" Type="int" />
-          <Property Name="Day" Type="int" />
-          <Property Name="StartTime" Type="time" Precision="7" />
-          <Property Name="EndTime" Type="time" Precision="7" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ClinicID" Type="bigint" Nullable="false" />
+          <Property Name="DoctorID" Type="int" Nullable="false" />
+          <Property Name="PoliID" Type="int" Nullable="false" />
+          <Property Name="Day" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Privilege">
@@ -391,32 +433,34 @@
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Privilege_Name" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Privilege_Desc" Type="nvarchar" MaxLength="500" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
-          <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="MenuID" Type="bigint" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="QueuePoli">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClinicID" Type="bigint" />
-          <Property Name="PatientID" Type="bigint" />
+          <Property Name="ClinicID" Type="bigint" Nullable="false" />
+          <Property Name="PatientID" Type="bigint" Nullable="false" />
           <Property Name="DoctorID" Type="int" />
-          <Property Name="TransactionDate" Type="datetime" />
-          <Property Name="Type" Type="smallint" />
+          <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+          <Property Name="Type" Type="smallint" Nullable="false" />
           <Property Name="AppointmentID" Type="bigint" />
-          <Property Name="SortNumber" Type="int" />
-          <Property Name="PoliFrom" Type="int" />
-          <Property Name="PoliTo" Type="int" />
+          <Property Name="SortNumber" Type="int" Nullable="false" />
+          <Property Name="PoliFrom" Type="int" Nullable="false" />
+          <Property Name="PoliTo" Type="int" Nullable="false" />
           <Property Name="Remark" Type="varchar" MaxLength="10" />
           <Property Name="ReffID" Type="bigint" />
           <Property Name="Status" Type="int" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="RolePrivilege">
@@ -426,17 +470,12 @@
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleID" Type="bigint" Nullable="false" />
           <Property Name="PrivilegeID" Type="bigint" Nullable="false" />
-          <Property Name="MenuId" Type="bigint" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
+          <Property Name="MenuID" Type="bigint" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -448,12 +487,13 @@
           <Property Name="Password" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="EmployeeID" Type="bigint" Nullable="false" />
           <Property Name="ExpiredDate" Type="datetime" />
+          <Property Name="ResetPasswordCode" Type="nvarchar" MaxLength="50" />
           <Property Name="Status" Type="bit" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="ResetPasswordCode" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -462,9 +502,14 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="bigint" Nullable="false" />
           <Property Name="RoleID" Type="bigint" Nullable="false" />
+          <Property Name="RowStatus" Type="smallint" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <Association Name="FK_Appointment_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -480,7 +525,7 @@
           <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Appointment">
               <PropertyRef Name="EmployeeID" />
@@ -500,7 +545,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DoctorClinic_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="DoctorClinic" Type="Self.DoctorClinic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -512,7 +557,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DoctorClinic_Doctor">
-          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
           <End Role="DoctorClinic" Type="Self.DoctorClinic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Doctor">
@@ -564,7 +609,7 @@
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="GeneralMaster">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="EmpType" />
@@ -576,7 +621,7 @@
           <End Role="EmployeeAssignment" Type="Self.EmployeeAssignment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="EmployeeAssignment">
               <PropertyRef Name="EmployeeID" />
@@ -648,7 +693,7 @@
           <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Patient">
               <PropertyRef Name="EmployeeID" />
@@ -656,7 +701,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PatientClinic_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="PatientClinic" Type="Self.PatientClinic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -680,7 +725,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PatientClinic_Patient">
-          <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
           <End Role="PatientClinic" Type="Self.PatientClinic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patient">
@@ -692,7 +737,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliClinic_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="PoliClinic" Type="Self.PoliClinic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -704,7 +749,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliClinic_Poli">
-          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="Poli" Type="Self.Poli" Multiplicity="1" />
           <End Role="PoliClinic" Type="Self.PoliClinic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Poli">
@@ -716,7 +761,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliSchedule_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="PoliSchedule" Type="Self.PoliSchedule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -728,7 +773,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliSchedule_Doctor">
-          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
           <End Role="PoliSchedule" Type="Self.PoliSchedule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Doctor">
@@ -740,7 +785,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliSchedule_Poli">
-          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="Poli" Type="Self.Poli" Multiplicity="1" />
           <End Role="PoliSchedule" Type="Self.PoliSchedule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Poli">
@@ -752,7 +797,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliScheduleMaster_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="PoliScheduleMaster" Type="Self.PoliScheduleMaster" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -764,7 +809,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliScheduleMaster_Doctor">
-          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
           <End Role="PoliScheduleMaster" Type="Self.PoliScheduleMaster" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Doctor">
@@ -776,7 +821,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliScheduleMaster_Poli">
-          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="Poli" Type="Self.Poli" Multiplicity="1" />
           <End Role="PoliScheduleMaster" Type="Self.PoliScheduleMaster" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Poli">
@@ -792,7 +837,7 @@
           <End Role="Privilege" Type="Self.Privilege" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Menu">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Privilege">
               <PropertyRef Name="MenuID" />
@@ -800,7 +845,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_QueuePoli_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -824,7 +869,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_QueuePoli_Patient">
-          <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
           <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patient">
@@ -836,7 +881,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_QueuePoli_PoliFrom">
-          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="Poli" Type="Self.Poli" Multiplicity="1" />
           <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Poli">
@@ -848,7 +893,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_QueuePoli_PoliTo">
-          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="Poli" Type="Self.Poli" Multiplicity="1" />
           <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Poli">
@@ -888,7 +933,7 @@
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="EmployeeID" />
@@ -960,7 +1005,6 @@
           <EntitySet Name="Privilege" EntityType="Self.Privilege" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QueuePoli" EntityType="Self.QueuePoli" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolePrivilege" EntityType="Self.RolePrivilege" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Appointment_Clinic" Association="Self.FK_Appointment_Clinic">
@@ -1130,8 +1174,13 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Value" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Appointment">
           <Key>
@@ -1139,17 +1188,17 @@
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeID" Type="Int64" />
-          <Property Name="ClinicID" Type="Int64" />
+          <Property Name="ClinicID" Type="Int64" Nullable="false" />
           <Property Name="DoctorID" Type="Int32" />
           <Property Name="RequirementID" Type="Int32" />
-          <Property Name="AppointmentDate" Type="DateTime" Precision="3" />
+          <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="MCUPackageID" Type="Int32" />
           <Property Name="PoliID" Type="Int32" />
           <Property Name="Status" Type="Int16" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Clinic" Relationship="Self.FK_Appointment_Clinic" FromRole="Appointment" ToRole="Clinic" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_Appointment_Employee" FromRole="Appointment" ToRole="Employee" />
@@ -1172,11 +1221,11 @@
           <Property Name="CityID" Type="Int32" />
           <Property Name="ClinicType" Type="Int16" />
           <Property Name="ReffID" Type="Int32" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Appointments" Relationship="Self.FK_Appointment_Clinic" FromRole="Clinic" ToRole="Appointment" />
           <NavigationProperty Name="DoctorClinics" Relationship="Self.FK_DoctorClinic_Clinic" FromRole="Clinic" ToRole="DoctorClinic" />
           <NavigationProperty Name="Organizations" Relationship="Self.FK_Organization_Clinic" FromRole="Clinic" ToRole="Organization" />
@@ -1203,10 +1252,10 @@
           <Property Name="HPNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Remark" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="DoctorClinics" Relationship="Self.FK_DoctorClinic_Doctor" FromRole="Doctor" ToRole="DoctorClinic" />
           <NavigationProperty Name="PoliSchedules" Relationship="Self.FK_PoliSchedule_Doctor" FromRole="Doctor" ToRole="PoliSchedule" />
@@ -1219,23 +1268,23 @@
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="ClinicID" Type="Int64" />
-          <Property Name="DoctorID" Type="Int32" />
+          <Property Name="ClinicID" Type="Int64" Nullable="false" />
+          <Property Name="DoctorID" Type="Int32" Nullable="false" />
           <Property Name="PhotoID" Type="Int64" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MidifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Clinic" Relationship="Self.FK_DoctorClinic_Clinic" FromRole="DoctorClinic" ToRole="Clinic" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK_DoctorClinic_Doctor" FromRole="DoctorClinic" ToRole="Doctor" />
           <NavigationProperty Name="FileArchieve" Relationship="Self.FK_DoctorClinic_FileArchieve" FromRole="DoctorClinic" ToRole="FileArchieve" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EmpName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="BirthDate" Type="DateTime" Precision="0" />
@@ -1247,10 +1296,10 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LastEmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="Int16" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Appointments" Relationship="Self.FK_Appointment_Employee" FromRole="Employee" ToRole="Appointment" />
           <NavigationProperty Name="EmployeeStatu" Relationship="Self.FK_Employee_EmployeeStatus" FromRole="Employee" ToRole="EmployeeStatus" />
@@ -1274,10 +1323,10 @@
           <Property Name="Grade" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EmpStatus" Type="Int16" />
           <Property Name="LastEmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeAssignment_Employee" FromRole="EmployeeAssignment" ToRole="Employee" />
           <NavigationProperty Name="EmployeeStatu" Relationship="Self.FK_EmployeeAssignment_EmployeeStatus" FromRole="EmployeeAssignment" ToRole="EmployeeStatus" />
@@ -1290,10 +1339,10 @@
           <Property Name="Code" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_EmployeeStatus" FromRole="EmployeeStatus" ToRole="Employee" />
           <NavigationProperty Name="EmployeeAssignments" Relationship="Self.FK_EmployeeAssignment_EmployeeStatus" FromRole="EmployeeStatus" ToRole="EmployeeAssignment" />
@@ -1305,10 +1354,10 @@
           <Property Name="ID" Type="Int16" Nullable="false" />
           <Property Name="Code" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_FamilyRelationship" FromRole="FamilyRelationship" ToRole="Employee" />
         </EntityType>
@@ -1321,29 +1370,34 @@
           <Property Name="ActualPath" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="ActualName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TypeDoc" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="DoctorClinics" Relationship="Self.FK_DoctorClinic_FileArchieve" FromRole="FileArchieve" ToRole="DoctorClinic" />
           <NavigationProperty Name="PatientClinics" Relationship="Self.FK_PatientClinic_FileArchieve" FromRole="FileArchieve" ToRole="PatientClinic" />
         </EntityType>
         <EntityType Name="GeneralMaster">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Value" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_GeneralMaster" FromRole="GeneralMaster" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Start" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Module" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Account" Type="Int64" Nullable="false" />
@@ -1351,6 +1405,11 @@
           <Property Name="OldValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NewValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="MCUPackage">
           <Key>
@@ -1362,18 +1421,18 @@
           <Property Name="AgeStart" Type="Int32" />
           <Property Name="AgeEnd" Type="Int32" />
           <Property Name="GradeID" Type="Int32" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NodifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Appointments" Relationship="Self.FK_Appointment_MCUPackage" FromRole="MCUPackage" ToRole="Appointment" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ParentMenuId" Type="Int64" />
           <Property Name="PageLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1384,7 +1443,12 @@
           <Property Name="Controller" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Level" Type="Int32" />
-          <Property Name="icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Privileges" Relationship="Self.FK_Privilege_Menu" FromRole="Menu" ToRole="Privilege" />
         </EntityType>
         <EntityType Name="Organization">
@@ -1395,9 +1459,10 @@
           <Property Name="OrgCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="OrgName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="KlinikID" Type="Int64" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Clinic" Relationship="Self.FK_Organization_Clinic" FromRole="Organization" ToRole="Clinic" />
           <NavigationProperty Name="OrganizationPrivileges" Relationship="Self.FK_OrganizationPrivilege_Organization" FromRole="Organization" ToRole="OrganizationPrivilege" />
@@ -1411,6 +1476,11 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OrgID" Type="Int64" Nullable="false" />
           <Property Name="PrivilegeID" Type="Int64" Nullable="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Organization" Relationship="Self.FK_OrganizationPrivilege_Organization" FromRole="OrganizationPrivilege" ToRole="Organization" />
           <NavigationProperty Name="Privilege" Relationship="Self.FK_OrganizationPrivilege_Privilege" FromRole="OrganizationPrivilege" ToRole="Privilege" />
         </EntityType>
@@ -1421,6 +1491,11 @@
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OrgID" Type="Int64" Nullable="false" />
           <Property Name="RoleName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Organization" Relationship="Self.FK_OrganizationRole_Organization" FromRole="OrganizationRole" ToRole="Organization" />
           <NavigationProperty Name="RolePrivileges" Relationship="Self.FK_RolePrivilege_OrganizationRole" FromRole="OrganizationRole" ToRole="RolePrivilege" />
           <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_OrganizationRole" FromRole="OrganizationRole" ToRole="UserRole" />
@@ -1433,6 +1508,11 @@
           <Property Name="OrganizationID" Type="Int64" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Patient">
           <Key>
@@ -1442,20 +1522,20 @@
           <Property Name="EmployeeID" Type="Int64" />
           <Property Name="FamilyRelationshipID" Type="Int16" />
           <Property Name="MRNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="MaritalStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="BirthDate" Type="DateTime" Precision="3" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="KTPNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CityID" Type="Int32" />
           <Property Name="Type" Type="Int16" />
           <Property Name="BPJSNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="BloodType" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_Patient_Employee" FromRole="Patient" ToRole="Employee" />
           <NavigationProperty Name="PatientClinics" Relationship="Self.FK_PatientClinic_Patient" FromRole="Patient" ToRole="PatientClinic" />
@@ -1466,13 +1546,18 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PatientID" Type="Int64" />
-          <Property Name="ClinicID" Type="Int64" />
+          <Property Name="PatientID" Type="Int64" Nullable="false" />
+          <Property Name="ClinicID" Type="Int64" Nullable="false" />
+          <Property Name="TempAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TempCityID" Type="Int32" />
+          <Property Name="RefferencePerson" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RefferenceNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RefferenceRelation" Type="Int32" />
           <Property Name="PhotoID" Type="Int64" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Clinic" Relationship="Self.FK_PatientClinic_Clinic" FromRole="PatientClinic" ToRole="Clinic" />
           <NavigationProperty Name="FileArchieve" Relationship="Self.FK_PatientClinic_FileArchieve" FromRole="PatientClinic" ToRole="FileArchieve" />
@@ -1483,13 +1568,13 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Type" Type="Int16" />
-          <Property Name="Rowstatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Type" Type="Int16" Nullable="false" />
+          <Property Name="Rowstatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="PoliClinics" Relationship="Self.FK_PoliClinic_Poli" FromRole="Poli" ToRole="PoliClinic" />
           <NavigationProperty Name="PoliSchedules" Relationship="Self.FK_PoliSchedule_Poli" FromRole="Poli" ToRole="PoliSchedule" />
@@ -1502,12 +1587,12 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClinicID" Type="Int64" />
-          <Property Name="PoliID" Type="Int32" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Createddate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ClinicID" Type="Int64" Nullable="false" />
+          <Property Name="PoliID" Type="Int32" Nullable="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Createddate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Clinic" Relationship="Self.FK_PoliClinic_Clinic" FromRole="PoliClinic" ToRole="Clinic" />
           <NavigationProperty Name="Poli" Relationship="Self.FK_PoliClinic_Poli" FromRole="PoliClinic" ToRole="Poli" />
@@ -1517,13 +1602,13 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="PoliTypeID" Type="Int16" />
-          <Property Name="PoliTypeIDTo" Type="Int16" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PoliTypeID" Type="Int16" Nullable="false" />
+          <Property Name="PoliTypeIDTo" Type="Int16" Nullable="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="PoliSchedule">
@@ -1531,17 +1616,18 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClinicID" Type="Int64" />
-          <Property Name="DoctorID" Type="Int32" />
-          <Property Name="PoliID" Type="Int32" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="ClinicID" Type="Int64" Nullable="false" />
+          <Property Name="DoctorID" Type="Int32" Nullable="false" />
+          <Property Name="PoliID" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ReffID" Type="Int64" />
-          <Property Name="Status" Type="Int32" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Clinic" Relationship="Self.FK_PoliSchedule_Clinic" FromRole="PoliSchedule" ToRole="Clinic" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK_PoliSchedule_Doctor" FromRole="PoliSchedule" ToRole="Doctor" />
@@ -1552,16 +1638,16 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClinicID" Type="Int64" />
-          <Property Name="DoctorID" Type="Int32" />
-          <Property Name="PoliID" Type="Int32" />
-          <Property Name="Day" Type="Int32" />
-          <Property Name="StartTime" Type="Time" Precision="7" />
-          <Property Name="EndTime" Type="Time" Precision="7" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ClinicID" Type="Int64" Nullable="false" />
+          <Property Name="DoctorID" Type="Int32" Nullable="false" />
+          <Property Name="PoliID" Type="Int32" Nullable="false" />
+          <Property Name="Day" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Clinic" Relationship="Self.FK_PoliScheduleMaster_Clinic" FromRole="PoliScheduleMaster" ToRole="Clinic" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK_PoliScheduleMaster_Doctor" FromRole="PoliScheduleMaster" ToRole="Doctor" />
@@ -1574,11 +1660,12 @@
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Privilege_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Privilege_Desc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="MenuID" Type="Int64" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Menu" Relationship="Self.FK_Privilege_Menu" FromRole="Privilege" ToRole="Menu" />
           <NavigationProperty Name="OrganizationPrivileges" Relationship="Self.FK_OrganizationPrivilege_Privilege" FromRole="Privilege" ToRole="OrganizationPrivilege" />
           <NavigationProperty Name="RolePrivileges" Relationship="Self.FK_RolePrivilege_Privilege" FromRole="Privilege" ToRole="RolePrivilege" />
@@ -1588,21 +1675,22 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClinicID" Type="Int64" />
-          <Property Name="PatientID" Type="Int64" />
+          <Property Name="ClinicID" Type="Int64" Nullable="false" />
+          <Property Name="PatientID" Type="Int64" Nullable="false" />
           <Property Name="DoctorID" Type="Int32" />
-          <Property Name="TransactionDate" Type="DateTime" Precision="3" />
-          <Property Name="Type" Type="Int16" />
+          <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Type" Type="Int16" Nullable="false" />
           <Property Name="AppointmentID" Type="Int64" />
-          <Property Name="SortNumber" Type="Int32" />
-          <Property Name="PoliFrom" Type="Int32" />
-          <Property Name="PoliTo" Type="Int32" />
+          <Property Name="SortNumber" Type="Int32" Nullable="false" />
+          <Property Name="PoliFrom" Type="Int32" Nullable="false" />
+          <Property Name="PoliTo" Type="Int32" Nullable="false" />
           <Property Name="Remark" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="ReffID" Type="Int64" />
           <Property Name="Status" Type="Int32" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Clinic" Relationship="Self.FK_QueuePoli_Clinic" FromRole="QueuePoli" ToRole="Clinic" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK_QueuePoli_Doctor" FromRole="QueuePoli" ToRole="Doctor" />
@@ -1617,19 +1705,14 @@
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleID" Type="Int64" Nullable="false" />
           <Property Name="PrivilegeID" Type="Int64" Nullable="false" />
-          <Property Name="MenuId" Type="Int64" />
+          <Property Name="MenuID" Type="Int64" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="OrganizationRole" Relationship="Self.FK_RolePrivilege_OrganizationRole" FromRole="RolePrivilege" ToRole="OrganizationRole" />
           <NavigationProperty Name="Privilege" Relationship="Self.FK_RolePrivilege_Privilege" FromRole="RolePrivilege" ToRole="Privilege" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1641,12 +1724,13 @@
           <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EmployeeID" Type="Int64" Nullable="false" />
           <Property Name="ExpiredDate" Type="DateTime" Precision="3" />
+          <Property Name="ResetPasswordCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Boolean" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ResetPasswordCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_User_Employee" FromRole="User" ToRole="Employee" />
           <NavigationProperty Name="Organization" Relationship="Self.FK_User_Organization" FromRole="User" ToRole="Organization" />
           <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
@@ -1658,11 +1742,16 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int64" Nullable="false" />
           <Property Name="RoleID" Type="Int64" Nullable="false" />
+          <Property Name="RowStatus" Type="Int16" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="OrganizationRole" Relationship="Self.FK_UserRole_OrganizationRole" FromRole="UserRole" ToRole="OrganizationRole" />
           <NavigationProperty Name="User" Relationship="Self.FK_UserRole_User" FromRole="UserRole" ToRole="User" />
         </EntityType>
         <Association Name="FK_Appointment_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -1678,7 +1767,7 @@
           <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Appointment">
               <PropertyRef Name="EmployeeID" />
@@ -1698,7 +1787,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DoctorClinic_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="DoctorClinic" Type="Self.DoctorClinic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -1722,7 +1811,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PatientClinic_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="PatientClinic" Type="Self.PatientClinic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -1734,7 +1823,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliClinic_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="PoliClinic" Type="Self.PoliClinic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -1746,7 +1835,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliSchedule_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="PoliSchedule" Type="Self.PoliSchedule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -1758,7 +1847,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliScheduleMaster_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="PoliScheduleMaster" Type="Self.PoliScheduleMaster" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -1770,7 +1859,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_QueuePoli_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -1782,7 +1871,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DoctorClinic_Doctor">
-          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
           <End Role="DoctorClinic" Type="Self.DoctorClinic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Doctor">
@@ -1794,7 +1883,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliSchedule_Doctor">
-          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
           <End Role="PoliSchedule" Type="Self.PoliSchedule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Doctor">
@@ -1806,7 +1895,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliScheduleMaster_Doctor">
-          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
           <End Role="PoliScheduleMaster" Type="Self.PoliScheduleMaster" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Doctor">
@@ -1870,7 +1959,7 @@
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="GeneralMaster">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="EmpType" />
@@ -1882,7 +1971,7 @@
           <End Role="EmployeeAssignment" Type="Self.EmployeeAssignment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="EmployeeAssignment">
               <PropertyRef Name="EmployeeID" />
@@ -1894,7 +1983,7 @@
           <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Patient">
               <PropertyRef Name="EmployeeID" />
@@ -1906,7 +1995,7 @@
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="EmployeeID" />
@@ -1942,7 +2031,7 @@
           <End Role="Privilege" Type="Self.Privilege" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Menu">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Privilege">
               <PropertyRef Name="MenuID" />
@@ -2022,7 +2111,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PatientClinic_Patient">
-          <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
           <End Role="PatientClinic" Type="Self.PatientClinic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patient">
@@ -2034,7 +2123,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_QueuePoli_Patient">
-          <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
           <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Patient">
@@ -2046,7 +2135,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliClinic_Poli">
-          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="Poli" Type="Self.Poli" Multiplicity="1" />
           <End Role="PoliClinic" Type="Self.PoliClinic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Poli">
@@ -2058,7 +2147,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliSchedule_Poli">
-          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="Poli" Type="Self.Poli" Multiplicity="1" />
           <End Role="PoliSchedule" Type="Self.PoliSchedule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Poli">
@@ -2070,7 +2159,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliScheduleMaster_Poli">
-          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="Poli" Type="Self.Poli" Multiplicity="1" />
           <End Role="PoliScheduleMaster" Type="Self.PoliScheduleMaster" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Poli">
@@ -2082,7 +2171,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_QueuePoli_PoliFrom">
-          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="Poli" Type="Self.Poli" Multiplicity="1" />
           <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Poli">
@@ -2094,7 +2183,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_QueuePoli_PoliTo">
-          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="Poli" Type="Self.Poli" Multiplicity="1" />
           <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Poli">
@@ -2158,7 +2247,6 @@
           <EntitySet Name="Privileges" EntityType="Self.Privilege" />
           <EntitySet Name="QueuePolis" EntityType="Self.QueuePoli" />
           <EntitySet Name="RolePrivileges" EntityType="Self.RolePrivilege" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
           <AssociationSet Name="FK_Appointment_Clinic" Association="Self.FK_Appointment_Clinic">
@@ -2330,6 +2418,11 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2371,9 +2464,9 @@
                 <ScalarProperty Name="ReffID" ColumnName="ReffID" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2413,14 +2506,14 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="MidifiedDate" ColumnName="MidifiedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="KlinikDBModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="EmpID" ColumnName="EmpID" />
                 <ScalarProperty Name="EmpName" ColumnName="EmpName" />
                 <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
@@ -2509,17 +2602,22 @@
           <EntitySetMapping Name="GeneralMasters">
             <EntityTypeMapping TypeName="KlinikDBModel.GeneralMaster">
               <MappingFragment StoreEntitySet="GeneralMaster">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Logs">
             <EntityTypeMapping TypeName="KlinikDBModel.Log">
               <MappingFragment StoreEntitySet="Log">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Start" ColumnName="Start" />
                 <ScalarProperty Name="Module" ColumnName="Module" />
                 <ScalarProperty Name="Account" ColumnName="Account" />
@@ -2527,6 +2625,11 @@
                 <ScalarProperty Name="OldValue" ColumnName="OldValue" />
                 <ScalarProperty Name="NewValue" ColumnName="NewValue" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2550,7 +2653,7 @@
           <EntitySetMapping Name="Menus">
             <EntityTypeMapping TypeName="KlinikDBModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ParentMenuId" ColumnName="ParentMenuId" />
                 <ScalarProperty Name="PageLink" ColumnName="PageLink" />
@@ -2561,7 +2664,12 @@
                 <ScalarProperty Name="Controller" ColumnName="Controller" />
                 <ScalarProperty Name="Action" ColumnName="Action" />
                 <ScalarProperty Name="Level" ColumnName="Level" />
-                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2572,6 +2680,7 @@
                 <ScalarProperty Name="OrgCode" ColumnName="OrgCode" />
                 <ScalarProperty Name="OrgName" ColumnName="OrgName" />
                 <ScalarProperty Name="KlinikID" ColumnName="KlinikID" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
@@ -2585,6 +2694,11 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="OrgID" ColumnName="OrgID" />
                 <ScalarProperty Name="PrivilegeID" ColumnName="PrivilegeID" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2594,6 +2708,11 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="OrgID" ColumnName="OrgID" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2604,6 +2723,11 @@
                 <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2638,6 +2762,11 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="PatientID" ColumnName="PatientID" />
                 <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
+                <ScalarProperty Name="TempAddress" ColumnName="TempAddress" />
+                <ScalarProperty Name="TempCityID" ColumnName="TempCityID" />
+                <ScalarProperty Name="RefferencePerson" ColumnName="RefferencePerson" />
+                <ScalarProperty Name="RefferenceNumber" ColumnName="RefferenceNumber" />
+                <ScalarProperty Name="RefferenceRelation" ColumnName="RefferenceRelation" />
                 <ScalarProperty Name="PhotoID" ColumnName="PhotoID" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -2701,6 +2830,7 @@
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="ReffID" ColumnName="ReffID" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -2734,11 +2864,12 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Privilege_Name" ColumnName="Privilege_Name" />
                 <ScalarProperty Name="Privilege_Desc" ColumnName="Privilege_Desc" />
+                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2758,6 +2889,7 @@
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="ReffID" ColumnName="ReffID" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
@@ -2771,18 +2903,12 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="PrivilegeID" ColumnName="PrivilegeID" />
-                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="KlinikDBModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2795,12 +2921,13 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
                 <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+                <ScalarProperty Name="ResetPasswordCode" ColumnName="ResetPasswordCode" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ResetPasswordCode" ColumnName="ResetPasswordCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2810,6 +2937,11 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

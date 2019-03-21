@@ -114,7 +114,7 @@ namespace Klinik.Features
                 try
                 {
                     // get user based on employee ID
-                    var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.EmployeeID == employee.id);
+                    var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.EmployeeID == employee.ID);
 
                     // set reset password code
                     user.ResetPasswordCode = request.Data.ResetPasswordCode;

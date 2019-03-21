@@ -60,7 +60,7 @@ namespace Klinik.Features
         public IList<MenuModel> GetMenuBasedOnPrivilege(List<long> privileges)
         {
             var qry_menuid = _unitOfWork.PrivilegeRepository.Get(x => privileges.Contains(x.ID)).Select(x => x.MenuID);
-            var qry2menu = _unitOfWork.MenuRepository.Get(x => qry_menuid.ToList().Contains(x.Id), orderBy: q => q.OrderBy(x => x.Level).ThenBy(x => x.SortIndex));
+            var qry2menu = _unitOfWork.MenuRepository.Get(x => qry_menuid.ToList().Contains(x.ID), orderBy: q => q.OrderBy(x => x.Level).ThenBy(x => x.SortIndex));
             IList<MenuModel> _authmenu = new List<MenuModel>();
             foreach (var item in qry2menu)
             {

@@ -23,7 +23,7 @@ namespace Klinik.Data.DataRepository
             this.Users = new HashSet<User>();
         }
     
-        public long id { get; set; }
+        public long ID { get; set; }
         public string EmpID { get; set; }
         public string EmpName { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
@@ -35,9 +35,9 @@ namespace Klinik.Data.DataRepository
         public string Email { get; set; }
         public string LastEmpID { get; set; }
         public Nullable<short> Status { get; set; }
-        public Nullable<short> RowStatus { get; set; }
+        public short RowStatus { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     

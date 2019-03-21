@@ -36,9 +36,9 @@ namespace Klinik.Data.DataRepository
         public string HPNumber { get; set; }
         public string Email { get; set; }
         public string Remark { get; set; }
-        public Nullable<short> RowStatus { get; set; }
+        public short RowStatus { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     

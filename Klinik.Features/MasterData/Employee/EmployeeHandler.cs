@@ -100,7 +100,7 @@ namespace Klinik.Features
                     request.Data.EmpType = _context.FamilyRelationships.SingleOrDefault(x => x.Code == request.Data.EmpTypeDesc).ID;
                     request.Data.Status = _context.EmployeeStatus.SingleOrDefault(x => x.Code == request.Data.EmpStatusDesc).ID;
                     if (request.Data.ReffEmpID != string.Empty)
-                        request.Data.ReffEmpID = _context.Employees.SingleOrDefault(x => x.EmpID == request.Data.ReffEmpID).id.ToString();
+                        request.Data.ReffEmpID = _context.Employees.SingleOrDefault(x => x.EmpID == request.Data.ReffEmpID).ID.ToString();
                 }
 
                 try
@@ -146,7 +146,7 @@ namespace Klinik.Features
 
                             var newEmployeeAssignment = new EmployeeAssignment
                             {
-                                EmployeeID = _qry.id,
+                                EmployeeID = _qry.ID,
                                 BusinessUnit = request.Data.BussinesUnit,
                                 Department = request.Data.Department,
                                 StartDate = request.Data.StartDate,
@@ -187,14 +187,14 @@ namespace Klinik.Features
                             if (_resultAffected > 0)
                             {
                                 CommandLog(true, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.ADD_NEW_EMPLOYEE, request.Data.Account, _employeeEntity);
-                                _newEmpId = _employeeEntity.id;
+                                _newEmpId = _employeeEntity.ID;
                             }
 
                             if (request.Data.EmpTypeDesc.Trim() == Constants.Command.EmployeeRelationshipCode)
                             {
                                 var _employeeAssignmentEntity = new EmployeeAssignment
                                 {
-                                    EmployeeID = _employeeEntity.id,
+                                    EmployeeID = _employeeEntity.ID,
                                     BusinessUnit = request.Data.BussinesUnit,
                                     Department = request.Data.Department,
                                     StartDate = request.Data.StartDate,
@@ -218,7 +218,7 @@ namespace Klinik.Features
                             _context.SaveChanges();
 
                             //get all dependent
-                            var _getAllDependant = _context.Employees.Where(x => x.ReffEmpID == oldEmployee.id.ToString());
+                            var _getAllDependant = _context.Employees.Where(x => x.ReffEmpID == oldEmployee.ID.ToString());
                             foreach (var item in _getAllDependant)
                             {
                                 item.ReffEmpID = _newEmpId.ToString();
@@ -258,7 +258,7 @@ namespace Klinik.Features
                             {
                                 var _employeeAssignmentEntity = new EmployeeAssignment
                                 {
-                                    EmployeeID = _employeeEntity.id,
+                                    EmployeeID = _employeeEntity.ID,
                                     BusinessUnit = request.Data.BussinesUnit,
                                     Department = request.Data.Department,
                                     StartDate = request.Data.StartDate,
@@ -328,7 +328,7 @@ namespace Klinik.Features
             //Get from EmployeeAssignment
             DateTime minTime = (DateTime)SqlDateTime.Null;
             var _idActiveEmp = _unitOfWork.EmployeeAssignmentRepository.Get(x => (x.EndDate == null || x.EndDate == minTime) && x.EmployeeStatu.Status == "A").Select(x => x.EmployeeID);
-            var qry = _unitOfWork.EmployeeRepository.Get(x => _idActiveEmp.Contains(x.id));
+            var qry = _unitOfWork.EmployeeRepository.Get(x => _idActiveEmp.Contains(x.ID));
             IList<EmployeeModel> employees = new List<EmployeeModel>();
             foreach (var item in qry)
             {
@@ -348,7 +348,7 @@ namespace Klinik.Features
         {
             EmployeeResponse response = new EmployeeResponse();
 
-            var qry = _unitOfWork.EmployeeRepository.Query(x => x.id == request.Data.Id, null);
+            var qry = _unitOfWork.EmployeeRepository.Query(x => x.ID == request.Data.Id, null);
             if (qry.FirstOrDefault() != null)
             {
                 response.Entity = Mapper.Map<Employee, EmployeeModel>(qry.FirstOrDefault());
@@ -399,7 +399,7 @@ namespace Klinik.Features
 
                         default:
 
-                            qry = _unitOfWork.EmployeeRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.id), p => p.EmployeeAssignments, p => p.FamilyRelationship, prop => prop.EmployeeStatu);
+                            qry = _unitOfWork.EmployeeRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.ID), p => p.EmployeeAssignments, p => p.FamilyRelationship, prop => prop.EmployeeStatu);
                             break;
                     }
                 }
@@ -415,7 +415,7 @@ namespace Klinik.Features
                             break;
 
                         default:
-                            qry = _unitOfWork.EmployeeRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.id), includes: p => new { p.FamilyRelationship, p.EmployeeStatu, p.EmployeeAssignments });
+                            qry = _unitOfWork.EmployeeRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID), includes: p => new { p.FamilyRelationship, p.EmployeeStatu, p.EmployeeAssignments });
                             break;
                     }
                 }
@@ -553,11 +553,9 @@ namespace Klinik.Features
             var _qry = _unitOfWork.EmployeeRepository.GetFirstOrDefault(x => x.EmpID == employeeCd);
             if (_qry != null)
             {
-                _emplId = _qry.id;
+                _emplId = _qry.ID;
             }
             return _emplId;
         }
-
-
     }
 }

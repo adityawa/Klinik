@@ -31,7 +31,7 @@ namespace Klinik.Web.Controllers
         private List<SelectListItem> BindDropDownPoliList(short poliType = 0)
         {
             // get valid poli from type
-            var filteredPoliList = _unitOfWork.PoliFlowTemplateRepository.Get(x => x.PoliTypeID.Value == poliType);
+            var filteredPoliList = _unitOfWork.PoliFlowTemplateRepository.Get(x => x.PoliTypeID == poliType);
 
             // get all poli
             var qry = _unitOfWork.PoliRepository.Get();

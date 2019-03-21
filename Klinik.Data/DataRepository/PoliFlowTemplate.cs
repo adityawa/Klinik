@@ -16,11 +16,11 @@ namespace Klinik.Data.DataRepository
     {
         public long ID { get; set; }
         public string Code { get; set; }
-        public Nullable<short> PoliTypeID { get; set; }
-        public Nullable<short> PoliTypeIDTo { get; set; }
-        public Nullable<short> RowStatus { get; set; }
+        public short PoliTypeID { get; set; }
+        public short PoliTypeIDTo { get; set; }
+        public short RowStatus { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     }

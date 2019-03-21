@@ -15,12 +15,17 @@ namespace Klinik.Data.DataRepository
     public partial class PatientClinic
     {
         public long ID { get; set; }
-        public Nullable<long> PatientID { get; set; }
-        public Nullable<long> ClinicID { get; set; }
+        public long PatientID { get; set; }
+        public long ClinicID { get; set; }
+        public string TempAddress { get; set; }
+        public Nullable<int> TempCityID { get; set; }
+        public string RefferencePerson { get; set; }
+        public string RefferenceNumber { get; set; }
+        public Nullable<int> RefferenceRelation { get; set; }
         public Nullable<long> PhotoID { get; set; }
-        public Nullable<short> RowStatus { get; set; }
+        public short RowStatus { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     

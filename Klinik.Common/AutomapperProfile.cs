@@ -15,14 +15,13 @@ namespace Klinik.Common
         {
             CreateMap<Organization, OrganizationModel>();
             CreateMap<OrganizationModel, Organization>();
+
             CreateMap<Clinic, ClinicModel>()
                 .ForMember(m => m.LegalDateDesc, map => map.MapFrom(p => p.LegalDate == null ? "" : p.LegalDate.Value.ToString("dd/MM/yyyy")));
-
-
             CreateMap<ClinicModel, Clinic>()
-                .ForMember(m => m.DateCreated, map => map.MapFrom(p => p.CreatedDate))
-                .ForMember(m => m.DateModified, map => map.MapFrom(p => p.ModifiedDate))
-                .ForMember(m => m.LastUpdateBy, map => map.MapFrom(p => p.ModifiedBy));
+                .ForMember(m => m.CreatedDate, map => map.MapFrom(p => p.CreatedDate))
+                .ForMember(m => m.ModifiedDate, map => map.MapFrom(p => p.ModifiedDate))
+                .ForMember(m => m.ModifiedBy, map => map.MapFrom(p => p.ModifiedBy));
 
             CreateMap<Organization, OrganizationData>()
                 .ForMember(m => m.Klinik, map => map.MapFrom(p => p.Clinic.Name));
@@ -30,11 +29,11 @@ namespace Klinik.Common
             CreateMap<Privilege, PrivilegeModel>()
                 .ForMember(m => m.Privilige_Name, map => map.MapFrom(p => p.Privilege_Name))
                 .ForMember(m => m.MenuDesc, map => map.MapFrom(p => p.Menu.Description))
-            .ForMember(m => m.MenuID, map => map.MapFrom(p => p.MenuID ?? 0));
-
+                .ForMember(m => m.MenuID, map => map.MapFrom(p => p.MenuID ?? 0));
             CreateMap<PrivilegeModel, Privilege>()
                 .ForMember(m => m.Privilege_Name, map => map.MapFrom(p => p.Privilige_Name))
                 .ForMember(m => m.MenuID, map => map.MapFrom(p => p.MenuID));
+
             CreateMap<OrganizationRole, RoleModel>()
                 .ForMember(m => m.OrganizationName, map => map.MapFrom(p => p.Organization.OrgName));
             CreateMap<RoleModel, OrganizationRole>();
@@ -52,7 +51,6 @@ namespace Klinik.Common
                 .ForMember(x => x.EmpTypeDesc, map => map.MapFrom(p => p.FamilyRelationship.Name))
                 .ForMember(x => x.EmpStatusDesc, map => map.MapFrom(p => p.EmployeeStatu.Name))
                 .ForMember(x => x.EmpTypeDesc, map => map.MapFrom(p => p.FamilyRelationship.Name));
-
             CreateMap<EmployeeModel, Employee>()
                 .ForMember(x => x.EmpType, map => map.MapFrom(p => p.EmpType))
                 .ForMember(x => x.Status, map => map.MapFrom(p => p.EmpStatus));
@@ -61,19 +59,16 @@ namespace Klinik.Common
                 .ForMember(x => x.OrganizationName, map => map.MapFrom(p => p.Organization.OrgName))
                 .ForMember(x => x.PrivileveName, map => map.MapFrom(p => p.Privilege.Privilege_Name))
                 .ForMember(x => x.PrivilegeDesc, map => map.MapFrom(p => p.Privilege.Privilege_Desc));
-
             CreateMap<OrganizationPrivilegeModel, OrganizationPrivilege>();
 
             CreateMap<RolePrivilege, RolePrivilegeModel>()
                .ForMember(x => x.RoleDesc, map => map.MapFrom(p => p.OrganizationRole.RoleName))
                .ForMember(x => x.PrivilegeDesc, map => map.MapFrom(p => p.Privilege.Privilege_Name));
-
             CreateMap<RolePrivilegeModel, RolePrivilege>();
 
             CreateMap<UserRole, UserRoleModel>()
                 .ForMember(x => x.UserName, map => map.MapFrom(p => p.User.UserName))
                 .ForMember(x => x.RoleName, map => map.MapFrom(p => p.OrganizationRole.RoleName));
-
             CreateMap<UserRoleModel, UserRole>();
 
             CreateMap<Menu, MenuModel>();
@@ -97,9 +92,9 @@ namespace Klinik.Common
                 .ForMember(m => m.PoliFromName, map => map.MapFrom(p => p.Poli.Name))
                 .ForMember(m => m.PoliToName, map => map.MapFrom(p => p.Poli1.Name))
                 .ForMember(m => m.StatusStr, map => map.MapFrom(p => ((RegistrationStatusEnum)p.Status.Value).ToString()))
-                .ForMember(m => m.TypeStr, map => map.MapFrom(p => ((RegistrationTypeEnum)p.Type.Value).ToString()))
-                .ForMember(m => m.TransactionDateStr, map => map.MapFrom(p => p.TransactionDate.Value.ToString("dd/MM/yyyy hh:mm:ss")))
-                .ForMember(m => m.TransactionDate, map => map.MapFrom(p => p.TransactionDate.Value));
+                .ForMember(m => m.TypeStr, map => map.MapFrom(p => ((RegistrationTypeEnum)p.Type).ToString()))
+                .ForMember(m => m.TransactionDateStr, map => map.MapFrom(p => p.TransactionDate.ToString("dd/MM/yyyy hh:mm:ss")))
+                .ForMember(m => m.TransactionDate, map => map.MapFrom(p => p.TransactionDate));
 
             CreateMap<PoliModel, Poli>();
             CreateMap<Poli, PoliModel>();
@@ -109,8 +104,8 @@ namespace Klinik.Common
 
             CreateMap<PoliFlowTemplateModel, PoliFlowTemplate>();
             CreateMap<PoliFlowTemplate, PoliFlowTemplateModel>()
-                .ForMember(m => m.PoliTypeIDTo, map => map.MapFrom(p => p.PoliTypeIDTo.Value))
-                .ForMember(m => m.PoliTypeID, map => map.MapFrom(p => p.PoliTypeID.Value));
+                .ForMember(m => m.PoliTypeIDTo, map => map.MapFrom(p => p.PoliTypeIDTo))
+                .ForMember(m => m.PoliTypeID, map => map.MapFrom(p => p.PoliTypeID));
 
             CreateMap<DoctorModel, Doctor>();
             CreateMap<Doctor, DoctorModel>()
@@ -119,13 +114,13 @@ namespace Klinik.Common
 
             CreateMap<PoliScheduleModel, PoliSchedule>();
             CreateMap<PoliSchedule, PoliScheduleModel>()
-                .ForMember(m => m.StartDateStr, map => map.MapFrom(p => p.StartDate.Value.ToString("dd/MM/yyyy hh:mm:ss")))
-                .ForMember(m => m.EndDateStr, map => map.MapFrom(p => p.EndDate.Value.ToString("dd/MM/yyyy hh:mm:ss")));
+                .ForMember(m => m.StartDateStr, map => map.MapFrom(p => p.StartDate.ToString("dd/MM/yyyy hh:mm:ss")))
+                .ForMember(m => m.EndDateStr, map => map.MapFrom(p => p.EndDate.ToString("dd/MM/yyyy hh:mm:ss")));
 
             CreateMap<PoliScheduleMasterModel, PoliScheduleMaster>();
             CreateMap<PoliScheduleMaster, PoliScheduleMasterModel>()
-            .ForMember(m => m.StartTimeStr, map => map.MapFrom(p => p.StartTime.HasValue ? p.StartTime.Value.ToString() : ""))
-            .ForMember(m => m.EndTimeStr, map => map.MapFrom(p => p.EndTime.HasValue ? p.EndTime.Value.ToString() : ""));
+                .ForMember(m => m.StartTimeStr, map => map.MapFrom(p => p.StartTime.ToString()))
+                .ForMember(m => m.EndTimeStr, map => map.MapFrom(p => p.EndTime.ToString()));
         }
     }
 }

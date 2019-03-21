@@ -17,6 +17,11 @@ namespace Klinik.Data.DataRepository
         public long Id { get; set; }
         public long UserID { get; set; }
         public long RoleID { get; set; }
+        public Nullable<short> RowStatus { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual OrganizationRole OrganizationRole { get; set; }
         public virtual User User { get; set; }
