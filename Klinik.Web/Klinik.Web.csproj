@@ -1024,6 +1024,7 @@
     <Content Include="Content\Login\vendor\bootstrap\css\bootstrap.css.map" />
     <Content Include="Content\Login\vendor\bootstrap\css\bootstrap.min.css.map" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\KlinikWeb - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\i18n\af.js" />
     <Content Include="Scripts\i18n\ar.js" />
