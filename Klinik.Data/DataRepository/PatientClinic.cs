@@ -23,6 +23,7 @@ namespace Klinik.Data.DataRepository
         public string RefferenceNumber { get; set; }
         public Nullable<int> RefferenceRelation { get; set; }
         public Nullable<long> PhotoID { get; set; }
+        public string OldMRNumber { get; set; }
         public short RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }

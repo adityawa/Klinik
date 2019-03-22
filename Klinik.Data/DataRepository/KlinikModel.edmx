@@ -343,6 +343,7 @@
           <Property Name="RefferenceNumber" Type="varchar" MaxLength="20" />
           <Property Name="RefferenceRelation" Type="int" />
           <Property Name="PhotoID" Type="bigint" />
+          <Property Name="OldMRNumber" Type="varchar" MaxLength="50" />
           <Property Name="RowStatus" Type="smallint" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
@@ -454,7 +455,7 @@
           <Property Name="SortNumber" Type="int" Nullable="false" />
           <Property Name="PoliFrom" Type="int" Nullable="false" />
           <Property Name="PoliTo" Type="int" Nullable="false" />
-          <Property Name="Remark" Type="varchar" MaxLength="10" />
+          <Property Name="Remark" Type="varchar" MaxLength="100" />
           <Property Name="ReffID" Type="bigint" />
           <Property Name="Status" Type="int" />
           <Property Name="RowStatus" Type="smallint" Nullable="false" />
@@ -1554,6 +1555,7 @@
           <Property Name="RefferenceNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="RefferenceRelation" Type="Int32" />
           <Property Name="PhotoID" Type="Int64" />
+          <Property Name="OldMRNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RowStatus" Type="Int16" Nullable="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -1684,7 +1686,7 @@
           <Property Name="SortNumber" Type="Int32" Nullable="false" />
           <Property Name="PoliFrom" Type="Int32" Nullable="false" />
           <Property Name="PoliTo" Type="Int32" Nullable="false" />
-          <Property Name="Remark" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ReffID" Type="Int64" />
           <Property Name="Status" Type="Int32" />
           <Property Name="RowStatus" Type="Int16" Nullable="false" />
@@ -2768,6 +2770,7 @@
                 <ScalarProperty Name="RefferenceNumber" ColumnName="RefferenceNumber" />
                 <ScalarProperty Name="RefferenceRelation" ColumnName="RefferenceRelation" />
                 <ScalarProperty Name="PhotoID" ColumnName="PhotoID" />
+                <ScalarProperty Name="OldMRNumber" ColumnName="OldMRNumber" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
