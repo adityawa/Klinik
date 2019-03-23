@@ -525,4 +525,7 @@
   <data name="StartTime" xml:space="preserve">
     <value>Start Time</value>
   </data>
+  <data name="BackToHome" xml:space="preserve">
+    <value>Back To Home</value>
+  </data>
 </root>

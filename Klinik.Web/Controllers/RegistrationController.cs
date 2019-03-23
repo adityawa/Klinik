@@ -405,5 +405,66 @@ namespace Klinik.Web.Controllers
 
             return IsAuthorized;
         }
+
+        [NonAction]
+        private ActionResult GenericController(int poliToID)
+        {
+            var model = new RegistrationModel
+            {
+                PoliFromID = CURRENT_POLI_ID,
+                PoliFromName = CURRENT_POLI_NAME,
+                PoliToID = poliToID
+            };
+
+            ViewBag.ActionType = ClinicEnums.Action.Add;
+            ViewBag.PoliList = BindDropDownPoliList();
+            ViewBag.PatientList = BindDropDownPatientList();
+            ViewBag.RegistrationTypeList = BindDropDownTypeList();
+            ViewBag.DoctorList = BindDropDownDoctorList(poliToID);
+
+            return View("CreateOrEditRegistration", model);
+        }
+
+        [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
+        public ActionResult Umum()
+        {
+            return GenericController(2);
+        }
+
+        [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
+        public ActionResult Gigi()
+        {
+            return GenericController(3);
+        }
+
+        [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
+        public ActionResult Kulit()
+        {
+            return GenericController(5);
+        }
+
+        [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
+        public ActionResult THT()
+        {
+            return GenericController(7);
+        }
+
+        [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
+        public ActionResult Farmasi()
+        {
+            return GenericController(12);
+        }
+
+        [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
+        public ActionResult Lab()
+        {
+            return GenericController(11);
+        }
+
+        [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
+        public ActionResult Radiologi()
+        {
+            return GenericController(10);
+        }
     }
 }
