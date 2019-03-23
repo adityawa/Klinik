@@ -100,7 +100,7 @@ namespace Klinik.Features
                 else
                 {
                     var doctorEntity = Mapper.Map<DoctorModel, Doctor>(request.Data);
-                    doctorEntity.CreatedBy = request.Data.Account.UserName;
+                    doctorEntity.CreatedBy = request.Data.Account.UserCode;
                     doctorEntity.CreatedDate = DateTime.Now;
 
                     _unitOfWork.DoctorRepository.Insert(doctorEntity);

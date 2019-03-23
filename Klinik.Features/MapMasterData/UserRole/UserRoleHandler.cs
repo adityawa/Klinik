@@ -48,7 +48,9 @@ namespace Klinik.Features
                         var _userrole = new UserRole
                         {
                             UserID = request.Data.UserID,
-                            RoleID = _roleid
+                            RoleID = _roleid,
+                            CreatedBy = request.Data.Account.UserCode,
+                            CreatedDate = DateTime.Now
                         };
 
                         _context.UserRoles.Add(_userrole);

@@ -64,7 +64,7 @@ namespace Klinik.Features.PoliSchedules
                                 newSchedule.PoliID = qry.PoliID;
                                 newSchedule.DoctorID = qry.DoctorID;
                                 newSchedule.ReffID = request.Data.ReffID;
-                                newSchedule.CreatedBy = request.Data.Account.UserName;
+                                newSchedule.CreatedBy = request.Data.Account.UserCode;
                                 newSchedule.CreatedDate = DateTime.Now;
                                 newSchedule.StartDate = request.Data.StartDate;
                                 newSchedule.EndDate = request.Data.EndDate;
@@ -130,7 +130,7 @@ namespace Klinik.Features.PoliSchedules
                 else
                 {
                     var regEntity = Mapper.Map<PoliScheduleModel, PoliSchedule>(request.Data);
-                    regEntity.CreatedBy = request.Data.Account.UserName;
+                    regEntity.CreatedBy = request.Data.Account.UserCode;
                     regEntity.CreatedDate = DateTime.Now;
 
                     _unitOfWork.PoliScheduleRepository.Insert(regEntity);

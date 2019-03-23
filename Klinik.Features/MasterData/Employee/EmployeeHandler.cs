@@ -179,9 +179,9 @@ namespace Klinik.Features
                             }
 
                             var _employeeEntity = Mapper.Map<EmployeeModel, Employee>(request.Data);
-
                             _employeeEntity.CreatedDate = DateTime.Now;
-                            _employeeEntity.CreatedBy = request.Data.Account.UserName ?? "SYSTEM";
+                            _employeeEntity.CreatedBy = request.Data.Account.UserCode;
+
                             _context.Employees.Add(_employeeEntity);
                             _resultAffected = _context.SaveChanges();
                             if (_resultAffected > 0)
@@ -204,7 +204,7 @@ namespace Klinik.Features
                                     LastEmpID = request.Data.LastEmpId,
                                     Grade = request.Data.Grade,
                                     CreatedDate = DateTime.Now,
-                                    CreatedBy = request.Data.Account.UserName ?? "System"
+                                    CreatedBy = request.Data.Account.UserCode
                                 };
 
                                 _context.EmployeeAssignments.Add(_employeeAssignmentEntity);
@@ -234,22 +234,18 @@ namespace Klinik.Features
                                 oldEmpAssignment.EmpStatus = _context.EmployeeStatus.FirstOrDefault(x => x.Code == Constants.Command.NotActiveCode.ToString()).ID;
                                 _context.SaveChanges();
                             }
-
                         }
-
                         else
                         {
-
                             if (request.Data.EmpTypeDesc.Trim() != Constants.Command.EmployeeRelationshipCode)
                             {
                                 request.Data.EmpID = string.Format("{0}-{1}", request.Data.ReffEmpID, request.Data.EmpTypeDesc);
-
                             }
 
                             var _employeeEntity = Mapper.Map<EmployeeModel, Employee>(request.Data);
 
                             _employeeEntity.CreatedDate = DateTime.Now;
-                            _employeeEntity.CreatedBy = request.Data.Account.UserName ?? "SYSTEM";
+                            _employeeEntity.CreatedBy = request.Data.Account.UserCode;
                             _context.Employees.Add(_employeeEntity);
                             _resultAffected = _context.SaveChanges();
                             if (_resultAffected > 0)
@@ -268,7 +264,7 @@ namespace Klinik.Features
                                     LastEmpID = request.Data.LastEmpId,
                                     Grade = request.Data.Grade,
                                     CreatedDate = DateTime.Now,
-                                    CreatedBy = request.Data.Account.UserName ?? "System"
+                                    CreatedBy = request.Data.Account.UserCode
                                 };
 
                                 _context.EmployeeAssignments.Add(_employeeAssignmentEntity);
@@ -277,19 +273,14 @@ namespace Klinik.Features
                                 if (_resultAffected > 0)
                                     CommandLog(true, ClinicEnums.Module.EMPLOYEE_ASSIGNMENT, Constants.Command.ADD_EMPLOYEEASSIGNMENT, request.Data.Account, _employeeAssignmentEntity);
                             }
-
-
                         }
-
-
 
                         response.Message = string.Format(Messages.ObjectHasBeenAdded, "Employee", request.Data.EmpName, request.Data.EmpID);
                     }
 
                     transaction.Commit();
-
                 }
-                catch (Exception ex)
+                catch
                 {
                     transaction.Rollback();
                     response.Status = false;
@@ -297,11 +288,7 @@ namespace Klinik.Features
 
                     CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data);
                 }
-
             }
-
-
-
 
             return response;
         }
@@ -518,9 +505,7 @@ namespace Klinik.Features
                             if (result_affected > 0)
                                 CommandLog(true, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.DELETE_EMPLOYEE, request.Data.Account, null, oldEmployee);
                         }
-
                     }
-
                     else
                     {
                         var isExistInEmployee = _unitOfWork.EmployeeRepository.GetById(request.Data.Id);
@@ -537,13 +522,14 @@ namespace Klinik.Features
                     transaction.Commit();
                     response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Employee", request.Data.EmpName, request.Data.EmpID);
                 }
-                catch (Exception ex)
+                catch
                 {
                     transaction.Rollback();
                     response.Status = false;
                     response.Message = Messages.GeneralError;
                 }
             }
+
             return response;
         }
 

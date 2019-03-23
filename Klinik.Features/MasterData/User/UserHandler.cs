@@ -77,7 +77,7 @@ namespace Klinik.Features
                     request.Data.Password = CommonUtils.Encryptor(request.Data.Password, CommonUtils.KeyEncryptor);
                     request.Data.ExpiredDate = request.Data.ExpiredDate ?? DateTime.Now.AddDays(100);
                     var UserEntity = Mapper.Map<UserModel, User>(request.Data);
-                    UserEntity.CreatedBy = request.Data.Account.UserName;
+                    UserEntity.CreatedBy = request.Data.Account.UserCode;
                     UserEntity.CreatedDate = DateTime.Now;
 
                     _unitOfWork.UserRepository.Insert(UserEntity);

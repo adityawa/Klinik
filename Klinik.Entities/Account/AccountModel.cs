@@ -17,6 +17,13 @@ namespace Klinik.Entities.Account
         public List<long> Roles { get; set; }
         public RolePrivilegeModel Privileges { get; set; }
         public string Organization { get; set; }
+        public string UserCode
+        {
+            get
+            {
+                return Organization + "-" + UserName;
+            }
+        }
 
         public AccountModel()
         {
