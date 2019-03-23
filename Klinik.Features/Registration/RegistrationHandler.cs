@@ -346,13 +346,14 @@ namespace Klinik.Features.Registration
                 {
                     // get previous registration with status new
                     var previousRegistrationList = _unitOfWork.RegistrationRepository.Get(x => x.ID != currentRegistration.ID &&
-                    x.ClinicID == currentRegistration.ClinicID &&
-                    x.PoliTo == currentRegistration.PoliTo &&
-                    x.Status == 0 &&
-                    x.TransactionDate.Year == currentRegistration.TransactionDate.Year &&
-                    x.TransactionDate.Month == currentRegistration.TransactionDate.Month &&
-                    x.TransactionDate.Day == currentRegistration.TransactionDate.Day &&
-                    x.SortNumber < request.Data.SortNumber);
+                                        x.TransactionDate.Year == currentRegistration.TransactionDate.Year &&
+                                        x.TransactionDate.Month == currentRegistration.TransactionDate.Month &&
+                                        x.TransactionDate.Day == currentRegistration.TransactionDate.Day &&
+                                        x.ClinicID == currentRegistration.ClinicID &&
+                                        x.PoliTo == currentRegistration.PoliTo &&
+                                        x.DoctorID == currentRegistration.DoctorID &&
+                                        x.Status == 0 &&
+                                        x.SortNumber < currentRegistration.SortNumber);
 
                     foreach (var item in previousRegistrationList)
                     {

@@ -107,11 +107,14 @@ namespace Klinik.Web.Controllers
                 var doctor = _unitOfWork.DoctorRepository.GetFirstOrDefault(x => x.ID == item.DoctorID);
                 if (doctor != null)
                 {
-                    _typeList.Add(new SelectListItem
+                    if (!_typeList.Any(x => x.Value == doctor.ID.ToString()))
                     {
-                        Text = doctor.Name,
-                        Value = doctor.ID.ToString()
-                    });
+                        _typeList.Add(new SelectListItem
+                        {
+                            Text = doctor.Name,
+                            Value = doctor.ID.ToString()
+                        });
+                    }
                 }
             }
 
