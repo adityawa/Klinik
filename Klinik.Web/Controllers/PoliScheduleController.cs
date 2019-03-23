@@ -117,10 +117,10 @@ namespace Klinik.Web.Controllers
                 _model.Account = (AccountModel)Session["UserLogon"];
 
             // convert the time
-            DateTime startDate = DateTime.ParseExact(_model.StartTimeStr, "hh:mm tt", CultureInfo.InvariantCulture);
+            DateTime startDate = DateTime.ParseExact(_model.StartTimeStr, "HH:mm", CultureInfo.InvariantCulture);
             _model.StartTime = startDate.TimeOfDay;
 
-            DateTime endDate = DateTime.ParseExact(_model.EndTimeStr, "hh:mm tt", CultureInfo.InvariantCulture);
+            DateTime endDate = DateTime.ParseExact(_model.EndTimeStr, "HH:mm", CultureInfo.InvariantCulture);
             _model.EndTime = endDate.TimeOfDay;
 
             var request = new PoliScheduleMasterRequest

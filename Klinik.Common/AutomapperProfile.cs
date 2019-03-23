@@ -119,8 +119,8 @@ namespace Klinik.Common
 
             CreateMap<PoliScheduleMasterModel, PoliScheduleMaster>();
             CreateMap<PoliScheduleMaster, PoliScheduleMasterModel>()
-                .ForMember(m => m.StartTimeStr, map => map.MapFrom(p => p.StartTime.ToString()))
-                .ForMember(m => m.EndTimeStr, map => map.MapFrom(p => p.EndTime.ToString()));
+                .ForMember(m => m.StartTimeStr, map => map.MapFrom(p => p.StartTime.ToString(@"hh\:mm")))
+                .ForMember(m => m.EndTimeStr, map => map.MapFrom(p => p.EndTime.ToString(@"hh\:mm")));
         }
     }
 }
