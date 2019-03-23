@@ -531,4 +531,7 @@
   <data name="Reschedule" xml:space="preserve">
     <value>Reschedule</value>
   </data>
+  <data name="RescheduleConfirmation" xml:space="preserve">
+    <value>Inactive schedule could not be rescheduled !</value>
+  </data>
 </root>

@@ -1087,6 +1087,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inactive schedule could not be rescheduled !.
+        /// </summary>
+        public static string RescheduleConfirmation {
+            get {
+                return ResourceManager.GetString("RescheduleConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
         public static string Reset {

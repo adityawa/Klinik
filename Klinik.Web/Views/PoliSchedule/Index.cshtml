@@ -125,7 +125,7 @@
                         } else {
                             return '<a class="btn btn-info" href="/PoliSchedule/CreateOrEditPoliSchedule?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' +
                                 " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" +
-                                " | <button class='btn btn-default'>@Klinik.Resources.UIMessages.Reschedule</button>";
+                                " | <button class='btn btn-default' onclick='Warning()'>@Klinik.Resources.UIMessages.Reschedule</button>";
                         }
                     }
                 }
@@ -149,7 +149,12 @@
         if (r == true) {
             DeletePoliSchedule(ID);
         }
+
         return false;
+    }
+
+    var Warning = function () {
+        alert("@Klinik.Resources.UIMessages.RescheduleConfirmation");
     }
 
     function DeletePoliSchedule(Id) {
