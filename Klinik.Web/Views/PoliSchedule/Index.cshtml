@@ -63,7 +63,7 @@
                 [{
                     "targets": [0],
                     "searchable": true,
-                    "searchable": true,
+                    "orderable": true,
                 },
                 {
                     "targets": [1],
@@ -77,14 +77,13 @@
                 },
                 {
                     "targets": [3],
-                    "searchable": false,
-                    "orderable": false
+                    "searchable": true,
+                    "orderable": true
                 },
                 {
                     "targets": [4],
                     "searchable": false,
                     "orderable": false
-
                 },
                 {
                     "targets": [5],
@@ -98,8 +97,8 @@
                 },
                 {
                     "targets": [7],
-                    "searchable": false,
-                    "orderable": false
+                    "searchable": true,
+                    "orderable": true
                 },
                 {
                     "targets": [8],
@@ -119,9 +118,15 @@
                 { "data": "StatusStr", "name": "StatusStr", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta) {
-                        return '<a class="btn btn-info" href="/PoliSchedule/CreateOrEditPoliSchedule?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' +
-                            " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" +
-                            ' | <a class="btn btn-warning" href="/PoliSchedule/Reschedule?id=' + full.Id + '">@Klinik.Resources.UIMessages.Reschedule</a>  '  ;
+                        if ( full.StatusStr === 'Aktif') {
+                            return '<a class="btn btn-info" href="/PoliSchedule/CreateOrEditPoliSchedule?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' +
+                                " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" +
+                                ' | <a class="btn btn-success" href="/PoliSchedule/Reschedule?id=' + full.Id + '">@Klinik.Resources.UIMessages.Reschedule</a>';
+                        } else {
+                            return '<a class="btn btn-info" href="/PoliSchedule/CreateOrEditPoliSchedule?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' +
+                                " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" +
+                                " | <button class='btn btn-default'>@Klinik.Resources.UIMessages.Reschedule</button>";
+                        }
                     }
                 }
             ]

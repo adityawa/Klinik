@@ -226,7 +226,7 @@ namespace Klinik.Features.PoliSchedules
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
-                searchPredicate = searchPredicate.And(p => p.Doctor.Name.Contains(request.SearchValue));
+                searchPredicate = searchPredicate.And(p => p.Doctor.Name.Contains(request.SearchValue) || p.Clinic.Name.Contains(request.SearchValue) || p.Poli.Name.Contains(request.SearchValue));
             }
 
             if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
@@ -235,10 +235,21 @@ namespace Klinik.Features.PoliSchedules
                 {
                     switch (request.SortColumn.ToLower())
                     {
+                        case "id":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.ID));
+                            break;
+                        case "clinicname":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Clinic.Name));
+                            break;
+                        case "poliname":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Poli.Name));
+                            break;
                         case "doctorname":
                             qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Doctor.Name));
                             break;
-
+                        case "statusstr":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Status));
+                            break;
                         default:
                             qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.ID));
                             break;
@@ -248,10 +259,21 @@ namespace Klinik.Features.PoliSchedules
                 {
                     switch (request.SortColumn.ToLower())
                     {
+                        case "id":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID));
+                            break;
+                        case "clinicname":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Clinic.Name));
+                            break;
+                        case "poliname":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Poli.Name));
+                            break;
                         case "doctorname":
                             qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Doctor.Name));
                             break;
-
+                        case "statusstr":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Status));
+                            break;
                         default:
                             qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID));
                             break;

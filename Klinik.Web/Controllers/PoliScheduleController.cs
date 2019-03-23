@@ -245,13 +245,12 @@ namespace Klinik.Web.Controllers
             ViewBag.Clinics = BindDropDownClinic();
             ViewBag.Doctors = BindDropDownDoctor();
             ViewBag.Polis = BindDropDownPoli();
+            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
 
             if (_model.ReffID != 0)
-                ViewBag.ActionType = ClinicEnums.Action.Reschedule;
+                return View("Index");
             else
-                ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
-
-            return View();
+                return View();
         }
 
         [CustomAuthorize("ADD_M_POLISCHEDULE", "EDIT_M_POLISCHEDULE")]
