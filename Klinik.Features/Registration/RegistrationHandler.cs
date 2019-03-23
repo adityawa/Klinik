@@ -351,7 +351,8 @@ namespace Klinik.Features.Registration
                     x.Status == 0 &&
                     x.TransactionDate.Year == currentRegistration.TransactionDate.Year &&
                     x.TransactionDate.Month == currentRegistration.TransactionDate.Month &&
-                    x.TransactionDate.Day == currentRegistration.TransactionDate.Day);
+                    x.TransactionDate.Day == currentRegistration.TransactionDate.Day &&
+                    x.SortNumber < request.Data.SortNumber);
 
                     foreach (var item in previousRegistrationList)
                     {
