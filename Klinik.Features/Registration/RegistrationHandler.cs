@@ -50,6 +50,7 @@ namespace Klinik.Features.Registration
                         qry.Type = (short)request.Data.Type;
                         qry.ReffID = request.Data.ReffID;
                         qry.Remark = request.Data.Remark;
+                        qry.DoctorID = request.Data.DoctorID == 0 ? (int?)null : request.Data.DoctorID;
 
                         _unitOfWork.RegistrationRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
@@ -85,6 +86,7 @@ namespace Klinik.Features.Registration
                     regEntity.ClinicID = GetClinicID(request.Data.Account.Organization);
                     regEntity.PoliFrom = 1;
                     regEntity.SortNumber = GenerateSortNumber(request.Data.PoliToID);
+                    regEntity.DoctorID = request.Data.DoctorID == 0 ? (int?)null : request.Data.DoctorID;
 
                     _unitOfWork.RegistrationRepository.Insert(regEntity);
                     int resultAffected = _unitOfWork.Save();
