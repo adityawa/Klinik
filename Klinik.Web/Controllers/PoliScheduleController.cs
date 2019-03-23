@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace Klinik.Web.Controllers
@@ -236,12 +237,19 @@ namespace Klinik.Web.Controllers
                 Data = _model,
             };
 
+            if (_model.ReffID != 0)
+                request.Action = ClinicEnums.Action.Reschedule.ToString();
+
             PoliScheduleResponse _response = new PoliScheduleValidator(_unitOfWork).Validate(request);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
             ViewBag.Clinics = BindDropDownClinic();
             ViewBag.Doctors = BindDropDownDoctor();
             ViewBag.Polis = BindDropDownPoli();
-            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
+            if (_model.ReffID != 0)
+                ViewBag.ActionType = ClinicEnums.Action.Reschedule;
+            else
+                ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
 
             return View();
         }
@@ -277,6 +285,37 @@ namespace Klinik.Web.Controllers
                 ViewBag.Doctors = BindDropDownDoctor();
                 ViewBag.Polis = BindDropDownPoli();
                 return View();
+            }
+        }
+
+        [CustomAuthorize("ADD_M_POLISCHEDULE", "EDIT_M_POLISCHEDULE")]
+        public ActionResult Reschedule()
+        {
+            PoliScheduleResponse _response = new PoliScheduleResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new PoliScheduleRequest
+                {
+                    Data = new PoliScheduleModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                PoliScheduleResponse resp = new PoliScheduleHandler(_unitOfWork).GetDetail(request);
+                PoliScheduleModel _model = resp.Entity;
+                _model.ReffID = _model.Id;
+                ViewBag.Response = _response;
+                ViewBag.Clinics = BindDropDownClinic();
+                ViewBag.Doctors = BindDropDownDoctor();
+                ViewBag.Polis = BindDropDownPoli();
+                ViewBag.ActionType = ClinicEnums.Action.Reschedule;
+
+                return View("CreateOrEditPoliSchedule", _model);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
         }
 

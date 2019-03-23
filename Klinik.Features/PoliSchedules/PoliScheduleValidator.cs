@@ -28,10 +28,9 @@ namespace Klinik.Features.PoliSchedules
         {
             var response = new PoliScheduleResponse();
 
-            if (request.Action != null)
+            if (request.Action != null && request.Action.Equals(ClinicEnums.Action.DELETE.ToString()))
             {
-                if (request.Action.Equals(ClinicEnums.Action.DELETE.ToString()))
-                    response = ValidateForDelete(request);
+                response = ValidateForDelete(request);
             }
             else
             {

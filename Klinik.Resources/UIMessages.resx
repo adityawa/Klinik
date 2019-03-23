@@ -528,4 +528,7 @@
   <data name="BackToHome" xml:space="preserve">
     <value>Back To Home</value>
   </data>
+  <data name="Reschedule" xml:space="preserve">
+    <value>Reschedule</value>
+  </data>
 </root>

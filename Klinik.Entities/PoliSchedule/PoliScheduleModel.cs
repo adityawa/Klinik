@@ -17,5 +17,6 @@ namespace Klinik.Entities.PoliSchedules
         public long ReffID { get; set; }
         public int Status { get; set; }
         public string StatusStr { get; set; }
+        public string Remark { get; set; }
     }
 }

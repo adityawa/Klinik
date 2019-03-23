@@ -62,8 +62,8 @@
             "columnDefs":
                 [{
                     "targets": [0],
-                    "visible": false,
-                    "searchable": false,
+                    "searchable": true,
+                    "searchable": true,
                 },
                 {
                     "targets": [1],
@@ -118,7 +118,11 @@
                 { "data": "ReffID", "name": "ReffID", "autoWidth": true },
                 { "data": "StatusStr", "name": "StatusStr", "autoWidth": true },
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/PoliSchedule/CreateOrEditPoliSchedule?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>"; }
+                    "render": function (data, type, full, meta) {
+                        return '<a class="btn btn-info" href="/PoliSchedule/CreateOrEditPoliSchedule?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' +
+                            " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" +
+                            ' | <a class="btn btn-warning" href="/PoliSchedule/Reschedule?id=' + full.Id + '">@Klinik.Resources.UIMessages.Reschedule</a>  '  ;
+                    }
                 }
             ]
         });

@@ -53,7 +53,8 @@
             DELETE,
             Process,
             Hold,
-            Finish
+            Finish,
+            Reschedule
         }
     }
 }
