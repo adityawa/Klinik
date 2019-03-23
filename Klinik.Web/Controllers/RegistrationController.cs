@@ -129,7 +129,7 @@ namespace Klinik.Web.Controllers
             foreach (var item in scheduleList)
             {
                 var doctor = _unitOfWork.DoctorRepository.GetFirstOrDefault(x => x.ID == item.DoctorID);
-                if (doctor != null)
+                if (doctor != null && !doctorList.Any(x => x.ID == doctor.ID))
                 {
                     doctorList.Add(new Doctor { ID = doctor.ID, Name = doctor.Name });
                 }
