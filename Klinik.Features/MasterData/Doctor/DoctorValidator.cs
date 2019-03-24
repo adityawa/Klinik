@@ -1,5 +1,6 @@
 ﻿using Klinik.Common;
 using Klinik.Data;
+using Klinik.Data.DataRepository;
 using Klinik.Resources;
 using System;
 using System.Linq;
@@ -22,6 +23,12 @@ namespace Klinik.Features
             _unitOfWork = unitOfWork;
         }
 
+        public DoctorValidator(IUnitOfWork unitOfWork, KlinikDBEntities context)
+        {
+            _unitOfWork = unitOfWork;
+            _context = context;
+        }
+
         /// <summary>
         /// Validate the request
         /// </summary>
@@ -41,7 +48,15 @@ namespace Klinik.Features
 
                 if (String.IsNullOrEmpty(request.Data.Code) || String.IsNullOrWhiteSpace(request.Data.Code))
                 {
-                    errorFields.Add("Doctor Code");
+                    request.Data.Code = "D" + new Random().Next(1000, 9999);
+                }
+
+                if (request.Data.STRValidFrom != null && request.Data.STRValidTo != null)
+                {
+                    if (request.Data.STRValidTo < request.Data.STRValidFrom)
+                    {
+                        errorFields.Add(Messages.STRValidToInvalid);
+                    }
                 }
 
                 if (String.IsNullOrEmpty(request.Data.Name) || String.IsNullOrWhiteSpace(request.Data.Name))
@@ -82,7 +97,7 @@ namespace Klinik.Features
 
                 if (response.Status)
                 {
-                    response = new DoctorHandler(_unitOfWork).CreateOrEdit(request);
+                    response = new DoctorHandler(_unitOfWork, _context).CreateOrEdit(request);
                 }
             }
 

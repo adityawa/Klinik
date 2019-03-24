@@ -66,15 +66,16 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Code" Type="char" MaxLength="10" />
-          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="SpecialistID" Type="int" />
-          <Property Name="TypeID" Type="int" />
-          <Property Name="KTPNumber" Type="varchar" MaxLength="50" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="bigint" Nullable="false" />
+          <Property Name="KTPNumber" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="STRNumber" Type="varchar" MaxLength="50" />
           <Property Name="STRValidFrom" Type="datetime" />
           <Property Name="STRValidTo" Type="datetime" />
-          <Property Name="Address" Type="varchar" MaxLength="200" />
-          <Property Name="HPNumber" Type="varchar" MaxLength="20" />
+          <Property Name="Address" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="HPNumber" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="Remark" Type="varchar" MaxLength="300" />
           <Property Name="RowStatus" Type="smallint" Nullable="false" />
@@ -581,6 +582,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Employee_Doctor">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Doctor">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_EmployeeStatus">
           <End Role="EmployeeStatus" Type="Self.EmployeeStatus" Multiplicity="0..1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -1032,6 +1045,10 @@
             <End Role="FileArchieve" EntitySet="FileArchieve" />
             <End Role="DoctorClinic" EntitySet="DoctorClinic" />
           </AssociationSet>
+          <AssociationSet Name="FK_Employee_Doctor" Association="Self.FK_Employee_Doctor">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Doctor" EntitySet="Doctor" />
+          </AssociationSet>
           <AssociationSet Name="FK_Employee_EmployeeStatus" Association="Self.FK_Employee_EmployeeStatus">
             <End Role="EmployeeStatus" EntitySet="EmployeeStatus" />
             <End Role="Employee" EntitySet="Employee" />
@@ -1242,15 +1259,16 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SpecialistID" Type="Int32" />
-          <Property Name="TypeID" Type="Int32" />
-          <Property Name="KTPNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="Int64" Nullable="false" />
+          <Property Name="KTPNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="STRNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="STRValidFrom" Type="DateTime" Precision="3" />
           <Property Name="STRValidTo" Type="DateTime" Precision="3" />
-          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="HPNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HPNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Remark" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="RowStatus" Type="Int16" Nullable="false" />
@@ -1259,6 +1277,7 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="DoctorClinics" Relationship="Self.FK_DoctorClinic_Doctor" FromRole="Doctor" ToRole="DoctorClinic" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Doctor" FromRole="Doctor" ToRole="Employee" />
           <NavigationProperty Name="PoliSchedules" Relationship="Self.FK_PoliSchedule_Doctor" FromRole="Doctor" ToRole="PoliSchedule" />
           <NavigationProperty Name="PoliScheduleMasters" Relationship="Self.FK_PoliScheduleMaster_Doctor" FromRole="Doctor" ToRole="PoliScheduleMaster" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_Doctor" FromRole="Doctor" ToRole="QueuePoli" />
@@ -1303,6 +1322,7 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Appointments" Relationship="Self.FK_Appointment_Employee" FromRole="Employee" ToRole="Appointment" />
+          <NavigationProperty Name="Doctors" Relationship="Self.FK_Employee_Doctor" FromRole="Employee" ToRole="Doctor" />
           <NavigationProperty Name="EmployeeStatu" Relationship="Self.FK_Employee_EmployeeStatus" FromRole="Employee" ToRole="EmployeeStatus" />
           <NavigationProperty Name="FamilyRelationship" Relationship="Self.FK_Employee_FamilyRelationship" FromRole="Employee" ToRole="FamilyRelationship" />
           <NavigationProperty Name="GeneralMaster" Relationship="Self.FK_Employee_GeneralMaster" FromRole="Employee" ToRole="GeneralMaster" />
@@ -1884,6 +1904,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Employee_Doctor">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Doctor">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PoliSchedule_Doctor">
           <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
           <End Role="PoliSchedule" Type="Self.PoliSchedule" Multiplicity="*" />
@@ -2295,6 +2327,10 @@
             <End Role="Doctor" EntitySet="Doctors" />
             <End Role="DoctorClinic" EntitySet="DoctorClinics" />
           </AssociationSet>
+          <AssociationSet Name="FK_Employee_Doctor" Association="Self.FK_Employee_Doctor">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Doctor" EntitySet="Doctors" />
+          </AssociationSet>
           <AssociationSet Name="FK_PoliSchedule_Doctor" Association="Self.FK_PoliSchedule_Doctor">
             <End Role="Doctor" EntitySet="Doctors" />
             <End Role="PoliSchedule" EntitySet="PoliSchedules" />
@@ -2480,6 +2516,7 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="SpecialistID" ColumnName="SpecialistID" />
                 <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
                 <ScalarProperty Name="KTPNumber" ColumnName="KTPNumber" />
                 <ScalarProperty Name="STRNumber" ColumnName="STRNumber" />
                 <ScalarProperty Name="STRValidFrom" ColumnName="STRValidFrom" />

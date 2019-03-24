@@ -14,17 +14,14 @@ using System.Web.Mvc;
 
 namespace Klinik.Web.Controllers
 {
-    public class RegistrationController : Controller
+    public class RegistrationController : BaseController
     {
         private const int CURRENT_POLI_ID = 1;
         private const string CURRENT_POLI_NAME = "Loket";
 
-        // GET: Account
-        private IUnitOfWork _unitOfWork;
-
-        public RegistrationController(IUnitOfWork unitOfWork)
+        public RegistrationController(IUnitOfWork unitOfWork, KlinikDBEntities context) :
+            base(unitOfWork, context)
         {
-            _unitOfWork = unitOfWork;
         }
 
         #region DropDown methods
@@ -100,8 +97,12 @@ namespace Klinik.Web.Controllers
         private List<SelectListItem> BindDropDownDoctorList(int poliID)
         {
             List<SelectListItem> _typeList = new List<SelectListItem>();
-            long ClinicID = GetClinicID();
-            List<PoliSchedule> scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID && x.ClinicID == ClinicID);
+            List<PoliSchedule> scheduleList = new List<PoliSchedule>();
+            if (ClinicID < 0)
+                scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID && x.ClinicID == ClinicID);
+            else
+                scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID);
+
             foreach (var item in scheduleList)
             {
                 var doctor = _unitOfWork.DoctorRepository.GetFirstOrDefault(x => x.ID == item.DoctorID);
@@ -124,8 +125,12 @@ namespace Klinik.Web.Controllers
         public JsonResult GetDoctorList(int poliID)
         {
             List<Doctor> doctorList = new List<Doctor>();
-            long ClinicID = GetClinicID();
-            List<PoliSchedule> scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID && x.ClinicID == ClinicID);
+            List<PoliSchedule> scheduleList = new List<PoliSchedule>();
+            if (ClinicID < 0)
+                scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID && x.ClinicID == ClinicID);
+            else
+                scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID);
+
             foreach (var item in scheduleList)
             {
                 var doctor = _unitOfWork.DoctorRepository.GetFirstOrDefault(x => x.ID == item.DoctorID);
@@ -137,24 +142,6 @@ namespace Klinik.Web.Controllers
 
             return Json(doctorList, JsonRequestBehavior.AllowGet);
         }
-
-        /// <summary>
-        /// Get klinik ID
-        /// </summary>
-        /// <param name="organizationCode"></param>
-        /// <returns></returns>
-        private long GetClinicID()
-        {
-            if (Session["UserLogon"] != null)
-            {
-                AccountModel account = (AccountModel)Session["UserLogon"];
-                Organization organization = _unitOfWork.OrganizationRepository.GetFirstOrDefault(x => x.OrgCode == account.Organization);
-                return organization.Clinic.ID;
-            }
-
-            return 1;
-        }
-
         #endregion
 
         [CustomAuthorize("VIEW_REGISTRATION")]

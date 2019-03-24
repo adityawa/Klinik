@@ -358,6 +358,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Doctor Form.
+        /// </summary>
+        public static string EditDoctorForm {
+            get {
+                return ResourceManager.GetString("EditDoctorForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Paramedic Form.
+        /// </summary>
+        public static string EditParamedicForm {
+            get {
+                return ResourceManager.GetString("EditParamedicForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email {

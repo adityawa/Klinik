@@ -311,6 +311,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to STRValidTo should be greater than STRValidFrom.
+        /// </summary>
+        public static string STRValidToInvalid {
+            get {
+                return ResourceManager.GetString("STRValidToInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unauthorized Access!.
         /// </summary>
         public static string UnauthorizedAccess {

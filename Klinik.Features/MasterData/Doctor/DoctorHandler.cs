@@ -17,9 +17,10 @@ namespace Klinik.Features
         /// Constructor
         /// </summary>
         /// <param name="unitOfWork"></param>
-        public DoctorHandler(IUnitOfWork unitOfWork)
+        public DoctorHandler(IUnitOfWork unitOfWork, KlinikDBEntities context = null)
         {
             _unitOfWork = unitOfWork;
+            _context = context;
         }
 
         /// <summary>
@@ -99,29 +100,10 @@ namespace Klinik.Features
                 }
                 else
                 {
-                    var doctorEntity = Mapper.Map<DoctorModel, Doctor>(request.Data);
-                    doctorEntity.CreatedBy = request.Data.Account.UserCode;
-                    doctorEntity.CreatedDate = DateTime.Now;
-
-                    _unitOfWork.DoctorRepository.Insert(doctorEntity);
-
-                    int resultAffected = _unitOfWork.Save();
-                    if (resultAffected > 0)
-                    {
-                        response.Message = string.Format(Messages.ObjectHasBeenAdded, type, doctorEntity.Name, doctorEntity.Code);
-
-                        CommandLog(true, ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.ADD_NEW_DOCTOR, request.Data.Account, request.Data);
-                    }
-                    else
-                    {
-                        response.Status = false;
-                        response.Message = string.Format(Messages.AddObjectFailed, type);
-
-                        CommandLog(false, ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.ADD_NEW_DOCTOR, request.Data.Account, request.Data);
-                    }
+                    return CreateDoctor(request.Data);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 response.Status = false;
                 response.Message = Messages.GeneralError;
@@ -132,6 +114,64 @@ namespace Klinik.Features
                         CommandLog(false, ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.EDIT_DOCTOR, request.Data.Account, request.Data);
                     else
                         CommandLog(false, ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.ADD_NEW_DOCTOR, request.Data.Account, request.Data);
+                }
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Create new doctor automatically create employee and user also
+        /// </summary>
+        /// <param name="requestData"></param>
+        /// <returns></returns>
+        private DoctorResponse CreateDoctor(DoctorModel requestData)
+        {
+            DoctorResponse response = new DoctorResponse();
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                int _resultAffected = 0;
+                try
+                {
+                    // create employee
+                    Employee employeeEntity = Mapper.Map<DoctorModel, Employee>(requestData);
+                    employeeEntity.CreatedBy = requestData.Account.UserCode;
+                    employeeEntity.CreatedDate = DateTime.Now;
+
+                    // create user
+                    User userEntity = Mapper.Map<DoctorModel, User>(requestData);
+                    userEntity.Password = CommonUtils.Encryptor(requestData.Password, CommonUtils.KeyEncryptor);
+                    userEntity.Status = true;
+                    userEntity.Employee = employeeEntity;
+                    userEntity.CreatedBy = requestData.Account.UserCode;
+                    userEntity.CreatedDate = DateTime.Now;
+
+                    Doctor doctorEntity = Mapper.Map<DoctorModel, Doctor>(requestData);
+                    doctorEntity.Employee = employeeEntity;
+                    doctorEntity.CreatedBy = requestData.Account.UserCode;
+                    doctorEntity.CreatedDate = DateTime.Now;
+
+                    _context.Users.Add(userEntity);
+                    _context.Doctors.Add(doctorEntity);
+
+                    _resultAffected = _context.SaveChanges();
+
+                    if (_resultAffected > 0)
+                    {
+                        CommandLog(true, ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.ADD_NEW_DOCTOR, requestData.Account, doctorEntity);
+
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "Doctor", requestData.Name, requestData.Id);
+
+                        transaction.Commit();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    response.Status = false;
+                    response.Message = string.Format(Messages.AddObjectFailed, "Doctor");
+
+                    CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, requestData.Account, requestData);
                 }
             }
 

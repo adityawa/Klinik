@@ -109,8 +109,8 @@ namespace Klinik.Common
 
             CreateMap<DoctorModel, Doctor>();
             CreateMap<Doctor, DoctorModel>()
-                .ForMember(m => m.STRValidFromStr, map => map.MapFrom(p => p.STRValidFrom.Value.ToString("dd/MM/yyyy")))
-                .ForMember(m => m.STRValidToStr, map => map.MapFrom(p => p.STRValidTo.Value.ToString("dd/MM/yyyy")));
+                .ForMember(m => m.STRValidFromStr, map => map.MapFrom(p => p.STRValidFrom.HasValue ? p.STRValidFrom.Value.ToString("dd/MM/yyyy") : string.Empty))
+                .ForMember(m => m.STRValidToStr, map => map.MapFrom(p => p.STRValidTo.HasValue ? p.STRValidTo.Value.ToString("dd/MM/yyyy") : string.Empty));
 
             CreateMap<PoliScheduleModel, PoliSchedule>();
             CreateMap<PoliSchedule, PoliScheduleModel>()
@@ -121,6 +121,10 @@ namespace Klinik.Common
             CreateMap<PoliScheduleMaster, PoliScheduleMasterModel>()
                 .ForMember(m => m.StartTimeStr, map => map.MapFrom(p => p.StartTime.ToString(@"hh\:mm")))
                 .ForMember(m => m.EndTimeStr, map => map.MapFrom(p => p.EndTime.ToString(@"hh\:mm")));
+
+            CreateMap<DoctorModel, User>();
+            CreateMap<DoctorModel, Employee>()
+                .ForMember(m => m.EmpName, map => map.MapFrom(p => p.Name));
         }
     }
 }

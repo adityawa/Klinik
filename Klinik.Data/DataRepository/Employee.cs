@@ -18,6 +18,7 @@ namespace Klinik.Data.DataRepository
         public Employee()
         {
             this.Appointments = new HashSet<Appointment>();
+            this.Doctors = new HashSet<Doctor>();
             this.EmployeeAssignments = new HashSet<EmployeeAssignment>();
             this.Patients = new HashSet<Patient>();
             this.Users = new HashSet<User>();
@@ -43,6 +44,8 @@ namespace Klinik.Data.DataRepository
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Doctor> Doctors { get; set; }
         public virtual EmployeeStatu EmployeeStatu { get; set; }
         public virtual FamilyRelationship FamilyRelationship { get; set; }
         public virtual GeneralMaster GeneralMaster { get; set; }

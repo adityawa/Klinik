@@ -534,4 +534,10 @@
   <data name="RescheduleConfirmation" xml:space="preserve">
     <value>Inactive schedule could not be rescheduled !</value>
   </data>
+  <data name="EditDoctorForm" xml:space="preserve">
+    <value>Edit Doctor Form</value>
+  </data>
+  <data name="EditParamedicForm" xml:space="preserve">
+    <value>Edit Paramedic Form</value>
+  </data>
 </root>

@@ -235,4 +235,7 @@ Administrator</value>
   <data name="InvalidModelState" xml:space="preserve">
     <value>Invalid Model State. Please check your input.</value>
   </data>
+  <data name="STRValidToInvalid" xml:space="preserve">
+    <value>STRValidTo should be greater than STRValidFrom</value>
+  </data>
 </root>

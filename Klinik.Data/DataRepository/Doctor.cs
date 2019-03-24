@@ -27,7 +27,8 @@ namespace Klinik.Data.DataRepository
         public string Code { get; set; }
         public string Name { get; set; }
         public Nullable<int> SpecialistID { get; set; }
-        public Nullable<int> TypeID { get; set; }
+        public int TypeID { get; set; }
+        public long EmployeeID { get; set; }
         public string KTPNumber { get; set; }
         public string STRNumber { get; set; }
         public Nullable<System.DateTime> STRValidFrom { get; set; }
@@ -44,6 +45,7 @@ namespace Klinik.Data.DataRepository
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DoctorClinic> DoctorClinics { get; set; }
+        public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PoliSchedule> PoliSchedules { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
