@@ -66,14 +66,20 @@ namespace Klinik.Web.Controllers
                 _patientModelList.Add(_poli);
             }
 
+            RegistrationResponse response = GetRegistrationList(false);
+
             List<SelectListItem> _patientList = new List<SelectListItem>();
             foreach (var item in _patientModelList)
             {
-                _patientList.Add(new SelectListItem
+                // validate if patient already registered and the status is New
+                if (!response.Data.Any(x => x.PatientID == item.Id && x.Status == 0))
                 {
-                    Text = item.Name,
-                    Value = item.Id.ToString()
-                });
+                    _patientList.Add(new SelectListItem
+                    {
+                        Text = item.Name,
+                        Value = item.Id.ToString()
+                    });
+                }
             }
 
             return _patientList;
@@ -173,13 +179,9 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public ActionResult CreateOrEditRegistration(RegistrationModel model)
         {
-            if (Session["UserLogon"] != null)
-                model.Account = (AccountModel)Session["UserLogon"];
+            model.Account = Account;
 
-            var request = new RegistrationRequest
-            {
-                Data = model,
-            };
+            var request = new RegistrationRequest { Data = model, };
 
             RegistrationResponse _response = new RegistrationValidator(_unitOfWork).Validate(request);
             if (_response.Status)
@@ -243,29 +245,37 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public ActionResult GetRegistrationData()
         {
-            string _draw = Request.Form.Count > 0 ? Request.Form.GetValues("draw").FirstOrDefault() : string.Empty;
-            string _start = Request.Form.Count > 0 ? Request.Form.GetValues("start").FirstOrDefault() : string.Empty;
-            string _length = Request.Form.Count > 0 ? Request.Form.GetValues("length").FirstOrDefault() : string.Empty;
-            string _sortColumn = Request.Form.Count > 0 ? Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault() : string.Empty;
-            string _sortColumnDir = Request.Form.Count > 0 ? Request.Form.GetValues("order[0][dir]").FirstOrDefault() : string.Empty;
-            string _searchValue = Request.Form.Count > 0 ? Request.Form.GetValues("search[value]").FirstOrDefault() : string.Empty;
+            RegistrationResponse response = GetRegistrationList();
 
-            int _pageSize = string.IsNullOrEmpty(_length) ? 0 : Convert.ToInt32(_length);
-            int _skip = string.IsNullOrEmpty(_start) ? 0 : Convert.ToInt32(_start);
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw, Status = response.Status }, JsonRequestBehavior.AllowGet);
+        }
 
-            var request = new RegistrationRequest
+        private RegistrationResponse GetRegistrationList(bool isHttpPost = true)
+        {
+            var request = new RegistrationRequest();
+            if (isHttpPost)
             {
-                Draw = _draw,
-                SearchValue = _searchValue,
-                SortColumn = _sortColumn,
-                SortColumnDir = _sortColumnDir,
-                PageSize = _pageSize,
-                Skip = _skip
-            };
+                string _draw = Request.Form.Count > 0 ? Request.Form.GetValues("draw").FirstOrDefault() : string.Empty;
+                string _start = Request.Form.Count > 0 ? Request.Form.GetValues("start").FirstOrDefault() : string.Empty;
+                string _length = Request.Form.Count > 0 ? Request.Form.GetValues("length").FirstOrDefault() : string.Empty;
+                string _sortColumn = Request.Form.Count > 0 ? Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault() : string.Empty;
+                string _sortColumnDir = Request.Form.Count > 0 ? Request.Form.GetValues("order[0][dir]").FirstOrDefault() : string.Empty;
+                string _searchValue = Request.Form.Count > 0 ? Request.Form.GetValues("search[value]").FirstOrDefault() : string.Empty;
+
+                int _pageSize = string.IsNullOrEmpty(_length) ? 0 : Convert.ToInt32(_length);
+                int _skip = string.IsNullOrEmpty(_start) ? 0 : Convert.ToInt32(_start);
+
+                request.Draw = _draw;
+                request.SearchValue = _searchValue;
+                request.SortColumn = _sortColumn;
+                request.SortColumnDir = _sortColumnDir;
+                request.PageSize = _pageSize;
+                request.Skip = _skip;
+            }
 
             var response = new RegistrationHandler(_unitOfWork).GetListData(request);
 
-            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw, Status = response.Status }, JsonRequestBehavior.AllowGet);
+            return response;
         }
 
         [HttpPost]

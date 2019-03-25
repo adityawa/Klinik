@@ -280,7 +280,8 @@ namespace Klinik.Features.Registration
             }
 
             int totalRequest = lists.Count();
-            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
+            int take = request.PageSize == 0 ? totalRequest : request.PageSize;
+            var data = lists.Skip(request.Skip).Take(take).ToList();
 
             var response = new RegistrationResponse
             {
