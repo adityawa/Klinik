@@ -540,4 +540,7 @@
   <data name="EditParamedicForm" xml:space="preserve">
     <value>Edit Paramedic Form</value>
   </data>
+  <data name="QueueCode" xml:space="preserve">
+    <value>Queue Code</value>
+  </data>
 </root>

@@ -1015,6 +1015,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Queue Code.
+        /// </summary>
+        public static string QueueCode {
+            get {
+                return ResourceManager.GetString("QueueCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recover Password.
         /// </summary>
         public static string RecoverPassword {

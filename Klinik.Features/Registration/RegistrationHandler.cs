@@ -204,7 +204,7 @@ namespace Klinik.Features.Registration
         public RegistrationResponse GetListData(RegistrationRequest request, int poliID = 0)
         {
             List<RegistrationModel> lists = new List<RegistrationModel>();
-            dynamic qry = null;
+            List<QueuePoli> qry = null;
             var searchPredicate = PredicateBuilder.New<QueuePoli>(true);
 
             // add default filter to show today queue only
@@ -275,6 +275,9 @@ namespace Klinik.Features.Registration
 
                 // format the registration type
                 prData.TypeStr = prData.TypeStr.Replace("WalkIn", "Walk-In");
+
+                // format the queue code
+                prData.SortNumberCode = item.Poli1.Code.Trim() + "-" + string.Format("{0:D3}", item.SortNumber);
 
                 lists.Add(prData);
             }
