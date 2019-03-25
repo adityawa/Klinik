@@ -53,7 +53,7 @@ namespace Klinik.Features
                         response.Entity.UserID = _getByUname.ID;
                         response.Entity.EmployeeID = _getByUname.EmployeeID;
                         response.Entity.Organization = _getOrganization.OrgCode;
-
+                        response.Entity.clinicID = _getOrganization.KlinikID ?? 0;
                         var _getRoles = _unitOfWork.UserRoleRepository.Get(x => x.UserID == response.Entity.UserID);
 
                         foreach (var role in _getRoles)

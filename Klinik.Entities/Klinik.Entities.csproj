@@ -70,6 +70,7 @@
     <Compile Include="BaseRequest.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="BaseResponse.cs" />
+    <Compile Include="Document\DocumentModel.cs" />
     <Compile Include="MappingMaster\OrganizationPrivilegeModel.cs" />
     <Compile Include="MappingMaster\RolePrivilegeModel.cs" />
     <Compile Include="MappingMaster\UserRoleModel.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="MasterData\PrivilegeModel.cs" />
     <Compile Include="MasterData\RoleModel.cs" />
     <Compile Include="MasterData\UserModel.cs" />
+    <Compile Include="Patient\PatientClinicModel.cs" />
     <Compile Include="PoliSchedule\PoliScheduleMasterModel.cs" />
     <Compile Include="PoliSchedule\PoliScheduleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

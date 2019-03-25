@@ -40,11 +40,12 @@ namespace Klinik.Data.DataRepository
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public string PatientKey { get; set; }
     
-        public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PatientClinic> PatientClinics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QueuePoli> QueuePolis { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

@@ -1158,6 +1158,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="fileDoc\Photo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

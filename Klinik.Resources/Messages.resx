@@ -235,4 +235,7 @@ Administrator</value>
   <data name="InvalidModelState" xml:space="preserve">
     <value>Invalid Model State. Please check your input.</value>
   </data>
+  <data name="UserDoesNotHaveClinic" xml:space="preserve">
+    <value>Organization of this user does not have clinic, please assign clinic to this user</value>
+  </data>
 </root>

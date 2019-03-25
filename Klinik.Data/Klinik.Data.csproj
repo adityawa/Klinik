@@ -186,6 +186,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>KlinikModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="App.Config" />
     <None Include="DataRepository\KlinikModel.edmx.diagram">
       <DependentUpon>KlinikModel.edmx</DependentUpon>
     </None>

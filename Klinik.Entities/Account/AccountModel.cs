@@ -18,6 +18,7 @@ namespace Klinik.Entities.Account
         public RolePrivilegeModel Privileges { get; set; }
         public string Organization { get; set; }
 
+        public long clinicID { get; set; }
         public AccountModel()
         {
             Roles = new List<long>();

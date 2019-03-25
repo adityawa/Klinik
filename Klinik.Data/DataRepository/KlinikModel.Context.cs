@@ -30,7 +30,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<Clinic> Clinics { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<DoctorClinic> DoctorClinics { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeAssignment> EmployeeAssignments { get; set; }
         public virtual DbSet<EmployeeStatu> EmployeeStatus { get; set; }
         public virtual DbSet<FamilyRelationship> FamilyRelationships { get; set; }
@@ -43,7 +42,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<OrganizationPrivilege> OrganizationPrivileges { get; set; }
         public virtual DbSet<OrganizationRole> OrganizationRoles { get; set; }
         public virtual DbSet<PasswordHistory> PasswordHistories { get; set; }
-        public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<PatientClinic> PatientClinics { get; set; }
         public virtual DbSet<Poli> Polis { get; set; }
         public virtual DbSet<PoliClinic> PoliClinics { get; set; }
@@ -55,5 +53,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<RolePrivilege> RolePrivileges { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<Patient> Patients { get; set; }
     }
 }

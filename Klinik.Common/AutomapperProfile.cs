@@ -2,8 +2,10 @@
 using Klinik.Data.DataRepository;
 using Klinik.Entities;
 using Klinik.Entities.Administration;
+using Klinik.Entities.Document;
 using Klinik.Entities.MappingMaster;
 using Klinik.Entities.MasterData;
+using Klinik.Entities.Patient;
 using Klinik.Entities.PoliSchedules;
 using Klinik.Entities.Registration;
 
@@ -99,8 +101,12 @@ namespace Klinik.Common
             CreateMap<PoliModel, Poli>();
             CreateMap<Poli, PoliModel>();
 
-            CreateMap<PatientModel, Patient>();
-            CreateMap<Patient, PatientModel>();
+            CreateMap<PatientModel, Patient>()
+                .ForMember(x=>x.PatientKey, map=>map.MapFrom(p=>p.Name.Trim()+"_"+p.BirthDateStr));
+
+            CreateMap<Patient, PatientModel>()
+                .ForMember(x => x.BirthDateStr, map => map.MapFrom(p => p.BirthDate.ToString("dd/MM/yyyy")));
+               
 
             CreateMap<PoliFlowTemplateModel, PoliFlowTemplate>();
             CreateMap<PoliFlowTemplate, PoliFlowTemplateModel>()
@@ -121,6 +127,12 @@ namespace Klinik.Common
             CreateMap<PoliScheduleMaster, PoliScheduleMasterModel>()
                 .ForMember(m => m.StartTimeStr, map => map.MapFrom(p => p.StartTime.ToString()))
                 .ForMember(m => m.EndTimeStr, map => map.MapFrom(p => p.EndTime.ToString()));
+
+            CreateMap<PatientClinicModel, PatientClinic>();
+            CreateMap<PatientClinic, PatientClinicModel>();
+
+            CreateMap<DocumentModel, FileArchieve>();
+            CreateMap<FileArchieve, DocumentModel>();
         }
     }
 }

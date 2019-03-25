@@ -347,6 +347,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Organization of this user does not have clinic, please assign clinic to this user.
+        /// </summary>
+        public static string UserDoesNotHaveClinic {
+            get {
+                return ResourceManager.GetString("UserDoesNotHaveClinic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User name already exist.
         /// </summary>
         public static string UsernameAlreadyExist {
