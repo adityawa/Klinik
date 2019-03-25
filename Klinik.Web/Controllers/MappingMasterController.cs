@@ -1,5 +1,6 @@
 ﻿using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Entities.Account;
 using Klinik.Entities.MappingMaster;
 using Klinik.Entities.MasterData;
 using Klinik.Features;
@@ -67,10 +68,14 @@ namespace Klinik.Web.Controllers
                 _model.OrgID = Convert.ToInt64(Request.Form["OrgId"].ToString());
             if (Request.Form["Privileges"] != null)
                 _model.PrivilegeIDs = JsonConvert.DeserializeObject<List<long>>(Request.Form["Privileges"]);
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
             var request = new OrganizationPrivilegeRequest
             {
                 Data = _model
             };
+
             new OrganizationPrivilegeValidator(_unitOfWork, _context).Validate(request, out response);
             return Json(new { Status = response.Status, Message = response.Message }, JsonRequestBehavior.AllowGet);
         }
@@ -148,10 +153,14 @@ namespace Klinik.Web.Controllers
                 _model.RoleID = Convert.ToInt64(Request.Form["RoleId"].ToString());
             if (Request.Form["Privileges"] != null)
                 _model.PrivilegeIDs = JsonConvert.DeserializeObject<List<long>>(Request.Form["Privileges"]);
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
             var request = new RolePrivilegeRequest
             {
                 Data = _model
             };
+
             new RolePrivilegeValidator(_unitOfWork, _context).Validate(request, out response);
             return Json(new { Status = response.Status, Message = response.Message }, JsonRequestBehavior.AllowGet);
         }
@@ -236,10 +245,14 @@ namespace Klinik.Web.Controllers
                 _model.UserID = Convert.ToInt64(Request.Form["UserID"].ToString());
             if (Request.Form["Roles"] != null)
                 _model.RoleIds = JsonConvert.DeserializeObject<List<long>>(Request.Form["Roles"]);
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
             var request = new UserRoleRequest
             {
                 Data = _model
             };
+
             new UserRoleValidator(_unitOfWork, _context).Validate(request, out response);
             return Json(new { Status = response.Status, Message = response.Message }, JsonRequestBehavior.AllowGet);
         }

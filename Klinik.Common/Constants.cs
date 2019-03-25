@@ -29,5 +29,17 @@
             public const string EDIT_DOCTOR = "Edit Doctor";
             public const string DELETE_EMPLOYEE = "Remove Employee";
         }
+
+        public static class MasterType
+        {
+            public const string EMPLOYMENT = "EmploymentType";
+            public const string DEPARTMENT = "Department";
+            public const string CITY = "City";
+            public const string CLINIC = "ClinicType";
+            public const string DOCTOR = "DoctorType";
+            public const string SCHEDULE_STATUS = "PoliScheduleStatus";
+            public const string PARAMEDIC = "ParamedicType";
+            public const string DAY = "Day";
+        }
     }
 }

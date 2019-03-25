@@ -185,6 +185,8 @@
         </div>
     </section>
 
+    @RenderSection("Jquerys", required: false)
+
     <!-- Vendor -->
     <script src="~/Content/Octopus/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
     <script src="~/Content/Octopus/assets/vendor/bootstrap/js/bootstrap.js"></script>
@@ -221,6 +223,8 @@
 
     <!-- Theme Initialization Files -->
     <script src="~/Content/Octopus/assets/javascripts/theme.init.js"></script>
+
+    @RenderSection("Scripts", required: false)
 
     <script type="text/javascript">
         $(document).ready(function () {

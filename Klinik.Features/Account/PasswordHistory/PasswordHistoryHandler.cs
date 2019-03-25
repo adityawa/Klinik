@@ -46,7 +46,9 @@ namespace Klinik.Features
                     {
                         OrganizationID = request.Data.OrganizationID,
                         UserName = request.Data.UserName,
-                        Password = CommonUtils.Encryptor(request.Data.Password, CommonUtils.KeyEncryptor)
+                        Password = CommonUtils.Encryptor(request.Data.Password, CommonUtils.KeyEncryptor),
+                        CreatedBy = request.Data.UserName,
+                        CreatedDate = DateTime.Now
                     };
 
                     _context.PasswordHistories.Add(_passHistoryEntity);

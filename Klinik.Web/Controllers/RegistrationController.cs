@@ -14,17 +14,14 @@ using System.Web.Mvc;
 
 namespace Klinik.Web.Controllers
 {
-    public class RegistrationController : Controller
+    public class RegistrationController : BaseController
     {
         private const int CURRENT_POLI_ID = 1;
         private const string CURRENT_POLI_NAME = "Loket";
 
-        // GET: Account
-        private IUnitOfWork _unitOfWork;
-
-        public RegistrationController(IUnitOfWork unitOfWork)
+        public RegistrationController(IUnitOfWork unitOfWork, KlinikDBEntities context) :
+            base(unitOfWork, context)
         {
-            _unitOfWork = unitOfWork;
         }
 
         #region DropDown methods
@@ -69,14 +66,20 @@ namespace Klinik.Web.Controllers
                 _patientModelList.Add(_poli);
             }
 
+            RegistrationResponse response = GetRegistrationList(false);
+
             List<SelectListItem> _patientList = new List<SelectListItem>();
             foreach (var item in _patientModelList)
             {
-                _patientList.Add(new SelectListItem
+                // validate if patient already registered and the status is New
+                if (!response.Data.Any(x => x.PatientID == item.Id && x.Status == 0))
                 {
-                    Text = item.Name,
-                    Value = item.Id.ToString()
-                });
+                    _patientList.Add(new SelectListItem
+                    {
+                        Text = item.Name,
+                        Value = item.Id.ToString()
+                    });
+                }
             }
 
             return _patientList;
@@ -100,18 +103,25 @@ namespace Klinik.Web.Controllers
         private List<SelectListItem> BindDropDownDoctorList(int poliID)
         {
             List<SelectListItem> _typeList = new List<SelectListItem>();
-            long ClinicID = GetClinicID();
-            List<PoliSchedule> scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID && x.ClinicID == ClinicID);
+            List<PoliSchedule> scheduleList = new List<PoliSchedule>();
+            if (ClinicID < 0)
+                scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID && x.ClinicID == ClinicID);
+            else
+                scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID);
+
             foreach (var item in scheduleList)
             {
                 var doctor = _unitOfWork.DoctorRepository.GetFirstOrDefault(x => x.ID == item.DoctorID);
                 if (doctor != null)
                 {
-                    _typeList.Add(new SelectListItem
+                    if (!_typeList.Any(x => x.Value == doctor.ID.ToString()))
                     {
-                        Text = doctor.Name,
-                        Value = doctor.ID.ToString()
-                    });
+                        _typeList.Add(new SelectListItem
+                        {
+                            Text = doctor.Name,
+                            Value = doctor.ID.ToString()
+                        });
+                    }
                 }
             }
 
@@ -121,12 +131,16 @@ namespace Klinik.Web.Controllers
         public JsonResult GetDoctorList(int poliID)
         {
             List<Doctor> doctorList = new List<Doctor>();
-            long ClinicID = GetClinicID();
-            List<PoliSchedule> scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID && x.ClinicID == ClinicID);
+            List<PoliSchedule> scheduleList = new List<PoliSchedule>();
+            if (ClinicID < 0)
+                scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID && x.ClinicID == ClinicID);
+            else
+                scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID);
+
             foreach (var item in scheduleList)
             {
                 var doctor = _unitOfWork.DoctorRepository.GetFirstOrDefault(x => x.ID == item.DoctorID);
-                if (doctor != null)
+                if (doctor != null && !doctorList.Any(x => x.ID == doctor.ID))
                 {
                     doctorList.Add(new Doctor { ID = doctor.ID, Name = doctor.Name });
                 }
@@ -134,24 +148,6 @@ namespace Klinik.Web.Controllers
 
             return Json(doctorList, JsonRequestBehavior.AllowGet);
         }
-
-        /// <summary>
-        /// Get klinik ID
-        /// </summary>
-        /// <param name="organizationCode"></param>
-        /// <returns></returns>
-        private long GetClinicID()
-        {
-            if (Session["UserLogon"] != null)
-            {
-                AccountModel account = (AccountModel)Session["UserLogon"];
-                Organization organization = _unitOfWork.OrganizationRepository.GetFirstOrDefault(x => x.OrgCode == account.Organization);
-                return organization.Clinic.ID;
-            }
-
-            return 1;
-        }
-
         #endregion
 
         [CustomAuthorize("VIEW_REGISTRATION")]
@@ -183,13 +179,9 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public ActionResult CreateOrEditRegistration(RegistrationModel model)
         {
-            if (Session["UserLogon"] != null)
-                model.Account = (AccountModel)Session["UserLogon"];
+            model.Account = Account;
 
-            var request = new RegistrationRequest
-            {
-                Data = model,
-            };
+            var request = new RegistrationRequest { Data = model, };
 
             RegistrationResponse _response = new RegistrationValidator(_unitOfWork).Validate(request);
             if (_response.Status)
@@ -253,29 +245,37 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public ActionResult GetRegistrationData()
         {
-            string _draw = Request.Form.Count > 0 ? Request.Form.GetValues("draw").FirstOrDefault() : string.Empty;
-            string _start = Request.Form.Count > 0 ? Request.Form.GetValues("start").FirstOrDefault() : string.Empty;
-            string _length = Request.Form.Count > 0 ? Request.Form.GetValues("length").FirstOrDefault() : string.Empty;
-            string _sortColumn = Request.Form.Count > 0 ? Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault() : string.Empty;
-            string _sortColumnDir = Request.Form.Count > 0 ? Request.Form.GetValues("order[0][dir]").FirstOrDefault() : string.Empty;
-            string _searchValue = Request.Form.Count > 0 ? Request.Form.GetValues("search[value]").FirstOrDefault() : string.Empty;
+            RegistrationResponse response = GetRegistrationList();
 
-            int _pageSize = string.IsNullOrEmpty(_length) ? 0 : Convert.ToInt32(_length);
-            int _skip = string.IsNullOrEmpty(_start) ? 0 : Convert.ToInt32(_start);
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw, Status = response.Status }, JsonRequestBehavior.AllowGet);
+        }
 
-            var request = new RegistrationRequest
+        private RegistrationResponse GetRegistrationList(bool isHttpPost = true)
+        {
+            var request = new RegistrationRequest();
+            if (isHttpPost)
             {
-                Draw = _draw,
-                SearchValue = _searchValue,
-                SortColumn = _sortColumn,
-                SortColumnDir = _sortColumnDir,
-                PageSize = _pageSize,
-                Skip = _skip
-            };
+                string _draw = Request.Form.Count > 0 ? Request.Form.GetValues("draw").FirstOrDefault() : string.Empty;
+                string _start = Request.Form.Count > 0 ? Request.Form.GetValues("start").FirstOrDefault() : string.Empty;
+                string _length = Request.Form.Count > 0 ? Request.Form.GetValues("length").FirstOrDefault() : string.Empty;
+                string _sortColumn = Request.Form.Count > 0 ? Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault() : string.Empty;
+                string _sortColumnDir = Request.Form.Count > 0 ? Request.Form.GetValues("order[0][dir]").FirstOrDefault() : string.Empty;
+                string _searchValue = Request.Form.Count > 0 ? Request.Form.GetValues("search[value]").FirstOrDefault() : string.Empty;
+
+                int _pageSize = string.IsNullOrEmpty(_length) ? 0 : Convert.ToInt32(_length);
+                int _skip = string.IsNullOrEmpty(_start) ? 0 : Convert.ToInt32(_start);
+
+                request.Draw = _draw;
+                request.SearchValue = _searchValue;
+                request.SortColumn = _sortColumn;
+                request.SortColumnDir = _sortColumnDir;
+                request.PageSize = _pageSize;
+                request.Skip = _skip;
+            }
 
             var response = new RegistrationHandler(_unitOfWork).GetListData(request);
 
-            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw, Status = response.Status }, JsonRequestBehavior.AllowGet);
+            return response;
         }
 
         [HttpPost]
@@ -404,6 +404,67 @@ namespace Klinik.Web.Controllers
             IsAuthorized = privilegeNameList.Any(x => x.Privilege_Name == privilege_name);
 
             return IsAuthorized;
+        }
+
+        [NonAction]
+        private ActionResult GenericController(int poliToID)
+        {
+            var model = new RegistrationModel
+            {
+                PoliFromID = CURRENT_POLI_ID,
+                PoliFromName = CURRENT_POLI_NAME,
+                PoliToID = poliToID
+            };
+
+            ViewBag.ActionType = ClinicEnums.Action.Add;
+            ViewBag.PoliList = BindDropDownPoliList();
+            ViewBag.PatientList = BindDropDownPatientList();
+            ViewBag.RegistrationTypeList = BindDropDownTypeList();
+            ViewBag.DoctorList = BindDropDownDoctorList(poliToID);
+
+            return View("CreateOrEditRegistration", model);
+        }
+
+        [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
+        public ActionResult Umum()
+        {
+            return GenericController(2);
+        }
+
+        [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
+        public ActionResult Gigi()
+        {
+            return GenericController(3);
+        }
+
+        [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
+        public ActionResult Kulit()
+        {
+            return GenericController(5);
+        }
+
+        [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
+        public ActionResult THT()
+        {
+            return GenericController(7);
+        }
+
+        [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
+        public ActionResult Farmasi()
+        {
+            return GenericController(12);
+        }
+
+        [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
+        public ActionResult Lab()
+        {
+            return GenericController(11);
+        }
+
+        [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
+        public ActionResult Radiologi()
+        {
+            return GenericController(10);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual Clinic Clinic { get; set; }
-        public virtual MCUPackage MCUPackage { get; set; }
         public virtual Employee Employee { get; set; }
+        public virtual MCUPackage MCUPackage { get; set; }
     }
 }

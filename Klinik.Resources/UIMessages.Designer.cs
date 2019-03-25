@@ -124,6 +124,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back To Home.
+        /// </summary>
+        public static string BackToHome {
+            get {
+                return ResourceManager.GetString("BackToHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Birthdate.
         /// </summary>
         public static string Birthdate {
@@ -345,6 +354,24 @@ namespace Klinik.Resources {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Doctor Form.
+        /// </summary>
+        public static string EditDoctorForm {
+            get {
+                return ResourceManager.GetString("EditDoctorForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Paramedic Form.
+        /// </summary>
+        public static string EditParamedicForm {
+            get {
+                return ResourceManager.GetString("EditParamedicForm", resourceCulture);
             }
         }
         
@@ -988,6 +1015,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Queue Code.
+        /// </summary>
+        public static string QueueCode {
+            get {
+                return ResourceManager.GetString("QueueCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recover Password.
         /// </summary>
         public static string RecoverPassword {
@@ -1065,6 +1101,24 @@ namespace Klinik.Resources {
         public static string RememberQuestion {
             get {
                 return ResourceManager.GetString("RememberQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reschedule.
+        /// </summary>
+        public static string Reschedule {
+            get {
+                return ResourceManager.GetString("Reschedule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inactive schedule could not be rescheduled !.
+        /// </summary>
+        public static string RescheduleConfirmation {
+            get {
+                return ResourceManager.GetString("RescheduleConfirmation", resourceCulture);
             }
         }
         

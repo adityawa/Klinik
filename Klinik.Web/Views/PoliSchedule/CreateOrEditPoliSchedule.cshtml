@@ -20,13 +20,28 @@
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Clinic</label>
                 <div class="col-md-4">
                     @Html.HiddenFor(x => x.Id)
-                    @Html.DropDownListFor(x => x.ClinicID, (IEnumerable<SelectListItem>)ViewBag.Clinics, new { @class = "form-control", @id = "ddlclinic" })
+                    @Html.HiddenFor(x => x.ReffID)
+                    @if (Model == null || Model.ReffID == 0)
+                    {
+                        @Html.DropDownListFor(x => x.ClinicID, (IEnumerable<SelectListItem>)ViewBag.Clinics, new { @class = "form-control", @id = "ddlclinic" })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(x => x.ClinicID, (IEnumerable<SelectListItem>)ViewBag.Clinics, new { @class = "form-control", @id = "ddlclinic", @disabled = "disabled" })
+                    }
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Poli</label>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(x => x.PoliID, (IEnumerable<SelectListItem>)ViewBag.Polis, new { @class = "form-control", @id = "ddlpoli" })
+                    @if (Model == null || Model.ReffID == 0)
+                    {
+                        @Html.DropDownListFor(x => x.PoliID, (IEnumerable<SelectListItem>)ViewBag.Polis, new { @class = "form-control", @id = "ddlpoli" })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(x => x.PoliID, (IEnumerable<SelectListItem>)ViewBag.Polis, new { @class = "form-control", @id = "ddlpoli", @disabled = "disabled" })
+                    }
                 </div>
             </div>
             <div class="form-group">
@@ -34,7 +49,14 @@
                     @Klinik.Resources.UIMessages.Doctor
                 </label>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(x => x.DoctorID, (IEnumerable<SelectListItem>)ViewBag.Doctors, new { @class = "form-control", @id = "ddldoctor" })
+                    @if (Model == null || Model.ReffID == 0)
+                    {
+                        @Html.DropDownListFor(x => x.DoctorID, (IEnumerable<SelectListItem>)ViewBag.Doctors, new { @class = "form-control", @id = "ddldoctor" })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(x => x.DoctorID, (IEnumerable<SelectListItem>)ViewBag.Doctors, new { @class = "form-control", @id = "ddldoctor", @disabled = "disabled" })
+                    }
                 </div>
             </div>
             <div class="form-group">
@@ -53,20 +75,21 @@
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">
-                    @Klinik.Resources.UIMessages.ReffID
-                </label>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(x => x.ReffID, new { @class = "form-control", @id = "tbReffID" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">
                     @Klinik.Resources.UIMessages.Status
                 </label>
                 <div class="col-md-4">
-                    @Html.RadioButtonFor(m => m.Status, "1", new { @class = "form-check-input", @id = "rdbActive", @Checked = "checked" }) @Klinik.Resources.UIMessages.Active
-                    &nbsp;
-                    @Html.RadioButtonFor(m => m.Status, "0", new { @class = "form-check-input", @id = "rdbNonActive" }) @Klinik.Resources.UIMessages.NonActive
+                    @if (Model == null || Model.ReffID == 0)
+                    {
+                        @Html.RadioButtonFor(m => m.Status, "1", new { @class = "form-check-input", @id = "rdbActive", @Checked = "checked" }) @Klinik.Resources.UIMessages.Active
+                        @:&nbsp;
+                        @Html.RadioButtonFor(m => m.Status, "0", new { @class = "form-check-input", @id = "rdbNonActive" }) @Klinik.Resources.UIMessages.NonActive
+                    }
+                    else
+                    {
+                        @Html.RadioButtonFor(m => m.Status, "1", new { @class = "form-check-input", @id = "rdbActive", @Checked = "checked", @disabled = "disabled" }) @Klinik.Resources.UIMessages.Active
+                        @:&nbsp;
+                        @Html.RadioButtonFor(m => m.Status, "0", new { @class = "form-check-input", @id = "rdbNonActive", @disabled = "disabled" }) @Klinik.Resources.UIMessages.NonActive
+                    }
                 </div>
             </div>
             <br />
@@ -90,12 +113,14 @@
         $('#tbStartDate').datepicker({
             format: "dd/mm/yyyy",
             changeMonth: true,
+            ignoreReadonly: true,
             changeYear: true
         });
 
         $('#tbEndDate').datepicker({
             format: "dd/mm/yyyy",
             changeMonth: true,
+            ignoreReadonly: true,
             changeYear: true
         });
 

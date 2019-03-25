@@ -30,6 +30,7 @@ namespace Klinik.Data.DataRepository
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
+        public virtual City City { get; set; }
         public virtual Clinic Clinic { get; set; }
         public virtual FileArchieve FileArchieve { get; set; }
         public virtual Patient Patient { get; set; }

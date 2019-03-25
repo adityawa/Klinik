@@ -40,32 +40,83 @@ namespace Klinik.Features.PoliSchedules
                     var qry = _unitOfWork.PoliScheduleRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
-                        // save the old data
-                        var _oldentity = Mapper.Map<PoliSchedule, PoliScheduleModel>(qry);
-
-                        // update data
-                        qry.Status = request.Data.Status;
-                        qry.ClinicID = request.Data.ClinicID;
-                        qry.PoliID = request.Data.PoliID;
-                        qry.DoctorID = request.Data.DoctorID;
-                        qry.StartDate = request.Data.StartDate;
-                        qry.EndDate = request.Data.EndDate;
-                        qry.ReffID = request.Data.ReffID;
-
-                        _unitOfWork.PoliScheduleRepository.Update(qry);
-                        int resultAffected = _unitOfWork.Save();
-                        if (resultAffected > 0)
+                        if (request.Action == ClinicEnums.Action.Reschedule.ToString())
                         {
-                            response.Message = string.Format(Messages.ObjectHasBeenUpdated2, "PoliSchedule", qry.ID);
+                            // set to non active
+                            qry.Status = 0;
+                            qry.Remark = request.Data.Remark;
 
-                            CommandLog(true, ClinicEnums.Module.POLI_SCHEDULE, Constants.Command.EDIT_POLISCHEDULE, request.Data.Account, request.Data, _oldentity);
+                            _unitOfWork.PoliScheduleRepository.Update(qry);
+
+                            int resultAffected = _unitOfWork.Save();
+                            if (resultAffected < 0)
+                            {
+                                response.Status = false;
+                                response.Message = string.Format(Messages.UpdateObjectFailed, "PoliSchedule");
+
+                                CommandLog(false, ClinicEnums.Module.POLI_SCHEDULE, Constants.Command.EDIT_POLISCHEDULE, request.Data.Account, request.Data);
+                            }
+                            else
+                            {
+                                // create a new schedule 
+                                PoliSchedule newSchedule = new PoliSchedule();
+                                newSchedule.ClinicID = qry.ClinicID;
+                                newSchedule.PoliID = qry.PoliID;
+                                newSchedule.DoctorID = qry.DoctorID;
+                                newSchedule.ReffID = request.Data.ReffID;
+                                newSchedule.CreatedBy = request.Data.Account.UserCode;
+                                newSchedule.CreatedDate = DateTime.Now;
+                                newSchedule.StartDate = request.Data.StartDate;
+                                newSchedule.EndDate = request.Data.EndDate;
+                                newSchedule.Status = 1;
+                                newSchedule.Remark = qry.Remark;
+
+                                _unitOfWork.PoliScheduleRepository.Insert(newSchedule);
+                                resultAffected = _unitOfWork.Save();
+                                if (resultAffected > 0)
+                                {
+                                    response.Message = string.Format(Messages.ObjectHasBeenAdded2, "The New PoliSchedule", newSchedule.ID);
+
+                                    CommandLog(true, ClinicEnums.Module.POLI_SCHEDULE, Constants.Command.ADD_NEW_POLISCHEDULE, request.Data.Account, request.Data);
+                                }
+                                else
+                                {
+                                    response.Status = false;
+                                    response.Message = string.Format(Messages.AddObjectFailed, "PoliSchedule");
+
+                                    CommandLog(false, ClinicEnums.Module.POLI_SCHEDULE, Constants.Command.ADD_NEW_POLISCHEDULE, request.Data.Account, request.Data);
+                                }
+                            }
                         }
                         else
                         {
-                            response.Status = false;
-                            response.Message = string.Format(Messages.UpdateObjectFailed, "PoliSchedule");
+                            // save the old data
+                            var _oldentity = Mapper.Map<PoliSchedule, PoliScheduleModel>(qry);
 
-                            CommandLog(false, ClinicEnums.Module.POLI_SCHEDULE, Constants.Command.EDIT_POLISCHEDULE, request.Data.Account, request.Data, _oldentity);
+                            // update data
+                            qry.Status = request.Data.Status;
+                            qry.ClinicID = request.Data.ClinicID;
+                            qry.PoliID = request.Data.PoliID;
+                            qry.DoctorID = request.Data.DoctorID;
+                            qry.StartDate = request.Data.StartDate;
+                            qry.EndDate = request.Data.EndDate;
+                            qry.ReffID = request.Data.ReffID;
+
+                            _unitOfWork.PoliScheduleRepository.Update(qry);
+                            int resultAffected = _unitOfWork.Save();
+                            if (resultAffected > 0)
+                            {
+                                response.Message = string.Format(Messages.ObjectHasBeenUpdated2, "PoliSchedule", qry.ID);
+
+                                CommandLog(true, ClinicEnums.Module.POLI_SCHEDULE, Constants.Command.EDIT_POLISCHEDULE, request.Data.Account, request.Data, _oldentity);
+                            }
+                            else
+                            {
+                                response.Status = false;
+                                response.Message = string.Format(Messages.UpdateObjectFailed, "PoliSchedule");
+
+                                CommandLog(false, ClinicEnums.Module.POLI_SCHEDULE, Constants.Command.EDIT_POLISCHEDULE, request.Data.Account, request.Data, _oldentity);
+                            }
                         }
                     }
                     else
@@ -79,7 +130,7 @@ namespace Klinik.Features.PoliSchedules
                 else
                 {
                     var regEntity = Mapper.Map<PoliScheduleModel, PoliSchedule>(request.Data);
-                    regEntity.CreatedBy = request.Data.Account.UserName;
+                    regEntity.CreatedBy = request.Data.Account.UserCode;
                     regEntity.CreatedDate = DateTime.Now;
 
                     _unitOfWork.PoliScheduleRepository.Insert(regEntity);
@@ -175,7 +226,7 @@ namespace Klinik.Features.PoliSchedules
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
-                searchPredicate = searchPredicate.And(p => p.Doctor.Name.Contains(request.SearchValue));
+                searchPredicate = searchPredicate.And(p => p.Doctor.Name.Contains(request.SearchValue) || p.Clinic.Name.Contains(request.SearchValue) || p.Poli.Name.Contains(request.SearchValue));
             }
 
             if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
@@ -184,10 +235,21 @@ namespace Klinik.Features.PoliSchedules
                 {
                     switch (request.SortColumn.ToLower())
                     {
+                        case "id":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.ID));
+                            break;
+                        case "clinicname":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Clinic.Name));
+                            break;
+                        case "poliname":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Poli.Name));
+                            break;
                         case "doctorname":
                             qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Doctor.Name));
                             break;
-
+                        case "statusstr":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Status));
+                            break;
                         default:
                             qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.ID));
                             break;
@@ -197,10 +259,21 @@ namespace Klinik.Features.PoliSchedules
                 {
                     switch (request.SortColumn.ToLower())
                     {
+                        case "id":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID));
+                            break;
+                        case "clinicname":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Clinic.Name));
+                            break;
+                        case "poliname":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Poli.Name));
+                            break;
                         case "doctorname":
                             qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Doctor.Name));
                             break;
-
+                        case "statusstr":
+                            qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Status));
+                            break;
                         default:
                             qry = _unitOfWork.PoliScheduleRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID));
                             break;

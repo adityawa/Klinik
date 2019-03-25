@@ -34,9 +34,9 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual Clinic Clinic { get; set; }
-        public virtual Doctor Doctor { get; set; }
+        public virtual Patient Patient { get; set; }
         public virtual Poli Poli { get; set; }
         public virtual Poli Poli1 { get; set; }
-        public virtual Patient Patient { get; set; }
+        public virtual Doctor Doctor { get; set; }
     }
 }

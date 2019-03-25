@@ -50,6 +50,7 @@ namespace Klinik.Features.Registration
                         qry.Type = (short)request.Data.Type;
                         qry.ReffID = request.Data.ReffID;
                         qry.Remark = request.Data.Remark;
+                        qry.DoctorID = request.Data.DoctorID == 0 ? (int?)null : request.Data.DoctorID;
 
                         _unitOfWork.RegistrationRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
@@ -78,13 +79,14 @@ namespace Klinik.Features.Registration
                 else
                 {
                     var regEntity = Mapper.Map<RegistrationModel, QueuePoli>(request.Data);
-                    regEntity.CreatedBy = request.Data.Account.UserName;
+                    regEntity.CreatedBy = request.Data.Account.UserCode;
                     regEntity.CreatedDate = DateTime.Now;
                     regEntity.TransactionDate = DateTime.Now;
                     regEntity.Status = (int)RegistrationStatusEnum.New;
                     regEntity.ClinicID = GetClinicID(request.Data.Account.Organization);
                     regEntity.PoliFrom = 1;
                     regEntity.SortNumber = GenerateSortNumber(request.Data.PoliToID);
+                    regEntity.DoctorID = request.Data.DoctorID == 0 ? (int?)null : request.Data.DoctorID;
 
                     _unitOfWork.RegistrationRepository.Insert(regEntity);
                     int resultAffected = _unitOfWork.Save();
@@ -202,7 +204,7 @@ namespace Klinik.Features.Registration
         public RegistrationResponse GetListData(RegistrationRequest request, int poliID = 0)
         {
             List<RegistrationModel> lists = new List<RegistrationModel>();
-            dynamic qry = null;
+            List<QueuePoli> qry = null;
             var searchPredicate = PredicateBuilder.New<QueuePoli>(true);
 
             // add default filter to show today queue only
@@ -274,11 +276,15 @@ namespace Klinik.Features.Registration
                 // format the registration type
                 prData.TypeStr = prData.TypeStr.Replace("WalkIn", "Walk-In");
 
+                // format the queue code
+                prData.SortNumberCode = item.Poli1.Code.Trim() + "-" + string.Format("{0:D3}", item.SortNumber);
+
                 lists.Add(prData);
             }
 
             int totalRequest = lists.Count();
-            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
+            int take = request.PageSize == 0 ? totalRequest : request.PageSize;
+            var data = lists.Skip(request.Skip).Take(take).ToList();
 
             var response = new RegistrationResponse
             {
@@ -346,12 +352,14 @@ namespace Klinik.Features.Registration
                 {
                     // get previous registration with status new
                     var previousRegistrationList = _unitOfWork.RegistrationRepository.Get(x => x.ID != currentRegistration.ID &&
-                    x.ClinicID == currentRegistration.ClinicID &&
-                    x.PoliTo == currentRegistration.PoliTo &&
-                    x.Status == 0 &&
-                    x.TransactionDate.Year == currentRegistration.TransactionDate.Year &&
-                    x.TransactionDate.Month == currentRegistration.TransactionDate.Month &&
-                    x.TransactionDate.Day == currentRegistration.TransactionDate.Day);
+                                        x.TransactionDate.Year == currentRegistration.TransactionDate.Year &&
+                                        x.TransactionDate.Month == currentRegistration.TransactionDate.Month &&
+                                        x.TransactionDate.Day == currentRegistration.TransactionDate.Day &&
+                                        x.ClinicID == currentRegistration.ClinicID &&
+                                        x.PoliTo == currentRegistration.PoliTo &&
+                                        x.DoctorID == currentRegistration.DoctorID &&
+                                        x.Status == 0 &&
+                                        x.SortNumber < currentRegistration.SortNumber);
 
                     foreach (var item in previousRegistrationList)
                     {

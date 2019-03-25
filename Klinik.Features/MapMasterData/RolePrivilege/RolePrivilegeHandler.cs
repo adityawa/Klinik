@@ -47,7 +47,9 @@ namespace Klinik.Features
                         var rolepprivilege = new RolePrivilege
                         {
                             RoleID = request.Data.RoleID,
-                            PrivilegeID = _privid
+                            PrivilegeID = _privid,
+                            CreatedBy = request.Data.Account.UserCode,
+                            CreatedDate = DateTime.Now
                         };
 
                         _context.RolePrivileges.Add(rolepprivilege);
@@ -59,7 +61,7 @@ namespace Klinik.Features
                     response.Status = true;
                     response.Message = Messages.DataSaved;
                 }
-                catch
+                catch (Exception ex)
                 {
                     transaction.Rollback();
 

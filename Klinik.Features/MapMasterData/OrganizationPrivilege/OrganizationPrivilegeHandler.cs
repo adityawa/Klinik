@@ -45,7 +45,9 @@ namespace Klinik.Features
                         var orgpprivilege = new OrganizationPrivilege
                         {
                             OrgID = request.Data.OrgID,
-                            PrivilegeID = _privId
+                            PrivilegeID = _privId,
+                            CreatedBy = request.Data.Account.UserCode,
+                            CreatedDate = DateTime.Now
                         };
 
                         _context.OrganizationPrivileges.Add(orgpprivilege);

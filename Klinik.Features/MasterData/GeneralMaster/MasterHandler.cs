@@ -1,5 +1,6 @@
 ﻿using Klinik.Data;
 using Klinik.Data.DataRepository;
+using System;
 using System.Linq;
 
 namespace Klinik.Features
@@ -13,7 +14,7 @@ namespace Klinik.Features
 
         public IQueryable<GeneralMaster> GetMasterDataByType(string type)
         {
-            return _unitOfWork.MasterRepository.Query(x => x.Type.Equals(type));
+            return _unitOfWork.MasterRepository.Query(x => x.Type.Equals(type, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

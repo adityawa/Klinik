@@ -79,8 +79,24 @@
         $('#ddldoctor').select2();
         $('#ddlday').select2();
 
-        $('#tbStartTime').timepicker({});
-        $('#tbEndTime').timepicker({});
+        $('#tbStartTime').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '6',
+            maxTime: '23',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+        $('#tbEndTime').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '6',
+            maxTime: '23',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
 
         toastr.options = {
             "closeButton": false,

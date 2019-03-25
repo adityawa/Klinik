@@ -216,7 +216,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="Base\BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MappingMasterController.cs" />
     <Compile Include="Controllers\MasterDataController.cs" />
@@ -664,6 +666,7 @@
     <Content Include="Content\Octopus\assets\vendor\bootstrap-datepicker\js\locales\bootstrap-datepicker.zh-TW.js" />
     <Content Include="Content\Octopus\assets\vendor\bootstrap-multiselect\bootstrap-multiselect.css" />
     <Content Include="Content\Octopus\assets\vendor\bootstrap-multiselect\bootstrap-multiselect.js" />
+    <Content Include="Content\Octopus\assets\vendor\bootstrap-wizard\jquery.bootstrap.wizard.js" />
     <Content Include="Content\Octopus\assets\vendor\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Content\Octopus\assets\vendor\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Content\Octopus\assets\vendor\bootstrap\css\bootstrap.css" />
@@ -736,6 +739,10 @@
     <Content Include="Content\Octopus\assets\vendor\jquery-ui\js\jquery-1.10.2.js" />
     <Content Include="Content\Octopus\assets\vendor\jquery-ui\js\jquery-ui-1.10.4.custom.js" />
     <Content Include="Content\Octopus\assets\vendor\jquery-ui\js\jquery-ui-1.10.4.custom.min.js" />
+    <Content Include="Content\Octopus\assets\vendor\jquery-validation\additional-methods.js" />
+    <Content Include="Content\Octopus\assets\vendor\jquery-validation\additional-methods.min.js" />
+    <Content Include="Content\Octopus\assets\vendor\jquery-validation\jquery.validate.js" />
+    <Content Include="Content\Octopus\assets\vendor\jquery-validation\jquery.validate.min.js" />
     <Content Include="Content\Octopus\assets\vendor\jquery\jquery.js" />
     <Content Include="Content\Octopus\assets\vendor\jquery\jquery.min.js" />
     <Content Include="Content\Octopus\assets\vendor\liquid-meter\liquid.meter.js" />
@@ -747,6 +754,8 @@
     <Content Include="Content\Octopus\assets\vendor\morris\morris.min.js" />
     <Content Include="Content\Octopus\assets\vendor\nanoscroller\nanoscroller.css" />
     <Content Include="Content\Octopus\assets\vendor\nanoscroller\nanoscroller.js" />
+    <Content Include="Content\Octopus\assets\vendor\pnotify\pnotify.custom.css" />
+    <Content Include="Content\Octopus\assets\vendor\pnotify\pnotify.custom.js" />
     <Content Include="Content\Octopus\assets\vendor\raphael\raphael.js" />
     <Content Include="Content\Octopus\assets\vendor\snap-svg\snap.svg.js" />
     <Content Include="Content\Site.css" />
@@ -1155,6 +1164,9 @@
     <Content Include="Views\MasterData\CreateOrEditParamedic.cshtml" />
     <Content Include="Views\PoliSchedule\Master.cshtml" />
     <Content Include="Views\PoliSchedule\CreateOrEditPoliScheduleMaster.cshtml" />
+    <Content Include="Views\Doctor\Create.cshtml" />
+    <Content Include="Views\Doctor\Index.cshtml" />
+    <Content Include="Views\Doctor\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

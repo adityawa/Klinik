@@ -102,11 +102,11 @@ namespace Klinik.Common
             CreateMap<Poli, PoliModel>();
 
             CreateMap<PatientModel, Patient>()
-                .ForMember(x=>x.PatientKey, map=>map.MapFrom(p=>p.Name.Trim()+"_"+p.BirthDateStr));
+                .ForMember(x => x.PatientKey, map => map.MapFrom(p => p.Name.Trim() + "_" + p.BirthDateStr));
 
             CreateMap<Patient, PatientModel>()
                 .ForMember(x => x.BirthDateStr, map => map.MapFrom(p => p.BirthDate.ToString("dd/MM/yyyy")));
-               
+
 
             CreateMap<PoliFlowTemplateModel, PoliFlowTemplate>();
             CreateMap<PoliFlowTemplate, PoliFlowTemplateModel>()
@@ -115,8 +115,8 @@ namespace Klinik.Common
 
             CreateMap<DoctorModel, Doctor>();
             CreateMap<Doctor, DoctorModel>()
-                .ForMember(m => m.STRValidFromStr, map => map.MapFrom(p => p.STRValidFrom.Value.ToString("dd/MM/yyyy")))
-                .ForMember(m => m.STRValidToStr, map => map.MapFrom(p => p.STRValidTo.Value.ToString("dd/MM/yyyy")));
+                .ForMember(m => m.STRValidFromStr, map => map.MapFrom(p => p.STRValidFrom.HasValue ? p.STRValidFrom.Value.ToString("dd/MM/yyyy") : string.Empty))
+                .ForMember(m => m.STRValidToStr, map => map.MapFrom(p => p.STRValidTo.HasValue ? p.STRValidTo.Value.ToString("dd/MM/yyyy") : string.Empty));
 
             CreateMap<PoliScheduleModel, PoliSchedule>();
             CreateMap<PoliSchedule, PoliScheduleModel>()
@@ -125,14 +125,21 @@ namespace Klinik.Common
 
             CreateMap<PoliScheduleMasterModel, PoliScheduleMaster>();
             CreateMap<PoliScheduleMaster, PoliScheduleMasterModel>()
-                .ForMember(m => m.StartTimeStr, map => map.MapFrom(p => p.StartTime.ToString()))
-                .ForMember(m => m.EndTimeStr, map => map.MapFrom(p => p.EndTime.ToString()));
+                .ForMember(m => m.StartTimeStr, map => map.MapFrom(p => p.StartTime.ToString(@"hh\:mm")))
+                .ForMember(m => m.EndTimeStr, map => map.MapFrom(p => p.EndTime.ToString(@"hh\:mm")));
 
             CreateMap<PatientClinicModel, PatientClinic>();
             CreateMap<PatientClinic, PatientClinicModel>();
 
             CreateMap<DocumentModel, FileArchieve>();
             CreateMap<FileArchieve, DocumentModel>();
+
+
+
+            CreateMap<DoctorModel, User>();
+            CreateMap<DoctorModel, Employee>()
+                .ForMember(m => m.EmpName, map => map.MapFrom(p => p.Name));
+
         }
     }
 }

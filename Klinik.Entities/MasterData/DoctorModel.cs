@@ -7,7 +7,8 @@ namespace Klinik.Entities.MasterData
         public string Code { get; set; }
         public string Name { get; set; }
         public int? SpecialistID { get; set; }
-        public int? TypeID { get; set; }
+        public int TypeID { get; set; }
+        public long EmployeeID { get; set; }
         public string TypeName { get; set; }
         public string SpecialistName { get; set; }
         public string KTPNumber { get; set; }
@@ -20,5 +21,10 @@ namespace Klinik.Entities.MasterData
         public string HPNumber { get; set; }
         public string Email { get; set; }
         public string Remark { get; set; }
+        public int OrganizationID { get; set; }
+        public string Gender { get; set; }
+        public DateTime Birthdate { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
     }
 }
