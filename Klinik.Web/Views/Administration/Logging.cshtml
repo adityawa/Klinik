@@ -1,0 +1,110 @@
+﻿@model Klinik.Entities.Administration.LogModel
+
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/css/responsive.bootstrap.css" rel="stylesheet" />
+
+    <br /><br />
+
+    <section class="panel">
+        <header class="panel-heading">
+            <div class="panel-actions">
+                <a href="#" class="fa fa-caret-down"></a>
+            </div>
+            <h5 class="panel-title">@Klinik.Resources.UIMessages.LogViewer</h5>
+        </header>
+        <div class="panel-body">
+            <div style="width:100%; margin:0 auto">
+                <table id="tbLogging" class="table table-striped table-bordered dt-responsive" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>@Klinik.Resources.UIMessages.ID</th>
+                            <th>@Klinik.Resources.UIMessages.Module</th>
+                            <th>@Klinik.Resources.UIMessages.Command</th>
+                            <th>@Klinik.Resources.UIMessages.Status</th>
+                            <th>@Klinik.Resources.UIMessages.OldValue</th>
+                            <th>@Klinik.Resources.UIMessages.NewValue</th>
+                            <th>@Klinik.Resources.UIMessages.Username</th>
+                            <th>@Klinik.Resources.UIMessages.StartDate</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tbLogging').dataTable({
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "orderMulti": false,
+                "pageLength": 10,
+                "ajax": {
+                    "url": "/Administration/GetAllLogs",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+
+                "columnDefs":
+                    [{
+                        "targets": [0],
+                        "orderable": true
+                    },
+                    {
+                        "targets": [1],
+                        "searchable": true,
+                        "orderable": true
+                    },
+                    {
+                        "targets": [2],
+                        "searchable": true,
+                        "orderable": true
+                    },
+                    {
+                        "targets": [3],
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [4],
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [5],
+                        "searchable": true,
+                        "orderable": true
+                    },
+                    {
+                        "targets": [6],
+                        "searchable": true,
+                        "orderable": true
+                    },
+                    {
+                        "targets": [7],
+                        "searchable": true,
+                        "orderable": true
+                    }
+                    ],
+
+                "columns": [
+                    { "data": "Id", "name": "Id", "autoWidth": false },
+                    { "data": "Module", "name": "Module", "autoWidth": true },
+                    { "data": "Command", "name": "Command", "autoWidth": true },
+                    { "data": "Status", "name": "Status", "autoWidth": true },
+                    { "data": "OldValue", "name": "OldValue", "autoWidth": true },
+                    { "data": "NewValue", "name": "NewValue", "autoWidth": true },
+                    { "data": "CreatedBy", "name": "CreatedBy", "autoWidth": true },
+                    { "data": "StartStr", "name": "StartStr", "autoWidth": true }
+                ]
+            });
+        });
+    </script>
+
+

@@ -223,6 +223,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Command.
+        /// </summary>
+        public static string Command {
+            get {
+                return ResourceManager.GetString("Command", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command Logs.
+        /// </summary>
+        public static string CommandLog {
+            get {
+                return ResourceManager.GetString("CommandLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm Password.
         /// </summary>
         public static string ConfirmPassword {
@@ -754,6 +772,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log Viewer.
+        /// </summary>
+        public static string LogViewer {
+            get {
+                return ResourceManager.GetString("LogViewer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Longtitude.
         /// </summary>
         public static string Longtitude {
@@ -777,6 +804,15 @@ namespace Klinik.Resources {
         public static string Menu {
             get {
                 return ResourceManager.GetString("Menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Module.
+        /// </summary>
+        public static string Module {
+            get {
+                return ResourceManager.GetString("Module", resourceCulture);
             }
         }
         
@@ -817,11 +853,29 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Value.
+        /// </summary>
+        public static string NewValue {
+            get {
+                return ResourceManager.GetString("NewValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tidak Aktif.
         /// </summary>
         public static string NonActive {
             get {
                 return ResourceManager.GetString("NonActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Old Value.
+        /// </summary>
+        public static string OldValue {
+            get {
+                return ResourceManager.GetString("OldValue", resourceCulture);
             }
         }
         

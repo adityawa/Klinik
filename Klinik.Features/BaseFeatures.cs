@@ -78,7 +78,9 @@ namespace Klinik.Features
                     UserName = account.UserName,
                     Organization = account.Organization,
                     OldValue = oldValue is null ? null : JsonConvert.SerializeObject(oldValue),
-                    NewValue = newValue is null ? null : JsonConvert.SerializeObject(newValue)
+                    NewValue = newValue is null ? null : JsonConvert.SerializeObject(newValue),
+                    CreatedBy = account.UserCode,
+                    CreatedDate = DateTime.Now
                 };
 
                 var _entity = Mapper.Map<LogModel, Log>(log);

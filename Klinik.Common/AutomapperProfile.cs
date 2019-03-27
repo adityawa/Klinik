@@ -76,7 +76,7 @@ namespace Klinik.Common
             CreateMap<Menu, MenuModel>();
 
             CreateMap<Log, LogModel>()
-                .ForMember(x => x.strStart, map => map.MapFrom(p => p.Start.ToString("dd/MM/yyyy")));
+                .ForMember(x => x.StartStr, map => map.MapFrom(p => p.Start.ToString("dd/MM/yyyy")));
             CreateMap<LogModel, Log>();
 
             CreateMap<EmployeeStatu, EmployeeStatusModel>()

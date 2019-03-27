@@ -543,4 +543,22 @@
   <data name="QueueCode" xml:space="preserve">
     <value>Queue Code</value>
   </data>
+  <data name="LogViewer" xml:space="preserve">
+    <value>Log Viewer</value>
+  </data>
+  <data name="CommandLog" xml:space="preserve">
+    <value>Command Logs</value>
+  </data>
+  <data name="Command" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="Module" xml:space="preserve">
+    <value>Module</value>
+  </data>
+  <data name="NewValue" xml:space="preserve">
+    <value>New Value</value>
+  </data>
+  <data name="OldValue" xml:space="preserve">
+    <value>Old Value</value>
+  </data>
 </root>
