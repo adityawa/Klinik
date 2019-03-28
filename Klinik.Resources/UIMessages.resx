@@ -561,4 +561,13 @@
   <data name="OldValue" xml:space="preserve">
     <value>Old Value</value>
   </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="LogDetail" xml:space="preserve">
+    <value>Log Detail</value>
+  </data>
 </root>

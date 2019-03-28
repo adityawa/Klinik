@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Linq;
 using System;
 using Klinik.Features;
+using Klinik.Entities.Administration;
 
 namespace Klinik.Web.Controllers
 {
@@ -47,6 +48,22 @@ namespace Klinik.Web.Controllers
             var response = new LogHandler(_unitOfWork).GetListData(request);
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult LogDetailOldValue(int id)
+        {
+            LogResponse response = new LogHandler(_unitOfWork).GetDataByID(id);
+            var data = response.Data[0].OldValue;
+
+            return Json(new { Data = data }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult LogDetailNewValue(int id)
+        {
+            LogResponse response = new LogHandler(_unitOfWork).GetDataByID(id);
+            var data = response.Data[0].NewValue;
+
+            return Json(new { Data = data }, JsonRequestBehavior.AllowGet);
         }
     }
 }

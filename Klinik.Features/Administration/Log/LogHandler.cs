@@ -99,5 +99,23 @@ namespace Klinik.Features
 
             return response;
         }
+
+        /// <summary>
+        /// Get list data
+        /// </summary>
+        /// <param name="logID"></param>
+        /// <returns></returns>
+        public LogResponse GetDataByID(int logID)
+        {
+            LogResponse response = new LogResponse();
+            var log = _unitOfWork.LogRepository.GetById(logID);
+            if (log != null)
+            {
+                var logModel = Mapper.Map<Log, LogModel>(log);
+                response.Data.Add(logModel);
+            }
+
+            return response;
+        }
     }
 }

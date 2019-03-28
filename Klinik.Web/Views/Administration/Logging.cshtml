@@ -1,110 +1,143 @@
 ﻿@model Klinik.Entities.Administration.LogModel
 
-    @{
-        ViewBag.Title = "Index";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-    <link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/DataTables/css/responsive.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/DataTables/css/responsive.bootstrap.css" rel="stylesheet" />
 
-    <br /><br />
+<br /><br />
 
-    <section class="panel">
-        <header class="panel-heading">
-            <div class="panel-actions">
-                <a href="#" class="fa fa-caret-down"></a>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@Klinik.Resources.UIMessages.LogDetail</h4>
             </div>
-            <h5 class="panel-title">@Klinik.Resources.UIMessages.LogViewer</h5>
-        </header>
-        <div class="panel-body">
-            <div style="width:100%; margin:0 auto">
-                <table id="tbLogging" class="table table-striped table-bordered dt-responsive" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>@Klinik.Resources.UIMessages.ID</th>
-                            <th>@Klinik.Resources.UIMessages.Module</th>
-                            <th>@Klinik.Resources.UIMessages.Command</th>
-                            <th>@Klinik.Resources.UIMessages.Status</th>
-                            <th>@Klinik.Resources.UIMessages.OldValue</th>
-                            <th>@Klinik.Resources.UIMessages.NewValue</th>
-                            <th>@Klinik.Resources.UIMessages.Username</th>
-                            <th>@Klinik.Resources.UIMessages.StartDate</th>
-                        </tr>
-                    </thead>
-                </table>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@Klinik.Resources.UIMessages.Close</button>
             </div>
         </div>
-    </section>
+    </div>
+</div>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#tbLogging').dataTable({
-                "processing": true,
-                "serverSide": true,
-                "filter": true,
-                "orderMulti": false,
-                "pageLength": 10,
-                "ajax": {
-                    "url": "/Administration/GetAllLogs",
-                    "type": "POST",
-                    "datatype": "json"
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+        </div>
+        <h5 class="panel-title">@Klinik.Resources.UIMessages.LogViewer</h5>
+    </header>
+    <div class="panel-body">
+        <div style="width:100%; margin:0 auto">
+            <table id="tbLogging" class="table table-striped table-bordered dt-responsive" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>@Klinik.Resources.UIMessages.ID</th>
+                        <th>@Klinik.Resources.UIMessages.Module</th>
+                        <th>@Klinik.Resources.UIMessages.Command</th>
+                        <th>@Klinik.Resources.UIMessages.Status</th>
+                        <th>@Klinik.Resources.UIMessages.Username</th>
+                        <th>@Klinik.Resources.UIMessages.StartDate</th>
+                        <th>@Klinik.Resources.UIMessages.OldValue</th>
+                        <th>@Klinik.Resources.UIMessages.NewValue</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#tbLogging').dataTable({
+            "processing": true,
+            "serverSide": true,
+            "filter": true,
+            "orderMulti": false,
+            "pageLength": 10,
+            "ajax": {
+                "url": "/Administration/GetAllLogs",
+                "type": "POST",
+                "datatype": "json"
+            },
+
+            "columnDefs":
+                [{
+                    "targets": [0],
+                    "orderable": true
                 },
+                {
+                    "targets": [1],
+                    "searchable": true,
+                    "orderable": true
+                },
+                {
+                    "targets": [2],
+                    "searchable": true,
+                    "orderable": true
+                },
+                {
+                    "targets": [3],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [4],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [5],
+                    "searchable": true,
+                    "orderable": true
+                },
+                {
+                    "targets": [6],
+                    "searchable": true,
+                    "orderable": true
+                },
+                {
+                    "targets": [7],
+                    "searchable": true,
+                    "orderable": true
+                }
+                ],
 
-                "columnDefs":
-                    [{
-                        "targets": [0],
-                        "orderable": true
-                    },
-                    {
-                        "targets": [1],
-                        "searchable": true,
-                        "orderable": true
-                    },
-                    {
-                        "targets": [2],
-                        "searchable": true,
-                        "orderable": true
-                    },
-                    {
-                        "targets": [3],
-                        "searchable": false,
-                        "orderable": false
-                    },
-                    {
-                        "targets": [4],
-                        "searchable": false,
-                        "orderable": false
-                    },
-                    {
-                        "targets": [5],
-                        "searchable": true,
-                        "orderable": true
-                    },
-                    {
-                        "targets": [6],
-                        "searchable": true,
-                        "orderable": true
-                    },
-                    {
-                        "targets": [7],
-                        "searchable": true,
-                        "orderable": true
-                    }
-                    ],
-
-                "columns": [
-                    { "data": "Id", "name": "Id", "autoWidth": false },
-                    { "data": "Module", "name": "Module", "autoWidth": true },
-                    { "data": "Command", "name": "Command", "autoWidth": true },
-                    { "data": "Status", "name": "Status", "autoWidth": true },
-                    { "data": "OldValue", "name": "OldValue", "autoWidth": true },
-                    { "data": "NewValue", "name": "NewValue", "autoWidth": true },
-                    { "data": "CreatedBy", "name": "CreatedBy", "autoWidth": true },
-                    { "data": "StartStr", "name": "StartStr", "autoWidth": true }
-                ]
-            });
+            "columns": [
+                { "data": "Id", "name": "Id", "autoWidth": false },
+                { "data": "Module", "name": "Module", "autoWidth": true },
+                { "data": "Command", "name": "Command", "autoWidth": true },
+                { "data": "Status", "name": "Status", "autoWidth": true },
+                { "data": "CreatedBy", "name": "CreatedBy", "autoWidth": true },
+                { "data": "StartStr", "name": "StartStr", "autoWidth": true },
+                {
+                    "render": function (data, type, full, meta) { return "<button class='btn btn-info' onclick='OpenDialogOldValue(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Detail</button>"; }
+                },
+                {
+                    "render": function (data, type, full, meta) { return "<button class='btn btn-info' onclick='OpenDialogNewValue(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Detail</button>"; }
+                }
+            ]
         });
-    </script>
+    });
+
+    var OpenDialogOldValue = function (ID) {
+        $('.modal-body').load('/Administration/LogDetailOldValue?id='+ID, function () {
+            $('#myModal').modal({ show: true });
+        });
+    }
+
+    var OpenDialogNewValue = function (ID) {
+        $('.modal-body').load('/Administration/LogDetailNewValue?id=' + ID, function () {
+            $('#myModal').modal({ show: true });
+        });
+    }
+</script>
 
 
