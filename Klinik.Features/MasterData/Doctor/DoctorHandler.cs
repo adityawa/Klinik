@@ -130,6 +130,7 @@ namespace Klinik.Features
             DoctorResponse response = new DoctorResponse();
             using (var transaction = _context.Database.BeginTransaction())
             {
+                string type = requestData.TypeID == 0 ? Messages.Doctor : Messages.Paramedic;
                 int _resultAffected = 0;
                 try
                 {
@@ -160,7 +161,7 @@ namespace Klinik.Features
                     {
                         CommandLog(true, ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.ADD_NEW_DOCTOR, requestData.Account, doctorEntity);
 
-                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "Doctor", requestData.Name, requestData.Id);
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, type, requestData.Name, requestData.Id);
 
                         transaction.Commit();
                     }
@@ -169,7 +170,7 @@ namespace Klinik.Features
                 {
                     transaction.Rollback();
                     response.Status = false;
-                    response.Message = string.Format(Messages.AddObjectFailed, "Doctor");
+                    response.Message = string.Format(Messages.AddObjectFailed, type);
 
                     CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, requestData.Account, requestData);
                 }

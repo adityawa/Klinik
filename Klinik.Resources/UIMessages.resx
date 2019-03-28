@@ -570,4 +570,28 @@
   <data name="LogDetail" xml:space="preserve">
     <value>Log Detail</value>
   </data>
+  <data name="AccountInfo" xml:space="preserve">
+    <value>Account Info</value>
+  </data>
+  <data name="Confirmation" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="DoctorInfo" xml:space="preserve">
+    <value>Doctor Info</value>
+  </data>
+  <data name="DoctorRegistrationWizard" xml:space="preserve">
+    <value>Doctor Registration Wizard</value>
+  </data>
+  <data name="EmployeeInfo" xml:space="preserve">
+    <value>Employee Info</value>
+  </data>
+  <data name="ParamedicRegistrationWizard" xml:space="preserve">
+    <value>Paramedic Registration Wizard</value>
+  </data>
+  <data name="ParamedicInfo" xml:space="preserve">
+    <value>Paramedic Info</value>
+  </data>
+  <data name="Agreement" xml:space="preserve">
+    <value>I agree to the terms of service</value>
+  </data>
 </root>

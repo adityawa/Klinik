@@ -23,6 +23,7 @@
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Code</label>
                 <div class="col-md-4">
                     @Html.HiddenFor(x => x.Id)
+                    @Html.HiddenFor(x => x.TypeID)
                     @Html.TextBoxFor(x => x.Code, new { @class = "form-control", @id = "tbCode" })
                     @Html.ValidationMessageFor(m => m.Code, "", new { @class = "text-danger" })
                 </div>
