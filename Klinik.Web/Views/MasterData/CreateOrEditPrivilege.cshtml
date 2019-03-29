@@ -4,8 +4,6 @@
     ViewBag.Title = "CreateOrEditPrivilege";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="~/Content/css/select2.css" rel="stylesheet" />
-<script src="~/Scripts/select2.js"></script>
 
 <section class="panel">
     <header class="panel-heading">
@@ -46,7 +44,8 @@
     </div>
 </section>
 
-<script type="text/javascript">
+@section Scripts {
+    <script type="text/javascript">
     function clearFields() {
         $('#tbPrivilege').val('');
         $('#tbDesc').val('');
@@ -83,4 +82,5 @@
         }
     });
 
-</script>
+    </script>
+}

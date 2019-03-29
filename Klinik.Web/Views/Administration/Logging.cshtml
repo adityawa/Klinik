@@ -5,9 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
-<link href="~/Content/DataTables/css/responsive.bootstrap.css" rel="stylesheet" />
-
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -52,9 +49,11 @@
     </div>
 </section>
 
-<script type="text/javascript">
+@section Scripts {
+    <script type="text/javascript">
     $(document).ready(function () {
         $('#tbLogging').dataTable({
+            "autoWidth": false,
             "processing": true,
             "serverSide": true,
             "filter": true,
@@ -137,6 +136,6 @@
             $('#myModal').modal({ show: true });
         });
     }
-</script>
-
+    </script>
+}
 

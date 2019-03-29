@@ -185,9 +185,13 @@
 
     <script type="text/javascript">
     $(document).ready(function () {
+
         $('#btnreset').click(function (e) {
              window.location.href = "/Doctor/Index";
         });
+
+        $('#ddlOrganization').select2();
+        $('#ddldoctortype').select2();
 
         $('#tbValidFrom').datepicker({
             format: "dd/mm/yyyy",
