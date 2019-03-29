@@ -52,6 +52,9 @@
     <Reference Include="CommonServiceLocator, Version=2.0.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.5.0.1\lib\net45\CommonServiceLocator.dll</HintPath>
     </Reference>
+    <Reference Include="Datalist.Core, Version=6.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Datalist.Core.6.2.1\lib\net45\Datalist.Core.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -81,6 +84,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.5.0.1\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -228,6 +234,8 @@
     <Compile Include="Controllers\AdministrationController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
+    <Compile Include="Datalist\PatientDataList.cs" />
+    <Compile Include="Datalist\PatientDataListModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -528,6 +536,7 @@
     <Content Include="Content\Login\vendor\select2\select2.js" />
     <Content Include="Content\Login\vendor\select2\select2.min.css" />
     <Content Include="Content\Login\vendor\select2\select2.min.js" />
+    <Content Include="Content\MvcDatalist\mvc-datalist.css" />
     <Content Include="Content\Octopus\assets\images\!happy-face.png" />
     <Content Include="Content\Octopus\assets\images\!logged-user.jpg" />
     <Content Include="Content\Octopus\assets\images\!sample-user.jpg" />
@@ -767,6 +776,8 @@
     <Content Include="Scripts\jquery.signalR-2.4.0.js" />
     <Content Include="Scripts\jquery.signalR-2.4.0.min.js" />
     <Content Include="Scripts\jquery.timepicker.js" />
+    <Content Include="Scripts\MvcDatalist\mvc-datalist.js" />
+    <Content Include="Scripts\MvcDatalist\mvc-datalist.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Views\favicon.ico" />
@@ -1118,7 +1129,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -1173,6 +1186,7 @@
     <Content Include="Views\Paramedic\Index.cshtml" />
     <Content Include="Views\Paramedic\Create.cshtml" />
     <Content Include="Views\Paramedic\Edit.cshtml" />
+    <Content Include="Views\Shared\MvcDatalist\_Dialog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

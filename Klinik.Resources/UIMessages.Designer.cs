@@ -934,6 +934,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Patient.
+        /// </summary>
+        public static string NewPatient {
+            get {
+                return ResourceManager.GetString("NewPatient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Value.
         /// </summary>
         public static string NewValue {

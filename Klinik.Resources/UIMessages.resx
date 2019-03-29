@@ -594,4 +594,7 @@
   <data name="Agreement" xml:space="preserve">
     <value>I agree to the terms of service</value>
   </data>
+  <data name="NewPatient" xml:space="preserve">
+    <value>New Patient</value>
+  </data>
 </root>

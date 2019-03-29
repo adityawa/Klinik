@@ -42,6 +42,9 @@
     <!-- Theme Custom CSS -->
     <link href="~/Content/Octopus/assets/stylesheets/theme-custom.css" rel="stylesheet" />
 
+    <!-- MVC Datalist CSS -->
+    <link href="~/Content/MvcDatalist/mvc-datalist.css" rel="stylesheet">
+
     <!-- Head Libs -->
     <script src="~/Scripts/jquery-3.0.0.js"></script>
     <script src="~/Content/Octopus/assets/vendor/Modernizr/modernizr.js"></script>
@@ -49,7 +52,6 @@
 </head>
 <body>
     <section class="body">
-
         <!-- start: header -->
         <header class="header">
             <div class="logo-container">
@@ -179,6 +181,8 @@
                     </div>
                 </header>
                 <div>
+                    @Html.Partial("MvcDatalist/_Dialog")
+
                     @RenderBody()
                 </div>
             </section>

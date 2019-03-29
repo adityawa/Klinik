@@ -20,18 +20,23 @@
         <form class="form-horizontal form-bordered" method="post" action="/Registration/CreateOrEditRegistration">
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PatientName</label>
-                <div class="col-md-4">
-                    @Html.HiddenFor(x => x.Id)
-                    @Html.HiddenFor(x => x.Status)
-                    @if (((int)ViewBag.ActionType) == 0)
-                    {
-                        @Html.DropDownListFor(p => p.PatientID, (IEnumerable<SelectListItem>)ViewBag.PatientList, new { @class = "form-control", @id = "ddlpatientlist" })
-                    }
-                    else
-                    {
+                @Html.HiddenFor(x => x.Id)
+                @Html.HiddenFor(x => x.Status)
+                @if (((int)ViewBag.ActionType) == 0)
+                {
+                    <div class="col-md-4">
+                        @Html.DatalistFor(x => x.PatientID, new PatientDataList { Url = "/Registration/AllPatient" })
+                    </div>
+                    <div class="col-md-2">
+                        <button type="reset" id="btnNewPatient" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;@Klinik.Resources.UIMessages.NewPatient</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-4">
                         @Html.TextBoxFor(x => x.PatientName, new { @class = "form-control", @id = "tbPoliFrom", @readonly = "readonly" })
-                    }
-                </div>
+                    </div>
+                }
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">
@@ -63,7 +68,7 @@
                     @Klinik.Resources.UIMessages.RegistrationType
                 </label>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(p => p.Type, (IEnumerable<SelectListItem>)ViewBag.RegistrationTypeList, new { @class = "form-control", @id = "ddlregistertype" })
+                    @Html.DropDownListFor(p => p.Type, (IEnumerable<SelectListItem>)ViewBag.RegistrationTypeList, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
@@ -84,7 +89,14 @@
     </div>
 </section>
 
-<script type="text/javascript">
+@section Scripts {
+    <script src="~/Scripts/MvcDatalist/mvc-datalist.js"></script>
+    <script>
+        [].forEach.call(document.getElementsByClassName('datalist'), function (element) {
+            new MvcDatalist(element);
+        });
+    </script>
+    <script type="text/javascript">
     $(document).ready(function () {
         $('#btnreset').click(function (e) {
              window.location.href = "/Registration/Index";
@@ -98,9 +110,6 @@
                 });
             });
         });
-
-        $('#ddlregistertype').select2();
-        $('#ddlpatientlist').select2();
 
         toastr.options = {
             "closeButton": false,
@@ -126,4 +135,5 @@
             }
         }
     });
-</script>
+    </script>
+}
