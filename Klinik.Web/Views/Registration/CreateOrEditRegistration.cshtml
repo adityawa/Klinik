@@ -4,10 +4,9 @@
     ViewBag.Title = "CreateOrEditRegistration";
 }
 
-<link href="~/Content/css/select2.css" rel="stylesheet" />
-<link href="~/Content/jquery-ui.css" rel="stylesheet" />
-<script src="~/Scripts/select2.js"></script>
-<script src="~/Scripts/jquery-ui.js"></script>
+@section Styles {
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+}
 
 <section class="panel">
     <header class="panel-heading">
@@ -90,6 +89,7 @@
 </section>
 
 @section Scripts {
+    <script src="~/Scripts/jquery-ui.js"></script>
     <script src="~/Scripts/MvcDatalist/mvc-datalist.js"></script>
     <script>
         [].forEach.call(document.getElementsByClassName('datalist'), function (element) {
