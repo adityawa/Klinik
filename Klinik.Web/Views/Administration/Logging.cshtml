@@ -59,6 +59,7 @@
             "serverSide": true,
             "filter": true,
             "orderMulti": false,
+            "order": [[4, "desc"]],
             "pageLength": 10,
             "ajax": {
                 "url": "/Administration/GetAllLogs",
@@ -69,7 +70,7 @@
             "columnDefs":
                 [{
                     "targets": [0],
-                    "orderable": true
+                    "orderable": false
                 },
                 {
                     "targets": [1],

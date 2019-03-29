@@ -54,8 +54,14 @@ namespace Klinik.Features
                 {
                     switch (request.SortColumn.ToLower())
                     {
-                        case "name":
-                            qry = _unitOfWork.LogRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.CreatedBy));
+                        case "Module":
+                            qry = _unitOfWork.LogRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Module));
+                            break;
+                        case "Command":
+                            qry = _unitOfWork.LogRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Command));
+                            break;
+                        case "StartStr":
+                            qry = _unitOfWork.LogRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.CreatedDate));
                             break;
                         default:
                             qry = _unitOfWork.LogRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.ID));
@@ -66,8 +72,14 @@ namespace Klinik.Features
                 {
                     switch (request.SortColumn.ToLower())
                     {
-                        case "name":
+                        case "Module":
                             qry = _unitOfWork.LogRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.CreatedBy));
+                            break;
+                        case "Command":
+                            qry = _unitOfWork.LogRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.CreatedBy));
+                            break;
+                        case "StartStr":
+                            qry = _unitOfWork.LogRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.CreatedDate));
                             break;
                         default:
                             qry = _unitOfWork.LogRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID));
