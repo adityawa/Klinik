@@ -10,6 +10,7 @@ namespace Klinik.Entities
         public List<T> Data { get; set; }
         public T Entity { get; set; }
         public bool Status { get; set; } = true;
+        public bool IsNeedConfirmation { get; set; }
         public string Message { get; set; }
     }
 }

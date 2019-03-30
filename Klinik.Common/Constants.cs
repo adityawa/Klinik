@@ -28,6 +28,7 @@
             public const string EDIT_REGISTRATION = "Edit Registration";
             public const string EDIT_DOCTOR = "Edit Doctor";
             public const string DELETE_EMPLOYEE = "Remove Employee";
+            public const string ADD_NEW_PATIENT = "ADD New Patient";
         }
 
         public static class MasterType
@@ -40,6 +41,9 @@
             public const string SCHEDULE_STATUS = "PoliScheduleStatus";
             public const string PARAMEDIC = "ParamedicType";
             public const string DAY = "Day";
+            public const string PATIENT_TYPE = "PatientType";
+            public const string MARITAL_STATUS = "Marital";
+            public const string RELATION = "Relation";
         }
     }
 }

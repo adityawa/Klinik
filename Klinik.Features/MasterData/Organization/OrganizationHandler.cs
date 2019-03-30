@@ -164,7 +164,7 @@ namespace Klinik.Features
                 else
                 {
                     var OrganizationEntity = Mapper.Map<OrganizationModel, Organization>(request.Data);
-                    OrganizationEntity.CreatedBy = request.Data.CreatedBy;
+                    OrganizationEntity.CreatedBy = request.Data.Account.UserName;
                     OrganizationEntity.CreatedDate = DateTime.Now;
 
                     _unitOfWork.OrganizationRepository.Insert(OrganizationEntity);
@@ -184,7 +184,7 @@ namespace Klinik.Features
                     }
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 response.Status = false;
                 response.Message = Messages.GeneralError;

@@ -26,7 +26,7 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual Clinic Clinic { get; set; }
-        public virtual FileArchieve FileArchieve { get; set; }
         public virtual Doctor Doctor { get; set; }
+        public virtual FileArchieve FileArchieve { get; set; }
     }
 }

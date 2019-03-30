@@ -56,6 +56,12 @@ namespace Klinik.Features
             return IsAuthorized;
         }
 
+        public DateTime reformatDate(string dtStr)
+        {
+            string[] arrDates = dtStr.Split('/');
+            return new DateTime(Convert.ToInt16(arrDates[2]), Convert.ToInt16(arrDates[1]), Convert.ToInt16(arrDates[0]));
+        }
+
         /// <summary>
         /// Log any executed command by user
         /// </summary>

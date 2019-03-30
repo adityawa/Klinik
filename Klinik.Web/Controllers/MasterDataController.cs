@@ -30,6 +30,11 @@ namespace Klinik.Web.Controllers
             List<SelectListItem> _clinicLists = new List<SelectListItem>();
             foreach (var item in new ClinicHandler(_unitOfWork).GetAllClinic())
             {
+                _clinicLists.Insert(0, new SelectListItem
+                {
+                    Text = "",
+                    Value = "0"
+                });
                 _clinicLists.Add(new SelectListItem
                 {
                     Text = item.Name,
@@ -58,6 +63,11 @@ namespace Klinik.Web.Controllers
         private List<SelectListItem> BindDropDownEmployee()
         {
             List<SelectListItem> _employeeLists = new List<SelectListItem>();
+            _employeeLists.Insert(0, new SelectListItem
+            {
+                Text = "",
+                Value = "0"
+            });
             foreach (var item in new EmployeeHandler(_unitOfWork).GetAllEmployee())
             {
                 _employeeLists.Add(new SelectListItem
@@ -743,7 +753,7 @@ namespace Klinik.Web.Controllers
                 Action = ClinicEnums.Action.DELETE.ToString()
             };
 
-            EmployeeResponse _response = new EmployeeValidator(_unitOfWork).Validate(request);
+            EmployeeResponse _response = new EmployeeValidator(_unitOfWork, _context).Validate(request);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }

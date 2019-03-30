@@ -53,10 +53,7 @@ namespace Klinik.Features
                     errorFields.Add("Password");
                 }
 
-                if (request.Data.EmployeeID == 0)
-                {
-                    errorFields.Add("Employee");
-                }
+               
 
                 if (errorFields.Any())
                 {

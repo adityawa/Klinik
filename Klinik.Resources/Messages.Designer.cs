@@ -140,6 +140,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Photo File.
+        /// </summary>
+        public static string InvalidImage {
+            get {
+                return ResourceManager.GetString("InvalidImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Model State. Please check your input..
         /// </summary>
         public static string InvalidModelState {
@@ -239,6 +248,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Patient with name {0} has been Added for clinic Id {1}.
+        /// </summary>
+        public static string ObjectPatientAdded {
+            get {
+                return ResourceManager.GetString("ObjectPatientAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Patient with name  {0} has been Updated for clinic Id {1}.
+        /// </summary>
+        public static string ObjectPatientUpdated {
+            get {
+                return ResourceManager.GetString("ObjectPatientUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to One employee cannot have more than one user Id.
         /// </summary>
         public static string OneEmpOneUserID {
@@ -307,6 +334,15 @@ namespace Klinik.Resources {
         public static string ResetPasswordLinkSent {
             get {
                 return ResourceManager.GetString("ResetPasswordLinkSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Session Expired.
+        /// </summary>
+        public static string SessionExpired {
+            get {
+                return ResourceManager.GetString("SessionExpired", resourceCulture);
             }
         }
         

@@ -54,6 +54,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -88,6 +89,7 @@
     <Compile Include="MapMasterData\UserRole\UserRoleRequest.cs" />
     <Compile Include="MapMasterData\UserRole\UserRoleResponse.cs" />
     <Compile Include="MapMasterData\UserRole\UserRoleValidator.cs" />
+    <Compile Include="MasterData\City\CityHandler.cs" />
     <Compile Include="MasterData\Clinic\ClinicHandler.cs" />
     <Compile Include="MasterData\Clinic\ClinicRequest.cs" />
     <Compile Include="MasterData\Clinic\ClinicResponse.cs" />
