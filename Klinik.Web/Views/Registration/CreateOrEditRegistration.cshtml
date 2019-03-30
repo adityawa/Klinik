@@ -21,6 +21,7 @@
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PatientName</label>
                 @Html.HiddenFor(x => x.Id)
                 @Html.HiddenFor(x => x.Status)
+                @Html.HiddenFor(x => x.CurrentPoliID)
                 @if (((int)ViewBag.ActionType) == 0)
                 {
                     <div class="col-md-4">
@@ -82,7 +83,7 @@
             <footer class="panel-footer">
                 <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
                 <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Home")'">@Klinik.Resources.UIMessages.BackToHome</button>
-                <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+                <button type="reset" class="btn btn-danger" onclick="GoBack(@Model.CurrentPoliID)">@Klinik.Resources.UIMessages.Back</button>
             </footer>
         </form>
     </div>
@@ -102,10 +103,6 @@
             $('#ddlpolito').select2();
             $('#ddltype').select2();
 
-            $('#btnreset').click(function (e) {
-                 window.location.href = "/Registration/Index";
-            });
-
             $("#ddlpolito").change(function () {
                 $.get("/Registration/GetDoctorList", { PoliId: $("#ddlpolito").val() }, function (data) {
                 $("#ddldoctor").empty();
@@ -115,29 +112,61 @@
             });
             });
 
-        toastr.options = {
-            "closeButton": false,
-            "positionClass": "toast-top-full-width",
-            "onclick": null,
-            "showDuration": "0",
-            "hideDuration": "0",
-            "timeOut": "2000",
-            "showMethod": "fadeIn"
-        };
+            toastr.options = {
+                "closeButton": false,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "0",
+                "hideDuration": "0",
+                "timeOut": "2000",
+                "showMethod": "fadeIn"
+            };
 
-        var _temp="@ViewBag.Response";
-        var _arrMsg = _temp.split(";");
+            var _temp="@ViewBag.Response";
+            var _arrMsg = _temp.split(";");
 
-        if (_arrMsg.length > 1) {
-            if (_arrMsg[0] == "True") {
-                toastr.success(_arrMsg[1]);
+            if (_arrMsg.length > 1) {
+                if (_arrMsg[0] == "True") {
+                    toastr.success(_arrMsg[1]);
+                }
+                else {
+                    toastr.options.closeButton = true;
+                    toastr.options.timeOut = 0;
+                    toastr.error(_arrMsg[1]);
+                }
             }
-            else {
-                toastr.options.closeButton = true;
-                toastr.options.timeOut = 0;
-                toastr.error(_arrMsg[1]);
+        });
+
+        var GoBack = function (poliID) {
+            if (poliID == 1) {
+                window.location.href = "/Registration/Index";
+            } else if (poliID == 2) {
+                window.location.href = "/Registration/PoliUmum";
+            } else if (poliID == 3) {
+                window.location.href = "/Registration/PoliGigi";
+            } else if (poliID == 4) {
+                window.location.href = "/Registration/PoliPenyakitDalam";
+            } else if (poliID == 5) {
+                window.location.href = "/Registration/PoliKulit";
+            } else if (poliID == 6) {
+                window.location.href = "/Registration/PoliMata";
+            } else if (poliID == 7) {
+                window.location.href = "/Registration/PoliTHT";
+            } else if (poliID == 8) {
+                window.location.href = "/Registration/PoliAnak";
+            } else if (poliID == 9) {
+                window.location.href = "/Registration/PoliSyaraf";
+            } else if (poliID == 10) {
+                window.location.href = "/Registration/Radiologi";
+            } else if (poliID == 11) {
+                window.location.href = "/Registration/Laboratorium";
+            } else if (poliID == 12) {
+                window.location.href = "/Registration/Farmasi";
+            } else if (poliID == 13) {
+                window.location.href = "/Registration/RekamMedis";
+            } else if (poliID == 14) {
+                window.location.href = "/Registration/Kasir";
             }
         }
-    });
     </script>
 }

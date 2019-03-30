@@ -24,23 +24,6 @@ namespace Klinik.Web
             }
         }
 
-        protected long ClinicID
-        {
-            get
-            {
-                if (Session["UserLogon"] != null)
-                {
-                    AccountModel account = (AccountModel)Session["UserLogon"];
-                    Organization organization = _unitOfWork.OrganizationRepository.GetFirstOrDefault(x => x.OrgCode == account.Organization);
-
-                    if (organization.Clinic != null)
-                        return organization.Clinic.ID;
-                }
-
-                return -1;
-            }
-        }
-
         protected HttpStatusCodeResult BadRequestResponse
         {
             get
@@ -59,6 +42,50 @@ namespace Klinik.Web
         {
             _unitOfWork = unitOfWork;
             _context = context;
+        }
+
+        protected long GetClinicID()
+        {
+            if (Session["UserLogon"] != null)
+            {
+                AccountModel account = (AccountModel)Session["UserLogon"];
+                return account.ClinicID;
+            }
+
+            return -1;
+        }
+
+        protected bool IsHaveAuthorization(string privilege_name)
+        {
+            AccountModel account = (AccountModel)Session["UserLogon"];
+
+            var privilegeNameList = _unitOfWork.PrivilegeRepository.Get(x => account.Privileges.PrivilegeIDs.Contains(x.ID));
+
+            bool isAuthorized = privilegeNameList.Any(x => x.Privilege_Name == privilege_name);
+
+            return isAuthorized;
+        }
+
+        protected int GetUserPoliID()
+        {
+            AccountModel account = (AccountModel)Session["UserLogon"];
+            var privilegeNameList = _unitOfWork.PrivilegeRepository.Get(x => account.Privileges.PrivilegeIDs.Contains(x.ID));
+
+            if (privilegeNameList.Any(x => x.Privilege_Name == "VIEW_REGISTRATION")) { return 1; }
+            else if (privilegeNameList.Any(x => x.Privilege_Name == "VIEW_REGISTRATION_UMUM")) { return 2; }
+            else if (privilegeNameList.Any(x => x.Privilege_Name == "VIEW_REGISTRATION_GIGI")) { return 3; }
+            else if (privilegeNameList.Any(x => x.Privilege_Name == "VIEW_REGISTRATION_INTERNIS")) { return 4; }
+            else if (privilegeNameList.Any(x => x.Privilege_Name == "VIEW_REGISTRATION_KULIT")) { return 5; }
+            else if (privilegeNameList.Any(x => x.Privilege_Name == "VIEW_REGISTRATION_MATA")) { return 6; }
+            else if (privilegeNameList.Any(x => x.Privilege_Name == "VIEW_REGISTRATION_THT")) { return 7; }
+            else if (privilegeNameList.Any(x => x.Privilege_Name == "VIEW_REGISTRATION_ANAK")) { return 8; }
+            else if (privilegeNameList.Any(x => x.Privilege_Name == "VIEW_REGISTRATION_SYARAF")) { return 9; }
+            else if (privilegeNameList.Any(x => x.Privilege_Name == "VIEW_REGISTRATION_RADIOLOGI")) { return 10; }
+            else if (privilegeNameList.Any(x => x.Privilege_Name == "VIEW_REGISTRATION_LABORATORIUM")) { return 11; }
+            else if (privilegeNameList.Any(x => x.Privilege_Name == "VIEW_REGISTRATION_FARMASI")) { return 12; }
+            else if (privilegeNameList.Any(x => x.Privilege_Name == "VIEW_REGISTRATION_REKAMMEDIS")) { return 13; }
+            else if (privilegeNameList.Any(x => x.Privilege_Name == "VIEW_REGISTRATION_KASIR")) { return 14; }
+            else { return 1; }
         }
 
         #region ::Dropdown Methods::

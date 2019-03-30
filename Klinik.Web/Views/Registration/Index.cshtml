@@ -68,7 +68,7 @@
 
     $(document).ready(function () {
         $('#btnAdd').click(function (e) {
-            window.location.href = "@Url.Action("CreateOrEditRegistration", "Registration", new { poliId = Model.PoliFromID })";
+            window.location.href = "@Url.Action("CreateRegistration", "Registration", new { poliId = Model.PoliFromID })";
         });
 
         $('#tbRegistration').dataTable({
@@ -145,7 +145,7 @@
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": false },
                 {
-                    "render": function (data, type, full, meta) {return '<a href="/Registration/CreateOrEditRegistration?id=' + full.Id + '">'+ full.PatientName+'</a>'; }
+                    "render": function (data, type, full, meta) {return '<a href="/Registration/EditRegistration?id=' + full.Id + '">'+ full.PatientName+'</a>'; }
                 },
                 { "data": "PoliFromName", "name": "PoliFromName", "autoWidth": true },
                 { "data": "PoliToName", "name": "PoliToName", "autoWidth": true },

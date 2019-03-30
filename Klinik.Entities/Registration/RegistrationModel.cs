@@ -16,6 +16,7 @@ namespace Klinik.Entities.Registration
         public int SortNumber { get; set; }
         public string SortNumberCode { get; set; }
         public int PoliFromID { get; set; }
+        public int CurrentPoliID { get; set; }
         public string PoliFromName { get; set; }
         public int PoliToID { get; set; }
         public string PoliToName { get; set; }

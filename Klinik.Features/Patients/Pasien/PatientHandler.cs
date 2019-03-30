@@ -77,7 +77,7 @@ namespace Klinik.Features.Patients.Pasien
 
                         var _entityPatientClinic = new PatientClinic
                         {
-                            ClinicID = request.Data.Account.clinicID,
+                            ClinicID = request.Data.Account.ClinicID,
                             PhotoID = _photoID,
                             PatientID = _entityPatient.ID,
                             TempAddress = request.Data.PatientClinic.TempAddress,
@@ -124,7 +124,7 @@ namespace Klinik.Features.Patients.Pasien
                                 resultUpdated = _context.SaveChanges();
                             }
 
-                            var _patientclinicWillBeEdit = _context.PatientClinics.SingleOrDefault(x => x.PatientID == request.Data.Id && x.ClinicID == request.Data.Account.clinicID);
+                            var _patientclinicWillBeEdit = _context.PatientClinics.SingleOrDefault(x => x.PatientID == request.Data.Id && x.ClinicID == request.Data.Account.ClinicID);
                             if (_patientclinicWillBeEdit != null)
                             {
                                 long _idPhoto = _patientclinicWillBeEdit.PhotoID ?? 0;
@@ -214,7 +214,7 @@ namespace Klinik.Features.Patients.Pasien
                                 var _patientClinicEntity = new PatientClinic
                                 {
                                     PatientID = _tempPatientId,
-                                    ClinicID = request.Data.Account.clinicID,
+                                    ClinicID = request.Data.Account.ClinicID,
                                     OldMRNumber = request.Data.PatientClinic.OldMRNumber,
                                     TempAddress = request.Data.PatientClinic.TempAddress,
                                     TempCityID = request.Data.PatientClinic.TempCityId,
@@ -233,7 +233,7 @@ namespace Klinik.Features.Patients.Pasien
 
                             transaction.Commit();
                             response.Status = true;
-                            response.Message = string.Format(Messages.ObjectPatientUpdated, request.Data.Name, request.Data.Account.clinicID);
+                            response.Message = string.Format(Messages.ObjectPatientUpdated, request.Data.Name, request.Data.Account.ClinicID);
                         }
                         else if (request.Data.Id == 0 && cekIsPatientKeyExist != null && request.Data.IsUseExistingData == true)
                         {
@@ -247,7 +247,7 @@ namespace Klinik.Features.Patients.Pasien
                                 var _patientClinicEntity = new PatientClinic
                                 {
                                     PatientID = _tempPatientId,
-                                    ClinicID = request.Data.Account.clinicID,
+                                    ClinicID = request.Data.Account.ClinicID,
                                     OldMRNumber = _willCopyPatientClinic.OldMRNumber,
                                     TempAddress = _willCopyPatientClinic.TempAddress,
                                     TempCityID = _willCopyPatientClinic.TempCityID,
@@ -263,7 +263,7 @@ namespace Klinik.Features.Patients.Pasien
                                 result = _context.SaveChanges();
                                 transaction.Commit();
                                 response.Status = true;
-                                response.Message = string.Format(Messages.ObjectPatientAdded, request.Data.Name, request.Data.Account.clinicID);
+                                response.Message = string.Format(Messages.ObjectPatientAdded, request.Data.Name, request.Data.Account.ClinicID);
                             }
                         }
                     }
@@ -293,7 +293,7 @@ namespace Klinik.Features.Patients.Pasien
             if (_response.Entity.Photo == null)
                 _response.Entity.Photo = new DocumentModel();
 
-            var _patientClinicEntity = _unitOfWork.PatientClinicRepository.GetFirstOrDefault(x => x.ClinicID == request.Data.Account.clinicID && x.PatientID == _patientDetail.ID);
+            var _patientClinicEntity = _unitOfWork.PatientClinicRepository.GetFirstOrDefault(x => x.ClinicID == request.Data.Account.ClinicID && x.PatientID == _patientDetail.ID);
             if (_patientClinicEntity != null)
             {
                 _response.Entity.PatientClinic = Mapper.Map<PatientClinic, PatientClinicModel>(_patientClinicEntity);
@@ -307,7 +307,7 @@ namespace Klinik.Features.Patients.Pasien
 
         public PatientResponse GetListData(PatientRequest request)
         {
-            long _clinicID = request.Data.Account.clinicID;
+            long _clinicID = request.Data.Account.ClinicID;
             IList<long> clinicsID = _unitOfWork.PatientClinicRepository.Get(x => x.ClinicID == _clinicID).Select(x => x.PatientID).ToList();
             List<PatientModel> lists = new List<PatientModel>();
             dynamic qry = null;
@@ -405,7 +405,7 @@ namespace Klinik.Features.Patients.Pasien
             try
             {
                 var isExist = _unitOfWork.PatientRepository.GetById(request.Data.Id);
-                var isExistPatientClinic = _unitOfWork.PatientClinicRepository.GetFirstOrDefault(x => x.PatientID == isExist.ID && x.ClinicID == request.Data.Account.clinicID);
+                var isExistPatientClinic = _unitOfWork.PatientClinicRepository.GetFirstOrDefault(x => x.PatientID == isExist.ID && x.ClinicID == request.Data.Account.ClinicID);
                 var isExistFileArchive = _unitOfWork.FileArchiveRepository.GetById(isExistPatientClinic.PhotoID);
                 if (isExist.ID > 0)
                 {

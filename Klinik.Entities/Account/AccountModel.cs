@@ -25,7 +25,8 @@ namespace Klinik.Entities.Account
             }
         }
 
-        public long clinicID { get; set; }
+        public long ClinicID { get; set; }
+
         public AccountModel()
         {
             Roles = new List<long>();
