@@ -277,7 +277,14 @@ namespace Klinik.Features.Registration
                 prData.TypeStr = prData.TypeStr.Replace("WalkIn", "Walk-In");
 
                 // format the queue code
-                prData.SortNumberCode = item.Poli1.Code.Trim() + "-" + string.Format("{0:D3}", item.SortNumber);
+                if (item.Type == (int)RegistrationTypeEnum.MCU)
+                {
+                    prData.SortNumberCode = item.Poli1.Code.Trim() + "-" + string.Format("{0:D3}", item.SortNumber) + " (M)";
+                }
+                else
+                {
+                    prData.SortNumberCode = item.Poli1.Code.Trim() + "-" + string.Format("{0:D3}", item.SortNumber);
+                }
 
                 lists.Add(prData);
             }

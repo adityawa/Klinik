@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Datalist;
 using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
@@ -149,6 +150,18 @@ namespace Klinik.Web.Controllers
             return Json(doctorList, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        [HttpGet]
+        public JsonResult AllPatient(DatalistFilter filter)
+        {
+            PatientDataList datalist = new PatientDataList(_context, ClinicID) { Filter = filter };
+
+            DatalistData patientList = datalist.GetData();
+
+            RegistrationResponse response = GetRegistrationList(false);
+
+            return Json(patientList, JsonRequestBehavior.AllowGet);
+        }
 
         [CustomAuthorize("VIEW_REGISTRATION")]
         public ActionResult Index()

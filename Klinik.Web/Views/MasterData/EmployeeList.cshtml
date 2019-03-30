@@ -5,9 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
-<link href="~/Content/DataTables/css/responsive.bootstrap.css" rel="stylesheet" />
-
 <button id="btnAdd" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;@Klinik.Resources.UIMessages.AddNew</button>
 
 <br /><br />
@@ -31,7 +28,7 @@
                         <th>@Klinik.Resources.UIMessages.EmploymentType</th>
                         <th>@Klinik.Resources.UIMessages.EmpStatus</th>
                         <th>@Klinik.Resources.UIMessages.Email</th>
-                        <th></th>
+                        <th>@Klinik.Resources.UIMessages.Action</th>
                     </tr>
                 </thead>
             </table>
@@ -39,7 +36,8 @@
     </div>
 </section>
 
-<script type="text/javascript">
+@section Scripts {
+    <script type="text/javascript">
     $(document).ready(function () {
 
         $('#btnAdd').click(function (e) {
@@ -47,6 +45,7 @@
         });
 
         $('#tbEmployee').dataTable({
+            "autoWidth": false,
             "processing": true,
             "serverSide": true,
             "filter": true,
@@ -160,4 +159,5 @@
             }
         });
     }
-</script>
+    </script>
+}

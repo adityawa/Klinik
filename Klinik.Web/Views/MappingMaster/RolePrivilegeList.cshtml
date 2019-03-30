@@ -5,8 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/Content/DataTables/css/dataTables.bootstrap.css" rel="stylesheet" />
-<link href="~/Content/DataTables/css/responsive.bootstrap.css" rel="stylesheet" />
 <style>
     table.dataTable.select tbody tr,
     table.dataTable thead th:first-child {
@@ -49,7 +47,8 @@
     </div>
 </section>
 
-<script type="text/javascript">
+@section Scripts {
+    <script type="text/javascript">
     $(document).ready(function () {
 
         toastr.options = {
@@ -74,6 +73,7 @@
 
 
         var table = $('#tbRolePriv').DataTable({
+            "autoWidth": false,
             "processing": true,
             "serverSide": true,
             "filter": true,
@@ -258,4 +258,5 @@
         return vars;
     }
 
-</script>
+    </script>
+}

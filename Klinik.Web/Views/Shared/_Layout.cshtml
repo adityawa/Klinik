@@ -1,16 +1,17 @@
 ﻿@using Klinik.Entities.MasterData
-@using Klinik.Features;
 @using Klinik.Entities.Account;
 <!doctype html>
 <html class="fixed">
 <head>
     <!-- Basic -->
-    <meta charset="UTF-8">
-
     <title>@Klinik.Resources.UIMessages.HomepageTitle</title>
-    <meta name="keywords" content="Sistem Klinik" />
+    <meta charset="UTF-8">
+    <meta name="keywords" content="Sistem Klinik Online" />
     <meta name="description" content="Medical Management System">
     <meta name="author" content="CV Mandiri">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="~/Content/images/favicon.ico" />
 
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -20,36 +21,36 @@
 
     <!-- Vendor CSS -->
     <link href="~/Content/Octopus/assets/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/font-awesome.css" rel="stylesheet" />
-    <link rel="icon" type="image/png" href="~/Content/images/favicon.ico" />
     <link href="~/Content/Octopus/assets/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" />
     <link href="~/Content/Octopus/assets/vendor/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" />
-
-    <!-- Specific Page Vendor CSS -->
     <link href="~/Content/Octopus/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
     <link href="~/Content/Octopus/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" rel="stylesheet" />
     <link href="~/Content/Octopus/assets/vendor/morris/morris.css" rel="stylesheet" />
 
-    <!-- Toastr CSS -->
+    <!-- Specific Page Vendor CSS -->
+    <link rel="stylesheet" href="~/Content/Octopus/assets/vendor/select2/select2.css" />
+    <link rel="stylesheet" href="~/Content/Octopus/assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+
+    <!-- Nuget CSS -->
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
     <link href="~/Content/toastr.css" rel="stylesheet" />
+    <link href="~/Content/MvcDatalist/mvc-datalist.css" rel="stylesheet">
 
     <!-- Theme CSS -->
     <link href="~/Content/Octopus/assets/stylesheets/theme.css" rel="stylesheet" />
-
-    <!-- Skin CSS -->
     <link href="~/Content/Octopus/assets/stylesheets/skins/default.css" rel="stylesheet" />
-
-    <!-- Theme Custom CSS -->
     <link href="~/Content/Octopus/assets/stylesheets/theme-custom.css" rel="stylesheet" />
 
-    <!-- Head Libs -->
+    <!-- Head Libraries -->
     <script src="~/Scripts/jquery-3.0.0.js"></script>
     <script src="~/Content/Octopus/assets/vendor/Modernizr/modernizr.js"></script>
     <script src="~/Scripts/toastr.js"></script>
+
+    @RenderSection("Styles", required: false)
+
 </head>
 <body>
     <section class="body">
-
         <!-- start: header -->
         <header class="header">
             <div class="logo-container">
@@ -179,6 +180,8 @@
                     </div>
                 </header>
                 <div>
+                    @Html.Partial("MvcDatalist/_Dialog")
+
                     @RenderBody()
                 </div>
             </section>
@@ -187,17 +190,19 @@
 
     @RenderSection("Jquerys", required: false)
 
+    <!-- Specific Page Vendor -->
+    <script src="~/Content/Octopus/assets/vendor/select2/select2.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
+    <script src="~/Content/Octopus/assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
+
     <!-- Vendor -->
     <script src="~/Content/Octopus/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
     <script src="~/Content/Octopus/assets/vendor/bootstrap/js/bootstrap.js"></script>
-    <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
-    <script src="~/Scripts/DataTables/dataTables.bootstrap4.js"></script>
     <script src="~/Content/Octopus/assets/vendor/nanoscroller/nanoscroller.js"></script>
     <script src="~/Content/Octopus/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="~/Content/Octopus/assets/vendor/magnific-popup/magnific-popup.js"></script>
     <script src="~/Content/Octopus/assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
-
-    <!-- Specific Page Vendor -->
     <script src="~/Content/Octopus/assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
     <script src="~/Content/Octopus/assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
     <script src="~/Content/Octopus/assets/vendor/jquery-appear/jquery.appear.js"></script>
@@ -215,13 +220,9 @@
     <script src="~/Content/Octopus/assets/vendor/snap-svg/snap.svg.js"></script>
     <script src="~/Content/Octopus/assets/vendor/liquid-meter/liquid.meter.js"></script>
 
-    <!-- Theme Base, Components and Settings -->
+    <!-- Theme -->
     <script src="~/Content/Octopus/assets/javascripts/theme.js"></script>
-
-    <!-- Theme Custom -->
     <script src="~/Content/Octopus/assets/javascripts/theme.custom.js"></script>
-
-    <!-- Theme Initialization Files -->
     <script src="~/Content/Octopus/assets/javascripts/theme.init.js"></script>
 
     @RenderSection("Scripts", required: false)

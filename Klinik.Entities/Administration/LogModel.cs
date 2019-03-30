@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Klinik.Entities.Administration
 {
-    public class LogModel :BaseModel
+    public class LogModel
     {
         public DateTime Start { get; set; }
-        public string strStart { get; set; }
+
+        public string StartStr { get; set; }
 
         public string Module { get; set; }
 
@@ -24,5 +21,21 @@ namespace Klinik.Entities.Administration
         public string UserName { get; set; }
 
         public string Organization { get; set; }
+
+        public long Account { get; set; }
+
+        public long Id { get; set; }
+
+        public short RowStatus { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+
+        public DateTime? ModifiedDate { get; set; }
+
+        public string CreatedBy { get; set; }
+
+        public string ModifiedBy { get; set; }
+
+        public int Type { get; set; }
     }
 }

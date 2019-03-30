@@ -4,8 +4,6 @@
     ViewBag.Title = "CreateOrEditPoliScheduleMaster";
 }
 
-<link href="~/Content/css/select2.css" rel="stylesheet" />
-<script src="~/Scripts/select2.js"></script>
 <script src="~/Scripts/jquery.timepicker.js"></script>
 <link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
 
@@ -68,7 +66,8 @@
     </div>
 </section>
 
-<script type="text/javascript">
+@section Scripts {
+    <script type="text/javascript">
     $(document).ready(function () {
         $('#btnreset').click(function (e) {
              window.location.href = "/PoliSchedule/Master";
@@ -123,4 +122,5 @@
         }
     });
 
-</script>
+    </script>
+}

@@ -76,7 +76,7 @@ namespace Klinik.Common
             CreateMap<Menu, MenuModel>();
 
             CreateMap<Log, LogModel>()
-                .ForMember(x => x.strStart, map => map.MapFrom(p => p.Start.ToString("dd/MM/yyyy")));
+                .ForMember(x => x.StartStr, map => map.MapFrom(p => p.Start.ToString("dd/MM/yyyy")));
             CreateMap<LogModel, Log>();
 
             CreateMap<EmployeeStatu, EmployeeStatusModel>()
@@ -95,7 +95,7 @@ namespace Klinik.Common
                 .ForMember(m => m.PoliToName, map => map.MapFrom(p => p.Poli1.Name))
                 .ForMember(m => m.StatusStr, map => map.MapFrom(p => ((RegistrationStatusEnum)p.Status.Value).ToString()))
                 .ForMember(m => m.TypeStr, map => map.MapFrom(p => ((RegistrationTypeEnum)p.Type).ToString()))
-                .ForMember(m => m.TransactionDateStr, map => map.MapFrom(p => p.TransactionDate.ToString("dd/MM/yyyy hh:mm:ss")))
+                .ForMember(m => m.TransactionDateStr, map => map.MapFrom(p => p.TransactionDate.ToString("hh:mm:ss")))
                 .ForMember(m => m.TransactionDate, map => map.MapFrom(p => p.TransactionDate));
 
             CreateMap<PoliModel, Poli>();

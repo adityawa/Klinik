@@ -4,9 +4,6 @@
     ViewBag.Title = "CreateOrEditClinic";
 }
 
-<link href="~/Content/css/select2.css" rel="stylesheet" />
-<script src="~/Scripts/select2.js"></script>
-
 <section class="panel">
     <header class="panel-heading">
         <div class="panel-actions">
@@ -111,7 +108,8 @@
     </div>
 </section>
 
-<script type="text/javascript">
+@section Scripts {
+    <script type="text/javascript">
     $(document).ready(function () {
         $('#btnreset').click(function (e) {
              window.location.href = "/MasterData/ClinicList";
@@ -150,4 +148,5 @@
         }
     });
 
-</script>
+    </script>
+}

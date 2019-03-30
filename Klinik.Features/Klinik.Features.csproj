@@ -71,6 +71,10 @@
     <Compile Include="Account\PasswordHistory\PasswordHistoryRequest.cs" />
     <Compile Include="Account\PasswordHistory\PasswordHistoryResponse.cs" />
     <Compile Include="Account\PasswordHistory\PasswordHistoryValidator.cs" />
+    <Compile Include="Administration\Log\LogHandler.cs" />
+    <Compile Include="Administration\Log\LogRequest.cs" />
+    <Compile Include="Administration\Log\LogResponse.cs" />
+    <Compile Include="Administration\Log\LogValidator.cs" />
     <Compile Include="BaseFeatures.cs" />
     <Compile Include="IBaseFeatures.cs" />
     <Compile Include="MapMasterData\OrganizationPrivilege\OrganizationPrivilegeHandler.cs" />

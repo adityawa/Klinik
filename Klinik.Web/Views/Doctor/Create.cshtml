@@ -8,7 +8,7 @@
     <div class="col-xs-12">
         <section class="panel form-wizard" id="w4">
             <header class="panel-heading">
-                <h2 class="panel-title">Doctor Registration Wizard</h2>
+                <h2 class="panel-title">@Klinik.Resources.UIMessages.DoctorRegistrationWizard</h2>
             </header>
             <div class="panel-body">
                 <div class="wizard-progress wizard-progress-lg">
@@ -17,16 +17,16 @@
                     </div>
                     <ul class="wizard-steps">
                         <li class="active">
-                            <a href="#w4-account" data-toggle="tab"><span>1</span>Account Info</a>
+                            <a href="#w4-account" data-toggle="tab"><span>1</span>@Klinik.Resources.UIMessages.AccountInfo</a>
                         </li>
                         <li>
-                            <a href="#w4-profile" data-toggle="tab"><span>2</span>Employee Info</a>
+                            <a href="#w4-profile" data-toggle="tab"><span>2</span>@Klinik.Resources.UIMessages.EmployeeInfo</a>
                         </li>
                         <li>
-                            <a href="#w4-billing" data-toggle="tab"><span>3</span>Doctor Info</a>
+                            <a href="#w4-billing" data-toggle="tab"><span>3</span>@Klinik.Resources.UIMessages.DoctorInfo</a>
                         </li>
                         <li>
-                            <a href="#w4-confirm" data-toggle="tab"><span>4</span>Confirmation</a>
+                            <a href="#w4-confirm" data-toggle="tab"><span>4</span>@Klinik.Resources.UIMessages.Confirmation</a>
                         </li>
                     </ul>
                 </div>
@@ -146,7 +146,7 @@
                                 <div class="col-sm-6">
                                     <div class="checkbox-custom">
                                         <input type="checkbox" name="terms" id="w4-terms" required>
-                                        <label for="w4-terms">I agree to the terms of service</label>
+                                        <label for="w4-terms">@Klinik.Resources.UIMessages.Agreement</label>
                                     </div>
                                 </div>
                             </div>
@@ -185,9 +185,13 @@
 
     <script type="text/javascript">
     $(document).ready(function () {
+
         $('#btnreset').click(function (e) {
              window.location.href = "/Doctor/Index";
         });
+
+        $('#ddlOrganization').select2();
+        $('#ddldoctortype').select2();
 
         $('#tbValidFrom').datepicker({
             format: "dd/mm/yyyy",

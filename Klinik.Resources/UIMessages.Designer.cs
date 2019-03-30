@@ -61,6 +61,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Info.
+        /// </summary>
+        public static string AccountInfo {
+            get {
+                return ResourceManager.GetString("AccountInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Action.
         /// </summary>
         public static string Action {
@@ -93,6 +102,15 @@ namespace Klinik.Resources {
         public static string Address {
             get {
                 return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I agree to the terms of service.
+        /// </summary>
+        public static string Agreement {
+            get {
+                return ResourceManager.GetString("Agreement", resourceCulture);
             }
         }
         
@@ -232,11 +250,47 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Code.
         /// </summary>
         public static string Code {
             get {
                 return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command.
+        /// </summary>
+        public static string Command {
+            get {
+                return ResourceManager.GetString("Command", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command Logs.
+        /// </summary>
+        public static string CommandLog {
+            get {
+                return ResourceManager.GetString("CommandLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmation.
+        /// </summary>
+        public static string Confirmation {
+            get {
+                return ResourceManager.GetString("Confirmation", resourceCulture);
             }
         }
         
@@ -331,11 +385,29 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detail.
+        /// </summary>
+        public static string Detail {
+            get {
+                return ResourceManager.GetString("Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Doctor.
         /// </summary>
         public static string Doctor {
             get {
                 return ResourceManager.GetString("Doctor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Doctor Info.
+        /// </summary>
+        public static string DoctorInfo {
+            get {
+                return ResourceManager.GetString("DoctorInfo", resourceCulture);
             }
         }
         
@@ -363,6 +435,15 @@ namespace Klinik.Resources {
         public static string DoctorOrParamedic {
             get {
                 return ResourceManager.GetString("DoctorOrParamedic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Doctor Registration Wizard.
+        /// </summary>
+        public static string DoctorRegistrationWizard {
+            get {
+                return ResourceManager.GetString("DoctorRegistrationWizard", resourceCulture);
             }
         }
         
@@ -462,6 +543,15 @@ namespace Klinik.Resources {
         public static string EmployeeId {
             get {
                 return ResourceManager.GetString("EmployeeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employee Info.
+        /// </summary>
+        public static string EmployeeInfo {
+            get {
+                return ResourceManager.GetString("EmployeeInfo", resourceCulture);
             }
         }
         
@@ -754,6 +844,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log Detail.
+        /// </summary>
+        public static string LogDetail {
+            get {
+                return ResourceManager.GetString("LogDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         public static string Login {
@@ -777,6 +876,15 @@ namespace Klinik.Resources {
         public static string Logout {
             get {
                 return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log Viewer.
+        /// </summary>
+        public static string LogViewer {
+            get {
+                return ResourceManager.GetString("LogViewer", resourceCulture);
             }
         }
         
@@ -817,6 +925,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Module.
+        /// </summary>
+        public static string Module {
+            get {
+                return ResourceManager.GetString("Module", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MR Number.
         /// </summary>
         public static string MRNumber {
@@ -853,6 +970,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Patient.
+        /// </summary>
+        public static string NewPatient {
+            get {
+                return ResourceManager.GetString("NewPatient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Value.
+        /// </summary>
+        public static string NewValue {
+            get {
+                return ResourceManager.GetString("NewValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tidak Aktif.
         /// </summary>
         public static string NonActive {
@@ -867,6 +1002,15 @@ namespace Klinik.Resources {
         public static string OldMRNumber {
             get {
                 return ResourceManager.GetString("OldMRNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Old Value.
+        /// </summary>
+        public static string OldValue {
+            get {
+                return ResourceManager.GetString("OldValue", resourceCulture);
             }
         }
         
@@ -925,11 +1069,29 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Paramedic Info.
+        /// </summary>
+        public static string ParamedicInfo {
+            get {
+                return ResourceManager.GetString("ParamedicInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paramedic List.
         /// </summary>
         public static string ParamedicList {
             get {
                 return ResourceManager.GetString("ParamedicList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paramedic Registration Wizard.
+        /// </summary>
+        public static string ParamedicRegistrationWizard {
+            get {
+                return ResourceManager.GetString("ParamedicRegistrationWizard", resourceCulture);
             }
         }
         

@@ -543,6 +543,7 @@
   <data name="QueueCode" xml:space="preserve">
     <value>Queue Code</value>
   </data>
+
   <data name="BloodType" xml:space="preserve">
     <value>Blood Type</value>
   </data>
@@ -581,5 +582,59 @@
   </data>
   <data name="UseExistingGoLoket" xml:space="preserve">
     <value>Use Existing Data &amp; Go to Loket</value>
+</data>
+  <data name="LogViewer" xml:space="preserve">
+    <value>Log Viewer</value>
+  </data>
+  <data name="CommandLog" xml:space="preserve">
+    <value>Command Logs</value>
+  </data>
+  <data name="Command" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="Module" xml:space="preserve">
+    <value>Module</value>
+  </data>
+  <data name="NewValue" xml:space="preserve">
+    <value>New Value</value>
+  </data>
+  <data name="OldValue" xml:space="preserve">
+    <value>Old Value</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="LogDetail" xml:space="preserve">
+    <value>Log Detail</value>
+  </data>
+  <data name="AccountInfo" xml:space="preserve">
+    <value>Account Info</value>
+  </data>
+  <data name="Confirmation" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="DoctorInfo" xml:space="preserve">
+    <value>Doctor Info</value>
+  </data>
+  <data name="DoctorRegistrationWizard" xml:space="preserve">
+    <value>Doctor Registration Wizard</value>
+  </data>
+  <data name="EmployeeInfo" xml:space="preserve">
+    <value>Employee Info</value>
+  </data>
+  <data name="ParamedicRegistrationWizard" xml:space="preserve">
+    <value>Paramedic Registration Wizard</value>
+  </data>
+  <data name="ParamedicInfo" xml:space="preserve">
+    <value>Paramedic Info</value>
+  </data>
+  <data name="Agreement" xml:space="preserve">
+    <value>I agree to the terms of service</value>
+  </data>
+  <data name="NewPatient" xml:space="preserve">
+    <value>New Patient</value>
   </data>
 </root>
