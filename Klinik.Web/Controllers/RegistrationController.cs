@@ -274,58 +274,88 @@ namespace Klinik.Web.Controllers
         [CustomAuthorize("VIEW_REGISTRATION")]
         public ActionResult Index()
         {
-            if (Session["UserLogon"] != null)
-            {
-                bool isHasPrivilege = IsHaveAuthorization("ADD_REGISTRATION");
-                ViewBag.IsHasAddPrivilege = isHasPrivilege;
-            }
-
-            var model = new RegistrationModel
-            {
-                PoliFromID = CURRENT_POLI_ID,
-                PoliFromName = CURRENT_POLI_NAME
-            };
-
-            return View("Index", model);
+            return GenericIndex(PoliEnum.Loket);
         }
 
         [CustomAuthorize("VIEW_REGISTRATION_UMUM")]
         public ActionResult PoliUmum()
         {
-            if (Session["UserLogon"] != null)
-            {
-                bool isHasPrivilege = IsHaveAuthorization("ADD_REGISTRATION");
-                ViewBag.IsHasAddPrivilege = isHasPrivilege;
-            }
-
-            var model = new RegistrationModel
-            {
-                PoliFromID = (int)PoliEnum.PoliUmum
-            };
-
-            return View("Index", model);
+            return GenericIndex(PoliEnum.PoliUmum);
         }
 
         [CustomAuthorize("VIEW_REGISTRATION_GIGI")]
         public ActionResult PoliGigi()
         {
-            if (Session["UserLogon"] != null)
-            {
-                AccountModel account = (AccountModel)Session["UserLogon"];
-                bool isHasPrivilege = IsHaveAuthorization("ADD_REGISTRATION");
-                ViewBag.IsHasAddPrivilege = isHasPrivilege;
-            }
-
-            var model = new RegistrationModel
-            {
-                PoliFromID = (int)PoliEnum.PoliGigi
-            };
-
-            return View("Index", model);
+            return GenericIndex(PoliEnum.PoliGigi);
         }
 
-        [CustomAuthorize("VIEW_REGISTRATION_LAB")]
+        [CustomAuthorize("VIEW_REGISTRATION_INTERNIS")]
+        public ActionResult PoliInternis()
+        {
+            return GenericIndex(PoliEnum.PoliPenyakitDalam);
+        }
+
+        [CustomAuthorize("VIEW_REGISTRATION_KULIT")]
+        public ActionResult PoliKulit()
+        {
+            return GenericIndex(PoliEnum.PoliKulit);
+        }
+
+        [CustomAuthorize("VIEW_REGISTRATION_MATA")]
+        public ActionResult PoliMata()
+        {
+            return GenericIndex(PoliEnum.PoliMata);
+        }
+
+        [CustomAuthorize("VIEW_REGISTRATION_THT")]
+        public ActionResult PoliTHT()
+        {
+            return GenericIndex(PoliEnum.PoliTHT);
+        }
+
+        [CustomAuthorize("VIEW_REGISTRATION_ANAK")]
+        public ActionResult PoliAnak()
+        {
+            return GenericIndex(PoliEnum.PoliAnak);
+        }
+
+        [CustomAuthorize("VIEW_REGISTRATION_SYARAF")]
+        public ActionResult PoliSyaraf()
+        {
+            return GenericIndex(PoliEnum.PoliSyaraf);
+        }
+
+        [CustomAuthorize("VIEW_REGISTRATION_RADIOLOGI")]
+        public ActionResult Radiologi()
+        {
+            return GenericIndex(PoliEnum.Radiologi);
+        }
+
+        [CustomAuthorize("VIEW_REGISTRATION_LABORATORIUM")]
         public ActionResult Laboratorium()
+        {
+            return GenericIndex(PoliEnum.Laboratorium);
+        }
+
+        [CustomAuthorize("VIEW_REGISTRATION_FARMASI")]
+        public ActionResult Farmasi()
+        {
+            return GenericIndex(PoliEnum.Farmasi);
+        }
+
+        [CustomAuthorize("VIEW_REGISTRATION_REKAMMEDIS")]
+        public ActionResult RekamMedis()
+        {
+            return GenericIndex(PoliEnum.RekamMedis);
+        }
+
+        [CustomAuthorize("VIEW_REGISTRATION_KASIR")]
+        public ActionResult Kasir()
+        {
+            return GenericIndex(PoliEnum.Kasir);
+        }
+
+        private ActionResult GenericIndex(PoliEnum poliEnum)
         {
             if (Session["UserLogon"] != null)
             {
@@ -336,7 +366,7 @@ namespace Klinik.Web.Controllers
 
             var model = new RegistrationModel
             {
-                PoliFromID = (int)PoliEnum.Laboratorium
+                PoliFromID = (int)poliEnum
             };
 
             return View("Index", model);

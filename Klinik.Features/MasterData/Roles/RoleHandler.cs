@@ -71,13 +71,15 @@ namespace Klinik.Features
                 }
                 else
                 {
-                    var RoleEntity = Mapper.Map<RoleModel, OrganizationRole>(request.Data);
+                    var roleEntity = Mapper.Map<RoleModel, OrganizationRole>(request.Data);
+                    roleEntity.CreatedBy = request.Data.Account.UserCode;
+                    roleEntity.CreatedDate = DateTime.Now;
 
-                    _unitOfWork.RoleRepository.Insert(RoleEntity);
+                    _unitOfWork.RoleRepository.Insert(roleEntity);
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "Role", RoleEntity.RoleName, RoleEntity.ID);
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "Role", roleEntity.RoleName, roleEntity.ID);
 
                         CommandLog(true, ClinicEnums.Module.MASTER_ROLE, Constants.Command.ADD_NEW_ROLE, request.Data.Account, request.Data);
                     }
@@ -90,7 +92,7 @@ namespace Klinik.Features
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 response.Status = false;
                 response.Message = Messages.GeneralError;
