@@ -192,7 +192,7 @@ namespace Klinik.Features.Registration
         /// <returns></returns>
         public RegistrationResponse GetListData(RegistrationRequest request)
         {
-            return GetListData(request, 0);
+            return GetListData(request, 1);
         }
 
         /// <summary>
@@ -201,14 +201,14 @@ namespace Klinik.Features.Registration
         /// <param name="request"></param>
         /// <param name="poliID"></param>
         /// <returns></returns>
-        public RegistrationResponse GetListData(RegistrationRequest request, int poliID = 0)
+        public RegistrationResponse GetListData(RegistrationRequest request, int poliID = 1)
         {
             List<RegistrationModel> lists = new List<RegistrationModel>();
             List<QueuePoli> qry = null;
             var searchPredicate = PredicateBuilder.New<QueuePoli>(true);
 
             // add default filter to show today queue only
-            if (poliID == 0)
+            if (poliID == 1)
             {
                 searchPredicate = searchPredicate.And(p => p.TransactionDate.Year == DateTime.Today.Year &&
                                                            p.TransactionDate.Month == DateTime.Today.Month &&

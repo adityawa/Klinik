@@ -11,6 +11,7 @@ using Klinik.Web.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
 namespace Klinik.Web.Controllers
@@ -26,7 +27,7 @@ namespace Klinik.Web.Controllers
         }
 
         #region DropDown methods
-        private List<SelectListItem> BindDropDownPoliList(short poliType = 0)
+        private List<SelectListItem> BindDropDownPoliList(int poliType = 0)
         {
             // get valid poli from type
             var filteredPoliList = _unitOfWork.PoliFlowTemplateRepository.Get(x => x.PoliTypeID == poliType);
@@ -67,7 +68,7 @@ namespace Klinik.Web.Controllers
                 _patientModelList.Add(_poli);
             }
 
-            RegistrationResponse response = GetRegistrationList(false);
+            RegistrationResponse response = GetTodayRegistrationList();
 
             List<SelectListItem> _patientList = new List<SelectListItem>();
             foreach (var item in _patientModelList)
@@ -133,10 +134,11 @@ namespace Klinik.Web.Controllers
         {
             List<Doctor> doctorList = new List<Doctor>();
             List<PoliSchedule> scheduleList = new List<PoliSchedule>();
-            if (ClinicID < 0)
-                scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID && x.ClinicID == ClinicID);
-            else
+            var _clinicId = ClinicID;
+            if (_clinicId < 0)
                 scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID);
+            else
+                scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID && x.ClinicID == _clinicId);
 
             foreach (var item in scheduleList)
             {
@@ -158,11 +160,10 @@ namespace Klinik.Web.Controllers
 
             DatalistData patientList = datalist.GetData();
 
-            RegistrationResponse response = GetRegistrationList(false);
-
             return Json(patientList, JsonRequestBehavior.AllowGet);
         }
 
+        #region ::INDEX FROM MENU::
         [CustomAuthorize("VIEW_REGISTRATION")]
         public ActionResult Index()
         {
@@ -173,7 +174,13 @@ namespace Klinik.Web.Controllers
                 ViewBag.IsHasAddPrivilege = isHasPrivilege;
             }
 
-            return View();
+            var model = new RegistrationModel
+            {
+                PoliFromID = CURRENT_POLI_ID,
+                PoliFromName = CURRENT_POLI_NAME
+            };
+
+            return View("Index", model);
         }
 
         [CustomAuthorize("VIEW_REGISTRATION_UMUM")]
@@ -186,8 +193,50 @@ namespace Klinik.Web.Controllers
                 ViewBag.IsHasAddPrivilege = isHasPrivilege;
             }
 
-            return View();
+            var model = new RegistrationModel
+            {
+                PoliFromID = (int)PoliEnum.PoliUmum
+            };
+
+            return View("Index", model);
         }
+
+        [CustomAuthorize("VIEW_REGISTRATION_GIGI")]
+        public ActionResult PoliGigi()
+        {
+            if (Session["UserLogon"] != null)
+            {
+                AccountModel account = (AccountModel)Session["UserLogon"];
+                bool isHasPrivilege = IsHaveAuthorization("ADD_REGISTRATION", account.Privileges.PrivilegeIDs);
+                ViewBag.IsHasAddPrivilege = isHasPrivilege;
+            }
+
+            var model = new RegistrationModel
+            {
+                PoliFromID = (int)PoliEnum.PoliGigi
+            };
+
+            return View("Index", model);
+        }
+
+        [CustomAuthorize("VIEW_REGISTRATION_LAB")]
+        public ActionResult Laboratorium()
+        {
+            if (Session["UserLogon"] != null)
+            {
+                AccountModel account = (AccountModel)Session["UserLogon"];
+                bool isHasPrivilege = IsHaveAuthorization("ADD_REGISTRATION", account.Privileges.PrivilegeIDs);
+                ViewBag.IsHasAddPrivilege = isHasPrivilege;
+            }
+
+            var model = new RegistrationModel
+            {
+                PoliFromID = (int)PoliEnum.Laboratorium
+            };
+
+            return View("Index", model);
+        }
+        #endregion
 
         [HttpPost]
         public ActionResult CreateOrEditRegistration(RegistrationModel model)
@@ -213,7 +262,7 @@ namespace Klinik.Web.Controllers
         }
 
         [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
-        public ActionResult CreateOrEditRegistration()
+        public ActionResult CreateOrEditRegistration(int poliId = 1)
         {
             RegistrationResponse _response = new RegistrationResponse();
             if (Request.QueryString["id"] != null)
@@ -238,61 +287,28 @@ namespace Klinik.Web.Controllers
             }
             else
             {
+                var poliName = Regex.Replace(((PoliEnum)poliId).ToString(), "([A-Z])", " $1").Trim();
+
                 // hardcoded for now
                 var model = new RegistrationModel
                 {
-                    PoliFromID = CURRENT_POLI_ID,
-                    PoliFromName = CURRENT_POLI_NAME
+                    PoliFromID = poliId,
+                    PoliFromName = poliName
                 };
 
                 ViewBag.ActionType = ClinicEnums.Action.Add;
                 ViewBag.Response = _response;
-                ViewBag.PoliList = BindDropDownPoliList();
+                ViewBag.PoliList = BindDropDownPoliList(GetPoliType(poliId));
                 ViewBag.PatientList = BindDropDownPatientList();
                 ViewBag.RegistrationTypeList = BindDropDownTypeList();
                 ViewBag.DoctorList = BindDropDownDoctorList(2);
+
                 return View(model);
             }
         }
 
         [HttpPost]
-        public ActionResult GetRegistrationData()
-        {
-            RegistrationResponse response = GetRegistrationList();
-
-            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw, Status = response.Status }, JsonRequestBehavior.AllowGet);
-        }
-
-        private RegistrationResponse GetRegistrationList(bool isHttpPost = true)
-        {
-            var request = new RegistrationRequest();
-            if (isHttpPost)
-            {
-                string _draw = Request.Form.Count > 0 ? Request.Form.GetValues("draw").FirstOrDefault() : string.Empty;
-                string _start = Request.Form.Count > 0 ? Request.Form.GetValues("start").FirstOrDefault() : string.Empty;
-                string _length = Request.Form.Count > 0 ? Request.Form.GetValues("length").FirstOrDefault() : string.Empty;
-                string _sortColumn = Request.Form.Count > 0 ? Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault() : string.Empty;
-                string _sortColumnDir = Request.Form.Count > 0 ? Request.Form.GetValues("order[0][dir]").FirstOrDefault() : string.Empty;
-                string _searchValue = Request.Form.Count > 0 ? Request.Form.GetValues("search[value]").FirstOrDefault() : string.Empty;
-
-                int _pageSize = string.IsNullOrEmpty(_length) ? 0 : Convert.ToInt32(_length);
-                int _skip = string.IsNullOrEmpty(_start) ? 0 : Convert.ToInt32(_start);
-
-                request.Draw = _draw;
-                request.SearchValue = _searchValue;
-                request.SortColumn = _sortColumn;
-                request.SortColumnDir = _sortColumnDir;
-                request.PageSize = _pageSize;
-                request.Skip = _skip;
-            }
-
-            var response = new RegistrationHandler(_unitOfWork).GetListData(request);
-
-            return response;
-        }
-
-        [HttpPost]
-        public ActionResult GetRegistrationDataUmum()
+        public ActionResult GetRegistrationDataByPoliID(int poliId)
         {
             string _draw = Request.Form.Count > 0 ? Request.Form.GetValues("draw").FirstOrDefault() : string.Empty;
             string _start = Request.Form.Count > 0 ? Request.Form.GetValues("start").FirstOrDefault() : string.Empty;
@@ -314,12 +330,12 @@ namespace Klinik.Web.Controllers
                 Skip = _skip
             };
 
-            // get poli umum (2) registration list
-            var response = new RegistrationHandler(_unitOfWork).GetListData(request, 2);
+            var response = new RegistrationHandler(_unitOfWork).GetListData(request, poliId);
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw, Status = response.Status }, JsonRequestBehavior.AllowGet);
         }
 
+        #region ::MENU ACTION::
         [HttpPost]
         public JsonResult DeleteRegistration(int id)
         {
@@ -407,37 +423,9 @@ namespace Klinik.Web.Controllers
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
-        [NonAction]
-        public bool IsHaveAuthorization(string privilege_name, List<long> PrivilegeIds)
-        {
-            bool IsAuthorized = false;
-            var privilegeNameList = _unitOfWork.PrivilegeRepository.Get(x => PrivilegeIds.Contains(x.ID));
-
-            IsAuthorized = privilegeNameList.Any(x => x.Privilege_Name == privilege_name);
-
-            return IsAuthorized;
-        }
-
-        [NonAction]
-        private ActionResult GenericController(int poliToID)
-        {
-            var model = new RegistrationModel
-            {
-                PoliFromID = CURRENT_POLI_ID,
-                PoliFromName = CURRENT_POLI_NAME,
-                PoliToID = poliToID
-            };
-
-            ViewBag.ActionType = ClinicEnums.Action.Add;
-            ViewBag.PoliList = BindDropDownPoliList();
-            ViewBag.PatientList = BindDropDownPatientList();
-            ViewBag.RegistrationTypeList = BindDropDownTypeList();
-            ViewBag.DoctorList = BindDropDownDoctorList(poliToID);
-
-            return View("CreateOrEditRegistration", model);
-        }
-
+        #region ::DASHBOARD REGISTER::
         [CustomAuthorize("ADD_REGISTRATION", "EDIT_REGISTRATION")]
         public ActionResult Umum()
         {
@@ -479,5 +467,56 @@ namespace Klinik.Web.Controllers
         {
             return GenericController(10);
         }
+        #endregion
+
+        #region ::PRIVATE METHODS::
+        [NonAction]
+        private int GetPoliType(int poliId)
+        {
+            Poli poli = _unitOfWork.PoliRepository.GetFirstOrDefault(x => x.ID == poliId);
+
+            return poli.Type;
+        }
+
+        [NonAction]
+        private RegistrationResponse GetTodayRegistrationList()
+        {
+            var request = new RegistrationRequest();
+
+            var response = new RegistrationHandler(_unitOfWork).GetListData(request);
+
+            return response;
+        }
+
+        [NonAction]
+        private bool IsHaveAuthorization(string privilege_name, List<long> PrivilegeIds)
+        {
+            bool IsAuthorized = false;
+            var privilegeNameList = _unitOfWork.PrivilegeRepository.Get(x => PrivilegeIds.Contains(x.ID));
+
+            IsAuthorized = privilegeNameList.Any(x => x.Privilege_Name == privilege_name);
+
+            return IsAuthorized;
+        }
+
+        [NonAction]
+        private ActionResult GenericController(int poliToID)
+        {
+            var model = new RegistrationModel
+            {
+                PoliFromID = CURRENT_POLI_ID,
+                PoliFromName = CURRENT_POLI_NAME,
+                PoliToID = poliToID
+            };
+
+            ViewBag.ActionType = ClinicEnums.Action.Add;
+            ViewBag.PoliList = BindDropDownPoliList();
+            ViewBag.PatientList = BindDropDownPatientList();
+            ViewBag.RegistrationTypeList = BindDropDownTypeList();
+            ViewBag.DoctorList = BindDropDownDoctorList(poliToID);
+
+            return View("CreateOrEditRegistration", model);
+        }
+        #endregion
     }
 }

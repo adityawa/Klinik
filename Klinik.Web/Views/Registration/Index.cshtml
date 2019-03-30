@@ -68,7 +68,7 @@
 
     $(document).ready(function () {
         $('#btnAdd').click(function (e) {
-            window.location.href = "/Registration/CreateOrEditRegistration";
+            window.location.href = "@Url.Action("CreateOrEditRegistration", "Registration", new { poliId = Model.PoliFromID })";
         });
 
         $('#tbRegistration').dataTable({
@@ -79,7 +79,7 @@
             "orderMulti": false,
             "pageLength": 10,
             "ajax": {
-                "url": "/Registration/GetRegistrationData",
+                "url": "@Url.Action("GetRegistrationDataByPoliID", "Registration", new { poliId = Model.PoliFromID })",
                 "type": "POST",
                 "datatype": "json"
             },

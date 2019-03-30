@@ -100,21 +100,20 @@
         $(document).ready(function () {
 
             $('#ddlpolito').select2();
-            $('#ddldoctor').select2();
             $('#ddltype').select2();
 
-        $('#btnreset').click(function (e) {
-             window.location.href = "/Registration/Index";
-        });
+            $('#btnreset').click(function (e) {
+                 window.location.href = "/Registration/Index";
+            });
 
-        $("#PoliToID").change(function () {
-            $.get("/Registration/GetDoctorList", { PoliId: $("#PoliToID").val() }, function (data) {
-                $("#DoctorID").empty();
+            $("#ddlpolito").change(function () {
+                $.get("/Registration/GetDoctorList", { PoliId: $("#ddlpolito").val() }, function (data) {
+                $("#ddldoctor").empty();
                 $.each(data, function (index, row) {
-                    $("#DoctorID").append('<option value="' + row.ID + '">' + row.Name + '</option>');
+                    $("#ddldoctor").append('<option value="' + row.ID + '">' + row.Name + '</option>');
                 });
             });
-        });
+            });
 
         toastr.options = {
             "closeButton": false,

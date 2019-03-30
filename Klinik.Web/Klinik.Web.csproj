@@ -1454,7 +1454,6 @@
     <Content Include="Views\Registration\Index.cshtml" />
     <Content Include="Views\PoliSchedule\Index.cshtml" />
     <Content Include="Views\PoliSchedule\CreateOrEditPoliSchedule.cshtml" />
-    <Content Include="Views\Registration\PoliUmum.cshtml" />
     <Content Include="Views\PoliSchedule\Master.cshtml" />
     <Content Include="Views\PoliSchedule\CreateOrEditPoliScheduleMaster.cshtml" />
     <Content Include="Views\Doctor\Create.cshtml" />
