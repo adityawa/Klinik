@@ -1,5 +1,6 @@
 ﻿using Datalist;
 using Klinik.Data.DataRepository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,10 +30,15 @@ namespace Klinik.Web
         {
             List<PatientDataListModel> result = new List<PatientDataListModel>();
             List<PatientClinic> patientClinicList = _context.PatientClinics.Where(x => x.ClinicID == _clinicID).ToList();
+            List<QueuePoli> queueList = _context.QueuePolis.Where(x => x.ClinicID == _clinicID &&
+            x.TransactionDate.Year == DateTime.Today.Year &&
+            x.TransactionDate.Month == DateTime.Today.Month &&
+            x.TransactionDate.Day == DateTime.Today.Day).ToList();
+
             foreach (var item in patientClinicList)
             {
                 Patient patient = _context.Patients.FirstOrDefault(x => x.ID == item.PatientID);
-                if (patient != null)
+                if (patient != null && !queueList.Any(x => x.PatientID == item.PatientID && x.Status == 0))
                 {
                     PatientDataListModel patientModel = MapFrom(patient);
                     result.Add(patientModel);

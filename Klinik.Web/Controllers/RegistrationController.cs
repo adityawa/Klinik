@@ -155,9 +155,12 @@ namespace Klinik.Web.Controllers
         public JsonResult AllPatient(DatalistFilter filter)
         {
             PatientDataList datalist = new PatientDataList(_context, ClinicID) { Filter = filter };
-            var temp = datalist.GetData();
 
-            return Json(temp, JsonRequestBehavior.AllowGet);
+            DatalistData patientList = datalist.GetData();
+
+            RegistrationResponse response = GetRegistrationList(false);
+
+            return Json(patientList, JsonRequestBehavior.AllowGet);
         }
 
         [CustomAuthorize("VIEW_REGISTRATION")]
