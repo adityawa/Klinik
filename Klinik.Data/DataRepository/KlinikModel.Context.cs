@@ -30,21 +30,16 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Clinic> Clinics { get; set; }
         public virtual DbSet<DoctorClinic> DoctorClinics { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeAssignment> EmployeeAssignments { get; set; }
         public virtual DbSet<EmployeeStatu> EmployeeStatus { get; set; }
         public virtual DbSet<FamilyRelationship> FamilyRelationships { get; set; }
-        public virtual DbSet<FileArchieve> FileArchieves { get; set; }
         public virtual DbSet<GeneralMaster> GeneralMasters { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<MCUPackage> MCUPackages { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
-        public virtual DbSet<Organization> Organizations { get; set; }
         public virtual DbSet<OrganizationPrivilege> OrganizationPrivileges { get; set; }
         public virtual DbSet<OrganizationRole> OrganizationRoles { get; set; }
         public virtual DbSet<PasswordHistory> PasswordHistories { get; set; }
-        public virtual DbSet<Patient> Patients { get; set; }
-        public virtual DbSet<PatientClinic> PatientClinics { get; set; }
         public virtual DbSet<Poli> Polis { get; set; }
         public virtual DbSet<PoliClinic> PoliClinics { get; set; }
         public virtual DbSet<PoliFlowTemplate> PoliFlowTemplates { get; set; }
@@ -53,8 +48,13 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<Privilege> Privileges { get; set; }
         public virtual DbSet<QueuePoli> QueuePolis { get; set; }
         public virtual DbSet<RolePrivilege> RolePrivileges { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
+        public virtual DbSet<Patient> Patients { get; set; }
+        public virtual DbSet<Organization> Organizations { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<FileArchieve> FileArchieves { get; set; }
+        public virtual DbSet<PatientClinic> PatientClinics { get; set; }
     }
 }

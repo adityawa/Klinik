@@ -23,7 +23,7 @@ namespace Klinik.Data.DataRepository
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual Organization Organization { get; set; }
         public virtual Privilege Privilege { get; set; }
+        public virtual Organization Organization { get; set; }
     }
 }

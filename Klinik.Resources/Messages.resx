@@ -235,11 +235,22 @@ Administrator</value>
   <data name="InvalidModelState" xml:space="preserve">
     <value>Invalid Model State. Please check your input.</value>
   </data>
-
   <data name="UserDoesNotHaveClinic" xml:space="preserve">
     <value>Organization of this user does not have clinic, please assign clinic to this user</value>
-</data>
+  </data>
   <data name="STRValidToInvalid" xml:space="preserve">
     <value>STRValidTo should be greater than STRValidFrom</value>
+  </data>
+  <data name="InvalidImage" xml:space="preserve">
+    <value>Invalid Photo File</value>
+  </data>
+  <data name="ObjectPatientAdded" xml:space="preserve">
+    <value>Patient with name {0} has been Added for clinic Id {1}</value>
+  </data>
+  <data name="ObjectPatientUpdated" xml:space="preserve">
+    <value>Patient with name  {0} has been Updated for clinic Id {1}</value>
+  </data>
+  <data name="SessionExpired" xml:space="preserve">
+    <value>Session Expired</value>
   </data>
 </root>

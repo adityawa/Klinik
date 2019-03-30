@@ -17,8 +17,8 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EmployeeStatu()
         {
-            this.Employees = new HashSet<Employee>();
             this.EmployeeAssignments = new HashSet<EmployeeAssignment>();
+            this.Employees = new HashSet<Employee>();
         }
     
         public short ID { get; set; }
@@ -32,8 +32,8 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employees { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmployeeAssignment> EmployeeAssignments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

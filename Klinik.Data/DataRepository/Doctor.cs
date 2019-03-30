@@ -43,7 +43,6 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public long EmployeeID { get; set; }
     
-        public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DoctorClinic> DoctorClinics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -52,5 +51,6 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<PoliScheduleMaster> PoliScheduleMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QueuePoli> QueuePolis { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

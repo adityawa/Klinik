@@ -102,10 +102,14 @@ namespace Klinik.Common
             CreateMap<Poli, PoliModel>();
 
             CreateMap<PatientModel, Patient>()
-                .ForMember(x => x.PatientKey, map => map.MapFrom(p => p.Name.Trim() + "_" + p.BirthDateStr));
+                .ForMember(x => x.PatientKey, map => map.MapFrom(p => p.Name.Trim().Replace(" ", "") + "_" + p.BirthDateStr.Replace("/", "")));
+
 
             CreateMap<Patient, PatientModel>()
-                .ForMember(x => x.BirthDateStr, map => map.MapFrom(p => p.BirthDate.ToString("dd/MM/yyyy")));
+                .ForMember(x => x.BirthDateStr, map => map.MapFrom(p => p.BirthDate.ToString("dd/MM/yyyy")))
+                .ForMember(x => x.EmployeeName, map => map.MapFrom(p => p.Employee.EmpName));
+                
+                
 
 
             CreateMap<PoliFlowTemplateModel, PoliFlowTemplate>();
@@ -134,12 +138,13 @@ namespace Klinik.Common
             CreateMap<DocumentModel, FileArchieve>();
             CreateMap<FileArchieve, DocumentModel>();
 
-
-
             CreateMap<DoctorModel, User>();
             CreateMap<DoctorModel, Employee>()
                 .ForMember(m => m.EmpName, map => map.MapFrom(p => p.Name));
 
+            CreateMap<City, CityModel>()
+                .ForMember(x=>x.City, map=>map.MapFrom(p=>p.City1));
+            CreateMap<CityModel, City>();
         }
     }
 }

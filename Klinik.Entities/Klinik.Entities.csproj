@@ -37,6 +37,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -71,9 +72,11 @@
     <Compile Include="BaseModel.cs" />
     <Compile Include="BaseResponse.cs" />
     <Compile Include="Document\DocumentModel.cs" />
+    <Compile Include="FileArchive\FileArchiveModel.cs" />
     <Compile Include="MappingMaster\OrganizationPrivilegeModel.cs" />
     <Compile Include="MappingMaster\RolePrivilegeModel.cs" />
     <Compile Include="MappingMaster\UserRoleModel.cs" />
+    <Compile Include="MasterData\CityModel.cs" />
     <Compile Include="MasterData\ClinicModel.cs" />
     <Compile Include="MasterData\DoctorModel.cs" />
     <Compile Include="MasterData\EmployeeAssignmentModel.cs" />

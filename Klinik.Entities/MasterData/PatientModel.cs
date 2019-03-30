@@ -2,13 +2,15 @@
 using Klinik.Entities.Patient;
 using System;
 using System.ComponentModel.DataAnnotations;
-
+using System.Web;
+using System.Web.Mvc;
 namespace Klinik.Entities.MasterData
 {
     public class PatientModel : BaseModel
     {
         public long EmployeeID { get; set; }
-        public long familyRelationsgipID { get; set; }
+        public string EmployeeName { get; set; }
+        public long familyRelationshipID { get; set; }
         public string familyRelationshipDesc { get; set; }
         public string MRNumber { get; set; }
         [Required(ErrorMessage = "Please Enter a name")]
@@ -23,14 +25,17 @@ namespace Klinik.Entities.MasterData
         [Required(ErrorMessage = "Please Enter an Address")]
         public string Address { get; set; }
         public int CityID { get; set; }
+        public string CityNm { get; set; }
         public short Type { get; set; }
+        public string TypeDesc { get; set; }
         public string BPJSNumber { get; set; }
         public string BloodType { get; set; }
 
         public string PatientKey { get; set; }
-
+        [DataType(DataType.Upload)]
+        public HttpPostedFileBase file { get; set; }
         public DocumentModel Photo { get; set; }
-        public bool IsaSamePerson { get; set; }
+        public bool? IsUseExistingData { get; set; }
         public PatientClinicModel PatientClinic { get; set; }
 
     }

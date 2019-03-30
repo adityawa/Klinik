@@ -161,7 +161,7 @@ namespace Klinik.Features
 
             if (response.Status)
             {
-                response = new EmployeeHandler(_unitOfWork).RemoveData(request);
+                response = new EmployeeHandler(_unitOfWork, _context).RemoveData(request);
             }
         }
     }

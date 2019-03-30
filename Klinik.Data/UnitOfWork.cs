@@ -29,6 +29,9 @@ namespace Klinik.Data
         private IGenericRepository<Doctor> _doctorRepository;
         private IGenericRepository<PoliSchedule> _poliScheduleRepository;
         private IGenericRepository<PoliScheduleMaster> _poliScheduleMasterRepository;
+        private IGenericRepository<PatientClinic> _patientClinicRepository;
+        private IGenericRepository<FileArchieve> _fileArchiveRepository;
+        private IGenericRepository<City> _cityRepository;
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
@@ -169,6 +172,17 @@ namespace Klinik.Data
             }
         }
 
+        public IGenericRepository<City> CityRepository
+        {
+            get
+            {
+                if (_cityRepository == null)
+                    _cityRepository = new GenericRepository<City>(_context);
+
+                return _cityRepository;
+            }
+        }
+
         public IGenericRepository<GeneralMaster> MasterRepository
         {
             get
@@ -276,6 +290,28 @@ namespace Klinik.Data
                     _familyRelationshipRepository = new GenericRepository<FamilyRelationship>(_context);
 
                 return _familyRelationshipRepository;
+            }
+        }
+
+        public IGenericRepository<PatientClinic> PatientClinicRepository
+        {
+            get
+            {
+                if (_patientClinicRepository == null)
+                    _patientClinicRepository = new GenericRepository<PatientClinic>(_context);
+
+                return _patientClinicRepository;
+            }
+        }
+
+        public IGenericRepository<FileArchieve> FileArchiveRepository
+        {
+            get
+            {
+                if (_fileArchiveRepository == null)
+                    _fileArchiveRepository = new GenericRepository<FileArchieve>(_context);
+
+                return _fileArchiveRepository;
             }
         }
 

@@ -223,6 +223,7 @@
     <Compile Include="Controllers\MappingMasterController.cs" />
     <Compile Include="Controllers\MasterDataController.cs" />
     <Compile Include="Controllers\PasswordHistoryController.cs" />
+    <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PoliScheduleController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
@@ -1167,6 +1168,8 @@
     <Content Include="Views\Doctor\Create.cshtml" />
     <Content Include="Views\Doctor\Index.cshtml" />
     <Content Include="Views\Doctor\Edit.cshtml" />
+    <Content Include="Views\Patient\PasienList.cshtml" />
+    <Content Include="Views\Patient\CreateNewPatient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -83,7 +83,7 @@ namespace Klinik.Features
 
             var _empTypeDesc = _unitOfWork.FamilyRelationshipRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpType) == null ? "" : _unitOfWork.FamilyRelationshipRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpType).Code;
             var _statusDesc = _unitOfWork.EmployeeStatusRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpStatus) == null ? "" : _unitOfWork.EmployeeStatusRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpStatus).Code;
-            if (request.Data.EmpTypeDesc == string.Empty)
+            if (request.Data.EmpTypeDesc == string.Empty || request.Data.EmpTypeDesc==null)
                 request.Data.EmpTypeDesc = _empTypeDesc;
 
             using (var transaction = _context.Database.BeginTransaction())
@@ -479,12 +479,13 @@ namespace Klinik.Features
             {
                 try
                 {
-
-                    if (request.Data.EmpTypeDesc.ToLower() == "employee")
+                    var empdetail = _unitOfWork.EmployeeRepository.GetById(request.Data.Id);
+                    request.Data = Mapper.Map<Employee, EmployeeModel>(empdetail);
+                    if (empdetail.FamilyRelationship.Name.ToLower() == "employee")
                     {
                         //remove first in Employee Assignment
-
-                        var isExistEmpAssignment = _unitOfWork.EmployeeAssignmentRepository.GetFirstOrDefault(x => x.EmployeeID == GetEmployeeNo(request.Data.EmpID));
+                        long _empId = GetEmployeeNo(request.Data.EmpID);
+                        var isExistEmpAssignment = _unitOfWork.EmployeeAssignmentRepository.GetFirstOrDefault(x => x.EmployeeID == _empId);
                         if (isExistEmpAssignment != null)
                         {
                             var temp = isExistEmpAssignment;
@@ -522,7 +523,7 @@ namespace Klinik.Features
                     transaction.Commit();
                     response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Employee", request.Data.EmpName, request.Data.EmpID);
                 }
-                catch
+                catch(Exception ex)
                 {
                     transaction.Rollback();
                     response.Status = false;

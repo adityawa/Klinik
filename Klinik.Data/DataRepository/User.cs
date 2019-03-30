@@ -24,7 +24,7 @@ namespace Klinik.Data.DataRepository
         public long OrganizationID { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public long EmployeeID { get; set; }
+        public Nullable<long> EmployeeID { get; set; }
         public Nullable<System.DateTime> ExpiredDate { get; set; }
         public string ResetPasswordCode { get; set; }
         public Nullable<bool> Status { get; set; }

@@ -43,7 +43,8 @@
             EMPLOYEE_ASSIGNMENT,
             REGISTRATION,
             POLI_SCHEDULE,
-            MASTER_PARAMEDIC
+            MASTER_PARAMEDIC,
+            Patient
         }
 
         public enum Action
@@ -56,5 +57,11 @@
             Finish,
             Reschedule
         }
+
+        public enum SourceTable
+        {
+            PATIENT
+        }
+
     }
 }

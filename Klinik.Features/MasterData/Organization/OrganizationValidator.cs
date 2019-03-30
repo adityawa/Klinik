@@ -38,10 +38,7 @@ namespace Klinik.Features
             {
                 bool isHavePrivilege = true;
 
-                if (request.Data.KlinikID == 0)
-                {
-                    errorFields.Add("Klinik Id");
-                }
+               
                 if (request.Data.OrgCode == null || request.Data.OrgCode.Equals(string.Empty))
                 {
                     errorFields.Add("Organization Code");
