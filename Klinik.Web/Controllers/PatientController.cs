@@ -205,7 +205,7 @@ namespace Klinik.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(PatientModel _model)
+        public ActionResult CreateOrEditPatient(PatientModel _model)
         {
             if (Session["UserLogon"] != null)
                 _model.Account = (AccountModel)Session["UserLogon"];
@@ -244,11 +244,11 @@ namespace Klinik.Web.Controllers
             if (_response.Status && _model.IsFromRegistration)
                 return RedirectToAction("CreateRegistrationForNewPatient", "Registration", new { patientID = _response.Entity.Id });
             else
-                return View("Create", _model);
+                return View("CreateOrEditPatient", _model);
         }
 
         [CustomAuthorize("ADD_M_PATIENT", "EDIT_M_PATIENT")]
-        public ActionResult Create()
+        public ActionResult CreateOrEditPatient()
         {
             PatientResponse _response = new PatientResponse();
             if (Request.QueryString["id"] != null)
@@ -289,7 +289,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.Marital = BindDropDownMaritalStatus();
                 ViewBag.City = BindDropDownCity();
                 ViewBag.ReffRelation = BindDropDownReffRelation();
-                return View("Create", new PatientModel());
+                return View("CreateOrEditPatient", new PatientModel());
             }
         }
 
@@ -307,7 +307,7 @@ namespace Klinik.Web.Controllers
 
             PatientModel model = new PatientModel { IsFromRegistration = true };
 
-            return View("Create", model);
+            return View("CreateOrEditPatient", model);
         }
 
         [HttpPost]

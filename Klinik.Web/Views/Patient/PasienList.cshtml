@@ -20,10 +20,10 @@
                 <thead>
                     <tr>
                         <th>@Klinik.Resources.UIMessages.ID</th>
-                        <th>@Klinik.Resources.UIMessages.Employee</th>
-                        <th>@Klinik.Resources.UIMessages.FamilyRelationship</th>
                         <th>@Klinik.Resources.UIMessages.Name</th>
                         <th>@Klinik.Resources.UIMessages.Gender</th>
+                        <th>@Klinik.Resources.UIMessages.Employee</th>
+                        <th>@Klinik.Resources.UIMessages.FamilyRelationship</th>
                         <th>@Klinik.Resources.UIMessages.Birthdate</th>
                         <th>@Klinik.Resources.UIMessages.City</th>
                         <th>@Klinik.Resources.UIMessages.Type</th>
@@ -40,7 +40,7 @@
     $(document).ready(function () {
 
         $('#btnAdd').click(function (e) {
-            window.location.href = "/Patient/Create";
+            window.location.href = "/Patient/CreateOrEditPatient";
         });
 
         $('#tbPatient').dataTable({
@@ -99,16 +99,16 @@
                 ],
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": false },
-                { "data": "EmployeeName", "name": "EmployeeName", "autoWidth": true },
-                { "data": "familyRelationshipDesc", "name": "familyRelationshipDesc", "autoWidth": true },
                 { "data": "Name", "name": "Name", "autoWidth": true },
                 { "data": "Gender", "name": "Gender", "autoWidth": true },
+                { "data": "EmployeeName", "name": "EmployeeName", "autoWidth": true },
+                { "data": "familyRelationshipDesc", "name": "familyRelationshipDesc", "autoWidth": true },
                 { "data": "BirthDateStr", "name": "BirthDateStr", "autoWidth": true },
                 { "data": "CityNm", "name": "CityNm", "autoWidth": true },
                 { "data": "TypeDesc", "name": "TypeDesc", "autoWidth": true },
 
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Patient/CreateNewPatient?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>"; }
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Patient/CreateOrEditPatient?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>"; }
                 }
             ]
         });
