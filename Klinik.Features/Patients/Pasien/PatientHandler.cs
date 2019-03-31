@@ -11,9 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
+
 namespace Klinik.Features.Patients.Pasien
 {
     public class PatientHandler : BaseFeatures, IBaseFeatures<PatientResponse, PatientRequest>
@@ -58,20 +57,18 @@ namespace Klinik.Features.Patients.Pasien
                         _context.Patients.Add(_entityPatient);
                         result = _context.SaveChanges();
 
-                        if (request.Data.Photo != null)
+                        if (request.Data.Photo != null && !String.IsNullOrEmpty(request.Data.Photo.ActualPath))
                         {
-                            if (!String.IsNullOrEmpty(request.Data.Photo.ActualPath))
-                            {
-                                var _entityPhoto = Mapper.Map<DocumentModel, FileArchieve>(request.Data.Photo);
-                                _entityPhoto.SourceTable = ClinicEnums.SourceTable.PATIENT.ToString();
-                                _entityPhoto.CreatedBy = request.Data.Account.UserName;
-                                _entityPhoto.CreatedDate = DateTime.Now;
-                                _context.FileArchieves.Add(_entityPhoto);
-                                result = _context.SaveChanges();
-                                _photoID = _entityPhoto.ID;
-                            }
+                            var _entityPhoto = Mapper.Map<DocumentModel, FileArchieve>(request.Data.Photo);
+                            _entityPhoto.SourceTable = ClinicEnums.SourceTable.PATIENT.ToString();
+                            _entityPhoto.CreatedBy = request.Data.Account.UserName;
+                            _entityPhoto.CreatedDate = DateTime.Now;
+                            _context.FileArchieves.Add(_entityPhoto);
+                            result = _context.SaveChanges();
+                            _photoID = _entityPhoto.ID;
+
+                            request.Data.file.SaveAs(request.Data.Photo.ActualPath);
                         }
-                     
 
                         //GetClinicID for current admin login
 
@@ -93,10 +90,12 @@ namespace Klinik.Features.Patients.Pasien
                         _context.PatientClinics.Add(_entityPatientClinic);
                         result = _context.SaveChanges();
                         transaction.Commit();
-                        request.Data.file.SaveAs(request.Data.Photo.ActualPath);
+
                         CommandLog(true, ClinicEnums.Module.Patient, Constants.Command.ADD_NEW_PATIENT, request.Data.Account, request.Data);
+
                         response.Status = true;
                         response.Message = string.Format(Messages.ObjectHasBeenAdded2, request.Data.Name, _entityPatient.ID);
+                        response.Entity = new PatientModel { Id = _entityPatient.ID };
                     }
                     else
                     {
@@ -138,7 +137,6 @@ namespace Klinik.Features.Patients.Pasien
 
                                 resultUpdated = _context.SaveChanges();
 
-
                                 var _existingPhotoId = _context.FileArchieves.SingleOrDefault(x => x.ID == _idPhoto && x.SourceTable == ClinicEnums.SourceTable.PATIENT.ToString());
                                 if (_existingPhotoId != null)
                                 {
@@ -176,7 +174,6 @@ namespace Klinik.Features.Patients.Pasien
 
                         else if (request.Data.Id == 0 && cekIsPatientKeyExist != null && request.Data.IsUseExistingData == false)
                         {
-                            
                             //insert new with different clinic
                             var patientKey = $"{request.Data.Name.Trim().Replace(" ", "")}_{request.Data.BirthDateStr.Replace("/", "")}";
                             var _cekIsExist = _unitOfWork.PatientRepository.GetFirstOrDefault(x => x.PatientKey == newPatientKey);
@@ -209,7 +206,6 @@ namespace Klinik.Features.Patients.Pasien
                                         _photoID = _entityPhoto.ID;
                                     }
                                 }
-                              
 
                                 var _patientClinicEntity = new PatientClinic
                                 {
@@ -228,7 +224,6 @@ namespace Klinik.Features.Patients.Pasien
 
                                 _context.PatientClinics.Add(_patientClinicEntity);
                                 result = _context.SaveChanges();
-
                             }
 
                             transaction.Commit();
@@ -243,7 +238,7 @@ namespace Klinik.Features.Patients.Pasien
                             if (_cekIsExist != null)
                             {
                                 var _tempPatientId = _cekIsExist.ID;
-                                var _willCopyPatientClinic = _unitOfWork.PatientClinicRepository.GetFirstOrDefault(x=> x.PatientID == _tempPatientId);
+                                var _willCopyPatientClinic = _unitOfWork.PatientClinicRepository.GetFirstOrDefault(x => x.PatientID == _tempPatientId);
                                 var _patientClinicEntity = new PatientClinic
                                 {
                                     PatientID = _tempPatientId,
@@ -267,7 +262,6 @@ namespace Klinik.Features.Patients.Pasien
                             }
                         }
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -276,6 +270,7 @@ namespace Klinik.Features.Patients.Pasien
                     response.Message = Messages.GeneralError;
                 }
             }
+
             return response;
         }
 
@@ -365,12 +360,10 @@ namespace Klinik.Features.Patients.Pasien
                 qry = _unitOfWork.PatientRepository.Get(searchPredicate, null);
             }
 
-
-
             foreach (var item in qry)
             {
                 PatientModel psData = Mapper.Map<Patient, PatientModel>(item);
-                if (psData.familyRelationshipID != 0 || psData.familyRelationshipID != null)
+                if (psData.familyRelationshipID != 0)
                 {
                     var employeeRelation = _unitOfWork.FamilyRelationshipRepository.GetById(psData.familyRelationshipID);
                     if (employeeRelation != null)
@@ -422,7 +415,6 @@ namespace Klinik.Features.Patients.Pasien
                         isExistFileArchive.RowStatus = -1;
                         _unitOfWork.FileArchiveRepository.Update(isExistFileArchive);
                     }
-
 
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)

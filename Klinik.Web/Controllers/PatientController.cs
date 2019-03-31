@@ -205,7 +205,7 @@ namespace Klinik.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateNewPatient(PatientModel _model)
+        public ActionResult Create(PatientModel _model)
         {
             if (Session["UserLogon"] != null)
                 _model.Account = (AccountModel)Session["UserLogon"];
@@ -241,11 +241,14 @@ namespace Klinik.Web.Controllers
             ViewBag.ReffRelation = BindDropDownReffRelation();
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
 
-            return View();
+            if (_model.IsFromRegistration)
+                return RedirectToAction("CreateRegistrationForNewPatient", "Registration", new { patientID = _response.Entity.Id });
+            else
+                return View();
         }
 
         [CustomAuthorize("ADD_M_PATIENT", "EDIT_M_PATIENT")]
-        public ActionResult CreateNewPatient()
+        public ActionResult Create()
         {
             PatientResponse _response = new PatientResponse();
             if (Request.QueryString["id"] != null)
@@ -288,6 +291,23 @@ namespace Klinik.Web.Controllers
                 ViewBag.ReffRelation = BindDropDownReffRelation();
                 return View();
             }
+        }
+
+        [CustomAuthorize("ADD_M_PATIENT", "EDIT_M_PATIENT")]
+        public ActionResult CreateFromRegistration()
+        {
+            ViewBag.ActionType = ClinicEnums.Action.Add;
+            ViewBag.Response = new PatientResponse();
+            ViewBag.Relation = BindDropDownRelation();
+            ViewBag.PatientType = BindDropDownPatientType();
+            ViewBag.EmpReff = BindDropDownEmployeeReff();
+            ViewBag.Marital = BindDropDownMaritalStatus();
+            ViewBag.City = BindDropDownCity();
+            ViewBag.ReffRelation = BindDropDownReffRelation();
+
+            PatientModel model = new PatientModel { IsFromRegistration = true };
+
+            return View("Create", model);
         }
 
         [HttpPost]

@@ -30,7 +30,7 @@
                     if (@Model.CurrentPoliID == 1)
                     {
                         <div class="col-md-2">
-                            <button type="reset" id="btnNewPatient" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp;@Klinik.Resources.UIMessages.NewPatient</button>
+                            <button type="button" id="btnNewPatient" class="btn btn-success" onclick="location.href='@Url.Action("CreateFromRegistration", "Patient")'"><i class="fa fa-plus"></i>&nbsp;@Klinik.Resources.UIMessages.NewPatient</button>
                         </div>
                     }
                 }

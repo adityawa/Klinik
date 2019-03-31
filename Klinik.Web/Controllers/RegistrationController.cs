@@ -219,8 +219,6 @@ namespace Klinik.Web.Controllers
         [CustomAuthorize("ADD_REGISTRATION")]
         public ActionResult CreateRegistration(int poliId = 1)
         {
-            RegistrationResponse _response = new RegistrationResponse();
-
             var poliName = Regex.Replace(((PoliEnum)poliId).ToString(), "([A-Z])", " $1").Trim();
 
             var model = new RegistrationModel
@@ -231,8 +229,32 @@ namespace Klinik.Web.Controllers
             };
 
             ViewBag.ActionType = ClinicEnums.Action.Add;
-            ViewBag.Response = _response;
+            ViewBag.Response = new RegistrationResponse();
             var tempPoliList = BindDropDownPoliList(GetPoliType(poliId));
+            ViewBag.PoliList = tempPoliList;
+            ViewBag.PatientList = BindDropDownPatientList();
+            ViewBag.RegistrationTypeList = BindDropDownTypeList();
+            ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
+
+            return View("CreateOrEditRegistration", model);
+        }
+
+        [CustomAuthorize("ADD_REGISTRATION")]
+        public ActionResult CreateRegistrationForNewPatient(int patientID)
+        {
+            var poliName = Regex.Replace(((PoliEnum)1).ToString(), "([A-Z])", " $1").Trim();
+
+            var model = new RegistrationModel
+            {
+                PoliFromID = 1,
+                CurrentPoliID = 1,
+                PoliFromName = poliName,
+                PatientID = patientID
+            };
+
+            ViewBag.ActionType = ClinicEnums.Action.Add;
+            ViewBag.Response = new RegistrationResponse();
+            var tempPoliList = BindDropDownPoliList(GetPoliType(1));
             ViewBag.PoliList = tempPoliList;
             ViewBag.PatientList = BindDropDownPatientList();
             ViewBag.RegistrationTypeList = BindDropDownTypeList();

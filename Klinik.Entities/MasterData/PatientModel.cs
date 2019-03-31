@@ -37,6 +37,6 @@ namespace Klinik.Entities.MasterData
         public DocumentModel Photo { get; set; }
         public bool? IsUseExistingData { get; set; }
         public PatientClinicModel PatientClinic { get; set; }
-
+        public bool IsFromRegistration { get; set; }
     }
 }
