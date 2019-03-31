@@ -1,13 +1,10 @@
-﻿using Klinik.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Klinik.Interfaces;
-using Klinik.Common;
-using Klinik.Resources;
+﻿using Klinik.Common;
+using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Interfaces;
+using Klinik.Resources;
+using System;
+using System.Linq;
 
 namespace Klinik.Features.Patients.Pasien
 {
@@ -55,7 +52,7 @@ namespace Klinik.Features.Patients.Pasien
                 {
                     if (_typedesc.Name.ToLower() == "company")
                     {
-                        if (request.Data.EmployeeID==0)
+                        if (request.Data.EmployeeID == 0)
                         {
                             errorFields.Add("Employee");
                         }
@@ -93,7 +90,6 @@ namespace Klinik.Features.Patients.Pasien
                         response.Status = false;
                         response.Message = Messages.UnauthorizedAccess;
                     }
-
                 }
 
                 if (request.Data.Id == 0)
@@ -129,8 +125,6 @@ namespace Klinik.Features.Patients.Pasien
                     }
                 }
                 #endregion
-
-                
 
                 if (response.Status)
                 {
