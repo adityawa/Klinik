@@ -289,7 +289,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.Marital = BindDropDownMaritalStatus();
                 ViewBag.City = BindDropDownCity();
                 ViewBag.ReffRelation = BindDropDownReffRelation();
-                return View();
+                return View("Create", new PatientModel());
             }
         }
 
