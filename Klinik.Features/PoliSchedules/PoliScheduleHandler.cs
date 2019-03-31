@@ -158,9 +158,9 @@ namespace Klinik.Features.PoliSchedules
                 if (request.Data != null)
                 {
                     if (request.Data.Id > 0)
-                        CommandLog(false, ClinicEnums.Module.POLI_SCHEDULE, Constants.Command.EDIT_POLISCHEDULE, request.Data.Account, request.Data);
+                        CommandLog(false, ClinicEnums.Module.POLI_SCHEDULE, Constants.Command.EDIT_POLISCHEDULE, request.Data.Account, ex.Message, request.Data);
                     else
-                        CommandLog(false, ClinicEnums.Module.POLI_SCHEDULE, Constants.Command.ADD_NEW_POLISCHEDULE, request.Data.Account, request.Data);
+                        CommandLog(false, ClinicEnums.Module.POLI_SCHEDULE, Constants.Command.ADD_NEW_POLISCHEDULE, request.Data.Account, ex.Message, request.Data);
                 }
             }
 
