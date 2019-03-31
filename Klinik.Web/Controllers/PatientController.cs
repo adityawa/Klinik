@@ -244,7 +244,7 @@ namespace Klinik.Web.Controllers
             if (_response.Status && _model.IsFromRegistration)
                 return RedirectToAction("CreateRegistrationForNewPatient", "Registration", new { patientID = _response.Entity.Id });
             else
-                return View();
+                return View("Create", _model);
         }
 
         [CustomAuthorize("ADD_M_PATIENT", "EDIT_M_PATIENT")]
