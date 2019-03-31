@@ -5,6 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Styles {
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+}
+
 <section class="panel">
     <header class="panel-heading">
         <div class="panel-actions">
@@ -23,9 +27,14 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Role</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(p => p.RoleID, (IEnumerable<SelectListItem>)ViewBag.RoleList, new { @class = "form-control", @id = "ddlrole" })
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Employee</label>
                 <div class="col-md-4">
-
                     @Html.DropDownListFor(p => p.EmployeeID, (IEnumerable<SelectListItem>)ViewBag.Employees, new { @class = "form-control", @id = "ddlemployee" })
                     @Html.ValidationMessageFor(m => m.OrgID, "", new { @class = "text-danger" })
                 </div>
@@ -73,6 +82,7 @@
 </section>
 
 @section Scripts {
+    <script src="~/Scripts/jquery-ui.js"></script>
     <script type="text/javascript">
     $(document).ready(function () {
         $('#btnreset').click(function (e) {
@@ -85,6 +95,15 @@
             format: "dd/mm/yyyy",
             changeMonth: true,
             changeYear: true
+        });
+
+        $("#ddlorganisasi").change(function () {
+            $.get("/MasterData/GetRoleList", { OrgId: $("#ddlorganisasi").val() }, function (data) {
+                $("#ddlrole").empty();
+                $.each(data, function (index, row) {
+                    $("#ddlrole").append('<option value="' + row.ID + '">' + row.RoleName + '</option>');
+                });
+            });
         });
 
         toastr.options = {

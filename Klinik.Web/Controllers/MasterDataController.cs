@@ -25,6 +25,23 @@ namespace Klinik.Web.Controllers
         }
 
         #region ::MISC::
+        private List<SelectListItem> BindDropDownRoleList(int orgId)
+        {
+            List<OrganizationRole> orgRoleList = _context.OrganizationRoles.Where(x => x.OrgID == orgId).ToList();
+            List<SelectListItem> _roleList = new List<SelectListItem>();
+
+            foreach (var item in orgRoleList)
+            {
+                _roleList.Add(new SelectListItem
+                {
+                    Text = item.RoleName,
+                    Value = item.ID.ToString()
+                });
+            }
+
+            return _roleList;
+        }
+
         private List<SelectListItem> BindDropDownKlinik()
         {
             List<SelectListItem> _clinicLists = new List<SelectListItem>();
@@ -562,9 +579,11 @@ namespace Klinik.Web.Controllers
 
             new UserValidator(_unitOfWork).Validate(request, out _response);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
-            ViewBag.Organisasi = BindDropDownOrganization();
+            var tempOrgList = BindDropDownOrganization();
+            ViewBag.Organisasi = tempOrgList;
             ViewBag.Employees = BindDropDownEmployee();
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+            ViewBag.RoleList = BindDropDownRoleList(int.Parse(tempOrgList[0].Value));
 
             return View();
         }
@@ -587,17 +606,21 @@ namespace Klinik.Web.Controllers
                 UserResponse resp = new UserHandler(_unitOfWork).GetDetail(request);
                 UserModel _model = resp.Entity;
                 ViewBag.Response = _response;
-                ViewBag.Organisasi = BindDropDownOrganization();
+                var tempOrgList = BindDropDownOrganization();
+                ViewBag.Organisasi = tempOrgList;
                 ViewBag.Employees = BindDropDownEmployee();
                 ViewBag.ActionType = ClinicEnums.Action.Edit;
+                ViewBag.RoleList = BindDropDownRoleList(int.Parse(tempOrgList[0].Value));
                 return View(_model);
             }
             else
             {
                 ViewBag.Response = _response;
-                ViewBag.Organisasi = BindDropDownOrganization();
+                var tempOrgList = BindDropDownOrganization();
+                ViewBag.Organisasi = tempOrgList;
                 ViewBag.Employees = BindDropDownEmployee();
                 ViewBag.ActionType = ClinicEnums.Action.Add;
+                ViewBag.RoleList = BindDropDownRoleList(int.Parse(tempOrgList[0].Value));
                 return View();
             }
         }
@@ -647,6 +670,16 @@ namespace Klinik.Web.Controllers
             new UserValidator(_unitOfWork).Validate(request, out _response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetRoleList(int orgId)
+        {
+            // prevent circular reference
+            _context.Configuration.ProxyCreationEnabled = false;
+
+            List<OrganizationRole> orgRoleList = _context.OrganizationRoles.Where(x => x.OrgID == orgId).ToList();
+
+            return Json(orgRoleList, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

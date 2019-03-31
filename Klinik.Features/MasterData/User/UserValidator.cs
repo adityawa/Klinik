@@ -53,8 +53,6 @@ namespace Klinik.Features
                     errorFields.Add("Password");
                 }
 
-               
-
                 if (errorFields.Any())
                 {
                     response.Status = false;

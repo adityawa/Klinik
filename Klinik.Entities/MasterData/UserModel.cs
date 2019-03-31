@@ -34,5 +34,7 @@ namespace Klinik.Entities.MasterData
         public string StatusDesc { get; set; }
 
         public bool Status { get; set; }
+
+        public long RoleID { get; set; }
     }
 }

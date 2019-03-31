@@ -76,14 +76,22 @@ namespace Klinik.Features
                 {
                     request.Data.Password = CommonUtils.Encryptor(request.Data.Password, CommonUtils.KeyEncryptor);
                     request.Data.ExpiredDate = request.Data.ExpiredDate ?? DateTime.Now.AddDays(100);
+
                     var UserEntity = Mapper.Map<UserModel, User>(request.Data);
                     UserEntity.CreatedBy = request.Data.Account.UserCode;
                     UserEntity.CreatedDate = DateTime.Now;
 
-                    _unitOfWork.UserRepository.Insert(UserEntity);
+                    UserRole userRoleEntity = new UserRole();
+                    userRoleEntity.RoleID = request.Data.RoleID;
+                    userRoleEntity.User = UserEntity;
+                    userRoleEntity.CreatedBy = request.Data.Account.UserCode;
+                    userRoleEntity.CreatedDate = DateTime.Now;
+
+                    _unitOfWork.UserRoleRepository.Insert(userRoleEntity);
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
+
                         response.Message = string.Format(Messages.ObjectHasBeenAdded, "User", UserEntity.UserName, UserEntity.ID);
 
                         CommandLog(true, ClinicEnums.Module.MASTER_USER, Constants.Command.ADD_NEW_USER, request.Data.Account, request.Data);
