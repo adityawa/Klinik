@@ -153,7 +153,7 @@ namespace Klinik.Features.PoliSchedules
             catch (Exception ex)
             {
                 response.Status = false;
-                response.Message = Messages.GeneralError;
+                response.Message = ex.Message;
 
                 if (request.Data != null)
                 {
