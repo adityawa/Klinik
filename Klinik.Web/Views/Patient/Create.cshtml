@@ -177,7 +177,7 @@
             <br />
             <footer class="panel-footer">
                 <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
-                <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+                <button type="button" id="btnreset" class="btn btn-default" onclick="GoBack(@Model.IsFromRegistration)">@Klinik.Resources.UIMessages.Back</button>
             </footer>
         </form>
     </div>
@@ -205,9 +205,6 @@
 @section Scripts {
     <script type="text/javascript">
     $(document).ready(function () {
-        $('#btnreset').click(function (e) {
-             window.location.href = "/Patient/PasienList";
-        });
 
         $('#ddlEmpReff').select2();
         $('#ddlRelation').select2();
@@ -306,5 +303,12 @@
         });
     };
 
+    var GoBack = function (isFromRegistration) {
+            if (isFromRegistration) {
+                window.location.href = "/Registration/CreateRegistration";
+            } else {
+                window.location.href = "/Patient/PasienList";
+            }
+    }
     </script>
 }
