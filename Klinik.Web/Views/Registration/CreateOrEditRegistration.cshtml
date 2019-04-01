@@ -85,8 +85,14 @@
             <br />
             <footer class="panel-footer">
                 <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
-                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Home")'">@Klinik.Resources.UIMessages.BackToHome</button>
-                <button type="reset" class="btn btn-danger" onclick="GoBack(@Model.CurrentPoliID)">@Klinik.Resources.UIMessages.Back</button>
+                @if (Model.IsFromDashboard)
+                {
+                    <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Index", "Home")'">@Klinik.Resources.UIMessages.Back</button>
+                }
+                else
+                {
+                    <button type="reset" class="btn btn-danger" onclick="GoBack(@Model.CurrentPoliID)">@Klinik.Resources.UIMessages.Back</button>
+                }
             </footer>
         </form>
     </div>

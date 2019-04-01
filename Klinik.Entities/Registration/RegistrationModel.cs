@@ -26,5 +26,6 @@ namespace Klinik.Entities.Registration
         public string StatusStr { get; set; }
         public int DoctorID { get; set; }
         public string DoctorStr { get; set; }
+        public bool IsFromDashboard { get; set; }
     }
 }

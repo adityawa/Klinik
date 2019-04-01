@@ -5,17 +5,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (ViewBag.IsHasAddPrivilege)
-{
-    <button id="btnAdd" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;@Klinik.Resources.UIMessages.AddNew</button>
-}
-<br /><br />
 <section class="panel">
     <header class="panel-heading">
         <div class="panel-actions">
             <a href="#" class="fa fa-caret-down"></a>
         </div>
-        <h5 class="panel-title">@Klinik.Resources.UIMessages.RegistrationList</h5>
+        <h5 class="panel-title">
+            @Klinik.Resources.UIMessages.RegistrationList
+            @if (ViewBag.IsHasAddPrivilege)
+            {
+                <button id="btnAdd" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;@Klinik.Resources.UIMessages.AddNew</button>
+            }
+        </h5>
     </header>
     <div class="panel-body">
         <div style="width:100%; margin:0 auto">
@@ -83,7 +84,6 @@
                 "type": "POST",
                 "datatype": "json"
             },
-
             "columnDefs":
                 [{
                     "targets": [0],

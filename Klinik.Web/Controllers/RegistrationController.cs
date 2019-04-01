@@ -559,7 +559,8 @@ namespace Klinik.Web.Controllers
                 PoliFromID = userPoliID,
                 PoliFromName = poliName,
                 CurrentPoliID = userPoliID,
-                PoliToID = poliToID
+                PoliToID = poliToID,
+                IsFromDashboard = true
             };
 
             ViewBag.ActionType = ClinicEnums.Action.Add;
