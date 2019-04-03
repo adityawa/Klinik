@@ -28,7 +28,8 @@
             public const string EDIT_REGISTRATION = "Edit Registration";
             public const string EDIT_DOCTOR = "Edit Doctor";
             public const string DELETE_EMPLOYEE = "Remove Employee";
-            public const string ADD_NEW_PATIENT = "ADD New Patient";
+            public const string ADD_NEW_PATIENT = "Add New Patient";
+            public const string ADD_EDIT_PATIENT = "Add/Edit Patient";
         }
 
         public static class MasterType

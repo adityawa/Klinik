@@ -97,13 +97,10 @@ namespace Klinik.Features
                 response.Status = false;
                 response.Message = Messages.GeneralError;
 
-                if (request.Data != null)
-                {
-                    if (request.Data.Id > 0)
-                        CommandLog(false, ClinicEnums.Module.MASTER_ROLE, Constants.Command.EDIT_ROLE, request.Data.Account, request.Data);
-                    else
-                        CommandLog(false, ClinicEnums.Module.MASTER_ROLE, Constants.Command.ADD_NEW_ROLE, request.Data.Account, request.Data);
-                }
+                if (request.Data != null && request.Data.Id > 0)
+                    ErrorLog(ClinicEnums.Module.MASTER_ROLE, Constants.Command.EDIT_ROLE, request.Data.Account, ex);
+                else
+                    ErrorLog(ClinicEnums.Module.MASTER_ROLE, Constants.Command.ADD_NEW_ROLE, request.Data.Account, ex);
             }
 
             return response;
@@ -137,6 +134,10 @@ namespace Klinik.Features
             List<RoleModel> lists = new List<RoleModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<OrganizationRole>(true);
+
+            // add default filter to show the active data only
+            searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
+
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.RoleName.Contains(request.SearchValue) || p.Organization.OrgName.Contains(request.SearchValue));
@@ -208,14 +209,18 @@ namespace Klinik.Features
 
             try
             {
-                var isExist = _unitOfWork.RoleRepository.GetById(request.Data.Id);
-                if (isExist.ID > 0)
+                var role = _unitOfWork.RoleRepository.GetById(request.Data.Id);
+                if (role.ID > 0)
                 {
-                    _unitOfWork.RoleRepository.Delete(isExist.ID);
+                    role.RowStatus = -1;
+                    role.ModifiedBy = request.Data.Account.UserCode;
+                    role.ModifiedDate = DateTime.Now;
+
+                    _unitOfWork.RoleRepository.Update(role);
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Role", isExist.RoleName, isExist.ID);
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Role", role.RoleName, role.ID);
                     }
                     else
                     {
@@ -229,10 +234,12 @@ namespace Klinik.Features
                     response.Message = string.Format(Messages.RemoveObjectFailed, "Role");
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 response.Status = false;
-                response.Message = Messages.GeneralError; ;
+                response.Message = Messages.GeneralError;
+
+                ErrorLog(ClinicEnums.Module.MASTER_ROLE, ClinicEnums.Action.DELETE.ToString(), request.Data.Account, ex);
             }
 
             return response;

@@ -108,13 +108,10 @@ namespace Klinik.Features
                 response.Status = false;
                 response.Message = Messages.GeneralError;
 
-                if (request.Data != null)
-                {
-                    if (request.Data.Id > 0)
-                        CommandLog(false, ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.EDIT_DOCTOR, request.Data.Account, request.Data);
-                    else
-                        CommandLog(false, ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.ADD_NEW_DOCTOR, request.Data.Account, request.Data);
-                }
+                if (request.Data != null && request.Data.Id > 0)
+                    ErrorLog(ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.EDIT_DOCTOR, request.Data.Account, ex);
+                else
+                    ErrorLog(ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.ADD_NEW_DOCTOR, request.Data.Account, ex);
             }
 
             return response;

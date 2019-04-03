@@ -59,12 +59,14 @@ namespace Klinik.Features
 
                     response.Message = Messages.DataSaved;
                 }
-                catch
+                catch (Exception ex)
                 {
                     transaction.Rollback();
 
                     response.Status = false;
                     response.Message = Messages.GeneralError;
+
+                    ErrorLog(ClinicEnums.Module.MASTER_ORGANIZATION_PRIVILEGE, ClinicEnums.Action.DELETE.ToString(), request.Data.Account, ex);
                 }
             }
 
@@ -78,7 +80,7 @@ namespace Klinik.Features
         /// <returns></returns>
         public OrganizationPrivilegeResponse GetListData(OrganizationPrivilegeRequest request)
         {
-            var qry = _unitOfWork.OrgPrivRepository.Get(x => x.OrgID == request.Data.OrgID);
+            var qry = _unitOfWork.OrgPrivRepository.Get(x => x.OrgID == request.Data.OrgID && x.RowStatus == 0);
             OrganizationPrivilegeModel _model = new OrganizationPrivilegeModel();
 
             if (qry.Count > 0)

@@ -110,13 +110,10 @@ namespace Klinik.Features.Registration
                 response.Status = false;
                 response.Message = Messages.GeneralError;
 
-                if (request.Data != null)
-                {
-                    if (request.Data.Id > 0)
-                        CommandLog(false, ClinicEnums.Module.REGISTRATION, Constants.Command.EDIT_REGISTRATION, request.Data.Account, request.Data);
-                    else
-                        CommandLog(false, ClinicEnums.Module.REGISTRATION, Constants.Command.ADD_NEW_REGISTRATION, request.Data.Account, request.Data);
-                }
+                if (request.Data != null && request.Data.Id > 0)
+                    ErrorLog(ClinicEnums.Module.REGISTRATION, Constants.Command.EDIT_REGISTRATION, request.Data.Account, ex);
+                else
+                    ErrorLog(ClinicEnums.Module.REGISTRATION, Constants.Command.ADD_NEW_REGISTRATION, request.Data.Account, ex);
             }
 
             return response;
@@ -314,14 +311,18 @@ namespace Klinik.Features.Registration
             RegistrationResponse response = new RegistrationResponse();
             try
             {
-                var isExist = _unitOfWork.RegistrationRepository.GetById(request.Data.Id);
-                if (isExist.ID > 0)
+                var registration = _unitOfWork.RegistrationRepository.GetById(request.Data.Id);
+                if (registration.ID > 0)
                 {
-                    _unitOfWork.RegistrationRepository.Delete(isExist.ID);
+                    registration.RowStatus = -1;
+                    registration.ModifiedBy = request.Data.Account.UserCode;
+                    registration.ModifiedDate = DateTime.Now;
+
+                    _unitOfWork.RegistrationRepository.Update(registration);
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenRemoved2, "Registration", isExist.ID);
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved2, "Registration", registration.ID);
                     }
                     else
                     {
@@ -335,10 +336,12 @@ namespace Klinik.Features.Registration
                     response.Message = string.Format(Messages.RemoveObjectFailed, "Registration");
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 response.Status = false;
-                response.Message = Messages.GeneralError; ;
+                response.Message = Messages.GeneralError;
+
+                ErrorLog(ClinicEnums.Module.REGISTRATION, ClinicEnums.Action.DELETE.ToString(), request.Data.Account, ex);
             }
 
             return response;
@@ -398,7 +401,7 @@ namespace Klinik.Features.Registration
             catch
             {
                 response.Status = false;
-                response.Message = Messages.GeneralError; ;
+                response.Message = Messages.GeneralError;
             }
 
             return response;
@@ -438,7 +441,7 @@ namespace Klinik.Features.Registration
             catch
             {
                 response.Status = false;
-                response.Message = Messages.GeneralError; ;
+                response.Message = Messages.GeneralError;
             }
 
             return response;
@@ -478,7 +481,7 @@ namespace Klinik.Features.Registration
             catch
             {
                 response.Status = false;
-                response.Message = Messages.GeneralError; ;
+                response.Message = Messages.GeneralError;
             }
 
             return response;

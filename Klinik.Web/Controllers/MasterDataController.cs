@@ -320,7 +320,7 @@ namespace Klinik.Web.Controllers
                 Skip = _skip
             };
 
-            var response = new OrganizationHandler(_unitOfWork).GetOrganizationData(request);
+            var response = new OrganizationHandler(_unitOfWork).GetListData(request);
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }

@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.SqlTypes;
+using System.Data.Entity;
+
 namespace Klinik.Features
 {
     public class EmployeeHandler : BaseFeatures, IBaseFeatures<EmployeeResponse, EmployeeRequest>
@@ -83,7 +85,7 @@ namespace Klinik.Features
 
             var _empTypeDesc = _unitOfWork.FamilyRelationshipRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpType) == null ? "" : _unitOfWork.FamilyRelationshipRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpType).Code;
             var _statusDesc = _unitOfWork.EmployeeStatusRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpStatus) == null ? "" : _unitOfWork.EmployeeStatusRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpStatus).Code;
-            if (request.Data.EmpTypeDesc == string.Empty || request.Data.EmpTypeDesc==null)
+            if (request.Data.EmpTypeDesc == string.Empty || request.Data.EmpTypeDesc == null)
                 request.Data.EmpTypeDesc = _empTypeDesc;
 
             using (var transaction = _context.Database.BeginTransaction())
@@ -280,13 +282,17 @@ namespace Klinik.Features
 
                     transaction.Commit();
                 }
-                catch
+                catch (Exception ex)
                 {
                     transaction.Rollback();
-                    response.Status = false;
-                    response.Message = string.Format(Messages.UpdateObjectFailed, "Employee");
 
-                    CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data);
+                    response.Status = false;
+                    response.Message = Messages.GeneralError;
+
+                    if (request.Data != null && request.Data.Id > 0)
+                        ErrorLog(ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, ex);
+                    else
+                        ErrorLog(ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.ADD_NEW_EMPLOYEE, request.Data.Account, ex);
                 }
             }
 
@@ -366,6 +372,10 @@ namespace Klinik.Features
             List<EmployeeModel> lists = new List<EmployeeModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<Employee>(true);
+
+            // add default filter to show the active data only
+            searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
+
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.EmpID.Contains(request.SearchValue) || p.EmpName.Contains(request.SearchValue));
@@ -444,6 +454,7 @@ namespace Klinik.Features
         {
             EmployeeResponse response = new EmployeeResponse();
             int result_affected = 0;
+
             #region ::OLD::
             //try
             //{
@@ -471,7 +482,7 @@ namespace Klinik.Features
             //catch
             //{
             //    response.Status = false;
-            //    response.Message = Messages.GeneralError; ;
+            //    response.Message = Messages.GeneralError;
             //}
             #endregion
 
@@ -479,55 +490,57 @@ namespace Klinik.Features
             {
                 try
                 {
-                    var empdetail = _unitOfWork.EmployeeRepository.GetById(request.Data.Id);
-                    request.Data = Mapper.Map<Employee, EmployeeModel>(empdetail);
-                    if (empdetail.FamilyRelationship.Name.ToLower() == "employee")
+                    var employee = _unitOfWork.EmployeeRepository.GetById(request.Data.Id);
+                    if (employee == null)
                     {
-                        //remove first in Employee Assignment
-                        long _empId = GetEmployeeNo(request.Data.EmpID);
-                        var isExistEmpAssignment = _unitOfWork.EmployeeAssignmentRepository.GetFirstOrDefault(x => x.EmployeeID == _empId);
-                        if (isExistEmpAssignment != null)
-                        {
-                            var temp = isExistEmpAssignment;
-                            _context.EmployeeAssignments.Remove(isExistEmpAssignment);
-                            result_affected = _context.SaveChanges();
-                            if (result_affected > 0)
-                                CommandLog(true, ClinicEnums.Module.EMPLOYEE_ASSIGNMENT, Constants.Command.DELETE_EMPLOYEE, request.Data.Account, null, temp);
-                        }
-
-                        var isExistInEmployee = _unitOfWork.EmployeeRepository.GetById(request.Data.Id);
-                        if (isExistInEmployee != null)
-                        {
-                            var oldEmployee = isExistInEmployee;
-                            result_affected = 0;
-                            _context.Employees.Remove(isExistInEmployee);
-                            result_affected = _context.SaveChanges();
-
-                            if (result_affected > 0)
-                                CommandLog(true, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.DELETE_EMPLOYEE, request.Data.Account, null, oldEmployee);
-                        }
+                        response.Status = false;
+                        response.Message = string.Format(Messages.RemoveObjectFailed, "Employee");
                     }
                     else
                     {
-                        var isExistInEmployee = _unitOfWork.EmployeeRepository.GetById(request.Data.Id);
-                        if (isExistInEmployee != null)
+                        if (employee.FamilyRelationship != null &&
+                            request.Data.EmpID != null &&
+                            !string.IsNullOrEmpty(employee.FamilyRelationship.Name) &&
+                            employee.FamilyRelationship.Name.ToLower() == "employee")
                         {
-                            var oldEmployee = isExistInEmployee;
-                            _context.Employees.Remove(isExistInEmployee);
-                            result_affected = _context.SaveChanges();
-                            if (result_affected > 0)
-                                CommandLog(true, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.DELETE_EMPLOYEE, request.Data.Account, null, oldEmployee);
-                        }
-                    }
+                            //remove first in Employee Assignment
+                            long _empId = GetEmployeeNo(request.Data.EmpID);
+                            var empAssignment = _unitOfWork.EmployeeAssignmentRepository.GetFirstOrDefault(x => x.EmployeeID == _empId);
+                            if (empAssignment != null)
+                            {
+                                _context.EmployeeAssignments.Attach(empAssignment);
+                                empAssignment.RowStatus = -1;
+                                empAssignment.ModifiedBy = request.Data.Account.UserCode;
+                                empAssignment.ModifiedDate = DateTime.Now;
 
-                    transaction.Commit();
-                    response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Employee", request.Data.EmpName, request.Data.EmpID);
+                                result_affected = _context.SaveChanges();
+
+                                if (result_affected > 0)
+                                    CommandLog(true, ClinicEnums.Module.EMPLOYEE_ASSIGNMENT, Constants.Command.DELETE_EMPLOYEE, request.Data.Account, null, empAssignment);
+                            }
+                        }
+
+                        _context.Employees.Attach(employee);
+
+                        employee.RowStatus = -1;
+                        employee.ModifiedBy = request.Data.Account.UserCode;
+                        employee.ModifiedDate = DateTime.Now;
+
+                        result_affected = _context.SaveChanges();
+
+                        if (result_affected > 0)
+                            CommandLog(true, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.DELETE_EMPLOYEE, request.Data.Account, null, employee);
+
+                        transaction.Commit();
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Employee", request.Data.EmpName, request.Data.EmpID);
+                    }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    transaction.Rollback();
                     response.Status = false;
                     response.Message = Messages.GeneralError;
+
+                    ErrorLog(ClinicEnums.Module.MASTER_EMPLOYEE, ClinicEnums.Action.DELETE.ToString(), request.Data.Account, ex);
                 }
             }
 

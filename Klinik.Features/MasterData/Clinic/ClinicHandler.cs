@@ -120,18 +120,15 @@ namespace Klinik.Features
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 response.Status = false;
                 response.Message = Messages.GeneralError;
 
-                if (request.Data != null)
-                {
-                    if (request.Data.Id > 0)
-                        CommandLog(false, ClinicEnums.Module.MASTER_CLINIC, Constants.Command.EDIT_CLINIC, request.Data.Account, request.Data);
-                    else
-                        CommandLog(false, ClinicEnums.Module.MASTER_CLINIC, Constants.Command.ADD_NEW_CLINIC, request.Data.Account, request.Data);
-                }
+                if (request.Data != null && request.Data.Id > 0)
+                    ErrorLog(ClinicEnums.Module.MASTER_CLINIC, Constants.Command.EDIT_CLINIC, request.Data.Account, ex);
+                else
+                    ErrorLog(ClinicEnums.Module.MASTER_CLINIC, Constants.Command.ADD_NEW_CLINIC, request.Data.Account, ex);
             }
 
             return response;
@@ -165,6 +162,10 @@ namespace Klinik.Features
             List<ClinicModel> lists = new List<ClinicModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<Clinic>(true);
+
+            // add default filter to show the active data only
+            searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
+
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.Code.Contains(request.SearchValue) || p.Name.Contains(request.SearchValue));
@@ -249,14 +250,18 @@ namespace Klinik.Features
             ClinicResponse response = new ClinicResponse();
             try
             {
-                var isExist = _unitOfWork.ClinicRepository.GetById(request.Data.Id);
-                if (isExist.ID > 0)
+                var clinic = _unitOfWork.ClinicRepository.GetById(request.Data.Id);
+                if (clinic.ID > 0)
                 {
-                    _unitOfWork.ClinicRepository.Delete(isExist.ID);
+                    clinic.RowStatus = -1;
+                    clinic.ModifiedBy = request.Data.Account.UserCode;
+                    clinic.ModifiedDate = DateTime.Now;
+
+                    _unitOfWork.ClinicRepository.Update(clinic);
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Clinic", isExist.Name, isExist.Code);
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Clinic", clinic.Name, clinic.Code);
                     }
                     else
                     {
@@ -270,10 +275,12 @@ namespace Klinik.Features
                     response.Message = string.Format(Messages.RemoveObjectFailed, "Clinic");
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 response.Status = false;
-                response.Message = Messages.GeneralError; ;
+                response.Message = Messages.GeneralError;
+
+                ErrorLog(ClinicEnums.Module.MASTER_CLINIC, ClinicEnums.Action.DELETE.ToString(), request.Data.Account, ex);
             }
 
             return response;

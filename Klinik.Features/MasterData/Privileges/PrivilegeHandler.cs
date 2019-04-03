@@ -94,18 +94,15 @@ namespace Klinik.Features
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 response.Status = false;
                 response.Message = Messages.GeneralError;
 
-                if (request.Data != null)
-                {
-                    if (request.Data.Id > 0)
-                        CommandLog(false, ClinicEnums.Module.MASTER_PRIVILEGE, Constants.Command.EDIT_PRIVILEGE, request.Data.Account, request.Data);
-                    else
-                        CommandLog(false, ClinicEnums.Module.MASTER_PRIVILEGE, Constants.Command.ADD_NEW_PRIVILEGE, request.Data.Account, request.Data);
-                }
+                if (request.Data != null && request.Data.Id > 0)
+                    ErrorLog(ClinicEnums.Module.MASTER_PRIVILEGE, Constants.Command.EDIT_PRIVILEGE, request.Data.Account, ex);
+                else
+                    ErrorLog(ClinicEnums.Module.MASTER_PRIVILEGE, Constants.Command.ADD_NEW_PRIVILEGE, request.Data.Account, ex);
             }
 
             return response;
@@ -139,6 +136,9 @@ namespace Klinik.Features
             List<PrivilegeModel> lists = new List<PrivilegeModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<Privilege>(true);
+
+            // add default filter to show the active data only
+            searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
@@ -211,14 +211,18 @@ namespace Klinik.Features
 
             try
             {
-                var isExist = _unitOfWork.PrivilegeRepository.GetById(request.Data.Id);
-                if (isExist.ID > 0)
+                var privilege = _unitOfWork.PrivilegeRepository.GetById(request.Data.Id);
+                if (privilege.ID > 0)
                 {
-                    _unitOfWork.PrivilegeRepository.Delete(isExist.ID);
+                    privilege.RowStatus = -1;
+                    privilege.ModifiedBy = request.Data.Account.UserCode;
+                    privilege.ModifiedDate = DateTime.Now;
+
+                    _unitOfWork.PrivilegeRepository.Update(privilege);
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Privilege", isExist.Privilege_Name, isExist.ID);
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Privilege", privilege.Privilege_Name, privilege.ID);
                     }
                     else
                     {
@@ -232,10 +236,12 @@ namespace Klinik.Features
                     response.Message = string.Format(Messages.RemoveObjectFailed, "Privilege");
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 response.Status = false;
-                response.Message = Messages.GeneralError; ;
+                response.Message = Messages.GeneralError;
+
+                ErrorLog(ClinicEnums.Module.MASTER_PRIVILEGE, ClinicEnums.Action.DELETE.ToString(), request.Data.Account, ex);
             }
 
             return response;

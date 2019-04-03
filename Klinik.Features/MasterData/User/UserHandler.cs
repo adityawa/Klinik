@@ -91,7 +91,6 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-
                         response.Message = string.Format(Messages.ObjectHasBeenAdded, "User", UserEntity.UserName, UserEntity.ID);
 
                         CommandLog(true, ClinicEnums.Module.MASTER_USER, Constants.Command.ADD_NEW_USER, request.Data.Account, request.Data);
@@ -105,18 +104,14 @@ namespace Klinik.Features
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 response.Status = false;
                 response.Message = Messages.GeneralError;
 
-                if (request.Data != null)
-                {
-                    if (request.Data.Id > 0)
-                        CommandLog(false, ClinicEnums.Module.MASTER_USER, Constants.Command.EDIT_USER, request.Data.Account, request.Data);
-                    else
-                        CommandLog(false, ClinicEnums.Module.MASTER_USER, Constants.Command.ADD_NEW_USER, request.Data.Account, request.Data);
-                }
+                string command = request.Data.Id > 0 ? Constants.Command.EDIT_USER : Constants.Command.ADD_NEW_USER;
+
+                ErrorLog(ClinicEnums.Module.MASTER_USER, command, request.Data.Account, ex);
             }
 
             return response;
@@ -151,6 +146,10 @@ namespace Klinik.Features
             List<UserModel> lists = new List<UserModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<User>(true);
+
+            // add default filter to show the active data only
+            searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
+
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.UserName.Contains(request.SearchValue) || p.Organization.OrgName.Contains(request.SearchValue) || p.Employee.EmpName.Contains(request.SearchValue));
@@ -234,14 +233,18 @@ namespace Klinik.Features
 
             try
             {
-                var isExist = _unitOfWork.UserRepository.GetById(request.Data.Id);
-                if (isExist.ID > 0)
+                var user = _unitOfWork.UserRepository.GetById(request.Data.Id);
+                if (user.ID > 0)
                 {
-                    _unitOfWork.UserRepository.Delete(isExist.ID);
+                    user.RowStatus = -1;
+                    user.ModifiedBy = request.Data.Account.UserCode;
+                    user.ModifiedDate = DateTime.Now;
+
+                    _unitOfWork.UserRepository.Update(user);
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "User", isExist.UserName, isExist.ID);
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "User", user.UserName, user.ID);
                     }
                     else
                     {
@@ -255,11 +258,14 @@ namespace Klinik.Features
                     response.Message = string.Format(Messages.RemoveObjectFailed, "User");
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 response.Status = false;
-                response.Message = Messages.GeneralError; ;
+                response.Message = Messages.GeneralError;
+
+                ErrorLog(ClinicEnums.Module.MASTER_USER, ClinicEnums.Action.DELETE.ToString(), request.Data.Account, ex);
             }
+
             return response;
         }
     }

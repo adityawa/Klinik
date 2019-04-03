@@ -34,15 +34,19 @@
         {
             LOGIN,
             MASTER_ORGANIZATION,
+            MASTER_ORGANIZATION_PRIVILEGE,
             MASTER_CLINIC,
             MASTER_EMPLOYEE,
             MASTER_PRIVILEGE,
             MASTER_ROLE,
+            MASTER_ROLE_PRIVILEGE,
             MASTER_USER,
+            MASTER_USER_ROLE,
             MASTER_DOCTOR,
             EMPLOYEE_ASSIGNMENT,
             REGISTRATION,
             POLI_SCHEDULE,
+            POLI_SCHEDULE_MASTER,
             MASTER_PARAMEDIC,
             Patient
         }

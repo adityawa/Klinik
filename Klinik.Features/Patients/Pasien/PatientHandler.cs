@@ -266,8 +266,11 @@ namespace Klinik.Features.Patients.Pasien
                 catch (Exception ex)
                 {
                     transaction.Rollback();
+
                     response.Status = false;
                     response.Message = Messages.GeneralError;
+
+                    ErrorLog(ClinicEnums.Module.Patient, Constants.Command.ADD_EDIT_PATIENT, request.Data.Account, ex);
                 }
             }
 
@@ -397,29 +400,29 @@ namespace Klinik.Features.Patients.Pasien
             PatientResponse response = new PatientResponse();
             try
             {
-                var isExist = _unitOfWork.PatientRepository.GetById(request.Data.Id);
-                var isExistPatientClinic = _unitOfWork.PatientClinicRepository.GetFirstOrDefault(x => x.PatientID == isExist.ID && x.ClinicID == request.Data.Account.ClinicID);
-                var isExistFileArchive = _unitOfWork.FileArchiveRepository.GetById(isExistPatientClinic.PhotoID);
-                if (isExist.ID > 0)
+                var patient = _unitOfWork.PatientRepository.GetById(request.Data.Id);
+                var patientClinic = _unitOfWork.PatientClinicRepository.GetFirstOrDefault(x => x.PatientID == patient.ID && x.ClinicID == request.Data.Account.ClinicID);
+                var fileArchive = _unitOfWork.FileArchiveRepository.GetById(patientClinic.PhotoID);
+                if (patient.ID > 0)
                 {
-                    isExist.RowStatus = -1;
-                    _unitOfWork.PatientRepository.Update(isExist);
-                    if (isExistPatientClinic != null)
+                    patient.RowStatus = -1;
+                    _unitOfWork.PatientRepository.Update(patient);
+                    if (patientClinic != null)
                     {
-                        isExistPatientClinic.RowStatus = -1;
-                        _unitOfWork.PatientClinicRepository.Update(isExistPatientClinic);
+                        patientClinic.RowStatus = -1;
+                        _unitOfWork.PatientClinicRepository.Update(patientClinic);
                     }
 
-                    if (isExistFileArchive != null)
+                    if (fileArchive != null)
                     {
-                        isExistFileArchive.RowStatus = -1;
-                        _unitOfWork.FileArchiveRepository.Update(isExistFileArchive);
+                        fileArchive.RowStatus = -1;
+                        _unitOfWork.FileArchiveRepository.Update(fileArchive);
                     }
 
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenRemoved2, "Patient", isExist.ID);
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved2, "Patient", patient.ID);
                     }
                     else
                     {
@@ -433,10 +436,12 @@ namespace Klinik.Features.Patients.Pasien
                     response.Message = string.Format(Messages.RemoveObjectFailed, "Patient");
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 response.Status = false;
                 response.Message = Messages.GeneralError;
+
+                ErrorLog(ClinicEnums.Module.Patient, ClinicEnums.Action.DELETE.ToString(), request.Data.Account, ex);
             }
 
             return response;

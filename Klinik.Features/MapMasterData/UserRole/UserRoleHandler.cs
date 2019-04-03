@@ -61,11 +61,14 @@ namespace Klinik.Features
 
                     response.Message = Messages.DataSaved;
                 }
-                catch
+                catch (Exception ex)
                 {
                     transaction.Rollback();
+
                     response.Status = false;
                     response.Message = Messages.GeneralError;
+
+                    ErrorLog(ClinicEnums.Module.MASTER_ROLE_PRIVILEGE, ClinicEnums.Action.DELETE.ToString(), request.Data.Account, ex);
                 }
             }
 
@@ -79,7 +82,7 @@ namespace Klinik.Features
         /// <returns></returns>
         public UserRoleResponse GetListData(UserRoleRequest request)
         {
-            var qry = _unitOfWork.UserRoleRepository.Get(x => x.UserID == request.Data.UserID);
+            var qry = _unitOfWork.UserRoleRepository.Get(x => x.UserID == request.Data.UserID && x.RowStatus == 0);
             UserRoleModel _model = new UserRoleModel();
 
             if (qry.Count > 0)

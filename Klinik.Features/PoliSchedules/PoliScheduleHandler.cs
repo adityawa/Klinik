@@ -153,15 +153,12 @@ namespace Klinik.Features.PoliSchedules
             catch (Exception ex)
             {
                 response.Status = false;
-                response.Message = ex.GetAllMessages();
+                response.Message = Messages.GeneralError;
 
-                if (request.Data != null)
-                {
-                    if (request.Data.Id > 0)
-                        CommandLog(false, ClinicEnums.Module.POLI_SCHEDULE, Constants.Command.EDIT_POLISCHEDULE, request.Data.Account, ex.Message, request.Data);
-                    else
-                        CommandLog(false, ClinicEnums.Module.POLI_SCHEDULE, Constants.Command.ADD_NEW_POLISCHEDULE, request.Data.Account, ex.Message, request.Data);
-                }
+                if (request.Data != null && request.Data.Id > 0)
+                    ErrorLog(ClinicEnums.Module.POLI_SCHEDULE, Constants.Command.EDIT_POLISCHEDULE, request.Data.Account, ex);
+                else
+                    ErrorLog(ClinicEnums.Module.POLI_SCHEDULE, Constants.Command.ADD_NEW_POLISCHEDULE, request.Data.Account, ex);
             }
 
             return response;
