@@ -175,7 +175,7 @@
             url: '/Doctor/Delete?id=' + Id,
             type: 'POST',
             success: function (result) {
-                if (result.Status == "True") {
+                if (result.Status) {
                     toastr.options.closeButton = false;
                     toastr.options.timeOut = 2000;
                     location.reload();

@@ -220,7 +220,7 @@ namespace Klinik.Features
             var searchPredicate = PredicateBuilder.New<Doctor>(true);
 
             // add default filter to show doctor or paramedic list            
-            searchPredicate = searchPredicate.And(p => p.TypeID == (isDoctor ? 0 : 1));
+            searchPredicate = searchPredicate.And(p => p.TypeID == (isDoctor ? 0 : 1) && p.RowStatus != -1);
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
@@ -324,14 +324,18 @@ namespace Klinik.Features
             try
             {
                 string type = isDoctor ? Messages.Doctor : Messages.Paramedic;
-                var isExist = _unitOfWork.DoctorRepository.GetById(request.Data.Id);
-                if (isExist.ID > 0)
+                var doctor = _unitOfWork.DoctorRepository.GetById(request.Data.Id);
+                if (doctor.ID > 0)
                 {
-                    _unitOfWork.DoctorRepository.Delete(isExist.ID);
+                    doctor.RowStatus = -1;
+                    doctor.ModifiedBy = request.Data.Account.UserCode;
+                    doctor.ModifiedDate = DateTime.Now;
+
+                    _unitOfWork.DoctorRepository.Update(doctor);
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, type, isExist.Name, isExist.Code);
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, type, doctor.Name, doctor.Code);
                     }
                     else
                     {
@@ -345,10 +349,12 @@ namespace Klinik.Features
                     response.Message = string.Format(Messages.RemoveObjectFailed, type);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 response.Status = false;
-                response.Message = Messages.GeneralError; ;
+                response.Message = Messages.GeneralError;
+
+                ErrorLog(ClinicEnums.Module.MASTER_DOCTOR, ClinicEnums.Action.DELETE.ToString(), request.Data.Account, ex);
             }
 
             return response;

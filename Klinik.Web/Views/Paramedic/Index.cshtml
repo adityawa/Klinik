@@ -1,8 +1,10 @@
 ﻿@model Klinik.Entities.MasterData.DoctorModel
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+                /**/
+
+                ViewBag.Title = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <section class="panel">
@@ -174,7 +176,7 @@
             url: '/Paramedic/Delete?id=' + Id,
             type: 'POST',
             success: function (result) {
-                if (result.Status == "True") {
+                if (result.Status) {
                     toastr.options.closeButton = false;
                     toastr.options.timeOut = 2000;
                     location.reload();

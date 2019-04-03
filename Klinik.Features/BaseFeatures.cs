@@ -63,6 +63,19 @@ namespace Klinik.Features
         }
 
         /// <summary>
+        /// Log an error
+        /// </summary>
+        /// <param name="module"></param>
+        /// <param name="status"></param>
+        /// <param name="command"></param>
+        /// <param name="account"></param>        
+        /// <param name="ex"></param>
+        public static void ErrorLog(ClinicEnums.Module module, string command, AccountModel account, Exception ex)
+        {
+            CommandLog(false, module, command, account, ex.GetAllMessages());
+        }
+
+        /// <summary>
         /// Log any executed command by user
         /// </summary>
         /// <param name="module"></param>
@@ -91,8 +104,11 @@ namespace Klinik.Features
 
                 var _entity = Mapper.Map<LogModel, Log>(log);
 
-                _unitOfWork.LogRepository.Insert(_entity);
-                _unitOfWork.Save();
+                using (var context = new KlinikDBEntities())
+                {
+                    context.Logs.Add(_entity);
+                    context.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
