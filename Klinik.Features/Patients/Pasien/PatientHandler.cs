@@ -47,11 +47,14 @@ namespace Klinik.Features.Patients.Pasien
                             request.Data.Photo.ActualPath = Path.Combine(HttpContext.Current.Server.MapPath(uploadDir), request.Data.file.FileName);
                             request.Data.Photo.ActualName = request.Data.file.FileName;
                             request.Data.Photo.TypeDoc = request.Data.file.ContentType;
+                            var reader = new System.IO.BinaryReader(request.Data.file.InputStream);
+                            request.Data.Photo.FileDoc = reader.ReadBytes(request.Data.file.ContentLength);
                         }
 
                         var _entityPatient = Mapper.Map<PatientModel, Patient>(request.Data);
                         _entityPatient.BirthDate = reformatDate(request.Data.BirthDateStr);
-                        _entityPatient.MRNumber = $"{ DateTime.Now.Month}{DateTime.Now.Year.ToString().Substring(2, 2)}_{ProvideMRNo()}";
+                        var _month = DateTime.Now.Month.ToString().Length == 1 ? string.Format("0{0}", DateTime.Now.Month.ToString()) : DateTime.Now.Month.ToString();
+                        _entityPatient.MRNumber = $"{_month}{DateTime.Now.Year.ToString().Substring(2, 2)}{ProvideMRNo()}";
                         _entityPatient.CreatedBy = request.Data.Account.UserName;
                         _entityPatient.CreatedDate = DateTime.Now;
                         _context.Patients.Add(_entityPatient);
@@ -67,7 +70,7 @@ namespace Klinik.Features.Patients.Pasien
                             result = _context.SaveChanges();
                             _photoID = _entityPhoto.ID;
 
-                            request.Data.file.SaveAs(request.Data.Photo.ActualPath);
+                           
                         }
 
                         //GetClinicID for current admin login
@@ -153,10 +156,14 @@ namespace Klinik.Features.Patients.Pasien
                                         _existingPhotoId.ActualName = request.Data.Photo.ActualName;
                                         _existingPhotoId.ActualPath = request.Data.Photo.ActualPath;
                                         _existingPhotoId.TypeDoc = request.Data.Photo.TypeDoc;
+
+                                        var reader = new System.IO.BinaryReader(request.Data.file.InputStream);
+                                        _existingPhotoId.FileDoc = reader.ReadBytes(request.Data.file.ContentLength);
+
                                         _existingPhotoId.ModifiedBy = request.Data.Account.UserName;
                                         _existingPhotoId.ModifiedDate = DateTime.Now;
                                         resultUpdated = _context.SaveChanges();
-                                        request.Data.file.SaveAs(request.Data.Photo.ActualPath);
+                                       
                                     }
                                 }
                             }
@@ -191,6 +198,8 @@ namespace Klinik.Features.Patients.Pasien
                                     request.Data.Photo.ActualPath = Path.Combine(HttpContext.Current.Server.MapPath(uploadDir), request.Data.file.FileName);
                                     request.Data.Photo.ActualName = request.Data.file.FileName;
                                     request.Data.Photo.TypeDoc = request.Data.file.ContentType;
+                                    var reader = new System.IO.BinaryReader(request.Data.file.InputStream);
+                                    request.Data.Photo.FileDoc = reader.ReadBytes(request.Data.file.ContentLength);
                                 }
 
                                 if (request.Data.Photo != null)

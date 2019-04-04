@@ -12,5 +12,6 @@ namespace Klinik.Entities.Document
         public string ActualName { get; set; }
         public string SourceTable { get; set; }
         public string TypeDoc { get; set; }
+        public byte[] FileDoc { get; set; }
     }
 }
