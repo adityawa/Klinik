@@ -57,9 +57,21 @@ namespace Klinik.Features.Loket
                         int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Message = string.Format(Messages.ObjectHasBeenUpdated2, "Registration", qry.ID);
+                            var formMedical = _unitOfWork.FormMedicalRepository.GetFirstOrDefault(x => x.QueuePoliID == qry.ID);
+                            if (formMedical != null)
+                            {
+                                formMedical.Necessity = request.Data.NecessityType.ToString();
+                                formMedical.PaymentType = request.Data.PaymentType.ToString();
+                            }
 
-                            CommandLog(true, ClinicEnums.Module.REGISTRATION, Constants.Command.EDIT_REGISTRATION, request.Data.Account, request.Data, _oldentity);
+                            _unitOfWork.FormMedicalRepository.Update(formMedical);
+                            resultAffected = _unitOfWork.Save();
+                            if (resultAffected > 0)
+                            {
+                                response.Message = string.Format(Messages.ObjectHasBeenUpdated2, "Registration", qry.ID);
+
+                                CommandLog(true, ClinicEnums.Module.REGISTRATION, Constants.Command.EDIT_REGISTRATION, request.Data.Account, request.Data, _oldentity);
+                            }
                         }
                         else
                         {
@@ -89,35 +101,28 @@ namespace Klinik.Features.Loket
                     regEntity.SortNumber = GenerateSortNumber(request.Data.PoliToID);
                     regEntity.DoctorID = request.Data.DoctorID == 0 ? (int?)null : request.Data.DoctorID;
 
-                    _unitOfWork.RegistrationRepository.Insert(regEntity);
+                    // create form medical
+                    var formMedical = new FormMedical
+                    {
+                        ClinicID = request.Data.Account.ClinicID,
+                        PatientID = request.Data.PatientID,
+                        PaymentType = request.Data.PaymentType.ToString(),
+                        Necessity = request.Data.NecessityType.ToString(),
+                        CreatedBy = request.Data.Account.UserCode,
+                        CreatedDate = DateTime.Now,
+                        StartDate = DateTime.Now
+                    };
+
+                    // reference to queue
+                    formMedical.QueuePoli = regEntity;
+
+                    _unitOfWork.FormMedicalRepository.Insert(formMedical);
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        // create form medical
-                        var formMedical = new FormMedical
-                        {
-                            PaymentType = request.Data.PaymentType.ToString(),
-                            Necessity = request.Data.NecessityType.ToString(),
-                            CreatedBy = request.Data.Account.UserCode,
-                            CreatedDate = DateTime.Now,
-                            StartDate = DateTime.Now
-                        };
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "Registration", regEntity.PatientID, regEntity.ID);
 
-                        _unitOfWork.FormMedicalRepository.Insert(formMedical);
-                        resultAffected = _unitOfWork.Save();
-                        if (resultAffected > 0)
-                        {
-                            response.Message = string.Format(Messages.ObjectHasBeenAdded, "Registration", regEntity.PatientID, regEntity.ID);
-
-                            CommandLog(true, ClinicEnums.Module.REGISTRATION, Constants.Command.ADD_NEW_REGISTRATION, request.Data.Account, request.Data);
-                        }
-                        else
-                        {
-                            response.Status = false;
-                            response.Message = string.Format(Messages.AddObjectFailed, "Registration");
-
-                            CommandLog(false, ClinicEnums.Module.REGISTRATION, Constants.Command.ADD_NEW_REGISTRATION, request.Data.Account, request.Data);
-                        }
+                        CommandLog(true, ClinicEnums.Module.REGISTRATION, Constants.Command.ADD_NEW_REGISTRATION, request.Data.Account, request.Data);
                     }
                     else
                     {
@@ -196,10 +201,21 @@ namespace Klinik.Features.Loket
         {
             LoketResponse response = new LoketResponse();
 
-            var qry = _unitOfWork.RegistrationRepository.Query(x => x.ID == request.Data.Id);
-            if (qry.FirstOrDefault() != null)
+            QueuePoli qry = _unitOfWork.RegistrationRepository.GetFirstOrDefault(x => x.ID == request.Data.Id);
+            if (qry != null)
             {
-                response.Entity = Mapper.Map<QueuePoli, LoketModel>(qry.FirstOrDefault());
+                response.Entity = Mapper.Map<QueuePoli, LoketModel>(qry);
+
+                // reformat gender
+                response.Entity.PatientGender = response.Entity.PatientGender == "M" ? Messages.Male : Messages.Female;
+                response.Entity.PatientType = response.Entity.PatientType == "2" ? Messages.Company : Messages.General;
+
+                FormMedical formMedical = _unitOfWork.FormMedicalRepository.GetFirstOrDefault(x => x.QueuePoliID == qry.ID);
+                if (formMedical != null)
+                {
+                    response.Entity.NecessityType = int.Parse(formMedical.Necessity);
+                    response.Entity.PaymentType = int.Parse(formMedical.PaymentType);
+                }
             }
 
             return response;

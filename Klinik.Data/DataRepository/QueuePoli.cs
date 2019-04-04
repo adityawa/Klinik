@@ -14,6 +14,12 @@ namespace Klinik.Data.DataRepository
     
     public partial class QueuePoli
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public QueuePoli()
+        {
+            this.FormMedicals = new HashSet<FormMedical>();
+        }
+    
         public long ID { get; set; }
         public long ClinicID { get; set; }
         public long PatientID { get; set; }
@@ -35,6 +41,8 @@ namespace Klinik.Data.DataRepository
     
         public virtual Clinic Clinic { get; set; }
         public virtual Doctor Doctor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FormMedical> FormMedicals { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual Poli Poli { get; set; }
         public virtual Poli Poli1 { get; set; }

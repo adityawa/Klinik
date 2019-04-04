@@ -92,7 +92,7 @@
                         @Klinik.Resources.UIMessages.PaymentType
                     </label>
                     <div class="col-md-3">
-                        @Html.DropDownListFor(p => p.PaymentType, (IEnumerable<SelectListItem>)ViewBag.PaymentTypeList, new { @class = "form-control", @id = "ddltype" })
+                        @Html.DropDownListFor(p => p.PaymentType, (IEnumerable<SelectListItem>)ViewBag.PaymentTypeList, new { @class = "form-control", @id = "ddlpaymenttype" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -158,9 +158,6 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
-
-            $('#ddlpolito').select2();
-            $('#ddltype').select2();
 
             $("#ddlpolito").change(function () {
                 $.get("/Loket/GetDoctorList", { PoliId: $("#ddlpolito").val() }, function (data) {

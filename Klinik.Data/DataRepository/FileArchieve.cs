@@ -27,12 +27,12 @@ namespace Klinik.Data.DataRepository
         public string ActualPath { get; set; }
         public string ActualName { get; set; }
         public string TypeDoc { get; set; }
+        public byte[] FileDoc { get; set; }
         public short RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public byte[] FileDoc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DoctorClinic> DoctorClinics { get; set; }
