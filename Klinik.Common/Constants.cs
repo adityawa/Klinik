@@ -45,6 +45,8 @@
             public const string PATIENT_TYPE = "PatientType";
             public const string MARITAL_STATUS = "Marital";
             public const string RELATION = "Relation";
+            public const string NECESSITY_TYPE = "NecessityType";
+            public const string PAYMENT_TYPE = "PaymentType";
         }
     }
 }

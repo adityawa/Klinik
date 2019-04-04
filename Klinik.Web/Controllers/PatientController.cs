@@ -242,7 +242,7 @@ namespace Klinik.Web.Controllers
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
 
             if (_response.Status && _model.IsFromRegistration)
-                return RedirectToAction("CreateRegistrationForNewPatient", "Registration", new { patientID = _response.Entity.Id });
+                return RedirectToAction("CreateRegistrationForNewPatient", "Loket", new { patientID = _response.Entity.Id });
             else
                 return View("CreateOrEditPatient", _model);
         }

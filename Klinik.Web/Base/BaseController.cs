@@ -169,7 +169,7 @@ namespace Klinik.Web
             return GetGeneralMasterByType(Constants.MasterType.EMPLOYMENT);
         }
 
-        private List<SelectListItem> GetGeneralMasterByType(string type)
+        protected List<SelectListItem> GetGeneralMasterByType(string type)
         {
             List<SelectListItem> _dataList = new List<SelectListItem>();
             foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(type).ToList())

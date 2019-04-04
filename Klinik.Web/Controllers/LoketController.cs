@@ -27,6 +27,16 @@ namespace Klinik.Web.Controllers
         }
 
         #region ::DROPDOWN METHODS::
+        private List<SelectListItem> BindDropDownNecessityList()
+        {
+            return GetGeneralMasterByType(Constants.MasterType.NECESSITY_TYPE);
+        }
+
+        private List<SelectListItem> BindDropDownPaymentTypeList()
+        {
+            return GetGeneralMasterByType(Constants.MasterType.PAYMENT_TYPE);
+        }
+
         private List<SelectListItem> BindDropDownPoliList(int poliType = 0)
         {
             // get valid poli from type
@@ -166,7 +176,7 @@ namespace Klinik.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateOrEditRegistration(LoketModel model)
+        public ActionResult Edit(LoketModel model)
         {
             model.Account = Account;
 
@@ -180,18 +190,43 @@ namespace Klinik.Web.Controllers
             }
 
             ViewBag.Response = $"{_response.Status};{_response.Message}";
-            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
-            var tempPoliList = BindDropDownPoliList(GetPoliType(model.PoliFromID));
-            ViewBag.PoliList = tempPoliList;
+            ViewBag.PoliList = BindDropDownPoliList(GetPoliType(model.PoliFromID));
             ViewBag.PatientList = BindDropDownPatientList();
             ViewBag.RegistrationTypeList = BindDropDownTypeList();
-            ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
+            ViewBag.DoctorList = BindDropDownDoctorList(model.PoliToID);
+            ViewBag.PaymentTypeList = BindDropDownPaymentTypeList();
+            ViewBag.NecessityList = BindDropDownNecessityList();
 
-            return View("CreateOrEditRegistration", model);
+            return View("Edit", model);
+        }
+
+        [HttpPost]
+        public ActionResult Create(LoketModel model)
+        {
+            model.Account = Account;
+
+            var request = new LoketRequest { Data = model, };
+
+            LoketResponse _response = new LoketValidator(_unitOfWork).Validate(request);
+            if (_response.Status)
+            {
+                // Notify to all
+                RegistrationHub.BroadcastDataToAllClients();
+            }
+
+            ViewBag.Response = $"{_response.Status};{_response.Message}";
+            ViewBag.PoliList = BindDropDownPoliList(GetPoliType(model.PoliFromID));
+            ViewBag.PatientList = BindDropDownPatientList();
+            ViewBag.RegistrationTypeList = BindDropDownTypeList();
+            ViewBag.DoctorList = BindDropDownDoctorList(model.PoliToID);
+            ViewBag.PaymentTypeList = BindDropDownPaymentTypeList();
+            ViewBag.NecessityList = BindDropDownNecessityList();
+
+            return View("Index", model);
         }
 
         [CustomAuthorize("EDIT_REGISTRATION")]
-        public ActionResult EditRegistration()
+        public ActionResult Edit()
         {
             LoketResponse _response = new LoketResponse();
             var request = new LoketRequest
@@ -206,37 +241,14 @@ namespace Klinik.Web.Controllers
             LoketModel _model = resp.Entity;
             _model.CurrentPoliID = GetUserPoliID();
             ViewBag.Response = _response;
-            var tempPoliList = BindDropDownPoliList(GetPoliType(_model.PoliFromID));
-            ViewBag.PoliList = tempPoliList;
+            ViewBag.PoliList = BindDropDownPoliList(GetPoliType(_model.PoliFromID));
             ViewBag.PatientList = BindDropDownPatientList();
             ViewBag.RegistrationTypeList = BindDropDownTypeList();
-            ViewBag.ActionType = ClinicEnums.Action.Edit;
-            ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
+            ViewBag.DoctorList = BindDropDownDoctorList(_model.PoliToID);
+            ViewBag.PaymentTypeList = BindDropDownPaymentTypeList();
+            ViewBag.NecessityList = BindDropDownNecessityList();
 
-            return View("CreateOrEditRegistration", _model);
-        }
-
-        [CustomAuthorize("ADD_REGISTRATION")]
-        public ActionResult CreateRegistration(int poliId = 1)
-        {
-            var poliName = Regex.Replace(((PoliEnum)poliId).ToString(), "([A-Z])", " $1").Trim();
-
-            var model = new LoketModel
-            {
-                PoliFromID = poliId,
-                CurrentPoliID = poliId,
-                PoliFromName = poliName
-            };
-
-            ViewBag.ActionType = ClinicEnums.Action.Add;
-            ViewBag.Response = new LoketResponse();
-            var tempPoliList = BindDropDownPoliList(GetPoliType(poliId));
-            ViewBag.PoliList = tempPoliList;
-            ViewBag.PatientList = BindDropDownPatientList();
-            ViewBag.RegistrationTypeList = BindDropDownTypeList();
-            ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
-
-            return View("CreateOrEditRegistration", model);
+            return View("Edit", _model);
         }
 
         [CustomAuthorize("ADD_REGISTRATION")]
@@ -252,15 +264,16 @@ namespace Klinik.Web.Controllers
                 PatientID = patientID
             };
 
-            ViewBag.ActionType = ClinicEnums.Action.Add;
             ViewBag.Response = new LoketResponse();
             var tempPoliList = BindDropDownPoliList(GetPoliType(1));
             ViewBag.PoliList = tempPoliList;
             ViewBag.PatientList = BindDropDownPatientList();
             ViewBag.RegistrationTypeList = BindDropDownTypeList();
             ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
+            ViewBag.PaymentTypeList = BindDropDownPaymentTypeList();
+            ViewBag.NecessityList = BindDropDownNecessityList();
 
-            return View("CreateOrEditRegistration", model);
+            return View("Index", model);
         }
 
         [HttpPost]
@@ -395,7 +408,6 @@ namespace Klinik.Web.Controllers
                 PoliFromName = poliName
             };
 
-            ViewBag.ActionType = ClinicEnums.Action.Add;
             ViewBag.Response = new LoketResponse();
             var tempPoliList = BindDropDownPoliList(GetPoliType((int)poliEnum));
             ViewBag.PoliList = tempPoliList;
@@ -406,30 +418,6 @@ namespace Klinik.Web.Controllers
             ViewBag.NecessityList = BindDropDownNecessityList();
 
             return View("Index", model);
-        }
-
-        private List<SelectListItem> BindDropDownNecessityList()
-        {
-            var list = new List<SelectListItem>();
-            list.Add(new SelectListItem { Text = "Berobat", Value = "1" });
-            list.Add(new SelectListItem { Text = "Kontrol", Value = "2" });
-            list.Add(new SelectListItem { Text = "Konsultasi", Value = "3" });
-            list.Add(new SelectListItem { Text = "Check Up", Value = "4" });
-            list.Add(new SelectListItem { Text = "Periksa Hamil", Value = "5" });
-
-            return list;
-        }
-
-        private List<SelectListItem> BindDropDownPaymentTypeList()
-        {
-            var list = new List<SelectListItem>();
-            list.Add(new SelectListItem { Text = "Umum / Swadaya", Value = "1" });
-            list.Add(new SelectListItem { Text = "BPJS", Value = "2" });
-            list.Add(new SelectListItem { Text = "ASKES", Value = "3" });
-            list.Add(new SelectListItem { Text = "Asuransi", Value = "4" });
-            list.Add(new SelectListItem { Text = "KIS", Value = "5" });
-
-            return list;
         }
         #endregion
 
@@ -577,6 +565,14 @@ namespace Klinik.Web.Controllers
         }
 
         [NonAction]
+        private long GetPatientId(int regId)
+        {
+            QueuePoli queue = _unitOfWork.RegistrationRepository.GetFirstOrDefault(x => x.ID == regId);
+
+            return queue.PatientID;
+        }
+
+        [NonAction]
         private LoketResponse GetTodayRegistrationList()
         {
             var request = new LoketRequest();
@@ -601,7 +597,6 @@ namespace Klinik.Web.Controllers
                 IsFromDashboard = true
             };
 
-            ViewBag.ActionType = ClinicEnums.Action.Add;
             var tempPoliList = BindDropDownPoliList(GetPoliType(model.CurrentPoliID));
             ViewBag.PoliList = tempPoliList;
             ViewBag.PatientList = BindDropDownPatientList();

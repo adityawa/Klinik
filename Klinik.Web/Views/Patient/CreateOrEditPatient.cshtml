@@ -279,7 +279,7 @@
             type: 'POST',
             success: function (result) {
                 if (result.Status) {
-                    window.location.href="@Url.Action("Index", "Registration")";
+                    window.location.href="@Url.Action("Index", "Loket")";
                 }
                 else {
                     toastr.error(result.Message);
@@ -294,7 +294,7 @@
             type: 'POST',
             success: function (result) {
                 if (result.Status) {
-                    window.location.href="@Url.Action("Index", "Registration")";
+                    window.location.href="@Url.Action("Index", "Loket")";
                 }
                 else {
                     toastr.error(result.Message);
@@ -305,7 +305,7 @@
 
     var GoBack = function (isFromRegistration) {
             if (isFromRegistration) {
-                window.location.href = "/Registration/CreateRegistration";
+                window.location.href = "/Loket/Index";
             } else {
                 window.location.href = "/Patient/PasienList";
             }

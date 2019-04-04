@@ -75,6 +75,7 @@ namespace Klinik.Web
                 Name = patient.Name,
                 MRNumber = patient.MRNumber,
                 KTPNumber = patient.KTPNumber,
+                BPJSNumber = patient.BPJSNumber,
                 Birthdate = patient.BirthDate,
                 Address = address,
                 BloodType = patient.BloodType,

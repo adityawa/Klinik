@@ -2,6 +2,7 @@
 using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Entities.Form;
 using Klinik.Entities.Loket;
 using Klinik.Resources;
 using LinqKit;
@@ -92,9 +93,31 @@ namespace Klinik.Features.Loket
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "Registration", regEntity.PatientID, regEntity.ID);
+                        // create form medical
+                        var formMedical = new FormMedical
+                        {
+                            PaymentType = request.Data.PaymentType.ToString(),
+                            Necessity = request.Data.NecessityType.ToString(),
+                            CreatedBy = request.Data.Account.UserCode,
+                            CreatedDate = DateTime.Now,
+                            StartDate = DateTime.Now
+                        };
 
-                        CommandLog(true, ClinicEnums.Module.REGISTRATION, Constants.Command.ADD_NEW_REGISTRATION, request.Data.Account, request.Data);
+                        _unitOfWork.FormMedicalRepository.Insert(formMedical);
+                        resultAffected = _unitOfWork.Save();
+                        if (resultAffected > 0)
+                        {
+                            response.Message = string.Format(Messages.ObjectHasBeenAdded, "Registration", regEntity.PatientID, regEntity.ID);
+
+                            CommandLog(true, ClinicEnums.Module.REGISTRATION, Constants.Command.ADD_NEW_REGISTRATION, request.Data.Account, request.Data);
+                        }
+                        else
+                        {
+                            response.Status = false;
+                            response.Message = string.Format(Messages.AddObjectFailed, "Registration");
+
+                            CommandLog(false, ClinicEnums.Module.REGISTRATION, Constants.Command.ADD_NEW_REGISTRATION, request.Data.Account, request.Data);
+                        }
                     }
                     else
                     {
@@ -276,7 +299,7 @@ namespace Klinik.Features.Loket
                 // format the queue code
                 if (item.Type == (int)RegistrationTypeEnum.MCU)
                 {
-                    prData.SortNumberCode = item.Poli1.Code.Trim() + "-" + string.Format("{0:D3}", item.SortNumber) + " (M)";
+                    prData.SortNumberCode = "M-" + string.Format("{0:D3}", item.SortNumber);
                 }
                 else
                 {

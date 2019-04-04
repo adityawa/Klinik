@@ -1348,6 +1348,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register Type.
+        /// </summary>
+        public static string RegisterType {
+            get {
+                return ResourceManager.GetString("RegisterType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registration List.
         /// </summary>
         public static string RegistrationList {

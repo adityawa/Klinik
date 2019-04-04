@@ -1,6 +1,8 @@
 ﻿@model Klinik.Entities.Loket.LoketModel
 
 @{
+    /**/
+
     ViewBag.Title = "RegistrationList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -15,18 +17,17 @@
 }
 
 <div class="col-md-12">
-    <form class="form-horizontal form-bordered" method="post" action="/Loket/CreateOrEditRegistration">
+    <form class="form-horizontal form-bordered" method="post" action="/Loket/Create">
         <section class="panel">
             <header class="panel-heading">
                 <div class="panel-actions">
                     <a href="#" class="fa fa-caret-down"></a>
                 </div>
-                <h5 class="panel-title">
-                    @ViewBag.ActionType Registration |
-                    <button type="button" id="btnNewPatient" class="btn btn-success" onclick="location.href='@Url.Action("CreateFromRegistration", "Patient")'">
-                        <i class="fa fa-plus"></i>&nbsp;@Klinik.Resources.UIMessages.NewPatient
-                    </button>
-                </h5>
+                <div>
+                    <h5 class="panel-title">
+                        @Klinik.Resources.UIMessages.Register
+                    </h5>
+                </div>
             </header>
             <div class="panel-body">
                 <div class="form-group">
@@ -45,9 +46,10 @@
                     <label class="col-md-1 control-label " for="inputDefault" style="text-align:left">
                         @Klinik.Resources.UIMessages.PoliTo
                     </label>
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         @Html.DropDownListFor(p => p.PoliToID, (IEnumerable<SelectListItem>)ViewBag.PoliList, new { @class = "form-control", @id = "ddlpolito" })
                     </div>
+                    <div class="col-md-2"><button type="button" class="btn btn-success btn-block" onclick="location.href='@Url.Action("CreateFromRegistration", "Patient")'">@Klinik.Resources.UIMessages.NewPatient</button></div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.MRNumber</label>
@@ -61,9 +63,10 @@
                     <label class="col-md-1 control-label" for="inputDefault">
                         @Klinik.Resources.UIMessages.Doctor
                     </label>
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         @Html.DropDownListFor(p => p.DoctorID, (IEnumerable<SelectListItem>)ViewBag.DoctorList, new { @class = "form-control", @id = "ddldoctor" })
                     </div>
+                    <div class="col-md-2"><button type="button" class="btn btn-warning btn-block">Print Card</button></div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Birthdate</label>
@@ -77,9 +80,10 @@
                     <label class="col-md-1 control-label" for="inputDefault">
                         @Klinik.Resources.UIMessages.Necessity
                     </label>
-                    <div class="col-md-5">
-                        @Html.DropDownListFor(p => p.DoctorID, (IEnumerable<SelectListItem>)ViewBag.NecessityList, new { @class = "form-control", @id = "ddldoctor" })
+                    <div class="col-md-3">
+                        @Html.DropDownListFor(p => p.NecessityType, (IEnumerable<SelectListItem>)ViewBag.NecessityList, new { @class = "form-control", @id = "ddlnecessity" })
                     </div>
+                    <div class="col-md-2"><button type="submit" class="btn btn-primary btn-block">@Klinik.Resources.UIMessages.Register</button></div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PatientType</label>
@@ -93,8 +97,8 @@
                     <label class="col-md-1 control-label" for="inputDefault">
                         @Klinik.Resources.UIMessages.PaymentType
                     </label>
-                    <div class="col-md-5">
-                        @Html.DropDownListFor(p => p.Type, (IEnumerable<SelectListItem>)ViewBag.PaymentTypeList, new { @class = "form-control", @id = "ddltype" })
+                    <div class="col-md-3">
+                        @Html.DropDownListFor(p => p.PaymentType, (IEnumerable<SelectListItem>)ViewBag.PaymentTypeList, new { @class = "form-control", @id = "ddltype" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -103,12 +107,11 @@
                         @Html.TextBoxFor(x => x.PatientAddress, new { @class = "form-control", @id = "tbAddress", @readonly = "readonly" })
                     </div>
                     <label class="col-md-1 control-label" for="inputDefault">
-                        Register Type
+                        @Klinik.Resources.UIMessages.RegisterType
                     </label>
                     <div class="col-md-3">
                         @Html.DropDownListFor(p => p.Type, (IEnumerable<SelectListItem>)ViewBag.RegistrationTypeList, new { @class = "form-control", @id = "ddltype" })
                     </div>
-                    <div class="col-md-2"><button type="submit" class="btn btn-primary btn-block">@Klinik.Resources.UIMessages.Register</button></div>
                 </div>
             </div>
         </section>
@@ -207,9 +210,6 @@
     }
 
     $(document).ready(function () {
-        $('#btnAdd').click(function (e) {
-            window.location.href = "@Url.Action("CreateRegistration", "Loket", new { poliId = Model.PoliFromID })";
-        });
 
         $("#ddlpolito").change(function () {
             $.get("/Loket/GetDoctorList", { PoliId: $("#ddlpolito").val() }, function (data) {
@@ -293,7 +293,7 @@
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": false },
                 {
-                    "render": function (data, type, full, meta) { return '<a href="/Loket/EditRegistration?id=' + full.Id + '">'+ full.PatientName+'</a>'; }
+                    "render": function (data, type, full, meta) { return '<a href="/Loket/Edit?id=' + full.Id + '">'+ full.PatientName+'</a>'; }
                 },
                 { "data": "PoliFromName", "name": "PoliFromName", "autoWidth": true },
                 { "data": "PoliToName", "name": "PoliToName", "autoWidth": true },
@@ -325,6 +325,22 @@
         "timeOut": "0",
         "showMethod": "fadeIn"
     };
+
+    var _temp = "@ViewBag.Response";
+    var _arrMsg = _temp.split(";");
+
+    if (_arrMsg.length > 1) {
+        if (_arrMsg[0] == "True") {
+            toastr.options.closeButton = false;
+            toastr.options.timeOut = 2000;
+            toastr.success(_arrMsg[1]);
+        }
+        else {
+            toastr.options.closeButton = true;
+            toastr.options.timeOut = 0;
+            toastr.error(_arrMsg[1]);
+        }
+    }
 
     var Process = function (ID) {
         var r = confirm("@Klinik.Resources.UIMessages.ProcessConfirmation");

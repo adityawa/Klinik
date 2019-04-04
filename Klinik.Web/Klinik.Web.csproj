@@ -1390,7 +1390,7 @@
     <Content Include="Views\MasterData\CreateOrEditClinic.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Loket\CreateOrEditRegistration.cshtml" />
+    <Content Include="Views\Loket\Edit.cshtml" />
     <Content Include="Views\Loket\Index.cshtml" />
     <Content Include="Views\PoliSchedule\Index.cshtml" />
     <Content Include="Views\PoliSchedule\CreateOrEditPoliSchedule.cshtml" />

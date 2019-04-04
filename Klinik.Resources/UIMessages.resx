@@ -654,4 +654,7 @@
   <data name="PaymentType" xml:space="preserve">
     <value>Payment Type</value>
   </data>
+  <data name="RegisterType" xml:space="preserve">
+    <value>Register Type</value>
+  </data>
 </root>
