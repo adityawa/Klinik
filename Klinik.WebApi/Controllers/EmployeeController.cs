@@ -21,6 +21,7 @@ namespace Klinik.WebApi.Controllers
         /// Constructor
         /// </summary>
         /// <param name="unitOfWork"></param>
+        /// <param name="context"></param>
         public EmployeeController(IUnitOfWork unitOfWork, KlinikDBEntities context)
         {
             _unitOfWork = unitOfWork;
@@ -58,7 +59,7 @@ namespace Klinik.WebApi.Controllers
             };
 
             EmployeeResponse _response = new EmployeeValidator(_unitOfWork, _context).Validate(request, true);
-            if (_response.Status ==true)
+            if (_response.Status == true)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, _response.Message);
             }

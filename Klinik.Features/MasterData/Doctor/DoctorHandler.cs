@@ -169,7 +169,7 @@ namespace Klinik.Features
                     response.Status = false;
                     response.Message = string.Format(Messages.AddObjectFailed, type);
 
-                    CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, requestData.Account, requestData);
+                    ErrorLog(ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.ADD_NEW_DOCTOR, requestData.Account, ex);
                 }
             }
 
