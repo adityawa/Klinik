@@ -205,6 +205,7 @@
           <Property Name="PoliID" Type="int" />
           <Property Name="TransDate" Type="datetime" />
           <Property Name="DoctorID" Type="int" />
+          <Property Name="Anamnesa" Type="text" />
           <Property Name="Diagnose" Type="text" />
           <Property Name="Therapy" Type="text" />
           <Property Name="Remark" Type="text" />
@@ -309,7 +310,6 @@
           <Property Name="FormMedicalID" Type="bigint" Nullable="false" />
           <Property Name="TransDate" Type="datetime" Nullable="false" />
           <Property Name="DoctorID" Type="int" />
-          <Property Name="Anamnesa" Type="text" />
           <Property Name="Temperature" Type="float" />
           <Property Name="Weight" Type="float" />
           <Property Name="Height" Type="float" />
@@ -1938,6 +1938,7 @@
           <Property Name="PoliID" Type="Int32" />
           <Property Name="TransDate" Type="DateTime" Precision="3" />
           <Property Name="DoctorID" Type="Int32" />
+          <Property Name="Anamnesa" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Diagnose" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Therapy" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -2058,7 +2059,6 @@
           <Property Name="FormMedicalID" Type="Int64" Nullable="false" />
           <Property Name="TransDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DoctorID" Type="Int32" />
-          <Property Name="Anamnesa" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Temperature" Type="Double" />
           <Property Name="Weight" Type="Double" />
           <Property Name="Height" Type="Double" />
@@ -3714,6 +3714,7 @@
                 <ScalarProperty Name="PoliID" ColumnName="PoliID" />
                 <ScalarProperty Name="TransDate" ColumnName="TransDate" />
                 <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="Anamnesa" ColumnName="Anamnesa" />
                 <ScalarProperty Name="Diagnose" ColumnName="Diagnose" />
                 <ScalarProperty Name="Therapy" ColumnName="Therapy" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
@@ -3824,7 +3825,6 @@
                 <ScalarProperty Name="FormMedicalID" ColumnName="FormMedicalID" />
                 <ScalarProperty Name="TransDate" ColumnName="TransDate" />
                 <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
-                <ScalarProperty Name="Anamnesa" ColumnName="Anamnesa" />
                 <ScalarProperty Name="Temperature" ColumnName="Temperature" />
                 <ScalarProperty Name="Weight" ColumnName="Weight" />
                 <ScalarProperty Name="Height" ColumnName="Height" />

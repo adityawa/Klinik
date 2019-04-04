@@ -18,7 +18,6 @@ namespace Klinik.Data.DataRepository
         public long FormMedicalID { get; set; }
         public System.DateTime TransDate { get; set; }
         public Nullable<int> DoctorID { get; set; }
-        public string Anamnesa { get; set; }
         public Nullable<double> Temperature { get; set; }
         public Nullable<double> Weight { get; set; }
         public Nullable<double> Height { get; set; }

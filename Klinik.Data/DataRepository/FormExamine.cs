@@ -27,6 +27,7 @@ namespace Klinik.Data.DataRepository
         public Nullable<int> PoliID { get; set; }
         public Nullable<System.DateTime> TransDate { get; set; }
         public Nullable<int> DoctorID { get; set; }
+        public string Anamnesa { get; set; }
         public string Diagnose { get; set; }
         public string Therapy { get; set; }
         public string Remark { get; set; }
