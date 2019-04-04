@@ -12,28 +12,28 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Collections.Generic;
     
-    public partial class OrganizationRole
+    public partial class LabItem
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OrganizationRole()
+        public LabItem()
         {
-            this.RolePrivileges = new HashSet<RolePrivilege>();
-            this.UserRoles = new HashSet<UserRole>();
+            this.FormExamineLabs = new HashSet<FormExamineLab>();
         }
     
-        public long ID { get; set; }
-        public long OrgID { get; set; }
-        public string RoleName { get; set; }
-        public short RowStatus { get; set; }
+        public int ID { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public Nullable<int> LabCategoryID { get; set; }
+        public string Normal { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
-        public System.DateTime CreatedDate { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual Organization Organization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RolePrivilege> RolePrivileges { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserRole> UserRoles { get; set; }
+        public virtual ICollection<FormExamineLab> FormExamineLabs { get; set; }
+        public virtual LabItemCategory LabItemCategory { get; set; }
     }
 }

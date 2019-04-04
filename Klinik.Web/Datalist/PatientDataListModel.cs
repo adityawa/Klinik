@@ -22,11 +22,26 @@ namespace Klinik.Web
         public string KTPNumber { get; set; }
 
         [Display(Name = "Birthdate")]
-        [DatalistColumn(Format = "{0:dd/MM/yyyy}")]
+        [DatalistColumn(Format = "{0:dd MMMM yyyy}")]
         public DateTime Birthdate { get; set; }
 
         [DatalistColumn]
         [Display(Name = "Address")]
         public string Address { get; set; }
+
+        [DatalistColumn(Hidden = true)]
+        public string HPNumber { get; set; }
+
+        [DatalistColumn(Hidden = true)]
+        public string BPJSNumber { get; set; }
+
+        [DatalistColumn(Hidden = true)]
+        public string Gender { get; set; }
+
+        [DatalistColumn(Hidden = true)]
+        public string BloodType { get; set; }
+
+        [DatalistColumn(Hidden = true)]
+        public string PatientType { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
-using Klinik.Entities.Registration;
+using Klinik.Entities.Loket;
 using Klinik.Resources;
 using LinqKit;
 using System;
@@ -10,15 +10,15 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-namespace Klinik.Features.Registration
+namespace Klinik.Features.Loket
 {
-    public class RegistrationHandler : BaseFeatures, IBaseFeatures<RegistrationResponse, RegistrationRequest>
+    public class LoketHandler : BaseFeatures, IBaseFeatures<LoketResponse, LoketRequest>
     {
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="unitOfWork"></param>
-        public RegistrationHandler(IUnitOfWork unitOfWork)
+        public LoketHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -28,9 +28,9 @@ namespace Klinik.Features.Registration
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public RegistrationResponse CreateOrEdit(RegistrationRequest request)
+        public LoketResponse CreateOrEdit(LoketRequest request)
         {
-            RegistrationResponse response = new RegistrationResponse();
+            LoketResponse response = new LoketResponse();
 
             try
             {
@@ -40,7 +40,7 @@ namespace Klinik.Features.Registration
                     if (qry != null)
                     {
                         // save the old data
-                        var _oldentity = Mapper.Map<QueuePoli, RegistrationModel>(qry);
+                        var _oldentity = Mapper.Map<QueuePoli, LoketModel>(qry);
 
                         // update data
                         qry.Status = request.Data.Status;
@@ -78,7 +78,7 @@ namespace Klinik.Features.Registration
                 }
                 else
                 {
-                    var regEntity = Mapper.Map<RegistrationModel, QueuePoli>(request.Data);
+                    var regEntity = Mapper.Map<LoketModel, QueuePoli>(request.Data);
                     regEntity.CreatedBy = request.Data.Account.UserCode;
                     regEntity.CreatedDate = DateTime.Now;
                     regEntity.TransactionDate = DateTime.Now;
@@ -151,13 +151,13 @@ namespace Klinik.Features.Registration
         /// Get all registration
         /// </summary>
         /// <returns></returns>
-        public IList<RegistrationModel> GetAllRegistration()
+        public IList<LoketModel> GetAllRegistration()
         {
             var qry = _unitOfWork.RegistrationRepository.Get();
-            IList<RegistrationModel> registrationList = new List<RegistrationModel>();
+            IList<LoketModel> registrationList = new List<LoketModel>();
             foreach (var item in qry)
             {
-                var _registration = Mapper.Map<QueuePoli, RegistrationModel>(item);
+                var _registration = Mapper.Map<QueuePoli, LoketModel>(item);
                 registrationList.Add(_registration);
             }
 
@@ -169,14 +169,14 @@ namespace Klinik.Features.Registration
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public RegistrationResponse GetDetail(RegistrationRequest request)
+        public LoketResponse GetDetail(LoketRequest request)
         {
-            RegistrationResponse response = new RegistrationResponse();
+            LoketResponse response = new LoketResponse();
 
             var qry = _unitOfWork.RegistrationRepository.Query(x => x.ID == request.Data.Id);
             if (qry.FirstOrDefault() != null)
             {
-                response.Entity = Mapper.Map<QueuePoli, RegistrationModel>(qry.FirstOrDefault());
+                response.Entity = Mapper.Map<QueuePoli, LoketModel>(qry.FirstOrDefault());
             }
 
             return response;
@@ -187,7 +187,7 @@ namespace Klinik.Features.Registration
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public RegistrationResponse GetListData(RegistrationRequest request)
+        public LoketResponse GetListData(LoketRequest request)
         {
             return GetListData(request, 1);
         }
@@ -198,9 +198,9 @@ namespace Klinik.Features.Registration
         /// <param name="request"></param>
         /// <param name="poliID"></param>
         /// <returns></returns>
-        public RegistrationResponse GetListData(RegistrationRequest request, int poliID = 1)
+        public LoketResponse GetListData(LoketRequest request, int poliID = 1)
         {
-            List<RegistrationModel> lists = new List<RegistrationModel>();
+            List<LoketModel> lists = new List<LoketModel>();
             List<QueuePoli> qry = null;
             var searchPredicate = PredicateBuilder.New<QueuePoli>(true);
 
@@ -260,7 +260,7 @@ namespace Klinik.Features.Registration
 
             foreach (var item in qry)
             {
-                RegistrationModel prData = Mapper.Map<QueuePoli, RegistrationModel>(item);
+                LoketModel prData = Mapper.Map<QueuePoli, LoketModel>(item);
 
                 // get the doctor name
                 if (prData.DoctorID != 0)
@@ -290,7 +290,7 @@ namespace Klinik.Features.Registration
             int take = request.PageSize == 0 ? totalRequest : request.PageSize;
             var data = lists.Skip(request.Skip).Take(take).ToList();
 
-            var response = new RegistrationResponse
+            var response = new LoketResponse
             {
                 Draw = request.Draw,
                 RecordsFiltered = totalRequest,
@@ -306,9 +306,9 @@ namespace Klinik.Features.Registration
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public RegistrationResponse RemoveData(RegistrationRequest request)
+        public LoketResponse RemoveData(LoketRequest request)
         {
-            RegistrationResponse response = new RegistrationResponse();
+            LoketResponse response = new LoketResponse();
             try
             {
                 var registration = _unitOfWork.RegistrationRepository.GetById(request.Data.Id);
@@ -352,9 +352,9 @@ namespace Klinik.Features.Registration
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public RegistrationResponse ProcessRegistration(RegistrationRequest request)
+        public LoketResponse ProcessRegistration(LoketRequest request)
         {
-            RegistrationResponse response = new RegistrationResponse();
+            LoketResponse response = new LoketResponse();
             try
             {
                 var currentRegistration = _unitOfWork.RegistrationRepository.GetById(request.Data.Id);
@@ -412,9 +412,9 @@ namespace Klinik.Features.Registration
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public RegistrationResponse HoldRegistration(RegistrationRequest request)
+        public LoketResponse HoldRegistration(LoketRequest request)
         {
-            RegistrationResponse response = new RegistrationResponse();
+            LoketResponse response = new LoketResponse();
             try
             {
                 var currentRegistration = _unitOfWork.RegistrationRepository.GetById(request.Data.Id);
@@ -452,9 +452,9 @@ namespace Klinik.Features.Registration
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public RegistrationResponse FinishRegistration(RegistrationRequest request)
+        public LoketResponse FinishRegistration(LoketRequest request)
         {
-            RegistrationResponse response = new RegistrationResponse();
+            LoketResponse response = new LoketResponse();
             try
             {
                 var currentRegistration = _unitOfWork.RegistrationRepository.GetById(request.Data.Id);

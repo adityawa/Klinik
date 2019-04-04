@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Klinik.Entities.Registration
+namespace Klinik.Entities.Loket
 {
-    public class RegistrationModel : BaseModel
+    public class LoketModel : BaseModel
     {
         public int ClinicID { get; set; }
         public int PatientID { get; set; }
@@ -27,5 +27,13 @@ namespace Klinik.Entities.Registration
         public int DoctorID { get; set; }
         public string DoctorStr { get; set; }
         public bool IsFromDashboard { get; set; }
+        public string PatientBirthDateStr { get; set; }
+        public string PatientHPNumber { get; set; }
+        public string PatientGender { get; set; }
+        public string PatientAddress { get; set; }
+        public string PatientKTPNumber { get; set; }
+        public string PatientBPJSNumber { get; set; }
+        public string PatientBloodType { get; set; }
+        public string PatientType { get; set; }
     }
 }

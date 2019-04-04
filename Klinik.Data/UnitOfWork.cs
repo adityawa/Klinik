@@ -32,11 +32,88 @@ namespace Klinik.Data
         private IGenericRepository<PatientClinic> _patientClinicRepository;
         private IGenericRepository<FileArchieve> _fileArchiveRepository;
         private IGenericRepository<City> _cityRepository;
+        private IGenericRepository<FormMedical> _formMedicalRepository;
+        private IGenericRepository<FormPreExamine> _formPreExamineRepository;
+        private IGenericRepository<FormExamine> _formExamineRepository;
+        private IGenericRepository<FormExamineAttachment> _formExamineAttachmentRepository;
+        private IGenericRepository<FormExamineLab> _formExamineLabRepository;
+        private IGenericRepository<FormExamineMedicine> _formExamineMedicineRepository;
+        private IGenericRepository<FormExamineService> _formExamineServiceRepository;
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
         {
             _context = context;
+        }
+
+        public IGenericRepository<FormMedical> FormMedicalRepository
+        {
+            get
+            {
+                if (_formMedicalRepository == null)
+                    _formMedicalRepository = new GenericRepository<FormMedical>(_context);
+                return _formMedicalRepository;
+            }
+        }
+
+        public IGenericRepository<FormPreExamine> FormPreExamineRepository
+        {
+            get
+            {
+                if (_formPreExamineRepository == null)
+                    _formPreExamineRepository = new GenericRepository<FormPreExamine>(_context);
+                return _formPreExamineRepository;
+            }
+        }
+
+        public IGenericRepository<FormExamine> FormExamineRepository
+        {
+            get
+            {
+                if (_formExamineRepository == null)
+                    _formExamineRepository = new GenericRepository<FormExamine>(_context);
+                return _formExamineRepository;
+            }
+        }
+
+        public IGenericRepository<FormExamineAttachment> FormExamineAttachmentRepository
+        {
+            get
+            {
+                if (_formExamineAttachmentRepository == null)
+                    _formExamineAttachmentRepository = new GenericRepository<FormExamineAttachment>(_context);
+                return _formExamineAttachmentRepository;
+            }
+        }
+
+        public IGenericRepository<FormExamineLab> FormExamineLabRepository
+        {
+            get
+            {
+                if (_formExamineLabRepository == null)
+                    _formExamineLabRepository = new GenericRepository<FormExamineLab>(_context);
+                return _formExamineLabRepository;
+            }
+        }
+
+        public IGenericRepository<FormExamineMedicine> FormExamineMedicineRepository
+        {
+            get
+            {
+                if (_formExamineMedicineRepository == null)
+                    _formExamineMedicineRepository = new GenericRepository<FormExamineMedicine>(_context);
+                return _formExamineMedicineRepository;
+            }
+        }
+
+        public IGenericRepository<FormExamineService> FormExamineServiceRepository
+        {
+            get
+            {
+                if (_formExamineServiceRepository == null)
+                    _formExamineServiceRepository = new GenericRepository<FormExamineService>(_context);
+                return _formExamineServiceRepository;
+            }
         }
 
         public IGenericRepository<PoliScheduleMaster> PoliScheduleMasterRepository

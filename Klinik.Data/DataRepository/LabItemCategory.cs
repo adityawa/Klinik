@@ -12,18 +12,25 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Collections.Generic;
     
-    public partial class OrganizationPrivilege
+    public partial class LabItemCategory
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public LabItemCategory()
+        {
+            this.LabItems = new HashSet<LabItem>();
+        }
+    
         public int ID { get; set; }
-        public long OrgID { get; set; }
-        public long PrivilegeID { get; set; }
-        public short RowStatus { get; set; }
+        public string LabType { get; set; }
+        public Nullable<int> PoliID { get; set; }
+        public string Name { get; set; }
+        public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
-        public System.DateTime CreatedDate { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual Organization Organization { get; set; }
-        public virtual Privilege Privilege { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LabItem> LabItems { get; set; }
     }
 }

@@ -169,7 +169,7 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No BPJS.
+        ///   Looks up a localized string similar to BPJS No.
         /// </summary>
         public static string BPJSNo {
             get {
@@ -961,6 +961,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Necessity.
+        /// </summary>
+        public static string Necessity {
+            get {
+                return ResourceManager.GetString("Necessity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Password.
         /// </summary>
         public static string NewPassword {
@@ -1114,6 +1123,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Patient.
+        /// </summary>
+        public static string Patient {
+            get {
+                return ResourceManager.GetString("Patient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List Pasien.
         /// </summary>
         public static string PatientList {
@@ -1128,6 +1146,24 @@ namespace Klinik.Resources {
         public static string PatientName {
             get {
                 return ResourceManager.GetString("PatientName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Patient Type.
+        /// </summary>
+        public static string PatientType {
+            get {
+                return ResourceManager.GetString("PatientType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Type.
+        /// </summary>
+        public static string PaymentType {
+            get {
+                return ResourceManager.GetString("PaymentType", resourceCulture);
             }
         }
         
@@ -1303,6 +1339,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registration List.
         /// </summary>
         public static string RegistrationList {
@@ -1321,7 +1366,7 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type.
+        ///   Looks up a localized string similar to Registration Type.
         /// </summary>
         public static string RegistrationType {
             get {
@@ -1524,6 +1569,15 @@ namespace Klinik.Resources {
         public static string ThisAccountLocked {
             get {
                 return ResourceManager.GetString("ThisAccountLocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To.
+        /// </summary>
+        public static string To {
+            get {
+                return ResourceManager.GetString("To", resourceCulture);
             }
         }
         

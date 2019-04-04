@@ -77,6 +77,10 @@
     <Compile Include="Administration\Log\LogValidator.cs" />
     <Compile Include="BaseFeatures.cs" />
     <Compile Include="IBaseFeatures.cs" />
+    <Compile Include="Loket\LoketHandler.cs" />
+    <Compile Include="Loket\LoketRequest.cs" />
+    <Compile Include="Loket\LoketResponse.cs" />
+    <Compile Include="Loket\LoketValidator.cs" />
     <Compile Include="MapMasterData\OrganizationPrivilege\OrganizationPrivilegeHandler.cs" />
     <Compile Include="MapMasterData\OrganizationPrivilege\OrganizationPrivilegeRequest.cs" />
     <Compile Include="MapMasterData\OrganizationPrivilege\OrganizationPrivilegeResponse.cs" />
@@ -135,10 +139,6 @@
     <Compile Include="PoliSchedules\PoliScheduleResponse.cs" />
     <Compile Include="PoliSchedules\PoliScheduleValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registration\RegistrationHandler.cs" />
-    <Compile Include="Registration\RegistrationRequest.cs" />
-    <Compile Include="Registration\RegistrationResponse.cs" />
-    <Compile Include="Registration\RegistrationValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Klinik.Common\Klinik.Common.csproj">

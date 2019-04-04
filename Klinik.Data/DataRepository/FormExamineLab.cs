@@ -12,18 +12,21 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Collections.Generic;
     
-    public partial class OrganizationPrivilege
+    public partial class FormExamineLab
     {
-        public int ID { get; set; }
-        public long OrgID { get; set; }
-        public long PrivilegeID { get; set; }
-        public short RowStatus { get; set; }
+        public long ID { get; set; }
+        public Nullable<long> FormExamineID { get; set; }
+        public string LabType { get; set; }
+        public Nullable<int> LabItemID { get; set; }
+        public string Result { get; set; }
+        public string ResultIndicator { get; set; }
+        public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
-        public System.DateTime CreatedDate { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual Organization Organization { get; set; }
-        public virtual Privilege Privilege { get; set; }
+        public virtual FormExamine FormExamine { get; set; }
+        public virtual LabItem LabItem { get; set; }
     }
 }

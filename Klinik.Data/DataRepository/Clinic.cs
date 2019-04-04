@@ -19,12 +19,13 @@ namespace Klinik.Data.DataRepository
         {
             this.Appointments = new HashSet<Appointment>();
             this.DoctorClinics = new HashSet<DoctorClinic>();
+            this.FormMedicals = new HashSet<FormMedical>();
+            this.Organizations = new HashSet<Organization>();
+            this.PatientClinics = new HashSet<PatientClinic>();
             this.PoliClinics = new HashSet<PoliClinic>();
             this.PoliSchedules = new HashSet<PoliSchedule>();
             this.PoliScheduleMasters = new HashSet<PoliScheduleMaster>();
             this.QueuePolis = new HashSet<QueuePoli>();
-            this.Organizations = new HashSet<Organization>();
-            this.PatientClinics = new HashSet<PatientClinic>();
         }
     
         public long ID { get; set; }
@@ -51,6 +52,12 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DoctorClinic> DoctorClinics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FormMedical> FormMedicals { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Organization> Organizations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PatientClinic> PatientClinics { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PoliClinic> PoliClinics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PoliSchedule> PoliSchedules { get; set; }
@@ -58,9 +65,5 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<PoliScheduleMaster> PoliScheduleMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QueuePoli> QueuePolis { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Organization> Organizations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PatientClinic> PatientClinics { get; set; }
     }
 }

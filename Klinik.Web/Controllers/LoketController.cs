@@ -5,8 +5,8 @@ using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
-using Klinik.Entities.Registration;
-using Klinik.Features.Registration;
+using Klinik.Entities.Loket;
+using Klinik.Features.Loket;
 using Klinik.Web.Hubs;
 using System;
 using System.Collections.Generic;
@@ -16,12 +16,12 @@ using System.Web.Mvc;
 
 namespace Klinik.Web.Controllers
 {
-    public class RegistrationController : BaseController
+    public class LoketController : BaseController
     {
         private const int CURRENT_POLI_ID = 1;
         private const string CURRENT_POLI_NAME = "Loket";
 
-        public RegistrationController(IUnitOfWork unitOfWork, KlinikDBEntities context) :
+        public LoketController(IUnitOfWork unitOfWork, KlinikDBEntities context) :
             base(unitOfWork, context)
         {
         }
@@ -68,7 +68,7 @@ namespace Klinik.Web.Controllers
                 _patientModelList.Add(_poli);
             }
 
-            RegistrationResponse response = GetTodayRegistrationList();
+            LoketResponse response = GetTodayRegistrationList();
 
             List<SelectListItem> _patientList = new List<SelectListItem>();
             foreach (var item in _patientModelList)
@@ -166,13 +166,13 @@ namespace Klinik.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateOrEditRegistration(RegistrationModel model)
+        public ActionResult CreateOrEditRegistration(LoketModel model)
         {
             model.Account = Account;
 
-            var request = new RegistrationRequest { Data = model, };
+            var request = new LoketRequest { Data = model, };
 
-            RegistrationResponse _response = new RegistrationValidator(_unitOfWork).Validate(request);
+            LoketResponse _response = new LoketValidator(_unitOfWork).Validate(request);
             if (_response.Status)
             {
                 // Notify to all
@@ -193,17 +193,17 @@ namespace Klinik.Web.Controllers
         [CustomAuthorize("EDIT_REGISTRATION")]
         public ActionResult EditRegistration()
         {
-            RegistrationResponse _response = new RegistrationResponse();
-            var request = new RegistrationRequest
+            LoketResponse _response = new LoketResponse();
+            var request = new LoketRequest
             {
-                Data = new RegistrationModel
+                Data = new LoketModel
                 {
                     Id = long.Parse(Request.QueryString["id"].ToString())
                 }
             };
 
-            RegistrationResponse resp = new RegistrationHandler(_unitOfWork).GetDetail(request);
-            RegistrationModel _model = resp.Entity;
+            LoketResponse resp = new LoketHandler(_unitOfWork).GetDetail(request);
+            LoketModel _model = resp.Entity;
             _model.CurrentPoliID = GetUserPoliID();
             ViewBag.Response = _response;
             var tempPoliList = BindDropDownPoliList(GetPoliType(_model.PoliFromID));
@@ -221,7 +221,7 @@ namespace Klinik.Web.Controllers
         {
             var poliName = Regex.Replace(((PoliEnum)poliId).ToString(), "([A-Z])", " $1").Trim();
 
-            var model = new RegistrationModel
+            var model = new LoketModel
             {
                 PoliFromID = poliId,
                 CurrentPoliID = poliId,
@@ -229,7 +229,7 @@ namespace Klinik.Web.Controllers
             };
 
             ViewBag.ActionType = ClinicEnums.Action.Add;
-            ViewBag.Response = new RegistrationResponse();
+            ViewBag.Response = new LoketResponse();
             var tempPoliList = BindDropDownPoliList(GetPoliType(poliId));
             ViewBag.PoliList = tempPoliList;
             ViewBag.PatientList = BindDropDownPatientList();
@@ -244,7 +244,7 @@ namespace Klinik.Web.Controllers
         {
             var poliName = Regex.Replace(((PoliEnum)1).ToString(), "([A-Z])", " $1").Trim();
 
-            var model = new RegistrationModel
+            var model = new LoketModel
             {
                 PoliFromID = 1,
                 CurrentPoliID = 1,
@@ -253,7 +253,7 @@ namespace Klinik.Web.Controllers
             };
 
             ViewBag.ActionType = ClinicEnums.Action.Add;
-            ViewBag.Response = new RegistrationResponse();
+            ViewBag.Response = new LoketResponse();
             var tempPoliList = BindDropDownPoliList(GetPoliType(1));
             ViewBag.PoliList = tempPoliList;
             ViewBag.PatientList = BindDropDownPatientList();
@@ -276,7 +276,7 @@ namespace Klinik.Web.Controllers
             int _pageSize = string.IsNullOrEmpty(_length) ? 0 : Convert.ToInt32(_length);
             int _skip = string.IsNullOrEmpty(_start) ? 0 : Convert.ToInt32(_start);
 
-            var request = new RegistrationRequest
+            var request = new LoketRequest
             {
                 Draw = _draw,
                 SearchValue = _searchValue,
@@ -286,7 +286,7 @@ namespace Klinik.Web.Controllers
                 Skip = _skip
             };
 
-            var response = new RegistrationHandler(_unitOfWork).GetListData(request, poliId);
+            var response = new LoketHandler(_unitOfWork).GetListData(request, poliId);
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw, Status = response.Status }, JsonRequestBehavior.AllowGet);
         }
@@ -386,12 +386,50 @@ namespace Klinik.Web.Controllers
                 ViewBag.IsHasAddPrivilege = isHasPrivilege;
             }
 
-            var model = new RegistrationModel
+            var poliName = Regex.Replace(poliEnum.ToString(), "([A-Z])", " $1").Trim();
+
+            var model = new LoketModel
             {
-                PoliFromID = (int)poliEnum
+                PoliFromID = (int)poliEnum,
+                CurrentPoliID = (int)poliEnum,
+                PoliFromName = poliName
             };
 
+            ViewBag.ActionType = ClinicEnums.Action.Add;
+            ViewBag.Response = new LoketResponse();
+            var tempPoliList = BindDropDownPoliList(GetPoliType((int)poliEnum));
+            ViewBag.PoliList = tempPoliList;
+            ViewBag.PatientList = BindDropDownPatientList();
+            ViewBag.RegistrationTypeList = BindDropDownTypeList();
+            ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
+            ViewBag.PaymentTypeList = BindDropDownPaymentTypeList();
+            ViewBag.NecessityList = BindDropDownNecessityList();
+
             return View("Index", model);
+        }
+
+        private List<SelectListItem> BindDropDownNecessityList()
+        {
+            var list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Text = "Berobat", Value = "1" });
+            list.Add(new SelectListItem { Text = "Kontrol", Value = "2" });
+            list.Add(new SelectListItem { Text = "Konsultasi", Value = "3" });
+            list.Add(new SelectListItem { Text = "Check Up", Value = "4" });
+            list.Add(new SelectListItem { Text = "Periksa Hamil", Value = "5" });
+
+            return list;
+        }
+
+        private List<SelectListItem> BindDropDownPaymentTypeList()
+        {
+            var list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Text = "Umum / Swadaya", Value = "1" });
+            list.Add(new SelectListItem { Text = "BPJS", Value = "2" });
+            list.Add(new SelectListItem { Text = "ASKES", Value = "3" });
+            list.Add(new SelectListItem { Text = "Asuransi", Value = "4" });
+            list.Add(new SelectListItem { Text = "KIS", Value = "5" });
+
+            return list;
         }
         #endregion
 
@@ -399,9 +437,9 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public JsonResult DeleteRegistration(int id)
         {
-            var request = new RegistrationRequest
+            var request = new LoketRequest
             {
-                Data = new RegistrationModel
+                Data = new LoketModel
                 {
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
@@ -409,7 +447,7 @@ namespace Klinik.Web.Controllers
                 Action = ClinicEnums.Action.DELETE.ToString()
             };
 
-            RegistrationResponse _response = new RegistrationValidator(_unitOfWork).Validate(request);
+            LoketResponse _response = new LoketValidator(_unitOfWork).Validate(request);
             if (_response.Status)
             {
                 RegistrationHub.BroadcastDataToAllClients();
@@ -421,9 +459,9 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public JsonResult ProcessRegistration(int id)
         {
-            var request = new RegistrationRequest
+            var request = new LoketRequest
             {
-                Data = new RegistrationModel
+                Data = new LoketModel
                 {
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
@@ -431,7 +469,7 @@ namespace Klinik.Web.Controllers
                 Action = ClinicEnums.Action.Process.ToString()
             };
 
-            RegistrationResponse _response = new RegistrationValidator(_unitOfWork).Validate(request);
+            LoketResponse _response = new LoketValidator(_unitOfWork).Validate(request);
             if (_response.Status)
             {
                 RegistrationHub.BroadcastDataToAllClients();
@@ -443,9 +481,9 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public JsonResult HoldRegistration(int id)
         {
-            var request = new RegistrationRequest
+            var request = new LoketRequest
             {
-                Data = new RegistrationModel
+                Data = new LoketModel
                 {
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
@@ -453,7 +491,7 @@ namespace Klinik.Web.Controllers
                 Action = ClinicEnums.Action.Hold.ToString()
             };
 
-            RegistrationResponse _response = new RegistrationValidator(_unitOfWork).Validate(request);
+            LoketResponse _response = new LoketValidator(_unitOfWork).Validate(request);
             if (_response.Status)
             {
                 RegistrationHub.BroadcastDataToAllClients();
@@ -465,9 +503,9 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public JsonResult FinishRegistration(int id)
         {
-            var request = new RegistrationRequest
+            var request = new LoketRequest
             {
-                Data = new RegistrationModel
+                Data = new LoketModel
                 {
                     Id = id,
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
@@ -475,7 +513,7 @@ namespace Klinik.Web.Controllers
                 Action = ClinicEnums.Action.Finish.ToString()
             };
 
-            RegistrationResponse _response = new RegistrationValidator(_unitOfWork).Validate(request);
+            LoketResponse _response = new LoketValidator(_unitOfWork).Validate(request);
             if (_response.Status)
             {
                 RegistrationHub.BroadcastDataToAllClients();
@@ -539,11 +577,11 @@ namespace Klinik.Web.Controllers
         }
 
         [NonAction]
-        private RegistrationResponse GetTodayRegistrationList()
+        private LoketResponse GetTodayRegistrationList()
         {
-            var request = new RegistrationRequest();
+            var request = new LoketRequest();
 
-            var response = new RegistrationHandler(_unitOfWork).GetListData(request);
+            var response = new LoketHandler(_unitOfWork).GetListData(request);
 
             return response;
         }
@@ -554,7 +592,7 @@ namespace Klinik.Web.Controllers
             var userPoliID = GetUserPoliID();
             var poliName = Regex.Replace(((PoliEnum)userPoliID).ToString(), "([A-Z])", " $1").Trim();
 
-            var model = new RegistrationModel
+            var model = new LoketModel
             {
                 PoliFromID = userPoliID,
                 PoliFromName = poliName,

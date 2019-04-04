@@ -340,7 +340,7 @@
     <value>Status</value>
   </data>
   <data name="RegistrationType" xml:space="preserve">
-    <value>Type</value>
+    <value>Registration Type</value>
   </data>
   <data name="Remark" xml:space="preserve">
     <value>Remark</value>
@@ -543,12 +543,11 @@
   <data name="QueueCode" xml:space="preserve">
     <value>Queue Code</value>
   </data>
-
   <data name="BloodType" xml:space="preserve">
     <value>Blood Type</value>
   </data>
   <data name="BPJSNo" xml:space="preserve">
-    <value>No BPJS</value>
+    <value>BPJS No</value>
   </data>
   <data name="CurrentAddress" xml:space="preserve">
     <value>Current Address</value>
@@ -582,7 +581,7 @@
   </data>
   <data name="UseExistingGoLoket" xml:space="preserve">
     <value>Use Existing Data &amp; Go to Loket</value>
-</data>
+  </data>
   <data name="LogViewer" xml:space="preserve">
     <value>Log Viewer</value>
   </data>
@@ -636,5 +635,23 @@
   </data>
   <data name="NewPatient" xml:space="preserve">
     <value>New Patient</value>
+  </data>
+  <data name="Patient" xml:space="preserve">
+    <value>Patient</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Necessity" xml:space="preserve">
+    <value>Necessity</value>
+  </data>
+  <data name="PatientType" xml:space="preserve">
+    <value>Patient Type</value>
+  </data>
+  <data name="PaymentType" xml:space="preserve">
+    <value>Payment Type</value>
   </data>
 </root>

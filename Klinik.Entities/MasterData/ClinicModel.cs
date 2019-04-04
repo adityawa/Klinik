@@ -5,7 +5,7 @@ namespace Klinik.Entities.MasterData
 {
     public class ClinicModel : BaseModel
     {
-        [Required(ErrorMessage ="Please fill code")]
+        [Required(ErrorMessage = "Please fill code")]
         public string Code { get; set; }
         [Required(ErrorMessage = "Please fill Name")]
         public string Name { get; set; }
@@ -26,6 +26,5 @@ namespace Klinik.Entities.MasterData
 
         public string ClinicTypeDesc { get; set; }
         public int ReffID { get; set; }
-        public int RowStatus { get; set; }
     }
 }

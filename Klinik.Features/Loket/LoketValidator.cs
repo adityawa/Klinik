@@ -3,9 +3,9 @@ using Klinik.Common;
 using Klinik.Data;
 using Klinik.Resources;
 
-namespace Klinik.Features.Registration
+namespace Klinik.Features.Loket
 {
-    public class RegistrationValidator : BaseFeatures
+    public class LoketValidator : BaseFeatures
     {
         private const string ADD_PRIVILEGE_NAME = "ADD_REGISTRATION";
         private const string EDIT_PRIVILEGE_NAME = "EDIT_REGISTRATION";
@@ -15,7 +15,7 @@ namespace Klinik.Features.Registration
         /// Constructor
         /// </summary>
         /// <param name="unitOfWork"></param>
-        public RegistrationValidator(IUnitOfWork unitOfWork)
+        public LoketValidator(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -25,9 +25,9 @@ namespace Klinik.Features.Registration
         /// </summary>
         /// <param name="request"></param>
         /// <param name="response"></param>
-        public RegistrationResponse Validate(RegistrationRequest request)
+        public LoketResponse Validate(LoketRequest request)
         {
-            var response = new RegistrationResponse();
+            var response = new LoketResponse();
 
             if (request.Action != null)
             {
@@ -61,7 +61,7 @@ namespace Klinik.Features.Registration
 
                 if (response.Status)
                 {
-                    response = new RegistrationHandler(_unitOfWork).CreateOrEdit(request);
+                    response = new LoketHandler(_unitOfWork).CreateOrEdit(request);
                 }
             }
 
@@ -73,9 +73,9 @@ namespace Klinik.Features.Registration
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        private RegistrationResponse ValidateForProcess(RegistrationRequest request)
+        private LoketResponse ValidateForProcess(LoketRequest request)
         {
-            var response = new RegistrationResponse();
+            var response = new LoketResponse();
 
             bool isHavePrivilege = IsHaveAuthorization(EDIT_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
             if (!isHavePrivilege)
@@ -86,7 +86,7 @@ namespace Klinik.Features.Registration
 
             if (response.Status)
             {
-                response = new RegistrationHandler(_unitOfWork).ProcessRegistration(request);
+                response = new LoketHandler(_unitOfWork).ProcessRegistration(request);
             }
 
             return response;
@@ -97,9 +97,9 @@ namespace Klinik.Features.Registration
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        private RegistrationResponse ValidateForHold(RegistrationRequest request)
+        private LoketResponse ValidateForHold(LoketRequest request)
         {
-            var response = new RegistrationResponse();
+            var response = new LoketResponse();
 
             bool isHavePrivilege = IsHaveAuthorization(EDIT_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
             if (!isHavePrivilege)
@@ -110,7 +110,7 @@ namespace Klinik.Features.Registration
 
             if (response.Status)
             {
-                response = new RegistrationHandler(_unitOfWork).HoldRegistration(request);
+                response = new LoketHandler(_unitOfWork).HoldRegistration(request);
             }
 
             return response;
@@ -121,9 +121,9 @@ namespace Klinik.Features.Registration
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        private RegistrationResponse ValidateForFinish(RegistrationRequest request)
+        private LoketResponse ValidateForFinish(LoketRequest request)
         {
-            var response = new RegistrationResponse();
+            var response = new LoketResponse();
 
             bool isHavePrivilege = IsHaveAuthorization(EDIT_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
             if (!isHavePrivilege)
@@ -134,7 +134,7 @@ namespace Klinik.Features.Registration
 
             if (response.Status)
             {
-                response = new RegistrationHandler(_unitOfWork).FinishRegistration(request);
+                response = new LoketHandler(_unitOfWork).FinishRegistration(request);
             }
 
             return response;
@@ -144,9 +144,9 @@ namespace Klinik.Features.Registration
         /// Delete validation
         /// </summary>
         /// <param name="request"></param>        
-        private RegistrationResponse ValidateForDelete(RegistrationRequest request)
+        private LoketResponse ValidateForDelete(LoketRequest request)
         {
-            var response = new RegistrationResponse();
+            var response = new LoketResponse();
 
             bool isHavePrivilege = IsHaveAuthorization(DELETE_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
             if (!isHavePrivilege)
@@ -157,7 +157,7 @@ namespace Klinik.Features.Registration
 
             if (response.Status)
             {
-                response = new RegistrationHandler(_unitOfWork).RemoveData(request);
+                response = new LoketHandler(_unitOfWork).RemoveData(request);
             }
 
             return response;

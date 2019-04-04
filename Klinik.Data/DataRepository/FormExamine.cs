@@ -12,32 +12,40 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Collections.Generic;
     
-    public partial class FileArchieve
+    public partial class FormExamine
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public FileArchieve()
+        public FormExamine()
         {
-            this.DoctorClinics = new HashSet<DoctorClinic>();
             this.FormExamineAttachments = new HashSet<FormExamineAttachment>();
-            this.PatientClinics = new HashSet<PatientClinic>();
+            this.FormExamineLabs = new HashSet<FormExamineLab>();
+            this.FormExamineMedicines = new HashSet<FormExamineMedicine>();
         }
     
         public long ID { get; set; }
-        public string SourceTable { get; set; }
-        public string ActualPath { get; set; }
-        public string ActualName { get; set; }
-        public string TypeDoc { get; set; }
-        public short RowStatus { get; set; }
+        public Nullable<long> FormMedicalID { get; set; }
+        public Nullable<int> PoliID { get; set; }
+        public Nullable<System.DateTime> TransDate { get; set; }
+        public Nullable<int> DoctorID { get; set; }
+        public string Diagnose { get; set; }
+        public string Therapy { get; set; }
+        public string Remark { get; set; }
+        public string ICDInformation { get; set; }
+        public string Result { get; set; }
+        public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
-        public System.DateTime CreatedDate { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DoctorClinic> DoctorClinics { get; set; }
+        public virtual Doctor Doctor { get; set; }
+        public virtual FormMedical FormMedical { get; set; }
+        public virtual Poli Poli { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormExamineAttachment> FormExamineAttachments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PatientClinic> PatientClinics { get; set; }
+        public virtual ICollection<FormExamineLab> FormExamineLabs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FormExamineMedicine> FormExamineMedicines { get; set; }
     }
 }

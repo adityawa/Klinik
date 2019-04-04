@@ -1,5 +1,6 @@
 ﻿using Datalist;
 using Klinik.Data.DataRepository;
+using Klinik.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,24 @@ namespace Klinik.Web
 
         private PatientDataListModel MapFrom(Patient patient)
         {
+            string address = patient.Address;
+
+            if (patient.CityID.HasValue)
+            {
+                City city = _context.Cities.FirstOrDefault(x => x.Id == patient.CityID.Value);
+                if (city != null)
+                {
+                    if (!string.IsNullOrEmpty(city.Kelurahan))
+                        address += ", " + city.Kelurahan;
+                    if (!string.IsNullOrEmpty(city.Kecamatan))
+                        address += ", " + city.Kecamatan;
+                    if (!string.IsNullOrEmpty(city.City1))
+                        address += ", " + city.City1;
+                    if (!string.IsNullOrEmpty(city.Province))
+                        address += ", " + city.Province;
+                }
+            }
+
             PatientDataListModel patientModel = new PatientDataListModel
             {
                 Id = patient.ID,
@@ -57,7 +76,10 @@ namespace Klinik.Web
                 MRNumber = patient.MRNumber,
                 KTPNumber = patient.KTPNumber,
                 Birthdate = patient.BirthDate,
-                Address = patient.Address
+                Address = address,
+                BloodType = patient.BloodType,
+                Gender = patient.Gender == "M" ? Messages.Male : Messages.Female,
+                PatientType = patient.Type.HasValue && patient.Type.Value == 2 ? Messages.Company : Messages.General,
             };
 
             return patientModel;

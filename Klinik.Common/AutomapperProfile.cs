@@ -7,7 +7,8 @@ using Klinik.Entities.MappingMaster;
 using Klinik.Entities.MasterData;
 using Klinik.Entities.Patient;
 using Klinik.Entities.PoliSchedules;
-using Klinik.Entities.Registration;
+using Klinik.Entities.Loket;
+using Klinik.Entities.Form;
 
 namespace Klinik.Common
 {
@@ -84,10 +85,10 @@ namespace Klinik.Common
 
             CreateMap<FamilyRelationship, FamilyRelationshipModel>();
 
-            CreateMap<RegistrationModel, QueuePoli>()
+            CreateMap<LoketModel, QueuePoli>()
                 .ForMember(m => m.PoliFrom, map => map.MapFrom(p => p.PoliFromID))
                 .ForMember(m => m.PoliTo, map => map.MapFrom(p => p.PoliToID));
-            CreateMap<QueuePoli, RegistrationModel>()
+            CreateMap<QueuePoli, LoketModel>()
                 .ForMember(m => m.PoliFromID, map => map.MapFrom(p => p.PoliFrom))
                 .ForMember(m => m.PoliToID, map => map.MapFrom(p => p.PoliTo))
                 .ForMember(m => m.PatientName, map => map.MapFrom(p => p.Patient.Name))
@@ -104,13 +105,9 @@ namespace Klinik.Common
             CreateMap<PatientModel, Patient>()
                 .ForMember(x => x.PatientKey, map => map.MapFrom(p => p.Name.Trim().Replace(" ", "") + "_" + p.BirthDateStr.Replace("/", "")));
 
-
             CreateMap<Patient, PatientModel>()
                 .ForMember(x => x.BirthDateStr, map => map.MapFrom(p => p.BirthDate.ToString("dd/MM/yyyy")))
                 .ForMember(x => x.EmployeeName, map => map.MapFrom(p => p.Employee.EmpName));
-                
-                
-
 
             CreateMap<PoliFlowTemplateModel, PoliFlowTemplate>();
             CreateMap<PoliFlowTemplate, PoliFlowTemplateModel>()
@@ -143,8 +140,29 @@ namespace Klinik.Common
                 .ForMember(m => m.EmpName, map => map.MapFrom(p => p.Name));
 
             CreateMap<City, CityModel>()
-                .ForMember(x=>x.City, map=>map.MapFrom(p=>p.City1));
+                .ForMember(x => x.City, map => map.MapFrom(p => p.City1));
             CreateMap<CityModel, City>();
+
+            CreateMap<FormMedicalModel, FormMedical>();
+            CreateMap<FormMedical, FormMedicalModel>();
+
+            CreateMap<FormPreExamineModel, FormPreExamine>();
+            CreateMap<FormPreExamine, FormPreExamineModel>();
+
+            CreateMap<FormExamineModel, FormExamine>();
+            CreateMap<FormExamine, FormExamineModel>();
+
+            CreateMap<FormExamineAttachmentModel, FormExamineAttachment>();
+            CreateMap<FormExamineAttachment, FormExamineAttachmentModel>();
+
+            CreateMap<FormExamineLabModel, FormExamineLab>();
+            CreateMap<FormExamineLab, FormExamineLabModel>();
+
+            CreateMap<FormExamineServiceModel, FormExamineService>();
+            CreateMap<FormExamineService, FormExamineServiceModel>();
+
+            CreateMap<FormExamineMedicineModel, FormExamineMedicine>();
+            CreateMap<FormExamineMedicine, FormExamineMedicineModel>();
         }
     }
 }

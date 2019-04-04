@@ -34,6 +34,12 @@ namespace Klinik.Data
         IGenericRepository<PatientClinic> PatientClinicRepository { get; }
         IGenericRepository<FileArchieve> FileArchiveRepository { get; }
         IGenericRepository<City> CityRepository { get; }
+        IGenericRepository<FormMedical> FormMedicalRepository { get; }
+        IGenericRepository<FormPreExamine> FormPreExamineRepository { get; }
+        IGenericRepository<FormExamineAttachment> FormExamineAttachmentRepository { get; }
+        IGenericRepository<FormExamineLab> FormExamineLabRepository { get; }
+        IGenericRepository<FormExamineMedicine> FormExamineMedicineRepository { get; }
+        IGenericRepository<FormExamineService> FormExamineServiceRepository { get; }
         int Save();
     }
 }

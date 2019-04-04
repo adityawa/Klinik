@@ -233,7 +233,7 @@
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PoliScheduleController.cs" />
     <Compile Include="Controllers\AdministrationController.cs" />
-    <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\LoketController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Datalist\PatientDataList.cs" />
     <Compile Include="Datalist\PatientDataListModel.cs" />
@@ -1390,8 +1390,8 @@
     <Content Include="Views\MasterData\CreateOrEditClinic.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Registration\CreateOrEditRegistration.cshtml" />
-    <Content Include="Views\Registration\Index.cshtml" />
+    <Content Include="Views\Loket\CreateOrEditRegistration.cshtml" />
+    <Content Include="Views\Loket\Index.cshtml" />
     <Content Include="Views\PoliSchedule\Index.cshtml" />
     <Content Include="Views\PoliSchedule\CreateOrEditPoliSchedule.cshtml" />
     <Content Include="Views\PoliSchedule\Master.cshtml" />

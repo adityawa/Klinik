@@ -73,6 +73,13 @@
     <Compile Include="BaseResponse.cs" />
     <Compile Include="Document\DocumentModel.cs" />
     <Compile Include="FileArchive\FileArchiveModel.cs" />
+    <Compile Include="Form\FormExamineAttachmentModel.cs" />
+    <Compile Include="Form\FormExamineMedicineModel.cs" />
+    <Compile Include="Form\FormExamineServiceModel.cs" />
+    <Compile Include="Form\FormExamineLabModel.cs" />
+    <Compile Include="Form\FormExamineModel.cs" />
+    <Compile Include="Form\FormPreExamineModel.cs" />
+    <Compile Include="Form\FormMedicalModel.cs" />
     <Compile Include="MappingMaster\OrganizationPrivilegeModel.cs" />
     <Compile Include="MappingMaster\RolePrivilegeModel.cs" />
     <Compile Include="MappingMaster\UserRoleModel.cs" />
@@ -95,7 +102,7 @@
     <Compile Include="PoliSchedule\PoliScheduleMasterModel.cs" />
     <Compile Include="PoliSchedule\PoliScheduleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registration\RegistrationModel.cs" />
+    <Compile Include="Loket\LoketModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
