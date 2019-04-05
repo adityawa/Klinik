@@ -106,12 +106,9 @@
                     <div class="col-md-3">
                         @Html.DropDownListFor(p => p.PaymentType, (IEnumerable<SelectListItem>)ViewBag.PaymentTypeList, new { @class = "form-control", @id = "ddlpaymenttype" })
                     </div>
-                    @if (!string.IsNullOrEmpty(Model.PaymentNumber))
-                    {
-                        <div class="col-md-2">
-                            @Html.TextBoxFor(x => x.PaymentNumber, new { @class = "form-control", @id = "tbPaymentNumber" })
-                        </div>
-                    }
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(x => x.PaymentNumber, new { @class = "form-control", @id = "tbPaymentNumber", @style = "display: none;" })
+                    </div>
                 </div>
             </div>
             <div class="panel-footer">
@@ -133,6 +130,16 @@
     <script src="~/Scripts/jquery-ui.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            $("#ddlpaymenttype").change(function () {
+                var paymentId = $("#ddlpaymenttype").val();
+                var tb = document.getElementById("tbPaymentNumber");
+
+                if (paymentId == 1 || paymentId == 4) {
+                    tb.style.display = "none";
+                } else {
+                    tb.style.display = "block";
+                }
+            });
 
             $("#ddlpolito").change(function () {
                 $.get("/Loket/GetDoctorList", { PoliId: $("#ddlpolito").val() }, function (data) {
@@ -165,6 +172,11 @@
                     toastr.options.timeOut = 0;
                     toastr.error(_arrMsg[1]);
                 }
+            }
+
+            var _number="@Model.PaymentNumber";
+            if (_number.length > 1) {
+                document.getElementById("tbPaymentNumber").style.display = "block";
             }
         });
 
