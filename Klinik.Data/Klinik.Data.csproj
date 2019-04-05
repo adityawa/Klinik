@@ -194,9 +194,6 @@
     <Compile Include="DataRepository\RolePrivilege.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataRepository\sysdiagram.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataRepository\User.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
@@ -230,6 +227,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="DataRepository\KlinikModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>KlinikModel.Designer.cs</LastGenOutput>

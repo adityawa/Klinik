@@ -47,8 +47,6 @@ namespace Klinik.Features.Patients.Pasien
                             request.Data.Photo.ActualPath = Path.Combine(HttpContext.Current.Server.MapPath(uploadDir), request.Data.file.FileName);
                             request.Data.Photo.ActualName = request.Data.file.FileName;
                             request.Data.Photo.TypeDoc = request.Data.file.ContentType;
-                            var reader = new System.IO.BinaryReader(request.Data.file.InputStream);
-                            request.Data.Photo.FileDoc = reader.ReadBytes(request.Data.file.ContentLength);
                         }
 
                         var _entityPatient = Mapper.Map<PatientModel, Patient>(request.Data);
@@ -70,7 +68,7 @@ namespace Klinik.Features.Patients.Pasien
                             result = _context.SaveChanges();
                             _photoID = _entityPhoto.ID;
 
-                           
+                            request.Data.file.SaveAs(request.Data.Photo.ActualPath);
                         }
 
                         //GetClinicID for current admin login
@@ -123,6 +121,7 @@ namespace Klinik.Features.Patients.Pasien
                                 willBeEdit.BloodType = request.Data.BloodType;
                                 willBeEdit.ModifiedBy = request.Data.Account.UserName;
                                 willBeEdit.ModifiedDate = DateTime.Now;
+                                
                                 resultUpdated = _context.SaveChanges();
                             }
 
@@ -143,7 +142,7 @@ namespace Klinik.Features.Patients.Pasien
                                 var _existingPhotoId = _context.FileArchieves.SingleOrDefault(x => x.ID == _idPhoto && x.SourceTable == ClinicEnums.SourceTable.PATIENT.ToString());
                                 if (_existingPhotoId != null)
                                 {
-                                    if (request.Data.file != null && _existingPhotoId.ActualName != request.Data.file.FileName)
+                                    if (request.Data.file != null )//&& _existingPhotoId.ActualName != request.Data.file.FileName)
                                     {
                                         //need update
                                         if (request.Data.Photo == null)
@@ -156,14 +155,10 @@ namespace Klinik.Features.Patients.Pasien
                                         _existingPhotoId.ActualName = request.Data.Photo.ActualName;
                                         _existingPhotoId.ActualPath = request.Data.Photo.ActualPath;
                                         _existingPhotoId.TypeDoc = request.Data.Photo.TypeDoc;
-
-                                        var reader = new System.IO.BinaryReader(request.Data.file.InputStream);
-                                        _existingPhotoId.FileDoc = reader.ReadBytes(request.Data.file.ContentLength);
-
                                         _existingPhotoId.ModifiedBy = request.Data.Account.UserName;
                                         _existingPhotoId.ModifiedDate = DateTime.Now;
                                         resultUpdated = _context.SaveChanges();
-                                       
+                                        request.Data.file.SaveAs(request.Data.Photo.ActualPath);
                                     }
                                 }
                             }
@@ -198,8 +193,6 @@ namespace Klinik.Features.Patients.Pasien
                                     request.Data.Photo.ActualPath = Path.Combine(HttpContext.Current.Server.MapPath(uploadDir), request.Data.file.FileName);
                                     request.Data.Photo.ActualName = request.Data.file.FileName;
                                     request.Data.Photo.TypeDoc = request.Data.file.ContentType;
-                                    var reader = new System.IO.BinaryReader(request.Data.file.InputStream);
-                                    request.Data.Photo.FileDoc = reader.ReadBytes(request.Data.file.ContentLength);
                                 }
 
                                 if (request.Data.Photo != null)
