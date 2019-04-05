@@ -657,4 +657,7 @@
   <data name="RegisterType" xml:space="preserve">
     <value>Register Type</value>
   </data>
+  <data name="Number" xml:space="preserve">
+    <value>Number</value>
+  </data>
 </root>

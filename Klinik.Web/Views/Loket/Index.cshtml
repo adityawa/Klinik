@@ -46,9 +46,10 @@
                     <label class="col-md-1 control-label " for="inputDefault" style="text-align:left">
                         @Klinik.Resources.UIMessages.PoliTo
                     </label>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         @Html.DropDownListFor(p => p.PoliToID, (IEnumerable<SelectListItem>)ViewBag.PoliList, new { @class = "form-control", @id = "ddlpolito" })
                     </div>
+                    <div class="col-md-1"></div>
                     <div class="col-md-2"><button type="button" class="btn btn-success btn-block" onclick="location.href='@Url.Action("CreateFromRegistration", "Patient")'">@Klinik.Resources.UIMessages.NewPatient</button></div>
                 </div>
                 <div class="form-group">
@@ -63,9 +64,10 @@
                     <label class="col-md-1 control-label" for="inputDefault">
                         @Klinik.Resources.UIMessages.Doctor
                     </label>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         @Html.DropDownListFor(p => p.DoctorID, (IEnumerable<SelectListItem>)ViewBag.DoctorList, new { @class = "form-control", @id = "ddldoctor" })
                     </div>
+                    <div class="col-md-1"></div>
                     <div class="col-md-2"><button type="button" class="btn btn-warning btn-block">Print Card</button></div>
                 </div>
                 <div class="form-group">
@@ -80,9 +82,10 @@
                     <label class="col-md-1 control-label" for="inputDefault">
                         @Klinik.Resources.UIMessages.Necessity
                     </label>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         @Html.DropDownListFor(p => p.NecessityType, (IEnumerable<SelectListItem>)ViewBag.NecessityList, new { @class = "form-control", @id = "ddlnecessity" })
                     </div>
+                    <div class="col-md-1"></div>
                     <div class="col-md-2"><button type="submit" class="btn btn-primary btn-block">@Klinik.Resources.UIMessages.Register</button></div>
                 </div>
                 <div class="form-group">
@@ -95,11 +98,12 @@
                         @Html.TextBoxFor(x => x.PatientBloodType, new { @class = "form-control", @id = "tbBloodType", @readonly = "readonly" })
                     </div>
                     <label class="col-md-1 control-label" for="inputDefault">
-                        @Klinik.Resources.UIMessages.PaymentType
+                        @Klinik.Resources.UIMessages.RegisterType
                     </label>
-                    <div class="col-md-3">
-                        @Html.DropDownListFor(p => p.PaymentType, (IEnumerable<SelectListItem>)ViewBag.PaymentTypeList, new { @class = "form-control", @id = "ddltype" })
+                    <div class="col-md-2">
+                        @Html.DropDownListFor(p => p.Type, (IEnumerable<SelectListItem>)ViewBag.RegistrationTypeList, new { @class = "form-control", @id = "ddlRegisterType" })
                     </div>
+                    <div class="col-md-3"></div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Address</label>
@@ -107,13 +111,18 @@
                         @Html.TextBoxFor(x => x.PatientAddress, new { @class = "form-control", @id = "tbAddress", @readonly = "readonly" })
                     </div>
                     <label class="col-md-1 control-label" for="inputDefault">
-                        @Klinik.Resources.UIMessages.RegisterType
+                        @Klinik.Resources.UIMessages.PaymentType
                     </label>
-                    <div class="col-md-3">
-                        @Html.DropDownListFor(p => p.Type, (IEnumerable<SelectListItem>)ViewBag.RegistrationTypeList, new { @class = "form-control", @id = "ddltype" })
+                    <div class="col-md-2">
+                        @Html.DropDownListFor(p => p.PaymentType, (IEnumerable<SelectListItem>)ViewBag.PaymentTypeList, new { @class = "form-control", @id = "ddlPaymentType" })
+                    </div>
+                    <label class="col-md-1 control-label" for="inputDefault" id="lblNomor" style="display: none;">
+                        @Klinik.Resources.UIMessages.Number
+                    </label>
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(x => x.PaymentNumber, new { @class = "form-control", @id = "tbNomor", @style = "display: none;" })
                     </div>
                 </div>
-            </div>
         </section>
     </form>
 </div>
@@ -210,6 +219,20 @@
     }
 
     $(document).ready(function () {
+
+        $("#ddlPaymentType").change(function () {
+            var paymentId = $("#ddlPaymentType").val();
+            var lbl = document.getElementById("lblNomor");
+            var tb = document.getElementById("tbNomor");
+
+            if (paymentId == 1 || paymentId == 4) {
+                lbl.style.display = "none";
+                tb.style.display = "none";
+            } else {
+                lbl.style.display = "block";
+                tb.style.display = "block";
+            }
+        });
 
         $("#ddlpolito").change(function () {
             $.get("/Loket/GetDoctorList", { PoliId: $("#ddlpolito").val() }, function (data) {
