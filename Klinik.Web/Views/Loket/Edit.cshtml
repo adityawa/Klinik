@@ -34,7 +34,7 @@
                     @Html.HiddenFor(x => x.CurrentPoliID)
                     @Html.HiddenFor(x => x.PoliFromID)
                     <div class="col-md-2">
-                        @Html.DatalistFor(x => x.PatientID, new PatientDataList { Url = "/Loket/AllPatient" }, new { @id = "dlPatient" })
+                        @Html.TextBoxFor(x => x.PatientName, new { @class = "form-control", @id = "tbPatientName", @readonly = "readonly" })
                     </div>
                     <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.BPJSNo</label>
                     <div class="col-md-2">
@@ -89,10 +89,10 @@
                         @Html.TextBoxFor(x => x.PatientBloodType, new { @class = "form-control", @id = "tbBloodType", @readonly = "readonly" })
                     </div>
                     <label class="col-md-1 control-label" for="inputDefault">
-                        @Klinik.Resources.UIMessages.PaymentType
+                        @Klinik.Resources.UIMessages.RegisterType
                     </label>
                     <div class="col-md-3">
-                        @Html.DropDownListFor(p => p.PaymentType, (IEnumerable<SelectListItem>)ViewBag.PaymentTypeList, new { @class = "form-control", @id = "ddlpaymenttype" })
+                        @Html.DropDownListFor(p => p.Type, (IEnumerable<SelectListItem>)ViewBag.RegistrationTypeList, new { @class = "form-control", @id = "ddltype" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -101,10 +101,13 @@
                         @Html.TextBoxFor(x => x.PatientAddress, new { @class = "form-control", @id = "tbAddress", @readonly = "readonly" })
                     </div>
                     <label class="col-md-1 control-label" for="inputDefault">
-                        @Klinik.Resources.UIMessages.RegisterType
+                        @Klinik.Resources.UIMessages.PaymentType
                     </label>
                     <div class="col-md-3">
-                        @Html.DropDownListFor(p => p.Type, (IEnumerable<SelectListItem>)ViewBag.RegistrationTypeList, new { @class = "form-control", @id = "ddltype" })
+                        @Html.DropDownListFor(p => p.PaymentType, (IEnumerable<SelectListItem>)ViewBag.PaymentTypeList, new { @class = "form-control", @id = "ddlpaymenttype" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(x => x.PaymentNumber, new { @class = "form-control", @id = "tbPaymentNumber", @style = "display: none;" })
                     </div>
                 </div>
             </div>
@@ -125,39 +128,18 @@
 
 @section Scripts {
     <script src="~/Scripts/jquery-ui.js"></script>
-    <script src="~/Scripts/MvcDatalist/mvc-datalist.js"></script>
-    <script>
-        [].forEach.call(document.getElementsByClassName('datalist'), function (element) {
-            new MvcDatalist(element);
-        });
-
-        new MvcDatalist(document.querySelector('.datalist'), {
-            events: {
-                select: function (data, triggerChanges) {
-                    for (var i = 0; i < data.length; i++) {
-                        var mrNumber = document.getElementById("tbMRNumber");
-                        if (mrNumber != null) { mrNumber.value = data[i].MRNumber; }
-                        var ktpNumber = document.getElementById("tbKTPNumber");
-                        if (ktpNumber != null) { ktpNumber.value = data[i].KTPNumber; }
-                        var bpjsNumber = document.getElementById("tbBPJSNumber");
-                        if (bpjsNumber != null) { bpjsNumber.value = data[i].BPJSNumber; }
-                        var birthDate = document.getElementById("tbBirthdate");
-                        if (birthDate != null) { birthDate.value = data[i].Birthdate; }
-                        var gender = document.getElementById("tbPatientGender");
-                        if (gender != null) { gender.value = data[i].Gender; }
-                        var patientType = document.getElementById("tbPatientType");
-                        if (patientType != null) { patientType.value = data[i].PatientType; }
-                        var bloodType = document.getElementById("tbBloodType");
-                        if (bloodType != null) { bloodType.value = data[i].BloodType; }
-                        var address = document.getElementById("tbAddress");
-                        if (address != null) { address.value = data[i].Address; }
-                    }
-                }
-            }
-        });
-    </script>
     <script type="text/javascript">
         $(document).ready(function () {
+            $("#ddlpaymenttype").change(function () {
+                var paymentId = $("#ddlpaymenttype").val();
+                var tb = document.getElementById("tbPaymentNumber");
+
+                if (paymentId == 1 || paymentId == 4) {
+                    tb.style.display = "none";
+                } else {
+                    tb.style.display = "block";
+                }
+            });
 
             $("#ddlpolito").change(function () {
                 $.get("/Loket/GetDoctorList", { PoliId: $("#ddlpolito").val() }, function (data) {
@@ -190,6 +172,11 @@
                     toastr.options.timeOut = 0;
                     toastr.error(_arrMsg[1]);
                 }
+            }
+
+            var _number="@Model.PaymentNumber";
+            if (_number.length > 1) {
+                document.getElementById("tbPaymentNumber").style.display = "block";
             }
         });
 

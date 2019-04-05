@@ -37,5 +37,6 @@ namespace Klinik.Entities.Loket
         public string PatientType { get; set; }
         public int NecessityType { get; set; }
         public int PaymentType { get; set; }
+        public string PaymentNumber { get; set; }
     }
 }

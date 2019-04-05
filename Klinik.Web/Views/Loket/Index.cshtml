@@ -16,107 +16,119 @@
     </style>
 }
 
-<div class="col-md-12">
-    <form class="form-horizontal form-bordered" method="post" action="/Loket/Create">
-        <section class="panel">
-            <header class="panel-heading">
-                <div class="panel-actions">
-                    <a href="#" class="fa fa-caret-down"></a>
-                </div>
-                <div>
-                    <h5 class="panel-title">
-                        @Klinik.Resources.UIMessages.Register
-                    </h5>
-                </div>
-            </header>
-            <div class="panel-body">
-                <div class="form-group">
-                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Patient</label>
-                    @Html.HiddenFor(x => x.Id)
-                    @Html.HiddenFor(x => x.Status)
-                    @Html.HiddenFor(x => x.CurrentPoliID)
-                    @Html.HiddenFor(x => x.PoliFromID)
-                    <div class="col-md-2">
-                        @Html.DatalistFor(x => x.PatientID, new PatientDataList { Url = "/Loket/AllPatient" }, new { @id = "dlPatient" })
+@if (Model.PoliFromID == 1)
+{
+    <div class="col-md-12">
+        <form class="form-horizontal form-bordered" method="post" action="/Loket/Create">
+            <section class="panel">
+                <header class="panel-heading">
+                    <div class="panel-actions">
+                        <a href="#" class="fa fa-caret-down"></a>
                     </div>
-                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.BPJSNo</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(x => x.PatientBPJSNumber, new { @class = "form-control", @id = "tbBPJSNumber", @readonly = "readonly" })
+                    <div>
+                        <h5 class="panel-title">
+                            @Klinik.Resources.UIMessages.Register
+                        </h5>
                     </div>
-                    <label class="col-md-1 control-label " for="inputDefault" style="text-align:left">
-                        @Klinik.Resources.UIMessages.PoliTo
-                    </label>
-                    <div class="col-md-3">
-                        @Html.DropDownListFor(p => p.PoliToID, (IEnumerable<SelectListItem>)ViewBag.PoliList, new { @class = "form-control", @id = "ddlpolito" })
+                </header>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Patient</label>
+                        @Html.HiddenFor(x => x.Id)
+                        @Html.HiddenFor(x => x.Status)
+                        @Html.HiddenFor(x => x.CurrentPoliID)
+                        @Html.HiddenFor(x => x.PoliFromID)
+                        <div class="col-md-2">
+                            @Html.DatalistFor(x => x.PatientID, new PatientDataList { Url = "/Loket/AllPatient" }, new { @id = "dlPatient" })
+                        </div>
+                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.BPJSNo</label>
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(x => x.PatientBPJSNumber, new { @class = "form-control", @id = "tbBPJSNumber", @readonly = "readonly" })
+                        </div>
+                        <label class="col-md-1 control-label " for="inputDefault" style="text-align:left">
+                            @Klinik.Resources.UIMessages.PoliTo
+                        </label>
+                        <div class="col-md-2">
+                            @Html.DropDownListFor(p => p.PoliToID, (IEnumerable<SelectListItem>)ViewBag.PoliList, new { @class = "form-control", @id = "ddlpolito" })
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2"><button type="button" class="btn btn-success btn-block" onclick="location.href='@Url.Action("CreateFromRegistration", "Patient")'">@Klinik.Resources.UIMessages.NewPatient</button></div>
                     </div>
-                    <div class="col-md-2"><button type="button" class="btn btn-success btn-block" onclick="location.href='@Url.Action("CreateFromRegistration", "Patient")'">@Klinik.Resources.UIMessages.NewPatient</button></div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.MRNumber</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(x => x.MRNumber, new { @class = "form-control", @id = "tbMRNumber", @readonly = "readonly" })
+                    <div class="form-group">
+                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.MRNumber</label>
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(x => x.MRNumber, new { @class = "form-control", @id = "tbMRNumber", @readonly = "readonly" })
+                        </div>
+                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.KTPNumber</label>
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(x => x.PatientKTPNumber, new { @class = "form-control", @id = "tbKTPNumber", @readonly = "readonly" })
+                        </div>
+                        <label class="col-md-1 control-label" for="inputDefault">
+                            @Klinik.Resources.UIMessages.Doctor
+                        </label>
+                        <div class="col-md-2">
+                            @Html.DropDownListFor(p => p.DoctorID, (IEnumerable<SelectListItem>)ViewBag.DoctorList, new { @class = "form-control", @id = "ddldoctor" })
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2"><button type="button" class="btn btn-warning btn-block">Print Card</button></div>
                     </div>
-                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.KTPNumber</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(x => x.PatientKTPNumber, new { @class = "form-control", @id = "tbKTPNumber", @readonly = "readonly" })
+                    <div class="form-group">
+                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Birthdate</label>
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(x => x.PatientBirthDateStr, new { @class = "form-control", @id = "tbBirthdate", @readonly = "readonly" })
+                        </div>
+                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Gender</label>
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(x => x.PatientGender, new { @class = "form-control", @id = "tbPatientGender", @readonly = "readonly" })
+                        </div>
+                        <label class="col-md-1 control-label" for="inputDefault">
+                            @Klinik.Resources.UIMessages.Necessity
+                        </label>
+                        <div class="col-md-2">
+                            @Html.DropDownListFor(p => p.NecessityType, (IEnumerable<SelectListItem>)ViewBag.NecessityList, new { @class = "form-control", @id = "ddlnecessity" })
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2"><button type="submit" class="btn btn-primary btn-block">@Klinik.Resources.UIMessages.Register</button></div>
                     </div>
-                    <label class="col-md-1 control-label" for="inputDefault">
-                        @Klinik.Resources.UIMessages.Doctor
-                    </label>
-                    <div class="col-md-3">
-                        @Html.DropDownListFor(p => p.DoctorID, (IEnumerable<SelectListItem>)ViewBag.DoctorList, new { @class = "form-control", @id = "ddldoctor" })
+                    <div class="form-group">
+                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PatientType</label>
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(x => x.PatientType, new { @class = "form-control", @id = "tbPatientType", @readonly = "readonly" })
+                        </div>
+                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.BloodType</label>
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(x => x.PatientBloodType, new { @class = "form-control", @id = "tbBloodType", @readonly = "readonly" })
+                        </div>
+                        <label class="col-md-1 control-label" for="inputDefault">
+                            @Klinik.Resources.UIMessages.RegisterType
+                        </label>
+                        <div class="col-md-2">
+                            @Html.DropDownListFor(p => p.Type, (IEnumerable<SelectListItem>)ViewBag.RegistrationTypeList, new { @class = "form-control", @id = "ddlRegisterType" })
+                        </div>
+                        <div class="col-md-3"></div>
                     </div>
-                    <div class="col-md-2"><button type="button" class="btn btn-warning btn-block">Print Card</button></div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Birthdate</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(x => x.PatientBirthDateStr, new { @class = "form-control", @id = "tbBirthdate", @readonly = "readonly" })
+                    <div class="form-group">
+                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Address</label>
+                        <div class="col-md-5">
+                            @Html.TextBoxFor(x => x.PatientAddress, new { @class = "form-control", @id = "tbAddress", @readonly = "readonly" })
+                        </div>
+                        <label class="col-md-1 control-label" for="inputDefault">
+                            @Klinik.Resources.UIMessages.PaymentType
+                        </label>
+                        <div class="col-md-2">
+                            @Html.DropDownListFor(p => p.PaymentType, (IEnumerable<SelectListItem>)ViewBag.PaymentTypeList, new { @class = "form-control", @id = "ddlPaymentType" })
+                        </div>
+                        <label class="col-md-1 control-label" for="inputDefault" id="lblNomor" style="display: none;">
+                            @Klinik.Resources.UIMessages.Number
+                        </label>
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(x => x.PaymentNumber, new { @class = "form-control", @id = "tbNomor", @style = "display: none;" })
+                        </div>
                     </div>
-                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Gender</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(x => x.PatientGender, new { @class = "form-control", @id = "tbPatientGender", @readonly = "readonly" })
-                    </div>
-                    <label class="col-md-1 control-label" for="inputDefault">
-                        @Klinik.Resources.UIMessages.Necessity
-                    </label>
-                    <div class="col-md-3">
-                        @Html.DropDownListFor(p => p.NecessityType, (IEnumerable<SelectListItem>)ViewBag.NecessityList, new { @class = "form-control", @id = "ddlnecessity" })
-                    </div>
-                    <div class="col-md-2"><button type="submit" class="btn btn-primary btn-block">@Klinik.Resources.UIMessages.Register</button></div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PatientType</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(x => x.PatientType, new { @class = "form-control", @id = "tbPatientType", @readonly = "readonly" })
-                    </div>
-                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.BloodType</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(x => x.PatientBloodType, new { @class = "form-control", @id = "tbBloodType", @readonly = "readonly" })
-                    </div>
-                    <label class="col-md-1 control-label" for="inputDefault">
-                        @Klinik.Resources.UIMessages.PaymentType
-                    </label>
-                    <div class="col-md-3">
-                        @Html.DropDownListFor(p => p.PaymentType, (IEnumerable<SelectListItem>)ViewBag.PaymentTypeList, new { @class = "form-control", @id = "ddltype" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Address</label>
-                    <div class="col-md-5">
-                        @Html.TextBoxFor(x => x.PatientAddress, new { @class = "form-control", @id = "tbAddress", @readonly = "readonly" })
-                    </div>
-                    <label class="col-md-1 control-label" for="inputDefault">
-                        @Klinik.Resources.UIMessages.RegisterType
-                    </label>
-                    <div class="col-md-3">
-                        @Html.DropDownListFor(p => p.Type, (IEnumerable<SelectListItem>)ViewBag.RegistrationTypeList, new { @class = "form-control", @id = "ddltype" })
-                    </div>
-                </div>
-            </div>
-        </section>
-    </form>
-</div>
+            </section>
+        </form>
+    </div>
+}
 <div class="col-md-12">
     <section class="panel">
         <header class="panel-heading">
@@ -210,6 +222,20 @@
     }
 
     $(document).ready(function () {
+
+        $("#ddlPaymentType").change(function () {
+            var paymentId = $("#ddlPaymentType").val();
+            var lbl = document.getElementById("lblNomor");
+            var tb = document.getElementById("tbNomor");
+
+            if (paymentId == 1 || paymentId == 4) {
+                lbl.style.display = "none";
+                tb.style.display = "none";
+            } else {
+                lbl.style.display = "block";
+                tb.style.display = "block";
+            }
+        });
 
         $("#ddlpolito").change(function () {
             $.get("/Loket/GetDoctorList", { PoliId: $("#ddlpolito").val() }, function (data) {

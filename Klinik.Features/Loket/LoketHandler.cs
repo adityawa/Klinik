@@ -62,6 +62,7 @@ namespace Klinik.Features.Loket
                             {
                                 formMedical.Necessity = request.Data.NecessityType.ToString();
                                 formMedical.PaymentType = request.Data.PaymentType.ToString();
+                                formMedical.Number = request.Data.PaymentNumber;
                             }
 
                             _unitOfWork.FormMedicalRepository.Update(formMedical);
@@ -107,10 +108,12 @@ namespace Klinik.Features.Loket
                         ClinicID = request.Data.Account.ClinicID,
                         PatientID = request.Data.PatientID,
                         PaymentType = request.Data.PaymentType.ToString(),
+                        Number = request.Data.PaymentNumber,
                         Necessity = request.Data.NecessityType.ToString(),
                         CreatedBy = request.Data.Account.UserCode,
                         CreatedDate = DateTime.Now,
-                        StartDate = DateTime.Now
+                        StartDate = DateTime.Now,
+                        EndDate = DateTime.Now
                     };
 
                     // reference to queue
@@ -215,6 +218,7 @@ namespace Klinik.Features.Loket
                 {
                     response.Entity.NecessityType = int.Parse(formMedical.Necessity);
                     response.Entity.PaymentType = int.Parse(formMedical.PaymentType);
+                    response.Entity.PaymentNumber = formMedical.Number;
                 }
             }
 
