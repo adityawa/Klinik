@@ -114,6 +114,7 @@
     <Compile Include="MasterData\Organization\OrganizationRequest.cs" />
     <Compile Include="MasterData\Organization\OrganizationResponse.cs" />
     <Compile Include="MasterData\Organization\OrganizationValidator.cs" />
+    <Compile Include="MasterData\Poli\PoliHandler.cs" />
     <Compile Include="MasterData\Privileges\PrivilegeHandler.cs" />
     <Compile Include="MasterData\Privileges\PrivilegeRequest.cs" />
     <Compile Include="MasterData\Privileges\PrivilegeResponse.cs" />
@@ -138,6 +139,10 @@
     <Compile Include="PoliSchedules\PoliScheduleRequest.cs" />
     <Compile Include="PoliSchedules\PoliScheduleResponse.cs" />
     <Compile Include="PoliSchedules\PoliScheduleValidator.cs" />
+    <Compile Include="PreExamine\PreExamineHandler.cs" />
+    <Compile Include="PreExamine\PreExamineRequest.cs" />
+    <Compile Include="PreExamine\PreExamineResponse.cs" />
+    <Compile Include="PreExamine\PreExamineValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

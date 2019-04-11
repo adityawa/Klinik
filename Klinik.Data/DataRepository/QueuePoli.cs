@@ -38,6 +38,7 @@ namespace Klinik.Data.DataRepository
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<bool> IsPreExamine { get; set; }
     
         public virtual Clinic Clinic { get; set; }
         public virtual Doctor Doctor { get; set; }

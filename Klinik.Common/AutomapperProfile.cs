@@ -9,6 +9,7 @@ using Klinik.Entities.Patient;
 using Klinik.Entities.PoliSchedules;
 using Klinik.Entities.Loket;
 using Klinik.Entities.Form;
+using Klinik.Entities.PreExamine;
 
 namespace Klinik.Common
 {
@@ -53,10 +54,15 @@ namespace Klinik.Common
                 .ForMember(x => x.BirthdateStr, map => map.MapFrom(p => p.BirthDate == null ? "" : p.BirthDate.Value.ToString("dd/MM/yyyy")))
                 .ForMember(x => x.EmpTypeDesc, map => map.MapFrom(p => p.FamilyRelationship.Name))
                 .ForMember(x => x.EmpStatusDesc, map => map.MapFrom(p => p.EmployeeStatu.Name))
-                .ForMember(x => x.EmpTypeDesc, map => map.MapFrom(p => p.FamilyRelationship.Name));
-            CreateMap<EmployeeModel, Employee>()
+                .ForMember(x => x.EmpTypeDesc, map => map.MapFrom(p => p.FamilyRelationship.Name))
+                .ForMember(x=>x.Email, map=>map.MapFrom(p=>p.Email==null?"": CommonUtils.Decryptor(p.Email, CommonUtils.KeyEncryptor)))
+                .ForMember(x => x.HPNumber, map => map.MapFrom(p =>p.HPNumber==null?"": CommonUtils.Decryptor(p.HPNumber, CommonUtils.KeyEncryptor)));
+
+            CreateMap <EmployeeModel, Employee>()
                 .ForMember(x => x.EmpType, map => map.MapFrom(p => p.EmpType))
-                .ForMember(x => x.Status, map => map.MapFrom(p => p.EmpStatus));
+                .ForMember(x => x.Status, map => map.MapFrom(p => p.EmpStatus))
+                .ForMember(x=>x.HPNumber,map=>map.MapFrom(p=>p.HPNumber==null?"":CommonUtils.Encryptor(p.HPNumber, CommonUtils.KeyEncryptor)))
+                .ForMember(x => x.Email, map => map.MapFrom(p => p.Email == null ? "" : CommonUtils.Encryptor(p.Email, CommonUtils.KeyEncryptor)));
 
             CreateMap<OrganizationPrivilege, OrganizationPrivilegeModel>()
                 .ForMember(x => x.OrganizationName, map => map.MapFrom(p => p.Organization.OrgName))
@@ -101,13 +107,17 @@ namespace Klinik.Common
                 .ForMember(m => m.PatientBloodType, map => map.MapFrom(p => p.Patient.BloodType))
                 .ForMember(m => m.PatientBPJSNumber, map => map.MapFrom(p => p.Patient.BPJSNumber))
                 .ForMember(m => m.PatientGender, map => map.MapFrom(p => p.Patient.Gender))
-                //.ForMember(m => m.PatientHPNumber, map => map.MapFrom(p => p.Patient.HPNumber))
+
                 .ForMember(m => m.PatientKTPNumber, map => map.MapFrom(p => p.Patient.KTPNumber))
                 .ForMember(m => m.PatientType, map => map.MapFrom(p => p.Patient.Type))
                 .ForMember(m => m.StatusStr, map => map.MapFrom(p => ((RegistrationStatusEnum)p.Status.Value).ToString()))
                 .ForMember(m => m.TypeStr, map => map.MapFrom(p => ((RegistrationTypeEnum)p.Type).ToString()))
-                .ForMember(m => m.TransactionDateStr, map => map.MapFrom(p => p.TransactionDate.ToString("hh:mm:ss")))
-                .ForMember(m => m.TransactionDate, map => map.MapFrom(p => p.TransactionDate));
+                .ForMember(m => m.TransactionDateStr, map => map.MapFrom(p => p.TransactionDate.ToString("dd/MM/yyyy hh:mm:ss")))
+                .ForMember(m => m.TransactionDate, map => map.MapFrom(p => p.TransactionDate))
+                .ForMember(m => m.DoctorStr, map => map.MapFrom(p => p.Doctor.Name))
+                .ForMember(m => m.ClinicName, map => map.MapFrom(p => p.Clinic.Name))
+                .ForMember(m => m.strIsPreExamine, map => map.MapFrom(p => p.IsPreExamine == true ? "Yes" : "No"));
+
 
             CreateMap<PoliModel, Poli>();
             CreateMap<Poli, PoliModel>();
@@ -156,8 +166,8 @@ namespace Klinik.Common
             CreateMap<FormMedicalModel, FormMedical>();
             CreateMap<FormMedical, FormMedicalModel>();
 
-            CreateMap<FormPreExamineModel, FormPreExamine>();
-            CreateMap<FormPreExamine, FormPreExamineModel>();
+            CreateMap<PreExamineModel, FormPreExamine>();
+            CreateMap<FormPreExamine, PreExamineModel>();
 
             CreateMap<FormExamineModel, FormExamine>();
             CreateMap<FormExamine, FormExamineModel>();

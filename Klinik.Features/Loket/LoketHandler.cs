@@ -194,7 +194,7 @@ namespace Klinik.Features.Loket
 
             return registrationList;
         }
-
+       
         /// <summary>
         /// Get detail of registration
         /// </summary>

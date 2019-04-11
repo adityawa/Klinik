@@ -59,16 +59,23 @@ namespace Klinik.Common
             {
                 password = String.Empty;
             }
+            try
+            {
+                var bytesToBeDecrypted = Convert.FromBase64String(encryptedText);
+                var passwordBytes = Encoding.UTF8.GetBytes(password);
 
+                passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
+
+                var bytesDecrypted = Decrypt(bytesToBeDecrypted, passwordBytes);
+
+                return Encoding.UTF8.GetString(bytesDecrypted);
+            }
+            catch(Exception ex)
+            {
+                return encryptedText;
+            }
             // Get the bytes of the string
-            var bytesToBeDecrypted = Convert.FromBase64String(encryptedText);
-            var passwordBytes = Encoding.UTF8.GetBytes(password);
-
-            passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
-
-            var bytesDecrypted = Decrypt(bytesToBeDecrypted, passwordBytes);
-
-            return Encoding.UTF8.GetString(bytesDecrypted);
+           
         }
 
         /// <summary>
