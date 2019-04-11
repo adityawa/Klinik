@@ -1859,5 +1859,15 @@ namespace Klinik.Resources {
                 return ResourceManager.GetString("Weight", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Poli List.
+        /// </summary>
+        public static string PoliList
+        {
+            get{
+                return ResourceManager.GetString("PoliList", resourceCulture);
+            }
+        }
     }
 }

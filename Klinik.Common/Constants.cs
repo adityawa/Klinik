@@ -33,6 +33,8 @@
 
             public const string ADD_NEW_FORM_PREEXAMINE = "Add New Form Pre Examine";
             public const string EDIT_FORM_PREEXAMINE = "Edit Form Pre Examine";
+            public const string EDIT_POLI = "Edit Form Poli";
+            public const string ADD_NEW_POLI = "Add New Poli";
         }
 
         public static class MasterType
