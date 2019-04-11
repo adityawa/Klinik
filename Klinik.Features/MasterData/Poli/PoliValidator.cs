@@ -41,12 +41,12 @@ namespace Klinik.Features
 
                 if (request.Data.Name == null || String.IsNullOrWhiteSpace(request.Data.Name))
                 {
-                    errorFields.Add("Role Name");
+                    errorFields.Add("Poli Name");
                 }
 
-                if (request.Data.Id == 0)
+                if (request.Data.Type == 0)
                 {
-                    errorFields.Add("Organization");
+                    errorFields.Add("Type");
                 }
 
                 if (errorFields.Any())

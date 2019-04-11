@@ -234,6 +234,21 @@ namespace Klinik.Web.Controllers
             return _menus;
         }
 
+        private List<SelectListItem> BindDropDownPoliType()
+        {
+            List<SelectListItem> _PoliTypes = new List<SelectListItem>();
+            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.MasterTypes.PoliType.ToString()).ToList())
+            {
+                _PoliTypes.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.ID.ToString()
+                });
+            }
+
+            return _PoliTypes;
+        }
+
 
         #endregion
 
@@ -937,6 +952,36 @@ namespace Klinik.Web.Controllers
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
+        [CustomAuthorize("ADD_M_POLI", "EDIT_M_POLI")]
+        public ActionResult CreateOrEditPoli()
+        {
+            PoliResponse _response = new PoliResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new PoliRequest
+                {
+                    Data = new PoliModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                PoliResponse resp = new PoliHandler(_unitOfWork).GetDetail(request);
+                PoliModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.Type = BindDropDownPoliType();
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.Type = BindDropDownPoliType();
+                ViewBag.ActionType = ClinicEnums.Action.Add;
+                return View();
+            }
+        }
+
         [HttpPost]
         public ActionResult CreateOrEditPoli(PoliModel _model)
         {
@@ -952,11 +997,29 @@ namespace Klinik.Web.Controllers
 
             new PoliValidator(_unitOfWork).Validate(request, out _response);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
-            ViewBag.Cities = BindDropDownCity();
-            ViewBag.ClinicTypes = BindDropDownClinicType();
+            ViewBag.Type = BindDropDownPoliType();
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
 
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult DeleteMasterPoli(int id)
+        {
+            PoliResponse _response = new PoliResponse();
+            var request = new PoliRequest
+            {
+                Data = new PoliModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            new PoliValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

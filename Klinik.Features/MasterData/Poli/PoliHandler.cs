@@ -44,7 +44,7 @@ namespace Klinik.Features.MasterData.Poli
                     if (qry != null)
                     {
                         // save the old data
-                        var _oldentity = Mapper.Map<Klinik.Data.DataRepository.Poli, RoleModel>(qry);
+                        var _oldentity = Mapper.Map<Klinik.Data.DataRepository.Poli, PoliModel>(qry);
 
                         // update data
                         qry.Name = request.Data.Name;

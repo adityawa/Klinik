@@ -80,12 +80,49 @@
                 { "data": "Code", "name": "Code", "autoWidth": true },
                 { "data": "Name", "name": "Name", "autoWidth": true },
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditPoli?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" + ' | <a class="btn btn-info" href="/MappingMaster/RolePrivilegeList?roleid=' + full.Id + '">@Klinik.Resources.UIMessages.SetRolePrivilege</a>'; }
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditPoli?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>"; }
                 }
 
             ]
         });
     });
+    var _status, _message, _temp;
+    var _arrMsg = [];
+    toastr.options = {
+        "closeButton": true,
+        "positionClass": "toast-top-full-width",
+        "onclick": null,
+        "showDuration": "0",
+        "hideDuration": "0",
+        "timeOut": "0",
+        "showMethod": "fadeIn"
+    };
+
+    var Delete = function (ID) {
+        var r = confirm("@Klinik.Resources.UIMessages.DeleteConfirmation" + ID + " ) ?");
+        if (r == true) {
+            DeleteRole(ID);
+        }
+        return false;
+    }
+
+    function DeleteRole(Id) {
+        $.ajax({
+            url: '/MasterData/DeleteMasterPoli?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+    }
     </script>
 }
 
