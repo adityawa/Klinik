@@ -143,6 +143,7 @@ namespace Klinik.Features
                     userEntity.Employee = employeeEntity;
                     userEntity.CreatedBy = requestData.Account.UserCode;
                     userEntity.CreatedDate = DateTime.Now;
+                    userEntity.ExpiredDate = DateTime.Now.AddDays(100);
 
                     Doctor doctorEntity = Mapper.Map<DoctorModel, Doctor>(requestData);
                     doctorEntity.Employee = employeeEntity;
