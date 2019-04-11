@@ -3,9 +3,7 @@ using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Loket;
-using Klinik.Entities.MasterData;
 using Klinik.Entities.Poli;
-using Klinik.Features;
 using Klinik.Features.Loket;
 using Klinik.Resources;
 using System;
@@ -38,22 +36,6 @@ namespace Klinik.Web.Controllers
             return View("PatientList", model);
         }
 
-        [HttpPost]
-        public ActionResult FormExamine(DoctorModel model)
-        {
-            model.Account = Account;
-
-            var request = new DoctorRequest { Data = model };
-
-            DoctorResponse _response = new DoctorValidator(_unitOfWork, _context).Validate(request);
-
-            ViewBag.Response = $"{_response.Status};{_response.Message}";
-            ViewBag.DoctorTypes = BindDropDownDoctorType();
-            ViewBag.OrganizationList = BindDropDownOrganization();
-
-            return View();
-        }
-
         public ActionResult FormExamine()
         {
             var request = new LoketRequest
@@ -65,23 +47,25 @@ namespace Klinik.Web.Controllers
             };
 
             LoketResponse resp = new LoketHandler(_unitOfWork).GetDetail(request);
-            PatientListModel model = Mapper.Map<LoketModel, PatientListModel>(resp.Entity);
-            int age = CalculateAge(model.PatientBirthDateStr);
+            PoliExamineModel model = new PoliExamineModel();
+            model.LoketData = resp.Entity;
+
+            int age = CalculateAge(model.LoketData.PatientBirthDateStr);
             if (age > 0)
             {
                 model.PatientAge = age.ToString() + " " + UIMessages.Years;
             }
             else
             {
-                age = CalculateAgeInMonth(model.PatientBirthDateStr);
+                age = CalculateAgeInMonth(model.LoketData.PatientBirthDateStr);
                 model.PatientAge = age.ToString() + " " + UIMessages.Month;
             }
 
             var necessityTypeList = GetGeneralMasterByType(Constants.MasterType.NECESSITY_TYPE);
             var paymentTypeList = GetGeneralMasterByType(Constants.MasterType.PAYMENT_TYPE);
 
-            model.NecessityTypeStr = necessityTypeList.FirstOrDefault(x => x.Value == model.NecessityType.ToString()).Text;
-            model.PaymentTypeStr = paymentTypeList.FirstOrDefault(x => x.Value == model.PaymentType.ToString()).Text;
+            model.NecessityTypeStr = necessityTypeList.FirstOrDefault(x => x.Value == model.LoketData.NecessityType.ToString()).Text;
+            model.PaymentTypeStr = paymentTypeList.FirstOrDefault(x => x.Value == model.LoketData.PaymentType.ToString()).Text;
 
             return View(model);
         }

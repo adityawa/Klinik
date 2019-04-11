@@ -265,4 +265,13 @@ Administrator</value>
   <data name="Male" xml:space="preserve">
     <value>Male</value>
   </data>
+  <data name="MenstrualDataProhibited" xml:space="preserve">
+    <value>Menstrual and KB Date is only for woman. Don't fill if patient is a men</value>
+  </data>
+  <data name="ObjectPreExamineDataAdded" xml:space="preserve">
+    <value>Pre Examine Data for Patient {0} has been added with Id {1}</value>
+  </data>
+  <data name="PatientNotRegistered" xml:space="preserve">
+    <value>Patient is not registered in Poli yet</value>
+  </data>
 </root>

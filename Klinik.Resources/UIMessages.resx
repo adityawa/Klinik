@@ -660,6 +660,63 @@
   <data name="Number" xml:space="preserve">
     <value>Number</value>
   </data>
+  <data name="AlreadyPreExamine" xml:space="preserve">
+    <value>Already Pre Examine</value>
+  </data>
+  <data name="QueuePoli" xml:space="preserve">
+    <value>Queue Poli</value>
+  </data>
+  <data name="ColorBlind" xml:space="preserve">
+    <value>Color Blind</value>
+  </data>
+  <data name="DailyGlasses" xml:space="preserve">
+    <value>Daily Glasses</value>
+  </data>
+  <data name="Diastolic" xml:space="preserve">
+    <value>Diastolic</value>
+  </data>
+  <data name="ExamineGlasses" xml:space="preserve">
+    <value>Examine Glasses</value>
+  </data>
+  <data name="FormMedical" xml:space="preserve">
+    <value>Form Medical</value>
+  </data>
+  <data name="FormPreExamine" xml:space="preserve">
+    <value>Form Pre Examine</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="KBDate" xml:space="preserve">
+    <value>KB Date</value>
+  </data>
+  <data name="LeftEye" xml:space="preserve">
+    <value>Left Eye</value>
+  </data>
+  <data name="MenstrualDate" xml:space="preserve">
+    <value>Menstrual Date</value>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="Pulse" xml:space="preserve">
+    <value>Pulse</value>
+  </data>
+  <data name="Respiratory" xml:space="preserve">
+    <value>Respiratory</value>
+  </data>
+  <data name="RightEye" xml:space="preserve">
+    <value>Right Eye</value>
+  </data>
+  <data name="Systolic" xml:space="preserve">
+    <value>Systolic</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Temperatur</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>Weight</value>
+  </data>
   <data name="IsPreExamined" xml:space="preserve">
     <value>Is PreExamined</value>
   </data>
@@ -674,5 +731,8 @@
   </data>
   <data name="Years" xml:space="preserve">
     <value>years</value>
+  </data>
+  <data name="FormExamine" xml:space="preserve">
+    <value>Form Examine</value>
   </data>
 </root>

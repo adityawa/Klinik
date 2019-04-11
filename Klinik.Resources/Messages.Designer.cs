@@ -230,6 +230,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Menstrual and KB Date is only for woman. Don&apos;t fill if patient is a men.
+        /// </summary>
+        public static string MenstrualDataProhibited {
+            get {
+                return ResourceManager.GetString("MenstrualDataProhibited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} {1} with ID {2} has been successfully added.
         /// </summary>
         public static string ObjectHasBeenAdded {
@@ -302,6 +311,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pre Examine Data for Patient {0} has been added with Id {1}.
+        /// </summary>
+        public static string ObjectPreExamineDataAdded {
+            get {
+                return ResourceManager.GetString("ObjectPreExamineDataAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to One employee cannot have more than one user Id.
         /// </summary>
         public static string OneEmpOneUserID {
@@ -334,6 +352,15 @@ namespace Klinik.Resources {
         public static string Patient {
             get {
                 return ResourceManager.GetString("Patient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Patient is not registered in Poli yet.
+        /// </summary>
+        public static string PatientNotRegistered {
+            get {
+                return ResourceManager.GetString("PatientNotRegistered", resourceCulture);
             }
         }
         

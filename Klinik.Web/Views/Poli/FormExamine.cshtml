@@ -1,6 +1,10 @@
-﻿@model Klinik.Entities.Poli.PatientListModel
+﻿@model Klinik.Entities.Poli.PoliExamineModel
+
 @using Klinik.Entities.Account;
-<!doctype html>
+@{
+    Layout = "";
+}
+
 <html class="fixed">
 <head>
     <!-- Basic -->
@@ -32,7 +36,6 @@
     <!-- Nuget CSS -->
     <link href="~/Content/font-awesome.css" rel="stylesheet" />
     <link href="~/Content/toastr.css" rel="stylesheet" />
-    <link href="~/Content/MvcDatalist/mvc-datalist.css" rel="stylesheet">
 
     <!-- Theme CSS -->
     <link href="~/Content/Octopus/assets/stylesheets/theme.css" rel="stylesheet" />
@@ -121,19 +124,19 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label class="control-label">@Klinik.Resources.UIMessages.Name</label>
-                                            <input type="text" class="form-control" readOnly value="@Model.PatientName">
+                                            <input type="text" class="form-control" readOnly value="@Model.LoketData.PatientName">
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label class="control-label">@Klinik.Resources.UIMessages.Address</label>
-                                            <input type="url" class="form-control" readOnly value="@Model.PatientAddress">
+                                            <input type="url" class="form-control" readOnly value="@Model.LoketData.PatientAddress">
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label class="control-label">@Klinik.Resources.UIMessages.Birthdate</label>
-                                            <input type="url" class="form-control" readOnly value="@Model.PatientBirthDateStr">
+                                            <input type="url" class="form-control" readOnly value="@Model.LoketData.PatientBirthDateStr">
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
@@ -145,7 +148,7 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label class="control-label">@Klinik.Resources.UIMessages.Gender</label>
-                                            <input type="url" class="form-control" readOnly value="@Model.PatientGender">
+                                            <input type="url" class="form-control" readOnly value="@Model.LoketData.PatientGender">
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
@@ -186,6 +189,226 @@
                     </div>
                 </header>
                 <div>
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                <div class="panel-actions">
+                                    <a href="#" class="fa fa-caret-down"></a>
+                                </div>
+                                <div>
+                                    <h5 class="panel-title">
+                                        @Klinik.Resources.UIMessages.FormPreExamine
+                                    </h5>
+                                </div>
+                            </header>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.FormMedical</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.TransactionDate</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label " for="inputDefault" style="text-align:left">
+                                        <input type="text" class="form-control">
+                                    </label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Temperature</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Weight</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">
+                                        <input type="text" class="form-control">
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Respiratory</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Diastolic</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">
+                                        @Klinik.Resources.UIMessages.Systolic
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault" id="lblNomor">
+                                        @Klinik.Resources.UIMessages.DailyGlasses
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Pulse</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.LeftEye</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">
+                                        @Klinik.Resources.UIMessages.RightEye
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault" id="lblNomor">
+                                        @Klinik.Resources.UIMessages.ExamineGlasses
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Others</label>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">
+                                        @Klinik.Resources.UIMessages.MenstrualDate
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault" id="lblNomor">
+                                        @Klinik.Resources.UIMessages.KBDate
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                <div class="panel-actions">
+                                    <a href="#" class="fa fa-caret-down"></a>
+                                </div>
+                                <div>
+                                    <h5 class="panel-title">
+                                        @Klinik.Resources.UIMessages.FormExamine
+                                    </h5>
+                                </div>
+                            </header>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.FormMedical</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.TransactionDate</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label " for="inputDefault" style="text-align:left">
+                                        <input type="text" class="form-control">
+                                    </label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Temperature</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Weight</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">
+                                        <input type="text" class="form-control">
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Respiratory</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Diastolic</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">
+                                        @Klinik.Resources.UIMessages.Systolic
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault" id="lblNomor">
+                                        @Klinik.Resources.UIMessages.DailyGlasses
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Pulse</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.LeftEye</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">
+                                        @Klinik.Resources.UIMessages.RightEye
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault" id="lblNomor">
+                                        @Klinik.Resources.UIMessages.ExamineGlasses
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Others</label>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault">
+                                        @Klinik.Resources.UIMessages.MenstrualDate
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <label class="col-md-1 control-label" for="inputDefault" id="lblNomor">
+                                        @Klinik.Resources.UIMessages.KBDate
+                                    </label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </section>
         </div>
@@ -210,13 +433,6 @@
     <script src="~/Content/Octopus/assets/javascripts/theme.js"></script>
     <script src="~/Content/Octopus/assets/javascripts/theme.custom.js"></script>
     <script src="~/Content/Octopus/assets/javascripts/theme.init.js"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var url = window.location;
-            $('ul.nav a').filter(function () { return this.href == url; }).parent().addClass('nav-active').parent().closest('li').addClass('nav-expanded');
-        });
-    </script>
 </body>
 </html>
 

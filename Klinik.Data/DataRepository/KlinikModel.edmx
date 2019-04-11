@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AppConfig">
           <Key>
             <PropertyRef Name="ID" />
@@ -122,9 +122,9 @@
           <Property Name="ReffEmpID" Type="varchar" MaxLength="50" />
           <Property Name="Gender" Type="char" MaxLength="1" />
           <Property Name="EmpType" Type="smallint" />
-          <Property Name="KTPNumber" Type="varchar" MaxLength="20" />
-          <Property Name="HPNumber" Type="varchar" MaxLength="20" />
-          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="KTPNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="HPNumber" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
           <Property Name="LastEmpID" Type="varchar" MaxLength="50" />
           <Property Name="Status" Type="smallint" />
           <Property Name="RowStatus" Type="smallint" Nullable="false" />
@@ -189,7 +189,6 @@
           <Property Name="ActualPath" Type="varchar" MaxLength="300" />
           <Property Name="ActualName" Type="varchar" MaxLength="50" />
           <Property Name="TypeDoc" Type="varchar" MaxLength="10" />
-          <Property Name="FileDoc" Type="varbinary" MaxLength="1024" />
           <Property Name="RowStatus" Type="smallint" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
@@ -710,6 +709,7 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsPreExamine" Type="bit" />
         </EntityType>
         <EntityType Name="RolePrivilege">
           <Key>
@@ -1683,8 +1683,7 @@
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KlinikDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1815,7 +1814,7 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Clinic" Relationship="Self.FK_DoctorClinic_Clinic" FromRole="DoctorClinic" ToRole="Clinic" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK_DoctorClinic_Doctor" FromRole="DoctorClinic" ToRole="Doctor" />
-          <NavigationProperty Name="FileArchieve" Relationship="Self.FK_DoctorClinic_FileArchieve" FromRole="DoctorClinic" ToRole="FileArchieve" />
+          <NavigationProperty Name="FileArchieve" Relationship="KlinikDBModel.FK_DoctorClinic_FileArchieve" FromRole="DoctorClinic" ToRole="FileArchieve" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -1828,9 +1827,9 @@
           <Property Name="ReffEmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="EmpType" Type="Int16" />
-          <Property Name="KTPNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="HPNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="KTPNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HPNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="LastEmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="Int16" />
           <Property Name="RowStatus" Type="Int16" Nullable="false" />
@@ -1899,25 +1898,6 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_FamilyRelationship" FromRole="FamilyRelationship" ToRole="Employee" />
         </EntityType>
-        <EntityType Name="FileArchieve">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SourceTable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ActualPath" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="ActualName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TypeDoc" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="FileDoc" Type="Binary" MaxLength="1024" FixedLength="false" />
-          <Property Name="RowStatus" Type="Int16" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="DoctorClinics" Relationship="Self.FK_DoctorClinic_FileArchieve" FromRole="FileArchieve" ToRole="DoctorClinic" />
-          <NavigationProperty Name="FormExamineAttachments" Relationship="Self.FK_FormExamineAttachment_FileArchieve" FromRole="FileArchieve" ToRole="FormExamineAttachment" />
-          <NavigationProperty Name="PatientClinics" Relationship="Self.FK_PatientClinic_FileArchieve" FromRole="FileArchieve" ToRole="PatientClinic" />
-        </EntityType>
         <EntityType Name="FormExamine">
           <Key>
             <PropertyRef Name="ID" />
@@ -1957,8 +1937,8 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="FileArchieve" Relationship="Self.FK_FormExamineAttachment_FileArchieve" FromRole="FormExamineAttachment" ToRole="FileArchieve" />
           <NavigationProperty Name="FormExamine" Relationship="Self.FK_FormExamineAttachment_FormExamine" FromRole="FormExamineAttachment" ToRole="FormExamine" />
+          <NavigationProperty Name="FileArchieve" Relationship="KlinikDBModel.FK_FormExamineAttachment_FileArchieve" FromRole="FormExamineAttachment" ToRole="FileArchieve" />
         </EntityType>
         <EntityType Name="FormExamineLab">
           <Key>
@@ -2302,8 +2282,8 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="City" Relationship="Self.FK_PatientClinic_City" FromRole="PatientClinic" ToRole="City" />
           <NavigationProperty Name="Clinic" Relationship="Self.FK_PatientClinic_Clinic" FromRole="PatientClinic" ToRole="Clinic" />
-          <NavigationProperty Name="FileArchieve" Relationship="Self.FK_PatientClinic_FileArchieve" FromRole="PatientClinic" ToRole="FileArchieve" />
           <NavigationProperty Name="Patient" Relationship="Self.FK_PatientClinic_Patient" FromRole="PatientClinic" ToRole="Patient" />
+          <NavigationProperty Name="FileArchieve" Relationship="KlinikDBModel.FK_PatientClinic_FileArchieve" FromRole="PatientClinic" ToRole="FileArchieve" />
         </EntityType>
         <EntityType Name="Poli">
           <Key>
@@ -2496,6 +2476,7 @@
           <NavigationProperty Name="Patient" Relationship="Self.FK_QueuePoli_Patient" FromRole="QueuePoli" ToRole="Patient" />
           <NavigationProperty Name="Poli" Relationship="Self.FK_QueuePoli_PoliFrom" FromRole="QueuePoli" ToRole="Poli" />
           <NavigationProperty Name="Poli1" Relationship="Self.FK_QueuePoli_PoliTo" FromRole="QueuePoli" ToRole="Poli" />
+          <Property Name="IsPreExamine" Type="Boolean" />
         </EntityType>
         <EntityType Name="RolePrivilege">
           <Key>
@@ -2777,18 +2758,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DoctorClinic_FileArchieve">
-          <End Role="FileArchieve" Type="Self.FileArchieve" Multiplicity="0..1" />
-          <End Role="DoctorClinic" Type="Self.DoctorClinic" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FileArchieve">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DoctorClinic">
-              <PropertyRef Name="PhotoID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Employee_EmployeeStatus">
           <End Role="EmployeeStatus" Type="Self.EmployeeStatu" Multiplicity="0..1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -2870,30 +2839,6 @@
             </Principal>
             <Dependent Role="EmployeeAssignment">
               <PropertyRef Name="EmpStatus" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FormExamineAttachment_FileArchieve">
-          <End Role="FileArchieve" Type="Self.FileArchieve" Multiplicity="0..1" />
-          <End Role="FormExamineAttachment" Type="Self.FormExamineAttachment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FileArchieve">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FormExamineAttachment">
-              <PropertyRef Name="FileAttach" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PatientClinic_FileArchieve">
-          <End Role="FileArchieve" Type="Self.FileArchieve" Multiplicity="0..1" />
-          <End Role="PatientClinic" Type="Self.PatientClinic" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FileArchieve">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PatientClinic">
-              <PropertyRef Name="PhotoID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3220,7 +3165,6 @@
           <EntitySet Name="EmployeeAssignments" EntityType="Self.EmployeeAssignment" />
           <EntitySet Name="EmployeeStatus" EntityType="Self.EmployeeStatu" />
           <EntitySet Name="FamilyRelationships" EntityType="Self.FamilyRelationship" />
-          <EntitySet Name="FileArchieves" EntityType="Self.FileArchieve" />
           <EntitySet Name="FormExamines" EntityType="Self.FormExamine" />
           <EntitySet Name="FormExamineAttachments" EntityType="Self.FormExamineAttachment" />
           <EntitySet Name="FormExamineLabs" EntityType="Self.FormExamineLab" />
@@ -3331,10 +3275,6 @@
             <End Role="Doctor" EntitySet="Doctors" />
             <End Role="QueuePoli" EntitySet="QueuePolis" />
           </AssociationSet>
-          <AssociationSet Name="FK_DoctorClinic_FileArchieve" Association="Self.FK_DoctorClinic_FileArchieve">
-            <End Role="FileArchieve" EntitySet="FileArchieves" />
-            <End Role="DoctorClinic" EntitySet="DoctorClinics" />
-          </AssociationSet>
           <AssociationSet Name="FK_Employee_EmployeeStatus" Association="Self.FK_Employee_EmployeeStatus">
             <End Role="EmployeeStatus" EntitySet="EmployeeStatus" />
             <End Role="Employee" EntitySet="Employees" />
@@ -3362,14 +3302,6 @@
           <AssociationSet Name="FK_EmployeeAssignment_EmployeeStatus" Association="Self.FK_EmployeeAssignment_EmployeeStatus">
             <End Role="EmployeeStatus" EntitySet="EmployeeStatus" />
             <End Role="EmployeeAssignment" EntitySet="EmployeeAssignments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FormExamineAttachment_FileArchieve" Association="Self.FK_FormExamineAttachment_FileArchieve">
-            <End Role="FileArchieve" EntitySet="FileArchieves" />
-            <End Role="FormExamineAttachment" EntitySet="FormExamineAttachments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PatientClinic_FileArchieve" Association="Self.FK_PatientClinic_FileArchieve">
-            <End Role="FileArchieve" EntitySet="FileArchieves" />
-            <End Role="PatientClinic" EntitySet="PatientClinics" />
           </AssociationSet>
           <AssociationSet Name="FK_FormExamine_FormMedical" Association="Self.FK_FormExamine_FormMedical">
             <End Role="FormMedical" EntitySet="FormMedicals" />
@@ -3475,7 +3407,74 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
+          <EntitySet Name="FileArchieves" EntityType="KlinikDBModel.FileArchieve" />
+          <AssociationSet Name="FK_DoctorClinic_FileArchieve" Association="KlinikDBModel.FK_DoctorClinic_FileArchieve">
+            <End Role="FileArchieve" EntitySet="FileArchieves" />
+            <End Role="DoctorClinic" EntitySet="DoctorClinics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormExamineAttachment_FileArchieve" Association="KlinikDBModel.FK_FormExamineAttachment_FileArchieve">
+            <End Role="FileArchieve" EntitySet="FileArchieves" />
+            <End Role="FormExamineAttachment" EntitySet="FormExamineAttachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientClinic_FileArchieve" Association="KlinikDBModel.FK_PatientClinic_FileArchieve">
+            <End Role="FileArchieve" EntitySet="FileArchieves" />
+            <End Role="PatientClinic" EntitySet="PatientClinics" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="FileArchieve">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SourceTable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ActualPath" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="ActualName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TypeDoc" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DoctorClinics" Relationship="KlinikDBModel.FK_DoctorClinic_FileArchieve" FromRole="FileArchieve" ToRole="DoctorClinic" />
+          <NavigationProperty Name="FormExamineAttachments" Relationship="KlinikDBModel.FK_FormExamineAttachment_FileArchieve" FromRole="FileArchieve" ToRole="FormExamineAttachment" />
+          <NavigationProperty Name="PatientClinics" Relationship="KlinikDBModel.FK_PatientClinic_FileArchieve" FromRole="FileArchieve" ToRole="PatientClinic" />
+        </EntityType>
+        <Association Name="FK_DoctorClinic_FileArchieve">
+          <End Type="KlinikDBModel.FileArchieve" Role="FileArchieve" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.DoctorClinic" Role="DoctorClinic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FileArchieve">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DoctorClinic">
+              <PropertyRef Name="PhotoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormExamineAttachment_FileArchieve">
+          <End Type="KlinikDBModel.FileArchieve" Role="FileArchieve" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.FormExamineAttachment" Role="FormExamineAttachment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FileArchieve">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineAttachment">
+              <PropertyRef Name="FileAttach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientClinic_FileArchieve">
+          <End Type="KlinikDBModel.FileArchieve" Role="FileArchieve" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.PatientClinic" Role="PatientClinic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FileArchieve">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PatientClinic">
+              <PropertyRef Name="PhotoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3659,23 +3658,6 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FileArchieves">
-            <EntityTypeMapping TypeName="KlinikDBModel.FileArchieve">
-              <MappingFragment StoreEntitySet="FileArchieve">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="SourceTable" ColumnName="SourceTable" />
-                <ScalarProperty Name="ActualPath" ColumnName="ActualPath" />
-                <ScalarProperty Name="ActualName" ColumnName="ActualName" />
-                <ScalarProperty Name="TypeDoc" ColumnName="TypeDoc" />
-                <ScalarProperty Name="FileDoc" ColumnName="FileDoc" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -4209,6 +4191,7 @@
           <EntitySetMapping Name="QueuePolis">
             <EntityTypeMapping TypeName="KlinikDBModel.QueuePoli">
               <MappingFragment StoreEntitySet="QueuePoli">
+                <ScalarProperty Name="IsPreExamine" ColumnName="IsPreExamine" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
                 <ScalarProperty Name="PatientID" ColumnName="PatientID" />
@@ -4275,6 +4258,22 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FileArchieves">
+            <EntityTypeMapping TypeName="KlinikDBModel.FileArchieve">
+              <MappingFragment StoreEntitySet="FileArchieve">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="TypeDoc" ColumnName="TypeDoc" />
+                <ScalarProperty Name="ActualName" ColumnName="ActualName" />
+                <ScalarProperty Name="ActualPath" ColumnName="ActualPath" />
+                <ScalarProperty Name="SourceTable" ColumnName="SourceTable" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -235,6 +235,7 @@
     <Compile Include="Controllers\PoliScheduleController.cs" />
     <Compile Include="Controllers\AdministrationController.cs" />
     <Compile Include="Controllers\LoketController.cs" />
+    <Compile Include="Controllers\PreExamineController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Datalist\PatientDataList.cs" />
     <Compile Include="Datalist\PatientDataListModel.cs" />
@@ -1325,6 +1326,8 @@
     <Content Include="Content\Octopus\assets\vendor\select2\select2.jquery.json" />
     <Content Include="Content\Octopus\assets\vendor\select2\select2_locale_en.js.template" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
     <None Include="Properties\PublishProfiles\KlinikWeb - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -1407,6 +1410,8 @@
     <Content Include="Views\Paramedic\Create.cshtml" />
     <Content Include="Views\Paramedic\Edit.cshtml" />
     <Content Include="Views\Shared\MvcDatalist\_Dialog.cshtml" />
+    <Content Include="Views\PreExamine\ListQueue.cshtml" />
+    <Content Include="Views\PreExamine\CreateOrEditPreExamine.cshtml" />
     <Content Include="Views\Poli\PatientList.cshtml" />
     <Content Include="Views\Poli\FormExamine.cshtml" />
   </ItemGroup>

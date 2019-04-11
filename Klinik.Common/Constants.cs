@@ -30,6 +30,9 @@
             public const string DELETE_EMPLOYEE = "Remove Employee";
             public const string ADD_NEW_PATIENT = "Add New Patient";
             public const string ADD_EDIT_PATIENT = "Add/Edit Patient";
+
+            public const string ADD_NEW_FORM_PREEXAMINE = "Add New Form Pre Examine";
+            public const string EDIT_FORM_PREEXAMINE = "Edit Form Pre Examine";
         }
 
         public static class MasterType
@@ -47,6 +50,11 @@
             public const string RELATION = "Relation";
             public const string NECESSITY_TYPE = "NecessityType";
             public const string PAYMENT_TYPE = "PaymentType";
+        }
+
+        public static class NameConstant
+        {
+            public const string Loket = "Loket";
         }
     }
 }

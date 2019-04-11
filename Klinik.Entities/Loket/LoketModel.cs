@@ -5,6 +5,7 @@ namespace Klinik.Entities.Loket
     public class LoketModel : BaseModel
     {
         public int ClinicID { get; set; }
+        public string ClinicName { get; set; }
         public int PatientID { get; set; }
         public string PatientName { get; set; }
         public string MRNumber { get; set; }
@@ -38,6 +39,7 @@ namespace Klinik.Entities.Loket
         public int NecessityType { get; set; }
         public int PaymentType { get; set; }
         public string PaymentNumber { get; set; }
-        public bool IsPreExamined { get; set; }
+        public bool IsPreExamine { get; set; }
+        public string strIsPreExamine { get; set; }
     }
 }

@@ -35,7 +35,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<EmployeeAssignment> EmployeeAssignments { get; set; }
         public virtual DbSet<EmployeeStatu> EmployeeStatus { get; set; }
         public virtual DbSet<FamilyRelationship> FamilyRelationships { get; set; }
-        public virtual DbSet<FileArchieve> FileArchieves { get; set; }
         public virtual DbSet<FormExamine> FormExamines { get; set; }
         public virtual DbSet<FormExamineAttachment> FormExamineAttachments { get; set; }
         public virtual DbSet<FormExamineLab> FormExamineLabs { get; set; }
@@ -70,5 +69,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<RolePrivilege> RolePrivileges { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<FileArchieve> FileArchieves { get; set; }
     }
 }

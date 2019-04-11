@@ -36,52 +36,7 @@ namespace Klinik.Features
         {
             EmployeeResponse response = new EmployeeResponse();
 
-            #region ::OLD::
-            //var qry = _unitOfWork.EmployeeRepository.GetById(request.Data.EmpID);
-            //if (qry != null)
-            //{
-            //    // save the old data
-            //    var _oldentity = Mapper.Map<Employee, EmployeeModel>(qry);
-
-            //    // update data
-            //    qry.EmpName = request.Data.EmpName;
-            //    qry.BirthDate = request.Data.Birthdate;
-            //    qry.Gender = request.Data.Gender;
-            //    qry.Email = request.Data.Email;
-            //    qry.EmpType = request.Data.EmpType;
-            //    qry.KTPNumber = request.Data.KTPNumber;
-            //    qry.HPNumber = request.Data.HPNumber;
-            //    qry.ReffEmpID = request.Data.ReffEmpID;
-            //    qry.LastEmpID = request.Data.LastEmpID;
-            //    qry.ModifiedBy = request.Data.ModifiedBy ?? "SYSTEM";
-            //    qry.ModifiedDate = DateTime.Now;
-
-            //    // update
-            //    _unitOfWork.EmployeeRepository.Update(qry);
-            //    int resultAffected = _unitOfWork.Save();
-
-            //    if (resultAffected > 0)
-            //    {
-            //        response.Message = string.Format(Messages.ObjectHasBeenUpdated, "Employee", qry.EmpName, qry.id);
-
-            //        CommandLog(true, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data, _oldentity);
-            //    }
-            //    else
-            //    {
-            //        response.Status = false;
-            //        response.Message = string.Format(Messages.UpdateObjectFailed, "Employee");
-
-            //        CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data, _oldentity);
-            //    }
-            //}
-            //else
-            //{
-            //    response.Status = false;
-            //    response.Message = string.Format(Messages.UpdateObjectFailed, "Employee");
-
-            //    CommandLog(false, ClinicEnums.Module.MASTER_EMPLOYEE, Constants.Command.EDIT_EMPLOYEE, request.Data.Account, request.Data);
-            //}
-            #endregion
+          
 
             var _empTypeDesc = _unitOfWork.FamilyRelationshipRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpType) == null ? "" : _unitOfWork.FamilyRelationshipRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpType).Code;
             var _statusDesc = _unitOfWork.EmployeeStatusRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpStatus) == null ? "" : _unitOfWork.EmployeeStatusRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpStatus).Code;
@@ -116,12 +71,12 @@ namespace Klinik.Features
                         _qry.EmpName = request.Data.EmpName;
                         _qry.BirthDate = request.Data.Birthdate;
                         _qry.Gender = request.Data.Gender;
-                        _qry.Email = request.Data.Email;
+                        _qry.Email = CommonUtils.Encryptor( request.Data.Email, CommonUtils.KeyEncryptor);
                         _qry.EmpType = request.Data.EmpType;
                         _qry.ReffEmpID = request.Data.ReffEmpID;
                         _qry.Status = request.Data.EmpStatus;
                         _qry.KTPNumber = request.Data.KTPNumber;
-                        _qry.HPNumber = request.Data.HPNumber;
+                        _qry.HPNumber = CommonUtils.Encryptor( request.Data.HPNumber, CommonUtils.KeyEncryptor);
                         _qry.ReffEmpID = request.Data.ReffEmpID;
                         _qry.LastEmpID = request.Data.LastEmpId;
                         _qry.ModifiedBy = request.Data.ModifiedBy ?? "SYSTEM";
