@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace Klinik.Web.Controllers
 {
@@ -157,6 +158,10 @@ namespace Klinik.Web.Controllers
                 {
                     IList<MenuModel> Menu = new MenuHandler(_unitOfWork).GetMenuBasedOnPrivilege(response.Entity.Privileges.PrivilegeIDs);
                     Session["AuthMenu"] = Menu;
+                    if (Menu.Any(x => x.Name == "VIEW_POLI_PATIENT_LIST"))
+                    {
+                        return RedirectToAction("PatientList", "Poli");
+                    }
                 }
 
                 return RedirectToAction("Index", "Home");

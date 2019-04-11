@@ -106,6 +106,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Age.
+        /// </summary>
+        public static string Age {
+            get {
+                return ResourceManager.GetString("Age", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to I agree to the terms of service.
         /// </summary>
         public static string Agreement {
@@ -781,6 +790,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is PreExamined.
+        /// </summary>
+        public static string IsPreExamined {
+            get {
+                return ResourceManager.GetString("IsPreExamined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KTP No.
         /// </summary>
         public static string KTP {
@@ -930,6 +948,15 @@ namespace Klinik.Resources {
         public static string Module {
             get {
                 return ResourceManager.GetString("Module", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to month.
+        /// </summary>
+        public static string Month {
+            get {
+                return ResourceManager.GetString("Month", resourceCulture);
             }
         }
         
@@ -1137,6 +1164,15 @@ namespace Klinik.Resources {
         public static string Patient {
             get {
                 return ResourceManager.GetString("Patient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Patient Data.
+        /// </summary>
+        public static string PatientData {
+            get {
+                return ResourceManager.GetString("PatientData", resourceCulture);
             }
         }
         
@@ -1686,6 +1722,15 @@ namespace Klinik.Resources {
         public static string ValidTo {
             get {
                 return ResourceManager.GetString("ValidTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to years.
+        /// </summary>
+        public static string Years {
+            get {
+                return ResourceManager.GetString("Years", resourceCulture);
             }
         }
     }

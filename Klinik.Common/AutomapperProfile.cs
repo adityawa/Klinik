@@ -9,6 +9,7 @@ using Klinik.Entities.Patient;
 using Klinik.Entities.PoliSchedules;
 using Klinik.Entities.Loket;
 using Klinik.Entities.Form;
+using Klinik.Entities.Poli;
 
 namespace Klinik.Common
 {
@@ -173,6 +174,8 @@ namespace Klinik.Common
 
             CreateMap<FormExamineMedicineModel, FormExamineMedicine>();
             CreateMap<FormExamineMedicine, FormExamineMedicineModel>();
+
+            CreateMap<LoketModel, PatientListModel>();
         }
     }
 }

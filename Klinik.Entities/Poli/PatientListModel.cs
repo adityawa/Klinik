@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Klinik.Entities.Loket
+namespace Klinik.Entities.Poli
 {
-    public class LoketModel : BaseModel
+    public class PatientListModel : BaseModel
     {
         public int ClinicID { get; set; }
         public int PatientID { get; set; }
@@ -37,7 +37,10 @@ namespace Klinik.Entities.Loket
         public string PatientType { get; set; }
         public int NecessityType { get; set; }
         public int PaymentType { get; set; }
+        public string NecessityTypeStr { get; set; }
+        public string PaymentTypeStr { get; set; }
         public string PaymentNumber { get; set; }
         public bool IsPreExamined { get; set; }
+        public string PatientAge { get; set; }
     }
 }

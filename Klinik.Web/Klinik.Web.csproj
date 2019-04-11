@@ -231,6 +231,7 @@
     <Compile Include="Controllers\MasterDataController.cs" />
     <Compile Include="Controllers\PasswordHistoryController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
+    <Compile Include="Controllers\PoliController.cs" />
     <Compile Include="Controllers\PoliScheduleController.cs" />
     <Compile Include="Controllers\AdministrationController.cs" />
     <Compile Include="Controllers\LoketController.cs" />
@@ -1406,6 +1407,8 @@
     <Content Include="Views\Paramedic\Create.cshtml" />
     <Content Include="Views\Paramedic\Edit.cshtml" />
     <Content Include="Views\Shared\MvcDatalist\_Dialog.cshtml" />
+    <Content Include="Views\Poli\PatientList.cshtml" />
+    <Content Include="Views\Poli\FormExamine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
