@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Klinik.Features
+namespace Klinik.Features.MasterData.Poli
 {
     public class PoliHandler : BaseFeatures, IBaseFeatures<PoliResponse, PoliRequest>
     {

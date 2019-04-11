@@ -3,14 +3,15 @@ using Klinik.Data;
 using Klinik.Resources;
 using System;
 using System.Linq;
+using Klinik.Features.MasterData.Poli;
 
-namespace Klinik.Features.MasterData.Poli
+namespace Klinik.Features
 {
     public class PoliValidator : BaseFeatures
     {
-        private const string ADD_PRIVILEGE_NAME = "ADD_M_ROLE";
-        private const string EDIT_PRIVILEGE_NAME = "EDIT_M_ROLE";
-        private const string DELETE_PRIVILEGE_NAME = "DELETE_M_ROLE";
+        private const string ADD_POLI_NAME = "ADD_M_POLI";
+        private const string EDIT_POLI_NAME = "EDIT_M_POLI";
+        private const string DELETE_POLI_NAME = "DELETE_M_POLI";
 
         /// <summary>
         /// Constructor
@@ -62,11 +63,11 @@ namespace Klinik.Features.MasterData.Poli
                 if (request.Data.Id == 0)
                 {
 
-                    isHavePrivilege = IsHaveAuthorization(ADD_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
+                    isHavePrivilege = IsHaveAuthorization(ADD_POLI_NAME, request.Data.Account.Privileges.PrivilegeIDs);
                 }
                 else
                 {
-                    isHavePrivilege = IsHaveAuthorization(EDIT_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
+                    isHavePrivilege = IsHaveAuthorization(EDIT_POLI_NAME, request.Data.Account.Privileges.PrivilegeIDs);
                 }
 
                 if (!isHavePrivilege)
@@ -93,7 +94,7 @@ namespace Klinik.Features.MasterData.Poli
 
             if (request.Action == ClinicEnums.Action.DELETE.ToString())
             {
-                bool isHavePrivilege = IsHaveAuthorization(DELETE_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
+                bool isHavePrivilege = IsHaveAuthorization(DELETE_POLI_NAME, request.Data.Account.Privileges.PrivilegeIDs);
                 if (!isHavePrivilege)
                 {
                     response.Status = false;

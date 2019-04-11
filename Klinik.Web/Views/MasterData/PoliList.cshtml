@@ -35,7 +35,7 @@
     $(document).ready(function () {
 
         $('#btnAdd').click(function (e) {
-            window.location.href = "/MasterData/CreateOrEditRole";
+            window.location.href = "/MasterData/CreateOrEditPoli";
         });
 
         $('#tbPoli').dataTable({
@@ -80,7 +80,7 @@
                 { "data": "Code", "name": "Code", "autoWidth": true },
                 { "data": "Name", "name": "Name", "autoWidth": true },
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditRole?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" + ' | <a class="btn btn-info" href="/MappingMaster/RolePrivilegeList?roleid=' + full.Id + '">@Klinik.Resources.UIMessages.SetRolePrivilege</a>'; }
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditPoli?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" + ' | <a class="btn btn-info" href="/MappingMaster/RolePrivilegeList?roleid=' + full.Id + '">@Klinik.Resources.UIMessages.SetRolePrivilege</a>'; }
                 }
 
             ]

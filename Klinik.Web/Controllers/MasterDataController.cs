@@ -4,6 +4,7 @@ using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
 using Klinik.Features;
 using Klinik.Features.MasterData.Clinic;
+using Klinik.Features.MasterData.Poli;
 using Klinik.Features.MasterData.EmployeeStatus;
 using Klinik.Features.MasterData.FamilyRelationship;
 using System;
@@ -934,6 +935,28 @@ namespace Klinik.Web.Controllers
             var response = new PoliHandler(_unitOfWork).GetListData(request);
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult CreateOrEditPoli(PoliModel _model)
+        {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new PoliRequest
+            {
+                Data = _model
+            };
+
+            PoliResponse _response = new PoliResponse();
+
+            new PoliValidator(_unitOfWork).Validate(request, out _response);
+            ViewBag.Response = $"{_response.Status};{_response.Message}";
+            ViewBag.Cities = BindDropDownCity();
+            ViewBag.ClinicTypes = BindDropDownClinicType();
+            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
+            return View();
         }
         #endregion
     }

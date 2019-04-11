@@ -1412,6 +1412,7 @@
     <Content Include="Views\PreExamine\ListQueue.cshtml" />
     <Content Include="Views\PreExamine\CreateOrEditPreExamine.cshtml" />
     <Content Include="Views\MasterData\PoliList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditPoli.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
