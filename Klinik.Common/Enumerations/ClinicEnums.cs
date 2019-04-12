@@ -51,7 +51,8 @@
             MASTER_PARAMEDIC,
             Patient,
             FormPreExamine,
-            MASTER_POLI
+            MASTER_POLI,
+            MASTER_POLI_CLINIC
         }
 
         public enum Action

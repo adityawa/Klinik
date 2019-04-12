@@ -1413,6 +1413,7 @@
     <Content Include="Views\PreExamine\CreateOrEditPreExamine.cshtml" />
     <Content Include="Views\MasterData\PoliList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditPoli.cshtml" />
+    <Content Include="Views\MappingMaster\ClinicPoliList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
