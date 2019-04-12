@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
-using AutoMapper;
 using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.MappingMaster;
+using Klinik.Features.MasterData.Clinic;
+using Klinik.Entities.MasterData;
 using Klinik.Resources;
 using LinqKit;
 using System;
@@ -33,7 +34,7 @@ namespace Klinik.Features
                     _context.SaveChanges();
 
                     //insert new
-                    foreach (int _polid in request.Data.ListPoliId)
+                    foreach (int _polid in request.Data.PoliIDs)
                     {
                         var clinicPoli = new PoliClinic
                         {
@@ -76,13 +77,102 @@ namespace Klinik.Features
 
             foreach (var item in qry)
             {
-                _model.ListPoliId.Add(item.PoliID);
+                _model.PoliIDs.Add(item.PoliID);
             }
 
             var response = new ClinicPoliResponse
             {
                 Entity = _model
             };
+
+            return response;
+        }
+
+        public ClinicPoliResponse GetPoliBasedOnOrClinic(ClinicPoliRequest request)
+        {
+            var _clinicId = _unitOfWork.PoliClinicRepository.GetById(request.Data.ClinicID) == null ? 0 : _unitOfWork.PoliClinicRepository.GetById(request.Data.ClinicID).PoliID;
+
+            List<ClinicPoliModel> lists = new List<ClinicPoliModel>();
+            dynamic qry = null;
+            var searchPredicate = PredicateBuilder.New<PoliClinic>(true);
+            searchPredicate = searchPredicate.And(x => x.ClinicID == _clinicId);
+            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
+            {
+                searchPredicate = searchPredicate.And(p => p.Poli.Name.Contains(request.SearchValue) || p.Poli.Code.Contains(request.SearchValue));
+            }
+
+            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
+            {
+                if (request.SortColumnDir == "asc")
+                {
+                    switch (request.SortColumn.ToLower())
+                    {
+                        case "name":
+                            qry = _unitOfWork.PoliClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Poli.Name));
+                            break;
+
+                        default:
+                            qry = _unitOfWork.PoliClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.ID));
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (request.SortColumn.ToLower())
+                    {
+                        case "name":
+                            qry = _unitOfWork.PoliClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Poli.Name));
+                            break;
+
+                        default:
+                            qry = _unitOfWork.PoliClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID));
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                qry = _unitOfWork.PoliClinicRepository.Get(searchPredicate, null);
+            }
+
+            foreach (var item in qry)
+            {
+                var prData = new ClinicPoliModel
+                {
+                    Id = item.ID,
+                    ClinicID = item.ClinicID,
+                    PoliID = item.PoliID,
+                    PoliName = item.Poli.Name,
+                    ClinicName = item.Clinic.Name,
+                    PoliCode = item.Poli.Code
+                };
+
+                lists.Add(prData);
+            }
+
+            int totalRequest = lists.Count();
+            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
+
+            var response = new ClinicPoliResponse
+            {
+                Draw = request.Draw,
+                RecordsFiltered = totalRequest,
+                RecordsTotal = totalRequest,
+                Data = data
+            };
+
+            return response;
+        }
+
+        public ClinicResponse GetDetail(ClinicRequest request)
+        {
+            ClinicResponse response = new ClinicResponse();
+
+            var qry = _unitOfWork.ClinicRepository.Query(x => x.ID == request.Data.Id, null);
+            if (qry.FirstOrDefault() != null)
+            {
+                response.Entity = Mapper.Map<Klinik.Data.DataRepository.Clinic, ClinicModel>(qry.FirstOrDefault());
+            }
 
             return response;
         }

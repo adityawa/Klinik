@@ -21,7 +21,7 @@
         <div class="panel-actions">
             <a href="#" class="fa fa-caret-down"></a>
         </div>
-        <h5 class="panel-title">@Klinik.Resources.UIMessages.Poli</h5>
+        <h5 class="panel-title">@Klinik.Resources.UIMessages.Clinic</h5>
     </header>
     <div class="panel-body">
         <div class="form-group">
@@ -39,7 +39,8 @@
                         <th><input name="select_all" value="1" type="checkbox"></th>
                         <th>@Klinik.Resources.UIMessages.ID</th>
                         <th>@Klinik.Resources.UIMessages.Code</th>
-                        <th>@Klinik.Resources.UIMessages.Name</th>
+                        <th>@Klinik.Resources.UIMessages.PoliName</th>
+                        <th>@Klinik.Resources.UIMessages.ClinicName</th>
                     </tr>
                 </thead>
             </table>
@@ -64,7 +65,7 @@
         var _idClinic = getUrlVars()["clinicid"];
         var rows_selected = [];
 
-        var array = @Html.Raw(Json.Encode(Model.PoliID));
+        var array = @Html.Raw(Json.Encode(Model.PoliIDs));
         if (array != null && array.length > 0) {
             for (var i = 0; i < array.length; i++) {
                 rows_selected.push(array[i]);
@@ -106,10 +107,16 @@
                     "targets": 2,
                     "searchable": false,
                     "orderable": false,
-                    "data": "Code"
+                    "data": "PoliCode"
                 },
                 {
                     "targets": 3,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "PoliName"
+                },
+                {
+                    "targets": 4,
                     "searchable": false,
                     "orderable": false,
                     "data": "ClinicName"
@@ -188,7 +195,7 @@
 
                     $.ajax({
                         type: 'POST',
-                        url: '/MappingMaster/CreateRolePrivilege',
+                        url: '/MappingMaster/CreatePoliClinic',
                         contentType: false,
                         processData: false,
                         data: form_data,

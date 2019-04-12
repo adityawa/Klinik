@@ -5,7 +5,7 @@ using Klinik.Resources;
 using System;
 using System.Linq;
 
-namespace Klinik.Features.MapMasterData.ClinicPoli
+namespace Klinik.Features
 {
     public class ClinicPoliValidator : BaseFeatures
     {
@@ -23,7 +23,7 @@ namespace Klinik.Features.MapMasterData.ClinicPoli
             {
                 errorFields.Add("Clinic");
             }
-            if (request.Data.ListPoliId.Count == 0)
+            if (request.Data.PoliIDs.Count == 0)
             {
                 errorFields.Add("Poli");
             }

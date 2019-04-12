@@ -5,14 +5,20 @@ namespace Klinik.Entities.MappingMaster
     public class ClinicPoliModel : BaseModel
     {
         public long ClinicID { get; set; }
+        
         public int PoliID { get; set; }
-        public string Code { get; set; }
+
+        public List<int> PoliIDs { get; set; }
+
         public string ClinicName { get; set; }
-        public List<int> ListPoliId { get; set; }
+
+        public string PoliName { get; set; }
+
+        public string PoliCode { get; set; }
 
         public ClinicPoliModel()
         {
-            ListPoliId = new List<int>();
+            PoliIDs = new List<int>();
         }
     }
 }
