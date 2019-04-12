@@ -39,6 +39,7 @@ namespace Klinik.Data
         private IGenericRepository<FormExamineLab> _formExamineLabRepository;
         private IGenericRepository<FormExamineMedicine> _formExamineMedicineRepository;
         private IGenericRepository<FormExamineService> _formExamineServiceRepository;
+        private IGenericRepository<PoliClinic> _poliClinicRepository;
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
@@ -389,6 +390,16 @@ namespace Klinik.Data
                     _fileArchiveRepository = new GenericRepository<FileArchieve>(_context);
 
                 return _fileArchiveRepository;
+            }
+        }
+
+        public IGenericRepository<PoliClinic> PoliClinicRepository
+        {
+            get
+            {
+                if (_poliClinicRepository == null)
+                    _poliClinicRepository = new GenericRepository<PoliClinic>(_context);
+                return _poliClinicRepository;
             }
         }
 

@@ -125,7 +125,7 @@
                 { "data": "ClinicTypeDesc", "name": "ClinicTypeDesc", "autoWidth": true },
                 { "data": "Email", "name": "Email", "autoWidth": true },
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditClinic?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>"; }
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditClinic?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>"+ ' | <a class="btn btn-info" href="/MappingMaster/ClinicPoliList?clinicid=' + full.Id + '">@Klinik.Resources.UIMessages.PoliList</a>'; }
                 }
 
 

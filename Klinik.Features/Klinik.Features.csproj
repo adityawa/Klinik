@@ -81,6 +81,10 @@
     <Compile Include="Loket\LoketRequest.cs" />
     <Compile Include="Loket\LoketResponse.cs" />
     <Compile Include="Loket\LoketValidator.cs" />
+    <Compile Include="MapMasterData\ClinicPoli\ClinicPoliHandler.cs" />
+    <Compile Include="MapMasterData\ClinicPoli\ClinicPoliRequest.cs" />
+    <Compile Include="MapMasterData\ClinicPoli\ClinicPoliResponse.cs" />
+    <Compile Include="MapMasterData\ClinicPoli\ClinicPoliValidator.cs" />
     <Compile Include="MapMasterData\OrganizationPrivilege\OrganizationPrivilegeHandler.cs" />
     <Compile Include="MapMasterData\OrganizationPrivilege\OrganizationPrivilegeRequest.cs" />
     <Compile Include="MapMasterData\OrganizationPrivilege\OrganizationPrivilegeResponse.cs" />

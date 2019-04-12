@@ -3,6 +3,7 @@ using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MappingMaster;
 using Klinik.Entities.MasterData;
+using Klinik.Features.MasterData.Poli;
 using Klinik.Features;
 using Newtonsoft.Json;
 using System;
@@ -292,10 +293,39 @@ namespace Klinik.Web.Controllers
         }
         #endregion
 
-        #region ::USERROLE::
+        #region ::PoliClinic::
         public ActionResult ClinicPoliList()
         {
-            return View();
+            ClinicPoliModel rpmodel = new ClinicPoliModel();
+            if (Request.QueryString["clinicid"] != null)
+            {
+                var reqOrg = new PoliRequest
+                {
+                    Data = new PoliModel
+                    {
+                        Id = Convert.ToInt64(Request.QueryString["clinicid"].ToString())
+                    }
+                };
+
+                var respOrg = new PoliResponse();
+                respOrg = new PoliHandler(_unitOfWork).GetDetail(reqOrg);
+                rpmodel.ClinicName = respOrg.Entity.Name;
+                rpmodel.ClinicID = respOrg.Entity.Id;
+
+                var _request = new ClinicPoliRequest
+                {
+                    Data = new ClinicPoliModel
+                    {
+                        ClinicID = Convert.ToInt64(Request.QueryString["clinicid"].ToString())
+                    }
+                };
+                //get Privilege Ids for organization
+                var selPolis = new ClinicPoliHandler(_unitOfWork, _context).GetListData(_request);
+                if (selPolis.Entity.ListPoliId != null && selPolis.Entity.ListPoliId.Count > 0)
+                    rpmodel.ListPoliId = selPolis.Entity.ListPoliId;
+            }
+
+            return View(rpmodel);
         }
 
         [HttpPost]
@@ -316,7 +346,7 @@ namespace Klinik.Web.Controllers
                 ClinicID = long.Parse(clinicid)
             };
 
-            var request = new RolePrivilegeRequest
+            var request = new ClinicPoliRequest
             {
                 Draw = _draw,
                 SearchValue = _searchValue,
@@ -327,7 +357,7 @@ namespace Klinik.Web.Controllers
                 Data = _model
             };
 
-            var response = new RolePrivilegeHandler(_unitOfWork, _context).GetPrivilegeBasedOnOrganization(request);
+            var response = new ClinicPoliHandler(_unitOfWork, _context).GetListData(request);
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }

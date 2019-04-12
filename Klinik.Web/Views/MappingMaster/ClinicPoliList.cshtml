@@ -33,6 +33,7 @@
 @section Scripts {
     <script type="text/javascript">
     $(document).ready(function () {
+
         toastr.options = {
             "closeButton": true,
             "positionClass": "toast-top-full-width",
@@ -43,17 +44,18 @@
             "showMethod": "fadeIn"
         };
 
-        var _idRole = getUrlVars()["roleid"];
+        var _idClinic = getUrlVars()["clinicid"];
         var rows_selected = [];
 
-        var array = @Html.Raw(Json.Encode(Model.ListPoliId));
+        var array = @Html.Raw(Json.Encode(Model.PoliID));
         if (array != null && array.length > 0) {
             for (var i = 0; i < array.length; i++) {
                 rows_selected.push(array[i]);
             }
         }
 
-        var table = $('#tbRolePriv').DataTable({
+
+        var table = $('#tbPoli').DataTable({
             "autoWidth": false,
             "processing": true,
             "serverSide": true,
@@ -61,7 +63,7 @@
             "orderMulti": false,
             "pageLength": 10,
             'ajax': {
-                "url": "/MappingMaster/GetRolePrivilegeData?roleid=" + _idRole,
+                "url": "/MappingMaster/GetClinicPoliData?clinicid=" + _idClinic,
                 "type": "POST",
                 "datatype": "json"
             },
@@ -111,7 +113,134 @@
                 }
             }
         });
+
+
+        $('#tbRolePriv tbody').on('click', 'input[type="checkbox"]', function (e) {
+            var $row = $(this).closest('tr');
+            var data = table.row($row).data();
+            var rowId = data.PrivilegeID;
+            var index = $.inArray(rowId, rows_selected);
+            if (this.checked && index === -1) {
+                rows_selected.push(rowId);
+            } else if (!this.checked && index !== -1) {
+                rows_selected.splice(index, 1);
+            }
+
+            if (this.checked) {
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+            updateDataTableSelectAllCtrl(table);
+            e.stopPropagation();
+        });
+
+
+        $('#tbRolePriv').on('click', 'tbody td, thead th:first-child', function (e) {
+            $(this).parent().find('input[type="checkbox"]').trigger('click');
+        });
+
+
+        $('thead input[name="select_all"]', table.table().container()).on('click', function (e) {
+            if (this.checked) {
+                $('#tbRolePriv tbody input[type="checkbox"]:not(:checked)').trigger('click');
+            } else {
+                $('#tbRolePriv tbody input[type="checkbox"]:checked').trigger('click');
+            }
+
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+
+        table.on('draw', function () {
+            // Update state of "Select all" control
+            updateDataTableSelectAllCtrl(table);
+        });
+
+        $('#btnSave').click(function (e) {
+            if (window.FormData != undefined) {
+                if (rows_selected.length <= 0) {
+                    alert('please specify at least one privilege');
+                }
+                else {
+                    var form_data = new FormData();
+                    form_data.append("RoleId", $('#hdRoleId').val());
+
+                    form_data.append("Privileges", JSON.stringify(rows_selected));
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/MappingMaster/CreateRolePrivilege',
+                        contentType: false,
+                        processData: false,
+                        data: form_data,
+                        async: "true",
+                        success: function (result) {
+                            if (result.Status == true) {
+                                toastr.success(result.Message);
+                            }
+                            else {
+                                toastr.error(result.Message);
+                            }
+                        },
+                        error: function (xhr, status, p3, p4) {
+                            var err = "Error " + " " + status + " " + p3 + " " + p4;
+                            if (xhr.responseText && xhr.responseText[0] == "{")
+                                err = JSON.parse(xhr.responseText).Message;
+                            console.log(err);
+                        }
+                    });
+                }
+
+            }
+            else {
+                toastr.error("Your Browser is not support Form Data");
+            }
+        });
     });
+
+
+    function updateDataTableSelectAllCtrl(table) {
+        var $table = table.table().node();
+        var $chkbox_all = $('tbody input[type="checkbox"]', $table);
+        var $chkbox_checked = $('tbody input[type="checkbox"]:checked', $table);
+        var chkbox_select_all = $('thead input[name="select_all"]', $table).get(0);
+
+        // If none of the checkboxes are checked
+        if ($chkbox_checked.length === 0) {
+            chkbox_select_all.checked = false;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = false;
+            }
+
+            // If all of the checkboxes are checked
+        } else if ($chkbox_checked.length === $chkbox_all.length) {
+            chkbox_select_all.checked = true;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = false;
+            }
+
+            // If some of the checkboxes are checked
+        } else {
+            chkbox_select_all.checked = true;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = true;
+            }
+        }
+    }
+
+    function getUrlVars() {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < hashes.length; i++) {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
+
     </script>
 }
 
