@@ -40,8 +40,9 @@ namespace Klinik.Features
                         {
                             ClinicID = request.Data.ClinicID,
                             PoliID = _polid,
+                            RowStatus = 0,
                             CreatedBy = request.Data.Account.UserCode,
-                            ModifiedDate = DateTime.Now
+                            Createddate = DateTime.Now
                         };
 
                         _context.PoliClinics.Add(clinicPoli);
@@ -69,7 +70,7 @@ namespace Klinik.Features
 
         public ClinicPoliResponse GetListData(ClinicPoliRequest request)
         {
-            var qry = _unitOfWork.PoliClinicRepository.Get(x => x.RowStatus == 0);
+            var qry = _unitOfWork.PoliClinicRepository.Get(x => x.ClinicID == request.Data.ClinicID && x.RowStatus == 0);
             ClinicPoliModel _model = new ClinicPoliModel();
 
             if (qry.Count > 0)
@@ -90,7 +91,7 @@ namespace Klinik.Features
 
         public ClinicPoliResponse GetPoliBasedOnOrClinic(ClinicPoliRequest request)
         {
-            var _clinicId = _unitOfWork.PoliClinicRepository.GetById(request.Data.ClinicID) == null ? 0 : _unitOfWork.PoliClinicRepository.GetById(request.Data.ClinicID).PoliID;
+            var _clinicId = _unitOfWork.ClinicRepository.GetById(request.Data.ClinicID) == null ? 0 : _unitOfWork.ClinicRepository.GetById(request.Data.ClinicID).ID;
 
             List<ClinicPoliModel> lists = new List<ClinicPoliModel>();
             dynamic qry = null;
@@ -144,7 +145,7 @@ namespace Klinik.Features
                     PoliID = item.PoliID,
                     PoliName = item.Poli.Name,
                     ClinicName = item.Clinic.Name,
-                    PoliCode = item.Poli.Code
+                    PoliCode = item.Poli.Code,
                 };
 
                 lists.Add(prData);
