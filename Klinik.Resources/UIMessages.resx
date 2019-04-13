@@ -717,4 +717,7 @@
   <data name="Weight" xml:space="preserve">
     <value>Weight</value>
   </data>
+  <data name="PoliList" xml:space="preserve">
+    <value>Poli List</value>
+  </data>
 </root>
