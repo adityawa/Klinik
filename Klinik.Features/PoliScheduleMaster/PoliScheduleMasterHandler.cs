@@ -2,7 +2,6 @@
 using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
-using Klinik.Entities;
 using Klinik.Entities.PoliSchedules;
 using Klinik.Resources;
 using LinqKit;
@@ -11,7 +10,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-namespace Klinik.Features.PoliSchedules
+namespace Klinik.Features
 {
     public class PoliScheduleMasterHandler : BaseFeatures, IBaseFeatures<PoliScheduleMasterResponse, PoliScheduleMasterRequest>
     {

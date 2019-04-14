@@ -6,13 +6,13 @@ using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
 using Klinik.Entities.Loket;
-using Klinik.Features.Loket;
 using Klinik.Web.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
+using Klinik.Features;
 
 namespace Klinik.Web.Controllers
 {

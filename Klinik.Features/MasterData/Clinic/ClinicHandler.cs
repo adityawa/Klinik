@@ -3,7 +3,6 @@ using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.MasterData;
-using Klinik.Features.MasterData.Clinic;
 using System.Collections.Generic;
 using System;
 using System.Linq;

@@ -6,13 +6,9 @@ using Klinik.Entities.Loket;
 using Klinik.Entities.MasterData;
 using Klinik.Entities.PreExamine;
 using Klinik.Features;
-using Klinik.Features.Loket;
-using Klinik.Features.MasterData.Poli;
-using Klinik.Features.PreExamine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Klinik.Web.Controllers
@@ -36,8 +32,8 @@ namespace Klinik.Web.Controllers
 
             _poliList.Insert(0, new SelectListItem
             {
-                Text="All",
-                Value="0"
+                Text = "All",
+                Value = "0"
             });
 
             foreach (var item in PoliData)
@@ -77,7 +73,7 @@ namespace Klinik.Web.Controllers
 
         private List<SelectListItem> BindDropDownAlreadyPreExamine()
         {
-          
+
             List<SelectListItem> _poliIsPreExamine = new List<SelectListItem>();
 
             _poliIsPreExamine.Insert(0, new SelectListItem
@@ -131,8 +127,8 @@ namespace Klinik.Web.Controllers
                 SortColumnDir = _sortColumnDir,
                 PageSize = _pageSize,
                 Skip = _skip,
-                Data = new LoketModel { PoliToID = Convert.ToInt32(poli), strIsPreExamine=preexamine }
-                    
+                Data = new LoketModel { PoliToID = Convert.ToInt32(poli), strIsPreExamine = preexamine }
+
             };
 
             if (Session["UserLogon"] != null)
@@ -155,7 +151,7 @@ namespace Klinik.Web.Controllers
                     {
                         LoketData = new LoketModel
                         {
-                            Id= long.Parse(Request.QueryString["id"].ToString()),
+                            Id = long.Parse(Request.QueryString["id"].ToString()),
                         },
 
                     }
@@ -184,14 +180,14 @@ namespace Klinik.Web.Controllers
             if (Session["UserLogon"] != null)
                 _model.Account = (AccountModel)Session["UserLogon"];
 
-           
+
             var request = new PreExamineRequest
             {
                 Data = _model
             };
 
             PreExamineResponse _response = new PreExamineValidator(_unitOfWork, _context).Validate(request);
-          
+
             ViewBag.Response = $"{_response.Status};{_response.Message}";
             ViewBag.Doctors = BindDropDownDokter();
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;

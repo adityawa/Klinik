@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Klinik.Features.MasterData.Clinic
+namespace Klinik.Features
 {
     public class ClinicValidator : BaseFeatures
     {

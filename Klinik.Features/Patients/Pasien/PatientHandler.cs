@@ -13,7 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace Klinik.Features.Patients.Pasien
+namespace Klinik.Features
 {
     public class PatientHandler : BaseFeatures, IBaseFeatures<PatientResponse, PatientRequest>
     {
@@ -121,7 +121,7 @@ namespace Klinik.Features.Patients.Pasien
                                 willBeEdit.BloodType = request.Data.BloodType;
                                 willBeEdit.ModifiedBy = request.Data.Account.UserName;
                                 willBeEdit.ModifiedDate = DateTime.Now;
-                                
+
                                 resultUpdated = _context.SaveChanges();
                             }
 
@@ -142,7 +142,7 @@ namespace Klinik.Features.Patients.Pasien
                                 var _existingPhotoId = _context.FileArchieves.SingleOrDefault(x => x.ID == _idPhoto && x.SourceTable == ClinicEnums.SourceTable.PATIENT.ToString());
                                 if (_existingPhotoId != null)
                                 {
-                                    if (request.Data.file != null )//&& _existingPhotoId.ActualName != request.Data.file.FileName)
+                                    if (request.Data.file != null)//&& _existingPhotoId.ActualName != request.Data.file.FileName)
                                     {
                                         //need update
                                         if (request.Data.Photo == null)

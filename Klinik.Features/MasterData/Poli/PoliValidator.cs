@@ -3,7 +3,6 @@ using Klinik.Data;
 using Klinik.Resources;
 using System;
 using System.Linq;
-using Klinik.Features.MasterData.Poli;
 
 namespace Klinik.Features
 {

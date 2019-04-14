@@ -2,7 +2,7 @@
 using Klinik.Data;
 using Klinik.Resources;
 
-namespace Klinik.Features.PoliSchedules
+namespace Klinik.Features
 {
     public class PoliScheduleValidator : BaseFeatures
     {

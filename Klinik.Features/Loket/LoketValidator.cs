@@ -1,9 +1,8 @@
-﻿using System;
-using Klinik.Common;
+﻿using Klinik.Common;
 using Klinik.Data;
 using Klinik.Resources;
 
-namespace Klinik.Features.Loket
+namespace Klinik.Features
 {
     public class LoketValidator : BaseFeatures
     {

@@ -1,17 +1,14 @@
 ﻿using Klinik.Common;
 using Klinik.Data;
+using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
 using Klinik.Features;
-using Klinik.Features.MasterData.Clinic;
-using Klinik.Features.MasterData.Poli;
-using Klinik.Features.MasterData.EmployeeStatus;
-using Klinik.Features.MasterData.FamilyRelationship;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Klinik.Data.DataRepository;
+
 namespace Klinik.Web.Controllers
 {
     public class MasterDataController : Controller

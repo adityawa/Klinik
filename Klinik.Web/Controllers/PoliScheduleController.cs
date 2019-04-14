@@ -6,8 +6,6 @@ using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
 using Klinik.Entities.PoliSchedules;
 using Klinik.Features;
-using Klinik.Features.PoliSchedules;
-using Klinik.Resources;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

@@ -3,8 +3,6 @@ using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MappingMaster;
 using Klinik.Entities.MasterData;
-using Klinik.Features.MasterData.Poli;
-using Klinik.Features.MasterData.Clinic;
 using Klinik.Features;
 using Newtonsoft.Json;
 using System;

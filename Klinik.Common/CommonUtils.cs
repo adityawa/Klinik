@@ -70,12 +70,12 @@ namespace Klinik.Common
 
                 return Encoding.UTF8.GetString(bytesDecrypted);
             }
-            catch(Exception ex)
+            catch
             {
                 return encryptedText;
             }
             // Get the bytes of the string
-           
+
         }
 
         /// <summary>

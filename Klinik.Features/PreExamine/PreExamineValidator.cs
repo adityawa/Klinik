@@ -2,12 +2,9 @@
 using Klinik.Data.DataRepository;
 using Klinik.Resources;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Klinik.Features.PreExamine
+namespace Klinik.Features
 {
     public class PreExamineValidator : BaseFeatures
     {
@@ -25,7 +22,7 @@ namespace Klinik.Features.PreExamine
         {
             var response = new PreExamineResponse();
             bool isHavePrivilege = true;
-            if (String.IsNullOrEmpty( request.Data.strTransDate) || String.IsNullOrWhiteSpace(request.Data.strTransDate))
+            if (String.IsNullOrEmpty(request.Data.strTransDate) || String.IsNullOrWhiteSpace(request.Data.strTransDate))
             {
                 errorFields.Add("Transaction Date");
             }
@@ -41,7 +38,7 @@ namespace Klinik.Features.PreExamine
             {
                 if (_gender.Patient.Gender.ToLower() == "m")
                 {
-                    if(request.Data.strMenstrualDate!=string.Empty || request.Data.strKBDate != string.Empty)
+                    if (request.Data.strMenstrualDate != string.Empty || request.Data.strKBDate != string.Empty)
                     {
                         response.Status = false;
                         response.Message = Messages.MenstrualDataProhibited;

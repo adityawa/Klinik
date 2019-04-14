@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-namespace Klinik.Features.PoliSchedules
+namespace Klinik.Features
 {
     public class PoliScheduleHandler : BaseFeatures, IBaseFeatures<PoliScheduleResponse, PoliScheduleRequest>
     {

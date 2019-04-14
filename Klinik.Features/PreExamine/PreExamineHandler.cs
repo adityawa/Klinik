@@ -4,13 +4,13 @@ using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Loket;
 using Klinik.Entities.PreExamine;
-using Klinik.Features.Loket;
 using Klinik.Resources;
 using LinqKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-namespace Klinik.Features.PreExamine
+
+namespace Klinik.Features
 {
     public class PreExamineHandler : BaseFeatures
     {

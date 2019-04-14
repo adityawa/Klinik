@@ -6,7 +6,7 @@ using Klinik.Resources;
 using System;
 using System.Linq;
 
-namespace Klinik.Features.Patients.Pasien
+namespace Klinik.Features
 {
     public class PatientValidator : BaseFeatures, IValidator<PatientResponse, PatientRequest>
     {

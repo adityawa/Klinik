@@ -2,7 +2,6 @@
 using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
-using Klinik.Entities.Form;
 using Klinik.Entities.Loket;
 using Klinik.Resources;
 using LinqKit;
@@ -11,7 +10,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-namespace Klinik.Features.Loket
+namespace Klinik.Features
 {
     public class LoketHandler : BaseFeatures, IBaseFeatures<LoketResponse, LoketRequest>
     {

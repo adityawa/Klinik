@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Klinik.Common;
+﻿using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
 using Klinik.Features;
-using Klinik.Features.MasterData.City;
-using Klinik.Features.MasterData.FamilyRelationship;
-using Klinik.Features.Patients.Pasien;
 using Klinik.Resources;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Klinik.Web.Controllers
 {

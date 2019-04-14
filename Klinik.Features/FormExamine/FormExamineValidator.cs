@@ -1,7 +1,7 @@
 ﻿using Klinik.Data;
 using Klinik.Resources;
 
-namespace Klinik.Features.FormExamines
+namespace Klinik.Features
 {
     public class FormExamineValidator : BaseFeatures
     {

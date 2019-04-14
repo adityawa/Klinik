@@ -5,8 +5,7 @@ using Klinik.Data.DataRepository;
 using Klinik.Entities.Form;
 using Klinik.Entities.Loket;
 using Klinik.Entities.Poli;
-using Klinik.Features.FormExamines;
-using Klinik.Features.Loket;
+using Klinik.Features;
 using Klinik.Resources;
 using Klinik.Web.Hubs;
 using System;
@@ -164,7 +163,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
                 ViewBag.FinalStateList = BindDropDownFinalStateList();
             }
-            catch (Exception ex)
+            catch
             {
                 return BadRequestResponse;
             }
