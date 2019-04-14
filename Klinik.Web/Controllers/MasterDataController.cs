@@ -4,6 +4,7 @@ using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
 using Klinik.Features;
 using Klinik.Features.MasterData.Clinic;
+using Klinik.Features.MasterData.Poli;
 using Klinik.Features.MasterData.EmployeeStatus;
 using Klinik.Features.MasterData.FamilyRelationship;
 using System;
@@ -231,6 +232,21 @@ namespace Klinik.Web.Controllers
             }
 
             return _menus;
+        }
+
+        private List<SelectListItem> BindDropDownPoliType()
+        {
+            List<SelectListItem> _PoliTypes = new List<SelectListItem>();
+            foreach (var item in new MasterHandler(_unitOfWork).GetMasterDataByType(ClinicEnums.MasterTypes.PoliType.ToString()).ToList())
+            {
+                _PoliTypes.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.ID.ToString()
+                });
+            }
+
+            return _PoliTypes;
         }
 
 
@@ -896,6 +912,112 @@ namespace Klinik.Web.Controllers
             };
 
             new ClinicValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region ::POLI::
+        [CustomAuthorize("VIEW_M_POLI")]
+        public ActionResult PoliList()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetPoliData()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new PoliRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            var response = new PoliHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("ADD_M_POLI", "EDIT_M_POLI")]
+        public ActionResult CreateOrEditPoli()
+        {
+            PoliResponse _response = new PoliResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new PoliRequest
+                {
+                    Data = new PoliModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                PoliResponse resp = new PoliHandler(_unitOfWork).GetDetail(request);
+                PoliModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.Type = BindDropDownPoliType();
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.Type = BindDropDownPoliType();
+                ViewBag.ActionType = ClinicEnums.Action.Add;
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CreateOrEditPoli(PoliModel _model)
+        {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new PoliRequest
+            {
+                Data = _model
+            };
+
+            PoliResponse _response = new PoliResponse();
+
+            new PoliValidator(_unitOfWork).Validate(request, out _response);
+            ViewBag.Response = $"{_response.Status};{_response.Message}";
+            ViewBag.Type = BindDropDownPoliType();
+            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult DeleteMasterPoli(int id)
+        {
+            PoliResponse _response = new PoliResponse();
+            var request = new PoliRequest
+            {
+                Data = new PoliModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            new PoliValidator(_unitOfWork).Validate(request, out _response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }

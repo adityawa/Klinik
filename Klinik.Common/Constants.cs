@@ -32,6 +32,8 @@
             public const string ADD_EDIT_PATIENT = "Add/Edit Patient";
             public const string ADD_NEW_FORM_PREEXAMINE = "Add New Form Pre Examine";
             public const string EDIT_FORM_PREEXAMINE = "Edit Form Pre Examine";
+            public const string EDIT_POLI = "Edit Form Poli";
+            public const string ADD_NEW_POLI = "Add New Poli";
             public const string ADD_FORM_EXAMINE = "Add Form Examine";
             public const string EDIT_FORM_EXAMINE = "Edit Form Examine";
         }

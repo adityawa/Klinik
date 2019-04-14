@@ -21,7 +21,8 @@
             DoctorType,
             PoliScheduleStatus,
             ParamedicType,
-            Day
+            Day,
+            PoliType
         }
 
         public enum AuthResult
@@ -49,6 +50,9 @@
             POLI_SCHEDULE_MASTER,
             MASTER_PARAMEDIC,
             Patient,
+            FormPreExamine,
+            MASTER_POLI,
+            MASTER_POLI_CLINIC
             FormPreExamine,
             FORM_EXAMINE
         }

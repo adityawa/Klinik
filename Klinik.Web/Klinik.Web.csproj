@@ -1421,6 +1421,9 @@
     <Content Include="Views\Shared\MvcDatalist\_Dialog.cshtml" />
     <Content Include="Views\PreExamine\ListQueue.cshtml" />
     <Content Include="Views\PreExamine\CreateOrEditPreExamine.cshtml" />
+    <Content Include="Views\MasterData\PoliList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditPoli.cshtml" />
+    <Content Include="Views\MappingMaster\ClinicPoliList.cshtml" />
     <Content Include="Views\Poli\PatientList.cshtml" />
     <Content Include="Views\Poli\FormExamine.cshtml" />
   </ItemGroup>

@@ -3,6 +3,8 @@ using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MappingMaster;
 using Klinik.Entities.MasterData;
+using Klinik.Features.MasterData.Poli;
+using Klinik.Features.MasterData.Clinic;
 using Klinik.Features;
 using Newtonsoft.Json;
 using System;
@@ -289,6 +291,97 @@ namespace Klinik.Web.Controllers
             var response = new UserRoleHandler(_unitOfWork, _context).GetRoleBasedOnOrganization(request);
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region ::PoliClinic::
+        public ActionResult ClinicPoliList()
+        {
+            ClinicPoliModel rpmodel = new ClinicPoliModel();
+            if (Request.QueryString["clinicid"] != null)
+            {
+                var reqOrg = new ClinicRequest
+                {
+                    Data = new ClinicModel
+                    {
+                        Id = Convert.ToInt64(Request.QueryString["clinicid"].ToString())
+                    }
+                };
+
+                var respOrg = new ClinicResponse();
+                respOrg = new ClinicHandler(_unitOfWork).GetDetail(reqOrg);
+                rpmodel.ClinicName = respOrg.Entity.Name;
+                rpmodel.ClinicID = respOrg.Entity.Id;
+
+                var _request = new ClinicPoliRequest
+                {
+                    Data = new ClinicPoliModel
+                    {
+                        ClinicID = Convert.ToInt64(Request.QueryString["clinicid"].ToString())
+                    }
+                };
+                //get Privilege Ids for organization
+                var selPolis = new ClinicPoliHandler(_unitOfWork, _context).GetListData(_request);
+                if (selPolis.Entity.PoliIDs != null && selPolis.Entity.PoliIDs.Count > 0)
+                    rpmodel.PoliIDs = selPolis.Entity.PoliIDs;
+            }
+
+            return View(rpmodel);
+        }
+
+        [HttpPost]
+        public ActionResult GetClinicPoliData(string clinicid)
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var _model = new ClinicPoliModel
+            {
+                ClinicID = long.Parse(clinicid)
+            };
+
+            var request = new ClinicPoliRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip,
+                Data = _model
+            };
+
+            var response = new ClinicPoliHandler(_unitOfWork, _context).GetPoliBasedOnOrClinic(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult CreatePoliClinic()
+        {
+            ClinicPoliResponse response = new ClinicPoliResponse();
+            ClinicPoliModel _model = new ClinicPoliModel();
+            if (Request.Form["ClinicID"] != null)
+                _model.ClinicID = Convert.ToInt64(Request.Form["ClinicID"].ToString());
+            if (Request.Form["Poli"] != null)
+                _model.PoliIDs = JsonConvert.DeserializeObject<List<int>>(Request.Form["Poli"]);
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new ClinicPoliRequest
+            {
+                Data = _model
+            };
+
+            new ClinicPoliValidator(_unitOfWork, _context).Validate(request, out response);
+            return Json(new { Status = response.Status, Message = response.Message }, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

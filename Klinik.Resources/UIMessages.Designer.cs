@@ -1510,6 +1510,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Poli List.
+        /// </summary>
+        public static string PoliList {
+            get {
+                return ResourceManager.GetString("PoliList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Poli Name.
         /// </summary>
         public static string PoliName {
