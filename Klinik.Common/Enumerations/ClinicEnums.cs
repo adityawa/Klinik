@@ -52,8 +52,7 @@
             Patient,
             FormPreExamine,
             MASTER_POLI,
-            MASTER_POLI_CLINIC
-            FormPreExamine,
+            MASTER_POLI_CLINIC,
             FORM_EXAMINE
         }
 

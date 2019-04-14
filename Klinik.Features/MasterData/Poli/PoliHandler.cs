@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Klinik.Features.MasterData.Poli
+namespace Klinik.Features
 {
     public class PoliHandler : BaseFeatures, IBaseFeatures<PoliResponse, PoliRequest>
     {
@@ -25,7 +25,7 @@ namespace Klinik.Features.MasterData.Poli
             IList<PoliModel> polies = new List<PoliModel>();
             foreach (var item in qry)
             {
-                var _poli = Mapper.Map<Klinik.Data.DataRepository.Poli, PoliModel>(item);
+                var _poli = Mapper.Map<Poli, PoliModel>(item);
                 polies.Add(_poli);
             }
 
@@ -44,7 +44,7 @@ namespace Klinik.Features.MasterData.Poli
                     if (qry != null)
                     {
                         // save the old data
-                        var _oldentity = Mapper.Map<Klinik.Data.DataRepository.Poli, PoliModel>(qry);
+                        var _oldentity = Mapper.Map<Poli, PoliModel>(qry);
 
                         // update data
                         qry.Name = request.Data.Name;
@@ -76,7 +76,7 @@ namespace Klinik.Features.MasterData.Poli
                 }
                 else
                 {
-                    var roleEntity = Mapper.Map<PoliModel, Klinik.Data.DataRepository.Poli>(request.Data);
+                    var roleEntity = Mapper.Map<PoliModel, Poli>(request.Data);
                     roleEntity.CreatedBy = request.Data.Account.UserCode;
                     roleEntity.CreatedDate = DateTime.Now;
 
@@ -118,7 +118,7 @@ namespace Klinik.Features.MasterData.Poli
             var qry = _unitOfWork.PoliRepository.Query(x => x.ID == request.Data.Id, null);
             if (qry.FirstOrDefault() != null)
             {
-                response.Entity = Mapper.Map<Klinik.Data.DataRepository.Poli, PoliModel>(qry.FirstOrDefault());
+                response.Entity = Mapper.Map<Poli, PoliModel>(qry.FirstOrDefault());
             }
 
             return response;
@@ -128,7 +128,7 @@ namespace Klinik.Features.MasterData.Poli
         {
             List<PoliModel> lists = new List<PoliModel>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.New<Klinik.Data.DataRepository.Poli>(true);
+            var searchPredicate = PredicateBuilder.New<Poli>(true);
 
             // add default filter to show the active data only
             searchPredicate = searchPredicate.And(x => x.Rowstatus == 0);
@@ -174,7 +174,7 @@ namespace Klinik.Features.MasterData.Poli
 
             foreach (var item in qry)
             {
-                var prData = Mapper.Map<Klinik.Data.DataRepository.Poli, PoliModel>(item);
+                var prData = Mapper.Map<Poli, PoliModel>(item);
 
                 lists.Add(prData);
             }
