@@ -49,7 +49,8 @@
             POLI_SCHEDULE_MASTER,
             MASTER_PARAMEDIC,
             Patient,
-            FormPreExamine
+            FormPreExamine,
+            FORM_EXAMINE
         }
 
         public enum Action

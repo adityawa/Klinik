@@ -33,6 +33,7 @@ namespace Klinik.Data.DataRepository
         public string KTPNumber { get; set; }
         public string Address { get; set; }
         public Nullable<int> CityID { get; set; }
+        public string HPNumber { get; set; }
         public Nullable<short> Type { get; set; }
         public string BPJSNumber { get; set; }
         public string BloodType { get; set; }

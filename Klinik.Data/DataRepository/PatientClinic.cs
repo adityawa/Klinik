@@ -32,7 +32,7 @@ namespace Klinik.Data.DataRepository
     
         public virtual City City { get; set; }
         public virtual Clinic Clinic { get; set; }
-        public virtual Patient Patient { get; set; }
         public virtual FileArchieve FileArchieve { get; set; }
+        public virtual Patient Patient { get; set; }
     }
 }

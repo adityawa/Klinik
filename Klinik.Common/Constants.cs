@@ -30,9 +30,10 @@
             public const string DELETE_EMPLOYEE = "Remove Employee";
             public const string ADD_NEW_PATIENT = "Add New Patient";
             public const string ADD_EDIT_PATIENT = "Add/Edit Patient";
-
             public const string ADD_NEW_FORM_PREEXAMINE = "Add New Form Pre Examine";
             public const string EDIT_FORM_PREEXAMINE = "Edit Form Pre Examine";
+            public const string ADD_FORM_EXAMINE = "Add Form Examine";
+            public const string EDIT_FORM_EXAMINE = "Edit Form Examine";
         }
 
         public static class MasterType

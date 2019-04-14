@@ -37,37 +37,6 @@ namespace Klinik.Web.Controllers
             return GetGeneralMasterByType(Constants.MasterType.PAYMENT_TYPE);
         }
 
-        private List<SelectListItem> BindDropDownPoliList(int poliType = 0)
-        {
-            // get valid poli from type
-            var filteredPoliList = _unitOfWork.PoliFlowTemplateRepository.Get(x => x.PoliTypeID == poliType);
-
-            // get all poli
-            var qry = _unitOfWork.PoliRepository.Get();
-
-            IList<PoliModel> _poliListModel = new List<PoliModel>();
-            foreach (var item in qry)
-            {
-                if (filteredPoliList.Any(x => x.PoliTypeIDTo == item.Type))
-                {
-                    var _poli = Mapper.Map<Poli, PoliModel>(item);
-                    _poliListModel.Add(_poli);
-                }
-            }
-
-            List<SelectListItem> _poliList = new List<SelectListItem>();
-            foreach (var item in _poliListModel)
-            {
-                _poliList.Add(new SelectListItem
-                {
-                    Text = item.Name,
-                    Value = item.Id.ToString()
-                });
-            }
-
-            return _poliList;
-        }
-
         private List<SelectListItem> BindDropDownPatientList()
         {
             var qry = _unitOfWork.PatientRepository.Get();
@@ -107,35 +76,6 @@ namespace Klinik.Web.Controllers
                     Text = item.ToString().Replace("WalkIn", "Walk-In"),
                     Value = ((int)item).ToString()
                 });
-            }
-
-            return _typeList;
-        }
-
-        private List<SelectListItem> BindDropDownDoctorList(int poliID)
-        {
-            List<SelectListItem> _typeList = new List<SelectListItem>();
-            List<PoliSchedule> scheduleList = new List<PoliSchedule>();
-            var clinicID = GetClinicID();
-            if (clinicID <= 0)
-                scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID);
-            else
-                scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID && x.ClinicID == clinicID);
-
-            foreach (var item in scheduleList)
-            {
-                var doctor = _unitOfWork.DoctorRepository.GetFirstOrDefault(x => x.ID == item.DoctorID);
-                if (doctor != null)
-                {
-                    if (!_typeList.Any(x => x.Value == doctor.ID.ToString()))
-                    {
-                        _typeList.Add(new SelectListItem
-                        {
-                            Text = doctor.Name,
-                            Value = doctor.ID.ToString()
-                        });
-                    }
-                }
             }
 
             return _typeList;
@@ -190,7 +130,7 @@ namespace Klinik.Web.Controllers
             }
 
             ViewBag.Response = $"{_response.Status};{_response.Message}";
-            ViewBag.PoliList = BindDropDownPoliList(GetPoliType(model.PoliFromID));
+            ViewBag.PoliList = BindDropDownPoliList(model.PoliFromID);
             ViewBag.PatientList = BindDropDownPatientList();
             ViewBag.RegistrationTypeList = BindDropDownTypeList();
             ViewBag.DoctorList = BindDropDownDoctorList(model.PoliToID);
@@ -215,7 +155,7 @@ namespace Klinik.Web.Controllers
             }
 
             ViewBag.Response = $"{_response.Status};{_response.Message}";
-            ViewBag.PoliList = BindDropDownPoliList(GetPoliType(model.PoliFromID));
+            ViewBag.PoliList = BindDropDownPoliList(model.PoliFromID);
             ViewBag.PatientList = BindDropDownPatientList();
             ViewBag.RegistrationTypeList = BindDropDownTypeList();
             ViewBag.DoctorList = BindDropDownDoctorList(model.PoliToID);
@@ -241,7 +181,7 @@ namespace Klinik.Web.Controllers
             LoketModel _model = resp.Entity;
             _model.CurrentPoliID = GetUserPoliID();
             ViewBag.Response = _response;
-            ViewBag.PoliList = BindDropDownPoliList(GetPoliType(_model.PoliFromID));
+            ViewBag.PoliList = BindDropDownPoliList(_model.PoliFromID);
             ViewBag.PatientList = BindDropDownPatientList();
             ViewBag.RegistrationTypeList = BindDropDownTypeList();
             ViewBag.DoctorList = BindDropDownDoctorList(_model.PoliToID);
@@ -265,7 +205,7 @@ namespace Klinik.Web.Controllers
             };
 
             ViewBag.Response = new LoketResponse();
-            var tempPoliList = BindDropDownPoliList(GetPoliType(1));
+            var tempPoliList = BindDropDownPoliList(1);
             ViewBag.PoliList = tempPoliList;
             ViewBag.PatientList = BindDropDownPatientList();
             ViewBag.RegistrationTypeList = BindDropDownTypeList();
@@ -409,7 +349,7 @@ namespace Klinik.Web.Controllers
             };
 
             ViewBag.Response = new LoketResponse();
-            var tempPoliList = BindDropDownPoliList(GetPoliType((int)poliEnum));
+            var tempPoliList = BindDropDownPoliList((int)poliEnum);
             ViewBag.PoliList = tempPoliList;
             ViewBag.PatientList = BindDropDownPatientList();
             ViewBag.RegistrationTypeList = BindDropDownTypeList();
@@ -557,14 +497,6 @@ namespace Klinik.Web.Controllers
 
         #region ::PRIVATE METHODS::
         [NonAction]
-        private int GetPoliType(int poliId)
-        {
-            Poli poli = _unitOfWork.PoliRepository.GetFirstOrDefault(x => x.ID == poliId);
-
-            return poli.Type;
-        }
-
-        [NonAction]
         private long GetPatientId(int regId)
         {
             QueuePoli queue = _unitOfWork.RegistrationRepository.GetFirstOrDefault(x => x.ID == regId);
@@ -597,7 +529,7 @@ namespace Klinik.Web.Controllers
                 IsFromDashboard = true
             };
 
-            var tempPoliList = BindDropDownPoliList(GetPoliType(model.CurrentPoliID));
+            var tempPoliList = BindDropDownPoliList(model.CurrentPoliID);
             ViewBag.PoliList = tempPoliList;
             ViewBag.PatientList = BindDropDownPatientList();
             ViewBag.RegistrationTypeList = BindDropDownTypeList();

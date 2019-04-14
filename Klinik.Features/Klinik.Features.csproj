@@ -139,6 +139,10 @@
     <Compile Include="PoliSchedules\PoliScheduleRequest.cs" />
     <Compile Include="PoliSchedules\PoliScheduleResponse.cs" />
     <Compile Include="PoliSchedules\PoliScheduleValidator.cs" />
+    <Compile Include="FormExamine\FormExamineHandler.cs" />
+    <Compile Include="FormExamine\FormExamineRequest.cs" />
+    <Compile Include="FormExamine\FormExamineResponse.cs" />
+    <Compile Include="FormExamine\FormExamineValidator.cs" />
     <Compile Include="PreExamine\PreExamineHandler.cs" />
     <Compile Include="PreExamine\PreExamineRequest.cs" />
     <Compile Include="PreExamine\PreExamineResponse.cs" />

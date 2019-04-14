@@ -52,27 +52,17 @@ namespace Klinik.Features.Loket
                         qry.ReffID = request.Data.ReffID;
                         qry.Remark = request.Data.Remark;
                         qry.DoctorID = request.Data.DoctorID == 0 ? (int?)null : request.Data.DoctorID;
+                        qry.FormMedical.Necessity = request.Data.NecessityType.ToString();
+                        qry.FormMedical.PaymentType = request.Data.PaymentType.ToString();
+                        qry.FormMedical.Number = request.Data.PaymentNumber;
 
                         _unitOfWork.RegistrationRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            var formMedical = _unitOfWork.FormMedicalRepository.GetFirstOrDefault(x => x.QueuePoliID == qry.ID);
-                            if (formMedical != null)
-                            {
-                                formMedical.Necessity = request.Data.NecessityType.ToString();
-                                formMedical.PaymentType = request.Data.PaymentType.ToString();
-                                formMedical.Number = request.Data.PaymentNumber;
-                            }
+                            response.Message = string.Format(Messages.ObjectHasBeenUpdated2, "Registration", qry.ID);
 
-                            _unitOfWork.FormMedicalRepository.Update(formMedical);
-                            resultAffected = _unitOfWork.Save();
-                            if (resultAffected > 0)
-                            {
-                                response.Message = string.Format(Messages.ObjectHasBeenUpdated2, "Registration", qry.ID);
-
-                                CommandLog(true, ClinicEnums.Module.REGISTRATION, Constants.Command.EDIT_REGISTRATION, request.Data.Account, request.Data, _oldentity);
-                            }
+                            CommandLog(true, ClinicEnums.Module.REGISTRATION, Constants.Command.EDIT_REGISTRATION, request.Data.Account, request.Data, _oldentity);
                         }
                         else
                         {
@@ -92,15 +82,15 @@ namespace Klinik.Features.Loket
                 }
                 else
                 {
-                    var regEntity = Mapper.Map<LoketModel, QueuePoli>(request.Data);
-                    regEntity.CreatedBy = request.Data.Account.UserCode;
-                    regEntity.CreatedDate = DateTime.Now;
-                    regEntity.TransactionDate = DateTime.Now;
-                    regEntity.Status = (int)RegistrationStatusEnum.New;
-                    regEntity.ClinicID = GetClinicID(request.Data.Account.Organization);
-                    regEntity.PoliFrom = 1;
-                    regEntity.SortNumber = GenerateSortNumber(request.Data.PoliToID);
-                    regEntity.DoctorID = request.Data.DoctorID == 0 ? (int?)null : request.Data.DoctorID;
+                    var queueEntity = Mapper.Map<LoketModel, QueuePoli>(request.Data);
+                    queueEntity.CreatedBy = request.Data.Account.UserCode;
+                    queueEntity.CreatedDate = DateTime.Now;
+                    queueEntity.TransactionDate = DateTime.Now;
+                    queueEntity.Status = (int)RegistrationStatusEnum.New;
+                    queueEntity.ClinicID = GetClinicID(request.Data.Account.Organization);
+                    queueEntity.PoliFrom = 1;
+                    queueEntity.SortNumber = GenerateSortNumber(request.Data.PoliToID, request.Data.DoctorID);
+                    queueEntity.DoctorID = request.Data.DoctorID == 0 ? (int?)null : request.Data.DoctorID;
 
                     // create form medical
                     var formMedical = new FormMedical
@@ -117,13 +107,13 @@ namespace Klinik.Features.Loket
                     };
 
                     // reference to queue
-                    formMedical.QueuePoli = regEntity;
+                    queueEntity.FormMedical = formMedical;
 
-                    _unitOfWork.FormMedicalRepository.Insert(formMedical);
+                    _unitOfWork.RegistrationRepository.Insert(queueEntity);
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "Registration", regEntity.PatientID, regEntity.ID);
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "Registration", queueEntity.PatientID, queueEntity.ID);
 
                         CommandLog(true, ClinicEnums.Module.REGISTRATION, Constants.Command.ADD_NEW_REGISTRATION, request.Data.Account, request.Data);
                     }
@@ -166,12 +156,15 @@ namespace Klinik.Features.Loket
         /// </summary>
         /// <param name="poliID"></param>
         /// <returns></returns>
-        private int GenerateSortNumber(int poliID)
+        private int GenerateSortNumber(int poliID, int doctorID)
         {
-            var currentQueueList = _unitOfWork.RegistrationRepository.Get(x => x.PoliTo == poliID &&
+            List<QueuePoli> currentQueueList = _unitOfWork.RegistrationRepository.Get(x => x.PoliTo == poliID &&
             x.TransactionDate.Year == DateTime.Today.Year &&
             x.TransactionDate.Month == DateTime.Today.Month &&
             x.TransactionDate.Day == DateTime.Today.Day);
+
+            if (doctorID > 0 && currentQueueList.Count > 0)
+                currentQueueList = currentQueueList.Where(x => x.DoctorID == doctorID).ToList();
 
             int sortNumber = currentQueueList.Count + 1;
 
@@ -194,7 +187,7 @@ namespace Klinik.Features.Loket
 
             return registrationList;
         }
-       
+
         /// <summary>
         /// Get detail of registration
         /// </summary>
@@ -213,7 +206,7 @@ namespace Klinik.Features.Loket
                 response.Entity.PatientGender = response.Entity.PatientGender == "M" ? Messages.Male : Messages.Female;
                 response.Entity.PatientType = response.Entity.PatientType == "2" ? Messages.Company : Messages.General;
 
-                FormMedical formMedical = _unitOfWork.FormMedicalRepository.GetFirstOrDefault(x => x.QueuePoliID == qry.ID);
+                FormMedical formMedical = _unitOfWork.FormMedicalRepository.GetFirstOrDefault(x => x.ID == qry.FormMedicalID);
                 if (formMedical != null)
                 {
                     response.Entity.NecessityType = int.Parse(formMedical.Necessity);

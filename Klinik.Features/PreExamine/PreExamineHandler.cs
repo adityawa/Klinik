@@ -10,9 +10,6 @@ using LinqKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlTypes;
 namespace Klinik.Features.PreExamine
 {
     public class PreExamineHandler : BaseFeatures
@@ -21,6 +18,7 @@ namespace Klinik.Features.PreExamine
         {
             _unitOfWork = unitOfWork;
         }
+
         public LoketResponse GetListData(LoketRequest request)
         {
             var _loketId = _unitOfWork.PoliRepository.GetFirstOrDefault(x => x.Name == Constants.NameConstant.Loket);
@@ -114,41 +112,34 @@ namespace Klinik.Features.PreExamine
         public PreExamineResponse GetDetailNotPreExamine(PreExamineRequest request)
         {
             var _getdetailQueuePoli = _unitOfWork.RegistrationRepository.GetById(request.Data.LoketData.Id);
-            var _getFormMedical = _unitOfWork.FormMedicalRepository.GetFirstOrDefault(x => x.QueuePoliID == _getdetailQueuePoli.ID
-              && x.ClinicID == _getdetailQueuePoli.ClinicID
-              && x.PatientID == _getdetailQueuePoli.PatientID);
+            long formMedicalID = _getdetailQueuePoli.FormMedicalID.Value;
 
             var _preexmodel = new PreExamineModel
             {
                 DoctorID = _getdetailQueuePoli.DoctorID ?? 0,
-                FormMedicalID = _getFormMedical.ID,
+                FormMedicalID = formMedicalID,
                 strTransDate = _getdetailQueuePoli.TransactionDate.ToString("dd/MM/yyyy"),
-              
             };
 
-          
-
             //cek data preexamine
-            var _preExamineData = _unitOfWork.FormPreExamineRepository.GetFirstOrDefault(x => x.FormMedicalID == _getFormMedical.ID);
+            var _preExamineData = _unitOfWork.FormPreExamineRepository.GetFirstOrDefault(x => x.FormMedicalID == formMedicalID);
             if (_preExamineData != null)
             {
                 _preexmodel = Mapper.Map<FormPreExamine, PreExamineModel>(_preExamineData);
-                if(_preexmodel.strTransDate==""|| _preexmodel.strTransDate == null)
+                if (_preexmodel.strTransDate == "" || _preexmodel.strTransDate == null)
                 {
                     _preexmodel.strTransDate = _getdetailQueuePoli.TransactionDate.ToString("dd/MM/yyyy");
                 }
 
-                if(_preExamineData.MenstrualDate != null)
+                if (_preExamineData.MenstrualDate != null)
                 {
-                    _preexmodel.strMenstrualDate = _preExamineData.MenstrualDate.Value.ToString("dd/MM/yyyy").Contains("1900")?"": _preExamineData.MenstrualDate.Value.ToString("dd/MM/yyyy");
+                    _preexmodel.strMenstrualDate = _preExamineData.MenstrualDate.Value.ToString("dd/MM/yyyy").Contains("1900") ? "" : _preExamineData.MenstrualDate.Value.ToString("dd/MM/yyyy");
                 }
 
-                if (_preExamineData.KBDate != null )
+                if (_preExamineData.KBDate != null)
                 {
-                    _preexmodel.strKBDate = _preExamineData.KBDate.Value.ToString("dd/MM/yyyy").Contains("1900")?"": _preExamineData.KBDate.Value.ToString("dd/MM/yyyy");
+                    _preexmodel.strKBDate = _preExamineData.KBDate.Value.ToString("dd/MM/yyyy").Contains("1900") ? "" : _preExamineData.KBDate.Value.ToString("dd/MM/yyyy");
                 }
-
-                
             }
 
             if (_preexmodel.LoketData == null)
@@ -223,7 +214,7 @@ namespace Klinik.Features.PreExamine
                     {
                         entiti.MenstrualDate = reformatDate(request.Data.strMenstrualDate);
                     }
-                        
+
                     if (!String.IsNullOrEmpty(request.Data.strKBDate))
                     {
                         entiti.KBDate = reformatDate(request.Data.strKBDate);

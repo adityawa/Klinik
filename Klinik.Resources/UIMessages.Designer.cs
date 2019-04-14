@@ -133,6 +133,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount.
+        /// </summary>
+        public static string Amount {
+            get {
+                return ResourceManager.GetString("Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Anamnesa.
+        /// </summary>
+        public static string Anamnesa {
+            get {
+                return ResourceManager.GetString("Anamnesa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occurred while processing your request..
         /// </summary>
         public static string AnErrorOccured {
@@ -142,11 +160,38 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure?.
+        /// </summary>
+        public static string AreYouSure {
+            get {
+                return ResourceManager.GetString("AreYouSure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure that you want to delete this row?.
+        /// </summary>
+        public static string AreYouSureDelete {
+            get {
+                return ResourceManager.GetString("AreYouSureDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assign Role.
         /// </summary>
         public static string AssignRole {
             get {
                 return ResourceManager.GetString("AssignRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attachment.
+        /// </summary>
+        public static string Attachment {
+            get {
+                return ResourceManager.GetString("Attachment", resourceCulture);
             }
         }
         
@@ -201,6 +246,24 @@ namespace Klinik.Resources {
         public static string BusinessUnit {
             get {
                 return ResourceManager.GetString("BusinessUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Change {
+            get {
+                return ResourceManager.GetString("Change", resourceCulture);
             }
         }
         
@@ -430,6 +493,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Diagnose.
+        /// </summary>
+        public static string Diagnose {
+            get {
+                return ResourceManager.GetString("Diagnose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Diastolic.
         /// </summary>
         public static string Diastolic {
@@ -498,6 +570,15 @@ namespace Klinik.Resources {
         public static string DoctorType {
             get {
                 return ResourceManager.GetString("DoctorType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dose.
+        /// </summary>
+        public static string Dose {
+            get {
+                return ResourceManager.GetString("Dose", resourceCulture);
             }
         }
         
@@ -709,6 +790,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Examine.
+        /// </summary>
+        public static string Examine {
+            get {
+                return ResourceManager.GetString("Examine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Examine Glasses.
         /// </summary>
         public static string ExamineGlasses {
@@ -741,6 +831,24 @@ namespace Klinik.Resources {
         public static string Female {
             get {
                 return ResourceManager.GetString("Female", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File Upload.
+        /// </summary>
+        public static string FileUpload {
+            get {
+                return ResourceManager.GetString("FileUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Final State.
+        /// </summary>
+        public static string FinalState {
+            get {
+                return ResourceManager.GetString("FinalState", resourceCulture);
             }
         }
         
@@ -808,6 +916,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Forward to.
+        /// </summary>
+        public static string ForwardTo {
+            get {
+                return ResourceManager.GetString("ForwardTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gender.
         /// </summary>
         public static string Gender {
@@ -862,11 +979,29 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ICD.
+        /// </summary>
+        public static string ICDInformation {
+            get {
+                return ResourceManager.GetString("ICDInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID.
         /// </summary>
         public static string ID {
             get {
                 return ResourceManager.GetString("ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Injection.
+        /// </summary>
+        public static string Injection {
+            get {
+                return ResourceManager.GetString("Injection", resourceCulture);
             }
         }
         
@@ -903,6 +1038,15 @@ namespace Klinik.Resources {
         public static string KTPNumber {
             get {
                 return ResourceManager.GetString("KTPNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Laboratory.
+        /// </summary>
+        public static string Laboratory {
+            get {
+                return ResourceManager.GetString("Laboratory", resourceCulture);
             }
         }
         
@@ -1029,6 +1173,15 @@ namespace Klinik.Resources {
         public static string MaritalStatus {
             get {
                 return ResourceManager.GetString("MaritalStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medicine.
+        /// </summary>
+        public static string Medicine {
+            get {
+                return ResourceManager.GetString("Medicine", resourceCulture);
             }
         }
         
@@ -1465,6 +1618,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Radiology.
+        /// </summary>
+        public static string Radiology {
+            get {
+                return ResourceManager.GetString("Radiology", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recover Password.
         /// </summary>
         public static string RecoverPassword {
@@ -1591,6 +1753,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Replace.
         /// </summary>
         public static string Replace {
@@ -1654,6 +1825,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Result.
+        /// </summary>
+        public static string Result {
+            get {
+                return ResourceManager.GetString("Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Right Eye.
         /// </summary>
         public static string RightEye {
@@ -1704,6 +1884,33 @@ namespace Klinik.Resources {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Examine.
+        /// </summary>
+        public static string SaveExamine {
+            get {
+                return ResourceManager.GetString("SaveExamine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select File.
+        /// </summary>
+        public static string SelectFile {
+            get {
+                return ResourceManager.GetString("SelectFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service.
+        /// </summary>
+        public static string Service {
+            get {
+                return ResourceManager.GetString("Service", resourceCulture);
             }
         }
         
@@ -1789,6 +1996,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Theraphy.
+        /// </summary>
+        public static string Theraphy {
+            get {
+                return ResourceManager.GetString("Theraphy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This account has been locked out, please try again later..
         /// </summary>
         public static string ThisAccountLocked {
@@ -1803,6 +2019,15 @@ namespace Klinik.Resources {
         public static string To {
             get {
                 return ResourceManager.GetString("To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string Total {
+            get {
+                return ResourceManager.GetString("Total", resourceCulture);
             }
         }
         
@@ -1893,6 +2118,15 @@ namespace Klinik.Resources {
         public static string ValidTo {
             get {
                 return ResourceManager.GetString("ValidTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volume.
+        /// </summary>
+        public static string Volume {
+            get {
+                return ResourceManager.GetString("Volume", resourceCulture);
             }
         }
         

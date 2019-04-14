@@ -27,6 +27,7 @@ namespace Klinik.Data.DataRepository
         public string ActualPath { get; set; }
         public string ActualName { get; set; }
         public string TypeDoc { get; set; }
+        public byte[] FileDoc { get; set; }
         public short RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }

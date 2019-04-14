@@ -41,5 +41,6 @@ namespace Klinik.Entities.Loket
         public string PaymentNumber { get; set; }
         public bool IsPreExamine { get; set; }
         public string strIsPreExamine { get; set; }
+        public long FormMedicalID { get; set; }
     }
 }

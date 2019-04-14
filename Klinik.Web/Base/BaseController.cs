@@ -1,7 +1,9 @@
-﻿using Klinik.Common;
+﻿using AutoMapper;
+using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
+using Klinik.Entities.MasterData;
 using Klinik.Features;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,6 +91,70 @@ namespace Klinik.Web
         }
 
         #region ::Dropdown Methods::
+        protected List<SelectListItem> BindDropDownDoctorList(int poliID)
+        {
+            List<SelectListItem> _typeList = new List<SelectListItem>();
+            List<PoliSchedule> scheduleList = new List<PoliSchedule>();
+            var clinicID = GetClinicID();
+            if (clinicID <= 0)
+                scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID);
+            else
+                scheduleList = _unitOfWork.PoliScheduleRepository.Get(x => x.PoliID == poliID && x.ClinicID == clinicID);
+
+            foreach (var item in scheduleList)
+            {
+                var doctor = _unitOfWork.DoctorRepository.GetFirstOrDefault(x => x.ID == item.DoctorID);
+                if (doctor != null)
+                {
+                    if (!_typeList.Any(x => x.Value == doctor.ID.ToString()))
+                    {
+                        _typeList.Add(new SelectListItem
+                        {
+                            Text = doctor.Name,
+                            Value = doctor.ID.ToString()
+                        });
+                    }
+                }
+            }
+
+            return _typeList;
+        }
+
+        protected List<SelectListItem> BindDropDownPoliList(int poliId)
+        {
+            Poli poli = _unitOfWork.PoliRepository.GetFirstOrDefault(x => x.ID == poliId);
+
+            int poliType = poli.Type;
+
+            // get valid poli from type
+            var filteredPoliList = _unitOfWork.PoliFlowTemplateRepository.Get(x => x.PoliTypeID == poliType);
+
+            // get all poli
+            var qry = _unitOfWork.PoliRepository.Get();
+
+            IList<PoliModel> _poliListModel = new List<PoliModel>();
+            foreach (var item in qry)
+            {
+                if (filteredPoliList.Any(x => x.PoliTypeIDTo == item.Type))
+                {
+                    var _poli = Mapper.Map<Poli, PoliModel>(item);
+                    _poliListModel.Add(_poli);
+                }
+            }
+
+            List<SelectListItem> _poliList = new List<SelectListItem>();
+            foreach (var item in _poliListModel)
+            {
+                _poliList.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                });
+            }
+
+            return _poliList;
+        }
+
         protected List<SelectListItem> BindDropDownClinic()
         {
             List<SelectListItem> _clinicLists = new List<SelectListItem>();

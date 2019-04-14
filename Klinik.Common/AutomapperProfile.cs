@@ -108,7 +108,8 @@ namespace Klinik.Common
                 .ForMember(m => m.PatientBloodType, map => map.MapFrom(p => p.Patient.BloodType))
                 .ForMember(m => m.PatientBPJSNumber, map => map.MapFrom(p => p.Patient.BPJSNumber))
                 .ForMember(m => m.PatientGender, map => map.MapFrom(p => p.Patient.Gender))
-
+                .ForMember(m => m.PatientHPNumber, map => map.MapFrom(p => p.Patient.HPNumber))
+                .ForMember(m => m.FormMedicalID, map => map.MapFrom(p => p.FormMedical.ID))
                 .ForMember(m => m.PatientKTPNumber, map => map.MapFrom(p => p.Patient.KTPNumber))
                 .ForMember(m => m.PatientType, map => map.MapFrom(p => p.Patient.Type))
                 .ForMember(m => m.StatusStr, map => map.MapFrom(p => ((RegistrationStatusEnum)p.Status.Value).ToString()))

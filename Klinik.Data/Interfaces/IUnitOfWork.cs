@@ -40,6 +40,7 @@ namespace Klinik.Data
         IGenericRepository<FormExamineLab> FormExamineLabRepository { get; }
         IGenericRepository<FormExamineMedicine> FormExamineMedicineRepository { get; }
         IGenericRepository<FormExamineService> FormExamineServiceRepository { get; }
+        IGenericRepository<FormExamine> FormExamineRepository { get; }
         int Save();
     }
 }

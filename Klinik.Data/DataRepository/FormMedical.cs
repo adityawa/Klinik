@@ -19,10 +19,10 @@ namespace Klinik.Data.DataRepository
         {
             this.FormExamines = new HashSet<FormExamine>();
             this.FormPreExamines = new HashSet<FormPreExamine>();
+            this.QueuePolis = new HashSet<QueuePoli>();
         }
     
         public long ID { get; set; }
-        public Nullable<long> QueuePoliID { get; set; }
         public Nullable<long> ClinicID { get; set; }
         public Nullable<long> PatientID { get; set; }
         public string Necessity { get; set; }
@@ -47,8 +47,9 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormExamine> FormExamines { get; set; }
         public virtual Patient Patient { get; set; }
-        public virtual QueuePoli QueuePoli { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormPreExamine> FormPreExamines { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<QueuePoli> QueuePolis { get; set; }
     }
 }
