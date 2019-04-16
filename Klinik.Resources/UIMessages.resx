@@ -816,4 +816,40 @@
   <data name="Volume" xml:space="preserve">
     <value>Volume</value>
   </data>
+  <data name="Stock" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ConcoctionMedicine" xml:space="preserve">
+    <value>Concoction Medicine</value>
+  </data>
+  <data name="InjectionList" xml:space="preserve">
+    <value>Injection List</value>
+  </data>
+  <data name="LaboratList" xml:space="preserve">
+    <value>Lab List</value>
+  </data>
+  <data name="MedicineList" xml:space="preserve">
+    <value>Medicine List</value>
+  </data>
+  <data name="RadiologyList" xml:space="preserve">
+    <value>Radiology List</value>
+  </data>
+  <data name="ServiceList" xml:space="preserve">
+    <value>Service List</value>
+  </data>
+  <data name="TypeLabNameHere" xml:space="preserve">
+    <value>Type laborat name here</value>
+  </data>
+  <data name="TypeMedicineNameHere" xml:space="preserve">
+    <value>Type medicine name here...</value>
+  </data>
+  <data name="TypeRadiologyNameHere" xml:space="preserve">
+    <value>Type radiology name here</value>
+  </data>
+  <data name="TypeServiceNameHere" xml:space="preserve">
+    <value>Type service name here</value>
+  </data>
 </root>

@@ -11,6 +11,7 @@ using Klinik.Web.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
@@ -24,6 +25,51 @@ namespace Klinik.Web.Controllers
         }
 
         #region ::PUBLIC METHODS::
+        public class Obat
+        {
+            public string kode { get; set; }
+            public string label { get; set; }
+            public string val { get; set; }
+            public string stock { get; set; }
+        }
+
+        private string RandomString(int size)
+        {
+            StringBuilder builder = new StringBuilder();
+            Random random = new Random();
+            char ch;
+            for (int i = 0; i < size; i++)
+            {
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                builder.Append(ch);
+            }
+
+            return builder.ToString();
+        }
+
+        [HttpPost]
+        public JsonResult AutoCompleteMedicine(string prefix)
+        {
+            string[] daftarnamaobat = { "Albumin", "Allopurinol", "Allylestrenol", "Alpha-Lipoic Acid", "Alprazolam", "Aluminium Hidroksida", "Ambroxol", "Amfetamin", "Amikacin", "Amil Nitrit", "Aminofilin", "Aminoglikosida", "Amiodarone", "Amitriptyline", "Amlodipine", "Amonium Klorida", "Amoxicillin", "Amphotericin B", "Ampicillin", "Analgetik-Antipiretik", "Antagonis H2", "Antagonis Kalsium", "Antasida", "Antiansietas", "Antiaritimia", "Antibiotik", "Antibiotik Polipeptida", "Antidepresan", "Antidepresan Trisiklik" };
+            List<Obat> daftarObat = new List<Obat>();
+            for (int i = 0; i < 20; i++)
+            {
+                Obat obat = new Obat
+                {
+                    kode = RandomString(5),
+                    label = daftarnamaobat.OrderBy(s => Guid.NewGuid()).First(),
+                    val = "ID" + i,
+                    stock = i.ToString()
+                };
+
+                daftarObat.Add(obat);
+            }
+
+            var search = daftarObat.Where(t => t.label.ToLower().StartsWith(prefix.ToLower()));
+
+            return Json(search.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
         [CustomAuthorize("VIEW_POLI_PATIENT_LIST")]
         public ActionResult PatientList()
         {
