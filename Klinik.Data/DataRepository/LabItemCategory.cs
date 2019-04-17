@@ -32,5 +32,6 @@ namespace Klinik.Data.DataRepository
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LabItem> LabItems { get; set; }
+        public virtual Poli Poli { get; set; }
     }
 }

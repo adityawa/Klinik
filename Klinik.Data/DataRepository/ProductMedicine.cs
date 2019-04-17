@@ -20,8 +20,11 @@ namespace Klinik.Data.DataRepository
         public Nullable<double> Amount { get; set; }
         public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
-        public string LastUpdatedBy { get; set; }
-        public Nullable<System.DateTime> DateModified { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
+    
+        public virtual Medicine Medicine { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

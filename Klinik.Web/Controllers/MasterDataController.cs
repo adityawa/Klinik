@@ -1019,5 +1019,429 @@ namespace Klinik.Web.Controllers
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        #region ::MENU::
+        [CustomAuthorize("VIEW_M_MENU")]
+        public ActionResult MenuList()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateOrEditMenu(MenuModel _model)
+        {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new MenuRequest
+            {
+                Data = _model
+            };
+
+            MenuResponse _response = new MenuResponse();
+
+            new MenuValidator(_unitOfWork).Validate(request, out _response);
+            ViewBag.Response = $"{_response.Status};{_response.Message}";
+            ViewBag.Organisasi = BindDropDownOrganization();
+            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
+            return View();
+        }
+
+        [CustomAuthorize("ADD_M_MENU", "EDIT_M_MENU")]
+        public ActionResult CreateOrEditMenu()
+        {
+            MenuResponse _response = new MenuResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new MenuRequest
+                {
+                    Data = new MenuModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                MenuResponse resp = new MenuHandler(_unitOfWork).GetDetail(request);
+                MenuModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.ActionType = ClinicEnums.Action.Add;
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetMenuData()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new MenuRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            var response = new MenuHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteMasterMenu(int id)
+        {
+            MenuResponse _response = new MenuResponse();
+            var request = new MenuRequest
+            {
+                Data = new MenuModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            new MenuValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region ::MEDICINE::
+        [CustomAuthorize("VIEW_M_MEDICINE")]
+        public ActionResult MedicineList()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateOrEditMedicine(MedicineModel _model)
+        {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new MedicineRequest
+            {
+                Data = _model
+            };
+
+            MedicineResponse _response = new MedicineResponse();
+
+            new MedicineValidator(_unitOfWork).Validate(request, out _response);
+            ViewBag.Response = $"{_response.Status};{_response.Message}";
+            ViewBag.Organisasi = BindDropDownOrganization();
+            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
+            return View();
+        }
+
+        [CustomAuthorize("ADD_M_MEDICINE", "EDIT_M_MEDICINE")]
+        public ActionResult CreateOrEditMedicine()
+        {
+            MedicineResponse _response = new MedicineResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new MedicineRequest
+                {
+                    Data = new MedicineModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                MedicineResponse resp = new MedicineHandler(_unitOfWork).GetDetail(request);
+                MedicineModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.ActionType = ClinicEnums.Action.Add;
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetMedicineData()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new MedicineRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            var response = new MedicineHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteMasterMedicine(int id)
+        {
+            MedicineResponse _response = new MedicineResponse();
+            var request = new MedicineRequest
+            {
+                Data = new MedicineModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            new MedicineValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region ::LAB ITEM::
+        [CustomAuthorize("VIEW_M_LAB_ITEM")]
+        public ActionResult LabItemList()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateOrEditLabItem(LabItemModel _model)
+        {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new LabItemRequest
+            {
+                Data = _model
+            };
+
+            LabItemResponse _response = new LabItemResponse();
+
+            new LabItemValidator(_unitOfWork).Validate(request, out _response);
+            ViewBag.Response = $"{_response.Status};{_response.Message}";
+            ViewBag.Organisasi = BindDropDownOrganization();
+            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
+            return View();
+        }
+
+        [CustomAuthorize("ADD_M_LAB_ITEM", "EDIT_M_LAB_ITEM")]
+        public ActionResult CreateOrEditLabItem()
+        {
+            LabItemResponse _response = new LabItemResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new LabItemRequest
+                {
+                    Data = new LabItemModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                LabItemResponse resp = new LabItemHandler(_unitOfWork).GetDetail(request);
+                LabItemModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.ActionType = ClinicEnums.Action.Add;
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetLabItemData()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new LabItemRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            var response = new LabItemHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteMasterLabItem(int id)
+        {
+            LabItemResponse _response = new LabItemResponse();
+            var request = new LabItemRequest
+            {
+                Data = new LabItemModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            new LabItemValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region ::LAB ITEM CATEGORY::
+        [CustomAuthorize("VIEW_M_LAB_ITEM_CATEGORY")]
+        public ActionResult LabItemCategoryList()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateOrEditLabItemCategory(LabItemCategoryModel _model)
+        {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new LabItemCategoryRequest
+            {
+                Data = _model
+            };
+
+            LabItemCategoryResponse _response = new LabItemCategoryResponse();
+
+            new LabItemCategoryValidator(_unitOfWork).Validate(request, out _response);
+            ViewBag.Response = $"{_response.Status};{_response.Message}";
+            ViewBag.Organisasi = BindDropDownOrganization();
+            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
+            return View();
+        }
+
+        [CustomAuthorize("ADD_M_LAB_ITEM_CATEGORY", "EDIT_M_LAB_ITEM_CATEGORY")]
+        public ActionResult CreateOrEditLabItemCategory()
+        {
+            LabItemCategoryResponse _response = new LabItemCategoryResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new LabItemCategoryRequest
+                {
+                    Data = new LabItemCategoryModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                LabItemCategoryResponse resp = new LabItemCategoryHandler(_unitOfWork).GetDetail(request);
+                LabItemCategoryModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.ActionType = ClinicEnums.Action.Add;
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetLabItemCategoryData()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new LabItemCategoryRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            var response = new LabItemCategoryHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteMasterLabItemCategory(int id)
+        {
+            LabItemCategoryResponse _response = new LabItemCategoryResponse();
+            var request = new LabItemCategoryRequest
+            {
+                Data = new LabItemCategoryModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            new LabItemCategoryValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

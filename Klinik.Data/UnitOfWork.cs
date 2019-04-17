@@ -40,11 +40,88 @@ namespace Klinik.Data
         private IGenericRepository<FormExamineMedicine> _formExamineMedicineRepository;
         private IGenericRepository<FormExamineService> _formExamineServiceRepository;
         private IGenericRepository<PoliClinic> _poliClinicRepository;
+        private IGenericRepository<Product> _productRepository;
+        private IGenericRepository<ProductCategory> _productCategoryRepository;
+        private IGenericRepository<ProductMedicine> _productMedicineRepository;
+        private IGenericRepository<ProductUnit> _productUnitRepository;
+        private IGenericRepository<Medicine> _medicineRepository;
+        private IGenericRepository<LabItem> _labItemRepository;
+        private IGenericRepository<LabItemCategory> _labItemCategoryRepository;
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
         {
             _context = context;
+        }
+
+        public IGenericRepository<Product> ProductRepository
+        {
+            get
+            {
+                if (_productRepository == null)
+                    _productRepository = new GenericRepository<Product>(_context);
+                return _productRepository;
+            }
+        }
+
+        public IGenericRepository<ProductCategory> ProductCategoryRepository
+        {
+            get
+            {
+                if (_productCategoryRepository == null)
+                    _productCategoryRepository = new GenericRepository<ProductCategory>(_context);
+                return _productCategoryRepository;
+            }
+        }
+
+        public IGenericRepository<ProductMedicine> ProductMedicineRepository
+        {
+            get
+            {
+                if (_productMedicineRepository == null)
+                    _productMedicineRepository = new GenericRepository<ProductMedicine>(_context);
+                return _productMedicineRepository;
+            }
+        }
+
+        public IGenericRepository<ProductUnit> ProductUnitRepository
+        {
+            get
+            {
+                if (_productUnitRepository == null)
+                    _productUnitRepository = new GenericRepository<ProductUnit>(_context);
+                return _productUnitRepository;
+            }
+        }
+
+        public IGenericRepository<Medicine> MedicineRepository
+        {
+            get
+            {
+                if (_medicineRepository == null)
+                    _medicineRepository = new GenericRepository<Medicine>(_context);
+                return _medicineRepository;
+            }
+        }
+
+        public IGenericRepository<LabItem> LabItemRepository
+        {
+            get
+            {
+                if (_labItemRepository == null)
+                    _labItemRepository = new GenericRepository<LabItem>(_context);
+                return _labItemRepository;
+            }
+        }
+
+        public IGenericRepository<LabItemCategory> LabItemCategoryRepository
+        {
+            get
+            {
+                if (_labItemCategoryRepository == null)
+                    _labItemCategoryRepository = new GenericRepository<LabItemCategory>(_context);
+                return _labItemCategoryRepository;
+            }
         }
 
         public IGenericRepository<FormMedical> FormMedicalRepository

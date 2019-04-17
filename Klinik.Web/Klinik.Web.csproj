@@ -224,6 +224,7 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Base\BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\MasterProductController.cs" />
     <Compile Include="Controllers\ParamedicController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

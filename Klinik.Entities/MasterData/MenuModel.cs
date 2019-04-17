@@ -12,6 +12,6 @@
         public string Controller { get; set; }
         public string Action { get; set; }
         public int Level { get; set; }
-        public string icon { get; set; }
+        public string Icon { get; set; }
     }
 }
