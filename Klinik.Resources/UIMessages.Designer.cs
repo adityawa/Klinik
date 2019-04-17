@@ -421,6 +421,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Controller.
+        /// </summary>
+        public static string Controller {
+            get {
+                return ResourceManager.GetString("Controller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copyright 2019. Medical Management System. All rights reserved..
         /// </summary>
         public static string Copyright {
@@ -952,6 +961,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Has Child.
+        /// </summary>
+        public static string HasChild {
+            get {
+                return ResourceManager.GetString("HasChild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Height.
         /// </summary>
         public static string Height {
@@ -1006,6 +1024,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Icon.
+        /// </summary>
+        public static string Icon {
+            get {
+                return ResourceManager.GetString("Icon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID.
         /// </summary>
         public static string ID {
@@ -1029,6 +1056,15 @@ namespace Klinik.Resources {
         public static string InjectionList {
             get {
                 return ResourceManager.GetString("InjectionList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Menu.
+        /// </summary>
+        public static string IsMenu {
+            get {
+                return ResourceManager.GetString("IsMenu", resourceCulture);
             }
         }
         
@@ -1128,6 +1164,15 @@ namespace Klinik.Resources {
         public static string LegalNO {
             get {
                 return ResourceManager.GetString("LegalNO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Level.
+        /// </summary>
+        public static string Level {
+            get {
+                return ResourceManager.GetString("Level", resourceCulture);
             }
         }
         
@@ -1245,6 +1290,15 @@ namespace Klinik.Resources {
         public static string Menu {
             get {
                 return ResourceManager.GetString("Menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Menu List.
+        /// </summary>
+        public static string MenuList {
+            get {
+                return ResourceManager.GetString("MenuList", resourceCulture);
             }
         }
         
@@ -1420,6 +1474,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page Link.
+        /// </summary>
+        public static string PageLink {
+            get {
+                return ResourceManager.GetString("PageLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paramedic.
         /// </summary>
         public static string Paramedic {
@@ -1461,6 +1524,15 @@ namespace Klinik.Resources {
         public static string ParamedicType {
             get {
                 return ResourceManager.GetString("ParamedicType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent Menu.
+        /// </summary>
+        public static string ParentMenu {
+            get {
+                return ResourceManager.GetString("ParentMenu", resourceCulture);
             }
         }
         
@@ -2001,6 +2073,15 @@ namespace Klinik.Resources {
         public static string SetRolePrivilege {
             get {
                 return ResourceManager.GetString("SetRolePrivilege", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort Index.
+        /// </summary>
+        public static string SortIndex {
+            get {
+                return ResourceManager.GetString("SortIndex", resourceCulture);
             }
         }
         

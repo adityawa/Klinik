@@ -23,6 +23,23 @@ namespace Klinik.Web.Controllers
         }
 
         #region ::MISC::
+        private List<SelectListItem> BindDropDownParentMenuList()
+        {
+            List<Menu> menuList = _context.Menus.Where(x => x.IsMenu.Value).ToList();
+            List<SelectListItem> _menuList = new List<SelectListItem>();
+
+            foreach (var item in menuList)
+            {
+                _menuList.Add(new SelectListItem
+                {
+                    Text = item.Description,
+                    Value = item.ID.ToString()
+                });
+            }
+
+            return _menuList;
+        }
+
         private List<SelectListItem> BindDropDownRoleList(int orgId)
         {
             List<OrganizationRole> orgRoleList = _context.OrganizationRoles.Where(x => x.OrgID == orgId).ToList();
@@ -1042,7 +1059,7 @@ namespace Klinik.Web.Controllers
 
             new MenuValidator(_unitOfWork).Validate(request, out _response);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
-            ViewBag.Organisasi = BindDropDownOrganization();
+            ViewBag.ParentMenuList = BindDropDownParentMenuList();
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
 
             return View();
@@ -1065,14 +1082,14 @@ namespace Klinik.Web.Controllers
                 MenuResponse resp = new MenuHandler(_unitOfWork).GetDetail(request);
                 MenuModel _model = resp.Entity;
                 ViewBag.Response = _response;
-                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.ParentMenuList = BindDropDownParentMenuList();
                 ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }
             else
             {
                 ViewBag.Response = _response;
-                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.ParentMenuList = BindDropDownParentMenuList();
                 ViewBag.ActionType = ClinicEnums.Action.Add;
                 return View();
             }

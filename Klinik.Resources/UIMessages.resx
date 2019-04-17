@@ -852,4 +852,31 @@
   <data name="TypeServiceNameHere" xml:space="preserve">
     <value>Type service name here</value>
   </data>
+  <data name="Controller" xml:space="preserve">
+    <value>Controller</value>
+  </data>
+  <data name="HasChild" xml:space="preserve">
+    <value>Has Child</value>
+  </data>
+  <data name="Icon" xml:space="preserve">
+    <value>Icon</value>
+  </data>
+  <data name="IsMenu" xml:space="preserve">
+    <value>Is Menu</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="MenuList" xml:space="preserve">
+    <value>Menu List</value>
+  </data>
+  <data name="PageLink" xml:space="preserve">
+    <value>Page Link</value>
+  </data>
+  <data name="ParentMenu" xml:space="preserve">
+    <value>Parent Menu</value>
+  </data>
+  <data name="SortIndex" xml:space="preserve">
+    <value>Sort Index</value>
+  </data>
 </root>

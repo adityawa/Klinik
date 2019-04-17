@@ -47,9 +47,21 @@ namespace Klinik.Features
                     {
                         // save the old data
                         var _oldentity = Mapper.Map<Menu, MenuModel>(qry);
+                        qry.ModifiedBy = request.Data.Account.UserCode;
+                        qry.ModifiedDate = DateTime.Now;
 
                         // update data
+                        qry.Description = request.Data.Description;
+                        qry.ParentMenuId = request.Data.ParentMenuId;
                         qry.Name = request.Data.Name;
+                        qry.Controller = request.Data.Controller;
+                        qry.Action = request.Data.Action;
+                        qry.Level = request.Data.Level;
+                        qry.Icon = request.Data.Icon;
+                        qry.HasChild = request.Data.HasChild;
+                        qry.IsMenu = request.Data.IsMenu;
+                        qry.PageLink = request.Data.PageLink;
+                        qry.SortIndex = request.Data.SortIndex;
 
                         _unitOfWork.MenuRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();

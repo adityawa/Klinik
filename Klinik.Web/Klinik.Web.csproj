@@ -1425,6 +1425,8 @@
     <Content Include="Views\MappingMaster\ClinicPoliList.cshtml" />
     <Content Include="Views\Poli\PatientList.cshtml" />
     <Content Include="Views\Poli\FormExamine.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditMenu.cshtml" />
+    <Content Include="Views\MasterData\MenuList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
