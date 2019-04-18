@@ -1436,6 +1436,10 @@
     <Content Include="Views\MasterData\CreateOrEditProductMedicine.cshtml" />
     <Content Include="Views\MasterData\MedicineList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditMedicine.cshtml" />
+    <Content Include="Views\MasterData\LabItemCategoryList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditLabItemCategory.cshtml" />
+    <Content Include="Views\MasterData\LabItemList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditLabItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

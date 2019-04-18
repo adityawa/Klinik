@@ -205,6 +205,14 @@ namespace Klinik.Common
             CreateMap<ProductMedicine, ProductMedicineModel>()
                 .ForMember(m => m.ProductName, map => map.MapFrom(p => p.Product.Name))
                 .ForMember(m => m.MedicineName, map => map.MapFrom(p => p.Medicine.Name));
+
+            CreateMap<LabItemCategoryModel, LabItemCategory>();
+            CreateMap<LabItemCategory, LabItemCategoryModel>()
+                .ForMember(m => m.PoliName, map => map.MapFrom(p => p.Poli.Name));
+
+            CreateMap<LabItemModel, LabItem>();
+            CreateMap<LabItem, LabItemModel>()
+                .ForMember(m => m.LabItemCategoryName, map => map.MapFrom(p => p.LabItemCategory.Name));
         }
     }
 }

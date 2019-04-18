@@ -22,7 +22,41 @@ namespace Klinik.Web.Controllers
             _context = context;
         }
 
-        #region ::MISC::        
+        #region ::MISC::      
+        private List<SelectListItem> BindDropDownLabCategory()
+        {
+            List<LabItemCategory> labItemCatList = _context.LabItemCategories.Where(x => x.RowStatus == 0).ToList();
+            List<SelectListItem> _labItemCatList = new List<SelectListItem>();
+
+            foreach (var item in labItemCatList)
+            {
+                _labItemCatList.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.ID.ToString()
+                });
+            }
+
+            return _labItemCatList;
+        }
+
+        private List<SelectListItem> BindDropDownPoli()
+        {
+            List<Poli> poliList = _context.Polis.Where(x => x.Rowstatus == 0).ToList();
+            List<SelectListItem> _poliList = new List<SelectListItem>();
+
+            foreach (var item in poliList)
+            {
+                _poliList.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.ID.ToString()
+                });
+            }
+
+            return _poliList;
+        }
+
         private List<SelectListItem> BindDropDownProductCategory()
         {
             List<ProductCategory> productCategoryList = _context.ProductCategories.Where(x => x.RowStatus == 0).ToList();
@@ -1336,7 +1370,7 @@ namespace Klinik.Web.Controllers
 
             new LabItemValidator(_unitOfWork).Validate(request, out _response);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
-            ViewBag.Organisasi = BindDropDownOrganization();
+            ViewBag.LabItemCategoryList = BindDropDownLabCategory();
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
 
             return View();
@@ -1359,14 +1393,14 @@ namespace Klinik.Web.Controllers
                 LabItemResponse resp = new LabItemHandler(_unitOfWork).GetDetail(request);
                 LabItemModel _model = resp.Entity;
                 ViewBag.Response = _response;
-                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.LabItemCategoryList = BindDropDownLabCategory();
                 ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }
             else
             {
                 ViewBag.Response = _response;
-                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.LabItemCategoryList = BindDropDownLabCategory();
                 ViewBag.ActionType = ClinicEnums.Action.Add;
                 return View();
             }
@@ -1442,7 +1476,7 @@ namespace Klinik.Web.Controllers
 
             new LabItemCategoryValidator(_unitOfWork).Validate(request, out _response);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
-            ViewBag.Organisasi = BindDropDownOrganization();
+            ViewBag.PoliList = BindDropDownPoli();
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
 
             return View();
@@ -1465,14 +1499,14 @@ namespace Klinik.Web.Controllers
                 LabItemCategoryResponse resp = new LabItemCategoryHandler(_unitOfWork).GetDetail(request);
                 LabItemCategoryModel _model = resp.Entity;
                 ViewBag.Response = _response;
-                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.PoliList = BindDropDownPoli();
                 ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }
             else
             {
                 ViewBag.Response = _response;
-                ViewBag.Organisasi = BindDropDownOrganization();
+                ViewBag.PoliList = BindDropDownPoli();
                 ViewBag.ActionType = ClinicEnums.Action.Add;
                 return View();
             }

@@ -1105,6 +1105,42 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lab Item.
+        /// </summary>
+        public static string LabItem {
+            get {
+                return ResourceManager.GetString("LabItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lab Category.
+        /// </summary>
+        public static string LabItemCategory {
+            get {
+                return ResourceManager.GetString("LabItemCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lab Category List.
+        /// </summary>
+        public static string LabItemCategoryList {
+            get {
+                return ResourceManager.GetString("LabItemCategoryList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lab Item list.
+        /// </summary>
+        public static string LabItemList {
+            get {
+                return ResourceManager.GetString("LabItemList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lab List.
         /// </summary>
         public static string LaboratList {
@@ -1402,6 +1438,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Normal.
+        /// </summary>
+        public static string Normal {
+            get {
+                return ResourceManager.GetString("Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number.
         /// </summary>
         public static string Number {
@@ -1686,6 +1731,15 @@ namespace Klinik.Resources {
         public static string PoliType {
             get {
                 return ResourceManager.GetString("PoliType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        public static string Price {
+            get {
+                return ResourceManager.GetString("Price", resourceCulture);
             }
         }
         

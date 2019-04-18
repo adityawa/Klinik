@@ -40,10 +40,11 @@ namespace Klinik.Features
                     {
                         // save the old data
                         var _oldentity = Mapper.Map<ProductMedicine, ProductMedicineModel>(qry);
-
-                        _oldentity.ProductID = request.Data.ProductID;
-                        _oldentity.MedicineID = request.Data.MedicineID;
-                        _oldentity.Amount = request.Data.Amount;
+                        qry.ModifiedBy = request.Data.Account.UserCode;
+                        qry.ModifiedDate = DateTime.Now;
+                        qry.ProductID = request.Data.ProductID;
+                        qry.MedicineID = request.Data.MedicineID;
+                        qry.Amount = request.Data.Amount;
 
                         _unitOfWork.ProductMedicineRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();

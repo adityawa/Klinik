@@ -912,4 +912,22 @@
   <data name="ProductName" xml:space="preserve">
     <value>Product Name</value>
   </data>
+  <data name="LabItem" xml:space="preserve">
+    <value>Lab Item</value>
+  </data>
+  <data name="LabItemCategory" xml:space="preserve">
+    <value>Lab Category</value>
+  </data>
+  <data name="LabItemCategoryList" xml:space="preserve">
+    <value>Lab Category List</value>
+  </data>
+  <data name="LabItemList" xml:space="preserve">
+    <value>Lab Item list</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
 </root>
