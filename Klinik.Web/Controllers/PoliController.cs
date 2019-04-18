@@ -25,49 +25,115 @@ namespace Klinik.Web.Controllers
         }
 
         #region ::PUBLIC METHODS::
-        public class Obat
+        public class TempClass
         {
-            public string kode { get; set; }
+            public int id { get; set; }
+            public string code { get; set; }
             public string label { get; set; }
-            public string val { get; set; }
+            public string value { get; set; }
             public string stock { get; set; }
         }
 
-        private string RandomString(int size)
+        [HttpPost]
+        public JsonResult AutoCompleteRadiology(string prefix)
         {
-            StringBuilder builder = new StringBuilder();
-            Random random = new Random();
-            char ch;
-            for (int i = 0; i < size; i++)
+            List<LabItem> labList = _unitOfWork.LabItemRepository.Get(x => x.LabItemCategory.LabType == "Radiology").ToList();
+
+            var filteredList = labList.Where(t => t.Name.ToLower().Contains(prefix.ToLower()));
+
+            List<TempClass> resultList = new List<TempClass>();
+            foreach (var item in filteredList)
             {
-                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
-                builder.Append(ch);
+                TempClass temp = new TempClass
+                {
+                    id = item.ID,
+                    label = item.Name,
+                    code = item.Code,
+                    stock = "911" // hardcoded for now
+                };
+
+                FormExamineLab lab = _unitOfWork.FormExamineLabRepository.GetFirstOrDefault(x => x.LabItemID == item.ID);
+                temp.value = lab == null ? "not available yet" : lab.Result;
+
+                resultList.Add(temp);
             }
 
-            return builder.ToString();
+            return Json(resultList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AutoCompleteLaborat(string prefix)
+        {
+            List<LabItem> labList = _unitOfWork.LabItemRepository.Get(x => x.LabItemCategory.LabType == "Laboratorium").ToList();
+
+            var filteredList = labList.Where(t => t.Name.ToLower().Contains(prefix.ToLower()));
+
+            List<TempClass> resultList = new List<TempClass>();
+            foreach (var item in filteredList)
+            {
+                TempClass temp = new TempClass
+                {
+                    id = item.ID,
+                    label = item.Name,
+                    code = item.Code,
+                    stock = "911" // hardcoded for now
+                };
+
+                FormExamineLab lab = _unitOfWork.FormExamineLabRepository.GetFirstOrDefault(x => x.LabItemID == item.ID);
+                temp.value = lab == null ? "not available yet" : lab.Result;
+
+                resultList.Add(temp);
+            }
+
+            return Json(resultList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AutoCompleteInjection(string prefix)
+        {
+            List<Product> productList = _unitOfWork.ProductRepository.Get(x => x.ProductCategoryID == 2).ToList();
+
+            var filteredList = productList.Where(t => t.Name.ToLower().Contains(prefix.ToLower()));
+
+            List<TempClass> resultList = new List<TempClass>();
+            foreach (var item in filteredList)
+            {
+                TempClass temp = new TempClass
+                {
+                    id = item.ID,
+                    label = item.Name,
+                    code = item.Code,
+                    stock = "911" // hardcoded for now
+                };
+
+                resultList.Add(temp);
+            }
+
+            return Json(resultList, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult AutoCompleteMedicine(string prefix)
         {
-            string[] daftarnamaobat = { "Albumin", "Allopurinol", "Allylestrenol", "Alpha-Lipoic Acid", "Alprazolam", "Aluminium Hidroksida", "Ambroxol", "Amfetamin", "Amikacin", "Amil Nitrit", "Aminofilin", "Aminoglikosida", "Amiodarone", "Amitriptyline", "Amlodipine", "Amonium Klorida", "Amoxicillin", "Amphotericin B", "Ampicillin", "Analgetik-Antipiretik", "Antagonis H2", "Antagonis Kalsium", "Antasida", "Antiansietas", "Antiaritimia", "Antibiotik", "Antibiotik Polipeptida", "Antidepresan", "Antidepresan Trisiklik" };
-            List<Obat> daftarObat = new List<Obat>();
-            for (int i = 0; i < 20; i++)
+            List<Product> productList = _unitOfWork.ProductRepository.Get(x => x.ProductCategoryID == 1).ToList();
+
+            var filteredList = productList.Where(t => t.Name.ToLower().Contains(prefix.ToLower()));
+
+            List<TempClass> resultList = new List<TempClass>();
+            foreach (var item in filteredList)
             {
-                Obat obat = new Obat
+                TempClass temp = new TempClass
                 {
-                    kode = RandomString(5),
-                    label = daftarnamaobat.OrderBy(s => Guid.NewGuid()).First(),
-                    val = "ID" + i,
-                    stock = i.ToString()
+                    id = item.ID,
+                    label = item.Name,
+                    code = item.Code,
+                    stock = "911" // hardcoded for now
                 };
 
-                daftarObat.Add(obat);
+                resultList.Add(temp);
             }
 
-            var search = daftarObat.Where(t => t.label.ToLower().StartsWith(prefix.ToLower()));
-
-            return Json(search.ToList(), JsonRequestBehavior.AllowGet);
+            return Json(resultList, JsonRequestBehavior.AllowGet);
         }
 
         [CustomAuthorize("VIEW_POLI_PATIENT_LIST")]

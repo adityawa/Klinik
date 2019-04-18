@@ -252,7 +252,7 @@
                                             <table class="table table-striped table-bordered dt-responsive" id="table-medicine">
                                                 <thead>
                                                     <tr style="font-size:13px">
-                                                        <th style="width:50%">@Klinik.Resources.UIMessages.Medicine</th>
+                                                        <th style="width:50%">@Klinik.Resources.UIMessages.MedicineName</th>
                                                         <th>@Klinik.Resources.UIMessages.Stock</th>
                                                         <th>@Klinik.Resources.UIMessages.Dose</th>
                                                         <th>@Klinik.Resources.UIMessages.Amount</th>
@@ -278,7 +278,7 @@
                                             <table class="table table-striped table-bordered dt-responsive" id="table-injection">
                                                 <thead>
                                                     <tr style="font-size:13px">
-                                                        <th style="width:50%">@Klinik.Resources.UIMessages.Medicine</th>
+                                                        <th style="width:50%">@Klinik.Resources.UIMessages.MedicineName</th>
                                                         <th>@Klinik.Resources.UIMessages.Stock</th>
                                                         <th>@Klinik.Resources.UIMessages.Volume</th>
                                                         <th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
@@ -336,8 +336,8 @@
                                                 <tbody style="font-size:13px"></tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <td><input id="labName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeLabNameHere" /><input hidden type="text" id="idLab" /></td>
-                                                        <td><input id="labResult" type="text" class="form-control" disabled /></td>
+                                                        <td><input id="laboratName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeLabNameHere" /><input hidden type="text" id="idLaborat" /></td>
+                                                        <td><input id="laboratResult" type="text" class="form-control" disabled /></td>
                                                         <td><input type="button" id="btnAddLab" value="@Klinik.Resources.UIMessages.Add" /></td>
                                                     </tr>
                                                 </tfoot>
@@ -553,7 +553,7 @@
                     });
                 },
                 select: function (e, i) {
-                    $("#idMedicine").val(i.item.kode);
+                    $("#idMedicine").val(i.item.id);
                     $("#medicineStock").val(i.item.stock);
                 },
                 minLength: 1
@@ -612,7 +612,7 @@
             $("#medicineInjectionName").autocomplete({
                 source: function (request, response) {
                     $.ajax({
-                        url: '/Poli/AutoCompleteMedicine/',
+                        url: '/Poli/AutoCompleteInjection/',
                         data: "{ 'prefix': '" + request.term + "'}",
                         dataType: "json",
                         type: "POST",
@@ -631,7 +631,7 @@
                     });
                 },
                 select: function (e, i) {
-                    $("#idMedicineInjection").val(i.item.kode);
+                    $("#idMedicineInjection").val(i.item.id);
                     $("#medicineInjectionStock").val(i.item.stock);
                 },
                 minLength: 1
@@ -704,8 +704,8 @@
                     });
                 },
                 select: function (e, i) {
-                    $("#idService").val(i.item.kode);
-                    $("#serviceCode").val(i.item.kode);
+                    $("#idService").val(i.item.id);
+                    $("#serviceCode").val(i.item.code);
                 },
                 minLength: 1
             });
@@ -747,13 +747,13 @@
                 serviceCode.val("");
             });
 
-            var lab = $("#labName");
-            if (!lab.length) return;
+            var laborat = $("#laboratName");
+            if (!laborat.length) return;
 
-            $("#labName").autocomplete({
+            $("#laboratName").autocomplete({
                 source: function (request, response) {
                     $.ajax({
-                        url: '/Poli/AutoCompleteMedicine/',
+                        url: '/Poli/AutoCompleteLaborat/',
                         data: "{ 'prefix': '" + request.term + "'}",
                         dataType: "json",
                         type: "POST",
@@ -772,8 +772,8 @@
                     });
                 },
                 select: function (e, i) {
-                    $("#idLab").val(i.item.kode);
-                    $("#labResult").val(i.item.val);
+                    $("#idLaborat").val(i.item.id);
+                    $("#laboratResult").val(i.item.value);
                 },
                 minLength: 1
             });
@@ -821,7 +821,7 @@
             $("#radiologyName").autocomplete({
                 source: function (request, response) {
                     $.ajax({
-                        url: '/Poli/AutoCompleteMedicine/',
+                        url: '/Poli/AutoCompleteRadiology/',
                         data: "{ 'prefix': '" + request.term + "'}",
                         dataType: "json",
                         type: "POST",
@@ -840,8 +840,10 @@
                     });
                 },
                 select: function (e, i) {
-                    $("#idRadiology").val(i.item.kode);
-                    $("#radiologyResult").val(i.item.val);
+                    $("#idRadiology").val(i.item.id);
+                    $("#radiologyName").val(i.item.label);
+                    $("#radiologyCode").val(i.item.code);
+                    $("#radiologyResult").val(i.item.value);
                 },
                 minLength: 1
             });
