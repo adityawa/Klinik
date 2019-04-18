@@ -224,7 +224,6 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Base\BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\MasterProductController.cs" />
     <Compile Include="Controllers\ParamedicController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1427,6 +1426,16 @@
     <Content Include="Views\Poli\FormExamine.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditMenu.cshtml" />
     <Content Include="Views\MasterData\MenuList.cshtml" />
+    <Content Include="Views\MasterData\ProductCategoryList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditProductCategory.cshtml" />
+    <Content Include="Views\MasterData\ProductList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditProduct.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditProductUnit.cshtml" />
+    <Content Include="Views\MasterData\ProductUnitList.cshtml" />
+    <Content Include="Views\MasterData\ProductMedicineList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditProductMedicine.cshtml" />
+    <Content Include="Views\MasterData\MedicineList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditMedicine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

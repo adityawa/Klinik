@@ -82,6 +82,7 @@ namespace Klinik.Common
             CreateMap<UserRoleModel, UserRole>();
 
             CreateMap<Menu, MenuModel>();
+            CreateMap<MenuModel, Menu>();
 
             CreateMap<Log, LogModel>()
                 .ForMember(x => x.StartStr, map => map.MapFrom(p => p.Start.ToString("dd/MM/yyyy")));
@@ -187,6 +188,23 @@ namespace Klinik.Common
             CreateMap<FormExamineMedicine, FormExamineMedicineModel>();
 
             CreateMap<LoketModel, PoliExamineModel>();
+
+            CreateMap<ProductModel, Product>();
+            CreateMap<Product, ProductModel>();
+
+            CreateMap<ProductUnitModel, ProductUnit>();
+            CreateMap<ProductUnit, ProductUnitModel>();
+
+            CreateMap<ProductCategoryModel, ProductCategory>();
+            CreateMap<ProductCategory, ProductCategoryModel>();
+
+            CreateMap<MedicineModel, Medicine>();
+            CreateMap<Medicine, MedicineModel>();
+
+            CreateMap<ProductMedicineModel, ProductMedicine>();
+            CreateMap<ProductMedicine, ProductMedicineModel>()
+                .ForMember(m => m.ProductName, map => map.MapFrom(p => p.Product.Name))
+                .ForMember(m => m.MedicineName, map => map.MapFrom(p => p.Medicine.Name));
         }
     }
 }

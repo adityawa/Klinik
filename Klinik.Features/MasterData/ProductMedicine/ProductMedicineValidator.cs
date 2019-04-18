@@ -38,9 +38,9 @@ namespace Klinik.Features
             {
                 bool isHavePrivilege = true;
 
-                if (request.Data.Product.Name == null || String.IsNullOrWhiteSpace(request.Data.Product.Name))
+                if (request.Data.Amount < 0)
                 {
-                    errorFields.Add("ProductMedicine Name");
+                    errorFields.Add("Product Medicine Amount");
                 }
 
                 if (errorFields.Any())

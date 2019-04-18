@@ -40,6 +40,8 @@ namespace Klinik.Features
                     {
                         // save the old data
                         var _oldentity = Mapper.Map<ProductCategory, ProductCategoryModel>(qry);
+                        qry.ModifiedBy = request.Data.Account.UserCode;
+                        qry.ModifiedDate = DateTime.Now;
 
                         // update data
                         qry.Name = request.Data.Name;

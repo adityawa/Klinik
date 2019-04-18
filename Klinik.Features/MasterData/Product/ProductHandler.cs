@@ -40,9 +40,14 @@ namespace Klinik.Features
                     {
                         // save the old data
                         var _oldentity = Mapper.Map<Product, ProductModel>(qry);
+                        qry.ModifiedBy = request.Data.Account.UserCode;
+                        qry.ModifiedDate = DateTime.Now;
 
                         // update data
                         qry.Name = request.Data.Name;
+                        qry.ProductCategoryID = request.Data.ProductCategoryID;
+                        qry.ProductUnitID = request.Data.ProductUnitID;
+                        qry.RetailPrice = request.Data.RetailPrice;
 
                         _unitOfWork.ProductRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();

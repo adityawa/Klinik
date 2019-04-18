@@ -879,4 +879,37 @@
   <data name="SortIndex" xml:space="preserve">
     <value>Sort Index</value>
   </data>
+  <data name="Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="ProductCategory" xml:space="preserve">
+    <value>Product Category</value>
+  </data>
+  <data name="ProductCategoryList" xml:space="preserve">
+    <value>Product Category List</value>
+  </data>
+  <data name="ProductList" xml:space="preserve">
+    <value>Product List</value>
+  </data>
+  <data name="ProductMedicine" xml:space="preserve">
+    <value>Product Medicine</value>
+  </data>
+  <data name="ProductMedicineList" xml:space="preserve">
+    <value>Product Medicine List</value>
+  </data>
+  <data name="ProductUnit" xml:space="preserve">
+    <value>Product Unit</value>
+  </data>
+  <data name="ProductUnitList" xml:space="preserve">
+    <value>Product Unit List</value>
+  </data>
+  <data name="RetailPrice" xml:space="preserve">
+    <value>Retail Price</value>
+  </data>
+  <data name="MedicineName" xml:space="preserve">
+    <value>Medicine Name</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Product Name</value>
+  </data>
 </root>
