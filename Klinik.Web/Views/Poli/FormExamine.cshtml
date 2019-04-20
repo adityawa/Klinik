@@ -209,7 +209,8 @@
                                 </div>
                             </header>
                             <div class="panel-body">
-                                @Html.HiddenFor(x => x.LoketData.Id)
+                                @Html.HiddenFor(x => x.Id, new { @id = "formExamineID" })
+                                @Html.HiddenFor(x => x.LoketData.Id, new { @id = "loketID" })
                                 <div class="tabs">
                                     <ul class="nav nav-tabs nav-justified">
                                         <li class="active">
@@ -773,16 +774,16 @@
                 },
                 select: function (e, i) {
                     $("#idLaborat").val(i.item.id);
-                    $("#laboratResult").val(i.item.value);
+                    //$("#laboratResult").val(i.item.value);
                 },
                 minLength: 1
             });
 
             $("#btnAddLab").click(function () {
 
-                var idLab = $("#idLab");
-                var labName = $("#labName");
-                var labResult = $("#labResult");
+                var idLab = $("#idLaborat");
+                var labName = $("#laboratName");
+                var labResult = $("#laboratResult");
 
                 //Get the reference of the Table's TBODY element.
                 var tBody = $("#table-lab > TBODY")[0];
@@ -841,9 +842,7 @@
                 },
                 select: function (e, i) {
                     $("#idRadiology").val(i.item.id);
-                    $("#radiologyName").val(i.item.label);
-                    $("#radiologyCode").val(i.item.code);
-                    $("#radiologyResult").val(i.item.value);
+                    //$("#radiologyResult").val(i.item.value);
                 },
                 minLength: 1
             });
@@ -907,7 +906,8 @@
             });
 
             $('#btnSave').click(function () {
-            var loketID = $('#LoketData_Id').val();
+            var formExamineID = $('#formExamineID').val();
+            var loketID = $('#loketID').val();
             var anamnesa = $('#txtAnamnesa').val();
             var diagnose = $('#txtDiagnose').val();
             var therapy = $('#txtTherapy').val();
@@ -918,50 +918,43 @@
 
             var medicineList = [];
             $('#table-medicine tbody tr').each(function () {
-                var code = $(this).find('td').eq(0).text().trim();
+                var id = $(this).find('td').eq(0).text().trim();
                 var medicine = $(this).find('td').eq(1).text().trim();
                 var dose = $(this).find('td').eq(2).text().trim();
                 var amount = $(this).find('td').eq(3).text().trim();
-                var row = code + "|" + medicine + "|" + dose + "|" + amount;
+                var row = id + "|" + medicine + "|" + dose + "|" + amount;
                 medicineList.push(row);
             });
 
             var injectionList = [];
             $('#table-injection tbody tr').each(function () {
-                var code = $(this).find('td').eq(0).text().trim();
+                var id = $(this).find('td').eq(0).text().trim();
                 var medicine = $(this).find('td').eq(1).text().trim();
                 var volume = $(this).find('td').eq(2).text().trim();
-                var row = code + "|" + medicine + "|" + volume;
+                var row = id + "|" + medicine + "|" + volume;
                 injectionList.push(row);
             });
 
-            var labList = [];
+            var labIdList = [];
             $('#table-lab tbody tr').each(function () {
-                var code = $(this).find('td').eq(0).text().trim();
-                var lab = $(this).find('td').eq(1).text().trim();
-                var result = $(this).find('td').eq(2).text().trim();
-                var row = code + "|" + lab + "|" + result;
-                labList.push(row);
+                var id = $(this).find('td').eq(0).text().trim();
+                labIdList.push(id);
             });
 
-            var radiologyList = [];
-            $('#table-radiologi tbody tr').each(function () {
-                var code = $(this).find('td').eq(0).text().trim();
-                var radiology = $(this).find('td').eq(1).text().trim();
-                var result = $(this).find('td').eq(2).text().trim();
-                var row = code + "|" + radiology + "|" + result;
-                radiologyList.push(row);
+            var radiologyIdList = [];
+            $('#table-radiology tbody tr').each(function () {
+                var id = $(this).find('td').eq(0).text().trim();
+                radiologyIdList.push(id);
             });
 
-            var serviceList = [];
+            var serviceIdList = [];
             $('#table-service tbody tr').each(function () {
-                var code = $(this).find('td').eq(0).text().trim();
-                var service = $(this).find('td').eq(1).text().trim();
-                var row = code + "|" + service;
-                serviceList.push(row);
+                var id = $(this).find('td').eq(0).text().trim();
+                serviceIdList.push(id);
             });
 
             $.post('@Url.Action("FormExamine","Poli")', {
+                formExamineID: formExamineID,
                 loketID: loketID,
                 anamnesa: anamnesa,
                 diagnose: diagnose,
@@ -972,9 +965,9 @@
                 doctorToID: doctorToID,
                 medicineList: medicineList,
                 injectionList: injectionList,
-                labList: labList,
-                radiologyList: radiologyList,
-                serviceList: serviceList
+                labList: labIdList,
+                radiologyList: radiologyIdList,
+                serviceList: serviceIdList
             }, function (data) {
                 console.log(data);
             });

@@ -53,7 +53,7 @@ namespace Klinik.Web.Controllers
                 };
 
                 FormExamineLab lab = _unitOfWork.FormExamineLabRepository.GetFirstOrDefault(x => x.LabItemID == item.ID);
-                temp.value = lab == null ? "not available yet" : lab.Result;
+                temp.value = lab == null ? string.Empty : lab.Result;
 
                 resultList.Add(temp);
             }
@@ -80,7 +80,7 @@ namespace Klinik.Web.Controllers
                 };
 
                 FormExamineLab lab = _unitOfWork.FormExamineLabRepository.GetFirstOrDefault(x => x.LabItemID == item.ID);
-                temp.value = lab == null ? "not available yet" : lab.Result;
+                temp.value = lab == null ? string.Empty : lab.Result;
 
                 resultList.Add(temp);
             }
@@ -154,6 +154,7 @@ namespace Klinik.Web.Controllers
 
         [HttpPost]
         public ActionResult FormExamine(
+            string formExamineID,
             string loketID,
             string anamnesa,
             string diagnose,
@@ -168,7 +169,7 @@ namespace Klinik.Web.Controllers
             List<string> radiologyList,
             List<string> serviceList)
         {
-            PoliExamineModel model = GeneratePoliExamineModel(loketID, anamnesa, diagnose, therapy, receipt, finalState, poliToID, doctorToID, medicineList, injectionList, labList, radiologyList, serviceList);
+            PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, poliToID, doctorToID, medicineList, injectionList, labList, radiologyList, serviceList);
             model.Account = Account;
 
             var request = new FormExamineRequest { Data = model, };
@@ -401,6 +402,7 @@ namespace Klinik.Web.Controllers
 
         [NonAction]
         private PoliExamineModel GeneratePoliExamineModel(
+            string formExamineID,
             string loketID,
             string anamnesa,
             string diagnose,
@@ -420,7 +422,9 @@ namespace Klinik.Web.Controllers
             PoliExamineModel model = new PoliExamineModel();
 
             // For new registration data
-            model.DoctorToID = int.Parse(doctorToID);
+            if (!string.IsNullOrEmpty(doctorToID))
+                model.DoctorToID = int.Parse(doctorToID);
+
             model.PoliToID = int.Parse(poliToID);
 
             // Registration
@@ -436,10 +440,61 @@ namespace Klinik.Web.Controllers
             model.ExamineData.FormMedicalID = queue.FormMedicalID;
 
             // FormExamineMedicine
+            foreach (var item in medicineList)
+            {
+                string[] values = item.Split('|');
+                FormExamineMedicineModel medModel = new FormExamineMedicineModel
+                {
+                    ProductID = int.Parse(values[0]),
+                    FormExamineID = long.Parse(formExamineID),
+                    Qty = int.Parse(values[2]),
+                    RemarkUse = values[1],
+                    TypeID = "Medicine"
+                };
+
+                model.MedicineDataList.Add(medModel);
+            }
+
             // FormExamineInjection
+            foreach (var item in injectionList)
+            {
+                string[] values = item.Split('|');
+                FormExamineMedicineModel medModel = new FormExamineMedicineModel
+                {
+                    ProductID = int.Parse(values[0]),
+                    FormExamineID = long.Parse(formExamineID),
+                    RemarkUse = values[2],
+                    TypeID = "Injection"
+                };
+
+                model.MedicineDataList.Add(medModel);
+            }
+
             // FormExamineLab
+            foreach (var item in labList)
+            {
+                string[] values = item.Split('|');
+                FormExamineLabModel labModel = new FormExamineLabModel
+                {
+                    LabItemID = int.Parse(values[0]),
+                    LabType = "Laboratorium"
+                };
+
+                model.LabDataList.Add(labModel);
+            }
+
             // FormExamineRadiology
-            // FormExamineService
+            foreach (var item in radiologyList)
+            {
+                string[] values = item.Split('|');
+                FormExamineLabModel labModel = new FormExamineLabModel
+                {
+                    LabItemID = int.Parse(values[0]),
+                    LabType = "Radiology"
+                };
+
+                model.LabDataList.Add(labModel);
+            }
 
             return model;
         }
