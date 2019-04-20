@@ -23,7 +23,7 @@ namespace Klinik.Data.DataRepository
         public int ID { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public Nullable<int> LabCategoryID { get; set; }
+        public Nullable<int> LabItemCategoryID { get; set; }
         public string Normal { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<short> RowStatus { get; set; }

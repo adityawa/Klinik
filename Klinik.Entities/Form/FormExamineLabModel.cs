@@ -1,4 +1,4 @@
-﻿using Klinik.Entities.Laboratorium;
+﻿using Klinik.Entities.MasterData;
 using Klinik.Entities.Loket;
 using Klinik.Entities.MasterData;
 using System.Collections.Generic;

@@ -53,7 +53,15 @@
             FormPreExamine,
             MASTER_POLI,
             MASTER_POLI_CLINIC,
-            FORM_EXAMINE
+            FORM_EXAMINE,
+            MASTER_PRODUCT,
+            MASTER_PRODUCT_CATEGORY,
+            MASTER_PRODUCT_MEDICINE,
+            MASTER_PRODUCT_UNIT,
+            MASTER_LAB_ITEM,
+            MASTER_LAB_ITEM_CATEGORY,
+            MASTER_MEDICINE,
+            MASTER_MENU
         }
 
         public enum Action

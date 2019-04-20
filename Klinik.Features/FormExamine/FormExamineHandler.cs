@@ -73,6 +73,9 @@ namespace Klinik.Features
                     foreach (var item in request.Data.MedicineDataList)
                     {
                         var medicine = Mapper.Map<FormExamineMedicineModel, FormExamineMedicine>(item);
+                        medicine.CreatedBy = request.Data.Account.UserCode;
+                        medicine.CreatedDate = DateTime.Now;
+
                         formExamineMedicine.Add(medicine);
                     }
 
@@ -80,6 +83,9 @@ namespace Klinik.Features
                     foreach (var item in request.Data.LabDataList)
                     {
                         var lab = Mapper.Map<FormExamineLabModel, FormExamineLab>(item);
+                        lab.CreatedBy = request.Data.Account.UserCode;
+                        lab.CreatedDate = DateTime.Now;
+
                         formExamineLab.Add(lab);
                     }
 
@@ -87,6 +93,9 @@ namespace Klinik.Features
                     foreach (var item in request.Data.ServiceDataList)
                     {
                         var service = Mapper.Map<FormExamineServiceModel, FormExamineService>(item);
+                        service.CreatedBy = request.Data.Account.UserCode;
+                        service.CreatedDate = DateTime.Now;
+
                         formExamineService.Add(service);
                     }
 
@@ -134,6 +143,8 @@ namespace Klinik.Features
                     FormExamine formExamine = Mapper.Map<FormExamineModel, FormExamine>(request.Data.ExamineData);
                     formExamine.CreatedBy = request.Data.Account.UserCode;
                     formExamine.CreatedDate = DateTime.Now;
+                    formExamine.FormExamineMedicines = formExamineMedicine;
+                    formExamine.FormExamineLabs = formExamineLab;
 
                     // save the form examine data
                     _unitOfWork.FormExamineRepository.Insert(formExamine);

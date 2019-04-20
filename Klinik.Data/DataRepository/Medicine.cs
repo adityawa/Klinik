@@ -14,12 +14,21 @@ namespace Klinik.Data.DataRepository
     
     public partial class Medicine
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Medicine()
+        {
+            this.ProductMedicines = new HashSet<ProductMedicine>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
         public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
-        public string LastUpdatedBy { get; set; }
-        public Nullable<System.DateTime> DateModified { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductMedicine> ProductMedicines { get; set; }
     }
 }

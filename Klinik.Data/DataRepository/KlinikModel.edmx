@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AppConfig">
           <Key>
             <PropertyRef Name="ID" />
@@ -351,7 +351,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Code" Type="varchar" MaxLength="50" />
           <Property Name="Name" Type="varchar" MaxLength="200" />
-          <Property Name="LabCategoryID" Type="int" />
+          <Property Name="LabItemCategoryID" Type="int" />
           <Property Name="Normal" Type="varchar" MaxLength="50" />
           <Property Name="Price" Type="money" />
           <Property Name="RowStatus" Type="smallint" />
@@ -416,9 +416,9 @@
           <Property Name="Name" Type="varchar" MaxLength="200" />
           <Property Name="RowStatus" Type="smallint" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="DateCreated" Type="datetime" />
-          <Property Name="LastUpdatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="DateModified" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -645,9 +645,9 @@
           <Property Name="RetailPrice" Type="decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="RowStatus" Type="smallint" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="DateCreated" Type="datetime" />
-          <Property Name="LastUpdatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="DateModified" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -657,9 +657,9 @@
           <Property Name="Name" Type="varchar" MaxLength="200" />
           <Property Name="RowStatus" Type="smallint" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="DateCreated" Type="datetime" />
-          <Property Name="LastUpdatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="DateModified" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="ProductMedicine">
           <Key>
@@ -671,9 +671,9 @@
           <Property Name="Amount" Type="float" />
           <Property Name="RowStatus" Type="smallint" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="DateCreated" Type="datetime" />
-          <Property Name="LastUpdatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="DateModified" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="ProductUnit">
           <Key>
@@ -684,9 +684,9 @@
           <Property Name="Name" Type="varchar" MaxLength="200" />
           <Property Name="RowStatus" Type="smallint" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="DateCreated" Type="datetime" />
-          <Property Name="LastUpdatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="DateModified" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="QueuePoli">
           <Key>
@@ -1054,7 +1054,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="LabItem">
-              <PropertyRef Name="LabCategoryID" />
+              <PropertyRef Name="LabItemCategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1283,6 +1283,54 @@
             </Principal>
             <Dependent Role="Privilege">
               <PropertyRef Name="MenuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductCategory">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductUnit">
+          <End Role="ProductUnit" Type="Self.ProductUnit" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductUnit">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductUnitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductMedicine_Medicine">
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="1" />
+          <End Role="ProductMedicine" Type="Self.ProductMedicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medicine">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductMedicine">
+              <PropertyRef Name="MedicineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductMedicine_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductMedicine" Type="Self.ProductMedicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductMedicine">
+              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1652,6 +1700,22 @@
             <End Role="Menu" EntitySet="Menu" />
             <End Role="Privilege" EntitySet="Privilege" />
           </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductCategory" Association="Self.FK_Product_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductUnit" Association="Self.FK_Product_ProductUnit">
+            <End Role="ProductUnit" EntitySet="ProductUnit" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductMedicine_Medicine" Association="Self.FK_ProductMedicine_Medicine">
+            <End Role="Medicine" EntitySet="Medicine" />
+            <End Role="ProductMedicine" EntitySet="ProductMedicine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductMedicine_Product" Association="Self.FK_ProductMedicine_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductMedicine" EntitySet="ProductMedicine" />
+          </AssociationSet>
           <AssociationSet Name="FK_QueuePoli_Clinic" Association="Self.FK_QueuePoli_Clinic">
             <End Role="Clinic" EntitySet="Clinic" />
             <End Role="QueuePoli" EntitySet="QueuePoli" />
@@ -1701,7 +1765,8 @@
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KlinikDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2109,7 +2174,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="LabCategoryID" Type="Int32" />
+          <Property Name="LabItemCategoryID" Type="Int32" />
           <Property Name="Normal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="RowStatus" Type="Int16" />
@@ -2118,7 +2183,23 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="FormExamineLabs" Relationship="Self.FK_FormExamineLab_LabItem" FromRole="LabItem" ToRole="FormExamineLab" />
-          <NavigationProperty Name="LabItemCategory" Relationship="KlinikDBModel.FK_LabItem_LabItemCategory" FromRole="LabItem" ToRole="LabItemCategory" />
+          <NavigationProperty Name="LabItemCategory" Relationship="Self.FK_LabItem_LabItemCategory" FromRole="LabItem" ToRole="LabItemCategory" />
+        </EntityType>
+        <EntityType Name="LabItemCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LabType" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PoliID" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="LabItems" Relationship="Self.FK_LabItem_LabItemCategory" FromRole="LabItemCategory" ToRole="LabItem" />
+          <NavigationProperty Name="Poli" Relationship="Self.FK_LabItemCategory_Poli" FromRole="LabItemCategory" ToRole="Poli" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -2163,9 +2244,10 @@
           <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="RowStatus" Type="Int16" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ProductMedicines" Relationship="Self.FK_ProductMedicine_Medicine" FromRole="Medicine" ToRole="ProductMedicine" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -2321,12 +2403,12 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="FormExamines" Relationship="Self.FK_FormExamine_Poli" FromRole="Poli" ToRole="FormExamine" />
+          <NavigationProperty Name="LabItemCategories" Relationship="Self.FK_LabItemCategory_Poli" FromRole="Poli" ToRole="LabItemCategory" />
           <NavigationProperty Name="PoliClinics" Relationship="Self.FK_PoliClinic_Poli" FromRole="Poli" ToRole="PoliClinic" />
           <NavigationProperty Name="PoliSchedules" Relationship="Self.FK_PoliSchedule_Poli" FromRole="Poli" ToRole="PoliSchedule" />
           <NavigationProperty Name="PoliScheduleMasters" Relationship="Self.FK_PoliScheduleMaster_Poli" FromRole="Poli" ToRole="PoliScheduleMaster" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_PoliFrom" FromRole="Poli" ToRole="QueuePoli" />
           <NavigationProperty Name="QueuePolis1" Relationship="Self.FK_QueuePoli_PoliTo" FromRole="Poli" ToRole="QueuePoli" />
-          <NavigationProperty Name="LabItemCategories" Relationship="KlinikDBModel.FK_LabItemCategory_Poli" FromRole="Poli" ToRole="LabItemCategory" />
         </EntityType>
         <EntityType Name="PoliClinic">
           <Key>
@@ -2428,9 +2510,12 @@
           <Property Name="RetailPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="RowStatus" Type="Int16" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ProductCategory" Relationship="Self.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
+          <NavigationProperty Name="ProductUnit" Relationship="Self.FK_Product_ProductUnit" FromRole="Product" ToRole="ProductUnit" />
+          <NavigationProperty Name="ProductMedicines" Relationship="Self.FK_ProductMedicine_Product" FromRole="Product" ToRole="ProductMedicine" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -2440,9 +2525,10 @@
           <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="RowStatus" Type="Int16" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductCategory" FromRole="ProductCategory" ToRole="Product" />
         </EntityType>
         <EntityType Name="ProductMedicine">
           <Key>
@@ -2454,9 +2540,11 @@
           <Property Name="Amount" Type="Double" />
           <Property Name="RowStatus" Type="Int16" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Medicine" Relationship="Self.FK_ProductMedicine_Medicine" FromRole="ProductMedicine" ToRole="Medicine" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_ProductMedicine_Product" FromRole="ProductMedicine" ToRole="Product" />
         </EntityType>
         <EntityType Name="ProductUnit">
           <Key>
@@ -2467,9 +2555,10 @@
           <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="RowStatus" Type="Int16" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductUnit" FromRole="ProductUnit" ToRole="Product" />
         </EntityType>
         <EntityType Name="QueuePoli">
           <Key>
@@ -3010,6 +3099,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LabItem_LabItemCategory">
+          <End Role="LabItemCategory" Type="Self.LabItemCategory" Multiplicity="0..1" />
+          <End Role="LabItem" Type="Self.LabItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabItemCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LabItem">
+              <PropertyRef Name="LabItemCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabItemCategory_Poli">
+          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="LabItemCategory" Type="Self.LabItemCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poli">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LabItemCategory">
+              <PropertyRef Name="PoliID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductMedicine_Medicine">
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="1" />
+          <End Role="ProductMedicine" Type="Self.ProductMedicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medicine">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductMedicine">
+              <PropertyRef Name="MedicineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Privilege_Menu">
           <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
           <End Role="Privilege" Type="Self.Privilege" Multiplicity="*" />
@@ -3190,6 +3315,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Product_ProductCategory">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductUnit">
+          <End Role="ProductUnit" Type="Self.ProductUnit" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductUnit">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductUnitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductMedicine_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductMedicine" Type="Self.ProductMedicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductMedicine">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserRole_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
@@ -3223,6 +3384,7 @@
           <EntitySet Name="FormPreExamines" EntityType="Self.FormPreExamine" />
           <EntitySet Name="GeneralMasters" EntityType="Self.GeneralMaster" />
           <EntitySet Name="LabItems" EntityType="Self.LabItem" />
+          <EntitySet Name="LabItemCategories" EntityType="Self.LabItemCategory" />
           <EntitySet Name="Logs" EntityType="Self.Log" />
           <EntitySet Name="MCUPackages" EntityType="Self.MCUPackage" />
           <EntitySet Name="Medicines" EntityType="Self.Medicine" />
@@ -3399,6 +3561,18 @@
             <End Role="FormMedical" EntitySet="FormMedicals" />
             <End Role="QueuePoli" EntitySet="QueuePolis" />
           </AssociationSet>
+          <AssociationSet Name="FK_LabItem_LabItemCategory" Association="Self.FK_LabItem_LabItemCategory">
+            <End Role="LabItemCategory" EntitySet="LabItemCategories" />
+            <End Role="LabItem" EntitySet="LabItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabItemCategory_Poli" Association="Self.FK_LabItemCategory_Poli">
+            <End Role="Poli" EntitySet="Polis" />
+            <End Role="LabItemCategory" EntitySet="LabItemCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductMedicine_Medicine" Association="Self.FK_ProductMedicine_Medicine">
+            <End Role="Medicine" EntitySet="Medicines" />
+            <End Role="ProductMedicine" EntitySet="ProductMedicines" />
+          </AssociationSet>
           <AssociationSet Name="FK_Privilege_Menu" Association="Self.FK_Privilege_Menu">
             <End Role="Menu" EntitySet="Menus" />
             <End Role="Privilege" EntitySet="Privileges" />
@@ -3459,60 +3633,23 @@
             <End Role="Privilege" EntitySet="Privileges" />
             <End Role="RolePrivilege" EntitySet="RolePrivileges" />
           </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductCategory" Association="Self.FK_Product_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductUnit" Association="Self.FK_Product_ProductUnit">
+            <End Role="ProductUnit" EntitySet="ProductUnits" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductMedicine_Product" Association="Self.FK_ProductMedicine_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductMedicine" EntitySet="ProductMedicines" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-          <EntitySet Name="LabItemCategories" EntityType="KlinikDBModel.LabItemCategory" />
-          <AssociationSet Name="FK_LabItem_LabItemCategory" Association="KlinikDBModel.FK_LabItem_LabItemCategory">
-            <End Role="LabItemCategory" EntitySet="LabItemCategories" />
-            <End Role="LabItem" EntitySet="LabItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LabItemCategory_Poli" Association="KlinikDBModel.FK_LabItemCategory_Poli">
-            <End Role="Poli" EntitySet="Polis" />
-            <End Role="LabItemCategory" EntitySet="LabItemCategories" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="LabItemCategory">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LabType" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="PoliID" Type="Int32" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="LabItems" Relationship="KlinikDBModel.FK_LabItem_LabItemCategory" FromRole="LabItemCategory" ToRole="LabItem" />
-          <NavigationProperty Name="Poli" Relationship="KlinikDBModel.FK_LabItemCategory_Poli" FromRole="LabItemCategory" ToRole="Poli" />
-        </EntityType>
-        <Association Name="FK_LabItem_LabItemCategory">
-          <End Type="KlinikDBModel.LabItemCategory" Role="LabItemCategory" Multiplicity="0..1" />
-          <End Type="KlinikDBModel.LabItem" Role="LabItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LabItemCategory">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="LabItem">
-              <PropertyRef Name="LabCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LabItemCategory_Poli">
-          <End Type="KlinikDBModel.Poli" Role="Poli" Multiplicity="0..1" />
-          <End Type="KlinikDBModel.LabItemCategory" Role="LabItemCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Poli">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="LabItemCategory">
-              <PropertyRef Name="PoliID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3883,9 +4020,24 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="LabCategoryID" ColumnName="LabCategoryID" />
+                <ScalarProperty Name="LabItemCategoryID" ColumnName="LabItemCategoryID" />
                 <ScalarProperty Name="Normal" ColumnName="Normal" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LabItemCategories">
+            <EntityTypeMapping TypeName="KlinikDBModel.LabItemCategory">
+              <MappingFragment StoreEntitySet="LabItemCategory">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LabType" ColumnName="LabType" />
+                <ScalarProperty Name="PoliID" ColumnName="PoliID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -3937,9 +4089,9 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4180,9 +4332,9 @@
                 <ScalarProperty Name="RetailPrice" ColumnName="RetailPrice" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4193,9 +4345,9 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4208,9 +4360,9 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4222,9 +4374,9 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4299,21 +4451,6 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LabItemCategories">
-            <EntityTypeMapping TypeName="KlinikDBModel.LabItemCategory">
-              <MappingFragment StoreEntitySet="LabItemCategory">
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="PoliID" ColumnName="PoliID" />
-                <ScalarProperty Name="LabType" ColumnName="LabType" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

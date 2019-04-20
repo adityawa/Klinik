@@ -1122,11 +1122,9 @@
     <Content Include="Scripts\jquery.signalR-2.4.0.js" />
     <Content Include="Scripts\jquery.signalR-2.4.0.min.js" />
     <Content Include="Scripts\jquery.timepicker.js" />
-    <Content Include="Scripts\medica\service.datatables.editable.js" />
-    <Content Include="Scripts\medica\radiologi.datatables.editable.js" />
-    <Content Include="Scripts\medica\lab.datatables.editable.js" />
-    <Content Include="Scripts\medica\injection.datatables.editable.js" />
-    <Content Include="Scripts\medica\medicine.datatables.editable.js" />
+    <Content Include="Scripts\medica\jquery-1.10.2.js" />
+    <Content Include="Scripts\medica\jquery-ui.css" />
+    <Content Include="Scripts\medica\jquery-ui.js" />
     <Content Include="Scripts\MvcDatalist\mvc-datalist.js" />
     <Content Include="Scripts\MvcDatalist\mvc-datalist.min.js" />
     <Content Include="Scripts\toastr.js" />
@@ -1427,8 +1425,27 @@
     <Content Include="Views\MappingMaster\ClinicPoliList.cshtml" />
     <Content Include="Views\Poli\PatientList.cshtml" />
     <Content Include="Views\Poli\FormExamine.cshtml" />
+
     <Content Include="Views\Lab\ListQueueLaboratorium.cshtml" />
     <Content Include="Views\Lab\CreateItemLab.cshtml" />
+
+    <Content Include="Views\MasterData\CreateOrEditMenu.cshtml" />
+    <Content Include="Views\MasterData\MenuList.cshtml" />
+    <Content Include="Views\MasterData\ProductCategoryList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditProductCategory.cshtml" />
+    <Content Include="Views\MasterData\ProductList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditProduct.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditProductUnit.cshtml" />
+    <Content Include="Views\MasterData\ProductUnitList.cshtml" />
+    <Content Include="Views\MasterData\ProductMedicineList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditProductMedicine.cshtml" />
+    <Content Include="Views\MasterData\MedicineList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditMedicine.cshtml" />
+    <Content Include="Views\MasterData\LabItemCategoryList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditLabItemCategory.cshtml" />
+    <Content Include="Views\MasterData\LabItemList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditLabItem.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

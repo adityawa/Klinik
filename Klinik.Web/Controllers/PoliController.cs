@@ -11,6 +11,7 @@ using Klinik.Web.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
@@ -24,6 +25,117 @@ namespace Klinik.Web.Controllers
         }
 
         #region ::PUBLIC METHODS::
+        public class TempClass
+        {
+            public int id { get; set; }
+            public string code { get; set; }
+            public string label { get; set; }
+            public string value { get; set; }
+            public string stock { get; set; }
+        }
+
+        [HttpPost]
+        public JsonResult AutoCompleteRadiology(string prefix)
+        {
+            List<LabItem> labList = _unitOfWork.LabItemRepository.Get(x => x.LabItemCategory.LabType == "Radiology").ToList();
+
+            var filteredList = labList.Where(t => t.Name.ToLower().Contains(prefix.ToLower()));
+
+            List<TempClass> resultList = new List<TempClass>();
+            foreach (var item in filteredList)
+            {
+                TempClass temp = new TempClass
+                {
+                    id = item.ID,
+                    label = item.Name,
+                    code = item.Code,
+                    stock = "911" // hardcoded for now
+                };
+
+                FormExamineLab lab = _unitOfWork.FormExamineLabRepository.GetFirstOrDefault(x => x.LabItemID == item.ID);
+                temp.value = lab == null ? string.Empty : lab.Result;
+
+                resultList.Add(temp);
+            }
+
+            return Json(resultList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AutoCompleteLaborat(string prefix)
+        {
+            List<LabItem> labList = _unitOfWork.LabItemRepository.Get(x => x.LabItemCategory.LabType == "Laboratorium").ToList();
+
+            var filteredList = labList.Where(t => t.Name.ToLower().Contains(prefix.ToLower()));
+
+            List<TempClass> resultList = new List<TempClass>();
+            foreach (var item in filteredList)
+            {
+                TempClass temp = new TempClass
+                {
+                    id = item.ID,
+                    label = item.Name,
+                    code = item.Code,
+                    stock = "911" // hardcoded for now
+                };
+
+                FormExamineLab lab = _unitOfWork.FormExamineLabRepository.GetFirstOrDefault(x => x.LabItemID == item.ID);
+                temp.value = lab == null ? string.Empty : lab.Result;
+
+                resultList.Add(temp);
+            }
+
+            return Json(resultList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AutoCompleteInjection(string prefix)
+        {
+            List<Product> productList = _unitOfWork.ProductRepository.Get(x => x.ProductCategoryID == 2).ToList();
+
+            var filteredList = productList.Where(t => t.Name.ToLower().Contains(prefix.ToLower()));
+
+            List<TempClass> resultList = new List<TempClass>();
+            foreach (var item in filteredList)
+            {
+                TempClass temp = new TempClass
+                {
+                    id = item.ID,
+                    label = item.Name,
+                    code = item.Code,
+                    stock = "911" // hardcoded for now
+                };
+
+                resultList.Add(temp);
+            }
+
+            return Json(resultList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AutoCompleteMedicine(string prefix)
+        {
+            List<Product> productList = _unitOfWork.ProductRepository.Get(x => x.ProductCategoryID == 1).ToList();
+
+            var filteredList = productList.Where(t => t.Name.ToLower().Contains(prefix.ToLower()));
+
+            List<TempClass> resultList = new List<TempClass>();
+            foreach (var item in filteredList)
+            {
+                TempClass temp = new TempClass
+                {
+                    id = item.ID,
+                    label = item.Name,
+                    code = item.Code,
+                    stock = "911" // hardcoded for now
+                };
+
+                resultList.Add(temp);
+            }
+
+            return Json(resultList, JsonRequestBehavior.AllowGet);
+        }
+
         [CustomAuthorize("VIEW_POLI_PATIENT_LIST")]
         public ActionResult PatientList()
         {
@@ -42,6 +154,7 @@ namespace Klinik.Web.Controllers
 
         [HttpPost]
         public ActionResult FormExamine(
+            string formExamineID,
             string loketID,
             string anamnesa,
             string diagnose,
@@ -56,7 +169,7 @@ namespace Klinik.Web.Controllers
             List<string> radiologyList,
             List<string> serviceList)
         {
-            PoliExamineModel model = GeneratePoliExamineModel(loketID, anamnesa, diagnose, therapy, receipt, finalState, poliToID, doctorToID, medicineList, injectionList, labList, radiologyList, serviceList);
+            PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, poliToID, doctorToID, medicineList, injectionList, labList, radiologyList, serviceList);
             model.Account = Account;
 
             var request = new FormExamineRequest { Data = model, };
@@ -289,6 +402,7 @@ namespace Klinik.Web.Controllers
 
         [NonAction]
         private PoliExamineModel GeneratePoliExamineModel(
+            string formExamineID,
             string loketID,
             string anamnesa,
             string diagnose,
@@ -308,7 +422,9 @@ namespace Klinik.Web.Controllers
             PoliExamineModel model = new PoliExamineModel();
 
             // For new registration data
-            model.DoctorToID = int.Parse(doctorToID);
+            if (!string.IsNullOrEmpty(doctorToID))
+                model.DoctorToID = int.Parse(doctorToID);
+
             model.PoliToID = int.Parse(poliToID);
 
             // Registration
@@ -324,10 +440,61 @@ namespace Klinik.Web.Controllers
             model.ExamineData.FormMedicalID = queue.FormMedicalID;
 
             // FormExamineMedicine
+            foreach (var item in medicineList)
+            {
+                string[] values = item.Split('|');
+                FormExamineMedicineModel medModel = new FormExamineMedicineModel
+                {
+                    ProductID = int.Parse(values[0]),
+                    FormExamineID = long.Parse(formExamineID),
+                    Qty = int.Parse(values[2]),
+                    RemarkUse = values[1],
+                    TypeID = "Medicine"
+                };
+
+                model.MedicineDataList.Add(medModel);
+            }
+
             // FormExamineInjection
+            foreach (var item in injectionList)
+            {
+                string[] values = item.Split('|');
+                FormExamineMedicineModel medModel = new FormExamineMedicineModel
+                {
+                    ProductID = int.Parse(values[0]),
+                    FormExamineID = long.Parse(formExamineID),
+                    RemarkUse = values[2],
+                    TypeID = "Injection"
+                };
+
+                model.MedicineDataList.Add(medModel);
+            }
+
             // FormExamineLab
+            foreach (var item in labList)
+            {
+                string[] values = item.Split('|');
+                FormExamineLabModel labModel = new FormExamineLabModel
+                {
+                    LabItemID = int.Parse(values[0]),
+                    LabType = "Laboratorium"
+                };
+
+                model.LabDataList.Add(labModel);
+            }
+
             // FormExamineRadiology
-            // FormExamineService
+            foreach (var item in radiologyList)
+            {
+                string[] values = item.Split('|');
+                FormExamineLabModel labModel = new FormExamineLabModel
+                {
+                    LabItemID = int.Parse(values[0]),
+                    LabType = "Radiology"
+                };
+
+                model.LabDataList.Add(labModel);
+            }
 
             return model;
         }

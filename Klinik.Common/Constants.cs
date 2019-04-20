@@ -36,6 +36,22 @@
             public const string ADD_NEW_POLI = "Add New Poli";
             public const string ADD_FORM_EXAMINE = "Add Form Examine";
             public const string EDIT_FORM_EXAMINE = "Edit Form Examine";
+            public const string EDIT_PRODUCT = "Edit Product";
+            public const string EDIT_PRODUCT_CATEGORY = "Edit Product Category";
+            public const string EDIT_PRODUCT_MEDICINE = "Edit Product Medicine";
+            public const string EDIT_PRODUCT_UNIT = "Edit Product Unit";
+            public const string EDIT_MEDICINE = "Edit Medicine";
+            public const string EDIT_LAB_ITEM = "Edit Lab Item";
+            public const string EDIT_LAB_ITEM_CATEGORY = "Edit Lab Item Category";
+            public const string ADD_PRODUCT = "Add New Product";
+            public const string ADD_PRODUCT_CATEGORY = "Add New Product Category";
+            public const string ADD_PRODUCT_MEDICINE = "Add New Product Medicine";
+            public const string ADD_PRODUCT_UNIT = "Add New Product Unit";
+            public const string ADD_MEDICINE = "Add New Medicine";
+            public const string ADD_LAB_ITEM = "Add New Lab Item";
+            public const string ADD_LAB_ITEM_CATEGORY = "Add New Lab Item Category";
+            public const string EDIT_MENU = "Edit Form Menu";
+            public const string ADD_MENU = "Add New Menu";
         }
 
         public static class MasterType

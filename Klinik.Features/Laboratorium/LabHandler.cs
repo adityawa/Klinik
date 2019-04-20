@@ -3,7 +3,6 @@ using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Form;
-using Klinik.Entities.Laboratorium;
 using Klinik.Entities.Loket;
 using Klinik.Entities.MasterData;
 using LinqKit;

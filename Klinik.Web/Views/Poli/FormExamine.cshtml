@@ -41,6 +41,7 @@
     <link href="~/Content/Octopus/assets/stylesheets/theme.css" rel="stylesheet" />
     <link href="~/Content/Octopus/assets/stylesheets/skins/default.css" rel="stylesheet" />
     <link href="~/Content/Octopus/assets/stylesheets/theme-custom.css" rel="stylesheet" />
+    <link href="~/Scripts/medica/jquery-ui.css" rel="stylesheet" />
 
     <!-- Head Libraries -->
     <script src="~/Scripts/jquery-3.0.0.js"></script>
@@ -208,7 +209,8 @@
                                 </div>
                             </header>
                             <div class="panel-body">
-                                @Html.HiddenFor(x => x.LoketData.Id)
+                                @Html.HiddenFor(x => x.Id, new { @id = "formExamineID" })
+                                @Html.HiddenFor(x => x.LoketData.Id, new { @id = "loketID" })
                                 <div class="tabs">
                                     <ul class="nav nav-tabs nav-justified">
                                         <li class="active">
@@ -224,7 +226,7 @@
                                             <a href="#tabLab" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Laboratory</a>
                                         </li>
                                         <li>
-                                            <a href="#tabRadiologi" data-toggle="tab" class="text-center">Radiologi</a>
+                                            <a href="#tabRadiologi" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Radiology</a>
                                         </li>
                                         <li>
                                             <a href="#tabResult" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Result</a>
@@ -240,94 +242,130 @@
                                             @Html.TextAreaFor(x => x.ExamineData.Therapy, new { @class = "form-control", @id = "txtTherapy", @tabindex = "3", @rows = "4" })
                                         </div>
                                         <div id="tabMedicine" class="tab-pane">
-                                            <label>Manual Receipt</label>
+                                            <label>@Klinik.Resources.UIMessages.ConcoctionMedicine</label>
                                             @Html.TextAreaFor(x => x.ConcoctionMedicine, new { @class = "form-control", @id = "txtConcoction", @rows = "4" })
                                             <div><br /></div>
                                             <div class="row">
-                                                <div class="col-md-2">
-                                                    <button id="addToTableMedicine" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> &nbsp; @Klinik.Resources.UIMessages.Medicine</button>
+                                                <div class="col-md-12">
+                                                    <button type="button" class="btn btn-primary btn-block disabled">@Klinik.Resources.UIMessages.MedicineList</button>
                                                 </div>
                                             </div>
-                                            <table class="table table-striped table-bordered dt-responsive" id="datatable-editable-medicine">
+                                            <table class="table table-striped table-bordered dt-responsive" id="table-medicine">
                                                 <thead>
                                                     <tr style="font-size:13px">
-                                                        <th>@Klinik.Resources.UIMessages.Code</th>
-                                                        <th>@Klinik.Resources.UIMessages.Medicine</th>
+                                                        <th style="width:50%">@Klinik.Resources.UIMessages.MedicineName</th>
+                                                        <th>@Klinik.Resources.UIMessages.Stock</th>
                                                         <th>@Klinik.Resources.UIMessages.Dose</th>
                                                         <th>@Klinik.Resources.UIMessages.Amount</th>
-                                                        <th>@Klinik.Resources.UIMessages.Action</th>
+                                                        <th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody style="font-size:13px"></tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td><input id="medicineName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeMedicineNameHere" /><input hidden type="text" id="idMedicine" /></td>
+                                                        <td><input id="medicineStock" type="text" class="form-control" disabled /></td>
+                                                        <td><input id="medicineDose" type="text" class="form-control" /></td>
+                                                        <td><input id="medicineAmount" type="text" class="form-control" /></td>
+                                                        <td><input type="button" id="btnAddMedicine" value="@Klinik.Resources.UIMessages.Add" /></td>
+                                                    </tr>
+                                                </tfoot>
                                             </table>
                                             <div class="row">
-                                                <div class="col-md-2">
-                                                    <button id="addToTableInjection" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> &nbsp; @Klinik.Resources.UIMessages.Injection</button>
+                                                <div class="col-md-12">
+                                                    <button type="button" class="btn btn-primary btn-block disabled">@Klinik.Resources.UIMessages.InjectionList</button>
                                                 </div>
                                             </div>
-                                            <table class="table table-striped table-bordered dt-responsive" id="datatable-editable-injection">
+                                            <table class="table table-striped table-bordered dt-responsive" id="table-injection">
                                                 <thead>
                                                     <tr style="font-size:13px">
-                                                        <th>@Klinik.Resources.UIMessages.Code</th>
-                                                        <th>@Klinik.Resources.UIMessages.Medicine</th>
+                                                        <th style="width:50%">@Klinik.Resources.UIMessages.MedicineName</th>
+                                                        <th>@Klinik.Resources.UIMessages.Stock</th>
                                                         <th>@Klinik.Resources.UIMessages.Volume</th>
-                                                        <th>@Klinik.Resources.UIMessages.Action</th>
+                                                        <th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody style="font-size:13px"></tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td><input id="medicineInjectionName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeMedicineNameHere" /><input hidden type="text" id="idMedicineInjection" /></td>
+                                                        <td><input id="medicineInjectionStock" type="text" class="form-control" disabled /></td>
+                                                        <td><input id="medicineInjectionVolume" type="text" class="form-control" /></td>
+                                                        <td><input type="button" id="btnAddMedicineInjection" value="@Klinik.Resources.UIMessages.Add" /></td>
+                                                    </tr>
+                                                </tfoot>
                                             </table>
                                         </div>
                                         <div id="tabService" class="tab-pane">
                                             <div class="row">
-                                                <div class="col-md-2">
-                                                    <button id="addToTableService" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> &nbsp; @Klinik.Resources.UIMessages.Service</button>
+                                                <div class="col-md-12">
+                                                    <button type="button" class="btn btn-primary btn-block disabled">@Klinik.Resources.UIMessages.ServiceList</button>
                                                 </div>
                                             </div>
-                                            <table class="table table-striped table-bordered dt-responsive" id="datatable-editable-service">
+                                            <table class="table table-striped table-bordered dt-responsive" id="table-service">
                                                 <thead>
                                                     <tr style="font-size:13px">
+                                                        <th style="width:50%">@Klinik.Resources.UIMessages.Service</th>
                                                         <th>@Klinik.Resources.UIMessages.Code</th>
-                                                        <th>@Klinik.Resources.UIMessages.Service</th>
-                                                        <th>@Klinik.Resources.UIMessages.Action</th>
+                                                        <th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody style="font-size:13px"></tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td><input id="serviceName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeServiceNameHere" /><input hidden type="text" id="idService" /></td>
+                                                        <td><input id="serviceCode" type="text" class="form-control" disabled /></td>
+                                                        <td><input type="button" id="btnAddService" value="@Klinik.Resources.UIMessages.Add" /></td>
+                                                    </tr>
+                                                </tfoot>
                                             </table>
                                         </div>
                                         <div id="tabLab" class="tab-pane">
                                             <div class="row">
-                                                <div class="col-md-2">
-                                                    <button id="addToTableLab" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> @Klinik.Resources.UIMessages.Laboratory</button>
+                                                <div class="col-md-12">
+                                                    <button type="button" class="btn btn-primary btn-block disabled">@Klinik.Resources.UIMessages.LaboratList</button>
                                                 </div>
                                             </div>
-                                            <table class="table table-striped table-bordered dt-responsive" id="datatable-editable-lab">
+                                            <table class="table table-striped table-bordered dt-responsive" id="table-lab">
                                                 <thead>
                                                     <tr style="font-size:13px">
-                                                        <th>@Klinik.Resources.UIMessages.Code</th>
-                                                        <th>@Klinik.Resources.UIMessages.Laboratory</th>
+                                                        <th style="width:50%">@Klinik.Resources.UIMessages.Laboratory</th>
                                                         <th>@Klinik.Resources.UIMessages.Result</th>
-                                                        <th>@Klinik.Resources.UIMessages.Action</th>
+                                                        <th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody style="font-size:13px"></tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td><input id="laboratName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeLabNameHere" /><input hidden type="text" id="idLaborat" /></td>
+                                                        <td><input id="laboratResult" type="text" class="form-control" disabled /></td>
+                                                        <td><input type="button" id="btnAddLab" value="@Klinik.Resources.UIMessages.Add" /></td>
+                                                    </tr>
+                                                </tfoot>
                                             </table>
                                         </div>
                                         <div id="tabRadiologi" class="tab-pane">
                                             <div class="row">
-                                                <div class="col-md-2">
-                                                    <button id="addToTableRadiologi" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> &nbsp; @Klinik.Resources.UIMessages.Radiology</button>
+                                                <div class="col-md-12">
+                                                    <button type="button" class="btn btn-primary btn-block disabled">@Klinik.Resources.UIMessages.RadiologyList</button>
                                                 </div>
                                             </div>
-                                            <table class="table table-striped table-bordered dt-responsive" id="datatable-editable-radiologi">
+                                            <table class="table table-striped table-bordered dt-responsive" id="table-radiology">
                                                 <thead>
                                                     <tr style="font-size:13px">
-                                                        <th>@Klinik.Resources.UIMessages.Code</th>
-                                                        <th>@Klinik.Resources.UIMessages.Radiology</th>
+                                                        <th style="width:50%">@Klinik.Resources.UIMessages.Radiology</th>
                                                         <th>@Klinik.Resources.UIMessages.Result</th>
                                                         <th>@Klinik.Resources.UIMessages.Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody style="font-size:13px"></tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td><input id="radiologyName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeRadiologyNameHere" /><input hidden type="text" id="idRadiology" /></td>
+                                                        <td><input id="radiologyResult" type="text" class="form-control" disabled /></td>
+                                                        <td><input type="button" id="btnAddRadiology" value="@Klinik.Resources.UIMessages.Add" /></td>
+                                                    </tr>
+                                                </tfoot>
                                             </table>
                                         </div>
                                         <div id="tabResult" class="tab-pane">
@@ -422,16 +460,430 @@
     <script src="~/Content/Octopus/assets/javascripts/theme.js"></script>
     <script src="~/Content/Octopus/assets/javascripts/theme.custom.js"></script>
     <script src="~/Content/Octopus/assets/javascripts/theme.init.js"></script>
-
-    <!-- Editable DataTable -->
-    <script src="~/Scripts/medica/injection.datatables.editable.js"></script>
-    <script src="~/Scripts/medica/lab.datatables.editable.js"></script>
-    <script src="~/Scripts/medica/medicine.datatables.editable.js"></script>
-    <script src="~/Scripts/medica/radiologi.datatables.editable.js"></script>
-    <script src="~/Scripts/medica/service.datatables.editable.js"></script>
-
+    <script src="~/Scripts/medica/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/medica/jquery-ui.js"></script>
     <script type="text/javascript" lang="en">
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#table-medicine")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+
+        function RemoveInjection(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#table-injection")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+
+        function RemoveService(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#table-service")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+
+        function RemoveLab(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#table-lab")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+
+        function RemoveRadiology(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#table-radiology")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+
         $(document).ready(function () {
+            var medicine = $("#medicineName");
+            if (!medicine.length) return;
+
+            $("#medicineName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Poli/AutoCompleteMedicine/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#idMedicine").val(i.item.id);
+                    $("#medicineStock").val(i.item.stock);
+                },
+                minLength: 1
+            });
+
+            $("#btnAddMedicine").click(function () {
+
+                var idMedicine = $("#idMedicine");
+                var medicineName = $("#medicineName");
+                var medicineStock = $("#medicineStock");
+                var medicineDose = $("#medicineDose");
+                var medicineAmount = $("#medicineAmount");
+
+                //Get the reference of the Table's TBODY element.
+                var tBody = $("#table-medicine > TBODY")[0];
+
+                //Add Row.
+                var row = tBody.insertRow(-1);
+
+                //Add id cell.
+                var cell = $(row.insertCell(-1));
+                cell.html(idMedicine.val());
+                cell.hide();
+                //add nama obat
+                cell = $(row.insertCell(-1));
+                cell.html(medicineName.val());
+                //add stok obat
+                cell = $(row.insertCell(-1));
+                cell.html(medicineStock.val());
+                //add dosis obat
+                cell = $(row.insertCell(-1));
+                cell.html(medicineDose.val());
+                //add jumlah obat
+                cell = $(row.insertCell(-1));
+                cell.html(medicineAmount.val());
+
+                //Add Button cell.
+                cell = $(row.insertCell(-1));
+                var btnRemove = $("<input />");
+                btnRemove.attr("type", "button");
+                btnRemove.attr("onclick", "Remove(this);");
+                btnRemove.val("Remove");
+                cell.append(btnRemove);
+
+                //Clear the TextBoxes.
+                idMedicine.val("");
+                medicineName.val("");
+                medicineStock.val("");
+                medicineDose.val("");
+                medicineAmount.val("");
+            });
+
+            var injection = $("#medicineInjectionName");
+            if (!injection.length) return;
+
+            $("#medicineInjectionName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Poli/AutoCompleteInjection/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#idMedicineInjection").val(i.item.id);
+                    $("#medicineInjectionStock").val(i.item.stock);
+                },
+                minLength: 1
+            });
+
+            $("#btnAddMedicineInjection").click( function () {
+
+                var idMedicine = $("#idMedicineInjection");
+                var medicineName = $("#medicineInjectionName");
+                var medicineStock = $("#medicineInjectionStock");
+                var volumeobat = $("#medicineInjectionVolume");
+
+                //Get the reference of the Table's TBODY element.
+                var tBody = $("#table-injection > TBODY")[0];
+
+                //Add Row.
+                var row = tBody.insertRow(-1);
+
+                //Add id cell.
+                var cell = $(row.insertCell(-1));
+                cell.html(idMedicine.val());
+                cell.hide();
+                //add nama obat
+                cell = $(row.insertCell(-1));
+                cell.html(medicineName.val());
+                //add stok obat
+                cell = $(row.insertCell(-1));
+                cell.html(medicineStock.val());
+                //add volume obat
+                cell = $(row.insertCell(-1));
+                cell.html(volumeobat.val());
+
+                //Add Button cell.
+                cell = $(row.insertCell(-1));
+                var btnRemove = $("<input />");
+                btnRemove.attr("type", "button");
+                btnRemove.attr("onclick", "RemoveInjection(this);");
+                btnRemove.val("Remove");
+                cell.append(btnRemove);
+
+                //Clear the TextBoxes.
+                idMedicine.val("");
+                medicineName.val("");
+                medicineStock.val("");
+                volumeobat.val("");
+            });
+
+            var service = $("#serviceName");
+            if (!service.length) return;
+
+            $("#serviceName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Poli/AutoCompleteMedicine/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#idService").val(i.item.id);
+                    $("#serviceCode").val(i.item.code);
+                },
+                minLength: 1
+            });
+
+            $("#btnAddService").click(function () {
+
+                var idService = $("#idService");
+                var serviceName = $("#serviceName");
+                var serviceCode = $("#serviceCode");
+
+                //Get the reference of the Table's TBODY element.
+                var tBody = $("#table-service > TBODY")[0];
+
+                //Add Row.
+                var row = tBody.insertRow(-1);
+
+                //Add id cell.
+                var cell = $(row.insertCell(-1));
+                cell.html(idService.val());
+                cell.hide();
+                //add service name
+                cell = $(row.insertCell(-1));
+                cell.html(serviceName.val());
+                //add service code
+                cell = $(row.insertCell(-1));
+                cell.html(serviceCode.val());
+
+                //Add Button cell.
+                cell = $(row.insertCell(-1));
+                var btnRemove = $("<input />");
+                btnRemove.attr("type", "button");
+                btnRemove.attr("onclick", "RemoveService(this);");
+                btnRemove.val("Remove");
+                cell.append(btnRemove);
+
+                //Clear the TextBoxes.
+                idService.val("");
+                serviceName.val("");
+                serviceCode.val("");
+            });
+
+            var laborat = $("#laboratName");
+            if (!laborat.length) return;
+
+            $("#laboratName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Poli/AutoCompleteLaborat/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#idLaborat").val(i.item.id);
+                    //$("#laboratResult").val(i.item.value);
+                },
+                minLength: 1
+            });
+
+            $("#btnAddLab").click(function () {
+
+                var idLab = $("#idLaborat");
+                var labName = $("#laboratName");
+                var labResult = $("#laboratResult");
+
+                //Get the reference of the Table's TBODY element.
+                var tBody = $("#table-lab > TBODY")[0];
+
+                //Add Row.
+                var row = tBody.insertRow(-1);
+
+                //Add id cell.
+                var cell = $(row.insertCell(-1));
+                cell.html(idLab.val());
+                cell.hide();
+                //add lab name
+                cell = $(row.insertCell(-1));
+                cell.html(labName.val());
+                //add lab result
+                cell = $(row.insertCell(-1));
+                cell.html(labResult.val());
+
+                //Add Button cell.
+                cell = $(row.insertCell(-1));
+                var btnRemove = $("<input />");
+                btnRemove.attr("type", "button");
+                btnRemove.attr("onclick", "RemoveLab(this);");
+                btnRemove.val("Remove");
+                cell.append(btnRemove);
+
+                //Clear the TextBoxes.
+                idLab.val("");
+                labName.val("");
+                labResult.val("");
+            });
+
+            var radiology = $("#radiologyName");
+            if (!radiology.length) return;
+
+            $("#radiologyName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Poli/AutoCompleteRadiology/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#idRadiology").val(i.item.id);
+                    //$("#radiologyResult").val(i.item.value);
+                },
+                minLength: 1
+            });
+
+            $("#btnAddRadiology").click(function () {
+
+                var idRadiology = $("#idRadiology");
+                var radiologyName = $("#radiologyName");
+                var radiologyResult = $("#radiologyResult");
+
+                //Get the reference of the Table's TBODY element.
+                var tBody = $("#table-radiology > TBODY")[0];
+
+                //Add Row.
+                var row = tBody.insertRow(-1);
+
+                //Add id cell.
+                var cell = $(row.insertCell(-1));
+                cell.html(idRadiology.val());
+                cell.hide();
+                //add lab name
+                cell = $(row.insertCell(-1));
+                cell.html(radiologyName.val());
+                //add lab result
+                cell = $(row.insertCell(-1));
+                cell.html(radiologyResult.val());
+
+                //Add Button cell.
+                cell = $(row.insertCell(-1));
+                var btnRemove = $("<input />");
+                btnRemove.attr("type", "button");
+                btnRemove.attr("onclick", "RemoveRadiology(this);");
+                btnRemove.val("Remove");
+                cell.append(btnRemove);
+
+                //Clear the TextBoxes.
+                idRadiology.val("");
+                radiologyName.val("");
+                radiologyResult.val("");
+            });
+
             $("#ddlpolito").change(function () {
                 $.get("/Loket/GetDoctorList", { PoliId: $("#ddlpolito").val() }, function (data) {
                     $("#ddldoctor").empty();
@@ -454,7 +906,8 @@
             });
 
             $('#btnSave').click(function () {
-            var loketID = $('#LoketData_Id').val();
+            var formExamineID = $('#formExamineID').val();
+            var loketID = $('#loketID').val();
             var anamnesa = $('#txtAnamnesa').val();
             var diagnose = $('#txtDiagnose').val();
             var therapy = $('#txtTherapy').val();
@@ -464,51 +917,44 @@
             var doctorToID = $('#ddldoctor').val();
 
             var medicineList = [];
-            $('#datatable-editable-medicine tbody tr').each(function () {
-                var code = $(this).find('td').eq(0).text().trim();
+            $('#table-medicine tbody tr').each(function () {
+                var id = $(this).find('td').eq(0).text().trim();
                 var medicine = $(this).find('td').eq(1).text().trim();
                 var dose = $(this).find('td').eq(2).text().trim();
                 var amount = $(this).find('td').eq(3).text().trim();
-                var row = code + "|" + medicine + "|" + dose + "|" + amount;
+                var row = id + "|" + medicine + "|" + dose + "|" + amount;
                 medicineList.push(row);
             });
 
             var injectionList = [];
-            $('#datatable-editable-injection tbody tr').each(function () {
-                var code = $(this).find('td').eq(0).text().trim();
+            $('#table-injection tbody tr').each(function () {
+                var id = $(this).find('td').eq(0).text().trim();
                 var medicine = $(this).find('td').eq(1).text().trim();
                 var volume = $(this).find('td').eq(2).text().trim();
-                var row = code + "|" + medicine + "|" + volume;
+                var row = id + "|" + medicine + "|" + volume;
                 injectionList.push(row);
             });
 
-            var labList = [];
-            $('#datatable-editable-lab tbody tr').each(function () {
-                var code = $(this).find('td').eq(0).text().trim();
-                var lab = $(this).find('td').eq(1).text().trim();
-                var result = $(this).find('td').eq(2).text().trim();
-                var row = code + "|" + lab + "|" + result;
-                labList.push(row);
+            var labIdList = [];
+            $('#table-lab tbody tr').each(function () {
+                var id = $(this).find('td').eq(0).text().trim();
+                labIdList.push(id);
             });
 
-            var radiologyList = [];
-            $('#datatable-editable-radiologi tbody tr').each(function () {
-                var code = $(this).find('td').eq(0).text().trim();
-                var radiology = $(this).find('td').eq(1).text().trim();
-                var result = $(this).find('td').eq(2).text().trim();
-                var row = code + "|" + radiology + "|" + result;
-                radiologyList.push(row);
+            var radiologyIdList = [];
+            $('#table-radiology tbody tr').each(function () {
+                var id = $(this).find('td').eq(0).text().trim();
+                radiologyIdList.push(id);
             });
 
-            var serviceList = [];
-            $('#datatable-editable-service tbody tr').each(function () {
-                var code = $(this).find('td').eq(0).text().trim();
-                var service = $(this).find('td').eq(1).text().trim();
-                var row = code + "|" + service;
-                serviceList.push(row);
+            var serviceIdList = [];
+            $('#table-service tbody tr').each(function () {
+                var id = $(this).find('td').eq(0).text().trim();
+                serviceIdList.push(id);
             });
 
             $.post('@Url.Action("FormExamine","Poli")', {
+                formExamineID: formExamineID,
                 loketID: loketID,
                 anamnesa: anamnesa,
                 diagnose: diagnose,
@@ -519,9 +965,9 @@
                 doctorToID: doctorToID,
                 medicineList: medicineList,
                 injectionList: injectionList,
-                labList: labList,
-                radiologyList: radiologyList,
-                serviceList: serviceList
+                labList: labIdList,
+                radiologyList: radiologyIdList,
+                serviceList: serviceIdList
             }, function (data) {
                 console.log(data);
             });
