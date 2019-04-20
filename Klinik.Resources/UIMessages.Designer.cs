@@ -88,6 +88,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string AddNew {
@@ -1042,6 +1051,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Laboratorium Queue.
+        /// </summary>
+        public static string LaboratoriumQueue {
+            get {
+                return ResourceManager.GetString("LaboratoriumQueue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Laboratory.
         /// </summary>
         public static string Laboratory {
@@ -1560,6 +1578,15 @@ namespace Klinik.Resources {
         public static string PoliType {
             get {
                 return ResourceManager.GetString("PoliType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PreExamine Queue.
+        /// </summary>
+        public static string PreExamineQueue {
+            get {
+                return ResourceManager.GetString("PreExamineQueue", resourceCulture);
             }
         }
         

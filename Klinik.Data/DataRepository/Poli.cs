@@ -23,6 +23,7 @@ namespace Klinik.Data.DataRepository
             this.PoliScheduleMasters = new HashSet<PoliScheduleMaster>();
             this.QueuePolis = new HashSet<QueuePoli>();
             this.QueuePolis1 = new HashSet<QueuePoli>();
+            this.LabItemCategories = new HashSet<LabItemCategory>();
         }
     
         public int ID { get; set; }
@@ -47,5 +48,7 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<QueuePoli> QueuePolis { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QueuePoli> QueuePolis1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LabItemCategory> LabItemCategories { get; set; }
     }
 }

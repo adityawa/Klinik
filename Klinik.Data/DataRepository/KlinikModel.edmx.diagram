@@ -25,7 +25,6 @@
         <EntityTypeShape EntityType="KlinikDBModel.FormPreExamine" Width="1.5" PointX="5.25" PointY="23.875" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.GeneralMaster" Width="1.5" PointX="1.5" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.LabItem" Width="1.5" PointX="11.25" PointY="20.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.LabItemCategory" Width="1.5" PointX="9" PointY="20.375" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Log" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.MCUPackage" Width="1.5" PointX="0.75" PointY="43.25" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Medicine" Width="1.5" PointX="3.75" PointY="5.75" IsExpanded="true" />
@@ -48,7 +47,6 @@
         <EntityTypeShape EntityType="KlinikDBModel.ProductUnit" Width="1.5" PointX="3.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.QueuePoli" Width="1.5" PointX="11.25" PointY="33" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.RolePrivilege" Width="1.5" PointX="7.5" PointY="56.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.sysdiagram" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.User" Width="1.5" PointX="8.25" PointY="51.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.UserRole" Width="1.5" PointX="10.5" PointY="57" IsExpanded="true" />
         <AssociationConnector Association="KlinikDBModel.FK_Appointment_Clinic" ManuallyRouted="false" />
@@ -89,7 +87,6 @@
         <AssociationConnector Association="KlinikDBModel.FK_FormMedical_Patient" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormPreExamine_FormMedical" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_QueuePoli_FormMedical" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_LabItem_LabItemCategory" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_Privilege_Menu" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_OrganizationPrivilege_Organization" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_OrganizationRole_Organization" ManuallyRouted="false" />
@@ -106,6 +103,9 @@
         <AssociationConnector Association="KlinikDBModel.FK_QueuePoli_PoliTo" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_RolePrivilege_Privilege" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_UserRole_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="KlinikDBModel.LabItemCategory" Width="1.5" PointX="8.25" PointY="19.5" />
+        <AssociationConnector Association="KlinikDBModel.FK_LabItem_LabItemCategory" />
+        <AssociationConnector Association="KlinikDBModel.FK_LabItemCategory_Poli" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

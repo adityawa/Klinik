@@ -45,7 +45,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<FormPreExamine> FormPreExamines { get; set; }
         public virtual DbSet<GeneralMaster> GeneralMasters { get; set; }
         public virtual DbSet<LabItem> LabItems { get; set; }
-        public virtual DbSet<LabItemCategory> LabItemCategories { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<MCUPackage> MCUPackages { get; set; }
         public virtual DbSet<Medicine> Medicines { get; set; }
@@ -68,8 +67,8 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<ProductUnit> ProductUnits { get; set; }
         public virtual DbSet<QueuePoli> QueuePolis { get; set; }
         public virtual DbSet<RolePrivilege> RolePrivileges { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<LabItemCategory> LabItemCategories { get; set; }
     }
 }

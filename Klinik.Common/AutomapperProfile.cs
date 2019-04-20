@@ -11,6 +11,7 @@ using Klinik.Entities.Loket;
 using Klinik.Entities.Form;
 using Klinik.Entities.PreExamine;
 using Klinik.Entities.Poli;
+using Klinik.Entities.Laboratorium;
 
 namespace Klinik.Common
 {
@@ -187,6 +188,10 @@ namespace Klinik.Common
             CreateMap<FormExamineMedicine, FormExamineMedicineModel>();
 
             CreateMap<LoketModel, PoliExamineModel>();
+
+            CreateMap<LabItemCategory, LabItemCategoryModel>()
+                .ForMember(x=>x.PoliName, map=>map.MapFrom(p=>p.Poli.Name));
+                
         }
     }
 }

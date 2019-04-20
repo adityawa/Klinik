@@ -816,4 +816,13 @@
   <data name="Volume" xml:space="preserve">
     <value>Volume</value>
   </data>
+  <data name="PreExamineQueue" xml:space="preserve">
+    <value>PreExamine Queue</value>
+  </data>
+  <data name="LaboratoriumQueue" xml:space="preserve">
+    <value>Laboratorium Queue</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
 </root>

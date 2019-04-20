@@ -77,6 +77,10 @@
     <Compile Include="Administration\Log\LogValidator.cs" />
     <Compile Include="BaseFeatures.cs" />
     <Compile Include="IBaseFeatures.cs" />
+    <Compile Include="Laboratorium\LabHandler.cs" />
+    <Compile Include="Laboratorium\LabRequest.cs" />
+    <Compile Include="Laboratorium\LabResponse.cs" />
+    <Compile Include="Laboratorium\LabValidator.cs" />
     <Compile Include="Loket\LoketHandler.cs" />
     <Compile Include="Loket\LoketRequest.cs" />
     <Compile Include="Loket\LoketResponse.cs" />

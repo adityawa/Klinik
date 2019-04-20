@@ -40,6 +40,8 @@ namespace Klinik.Data
         private IGenericRepository<FormExamineMedicine> _formExamineMedicineRepository;
         private IGenericRepository<FormExamineService> _formExamineServiceRepository;
         private IGenericRepository<PoliClinic> _poliClinicRepository;
+        private IGenericRepository<LabItemCategory> _labItemCategoryRepository;
+        private IGenericRepository<LabItem> _labItemRepository;
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
@@ -403,6 +405,24 @@ namespace Klinik.Data
             }
         }
 
+        public IGenericRepository<LabItemCategory> LabItemCategoryRepository
+        {
+            get
+            {
+                if (_labItemCategoryRepository == null)
+                    _labItemCategoryRepository = new GenericRepository<LabItemCategory>(_context);
+                return _labItemCategoryRepository;
+            }
+        }
+        public IGenericRepository<LabItem> LabItemRepository
+        {
+            get
+            {
+                if (_labItemRepository == null)
+                    _labItemRepository = new GenericRepository<LabItem>(_context);
+                return _labItemRepository;
+            }
+        }
         public virtual void Dispose(bool disposing)
         {
             if (!this.disposed)

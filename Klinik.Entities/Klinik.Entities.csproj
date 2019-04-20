@@ -78,6 +78,8 @@
     <Compile Include="Form\FormExamineLabModel.cs" />
     <Compile Include="Form\FormExamineModel.cs" />
     <Compile Include="Form\FormMedicalModel.cs" />
+    <Compile Include="Laboratorium\LabItemCategoryModel.cs" />
+    <Compile Include="Laboratorium\LabItemModel.cs" />
     <Compile Include="MappingMaster\ClinicPoliModel.cs" />
     <Compile Include="MappingMaster\OrganizationPrivilegeModel.cs" />
     <Compile Include="MappingMaster\RolePrivilegeModel.cs" />

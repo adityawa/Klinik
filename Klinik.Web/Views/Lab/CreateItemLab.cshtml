@@ -1,0 +1,58 @@
+﻿@model Klinik.Entities.Form.FormExamineLabModel
+
+@{
+    ViewBag.Title = "CreateItemLab";
+}
+
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+        </div>
+        <h5 class="panel-title">Form @Klinik.Resources.UIMessages.Add Lab Item</h5>
+    </header>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.FormMedical</label>
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.LoketData)
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.FormMedicalID, new { @class = "form-control", @id = "tbFormMedical", @readonly = "readonly" })
+            </div>
+            <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PatientName</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.PatientData.Name, new { @class = "form-control", @id = "tbPatientName", @readonly = "readonly" })
+            </div>
+            <label class="col-md-1 control-label " for="inputDefault" style="text-align:left">
+                @Klinik.Resources.UIMessages.Birthdate
+            </label>
+            <div class="col-md-3">
+                @Html.TextBoxFor(p => p.PatientData.BirthDateStr, new { @class = "form-control", @id = "tbPatientBirthDate", @readonly = "readonly" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.BloodType</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.PatientData.BloodType, new { @class = "form-control", @id = "tbBlood", @readonly = "readonly" })
+            </div>
+            <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Gender</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.PatientData.Gender, new { @class = "form-control", @id = "tbWeight", @readonly = "readonly" })
+            </div>
+            <label class="col-md-1 control-label" for="inputDefault">
+                @Klinik.Resources.UIMessages.Address
+            </label>
+            <div class="col-md-4">
+                @Html.TextAreaFor(x => x.PatientData.Address, new { @class = "form-control", @id = "tbAddress" })
+            </div>
+
+        </div>
+
+        <br />
+        <h4>Lab Item</h4>
+        <div>
+
+        </div>
+    </div>
+</section>

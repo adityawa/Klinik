@@ -224,6 +224,7 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Base\BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\LabController.cs" />
     <Compile Include="Controllers\ParamedicController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1426,6 +1427,8 @@
     <Content Include="Views\MappingMaster\ClinicPoliList.cshtml" />
     <Content Include="Views\Poli\PatientList.cshtml" />
     <Content Include="Views\Poli\FormExamine.cshtml" />
+    <Content Include="Views\Lab\ListQueueLaboratorium.cshtml" />
+    <Content Include="Views\Lab\CreateItemLab.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

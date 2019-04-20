@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AppConfig">
           <Key>
             <PropertyRef Name="ID" />
@@ -727,16 +727,6 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="ID" />
@@ -1065,6 +1055,18 @@
             </Principal>
             <Dependent Role="LabItem">
               <PropertyRef Name="LabCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabItemCategory_Poli">
+          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="LabItemCategory" Type="Self.LabItemCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poli">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LabItemCategory">
+              <PropertyRef Name="PoliID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1472,7 +1474,6 @@
           <EntitySet Name="ProductUnit" EntityType="Self.ProductUnit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QueuePoli" EntityType="Self.QueuePoli" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolePrivilege" EntityType="Self.RolePrivilege" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Appointment_Clinic" Association="Self.FK_Appointment_Clinic">
@@ -1574,6 +1575,10 @@
           <AssociationSet Name="FK_LabItem_LabItemCategory" Association="Self.FK_LabItem_LabItemCategory">
             <End Role="LabItemCategory" EntitySet="LabItemCategory" />
             <End Role="LabItem" EntitySet="LabItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabItemCategory_Poli" Association="Self.FK_LabItemCategory_Poli">
+            <End Role="Poli" EntitySet="Poli" />
+            <End Role="LabItemCategory" EntitySet="LabItemCategory" />
           </AssociationSet>
           <AssociationSet Name="FK_Organization_Clinic" Association="Self.FK_Organization_Clinic">
             <End Role="Clinic" EntitySet="Clinic" />
@@ -1696,8 +1701,7 @@
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KlinikDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2114,22 +2118,7 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="FormExamineLabs" Relationship="Self.FK_FormExamineLab_LabItem" FromRole="LabItem" ToRole="FormExamineLab" />
-          <NavigationProperty Name="LabItemCategory" Relationship="Self.FK_LabItem_LabItemCategory" FromRole="LabItem" ToRole="LabItemCategory" />
-        </EntityType>
-        <EntityType Name="LabItemCategory">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LabType" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="PoliID" Type="Int32" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="LabItems" Relationship="Self.FK_LabItem_LabItemCategory" FromRole="LabItemCategory" ToRole="LabItem" />
+          <NavigationProperty Name="LabItemCategory" Relationship="KlinikDBModel.FK_LabItem_LabItemCategory" FromRole="LabItem" ToRole="LabItemCategory" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -2337,6 +2326,7 @@
           <NavigationProperty Name="PoliScheduleMasters" Relationship="Self.FK_PoliScheduleMaster_Poli" FromRole="Poli" ToRole="PoliScheduleMaster" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_PoliFrom" FromRole="Poli" ToRole="QueuePoli" />
           <NavigationProperty Name="QueuePolis1" Relationship="Self.FK_QueuePoli_PoliTo" FromRole="Poli" ToRole="QueuePoli" />
+          <NavigationProperty Name="LabItemCategories" Relationship="KlinikDBModel.FK_LabItemCategory_Poli" FromRole="Poli" ToRole="LabItemCategory" />
         </EntityType>
         <EntityType Name="PoliClinic">
           <Key>
@@ -2527,16 +2517,6 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="OrganizationRole" Relationship="Self.FK_RolePrivilege_OrganizationRole" FromRole="RolePrivilege" ToRole="OrganizationRole" />
           <NavigationProperty Name="Privilege" Relationship="Self.FK_RolePrivilege_Privilege" FromRole="RolePrivilege" ToRole="Privilege" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -3030,18 +3010,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LabItem_LabItemCategory">
-          <End Role="LabItemCategory" Type="Self.LabItemCategory" Multiplicity="0..1" />
-          <End Role="LabItem" Type="Self.LabItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LabItemCategory">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="LabItem">
-              <PropertyRef Name="LabCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Privilege_Menu">
           <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
           <End Role="Privilege" Type="Self.Privilege" Multiplicity="*" />
@@ -3255,7 +3223,6 @@
           <EntitySet Name="FormPreExamines" EntityType="Self.FormPreExamine" />
           <EntitySet Name="GeneralMasters" EntityType="Self.GeneralMaster" />
           <EntitySet Name="LabItems" EntityType="Self.LabItem" />
-          <EntitySet Name="LabItemCategories" EntityType="Self.LabItemCategory" />
           <EntitySet Name="Logs" EntityType="Self.Log" />
           <EntitySet Name="MCUPackages" EntityType="Self.MCUPackage" />
           <EntitySet Name="Medicines" EntityType="Self.Medicine" />
@@ -3278,7 +3245,6 @@
           <EntitySet Name="ProductUnits" EntityType="Self.ProductUnit" />
           <EntitySet Name="QueuePolis" EntityType="Self.QueuePoli" />
           <EntitySet Name="RolePrivileges" EntityType="Self.RolePrivilege" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
           <AssociationSet Name="FK_Appointment_Clinic" Association="Self.FK_Appointment_Clinic">
@@ -3433,10 +3399,6 @@
             <End Role="FormMedical" EntitySet="FormMedicals" />
             <End Role="QueuePoli" EntitySet="QueuePolis" />
           </AssociationSet>
-          <AssociationSet Name="FK_LabItem_LabItemCategory" Association="Self.FK_LabItem_LabItemCategory">
-            <End Role="LabItemCategory" EntitySet="LabItemCategories" />
-            <End Role="LabItem" EntitySet="LabItems" />
-          </AssociationSet>
           <AssociationSet Name="FK_Privilege_Menu" Association="Self.FK_Privilege_Menu">
             <End Role="Menu" EntitySet="Menus" />
             <End Role="Privilege" EntitySet="Privileges" />
@@ -3501,7 +3463,56 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
+          <EntitySet Name="LabItemCategories" EntityType="KlinikDBModel.LabItemCategory" />
+          <AssociationSet Name="FK_LabItem_LabItemCategory" Association="KlinikDBModel.FK_LabItem_LabItemCategory">
+            <End Role="LabItemCategory" EntitySet="LabItemCategories" />
+            <End Role="LabItem" EntitySet="LabItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabItemCategory_Poli" Association="KlinikDBModel.FK_LabItemCategory_Poli">
+            <End Role="Poli" EntitySet="Polis" />
+            <End Role="LabItemCategory" EntitySet="LabItemCategories" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="LabItemCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LabType" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PoliID" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="LabItems" Relationship="KlinikDBModel.FK_LabItem_LabItemCategory" FromRole="LabItemCategory" ToRole="LabItem" />
+          <NavigationProperty Name="Poli" Relationship="KlinikDBModel.FK_LabItemCategory_Poli" FromRole="LabItemCategory" ToRole="Poli" />
+        </EntityType>
+        <Association Name="FK_LabItem_LabItemCategory">
+          <End Type="KlinikDBModel.LabItemCategory" Role="LabItemCategory" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.LabItem" Role="LabItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabItemCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LabItem">
+              <PropertyRef Name="LabCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabItemCategory_Poli">
+          <End Type="KlinikDBModel.Poli" Role="Poli" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.LabItemCategory" Role="LabItemCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poli">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LabItemCategory">
+              <PropertyRef Name="PoliID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3875,21 +3886,6 @@
                 <ScalarProperty Name="LabCategoryID" ColumnName="LabCategoryID" />
                 <ScalarProperty Name="Normal" ColumnName="Normal" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LabItemCategories">
-            <EntityTypeMapping TypeName="KlinikDBModel.LabItemCategory">
-              <MappingFragment StoreEntitySet="LabItemCategory">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="LabType" ColumnName="LabType" />
-                <ScalarProperty Name="PoliID" ColumnName="PoliID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -4273,17 +4269,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="KlinikDBModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="KlinikDBModel.User">
               <MappingFragment StoreEntitySet="User">
@@ -4314,6 +4299,21 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LabItemCategories">
+            <EntityTypeMapping TypeName="KlinikDBModel.LabItemCategory">
+              <MappingFragment StoreEntitySet="LabItemCategory">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PoliID" ColumnName="PoliID" />
+                <ScalarProperty Name="LabType" ColumnName="LabType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
