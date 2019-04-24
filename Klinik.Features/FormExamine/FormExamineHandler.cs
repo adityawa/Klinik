@@ -118,8 +118,8 @@ namespace Klinik.Features
 
                     // create a new registration
                     QueuePoli queue = Mapper.Map<LoketModel, QueuePoli>(request.Data.LoketData);
-                    queue.ID = 0; // reset
-                    queue.DoctorID = request.Data.DoctorToID;
+                    queue.ID = 0; // reset                    
+                    queue.DoctorID = request.Data.DoctorToID == 0 ? (int?)null : request.Data.DoctorToID;
                     queue.PoliFrom = queue.PoliTo;
                     queue.PoliTo = request.Data.PoliToID;
                     queue.CreatedBy = request.Data.Account.UserCode;

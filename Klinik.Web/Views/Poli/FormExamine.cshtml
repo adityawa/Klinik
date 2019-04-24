@@ -638,7 +638,7 @@
                 minLength: 1
             });
 
-            $("#btnAddMedicineInjection").click( function () {
+            $("#btnAddMedicineInjection").click(function () {
 
                 var idMedicine = $("#idMedicineInjection");
                 var medicineName = $("#medicineInjectionName");
@@ -905,91 +905,98 @@
                 });
             });
 
+            toastr.options = {
+                "closeButton": true,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "0",
+                "hideDuration": "0",
+                "timeOut": "0",
+                "showMethod": "fadeIn"
+            };
+
             $('#btnSave').click(function () {
-            var formExamineID = $('#formExamineID').val();
-            var loketID = $('#loketID').val();
-            var anamnesa = $('#txtAnamnesa').val();
-            var diagnose = $('#txtDiagnose').val();
-            var therapy = $('#txtTherapy').val();
-            var receipt = $('#txtConcoction').val();
-            var finalState = $('#ddlfinalstate').val();
-            var poliToID = $('#ddlpolito').val();
-            var doctorToID = $('#ddldoctor').val();
+                var formExamineID = $('#formExamineID').val();
+                var loketID = $('#loketID').val();
+                var anamnesa = $('#txtAnamnesa').val();
+                var diagnose = $('#txtDiagnose').val();
+                var therapy = $('#txtTherapy').val();
+                var receipt = $('#txtConcoction').val();
+                var finalState = $('#ddlfinalstate').val();
+                var poliToID = $('#ddlpolito').val();
+                var doctorToID = $('#ddldoctor').val();
 
-            var medicineList = [];
-            $('#table-medicine tbody tr').each(function () {
-                var id = $(this).find('td').eq(0).text().trim();
-                var medicine = $(this).find('td').eq(1).text().trim();
-                var dose = $(this).find('td').eq(2).text().trim();
-                var amount = $(this).find('td').eq(3).text().trim();
-                var row = id + "|" + medicine + "|" + dose + "|" + amount;
-                medicineList.push(row);
+                var medicineList = [];
+                $('#table-medicine tbody tr').each(function () {
+                    var id = $(this).find('td').eq(0).text().trim();
+                    var medicine = $(this).find('td').eq(1).text().trim();
+                    var dose = $(this).find('td').eq(2).text().trim();
+                    var amount = $(this).find('td').eq(3).text().trim();
+                    var row = id + "|" + medicine + "|" + dose + "|" + amount;
+                    medicineList.push(row);
+                });
+
+                var injectionList = [];
+                $('#table-injection tbody tr').each(function () {
+                    var id = $(this).find('td').eq(0).text().trim();
+                    var medicine = $(this).find('td').eq(1).text().trim();
+                    var volume = $(this).find('td').eq(2).text().trim();
+                    var row = id + "|" + medicine + "|" + volume;
+                    injectionList.push(row);
+                });
+
+                var labIdList = [];
+                $('#table-lab tbody tr').each(function () {
+                    var id = $(this).find('td').eq(0).text().trim();
+                    labIdList.push(id);
+                });
+
+                var radiologyIdList = [];
+                $('#table-radiology tbody tr').each(function () {
+                    var id = $(this).find('td').eq(0).text().trim();
+                    radiologyIdList.push(id);
+                });
+
+                var serviceIdList = [];
+                $('#table-service tbody tr').each(function () {
+                    var id = $(this).find('td').eq(0).text().trim();
+                    serviceIdList.push(id);
+                });
+
+                var DataModel = {
+                    formExamineID: formExamineID,
+                    loketID: loketID,
+                    anamnesa: anamnesa,
+                    diagnose: diagnose,
+                    therapy: therapy,
+                    receipt: receipt,
+                    finalState: finalState,
+                    poliToID: poliToID,
+                    doctorToID: doctorToID,
+                    medicineList: medicineList,
+                    injectionList: injectionList,
+                    labList: labIdList,
+                    radiologyList: radiologyIdList,
+                    serviceList: serviceIdList
+                };
+
+                $.ajax({
+                    url: '@Url.Action("FormExamine","Poli")',
+                    type: 'POST',
+                    data: DataModel,
+                    success: function (result) {
+                        if (result.Status) {
+                            toastr.options.closeButton = false;
+                            toastr.options.timeOut = 2000;
+                            toastr.success(result.Message);
+                        }
+                        else {
+                            toastr.error(result.Message);
+                        }
+                    }
+                });
             });
-
-            var injectionList = [];
-            $('#table-injection tbody tr').each(function () {
-                var id = $(this).find('td').eq(0).text().trim();
-                var medicine = $(this).find('td').eq(1).text().trim();
-                var volume = $(this).find('td').eq(2).text().trim();
-                var row = id + "|" + medicine + "|" + volume;
-                injectionList.push(row);
-            });
-
-            var labIdList = [];
-            $('#table-lab tbody tr').each(function () {
-                var id = $(this).find('td').eq(0).text().trim();
-                labIdList.push(id);
-            });
-
-            var radiologyIdList = [];
-            $('#table-radiology tbody tr').each(function () {
-                var id = $(this).find('td').eq(0).text().trim();
-                radiologyIdList.push(id);
-            });
-
-            var serviceIdList = [];
-            $('#table-service tbody tr').each(function () {
-                var id = $(this).find('td').eq(0).text().trim();
-                serviceIdList.push(id);
-            });
-
-            $.post('@Url.Action("FormExamine","Poli")', {
-                formExamineID: formExamineID,
-                loketID: loketID,
-                anamnesa: anamnesa,
-                diagnose: diagnose,
-                therapy: therapy,
-                receipt: receipt,
-                finalState: finalState,
-                poliToID: poliToID,
-                doctorToID: doctorToID,
-                medicineList: medicineList,
-                injectionList: injectionList,
-                labList: labIdList,
-                radiologyList: radiologyIdList,
-                serviceList: serviceIdList
-            }, function (data) {
-                console.log(data);
-            });
-
         });
-        });
-
-        var _temp = "@ViewBag.Response";
-        var _arrMsg = _temp.split(";");
-
-        if (_arrMsg.length > 1) {
-            if (_arrMsg[0] == "True") {
-                toastr.options.closeButton = false;
-                toastr.options.timeOut = 2000;
-                toastr.success(_arrMsg[1]);
-            }
-            else {
-                toastr.options.closeButton = true;
-                toastr.options.timeOut = 0;
-                toastr.error(_arrMsg[1]);
-            }
-        }
     </script>
 </body>
 </html>
