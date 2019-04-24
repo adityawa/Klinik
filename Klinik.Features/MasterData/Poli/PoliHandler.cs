@@ -128,22 +128,21 @@ namespace Klinik.Features
         {
             List<PoliModel> lists = new List<PoliModel>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.New<Poli>(true);
+            var searchPredicate = PredicateBuilder.New<PoliClinic>(true);
 
             // add default filter to show the active data only
             if(request.ClinicID != null)
             {
-                searchPredicate = searchPredicate.And(x => x.Rowstatus == 0 && x.PoliClinics.FirstOrDefault().ClinicID == request.ClinicID);
-
+                searchPredicate = searchPredicate.And(x => x.Clinic.RowStatus == 0 && x.ClinicID == request.ClinicID);
             }
             else
             {
-                searchPredicate = searchPredicate.And(x => x.Rowstatus == 0);
+                searchPredicate = searchPredicate.And(x => x.Clinic.RowStatus == 0);
             }
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
-                searchPredicate = searchPredicate.And(p => p.Name.Contains(request.SearchValue));
+                searchPredicate = searchPredicate.And(p => p.Clinic.Name.Contains(request.SearchValue));
             }
 
             if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
@@ -153,11 +152,11 @@ namespace Klinik.Features
                     switch (request.SortColumn.ToLower())
                     {
                         case "poliname":
-                            qry = _unitOfWork.PoliRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Name));
+                            qry = _unitOfWork.PoliClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Clinic.Name));
                             break;
 
                         default:
-                            qry = _unitOfWork.PoliRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.ID));
+                            qry = _unitOfWork.PoliClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Clinic.ID));
                             break;
                     }
                 }
@@ -166,23 +165,29 @@ namespace Klinik.Features
                     switch (request.SortColumn.ToLower())
                     {
                         case "poliname":
-                            qry = _unitOfWork.PoliRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Name));
+                            qry = _unitOfWork.PoliClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Clinic.Name));
                             break;
 
                         default:
-                            qry = _unitOfWork.PoliRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID));
+                            qry = _unitOfWork.PoliClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Clinic.ID));
                             break;
                     }
                 }
             }
             else
             {
-                qry = _unitOfWork.PoliRepository.Get(searchPredicate, null);
+                qry = _unitOfWork.PoliClinicRepository.Get(searchPredicate, null);
             }
 
+            
             foreach (var item in qry)
             {
-                var prData = Mapper.Map<Poli, PoliModel>(item);
+                var prData = new PoliModel
+                {
+                    Id = item.Poli.ID,
+                    Code = item.Poli.Code,
+                    Name = item.Poli.Name
+                };
 
                 lists.Add(prData);
             }

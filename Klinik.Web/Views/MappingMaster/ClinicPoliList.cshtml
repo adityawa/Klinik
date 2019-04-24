@@ -40,7 +40,6 @@
                         <th>@Klinik.Resources.UIMessages.ID</th>
                         <th>@Klinik.Resources.UIMessages.Code</th>
                         <th>@Klinik.Resources.UIMessages.PoliName</th>
-                        <th>@Klinik.Resources.UIMessages.ClinicName</th>
                     </tr>
                 </thead>
             </table>
@@ -72,7 +71,7 @@
             }
         }
 
-
+        
         var table = $('#tbClinicPoli').DataTable({
             "autoWidth": false,
             "processing": true,
@@ -101,32 +100,26 @@
                     "searchable": true,
                     "orderable": true,
                     "visible": false,
-                    "data": "PoliID"
+                    "data": "Id"
                 },
                 {
                     "targets": 2,
                     "searchable": false,
                     "orderable": false,
-                    "data": "PoliCode"
+                    "data": "Code"
                 },
                 {
                     "targets": 3,
                     "searchable": false,
                     "orderable": false,
-                    "data": "PoliName"
-                },
-                {
-                    "targets": 4,
-                    "searchable": false,
-                    "orderable": false,
-                    "data": "ClinicName"
+                    "data": "Name"
                 }],
 
 
             'order': [[1, 'desc']],
             'rowCallback': function (row, data, dataIndex) {
                 // Get row ID
-                var rowId = data.PoliID;
+                var rowId = data.Id;
 
                 //var cek = $.inArray(rowId, rows_selected);
                 //var cek1 = data.Id;
@@ -142,7 +135,7 @@
         $('#tbClinicPoli tbody').on('click', 'input[type="checkbox"]', function (e) {
             var $row = $(this).closest('tr');
             var data = table.row($row).data();
-            var rowId = data.PoliID;
+            var rowId = data.Id;
             var index = $.inArray(rowId, rows_selected);
             if (this.checked && index === -1) {
                 rows_selected.push(rowId);
