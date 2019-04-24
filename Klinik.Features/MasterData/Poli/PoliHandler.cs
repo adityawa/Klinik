@@ -131,7 +131,15 @@ namespace Klinik.Features
             var searchPredicate = PredicateBuilder.New<Poli>(true);
 
             // add default filter to show the active data only
-            searchPredicate = searchPredicate.And(x => x.Rowstatus == 0);
+            if(request.ClinicID != null)
+            {
+                searchPredicate = searchPredicate.And(x => x.Rowstatus == 0 && x.PoliClinics.FirstOrDefault().ClinicID == request.ClinicID);
+
+            }
+            else
+            {
+                searchPredicate = searchPredicate.And(x => x.Rowstatus == 0);
+            }
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {

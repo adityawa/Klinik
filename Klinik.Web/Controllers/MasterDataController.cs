@@ -1041,15 +1041,15 @@ namespace Klinik.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetPoliData()
+        public ActionResult GetPoliData(int? clinicid)
         {
+           var requests = Request.Form;
             var _draw = Request.Form.GetValues("draw").FirstOrDefault();
             var _start = Request.Form.GetValues("start").FirstOrDefault();
             var _length = Request.Form.GetValues("length").FirstOrDefault();
             var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
             var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
             var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
-
             int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
             int _skip = _start != null ? Convert.ToInt32(_start) : 0;
 
@@ -1060,7 +1060,8 @@ namespace Klinik.Web.Controllers
                 SortColumn = _sortColumn,
                 SortColumnDir = _sortColumnDir,
                 PageSize = _pageSize,
-                Skip = _skip
+                Skip = _skip,
+                ClinicID = clinicid
             };
 
             var response = new PoliHandler(_unitOfWork).GetListData(request);
@@ -1136,6 +1137,12 @@ namespace Klinik.Web.Controllers
             new PoliValidator(_unitOfWork).Validate(request, out _response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult getClinicData()
+        {
+            return Json(new { data = BindDropDownKlinik() }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

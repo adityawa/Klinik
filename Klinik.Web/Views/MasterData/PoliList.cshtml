@@ -8,6 +8,9 @@
     <header class="panel-heading">
         <div class="panel-actions">
             <a href="#" class="fa fa-caret-down"></a>
+            <select class="from-control" name="clinicid" id="clinicid">
+
+            </select>
         </div>
         <h5 class="panel-title">
             @Klinik.Resources.UIMessages.PoliList
@@ -32,31 +35,44 @@
 
 @section Scripts {
     <script type="text/javascript">
-    $(document).ready(function () {
-
-        $('#btnAdd').click(function (e) {
-            window.location.href = "/MasterData/CreateOrEditPoli";
-        });
-
-        $('#tbPoli').dataTable({
-            "autoWidth": false,
-            "processing": true,
-            "serverSide": true,
-            "filter": true,
-            "orderMulti": false,
-            "pageLength": 10,
-            "ajax": {
-                "url": "/MasterData/GetPoliData",
-                "type": "POST",
-                "datatype": "json"
+        var Site = {
+            init: function () {
+                Site.Add();
+                Site.ListData();
+                Site.DropDownClinic();
+                Site.OnchageClinic();
+                
             },
-
-            "columnDefs":
+            DropDownClinic: function () {
+                $.get("/MasterData/getClinicData", function (data) {
+                    $.each(data.data, function (key, value) {
+                        $('#clinicid').append('<option value="' + value.Value + '">' + value.Text + '</option>');
+                    });
+                });
+            },
+            Add: function() {
+                $('#btnAdd').click(function (e) {
+                    window.location.href = "/MasterData/CreateOrEditPoli";
+                });
+            },
+            ListData: function () {
+                $('#tbPoli').dataTable({
+                "autoWidth": false,
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "orderMulti": false,
+                "pageLength": 10,
+                "ajax": {
+                    "url": "/MasterData/GetPoliData?clinicid=" + $('#clinicid').val(),
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs":
                 [{
                     "targets": [0],
                     "visible": false,
                     "searchable": false,
-
                 },
                 {
                     "targets": [1],
@@ -74,7 +90,6 @@
                     "orderable": false
                 }
                 ],
-
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": false },
                 { "data": "Code", "name": "Code", "autoWidth": true },
@@ -82,48 +97,56 @@
                 {
                     "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditPoli?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>"; }
                 }
-
             ]
         });
-    });
-    var _status, _message, _temp;
-    var _arrMsg = [];
-    toastr.options = {
-        "closeButton": true,
-        "positionClass": "toast-top-full-width",
-        "onclick": null,
-        "showDuration": "0",
-        "hideDuration": "0",
-        "timeOut": "0",
-        "showMethod": "fadeIn"
-    };
 
-    var Delete = function (ID) {
-        var r = confirm("@Klinik.Resources.UIMessages.DeleteConfirmation" + ID + " ) ?");
-        if (r == true) {
-            DeleteRole(ID);
-        }
-        return false;
-    }
-
-    function DeleteRole(Id) {
-        $.ajax({
-            url: '/MasterData/DeleteMasterPoli?id=' + Id,
-            type: 'POST',
-            success: function (result) {
-                if (result.Status) {
-                    toastr.options.closeButton = false;
-                    toastr.options.timeOut = 2000;
-                    location.reload();
-                    toastr.success(result.Message);
-                }
-                else {
-                    toastr.error(result.Message);
-                }
+        var _status, _message, _temp;
+        var _arrMsg = [];
+        toastr.options = {
+            "closeButton": true,
+            "positionClass": "toast-top-full-width",
+            "onclick": null,
+            "showDuration": "0",
+            "hideDuration": "0",
+            "timeOut": "0",
+            "showMethod": "fadeIn"
+        };
+        var Delete = function (ID) {
+            var r = confirm("@Klinik.Resources.UIMessages.DeleteConfirmation" + ID + " ) ?");
+            if (r == true) {
+                DeleteRole(ID);
             }
-        });
-    }
+            return false;
+        }
+                function DeleteRole(Id) {
+                    $.ajax({
+                        url: '/MasterData/DeleteMasterPoli?id=' + Id,
+                        type: 'POST',
+                        success: function (result) {
+                            if (result.Status) {
+                                toastr.options.closeButton = false;
+                                toastr.options.timeOut = 2000;
+                                location.reload();
+                                toastr.success(result.Message);
+                            }
+                            else {
+                                toastr.error(result.Message);
+                            }
+                        }
+                    });
+                }
+            },
+            OnchageClinic: function () {
+                $('#clinicid').change(function () {
+                    //var aa = $.post("/MasterData/GetPoliData?clinicid=" + $('#clinicid').val());
+                    var table = $('#tbPoli').DataTable();
+
+                    table.ajax.url('/MasterData/GetPoliData?clinicid=' + $('#clinicid').val()).load();
+                });
+            },
+        }
+        $(document).ready(function () {
+            Site.init();
+        })
     </script>
 }
-
-

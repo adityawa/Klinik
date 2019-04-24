@@ -10,5 +10,6 @@
         public string SearchValue { get; set; }
         public string Action { get; set; }
         public T Data { get; set; }
+        public int? ClinicID {get; set; }
     }
 }
