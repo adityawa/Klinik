@@ -1063,13 +1063,17 @@ namespace Klinik.Web.Controllers
                 Skip = _skip,
                 ClinicID = clinicid
             };
-
+            
             var response = new PoliHandler(_unitOfWork).GetListData(request);
 
+            if(clinicid > 0)
+            {
+                response = new PoliHandler(_unitOfWork).GetListDataFilter(request);
+            }
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
-        [CustomAuthorize("ADD_M_POLI", "EDIT_M_POLI")]
+        [CustomAuthorize("ADD_M_POLI","EDIT_M_POLI")]
         public ActionResult CreateOrEditPoli()
         {
             PoliResponse _response = new PoliResponse();

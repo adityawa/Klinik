@@ -69,7 +69,7 @@ namespace Klinik.Features
 
         public ClinicPoliResponse GetListData(ClinicPoliRequest request)
         {
-            var qry = _unitOfWork.PoliClinicRepository.Get(x => x.ClinicID == request.Data.ClinicID && x.RowStatus == 0);
+            var qry = _unitOfWork.PoliClinicRepository.Get(x =>  x.RowStatus == 0);
             ClinicPoliModel _model = new ClinicPoliModel();
 
             if (qry.Count > 0)
