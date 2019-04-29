@@ -1005,8 +1005,11 @@ namespace Klinik.Web.Controllers
                 SortColumn = _sortColumn,
                 SortColumnDir = _sortColumnDir,
                 PageSize = _pageSize,
-                Skip = _skip
+                Skip = _skip,
+                Data = new ClinicModel()
             };
+            if (Session["UserLogon"] != null)
+                request.Data.Account = (AccountModel)Session["UserLogon"];
 
             var response = new ClinicHandler(_unitOfWork).GetListData(request);
 
@@ -1037,6 +1040,9 @@ namespace Klinik.Web.Controllers
         [CustomAuthorize("VIEW_M_POLI")]
         public ActionResult PoliList()
         {
+            PoliModel clinicModel = new PoliModel();
+            clinicModel.Account = (AccountModel)Session["UserLogon"];
+            ViewBag.ClinicID = clinicModel.Account.ClinicID;
             return View();
         }
 

@@ -8,9 +8,13 @@
     <header class="panel-heading">
         <div class="panel-actions">
             <a href="#" class="fa fa-caret-down"></a>
-            <select class="from-control" name="clinicid" id="clinicid">
+            @{
+                if (ViewBag.ClinicID <= 0) {
+                <select class="from-control" name="clinicid" id="clinicid">
 
-            </select>
+                </select>
+                }
+            }
         </div>
         <h5 class="panel-title">
             @Klinik.Resources.UIMessages.PoliList
@@ -56,6 +60,9 @@
                 });
             },
             ListData: function () {
+                if (@ViewBag.ClinicID > 0) {
+                    $('#clinicid').val() === @ViewBag.ClinicID;
+                }
                 $('#tbPoli').dataTable({
                 "autoWidth": false,
                 "processing": true,
