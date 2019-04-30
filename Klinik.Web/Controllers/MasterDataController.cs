@@ -365,6 +365,21 @@ namespace Klinik.Web.Controllers
             return _PoliTypes;
         }
 
+        private List<SelectListItem> PoliType()
+        {
+            List<SelectListItem> politype = new List<SelectListItem>();
+            for (var i = 1; i <= 7; i++)
+            {
+                politype.Add(new SelectListItem
+                {
+                    Text = "Type " + i,
+                    Value = i.ToString(),
+                });
+            }
+
+            return politype;
+        }
+
 
         #endregion
 
@@ -1096,14 +1111,14 @@ namespace Klinik.Web.Controllers
                 PoliResponse resp = new PoliHandler(_unitOfWork).GetDetail(request);
                 PoliModel _model = resp.Entity;
                 ViewBag.Response = _response;
-                ViewBag.Type = BindDropDownPoliType();
+                ViewBag.Type = new SelectList(PoliType(), "Value","Text").ToList();
                 ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }
             else
             {
                 ViewBag.Response = _response;
-                ViewBag.Type = BindDropDownPoliType();
+                ViewBag.Type = new SelectList(PoliType(), "Value", "Text").ToList();
                 ViewBag.ActionType = ClinicEnums.Action.Add;
                 return View();
             }
@@ -1112,6 +1127,7 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public ActionResult CreateOrEditPoli(PoliModel _model)
         {
+            
             if (Session["UserLogon"] != null)
                 _model.Account = (AccountModel)Session["UserLogon"];
 
@@ -1124,7 +1140,7 @@ namespace Klinik.Web.Controllers
 
             new PoliValidator(_unitOfWork).Validate(request, out _response);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
-            ViewBag.Type = BindDropDownPoliType();
+            ViewBag.Type = new SelectList(PoliType(), "Value", "Text", _model.Type).ToList();
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
 
             return View();
