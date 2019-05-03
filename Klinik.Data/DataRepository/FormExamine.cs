@@ -18,7 +18,6 @@ namespace Klinik.Data.DataRepository
         public FormExamine()
         {
             this.FormExamineAttachments = new HashSet<FormExamineAttachment>();
-            this.FormExamineLabs = new HashSet<FormExamineLab>();
             this.FormExamineMedicines = new HashSet<FormExamineMedicine>();
         }
     
@@ -44,8 +43,6 @@ namespace Klinik.Data.DataRepository
         public virtual Poli Poli { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormExamineAttachment> FormExamineAttachments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FormExamineLab> FormExamineLabs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormExamineMedicine> FormExamineMedicines { get; set; }
     }

@@ -221,6 +221,33 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} Lab items added with form medical ID : {1}.
+        /// </summary>
+        public static string LabItemAdded {
+            get {
+                return ResourceManager.GetString("LabItemAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lab Item cannot be change because the status was finished.
+        /// </summary>
+        public static string LabItemCannotChange {
+            get {
+                return ResourceManager.GetString("LabItemCannotChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lab Result successfully updated.
+        /// </summary>
+        public static string LabResultUpdated {
+            get {
+                return ResourceManager.GetString("LabResultUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Male.
         /// </summary>
         public static string Male {

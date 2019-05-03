@@ -8,5 +8,6 @@
         public string LabItemCategoryName { get; set; }
         public string Normal { get; set; }
         public decimal? Price { get; set; }
+        public int? PoliId { get; set; }
     }
 }

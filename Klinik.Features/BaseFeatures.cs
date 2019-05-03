@@ -5,6 +5,7 @@ using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.Administration;
 using Klinik.Entities.Loket;
+using Klinik.Entities.MasterData;
 using LinqKit;
 using Newtonsoft.Json;
 using System;
@@ -123,6 +124,8 @@ namespace Klinik.Features
             }
         }
 
+        
+
         public List<LoketModel> GetbaseLoketData(LoketRequest request, Expression<Func<QueuePoli, bool>> searchCriteria = null)
         {
            
@@ -136,6 +139,16 @@ namespace Klinik.Features
                 searchPredicate = searchPredicate.And(p => p.PoliTo == request.Data.PoliToID);
             }
 
+            if (request.Data.ClinicID != 0)
+            {
+                searchPredicate = searchPredicate.And(p => p.ClinicID == request.Data.ClinicID);
+            }
+
+            if (request.Data.Status != -1)
+            {
+                searchPredicate = searchPredicate.And(p => p.Status == request.Data.Status);
+            }
+
             if (request.Data.strIsPreExamine != string.Empty)
             {
                 bool _isAlreadyPreExamine = Convert.ToBoolean(request.Data.strIsPreExamine);
@@ -145,7 +158,7 @@ namespace Klinik.Features
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.Patient.Name.Contains(request.SearchValue) ||
-                 p.Doctor.Name.Contains(request.SearchValue));
+                 p.Doctor.Name.Contains(request.SearchValue)|| p.Patient.MRNumber.Contains(request.SearchValue) );
             }
 
             if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
@@ -195,6 +208,14 @@ namespace Klinik.Features
             foreach (var item in qry)
             {
                 LoketModel lokmdl = Mapper.Map<QueuePoli, LoketModel>(item);
+                if (item.Type == (int)RegistrationTypeEnum.MCU)
+                {
+                    lokmdl.SortNumberCode = "M-" + string.Format("{0:D3}", item.SortNumber);
+                }
+                else
+                {
+                    lokmdl.SortNumberCode = item.Poli1.Code.Trim() + "-" + string.Format("{0:D3}", item.SortNumber);
+                }
                 lists.Add(lokmdl);
             }
             DateTime _start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);

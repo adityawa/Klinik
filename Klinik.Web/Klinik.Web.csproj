@@ -1425,10 +1425,8 @@
     <Content Include="Views\MappingMaster\ClinicPoliList.cshtml" />
     <Content Include="Views\Poli\PatientList.cshtml" />
     <Content Include="Views\Poli\FormExamine.cshtml" />
-
     <Content Include="Views\Lab\ListQueueLaboratorium.cshtml" />
     <Content Include="Views\Lab\CreateItemLab.cshtml" />
-
     <Content Include="Views\MasterData\CreateOrEditMenu.cshtml" />
     <Content Include="Views\MasterData\MenuList.cshtml" />
     <Content Include="Views\MasterData\ProductCategoryList.cshtml" />
@@ -1445,7 +1443,7 @@
     <Content Include="Views\MasterData\CreateOrEditLabItemCategory.cshtml" />
     <Content Include="Views\MasterData\LabItemList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditLabItem.cshtml" />
-
+    <Content Include="Views\Lab\InputLabResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

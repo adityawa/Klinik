@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AppConfig">
           <Key>
             <PropertyRef Name="ID" />
@@ -235,7 +235,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FormExamineID" Type="bigint" />
+          <Property Name="FormMedicalID" Type="bigint" />
           <Property Name="LabType" Type="nvarchar" MaxLength="250" />
           <Property Name="LabItemID" Type="int" />
           <Property Name="Result" Type="varchar" MaxLength="50" />
@@ -962,18 +962,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FormExamineLab_FormExamine">
-          <End Role="FormExamine" Type="Self.FormExamine" Multiplicity="0..1" />
-          <End Role="FormExamineLab" Type="Self.FormExamineLab" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FormExamine">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FormExamineLab">
-              <PropertyRef Name="FormExamineID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_FormExamineLab_LabItem">
           <End Role="LabItem" Type="Self.LabItem" Multiplicity="0..1" />
           <End Role="FormExamineLab" Type="Self.FormExamineLab" Multiplicity="*" />
@@ -1592,10 +1580,6 @@
             <End Role="FormExamine" EntitySet="FormExamine" />
             <End Role="FormExamineAttachment" EntitySet="FormExamineAttachment" />
           </AssociationSet>
-          <AssociationSet Name="FK_FormExamineLab_FormExamine" Association="Self.FK_FormExamineLab_FormExamine">
-            <End Role="FormExamine" EntitySet="FormExamine" />
-            <End Role="FormExamineLab" EntitySet="FormExamineLab" />
-          </AssociationSet>
           <AssociationSet Name="FK_FormExamineLab_LabItem" Association="Self.FK_FormExamineLab_LabItem">
             <End Role="LabItem" EntitySet="LabItem" />
             <End Role="FormExamineLab" EntitySet="FormExamineLab" />
@@ -1765,8 +1749,7 @@
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KlinikDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1875,11 +1858,11 @@
           <Property Name="EmployeeID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_Doctor_Employee" FromRole="Doctor" ToRole="Employee" />
           <NavigationProperty Name="DoctorClinics" Relationship="Self.FK_DoctorClinic_Doctor" FromRole="Doctor" ToRole="DoctorClinic" />
-          <NavigationProperty Name="FormExamines" Relationship="Self.FK_FormExamine_Doctor" FromRole="Doctor" ToRole="FormExamine" />
           <NavigationProperty Name="FormPreExamines" Relationship="Self.FK_FormPreExamine_Doctor" FromRole="Doctor" ToRole="FormPreExamine" />
           <NavigationProperty Name="PoliSchedules" Relationship="Self.FK_PoliSchedule_Doctor" FromRole="Doctor" ToRole="PoliSchedule" />
           <NavigationProperty Name="PoliScheduleMasters" Relationship="Self.FK_PoliScheduleMaster_Doctor" FromRole="Doctor" ToRole="PoliScheduleMaster" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_Doctor" FromRole="Doctor" ToRole="QueuePoli" />
+          <NavigationProperty Name="FormExamines" Relationship="KlinikDBModel.FK_FormExamine_Doctor" FromRole="Doctor" ToRole="FormExamine" />
         </EntityType>
         <EntityType Name="DoctorClinic">
           <Key>
@@ -2000,33 +1983,6 @@
           <NavigationProperty Name="FormExamineAttachments" Relationship="Self.FK_FormExamineAttachment_FileArchieve" FromRole="FileArchieve" ToRole="FormExamineAttachment" />
           <NavigationProperty Name="PatientClinics" Relationship="Self.FK_PatientClinic_FileArchieve" FromRole="FileArchieve" ToRole="PatientClinic" />
         </EntityType>
-        <EntityType Name="FormExamine">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FormMedicalID" Type="Int64" />
-          <Property Name="PoliID" Type="Int32" />
-          <Property Name="TransDate" Type="DateTime" Precision="3" />
-          <Property Name="DoctorID" Type="Int32" />
-          <Property Name="Anamnesa" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Diagnose" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Therapy" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ICDInformation" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Result" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Doctor" Relationship="Self.FK_FormExamine_Doctor" FromRole="FormExamine" ToRole="Doctor" />
-          <NavigationProperty Name="FormMedical" Relationship="Self.FK_FormExamine_FormMedical" FromRole="FormExamine" ToRole="FormMedical" />
-          <NavigationProperty Name="Poli" Relationship="Self.FK_FormExamine_Poli" FromRole="FormExamine" ToRole="Poli" />
-          <NavigationProperty Name="FormExamineAttachments" Relationship="Self.FK_FormExamineAttachment_FormExamine" FromRole="FormExamine" ToRole="FormExamineAttachment" />
-          <NavigationProperty Name="FormExamineLabs" Relationship="Self.FK_FormExamineLab_FormExamine" FromRole="FormExamine" ToRole="FormExamineLab" />
-          <NavigationProperty Name="FormExamineMedicines" Relationship="Self.FK_FormExamineMedicine_FormExamine" FromRole="FormExamine" ToRole="FormExamineMedicine" />
-        </EntityType>
         <EntityType Name="FormExamineAttachment">
           <Key>
             <PropertyRef Name="ID" />
@@ -2040,25 +1996,7 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="FileArchieve" Relationship="Self.FK_FormExamineAttachment_FileArchieve" FromRole="FormExamineAttachment" ToRole="FileArchieve" />
-          <NavigationProperty Name="FormExamine" Relationship="Self.FK_FormExamineAttachment_FormExamine" FromRole="FormExamineAttachment" ToRole="FormExamine" />
-        </EntityType>
-        <EntityType Name="FormExamineLab">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FormExamineID" Type="Int64" />
-          <Property Name="LabType" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="LabItemID" Type="Int32" />
-          <Property Name="Result" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ResultIndicator" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="FormExamine" Relationship="Self.FK_FormExamineLab_FormExamine" FromRole="FormExamineLab" ToRole="FormExamine" />
-          <NavigationProperty Name="LabItem" Relationship="Self.FK_FormExamineLab_LabItem" FromRole="FormExamineLab" ToRole="LabItem" />
+          <NavigationProperty Name="FormExamine" Relationship="KlinikDBModel.FK_FormExamineAttachment_FormExamine" FromRole="FormExamineAttachment" ToRole="FormExamine" />
         </EntityType>
         <EntityType Name="FormExamineMedicine">
           <Key>
@@ -2076,7 +2014,7 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="FormExamine" Relationship="Self.FK_FormExamineMedicine_FormExamine" FromRole="FormExamineMedicine" ToRole="FormExamine" />
+          <NavigationProperty Name="FormExamine" Relationship="KlinikDBModel.FK_FormExamineMedicine_FormExamine" FromRole="FormExamineMedicine" ToRole="FormExamine" />
         </EntityType>
         <EntityType Name="FormExamineService">
           <Key>
@@ -2116,10 +2054,10 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Clinic" Relationship="Self.FK_FormMedical_Clinic" FromRole="FormMedical" ToRole="Clinic" />
-          <NavigationProperty Name="FormExamines" Relationship="Self.FK_FormExamine_FormMedical" FromRole="FormMedical" ToRole="FormExamine" />
           <NavigationProperty Name="Patient" Relationship="Self.FK_FormMedical_Patient" FromRole="FormMedical" ToRole="Patient" />
           <NavigationProperty Name="FormPreExamines" Relationship="Self.FK_FormPreExamine_FormMedical" FromRole="FormMedical" ToRole="FormPreExamine" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_FormMedical" FromRole="FormMedical" ToRole="QueuePoli" />
+          <NavigationProperty Name="FormExamines" Relationship="KlinikDBModel.FK_FormExamine_FormMedical" FromRole="FormMedical" ToRole="FormExamine" />
         </EntityType>
         <EntityType Name="FormPreExamine">
           <Key>
@@ -2182,8 +2120,8 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="FormExamineLabs" Relationship="Self.FK_FormExamineLab_LabItem" FromRole="LabItem" ToRole="FormExamineLab" />
           <NavigationProperty Name="LabItemCategory" Relationship="Self.FK_LabItem_LabItemCategory" FromRole="LabItem" ToRole="LabItemCategory" />
+          <NavigationProperty Name="FormExamineLabs" Relationship="KlinikDBModel.FK_FormExamineLab_LabItem" FromRole="LabItem" ToRole="FormExamineLab" />
         </EntityType>
         <EntityType Name="LabItemCategory">
           <Key>
@@ -2402,13 +2340,13 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="FormExamines" Relationship="Self.FK_FormExamine_Poli" FromRole="Poli" ToRole="FormExamine" />
           <NavigationProperty Name="LabItemCategories" Relationship="Self.FK_LabItemCategory_Poli" FromRole="Poli" ToRole="LabItemCategory" />
           <NavigationProperty Name="PoliClinics" Relationship="Self.FK_PoliClinic_Poli" FromRole="Poli" ToRole="PoliClinic" />
           <NavigationProperty Name="PoliSchedules" Relationship="Self.FK_PoliSchedule_Poli" FromRole="Poli" ToRole="PoliSchedule" />
           <NavigationProperty Name="PoliScheduleMasters" Relationship="Self.FK_PoliScheduleMaster_Poli" FromRole="Poli" ToRole="PoliScheduleMaster" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_PoliFrom" FromRole="Poli" ToRole="QueuePoli" />
           <NavigationProperty Name="QueuePolis1" Relationship="Self.FK_QueuePoli_PoliTo" FromRole="Poli" ToRole="QueuePoli" />
+          <NavigationProperty Name="FormExamines" Relationship="KlinikDBModel.FK_FormExamine_Poli" FromRole="Poli" ToRole="FormExamine" />
         </EntityType>
         <EntityType Name="PoliClinic">
           <Key>
@@ -2811,18 +2749,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FormExamine_Doctor">
-          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
-          <End Role="FormExamine" Type="Self.FormExamine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Doctor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FormExamine">
-              <PropertyRef Name="DoctorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_FormPreExamine_Doctor">
           <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
           <End Role="FormPreExamine" Type="Self.FormPreExamine" Multiplicity="*" />
@@ -2988,78 +2914,6 @@
             </Principal>
             <Dependent Role="PatientClinic">
               <PropertyRef Name="PhotoID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FormExamine_FormMedical">
-          <End Role="FormMedical" Type="Self.FormMedical" Multiplicity="0..1" />
-          <End Role="FormExamine" Type="Self.FormExamine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FormMedical">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FormExamine">
-              <PropertyRef Name="FormMedicalID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FormExamine_Poli">
-          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
-          <End Role="FormExamine" Type="Self.FormExamine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Poli">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FormExamine">
-              <PropertyRef Name="PoliID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FormExamineAttachment_FormExamine">
-          <End Role="FormExamine" Type="Self.FormExamine" Multiplicity="0..1" />
-          <End Role="FormExamineAttachment" Type="Self.FormExamineAttachment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FormExamine">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FormExamineAttachment">
-              <PropertyRef Name="FormExamineID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FormExamineLab_FormExamine">
-          <End Role="FormExamine" Type="Self.FormExamine" Multiplicity="0..1" />
-          <End Role="FormExamineLab" Type="Self.FormExamineLab" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FormExamine">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FormExamineLab">
-              <PropertyRef Name="FormExamineID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FormExamineMedicine_FormExamine">
-          <End Role="FormExamine" Type="Self.FormExamine" Multiplicity="0..1" />
-          <End Role="FormExamineMedicine" Type="Self.FormExamineMedicine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FormExamine">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FormExamineMedicine">
-              <PropertyRef Name="FormExamineID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FormExamineLab_LabItem">
-          <End Role="LabItem" Type="Self.LabItem" Multiplicity="0..1" />
-          <End Role="FormExamineLab" Type="Self.FormExamineLab" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LabItem">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FormExamineLab">
-              <PropertyRef Name="LabItemID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3375,9 +3229,7 @@
           <EntitySet Name="EmployeeStatus" EntityType="Self.EmployeeStatu" />
           <EntitySet Name="FamilyRelationships" EntityType="Self.FamilyRelationship" />
           <EntitySet Name="FileArchieves" EntityType="Self.FileArchieve" />
-          <EntitySet Name="FormExamines" EntityType="Self.FormExamine" />
           <EntitySet Name="FormExamineAttachments" EntityType="Self.FormExamineAttachment" />
-          <EntitySet Name="FormExamineLabs" EntityType="Self.FormExamineLab" />
           <EntitySet Name="FormExamineMedicines" EntityType="Self.FormExamineMedicine" />
           <EntitySet Name="FormExamineServices" EntityType="Self.FormExamineService" />
           <EntitySet Name="FormMedicals" EntityType="Self.FormMedical" />
@@ -3465,10 +3317,6 @@
             <End Role="Doctor" EntitySet="Doctors" />
             <End Role="DoctorClinic" EntitySet="DoctorClinics" />
           </AssociationSet>
-          <AssociationSet Name="FK_FormExamine_Doctor" Association="Self.FK_FormExamine_Doctor">
-            <End Role="Doctor" EntitySet="Doctors" />
-            <End Role="FormExamine" EntitySet="FormExamines" />
-          </AssociationSet>
           <AssociationSet Name="FK_FormPreExamine_Doctor" Association="Self.FK_FormPreExamine_Doctor">
             <End Role="Doctor" EntitySet="Doctors" />
             <End Role="FormPreExamine" EntitySet="FormPreExamines" />
@@ -3524,30 +3372,6 @@
           <AssociationSet Name="FK_PatientClinic_FileArchieve" Association="Self.FK_PatientClinic_FileArchieve">
             <End Role="FileArchieve" EntitySet="FileArchieves" />
             <End Role="PatientClinic" EntitySet="PatientClinics" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FormExamine_FormMedical" Association="Self.FK_FormExamine_FormMedical">
-            <End Role="FormMedical" EntitySet="FormMedicals" />
-            <End Role="FormExamine" EntitySet="FormExamines" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FormExamine_Poli" Association="Self.FK_FormExamine_Poli">
-            <End Role="Poli" EntitySet="Polis" />
-            <End Role="FormExamine" EntitySet="FormExamines" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FormExamineAttachment_FormExamine" Association="Self.FK_FormExamineAttachment_FormExamine">
-            <End Role="FormExamine" EntitySet="FormExamines" />
-            <End Role="FormExamineAttachment" EntitySet="FormExamineAttachments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FormExamineLab_FormExamine" Association="Self.FK_FormExamineLab_FormExamine">
-            <End Role="FormExamine" EntitySet="FormExamines" />
-            <End Role="FormExamineLab" EntitySet="FormExamineLabs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FormExamineMedicine_FormExamine" Association="Self.FK_FormExamineMedicine_FormExamine">
-            <End Role="FormExamine" EntitySet="FormExamines" />
-            <End Role="FormExamineMedicine" EntitySet="FormExamineMedicines" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FormExamineLab_LabItem" Association="Self.FK_FormExamineLab_LabItem">
-            <End Role="LabItem" EntitySet="LabItems" />
-            <End Role="FormExamineLab" EntitySet="FormExamineLabs" />
           </AssociationSet>
           <AssociationSet Name="FK_FormMedical_Patient" Association="Self.FK_FormMedical_Patient">
             <End Role="Patient" EntitySet="Patients" />
@@ -3649,8 +3473,149 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-        </EntityContainer>
-      </Schema>
+          <EntitySet Name="FormExamines" EntityType="KlinikDBModel.FormExamine" />
+          <EntitySet Name="FormExamineLabs" EntityType="KlinikDBModel.FormExamineLab" />
+          <AssociationSet Name="FK_FormExamine_Doctor" Association="KlinikDBModel.FK_FormExamine_Doctor">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="FormExamine" EntitySet="FormExamines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormExamine_FormMedical" Association="KlinikDBModel.FK_FormExamine_FormMedical">
+            <End Role="FormMedical" EntitySet="FormMedicals" />
+            <End Role="FormExamine" EntitySet="FormExamines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormExamine_Poli" Association="KlinikDBModel.FK_FormExamine_Poli">
+            <End Role="Poli" EntitySet="Polis" />
+            <End Role="FormExamine" EntitySet="FormExamines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormExamineAttachment_FormExamine" Association="KlinikDBModel.FK_FormExamineAttachment_FormExamine">
+            <End Role="FormExamine" EntitySet="FormExamines" />
+            <End Role="FormExamineAttachment" EntitySet="FormExamineAttachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormExamineMedicine_FormExamine" Association="KlinikDBModel.FK_FormExamineMedicine_FormExamine">
+            <End Role="FormExamine" EntitySet="FormExamines" />
+            <End Role="FormExamineMedicine" EntitySet="FormExamineMedicines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormExamineLab_LabItem" Association="KlinikDBModel.FK_FormExamineLab_LabItem">
+            <End Role="LabItem" EntitySet="LabItems" />
+            <End Role="FormExamineLab" EntitySet="FormExamineLabs" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="FormExamine">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormMedicalID" Type="Int64" />
+          <Property Name="PoliID" Type="Int32" />
+          <Property Name="TransDate" Type="DateTime" Precision="3" />
+          <Property Name="DoctorID" Type="Int32" />
+          <Property Name="Anamnesa" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Diagnose" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Therapy" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ICDInformation" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Result" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RowStatus" Type="Int16" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Doctor" Relationship="KlinikDBModel.FK_FormExamine_Doctor" FromRole="FormExamine" ToRole="Doctor" />
+          <NavigationProperty Name="FormMedical" Relationship="KlinikDBModel.FK_FormExamine_FormMedical" FromRole="FormExamine" ToRole="FormMedical" />
+          <NavigationProperty Name="Poli" Relationship="KlinikDBModel.FK_FormExamine_Poli" FromRole="FormExamine" ToRole="Poli" />
+          <NavigationProperty Name="FormExamineAttachments" Relationship="KlinikDBModel.FK_FormExamineAttachment_FormExamine" FromRole="FormExamine" ToRole="FormExamineAttachment" />
+          <NavigationProperty Name="FormExamineMedicines" Relationship="KlinikDBModel.FK_FormExamineMedicine_FormExamine" FromRole="FormExamine" ToRole="FormExamineMedicine" />
+        </EntityType>
+        <EntityType Name="FormExamineLab">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormMedicalID" Type="Int64" />
+          <Property Name="LabType" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LabItemID" Type="Int32" />
+          <Property Name="Result" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ResultIndicator" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="LabItem" Relationship="KlinikDBModel.FK_FormExamineLab_LabItem" FromRole="FormExamineLab" ToRole="LabItem" />
+        </EntityType>
+        <Association Name="FK_FormExamine_Doctor">
+          <End Type="KlinikDBModel.Doctor" Role="Doctor" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.FormExamine" Role="FormExamine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamine">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormExamine_FormMedical">
+          <End Type="KlinikDBModel.FormMedical" Role="FormMedical" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.FormExamine" Role="FormExamine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormMedical">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamine">
+              <PropertyRef Name="FormMedicalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormExamine_Poli">
+          <End Type="KlinikDBModel.Poli" Role="Poli" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.FormExamine" Role="FormExamine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poli">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamine">
+              <PropertyRef Name="PoliID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormExamineAttachment_FormExamine">
+          <End Type="KlinikDBModel.FormExamine" Role="FormExamine" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.FormExamineAttachment" Role="FormExamineAttachment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormExamine">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineAttachment">
+              <PropertyRef Name="FormExamineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormExamineMedicine_FormExamine">
+          <End Type="KlinikDBModel.FormExamine" Role="FormExamine" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.FormExamineMedicine" Role="FormExamineMedicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormExamine">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineMedicine">
+              <PropertyRef Name="FormExamineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormExamineLab_LabItem">
+          <End Type="KlinikDBModel.LabItem" Role="LabItem" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.FormExamineLab" Role="FormExamineLab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabItem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineLab">
+              <PropertyRef Name="LabItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -3858,51 +3823,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FormExamines">
-            <EntityTypeMapping TypeName="KlinikDBModel.FormExamine">
-              <MappingFragment StoreEntitySet="FormExamine">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="FormMedicalID" ColumnName="FormMedicalID" />
-                <ScalarProperty Name="PoliID" ColumnName="PoliID" />
-                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
-                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
-                <ScalarProperty Name="Anamnesa" ColumnName="Anamnesa" />
-                <ScalarProperty Name="Diagnose" ColumnName="Diagnose" />
-                <ScalarProperty Name="Therapy" ColumnName="Therapy" />
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="ICDInformation" ColumnName="ICDInformation" />
-                <ScalarProperty Name="Result" ColumnName="Result" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="FormExamineAttachments">
             <EntityTypeMapping TypeName="KlinikDBModel.FormExamineAttachment">
               <MappingFragment StoreEntitySet="FormExamineAttachment">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="FormExamineID" ColumnName="FormExamineID" />
                 <ScalarProperty Name="FileAttach" ColumnName="FileAttach" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FormExamineLabs">
-            <EntityTypeMapping TypeName="KlinikDBModel.FormExamineLab">
-              <MappingFragment StoreEntitySet="FormExamineLab">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="FormExamineID" ColumnName="FormExamineID" />
-                <ScalarProperty Name="LabType" ColumnName="LabType" />
-                <ScalarProperty Name="LabItemID" ColumnName="LabItemID" />
-                <ScalarProperty Name="Result" ColumnName="Result" />
-                <ScalarProperty Name="ResultIndicator" ColumnName="ResultIndicator" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -4454,7 +4380,46 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="FormExamines">
+            <EntityTypeMapping TypeName="KlinikDBModel.FormExamine">
+              <MappingFragment StoreEntitySet="FormExamine">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="ICDInformation" ColumnName="ICDInformation" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Therapy" ColumnName="Therapy" />
+                <ScalarProperty Name="Diagnose" ColumnName="Diagnose" />
+                <ScalarProperty Name="Anamnesa" ColumnName="Anamnesa" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+                <ScalarProperty Name="PoliID" ColumnName="PoliID" />
+                <ScalarProperty Name="FormMedicalID" ColumnName="FormMedicalID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FormExamineLabs">
+            <EntityTypeMapping TypeName="KlinikDBModel.FormExamineLab">
+              <MappingFragment StoreEntitySet="FormExamineLab">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="ResultIndicator" ColumnName="ResultIndicator" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="LabItemID" ColumnName="LabItemID" />
+                <ScalarProperty Name="LabType" ColumnName="LabType" />
+                <ScalarProperty Name="FormMedicalID" ColumnName="FormMedicalID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

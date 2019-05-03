@@ -120,6 +120,7 @@ namespace Klinik.Common
                 .ForMember(m => m.TransactionDate, map => map.MapFrom(p => p.TransactionDate))
                 .ForMember(m => m.DoctorStr, map => map.MapFrom(p => p.Doctor.Name))
                 .ForMember(m => m.ClinicName, map => map.MapFrom(p => p.Clinic.Name))
+                .ForMember(m=>m.MRNumber, map=>map.MapFrom(p=>p.Patient.MRNumber))
                 .ForMember(m => m.strIsPreExamine, map => map.MapFrom(p => p.IsPreExamine == true ? "Yes" : "No"));
 
 
@@ -180,7 +181,8 @@ namespace Klinik.Common
             CreateMap<FormExamineAttachment, FormExamineAttachmentModel>();
 
             CreateMap<FormExamineLabModel, FormExamineLab>();
-            CreateMap<FormExamineLab, FormExamineLabModel>();
+            CreateMap<FormExamineLab, FormExamineLabModel>()
+                .ForMember(x=>x.LabItemDesc,map=>map.MapFrom(p=>p.LabItem.Name));
 
             CreateMap<FormExamineServiceModel, FormExamineService>();
             CreateMap<FormExamineService, FormExamineServiceModel>();
