@@ -385,6 +385,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Conclusion.
+        /// </summary>
+        public static string Conclusion {
+            get {
+                return ResourceManager.GetString("Conclusion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Concoction Medicine.
         /// </summary>
         public static string ConcoctionMedicine {
@@ -1060,6 +1069,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Input Result.
+        /// </summary>
+        public static string InputLabResult {
+            get {
+                return ResourceManager.GetString("InputLabResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Menu.
         /// </summary>
         public static string IsMenu {
@@ -1132,6 +1150,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lab Item ID.
+        /// </summary>
+        public static string LabItemId {
+            get {
+                return ResourceManager.GetString("LabItemId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lab Item list.
         /// </summary>
         public static string LabItemList {
@@ -1150,11 +1177,29 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Laboratorium Queue.
+        /// </summary>
+        public static string LaboratoriumQueue {
+            get {
+                return ResourceManager.GetString("LaboratoriumQueue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Laboratory.
         /// </summary>
         public static string Laboratory {
             get {
                 return ResourceManager.GetString("Laboratory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string LabType {
+            get {
+                return ResourceManager.GetString("LabType", resourceCulture);
             }
         }
         
@@ -1753,6 +1798,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PreExamine Queue.
+        /// </summary>
+        public static string PreExamineQueue {
+            get {
+                return ResourceManager.GetString("PreExamineQueue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price.
         /// </summary>
         public static string Price {
@@ -2127,6 +2181,15 @@ namespace Klinik.Resources {
         public static string Result {
             get {
                 return ResourceManager.GetString("Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Result Indicator.
+        /// </summary>
+        public static string ResultIndicator {
+            get {
+                return ResourceManager.GetString("ResultIndicator", resourceCulture);
             }
         }
         

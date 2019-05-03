@@ -8,10 +8,11 @@ using LinqKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Klinik.Features
 {
-    public class LabItemHandler : BaseFeatures, IBaseFeatures<LabItemResponse, LabItemRequest>
+    public class LabItemHandler : BaseFeatures
     {
         /// <summary>
         /// Constructor
@@ -134,7 +135,7 @@ namespace Klinik.Features
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public LabItemResponse GetListData(LabItemRequest request)
+        public LabItemResponse GetListData(LabItemRequest request, Expression<Func<LabItem, bool>> searchCriteria = null)
         {
             List<LabItemModel> lists = new List<LabItemModel>();
             dynamic qry = null;
@@ -143,9 +144,14 @@ namespace Klinik.Features
             // add default filter to show the active data only
             searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
 
+            if (searchCriteria != null)
+            {
+                searchPredicate = searchPredicate.And(searchCriteria);
+            }
+
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
-                searchPredicate = searchPredicate.And(p => p.Name.Contains(request.SearchValue));
+                searchPredicate = searchPredicate.And(p => p.Name.Contains(request.SearchValue) || p.Code.Contains(request.SearchValue));
             }
 
             if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
@@ -156,6 +162,12 @@ namespace Klinik.Features
                     {
                         case "name":
                             qry = _unitOfWork.LabItemRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Name));
+                            break;
+                        case "code":
+                            qry = _unitOfWork.LabItemRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Code));
+                            break;
+                        case "price":
+                            qry = _unitOfWork.LabItemRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Price));
                             break;
 
                         default:
@@ -170,7 +182,12 @@ namespace Klinik.Features
                         case "name":
                             qry = _unitOfWork.LabItemRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Name));
                             break;
-
+                        case "code":
+                            qry = _unitOfWork.LabItemRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Code));
+                            break;
+                        case "price":
+                            qry = _unitOfWork.LabItemRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Price));
+                            break;
                         default:
                             qry = _unitOfWork.LabItemRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID));
                             break;

@@ -313,5 +313,14 @@ namespace Klinik.Features
             return response;
         }
 
+        public static int GetPoliIDBasedOnName(string poliName)
+        {
+            Int32 _id = 0;
+            var _getPoli = _unitOfWork.PoliRepository.GetFirstOrDefault(x => x.Name == poliName);
+            if (_getPoli != null)
+                _id = _getPoli.ID;
+            return _id;
+        }
+
     }
 }

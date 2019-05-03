@@ -61,10 +61,7 @@
             "showMethod": "fadeIn"
         };
 
-        //$('#btnAdd').click(function (e) {
-        //    window.location.href = "/MappingMaster/CreateOrganizationPrivilege";
-        //});
-
+      
         var _idOrg = getUrlVars()["orgid"];
         var rows_selected = [];
 
@@ -187,7 +184,6 @@
                 else {
                     var form_data = new FormData();
                     form_data.append("OrgId", $('#hdOrgId').val());
-
                     form_data.append("Privileges", JSON.stringify(rows_selected));
 
                     $.ajax({

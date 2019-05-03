@@ -816,6 +816,12 @@
   <data name="Volume" xml:space="preserve">
     <value>Volume</value>
   </data>
+  <data name="PreExamineQueue" xml:space="preserve">
+    <value>PreExamine Queue</value>
+  </data>
+  <data name="LaboratoriumQueue" xml:space="preserve">
+    <value>Laboratorium Queue</value>
+  </data>
   <data name="Stock" xml:space="preserve">
     <value>Stock</value>
   </data>
@@ -932,6 +938,21 @@
   </data>
   <data name="OldPassword" xml:space="preserve">
     <value>Old Password</value>
+  </data>
+  <data name="InputLabResult" xml:space="preserve">
+    <value>Input Result</value>
+  </data>
+  <data name="Conclusion" xml:space="preserve">
+    <value>Conclusion</value>
+  </data>
+  <data name="LabItemId" xml:space="preserve">
+    <value>Lab Item ID</value>
+  </data>
+  <data name="LabType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="ResultIndicator" xml:space="preserve">
+    <value>Result Indicator</value>
   </data>
   <data name="PoliServiceList" xml:space="preserve">
     <value>Poli Service List</value>

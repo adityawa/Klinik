@@ -78,6 +78,7 @@
         public static class NameConstant
         {
             public const string Loket = "Loket";
+            public const string Laboratorium = "Laboratorium";
         }
     }
 }

@@ -247,7 +247,7 @@ namespace Klinik.Web.Controllers
                     }
 
                     // get form examine lab if any
-                    List<FormExamineLab> formExamineLabs = _unitOfWork.FormExamineLabRepository.Get(x => x.FormExamineID == formExamine.ID && x.LabType == "Laboratory");
+                    List<FormExamineLab> formExamineLabs = _unitOfWork.FormExamineLabRepository.Get(x => x.FormMedicalID == formExamine.FormMedicalID && x.LabType == "Laboratory");
                     if (formExamineLabs.Count > 0)
                     {
                         foreach (var formExamineLab in formExamineLabs)
@@ -257,7 +257,7 @@ namespace Klinik.Web.Controllers
                     }
 
                     // get form examine radiologi if any
-                    List<FormExamineLab> formExamineRadiologies = _unitOfWork.FormExamineLabRepository.Get(x => x.FormExamineID == formExamine.ID && x.LabType == "Radiology");
+                    List<FormExamineLab> formExamineRadiologies = _unitOfWork.FormExamineLabRepository.Get(x => x.FormMedicalID == formExamine.FormMedicalID && x.LabType == "Radiology");
                     if (formExamineRadiologies.Count > 0)
                     {
                         foreach (var formExamineRadiology in formExamineRadiologies)

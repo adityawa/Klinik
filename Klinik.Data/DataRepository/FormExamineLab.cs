@@ -15,7 +15,7 @@ namespace Klinik.Data.DataRepository
     public partial class FormExamineLab
     {
         public long ID { get; set; }
-        public Nullable<long> FormExamineID { get; set; }
+        public Nullable<long> FormMedicalID { get; set; }
         public string LabType { get; set; }
         public Nullable<int> LabItemID { get; set; }
         public string Result { get; set; }
@@ -26,7 +26,6 @@ namespace Klinik.Data.DataRepository
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual FormExamine FormExamine { get; set; }
         public virtual LabItem LabItem { get; set; }
     }
 }

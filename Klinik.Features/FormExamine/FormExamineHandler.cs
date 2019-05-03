@@ -144,7 +144,7 @@ namespace Klinik.Features
                     formExamine.CreatedBy = request.Data.Account.UserCode;
                     formExamine.CreatedDate = DateTime.Now;
                     formExamine.FormExamineMedicines = formExamineMedicine;
-                    formExamine.FormExamineLabs = formExamineLab;
+                   // formExamine.FormExamineLabs = formExamineLab;
 
                     // save the form examine data
                     _unitOfWork.FormExamineRepository.Insert(formExamine);

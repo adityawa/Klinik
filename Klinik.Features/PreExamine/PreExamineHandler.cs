@@ -9,6 +9,7 @@ using LinqKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Klinik.Features
 {
@@ -22,88 +23,16 @@ namespace Klinik.Features
         public LoketResponse GetListData(LoketRequest request)
         {
             var _loketId = _unitOfWork.PoliRepository.GetFirstOrDefault(x => x.Name == Constants.NameConstant.Loket);
+            Expression<Func<QueuePoli, bool>> _serachCriteria = x=>x.PoliFrom==_loketId.ID;
 
-            List<LoketModel> lists = new List<LoketModel>();
-            dynamic qry = null;
-            var searchPredicate = PredicateBuilder.New<QueuePoli>(true);
-            searchPredicate = searchPredicate.And(p => p.PoliFrom == _loketId.ID);
-
-            if (request.Data.PoliToID != 0)
-            {
-                searchPredicate = searchPredicate.And(p => p.PoliTo == request.Data.PoliToID);
-            }
-
-            if (request.Data.strIsPreExamine != string.Empty)
-            {
-                bool _isAlreadyPreExamine = Convert.ToBoolean(request.Data.strIsPreExamine);
-                searchPredicate = searchPredicate.And(p => p.IsPreExamine == _isAlreadyPreExamine);
-            }
-
-            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
-            {
-                searchPredicate = searchPredicate.And(p => p.Patient.Name.Contains(request.SearchValue) ||
-                 p.Doctor.Name.Contains(request.SearchValue));
-            }
-
-            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
-            {
-                if (request.SortColumnDir == "asc")
-                {
-                    switch (request.SortColumn.ToLower())
-                    {
-                        case "patientname":
-                            qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Patient.Name));
-                            break;
-                        case "doctorstr":
-                            qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Doctor.Name));
-                            break;
-                        case "transactiondatestr":
-                            qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.TransactionDate));
-                            break;
-                        default:
-                            qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.ID));
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (request.SortColumn.ToLower())
-                    {
-                        case "patientname":
-                            qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Patient.Name));
-                            break;
-                        case "doctorstr":
-                            qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Doctor.Name));
-                            break;
-                        case "transactiondatestr":
-                            qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.TransactionDate));
-                            break;
-                        default:
-                            qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID));
-                            break;
-                    }
-                }
-            }
-            else
-            {
-                qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, null);
-            }
-
-            foreach (var item in qry)
-            {
-                LoketModel lokmdl = Mapper.Map<QueuePoli, LoketModel>(item);
-                lists.Add(lokmdl);
-            }
-
+            List<LoketModel> lists = base.GetbaseLoketData(request, _serachCriteria);
             int totalRequest = lists.Count();
-            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
-
             var response = new LoketResponse
             {
                 Draw = request.Draw,
                 RecordsFiltered = totalRequest,
                 RecordsTotal = totalRequest,
-                Data = data
+                Data = lists
             };
 
             return response;

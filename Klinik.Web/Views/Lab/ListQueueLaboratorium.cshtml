@@ -10,21 +10,21 @@
             <a href="#" class="fa fa-caret-down"></a>
         </div>
         <h5 class="panel-title">
-            @Klinik.Resources.UIMessages.PreExamineQueue
+            @Klinik.Resources.UIMessages.LaboratoriumQueue
         </h5>
     </header>
 
     <div class="panel-body">
         <div class="form-group">
-            <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PoliTo</label>
+            <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Clinic</label>
             <div class="col-md-4">
-                @Html.DropDownListFor(x => x.PoliToID, (IEnumerable<SelectListItem>)ViewBag.PoliSelection, new { @class = "form-control", @id = "ddlPoliTo" })
+                @Html.DropDownListFor(x => x.ClinicID, (IEnumerable<SelectListItem>)ViewBag.Clinics, new { @class = "form-control", @id = "ddlClinics" })
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.AlreadyPreExamine</label>
+            <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Status</label>
             <div class="col-md-4">
-                @Html.DropDownListFor(x => x.strIsPreExamine, (IEnumerable<SelectListItem>)ViewBag.AlreadyPreExamine, new { @class = "form-control", @id = "ddlPreExamine" })
+                @Html.DropDownListFor(x => x.Status, (IEnumerable<SelectListItem>)ViewBag.Status, new { @class = "form-control", @id = "ddlStatus" })
             </div>
         </div>
         <div style="width:100%; margin:0 auto">
@@ -34,12 +34,14 @@
                         <th>@Klinik.Resources.UIMessages.ID</th>
                         <th>@Klinik.Resources.UIMessages.Clinic</th>
                         <th>@Klinik.Resources.UIMessages.Patient</th>
+                        <th>@Klinik.Resources.UIMessages.MRNumber</th>
                         <th>@Klinik.Resources.UIMessages.Doctor</th>
+                        <th>@Klinik.Resources.UIMessages.QueueCode</th>
                         <th>@Klinik.Resources.UIMessages.TransactionDate</th>
                         <th>@Klinik.Resources.UIMessages.RegistrationType</th>
                         <th>@Klinik.Resources.UIMessages.PoliFrom</th>
                         <th>@Klinik.Resources.UIMessages.PoliTo</th>
-                        <th>@Klinik.Resources.UIMessages.AlreadyPreExamine</th>
+                        <th>@Klinik.Resources.UIMessages.Status</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -53,14 +55,14 @@
     <script type="text/javascript">
         var table;
     $(document).ready(function () {
-
-        $("#ddlPoliTo").change(function () {
+        $("#ddlClinics").change(function () {
             BindTable();
         });
 
-        $("#ddlPreExamine").change(function () {
+        $("#ddlStatus").change(function () {
             BindTable();
         });
+
 
         BindTable();
 
@@ -77,21 +79,20 @@
         "showMethod": "fadeIn"
     };
 
- 
 
         function BindTable() {
-            var _selected = $('#ddlPoliTo').val();
-            var _isAlreadyPreExamine = $('#ddlPreExamine').val();
+            var _clinics = $('#ddlClinics').val();
+            var _status = $('#ddlStatus').val();
         table = $('#tbQueuePoli').dataTable({
             "autoWidth": false,
             "processing": true,
             "serverSide": true,
             "filter": true,
-            "destroy":true,
+            "destroy": true,
             "orderMulti": false,
             "pageLength": 10,
             "ajax": {
-                "url": "/PreExamine/GetListQueue?poli="+_selected+"&preexamine="+_isAlreadyPreExamine,
+                "url": "/Lab/GetListQueue?clinics="+_clinics+"&status="+_status,
                 "type": "POST",
                 "datatype": "json"
             },
@@ -119,27 +120,27 @@
                 {
                     "targets": [4],
                     "searchable": false,
-                    "orderable": true
-                },
-                {
-                    "targets": [5],
-                    "searchable": true,
-                    "orderable": true
-                },
+                    "orderable": false
+                    },
+                    {
+                        "targets": [5],
+                        "searchable": false,
+                        "orderable": false
+                    },
                 {
                     "targets": [6],
+                    "searchable": false,
+                    "orderable": true
+                },
+                {
+                    "targets": [7],
                     "searchable": false,
                     "orderable": false
                 },
                 {
-                    "targets": [7],
-                    "searchable": true,
-                    "orderable": true
-                    },
-                    {
-                        "targets": [8],
-                        "searchable": false,
-                        "orderable": false
+                    "targets": [8],
+                    "searchable": false,
+                    "orderable": false
                     },
                     {
                         "targets": [9],
@@ -149,36 +150,50 @@
                     {
                         "targets": [10],
                         "searchable": false,
+                        "orderable": true
+                    },
+                    {
+                        "targets": [11],
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [12],
+                        "searchable": false,
                         "orderable": false
                     }
+                   
                 ],
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": false },
                 { "data": "ClinicName", "name": "ClinicName", "autoWidth": true },
                 { "data": "PatientName", "name": "PatientName", "autoWidth": true },
+                { "data": "MRNumber", "name": "MRNumber", "autoWidth": true },
                 { "data": "DoctorStr", "name": "DoctorStr", "autoWidth": true },
+                { "data": "SortNumberCode", "name": "SortNumberCode", "autoWidth": true },
                 { "data": "TransactionDateStr", "name": "TransactionDateStr", "autoWidth": true },
                 { "data": "TypeStr", "name": "TypeStr", "autoWidth": true },
                 { "data": "PoliFromName", "name": "PoliFromName", "autoWidth": true },
                 { "data": "PoliToName", "name": "PoliToName", "autoWidth": true },
-                { "data": "strIsPreExamine", "name": "strIsPreExamine", "autoWidth": true },
+                { "data": "StatusStr", "name": "StatusStr", "autoWidth": true },
 
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-success" href="/PreExamine/CreateOrEditPreExamine?id=' + full.Id + '">@Klinik.Resources.UIMessages.Process</a>'; }
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-success" href="/Lab/CreateItemLab?id=' + full.Id + '">@Klinik.Resources.UIMessages.Process</a>'; }
                 },
-
                 {
                     "render": function (data, type, full, meta) {
-                        if (full.strIsPreExamine == 'Yes') {
-                            return ' <a class="btn btn-info" href="/PreExamine/CreateOrEditPreExamine?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>';
+                        if (full.StatusStr == 'Hold' || full.StatusStr == 'Finish' ) {
+                            return '<a class="btn btn-info" href="/Lab/InputLabResult?id=' + full.Id + '">@Klinik.Resources.UIMessages.InputLabResult</a>';
                         }
                         else {
                             return ''
                         }
+                       
                     }
-                }
+                },
+              
             ]
-           
+
             });
             table.destroy();
         }

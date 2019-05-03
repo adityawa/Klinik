@@ -1,5 +1,6 @@
 using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Features;
 using System;
 using Unity;
 using Unity.Injection;
@@ -48,6 +49,7 @@ namespace Klinik.Web
             container.RegisterType<UnitOfWork>(new InjectionConstructor(new KlinikDBEntities()));
             container.RegisterType<IUnitOfWork, UnitOfWork>(new PerResolveLifetimeManager());
             container.RegisterType<KlinikDBEntities,KlinikDBEntities>(new PerResolveLifetimeManager());
+            container.RegisterType<ClinicHandler, ClinicHandler>(new PerResolveLifetimeManager());
         }
     }
 }

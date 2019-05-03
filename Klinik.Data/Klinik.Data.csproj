@@ -236,6 +236,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="DataRepository\KlinikModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>KlinikModel.Designer.cs</LastGenOutput>
