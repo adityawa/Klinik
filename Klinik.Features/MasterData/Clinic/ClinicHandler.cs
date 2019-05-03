@@ -171,12 +171,18 @@ namespace Klinik.Features
         /// <returns></returns>
         public ClinicResponse GetListData(ClinicRequest request)
         {
+            long _clinicID = request.Data.Account.ClinicID;
+            IList<long> clinicsID = _unitOfWork.PatientClinicRepository.Get(x => x.ClinicID == _clinicID).Select(x => x.PatientID).ToList();
             List<ClinicModel> lists = new List<ClinicModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<Clinic>(true);
 
             // add default filter to show the active data only
-            searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
+            searchPredicate = searchPredicate.And(x =>x.RowStatus == 0);
+            if(_clinicID > 0)
+            {
+                searchPredicate.And(x => x.ID == _clinicID); 
+            }
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {

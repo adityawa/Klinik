@@ -312,7 +312,14 @@ namespace Klinik.Features
             List<PatientModel> lists = new List<PatientModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<Patient>(true);
-            searchPredicate = searchPredicate.And(p => clinicsID.Contains(p.ID) && p.RowStatus == 0);
+            if (clinicsID.Count() > 0)
+            {
+                searchPredicate = searchPredicate.And(p => clinicsID.Contains(p.ID) && p.RowStatus == 0);
+            }
+            else
+            {
+                searchPredicate = searchPredicate.And(p => p.RowStatus == 0);
+            }
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.Name.Contains(request.SearchValue) ||

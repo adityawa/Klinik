@@ -19,7 +19,7 @@
                 <div class="col-md-4">
                     @Html.HiddenFor(x => x.Id)
                     @Html.TextBoxFor(x => x.Code, new { @class = "form-control", @id = "tbOrgCode" })
-                    @Html.ValidationMessageFor(m => m.Code, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.Code, "", new { @class = "text-danger" }    )
                 </div>
             </div>
             <div class="form-group">
@@ -30,9 +30,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Organization</label>
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PoliType</label>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(p => p.Type, (IEnumerable<SelectListItem>)ViewBag.Type, new { @class = "form-control", @id = "ddlType" })
+                    @Html.DropDownList("Type", null, "-- PIlih Type ---", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
                 </div>
             </div>
             <br />
@@ -48,7 +49,7 @@
     <script type="text/javascript">
     $(document).ready(function () {
         $('#btnreset').click(function (e) {
-            window.location.href = "/MasterData/RoleList";
+            window.location.href = "/MasterData/PoliList";
         });
 
         $('#ddlType').select2();

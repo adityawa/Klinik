@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Klinik.Resources;
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -154,6 +155,55 @@ namespace Klinik.Common
             }
 
             return decryptedBytes;
+        }
+
+        public static string GetPatientAge(string birthDate)
+        {
+            DateTime dob;
+            if (DateTime.TryParse(birthDate, out dob))
+            {
+                return GetPatientAge(dob);
+            }
+
+            return string.Empty;
+        }
+
+        public static string GetPatientAge(DateTime dob)
+        {
+            string result = string.Empty;
+
+            int Years = new DateTime(DateTime.Now.Subtract(dob).Ticks).Year - 1;
+
+            DateTime PastYearDate = dob.AddYears(Years);
+
+            int Months = 0;
+            for (int i = 1; i <= 12; i++)
+            {
+                if (PastYearDate.AddMonths(i) == DateTime.Now)
+                {
+                    Months = i;
+                    break;
+                }
+                else if (PastYearDate.AddMonths(i) >= DateTime.Now)
+                {
+                    Months = i - 1;
+                    break;
+                }
+            }
+
+            if (Years > 0)
+            {
+                if (Months > 0)
+                    result = Years.ToString() + " " + UIMessages.Years + " " + Months.ToString() + " " + UIMessages.Month;
+                else
+                    result = Years.ToString() + " " + UIMessages.Years;
+            }
+            else
+            {
+                result = Months.ToString() + " " + UIMessages.Month;
+            }
+
+            return result;
         }
     }
 }

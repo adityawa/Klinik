@@ -365,6 +365,21 @@ namespace Klinik.Web.Controllers
             return _PoliTypes;
         }
 
+        private List<SelectListItem> PoliType()
+        {
+            List<SelectListItem> politype = new List<SelectListItem>();
+            for (var i = 1; i <= 7; i++)
+            {
+                politype.Add(new SelectListItem
+                {
+                    Text = "Type " + i,
+                    Value = i.ToString(),
+                });
+            }
+
+            return politype;
+        }
+
 
         #endregion
 
@@ -1005,8 +1020,11 @@ namespace Klinik.Web.Controllers
                 SortColumn = _sortColumn,
                 SortColumnDir = _sortColumnDir,
                 PageSize = _pageSize,
-                Skip = _skip
+                Skip = _skip,
+                Data = new ClinicModel()
             };
+            if (Session["UserLogon"] != null)
+                request.Data.Account = (AccountModel)Session["UserLogon"];
 
             var response = new ClinicHandler(_unitOfWork).GetListData(request);
 
@@ -1037,19 +1055,22 @@ namespace Klinik.Web.Controllers
         [CustomAuthorize("VIEW_M_POLI")]
         public ActionResult PoliList()
         {
+            PoliModel clinicModel = new PoliModel();
+            clinicModel.Account = (AccountModel)Session["UserLogon"];
+            ViewBag.ClinicID = clinicModel.Account.ClinicID;
             return View();
         }
 
         [HttpPost]
-        public ActionResult GetPoliData()
+        public ActionResult GetPoliData(int? clinicid)
         {
+           var requests = Request.Form;
             var _draw = Request.Form.GetValues("draw").FirstOrDefault();
             var _start = Request.Form.GetValues("start").FirstOrDefault();
             var _length = Request.Form.GetValues("length").FirstOrDefault();
             var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
             var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
             var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
-
             int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
             int _skip = _start != null ? Convert.ToInt32(_start) : 0;
 
@@ -1060,15 +1081,20 @@ namespace Klinik.Web.Controllers
                 SortColumn = _sortColumn,
                 SortColumnDir = _sortColumnDir,
                 PageSize = _pageSize,
-                Skip = _skip
+                Skip = _skip,
+                ClinicID = clinicid
             };
-
+            
             var response = new PoliHandler(_unitOfWork).GetListData(request);
 
+            if(clinicid > 0)
+            {
+                response = new PoliHandler(_unitOfWork).GetListDataFilter(request);
+            }
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
-        [CustomAuthorize("ADD_M_POLI", "EDIT_M_POLI")]
+        [CustomAuthorize("ADD_M_POLI","EDIT_M_POLI")]
         public ActionResult CreateOrEditPoli()
         {
             PoliResponse _response = new PoliResponse();
@@ -1085,14 +1111,14 @@ namespace Klinik.Web.Controllers
                 PoliResponse resp = new PoliHandler(_unitOfWork).GetDetail(request);
                 PoliModel _model = resp.Entity;
                 ViewBag.Response = _response;
-                ViewBag.Type = BindDropDownPoliType();
+                ViewBag.Type = new SelectList(PoliType(), "Value","Text").ToList();
                 ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }
             else
             {
                 ViewBag.Response = _response;
-                ViewBag.Type = BindDropDownPoliType();
+                ViewBag.Type = new SelectList(PoliType(), "Value", "Text").ToList();
                 ViewBag.ActionType = ClinicEnums.Action.Add;
                 return View();
             }
@@ -1101,6 +1127,7 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public ActionResult CreateOrEditPoli(PoliModel _model)
         {
+            
             if (Session["UserLogon"] != null)
                 _model.Account = (AccountModel)Session["UserLogon"];
 
@@ -1113,7 +1140,7 @@ namespace Klinik.Web.Controllers
 
             new PoliValidator(_unitOfWork).Validate(request, out _response);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
-            ViewBag.Type = BindDropDownPoliType();
+            ViewBag.Type = new SelectList(PoliType(), "Value", "Text", _model.Type).ToList();
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
 
             return View();
@@ -1136,6 +1163,12 @@ namespace Klinik.Web.Controllers
             new PoliValidator(_unitOfWork).Validate(request, out _response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult getClinicData()
+        {
+            return Json(new { data = BindDropDownKlinik() }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

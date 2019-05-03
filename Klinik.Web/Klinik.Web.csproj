@@ -225,6 +225,7 @@
     <Compile Include="Base\BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\LabController.cs" />
+    <Compile Include="Controllers\CashierController.cs" />
     <Compile Include="Controllers\ParamedicController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1443,7 +1444,11 @@
     <Content Include="Views\MasterData\CreateOrEditLabItemCategory.cshtml" />
     <Content Include="Views\MasterData\LabItemList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditLabItem.cshtml" />
+
     <Content Include="Views\Lab\InputLabResult.cshtml" />
+
+    <Content Include="Views\Cashier\ListPatien.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -169,6 +169,17 @@ namespace Klinik.Web.Controllers
             List<string> radiologyList,
             List<string> serviceList)
         {
+            if (medicineList == null)
+                medicineList = new List<string>();
+            if (injectionList == null)
+                injectionList = new List<string>();
+            if (labList == null)
+                labList = new List<string>();
+            if (radiologyList == null)
+                radiologyList = new List<string>();
+            if (serviceList == null)
+                serviceList = new List<string>();
+
             PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, poliToID, doctorToID, medicineList, injectionList, labList, radiologyList, serviceList);
             model.Account = Account;
 
@@ -187,7 +198,7 @@ namespace Klinik.Web.Controllers
             ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
             ViewBag.FinalStateList = BindDropDownFinalStateList();
 
-            return View(model);
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult FormExamine()
@@ -211,7 +222,7 @@ namespace Klinik.Web.Controllers
             try
             {
                 model.LoketData = resp.Entity;
-                model.PatientAge = GetPatientAge(model.LoketData.PatientBirthDateStr);
+                model.PatientAge = CommonUtils.GetPatientAge(model.LoketData.PatientBirthDateStr);
 
                 var necessityTypeList = GetGeneralMasterByType(Constants.MasterType.NECESSITY_TYPE);
                 var paymentTypeList = GetGeneralMasterByType(Constants.MasterType.PAYMENT_TYPE);
@@ -318,46 +329,6 @@ namespace Klinik.Web.Controllers
             result.Add(new SelectListItem { Text = "Rujuk ke RS", Value = "Rujuk ke RS" });
             result.Add(new SelectListItem { Text = "Drop Out", Value = "Drop Out" });
             result.Add(new SelectListItem { Text = "Meninggal", Value = "Meninggal" });
-
-            return result;
-        }
-
-        [NonAction]
-        private string GetPatientAge(string patientBirthDateStr)
-        {
-            string result = string.Empty;
-
-            DateTime dob = Convert.ToDateTime(patientBirthDateStr);
-            int age = DateTime.Now.Year - dob.Year;
-            if (DateTime.Now.DayOfYear < dob.DayOfYear)
-                age = age - 1;
-
-            if (age > 0)
-            {
-                result = age.ToString() + " " + UIMessages.Years;
-            }
-            else
-            {
-                DateTime dateNow = DateTime.Now;
-                int years = new DateTime(dateNow.Subtract(dob).Ticks).Year - 1;
-                DateTime pastYearDate = dob.AddYears(years);
-                int month = 0;
-                for (int i = 1; i <= 12; i++)
-                {
-                    if (pastYearDate.AddMonths(i) == dateNow)
-                    {
-                        month = i;
-                        break;
-                    }
-                    else if (pastYearDate.AddMonths(i) >= dateNow)
-                    {
-                        month = i - 1;
-                        break;
-                    }
-                }
-
-                result = month.ToString() + " " + UIMessages.Month;
-            }
 
             return result;
         }

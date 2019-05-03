@@ -328,7 +328,7 @@ namespace Klinik.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetClinicPoliData(string clinicid)
+        public ActionResult GetClinicPoliData()
         {
             var _draw = Request.Form.GetValues("draw").FirstOrDefault();
             var _start = Request.Form.GetValues("start").FirstOrDefault();
@@ -339,24 +339,19 @@ namespace Klinik.Web.Controllers
 
             int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
             int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+            
 
-            var _model = new ClinicPoliModel
-            {
-                ClinicID = long.Parse(clinicid)
-            };
-
-            var request = new ClinicPoliRequest
+            var request = new PoliRequest
             {
                 Draw = _draw,
                 SearchValue = _searchValue,
                 SortColumn = _sortColumn,
                 SortColumnDir = _sortColumnDir,
                 PageSize = _pageSize,
-                Skip = _skip,
-                Data = _model
+                Skip = _skip
             };
 
-            var response = new ClinicPoliHandler(_unitOfWork, _context).GetPoliBasedOnOrClinic(request);
+            var response = new PoliHandler(_unitOfWork).GetListData(request);
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }

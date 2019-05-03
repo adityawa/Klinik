@@ -105,12 +105,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Klinik.Web\Klinik.Web.csproj">
-      <Project>{65C62B94-CC9F-4AA5-BD06-B42EF7AB2038}</Project>
-      <Name>Klinik.Web</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Controllers\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -131,6 +131,7 @@ namespace Klinik.Features
             var searchPredicate = PredicateBuilder.New<Poli>(true);
 
             // add default filter to show the active data only
+            
             searchPredicate = searchPredicate.And(x => x.Rowstatus == 0);
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
@@ -172,9 +173,86 @@ namespace Klinik.Features
                 qry = _unitOfWork.PoliRepository.Get(searchPredicate, null);
             }
 
+            
             foreach (var item in qry)
             {
                 var prData = Mapper.Map<Poli, PoliModel>(item);
+
+                lists.Add(prData);
+            }
+
+            int totalRequest = lists.Count();
+            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
+
+            var response = new PoliResponse
+            {
+                Draw = request.Draw,
+                RecordsFiltered = totalRequest,
+                RecordsTotal = totalRequest,
+                Data = data
+            };
+
+            return response;
+        }
+
+        public PoliResponse GetListDataFilter(PoliRequest request)
+        {
+            List<PoliModel> lists = new List<PoliModel>();
+            dynamic qry = null;
+            var searchPredicate = PredicateBuilder.New<PoliClinic>(true);
+
+            // add default filter to show the active data only
+
+            searchPredicate = searchPredicate.And(x => x.Clinic.RowStatus == 0 && x.Clinic.ID == request.ClinicID);
+
+            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
+            {
+                searchPredicate = searchPredicate.And(p => p.Clinic.Name.Contains(request.SearchValue));
+            }
+
+            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
+            {
+                if (request.SortColumnDir == "asc")
+                {
+                    switch (request.SortColumn.ToLower())
+                    {
+                        case "poliname":
+                            qry = _unitOfWork.PoliClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Clinic.Name));
+                            break;
+
+                        default:
+                            qry = _unitOfWork.PoliClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Clinic.ID));
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (request.SortColumn.ToLower())
+                    {
+                        case "poliname":
+                            qry = _unitOfWork.PoliClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Clinic.Name));
+                            break;
+
+                        default:
+                            qry = _unitOfWork.PoliClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID));
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                qry = _unitOfWork.PoliClinicRepository.Get(searchPredicate, null);
+            }
+
+
+            foreach (var item in qry)
+            {
+                var prData = new PoliModel
+                {
+                    Id = item.Poli.ID,
+                    Code = item.Poli.Code,
+                    Name = item.Poli.Name
+                };
 
                 lists.Add(prData);
             }
