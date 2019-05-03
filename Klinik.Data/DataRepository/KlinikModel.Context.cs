@@ -61,6 +61,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<PoliFlowTemplate> PoliFlowTemplates { get; set; }
         public virtual DbSet<PoliSchedule> PoliSchedules { get; set; }
         public virtual DbSet<PoliScheduleMaster> PoliScheduleMasters { get; set; }
+        public virtual DbSet<PoliService> PoliServices { get; set; }
         public virtual DbSet<Privilege> Privileges { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }
@@ -68,6 +69,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<ProductUnit> ProductUnits { get; set; }
         public virtual DbSet<QueuePoli> QueuePolis { get; set; }
         public virtual DbSet<RolePrivilege> RolePrivileges { get; set; }
+        public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }

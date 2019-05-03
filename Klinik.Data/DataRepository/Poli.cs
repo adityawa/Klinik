@@ -22,6 +22,7 @@ namespace Klinik.Data.DataRepository
             this.PoliClinics = new HashSet<PoliClinic>();
             this.PoliSchedules = new HashSet<PoliSchedule>();
             this.PoliScheduleMasters = new HashSet<PoliScheduleMaster>();
+            this.PoliServices = new HashSet<PoliService>();
             this.QueuePolis = new HashSet<QueuePoli>();
             this.QueuePolis1 = new HashSet<QueuePoli>();
         }
@@ -30,7 +31,7 @@ namespace Klinik.Data.DataRepository
         public string Code { get; set; }
         public string Name { get; set; }
         public short Type { get; set; }
-        public short Rowstatus { get; set; }
+        public short RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
@@ -46,6 +47,8 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<PoliSchedule> PoliSchedules { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PoliScheduleMaster> PoliScheduleMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PoliService> PoliServices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QueuePoli> QueuePolis { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AppConfig">
           <Key>
             <PropertyRef Name="ID" />
@@ -550,7 +550,7 @@
           <Property Name="Code" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Type" Type="smallint" Nullable="false" />
-          <Property Name="Rowstatus" Type="smallint" Nullable="false" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
@@ -617,6 +617,20 @@
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PoliServices">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServicesID" Type="int" />
+          <Property Name="ClinicID" Type="bigint" />
+          <Property Name="PoliID" Type="int" />
+          <Property Name="RowStatus" Type="smallint" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Privilege">
@@ -725,6 +739,20 @@
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Services">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="10" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Price" Type="money" />
+          <Property Name="RowStatus" Type="smallint" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -1284,6 +1312,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PoliServices_Clinic">
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="PoliServices" Type="Self.PoliServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PoliServices">
+              <PropertyRef Name="ClinicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PoliServices_Poli">
+          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="PoliServices" Type="Self.PoliServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poli">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PoliServices">
+              <PropertyRef Name="PoliID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PoliServices_Services">
+          <End Role="Services" Type="Self.Services" Multiplicity="0..1" />
+          <End Role="PoliServices" Type="Self.PoliServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PoliServices">
+              <PropertyRef Name="ServicesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Privilege_Menu">
           <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
           <End Role="Privilege" Type="Self.Privilege" Multiplicity="*" />
@@ -1525,6 +1589,7 @@
           <EntitySet Name="PoliFlowTemplate" EntityType="Self.PoliFlowTemplate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PoliSchedule" EntityType="Self.PoliSchedule" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PoliScheduleMaster" EntityType="Self.PoliScheduleMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PoliServices" EntityType="Self.PoliServices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Privilege" EntityType="Self.Privilege" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
@@ -1532,6 +1597,7 @@
           <EntitySet Name="ProductUnit" EntityType="Self.ProductUnit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QueuePoli" EntityType="Self.QueuePoli" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolePrivilege" EntityType="Self.RolePrivilege" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
@@ -1707,6 +1773,18 @@
             <End Role="Poli" EntitySet="Poli" />
             <End Role="PoliScheduleMaster" EntitySet="PoliScheduleMaster" />
           </AssociationSet>
+          <AssociationSet Name="FK_PoliServices_Clinic" Association="Self.FK_PoliServices_Clinic">
+            <End Role="Clinic" EntitySet="Clinic" />
+            <End Role="PoliServices" EntitySet="PoliServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PoliServices_Poli" Association="Self.FK_PoliServices_Poli">
+            <End Role="Poli" EntitySet="Poli" />
+            <End Role="PoliServices" EntitySet="PoliServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PoliServices_Services" Association="Self.FK_PoliServices_Services">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="PoliServices" EntitySet="PoliServices" />
+          </AssociationSet>
           <AssociationSet Name="FK_Privilege_Menu" Association="Self.FK_Privilege_Menu">
             <End Role="Menu" EntitySet="Menu" />
             <End Role="Privilege" EntitySet="Privilege" />
@@ -1776,8 +1854,7 @@
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KlinikDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1859,6 +1936,7 @@
           <NavigationProperty Name="PoliClinics" Relationship="Self.FK_PoliClinic_Clinic" FromRole="Clinic" ToRole="PoliClinic" />
           <NavigationProperty Name="PoliSchedules" Relationship="Self.FK_PoliSchedule_Clinic" FromRole="Clinic" ToRole="PoliSchedule" />
           <NavigationProperty Name="PoliScheduleMasters" Relationship="Self.FK_PoliScheduleMaster_Clinic" FromRole="Clinic" ToRole="PoliScheduleMaster" />
+          <NavigationProperty Name="PoliServices" Relationship="Self.FK_PoliServices_Clinic" FromRole="Clinic" ToRole="PoliServices" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_Clinic" FromRole="Clinic" ToRole="QueuePoli" />
         </EntityType>
         <EntityType Name="Doctor">
@@ -2408,7 +2486,7 @@
           <Property Name="Code" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Type" Type="Int16" Nullable="false" />
-          <Property Name="Rowstatus" Type="Int16" Nullable="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -2418,6 +2496,7 @@
           <NavigationProperty Name="PoliClinics" Relationship="Self.FK_PoliClinic_Poli" FromRole="Poli" ToRole="PoliClinic" />
           <NavigationProperty Name="PoliSchedules" Relationship="Self.FK_PoliSchedule_Poli" FromRole="Poli" ToRole="PoliSchedule" />
           <NavigationProperty Name="PoliScheduleMasters" Relationship="Self.FK_PoliScheduleMaster_Poli" FromRole="Poli" ToRole="PoliScheduleMaster" />
+          <NavigationProperty Name="PoliServices" Relationship="Self.FK_PoliServices_Poli" FromRole="Poli" ToRole="PoliServices" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_PoliFrom" FromRole="Poli" ToRole="QueuePoli" />
           <NavigationProperty Name="QueuePolis1" Relationship="Self.FK_QueuePoli_PoliTo" FromRole="Poli" ToRole="QueuePoli" />
         </EntityType>
@@ -2491,6 +2570,23 @@
           <NavigationProperty Name="Clinic" Relationship="Self.FK_PoliScheduleMaster_Clinic" FromRole="PoliScheduleMaster" ToRole="Clinic" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK_PoliScheduleMaster_Doctor" FromRole="PoliScheduleMaster" ToRole="Doctor" />
           <NavigationProperty Name="Poli" Relationship="Self.FK_PoliScheduleMaster_Poli" FromRole="PoliScheduleMaster" ToRole="Poli" />
+        </EntityType>
+        <EntityType Name="PoliService">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ServicesID" Type="Int32" />
+          <Property Name="ClinicID" Type="Int64" />
+          <Property Name="PoliID" Type="Int32" />
+          <Property Name="RowStatus" Type="Int16" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Clinic" Relationship="Self.FK_PoliServices_Clinic" FromRole="PoliServices" ToRole="Clinic" />
+          <NavigationProperty Name="Poli" Relationship="Self.FK_PoliServices_Poli" FromRole="PoliServices" ToRole="Poli" />
+          <NavigationProperty Name="Service" Relationship="Self.FK_PoliServices_Services" FromRole="PoliServices" ToRole="Services" />
         </EntityType>
         <EntityType Name="Privilege">
           <Key>
@@ -2617,6 +2713,21 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="OrganizationRole" Relationship="Self.FK_RolePrivilege_OrganizationRole" FromRole="RolePrivilege" ToRole="OrganizationRole" />
           <NavigationProperty Name="Privilege" Relationship="Self.FK_RolePrivilege_Privilege" FromRole="RolePrivilege" ToRole="Privilege" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RowStatus" Type="Int16" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PoliServices" Relationship="Self.FK_PoliServices_Services" FromRole="Services" ToRole="PoliServices" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -2792,6 +2903,18 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="PoliScheduleMaster">
+              <PropertyRef Name="ClinicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PoliServices_Clinic">
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="PoliServices" Type="Self.PoliService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PoliServices">
               <PropertyRef Name="ClinicID" />
             </Dependent>
           </ReferentialConstraint>
@@ -3300,6 +3423,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PoliServices_Poli">
+          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="PoliServices" Type="Self.PoliService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poli">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PoliServices">
+              <PropertyRef Name="PoliID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_QueuePoli_PoliFrom">
           <End Role="Poli" Type="Self.Poli" Multiplicity="1" />
           <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
@@ -3321,6 +3456,18 @@
             </Principal>
             <Dependent Role="QueuePoli">
               <PropertyRef Name="PoliTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PoliServices_Services">
+          <End Role="Services" Type="Self.Service" Multiplicity="0..1" />
+          <End Role="PoliServices" Type="Self.PoliService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PoliServices">
+              <PropertyRef Name="ServicesID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3421,6 +3568,7 @@
           <EntitySet Name="PoliFlowTemplates" EntityType="Self.PoliFlowTemplate" />
           <EntitySet Name="PoliSchedules" EntityType="Self.PoliSchedule" />
           <EntitySet Name="PoliScheduleMasters" EntityType="Self.PoliScheduleMaster" />
+          <EntitySet Name="PoliServices" EntityType="Self.PoliService" />
           <EntitySet Name="Privileges" EntityType="Self.Privilege" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="ProductCategories" EntityType="Self.ProductCategory" />
@@ -3428,6 +3576,7 @@
           <EntitySet Name="ProductUnits" EntityType="Self.ProductUnit" />
           <EntitySet Name="QueuePolis" EntityType="Self.QueuePoli" />
           <EntitySet Name="RolePrivileges" EntityType="Self.RolePrivilege" />
+          <EntitySet Name="Services" EntityType="Self.Service" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
@@ -3474,6 +3623,10 @@
           <AssociationSet Name="FK_PoliScheduleMaster_Clinic" Association="Self.FK_PoliScheduleMaster_Clinic">
             <End Role="Clinic" EntitySet="Clinics" />
             <End Role="PoliScheduleMaster" EntitySet="PoliScheduleMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PoliServices_Clinic" Association="Self.FK_PoliServices_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="PoliServices" EntitySet="PoliServices" />
           </AssociationSet>
           <AssociationSet Name="FK_QueuePoli_Clinic" Association="Self.FK_QueuePoli_Clinic">
             <End Role="Clinic" EntitySet="Clinics" />
@@ -3643,6 +3796,10 @@
             <End Role="Poli" EntitySet="Polis" />
             <End Role="PoliScheduleMaster" EntitySet="PoliScheduleMasters" />
           </AssociationSet>
+          <AssociationSet Name="FK_PoliServices_Poli" Association="Self.FK_PoliServices_Poli">
+            <End Role="Poli" EntitySet="Polis" />
+            <End Role="PoliServices" EntitySet="PoliServices" />
+          </AssociationSet>
           <AssociationSet Name="FK_QueuePoli_PoliFrom" Association="Self.FK_QueuePoli_PoliFrom">
             <End Role="Poli" EntitySet="Polis" />
             <End Role="QueuePoli" EntitySet="QueuePolis" />
@@ -3650,6 +3807,10 @@
           <AssociationSet Name="FK_QueuePoli_PoliTo" Association="Self.FK_QueuePoli_PoliTo">
             <End Role="Poli" EntitySet="Polis" />
             <End Role="QueuePoli" EntitySet="QueuePolis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PoliServices_Services" Association="Self.FK_PoliServices_Services">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="PoliServices" EntitySet="PoliServices" />
           </AssociationSet>
           <AssociationSet Name="FK_RolePrivilege_Privilege" Association="Self.FK_RolePrivilege_Privilege">
             <End Role="Privilege" EntitySet="Privileges" />
@@ -4253,7 +4414,7 @@
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Rowstatus" ColumnName="Rowstatus" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
@@ -4320,6 +4481,21 @@
                 <ScalarProperty Name="Day" ColumnName="Day" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PoliServices">
+            <EntityTypeMapping TypeName="KlinikDBModel.PoliService">
+              <MappingFragment StoreEntitySet="PoliServices">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ServicesID" ColumnName="ServicesID" />
+                <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
+                <ScalarProperty Name="PoliID" ColumnName="PoliID" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -4435,6 +4611,21 @@
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="PrivilegeID" ColumnName="PrivilegeID" />
                 <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="KlinikDBModel.Service">
+              <MappingFragment StoreEntitySet="Services">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />

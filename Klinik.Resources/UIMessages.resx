@@ -933,4 +933,7 @@
   <data name="OldPassword" xml:space="preserve">
     <value>Old Password</value>
   </data>
+  <data name="PoliServiceList" xml:space="preserve">
+    <value>Poli Service List</value>
+  </data>
 </root>

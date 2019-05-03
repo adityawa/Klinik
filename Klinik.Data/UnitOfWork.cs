@@ -47,11 +47,33 @@ namespace Klinik.Data
         private IGenericRepository<Medicine> _medicineRepository;
         private IGenericRepository<LabItem> _labItemRepository;
         private IGenericRepository<LabItemCategory> _labItemCategoryRepository;
+        private IGenericRepository<Service> _serviceRepository;
+        private IGenericRepository<PoliService> _poliServiceRepository;
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
         {
             _context = context;
+        }
+
+        public IGenericRepository<Service> ServicesRepository
+        {
+            get
+            {
+                if (_serviceRepository == null)
+                    _serviceRepository = new GenericRepository<Service>(_context);
+                return _serviceRepository;
+            }
+        }
+
+        public IGenericRepository<PoliService> PoliServicesRepository
+        {
+            get
+            {
+                if (_poliServiceRepository == null)
+                    _poliServiceRepository = new GenericRepository<PoliService>(_context);
+                return _poliServiceRepository;
+            }
         }
 
         public IGenericRepository<Product> ProductRepository

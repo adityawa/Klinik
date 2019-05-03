@@ -49,6 +49,8 @@ namespace Klinik.Data
         IGenericRepository<Medicine> MedicineRepository { get; }
         IGenericRepository<LabItem> LabItemRepository { get; }
         IGenericRepository<LabItemCategory> LabItemCategoryRepository { get; }
+        IGenericRepository<Service> ServicesRepository { get; }
+        IGenericRepository<PoliService> PoliServicesRepository { get; }
         int Save();
     }
 }

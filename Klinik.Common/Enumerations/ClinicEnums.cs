@@ -61,7 +61,9 @@
             MASTER_LAB_ITEM,
             MASTER_LAB_ITEM_CATEGORY,
             MASTER_MEDICINE,
-            MASTER_MENU
+            MASTER_MENU,
+            MASTER_SERVICE,
+            MASTER_POLI_SERVICE
         }
 
         public enum Action

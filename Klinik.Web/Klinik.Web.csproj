@@ -1442,6 +1442,10 @@
     <Content Include="Views\MasterData\LabItemList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditLabItem.cshtml" />
     <Content Include="Views\Cashier\ListPatien.cshtml" />
+    <Content Include="Views\MasterData\ServiceList.cshtml" />
+    <Content Include="Views\MasterData\PoliServiceList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditService.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditPoliService.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
