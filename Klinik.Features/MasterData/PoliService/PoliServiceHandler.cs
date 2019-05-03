@@ -52,7 +52,7 @@ namespace Klinik.Features
                         int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, "PoliService", qry.Service.Name, qry.ID);
+                            response.Message = string.Format(Messages.ObjectHasBeenUpdated2, "PoliService", qry.ID);
 
                             CommandLog(true, ClinicEnums.Module.MASTER_POLI_SERVICE, Constants.Command.EDIT_POLI_SERVICE, request.Data.Account, request.Data, _oldentity);
                         }
@@ -82,7 +82,7 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "PoliService", serviceEntity.Service.Name, serviceEntity.ID);
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded2, "PoliService", serviceEntity.ID);
 
                         CommandLog(true, ClinicEnums.Module.MASTER_POLI_SERVICE, Constants.Command.ADD_POLI_SERVICE, request.Data.Account, request.Data);
                     }
@@ -223,7 +223,7 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "PoliService", service.Service.Name, service.ID);
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved2, "PoliService", service.ID);
                     }
                     else
                     {

@@ -85,7 +85,7 @@
                 { "data": "Id", "name": "Id", "autoWidth": false },
                 { "data": "ClinicName", "name": "ClinicName", "autoWidth": true },
                 { "data": "PoliName", "name": "PoliName", "autoWidth": true },
-                { "data": "ServiceName", "name": "ServiceName", "autoWidth": true },
+                { "data": "ServicesName", "name": "ServicesName", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditPoliService?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" }
                 }
