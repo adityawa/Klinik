@@ -117,6 +117,14 @@
     <Compile Include="MasterData\Employee\EmployeeValidator.cs" />
     <Compile Include="MasterData\FamilyRelationship\FamilyStatusHandler.cs" />
     <Compile Include="MasterData\GeneralMaster\MasterHandler.cs" />
+    <Compile Include="MasterData\PoliService\PoliServiceHandler.cs" />
+    <Compile Include="MasterData\PoliService\PoliServiceRequest.cs" />
+    <Compile Include="MasterData\PoliService\PoliServiceResponse.cs" />
+    <Compile Include="MasterData\PoliService\PoliServiceValidator.cs" />
+    <Compile Include="MasterData\Service\ServiceHandler.cs" />
+    <Compile Include="MasterData\Service\ServiceRequest.cs" />
+    <Compile Include="MasterData\Service\ServiceResponse.cs" />
+    <Compile Include="MasterData\Service\ServiceValidator.cs" />
     <Compile Include="MasterData\LabItemCategory\LabItemCategoryHandler.cs" />
     <Compile Include="MasterData\LabItemCategory\LabItemCategoryRequest.cs" />
     <Compile Include="MasterData\LabItemCategory\LabItemCategoryResponse.cs" />

@@ -222,6 +222,14 @@ namespace Klinik.Common
             CreateMap<LabItem, LabItemModel>()
                 .ForMember(m => m.LabItemCategoryName, map => map.MapFrom(p => p.LabItemCategory.Name));
 
+            CreateMap<ServiceModel, Service>();
+            CreateMap<Service, ServiceModel>();
+
+            CreateMap<PoliServiceModel, PoliService>();
+            CreateMap<PoliService, PoliServiceModel>()
+                .ForMember(m => m.ClinicName, map => map.MapFrom(p => p.Clinic.Name))
+                .ForMember(m => m.PoliName, map => map.MapFrom(p => p.Poli.Name))
+                .ForMember(m => m.ServicesName, map => map.MapFrom(p => p.Service.Name));
         }
     }
 }

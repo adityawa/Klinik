@@ -52,6 +52,10 @@
             public const string ADD_LAB_ITEM_CATEGORY = "Add New Lab Item Category";
             public const string EDIT_MENU = "Edit Form Menu";
             public const string ADD_MENU = "Add New Menu";
+            public const string EDIT_SERVICE = "Edit Form Service";
+            public const string ADD_SERVICE = "Add New Service";
+            public const string EDIT_POLI_SERVICE = "Edit Form Poli Service";
+            public const string ADD_POLI_SERVICE = "Add New Poli Service";
         }
 
         public static class MasterType

@@ -89,7 +89,9 @@
     <Compile Include="MasterData\EmployeeModel.cs" />
     <Compile Include="MasterData\EmployeeStatusModel.cs" />
     <Compile Include="MasterData\FamilyRelationshipModel.cs" />
+    <Compile Include="MasterData\PoliServiceModel.cs" />
     <Compile Include="MasterData\LabItemCategoryModel.cs" />
+    <Compile Include="MasterData\ServiceModel.cs" />
     <Compile Include="MasterData\LabItemModel.cs" />
     <Compile Include="MasterData\MedicineModel.cs" />
     <Compile Include="MasterData\MenuModel.cs" />

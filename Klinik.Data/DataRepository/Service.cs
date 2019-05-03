@@ -12,19 +12,17 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Collections.Generic;
     
-    public partial class LabItem
+    public partial class Service
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public LabItem()
+        public Service()
         {
-            this.FormExamineLabs = new HashSet<FormExamineLab>();
+            this.PoliServices = new HashSet<PoliService>();
         }
     
         public int ID { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public Nullable<int> LabItemCategoryID { get; set; }
-        public string Normal { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
@@ -33,7 +31,6 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FormExamineLab> FormExamineLabs { get; set; }
-        public virtual LabItemCategory LabItemCategory { get; set; }
+        public virtual ICollection<PoliService> PoliServices { get; set; }
     }
 }

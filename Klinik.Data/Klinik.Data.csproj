@@ -173,6 +173,9 @@
     <Compile Include="DataRepository\PoliScheduleMaster.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataRepository\PoliService.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataRepository\Privilege.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
@@ -192,6 +195,9 @@
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\RolePrivilege.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataRepository\Service.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\User.cs">
@@ -227,7 +233,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="App.Config" />
     <EntityDeploy Include="DataRepository\KlinikModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>KlinikModel.Designer.cs</LastGenOutput>

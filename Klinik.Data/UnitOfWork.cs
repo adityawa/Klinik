@@ -40,21 +40,40 @@ namespace Klinik.Data
         private IGenericRepository<FormExamineMedicine> _formExamineMedicineRepository;
         private IGenericRepository<FormExamineService> _formExamineServiceRepository;
         private IGenericRepository<PoliClinic> _poliClinicRepository;
-
-        private IGenericRepository<LabItemCategory> _labItemCategoryRepository;
-        private IGenericRepository<LabItem> _labItemRepository;
-
         private IGenericRepository<Product> _productRepository;
         private IGenericRepository<ProductCategory> _productCategoryRepository;
         private IGenericRepository<ProductMedicine> _productMedicineRepository;
         private IGenericRepository<ProductUnit> _productUnitRepository;
         private IGenericRepository<Medicine> _medicineRepository;
-      
+        private IGenericRepository<LabItem> _labItemRepository;
+        private IGenericRepository<LabItemCategory> _labItemCategoryRepository;
+        private IGenericRepository<Service> _serviceRepository;
+        private IGenericRepository<PoliService> _poliServiceRepository;
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
         {
             _context = context;
+        }
+
+        public IGenericRepository<Service> ServicesRepository
+        {
+            get
+            {
+                if (_serviceRepository == null)
+                    _serviceRepository = new GenericRepository<Service>(_context);
+                return _serviceRepository;
+            }
+        }
+
+        public IGenericRepository<PoliService> PoliServicesRepository
+        {
+            get
+            {
+                if (_poliServiceRepository == null)
+                    _poliServiceRepository = new GenericRepository<PoliService>(_context);
+                return _poliServiceRepository;
+            }
         }
 
         public IGenericRepository<Product> ProductRepository
@@ -117,7 +136,7 @@ namespace Klinik.Data
             }
         }
 
-       
+
 
         public IGenericRepository<FormMedical> FormMedicalRepository
         {
@@ -484,7 +503,7 @@ namespace Klinik.Data
                 return _labItemCategoryRepository;
             }
         }
-       
+
         public virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
