@@ -190,6 +190,10 @@
     <Compile Include="PreExamine\PreExamineResponse.cs" />
     <Compile Include="PreExamine\PreExamineValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Radiologi\RadiologiHandler.cs" />
+    <Compile Include="Radiologi\RadiologiRequest.cs" />
+    <Compile Include="Radiologi\RadiologiResponse.cs" />
+    <Compile Include="Radiologi\RadiologiValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Klinik.Common\Klinik.Common.csproj">

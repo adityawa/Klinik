@@ -238,6 +238,7 @@
     <Compile Include="Controllers\AdministrationController.cs" />
     <Compile Include="Controllers\LoketController.cs" />
     <Compile Include="Controllers\PreExamineController.cs" />
+    <Compile Include="Controllers\RadiologiController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Datalist\PatientDataList.cs" />
     <Compile Include="Datalist\PatientDataListModel.cs" />
@@ -1444,11 +1445,11 @@
     <Content Include="Views\MasterData\CreateOrEditLabItemCategory.cshtml" />
     <Content Include="Views\MasterData\LabItemList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditLabItem.cshtml" />
-
     <Content Include="Views\Lab\InputLabResult.cshtml" />
-
     <Content Include="Views\Cashier\ListPatien.cshtml" />
-
+    <Content Include="Views\Radiologi\ListQueueRadiologi.cshtml" />
+    <Content Include="Views\Radiologi\CreateItemLabRadiologi.cshtml" />
+    <Content Include="Views\Radiologi\InputRadiologiResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

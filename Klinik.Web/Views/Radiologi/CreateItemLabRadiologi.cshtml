@@ -1,8 +1,9 @@
 ﻿@model Klinik.Entities.Form.FormExamineLabModel
 
 @{
-    ViewBag.Title = "CreateItemLab";
+    ViewBag.Title = "CreateItemLabRadiologi";
 }
+
 
 <div>
     <button id="btnSave" class="btn btn-primary"><i class="fa fa-save"></i>@Klinik.Resources.UIMessages.Save</button>
@@ -10,18 +11,18 @@
 </div>
 <br /><br />
 <section class="panel position-fixed">
-    <header class="panel-heading" >
+    <header class="panel-heading">
         <div class="panel-actions">
             <a href="#" class="fa fa-caret-down"></a>
         </div>
-        <h5 class="panel-title">Form @Klinik.Resources.UIMessages.Add Lab Item</h5>
+        <h5 class="panel-title">Form @Klinik.Resources.UIMessages.Add Lab Radiologi</h5>
     </header>
     <div class="panel-body">
         <div class="form-group">
             <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.MRNumber</label>
             @Html.HiddenFor(x => x.Id, new { @Id = "IdRegistration" })
             @Html.HiddenFor(x => x.LoketData.Id)
-            @Html.HiddenFor(x=>x.FormMedicalID, new { @id="frmMedId"})
+            @Html.HiddenFor(x => x.FormMedicalID, new { @id = "frmMedId" })
             <div class="col-md-2">
                 @Html.TextBoxFor(x => x.PatientData.MRNumber, new { @class = "form-control", @id = "tbFormMedical", @readonly = "readonly" })
             </div>
@@ -56,9 +57,9 @@
         </div>
 
         <br />
-        <h4>Lab Items</h4>
+        <h4>Radiologi Items</h4>
         <div style="width:100%; margin:0 auto">
-            <table id="tbLabItem" class="table table-striped table-bordered dt-responsive" cellspacing="0">
+            <table id="tbRadItem" class="table table-striped table-bordered dt-responsive" cellspacing="0">
                 <thead>
                     <tr>
                         <th><input name="select_all" value="1" type="checkbox"></th>
@@ -77,7 +78,7 @@
 
 @section Scripts {
     <script type="text/javascript">
-       
+
         $(document).ready(function () {
 
             toastr.options = {
@@ -91,7 +92,7 @@
             };
 
             $('#btnBack').click(function (e) {
-                window.location.href = "/Lab/ListQueueLaboratorium";
+                window.location.href = "/Radiologi/ListQueueRadiologi";
             });
 
             var _idOrg = getUrlVars();
@@ -104,7 +105,7 @@
                 }
             }
 
-            var table = $('#tbLabItem').DataTable({
+            var table = $('#tbRadItem').DataTable({
                 "autoWidth": false,
                 "processing": true,
                 "serverSide": true,
@@ -112,7 +113,7 @@
                 "orderMulti": false,
                 "pageLength": 10,
                 "ajax": {
-                    "url": "/Lab/GetListLabItem",
+                    "url": "/Radiologi/GetListRadiologiItem",
                     "type": "POST",
                     "datatype": "json"
                 },
@@ -156,7 +157,7 @@
                             "orderable": true,
                             "data": "Name"
                         },
-                       
+
                         {
                             "targets": [5],
                             "searchable": true,
@@ -178,9 +179,6 @@
                     // Get row ID
                     var rowId = data.Id;
 
-                    //var cek = $.inArray(rowId, rows_selected);
-                    //var cek1 = data.Id;
-
                     if ($.inArray(rowId, rows_selected) != -1) {
                         $(row).find('input[type="checkbox"]').prop('checked', true);
                         $(row).addClass('selected');
@@ -188,7 +186,7 @@
                 }
             });
 
-            $('#tbLabItem tbody').on('click', 'input[type="checkbox"]', function (e) {
+            $('#tbRadItem tbody').on('click', 'input[type="checkbox"]', function (e) {
                 var $row = $(this).closest('tr');
                 var data = table.row($row).data();
                 var rowId = data.Id;
@@ -209,16 +207,16 @@
             });
 
 
-            $('#tbLabItem').on('click', 'tbody td, thead th:first-child', function (e) {
+            $('#tbRadItem').on('click', 'tbody td, thead th:first-child', function (e) {
                 $(this).parent().find('input[type="checkbox"]').trigger('click');
             });
 
 
             $('thead input[name="select_all"]', table.table().container()).on('click', function (e) {
                 if (this.checked) {
-                    $('#tbLabItem tbody input[type="checkbox"]:not(:checked)').trigger('click');
+                    $('#tbRadItem tbody input[type="checkbox"]:not(:checked)').trigger('click');
                 } else {
-                    $('#tbLabItem tbody input[type="checkbox"]:checked').trigger('click');
+                    $('#tbRadItem tbody input[type="checkbox"]:checked').trigger('click');
                 }
 
                 // Prevent click event from propagating to parent
@@ -244,7 +242,7 @@
                         form_data.append("QueuePoliId", $('#IdRegistration'));
                         $.ajax({
                             type: 'POST',
-                            url: '/Lab/AddLabItem',
+                            url: '/Radiologi/AddLabRadiologiItem',
                             contentType: false,
                             processData: false,
                             data: form_data,

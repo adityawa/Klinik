@@ -954,4 +954,7 @@
   <data name="ResultIndicator" xml:space="preserve">
     <value>Result Indicator</value>
   </data>
+  <data name="RadiologiQueue" xml:space="preserve">
+    <value>Radiology Queue</value>
+  </data>
 </root>

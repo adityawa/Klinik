@@ -75,6 +75,8 @@
         {
             public const string Loket = "Loket";
             public const string Laboratorium = "Laboratorium";
+            public const string Radiology = "Radiology";
+            public const string Radiologi = "Radiologi";
         }
     }
 }

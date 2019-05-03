@@ -1,8 +1,9 @@
 ﻿@model Klinik.Entities.Loket.LoketModel
 
 @{
-    ViewBag.Title = "ListQueue";
+    ViewBag.Title = "ListQueueRadiologi";
 }
+
 
 <section class="panel">
     <header class="panel-heading">
@@ -10,7 +11,7 @@
             <a href="#" class="fa fa-caret-down"></a>
         </div>
         <h5 class="panel-title">
-            @Klinik.Resources.UIMessages.LaboratoriumQueue
+            @Klinik.Resources.UIMessages.RadiologiQueue
         </h5>
     </header>
 
@@ -92,7 +93,7 @@
             "orderMulti": false,
             "pageLength": 10,
             "ajax": {
-                "url": "/Lab/GetListQueue?clinics="+_clinics+"&status="+_status,
+                "url": "/Radiologi/GetListQueue?clinics="+_clinics+"&status="+_status,
                 "type": "POST",
                 "datatype": "json"
             },
@@ -179,9 +180,9 @@
 
                 {
                     "render": function (data, type, full, meta) {
-
-                          if (full.StatusStr == 'Hold' || full.StatusStr == 'New' ) {
-                            return '<a class="btn btn-success" href="/Lab/CreateItemLab?id=' + full.Id + '">@Klinik.Resources.UIMessages.Process</a>';
+                       
+                         if (full.StatusStr == 'Hold' || full.StatusStr == 'New' ) {
+                             return '<a class="btn btn-success" href="/Radiologi/CreateItemLabRadiologi?id=' + full.Id + '">@Klinik.Resources.UIMessages.Process</a>';
                         }
                         else {
                             return ''
@@ -191,7 +192,7 @@
                 {
                     "render": function (data, type, full, meta) {
                         if (full.StatusStr == 'Hold' || full.StatusStr == 'Finish' ) {
-                            return '<a class="btn btn-info" href="/Lab/InputLabResult?id=' + full.Id + '">@Klinik.Resources.UIMessages.InputLabResult</a>';
+                            return '<a class="btn btn-info" href="/Radiologi/InputRadiologiResult?id=' + full.Id + '">@Klinik.Resources.UIMessages.InputLabResult</a>';
                         }
                         else {
                             return ''
@@ -207,4 +208,3 @@
         }
     </script>
 }
-
