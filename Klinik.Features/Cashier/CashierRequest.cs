@@ -3,7 +3,7 @@ using Klinik.Entities.Cashier;
 
 namespace Klinik.Features.Cashier
 {
-    class CashierRequest : BaseRequest<CashierModel>
+    public class CashierRequest : BaseRequest<CashierModel>
     {
     }
 }

@@ -23,6 +23,7 @@ namespace Klinik.Features.Cashier
         {
             List<CashierModel> list = new List<CashierModel>();
             dynamic data;
+            CashierResponse cashierResponse = new CashierResponse();
 
             long formmedicalid = _unitOfWork.FormMedicalRepository.Get(a => a.PatientID == request.Data.Id).Select(x => x.ID).FirstOrDefault();
             long examineid = _unitOfWork.FormExamineRepository.Get(x => x.FormMedicalID == formmedicalid).Select(x => x.ID).FirstOrDefault();
@@ -51,8 +52,7 @@ namespace Klinik.Features.Cashier
                     {
                         var labdata = new CashierModel
                         {
-                            ItemName = item.,
-                            price = item.LabItem.Price
+                            
                         };
 
                         list.Add(labdata);
@@ -60,7 +60,7 @@ namespace Klinik.Features.Cashier
                 }
             }
 
-            return response;
+            return cashierResponse;
         }
 
     }
