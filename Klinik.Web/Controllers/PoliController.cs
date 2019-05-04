@@ -4,14 +4,13 @@ using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Form;
 using Klinik.Entities.Loket;
+using Klinik.Entities.MasterData;
 using Klinik.Entities.Poli;
 using Klinik.Features;
-using Klinik.Resources;
 using Klinik.Web.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
@@ -37,7 +36,7 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public JsonResult AutoCompleteRadiology(string prefix)
         {
-            List<LabItem> labList = _unitOfWork.LabItemRepository.Get(x => x.LabItemCategory.LabType == "Radiology").ToList();
+            List<LabItem> labList = _unitOfWork.LabItemRepository.Get(x => x.LabItemCategory.LabType == "Radiology" && x.RowStatus == 0).ToList();
 
             var filteredList = labList.Where(t => t.Name.ToLower().Contains(prefix.ToLower()));
 
@@ -64,7 +63,7 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public JsonResult AutoCompleteLaborat(string prefix)
         {
-            List<LabItem> labList = _unitOfWork.LabItemRepository.Get(x => x.LabItemCategory.LabType == "Laboratorium").ToList();
+            List<LabItem> labList = _unitOfWork.LabItemRepository.Get(x => x.LabItemCategory.LabType == "Laboratorium" && x.RowStatus == 0).ToList();
 
             var filteredList = labList.Where(t => t.Name.ToLower().Contains(prefix.ToLower()));
 
@@ -91,7 +90,7 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public JsonResult AutoCompleteInjection(string prefix)
         {
-            List<Product> productList = _unitOfWork.ProductRepository.Get(x => x.ProductCategoryID == 2).ToList();
+            List<Product> productList = _unitOfWork.ProductRepository.Get(x => x.ProductCategoryID == 2 && x.RowStatus == 0).ToList();
 
             var filteredList = productList.Where(t => t.Name.ToLower().Contains(prefix.ToLower()));
 
@@ -115,7 +114,7 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public JsonResult AutoCompleteMedicine(string prefix)
         {
-            List<Product> productList = _unitOfWork.ProductRepository.Get(x => x.ProductCategoryID == 1).ToList();
+            List<Product> productList = _unitOfWork.ProductRepository.Get(x => x.ProductCategoryID == 1 && x.RowStatus == 0).ToList();
 
             var filteredList = productList.Where(t => t.Name.ToLower().Contains(prefix.ToLower()));
 
@@ -128,6 +127,32 @@ namespace Klinik.Web.Controllers
                     label = item.Name,
                     code = item.Code,
                     stock = "911" // hardcoded for now
+                };
+
+                resultList.Add(temp);
+            }
+
+            return Json(resultList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AutoCompleteService(string poliID, string prefix)
+        {
+            int _poliID = int.Parse(poliID);
+            List<Service> serviceList = _unitOfWork.ServicesRepository.Get().ToList();
+            List<PoliService> poliServiceList = _unitOfWork.PoliServicesRepository.Get(x => x.PoliID == _poliID && x.RowStatus == 0).ToList();
+
+            var filteredList = serviceList.Where(x => !poliServiceList.Any(p => p.ServicesID == x.ID) && x.Name.ToLower().Contains(prefix.ToLower())).ToList();
+
+            List<TempClass> resultList = new List<TempClass>();
+            foreach (var item in filteredList)
+            {
+                TempClass temp = new TempClass
+                {
+                    id = item.ID,
+                    label = item.Name,
+                    code = item.Code,
+                    stock = item.Price.ToString()
                 };
 
                 resultList.Add(temp);
@@ -229,6 +254,14 @@ namespace Klinik.Web.Controllers
 
                 model.NecessityTypeStr = necessityTypeList.FirstOrDefault(x => x.Value == model.LoketData.NecessityType.ToString()).Text;
                 model.PaymentTypeStr = paymentTypeList.FirstOrDefault(x => x.Value == model.LoketData.PaymentType.ToString()).Text;
+
+                // get default services
+                List<PoliService> poliServicelist = _unitOfWork.PoliServicesRepository.Get(x => x.PoliID == model.LoketData.PoliToID && x.RowStatus == 0).ToList();
+                foreach (var item in poliServicelist)
+                {
+                    ServiceModel servModel = Mapper.Map<Service, ServiceModel>(item.Service);
+                    model.DefaultServiceList.Add(servModel);
+                }
 
                 // get form examine if any
                 FormExamine formExamine = _unitOfWork.FormExamineRepository.GetFirstOrDefault(x => x.FormMedicalID == model.LoketData.FormMedicalID);
@@ -465,6 +498,18 @@ namespace Klinik.Web.Controllers
                 };
 
                 model.LabDataList.Add(labModel);
+            }
+
+            // FormExamineRadiology
+            foreach (var item in serviceList)
+            {
+                string[] values = item.Split('|');
+                FormExamineServiceModel serviceModel = new FormExamineServiceModel
+                {
+                    ServiceID = int.Parse(values[0])
+                };
+
+                model.ServiceDataList.Add(serviceModel);
             }
 
             return model;

@@ -307,14 +307,35 @@
                                                     <tr style="font-size:13px">
                                                         <th style="width:50%">@Klinik.Resources.UIMessages.Service</th>
                                                         <th>@Klinik.Resources.UIMessages.Code</th>
+                                                        <th>@Klinik.Resources.UIMessages.Price</th>
                                                         <th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody style="font-size:13px"></tbody>
+                                                <tbody style="font-size:13px">
+                                                    @foreach (var item in Model.DefaultServiceList)
+                                                    {
+                                                        <tr>
+                                                            <td style="display: none;">
+                                                                @Html.DisplayFor(modelItem => item.Id)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Name)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Code)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Price)
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
                                                 <tfoot>
                                                     <tr>
                                                         <td><input id="serviceName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeServiceNameHere" /><input hidden type="text" id="idService" /></td>
                                                         <td><input id="serviceCode" type="text" class="form-control" disabled /></td>
+                                                        <td><input id="servicePrice" type="text" class="form-control" disabled /></td>
                                                         <td><input type="button" id="btnAddService" value="@Klinik.Resources.UIMessages.Add" /></td>
                                                     </tr>
                                                 </tfoot>
@@ -686,8 +707,8 @@
             $("#serviceName").autocomplete({
                 source: function (request, response) {
                     $.ajax({
-                        url: '/Poli/AutoCompleteMedicine/',
-                        data: "{ 'prefix': '" + request.term + "'}",
+                        url: '/Poli/AutoCompleteService/',
+                        data: "{ 'poliID': '"+ '@Model.LoketData.PoliToID' +"', 'prefix': '" + request.term + "'}",
                         dataType: "json",
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
@@ -707,6 +728,7 @@
                 select: function (e, i) {
                     $("#idService").val(i.item.id);
                     $("#serviceCode").val(i.item.code);
+                    $("#servicePrice").val(i.item.stock);
                 },
                 minLength: 1
             });
@@ -716,6 +738,7 @@
                 var idService = $("#idService");
                 var serviceName = $("#serviceName");
                 var serviceCode = $("#serviceCode");
+                var servicePrice = $("#servicePrice");
 
                 //Get the reference of the Table's TBODY element.
                 var tBody = $("#table-service > TBODY")[0];
@@ -733,6 +756,9 @@
                 //add service code
                 cell = $(row.insertCell(-1));
                 cell.html(serviceCode.val());
+                //add service price
+                cell = $(row.insertCell(-1));
+                cell.html(servicePrice.val());
 
                 //Add Button cell.
                 cell = $(row.insertCell(-1));
@@ -746,6 +772,7 @@
                 idService.val("");
                 serviceName.val("");
                 serviceCode.val("");
+                servicePrice.val("");
             });
 
             var laborat = $("#laboratName");
