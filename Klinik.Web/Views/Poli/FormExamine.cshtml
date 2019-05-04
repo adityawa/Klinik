@@ -260,7 +260,29 @@
                                                         <th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody style="font-size:13px"></tbody>
+                                                <tbody style="font-size:13px">
+                                                    @foreach (var item in Model.MedicineDataList)
+                                                    {
+                                                        <tr>
+                                                            <td style="display: none;">
+                                                                @Html.DisplayFor(modelItem => item.Id)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.ProductName)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Stock)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.RemarkUse)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Qty)
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
                                                 <tfoot>
                                                     <tr>
                                                         <td><input id="medicineName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeMedicineNameHere" /><input hidden type="text" id="idMedicine" /></td>
@@ -285,7 +307,26 @@
                                                         <th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody style="font-size:13px"></tbody>
+                                                <tbody style="font-size:13px">
+                                                    @foreach (var item in Model.InjectionDataList)
+                                                    {
+                                                        <tr>
+                                                            <td style="display: none;">
+                                                                @Html.DisplayFor(modelItem => item.Id)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.ProductName)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Stock)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.RemarkUse)
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
                                                 <tfoot>
                                                     <tr>
                                                         <td><input id="medicineInjectionName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeMedicineNameHere" /><input hidden type="text" id="idMedicineInjection" /></td>
@@ -330,6 +371,24 @@
                                                             <td></td>
                                                         </tr>
                                                     }
+                                                    @foreach (var item in Model.ServiceDataList)
+                                                    {
+                                                        <tr>
+                                                            <td style="display: none;">
+                                                                @Html.DisplayFor(modelItem => item.Id)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Service.Name)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Service.Code)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Service.Price)
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                    }
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -355,7 +414,23 @@
                                                         <th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody style="font-size:13px"></tbody>
+                                                <tbody style="font-size:13px">
+                                                    @foreach (var item in Model.LabDataList)
+                                                    {
+                                                        <tr>
+                                                            <td style="display: none;">
+                                                                @Html.DisplayFor(modelItem => item.Id)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.LabItemDesc)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Result)
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
                                                 <tfoot>
                                                     <tr>
                                                         <td><input id="laboratName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeLabNameHere" /><input hidden type="text" id="idLaborat" /></td>
@@ -379,7 +454,23 @@
                                                         <th>@Klinik.Resources.UIMessages.Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody style="font-size:13px"></tbody>
+                                                <tbody style="font-size:13px">
+                                                    @foreach (var item in Model.RadiologyDataList)
+                                                    {
+                                                        <tr>
+                                                            <td style="display: none;">
+                                                                @Html.DisplayFor(modelItem => item.Id)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.LabItemDesc)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Result)
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
                                                 <tfoot>
                                                     <tr>
                                                         <td><input id="radiologyName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeRadiologyNameHere" /><input hidden type="text" id="idRadiology" /></td>

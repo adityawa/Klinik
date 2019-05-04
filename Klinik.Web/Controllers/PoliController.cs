@@ -271,42 +271,32 @@ namespace Klinik.Web.Controllers
 
                     // get form examine medicine if any
                     List<FormExamineMedicine> formExamineMedicines = _unitOfWork.FormExamineMedicineRepository.Get(x => x.FormExamineID == formExamine.ID);
-                    if (formExamineMedicines.Count > 0)
+                    foreach (var formExamineMedicine in formExamineMedicines)
                     {
-                        foreach (var formExamineMedicine in formExamineMedicines)
-                        {
+                        if (formExamineMedicine.TypeID == ((int)MedicineTypeEnum.Medicine).ToString())
                             model.MedicineDataList.Add(Mapper.Map<FormExamineMedicine, FormExamineMedicineModel>(formExamineMedicine));
-                        }
+                        else if (formExamineMedicine.TypeID == ((int)MedicineTypeEnum.Injection).ToString())
+                            model.InjectionDataList.Add(Mapper.Map<FormExamineMedicine, FormExamineMedicineModel>(formExamineMedicine));
+                        else if (formExamineMedicine.TypeID == ((int)MedicineTypeEnum.Concoction).ToString())
+                            model.ConcoctionMedicine = formExamineMedicine.ConcoctionMedicine;
                     }
 
-                    // get form examine lab if any
-                    List<FormExamineLab> formExamineLabs = _unitOfWork.FormExamineLabRepository.Get(x => x.FormMedicalID == formExamine.FormMedicalID && x.LabType == "Laboratory");
-                    if (formExamineLabs.Count > 0)
+                    // get form examine lab and radiology if any
+                    List<FormExamineLab> formExamineLabs = _unitOfWork.FormExamineLabRepository.Get(x => x.FormMedicalID == formExamine.FormMedicalID);
+                    foreach (var formExamineLab in formExamineLabs)
                     {
-                        foreach (var formExamineLab in formExamineLabs)
-                        {
+                        if (formExamineLab.LabType == ((int)LabTypeEnum.Laboratorium).ToString())
                             model.LabDataList.Add(Mapper.Map<FormExamineLab, FormExamineLabModel>(formExamineLab));
-                        }
-                    }
-
-                    // get form examine radiologi if any
-                    List<FormExamineLab> formExamineRadiologies = _unitOfWork.FormExamineLabRepository.Get(x => x.FormMedicalID == formExamine.FormMedicalID && x.LabType == "Radiology");
-                    if (formExamineRadiologies.Count > 0)
-                    {
-                        foreach (var formExamineRadiology in formExamineRadiologies)
-                        {
-                            model.RadiologyDataList.Add(Mapper.Map<FormExamineLab, FormExamineLabModel>(formExamineRadiology));
-                        }
+                        else if (formExamineLab.LabType == ((int)LabTypeEnum.Radiology).ToString())
+                            model.RadiologyDataList.Add(Mapper.Map<FormExamineLab, FormExamineLabModel>(formExamineLab));
                     }
 
                     // get form examine service if any
                     List<FormExamineService> formExamineServices = _unitOfWork.FormExamineServiceRepository.Get(x => x.FormExamineID == formExamine.ID);
-                    if (formExamineServices.Count > 0)
+                    foreach (var formExamineService in formExamineServices)
                     {
-                        foreach (var formExamineService in formExamineServices)
-                        {
+                        if (!model.DefaultServiceList.Any(x => x.Id == formExamineService.ServiceID))
                             model.ServiceDataList.Add(Mapper.Map<FormExamineService, FormExamineServiceModel>(formExamineService));
-                        }
                     }
                 }
                 else
@@ -453,7 +443,7 @@ namespace Klinik.Web.Controllers
                     FormExamineID = long.Parse(formExamineID),
                     Qty = int.Parse(values[2]),
                     RemarkUse = values[1],
-                    TypeID = "Medicine"
+                    TypeID = ((int)MedicineTypeEnum.Medicine).ToString()
                 };
 
                 model.MedicineDataList.Add(medModel);
@@ -468,7 +458,7 @@ namespace Klinik.Web.Controllers
                     ProductID = int.Parse(values[0]),
                     FormExamineID = long.Parse(formExamineID),
                     RemarkUse = values[2],
-                    TypeID = "Injection"
+                    TypeID = ((int)MedicineTypeEnum.Injection).ToString()
                 };
 
                 model.MedicineDataList.Add(medModel);
@@ -480,7 +470,7 @@ namespace Klinik.Web.Controllers
                 {
                     FormExamineID = long.Parse(formExamineID),
                     ConcoctionMedicine = receipt,
-                    TypeID = "Medicine"
+                    TypeID = ((int)MedicineTypeEnum.Concoction).ToString()
                 };
 
                 model.MedicineDataList.Add(medModel);
@@ -492,7 +482,7 @@ namespace Klinik.Web.Controllers
                 FormExamineLabModel labModel = new FormExamineLabModel
                 {
                     LabItemID = int.Parse(item),
-                    LabType = "Laboratorium"
+                    LabType = ((int)LabTypeEnum.Laboratorium).ToString()
                 };
 
                 model.LabDataList.Add(labModel);
@@ -504,7 +494,7 @@ namespace Klinik.Web.Controllers
                 FormExamineLabModel labModel = new FormExamineLabModel
                 {
                     LabItemID = int.Parse(item),
-                    LabType = "Radiology"
+                    LabType = ((int)LabTypeEnum.Radiology).ToString()
                 };
 
                 model.LabDataList.Add(labModel);
