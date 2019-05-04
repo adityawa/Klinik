@@ -16,6 +16,13 @@ namespace Klinik.Web.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Detail(long? patienid)
+        {
+
+            return View();
+        }
         #endregion
     }
 }

@@ -1,24 +1,35 @@
 ﻿@model Klinik.Entities.MasterData.PoliModel
+@using Klinik.Entities.Account;
 @{
     ViewBag.Title = "PoliList";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    AccountModel account = (AccountModel)Session["UserLogon"];
 }
 
 <section class="panel">
     <header class="panel-heading">
         <div class="panel-actions">
             <a href="#" class="fa fa-caret-down"></a>
+            <label>Filter : </label>
             @{
-                if (ViewBag.ClinicID <= 0) {
-                <select class="from-control" name="clinicid" id="clinicid">
-
-                </select>
+                if (ViewBag.ClinicID <= 0)
+                {
+                    <select class="from-control" name="clinicid" id="clinicid"></select>
+                }
+                else
+                {
+                    <input type="text" value="@ViewBag.ClinicID" id="clinicid" class="hidden" />
                 }
             }
         </div>
         <h5 class="panel-title">
             @Klinik.Resources.UIMessages.PoliList
-            <button id="btnAdd" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;@Klinik.Resources.UIMessages.AddNew</button>
+            @{
+                if (account.ClinicID <= 0)
+                {
+                    <button id="btnAdd" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;@Klinik.Resources.UIMessages.AddNew</button>
+                }
+            }
         </h5>
     </header>
     <div class="panel-body">
@@ -29,7 +40,10 @@
                         <th>@Klinik.Resources.UIMessages.ID</th>
                         <th>@Klinik.Resources.UIMessages.Code</th>
                         <th>@Klinik.Resources.UIMessages.Name</th>
-                        <th>@Klinik.Resources.UIMessages.Action</th>
+                        @{ if (account.ClinicID <= 0) { 
+                                <th>@Klinik.Resources.UIMessages.Action</th>
+                            }
+                        }
                     </tr>
                 </thead>
             </table>
@@ -45,7 +59,7 @@
                 Site.ListData();
                 Site.DropDownClinic();
                 Site.OnchageClinic();
-                
+
             },
             DropDownClinic: function () {
                 $.get("/MasterData/getClinicData", function (data) {
@@ -60,9 +74,7 @@
                 });
             },
             ListData: function () {
-                if (@ViewBag.ClinicID > 0) {
-                    $('#clinicid').val() === @ViewBag.ClinicID;
-                }
+
                 $('#tbPoli').dataTable({
                 "autoWidth": false,
                 "processing": true,
@@ -90,19 +102,21 @@
                     "targets": [2],
                     "searchable": true,
                     "orderable": true
-                },
-                {
-                    "targets": [3],
-                    "searchable": false,
-                    "orderable": false
                 }
                 ],
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": false },
                 { "data": "Code", "name": "Code", "autoWidth": true },
                 { "data": "Name", "name": "Name", "autoWidth": true },
+
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditPoli?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>"; }
+                    "render": function (data, type, full, meta) {
+                        if (@account.ClinicID <= 0) {
+                            return '<a class="btn btn-info" href="/MasterData/CreateOrEditPoli?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>";
+                        } else {
+                            return null;
+                        }
+                    }
                 }
             ]
         });

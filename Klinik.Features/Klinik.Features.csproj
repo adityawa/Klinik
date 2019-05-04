@@ -76,6 +76,10 @@
     <Compile Include="Administration\Log\LogResponse.cs" />
     <Compile Include="Administration\Log\LogValidator.cs" />
     <Compile Include="BaseFeatures.cs" />
+    <Compile Include="Cashier\CashierHandler.cs" />
+    <Compile Include="Cashier\CashierResponse.cs" />
+    <Compile Include="Cashier\CashierValidator.cs" />
+    <Compile Include="Cashier\CashierRequest.cs" />
     <Compile Include="IBaseFeatures.cs" />
     <Compile Include="Laboratorium\LabHandler.cs" />
     <Compile Include="Laboratorium\LabRequest.cs" />
