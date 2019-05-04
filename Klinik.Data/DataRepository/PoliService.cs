@@ -15,9 +15,9 @@ namespace Klinik.Data.DataRepository
     public partial class PoliService
     {
         public int ID { get; set; }
-        public Nullable<int> ServicesID { get; set; }
-        public Nullable<long> ClinicID { get; set; }
-        public Nullable<int> PoliID { get; set; }
+        public int ServicesID { get; set; }
+        public long ClinicID { get; set; }
+        public int PoliID { get; set; }
         public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

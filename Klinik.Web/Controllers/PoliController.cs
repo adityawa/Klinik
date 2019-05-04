@@ -474,6 +474,18 @@ namespace Klinik.Web.Controllers
                 model.MedicineDataList.Add(medModel);
             }
 
+            if (!string.IsNullOrEmpty(receipt))
+            {
+                FormExamineMedicineModel medModel = new FormExamineMedicineModel
+                {
+                    FormExamineID = long.Parse(formExamineID),
+                    ConcoctionMedicine = receipt,
+                    TypeID = "Medicine"
+                };
+
+                model.MedicineDataList.Add(medModel);
+            }
+
             // FormExamineLab
             foreach (var item in labList)
             {

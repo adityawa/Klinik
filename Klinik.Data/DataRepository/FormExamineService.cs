@@ -24,5 +24,6 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual FormExamine FormExamine { get; set; }
+        public virtual Service Service { get; set; }
     }
 }

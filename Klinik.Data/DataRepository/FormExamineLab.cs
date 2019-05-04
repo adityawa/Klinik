@@ -26,6 +26,7 @@ namespace Klinik.Data.DataRepository
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
+        public virtual FormMedical FormMedical { get; set; }
         public virtual LabItem LabItem { get; set; }
     }
 }
