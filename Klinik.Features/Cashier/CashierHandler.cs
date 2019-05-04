@@ -45,13 +45,13 @@ namespace Klinik.Features.Cashier
                     }
                 }
 
-                if (FormExamineMedicine != null)
+                if (FormExamineservice != null)
                 {
-                    foreach (var item in FormExamineMedicine)
+                    foreach (var item in FormExamineservice)
                     {
                         var labdata = new CashierModel
                         {
-                            ItemName = item.LabItem.Name,
+                            ItemName = item.,
                             price = item.LabItem.Price
                         };
 
