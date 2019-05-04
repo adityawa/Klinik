@@ -19,6 +19,7 @@ namespace Klinik.Data.DataRepository
         {
             this.FormExamineAttachments = new HashSet<FormExamineAttachment>();
             this.FormExamineMedicines = new HashSet<FormExamineMedicine>();
+            this.FormExamineServices = new HashSet<FormExamineService>();
         }
     
         public long ID { get; set; }
@@ -45,5 +46,7 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<FormExamineAttachment> FormExamineAttachments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormExamineMedicine> FormExamineMedicines { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FormExamineService> FormExamineServices { get; set; }
     }
 }

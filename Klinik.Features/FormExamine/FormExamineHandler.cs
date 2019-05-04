@@ -79,14 +79,23 @@ namespace Klinik.Features
                         formExamineMedicine.Add(medicine);
                     }
 
-                    List<FormExamineLab> formExamineLab = new List<FormExamineLab>();
                     foreach (var item in request.Data.LabDataList)
                     {
                         var lab = Mapper.Map<FormExamineLabModel, FormExamineLab>(item);
+                        lab.FormMedicalID = request.Data.LoketData.FormMedicalID;
                         lab.CreatedBy = request.Data.Account.UserCode;
                         lab.CreatedDate = DateTime.Now;
 
-                        formExamineLab.Add(lab);
+                        _unitOfWork.FormExamineLabRepository.Insert(lab);
+                        int result = _unitOfWork.Save();
+                        if (result < 0)
+                        {
+                            response.Status = false;
+                            response.Message = string.Format(Messages.AddObjectFailed, "FormExamineLab");
+                            CommandLog(false, ClinicEnums.Module.FORM_EXAMINE, Constants.Command.ADD_FORM_EXAMINE, request.Data.Account, request.Data);
+
+                            return response;
+                        }
                     }
 
                     List<FormExamineService> formExamineService = new List<FormExamineService>();
@@ -144,7 +153,7 @@ namespace Klinik.Features
                     formExamine.CreatedBy = request.Data.Account.UserCode;
                     formExamine.CreatedDate = DateTime.Now;
                     formExamine.FormExamineMedicines = formExamineMedicine;
-                   // formExamine.FormExamineLabs = formExamineLab;
+                    formExamine.FormExamineServices = formExamineService;
 
                     // save the form examine data
                     _unitOfWork.FormExamineRepository.Insert(formExamine);

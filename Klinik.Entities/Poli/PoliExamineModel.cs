@@ -1,5 +1,6 @@
 ﻿using Klinik.Entities.Form;
 using Klinik.Entities.Loket;
+using Klinik.Entities.MasterData;
 using Klinik.Entities.PreExamine;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Klinik.Entities.Poli
         public List<FormExamineLabModel> RadiologyDataList { get; set; }
         public List<FormExamineMedicineModel> MedicineDataList { get; set; }
         public List<FormExamineServiceModel> ServiceDataList { get; set; }
+        public List<ServiceModel> DefaultServiceList { get; set; }
         public string PatientAge { get; set; }
         public string NecessityTypeStr { get; set; }
         public string PaymentTypeStr { get; set; }
@@ -31,6 +33,7 @@ namespace Klinik.Entities.Poli
             RadiologyDataList = new List<FormExamineLabModel>();
             MedicineDataList = new List<FormExamineMedicineModel>();
             ServiceDataList = new List<FormExamineServiceModel>();
+            DefaultServiceList = new List<ServiceModel>();
         }
     }
 }

@@ -1014,6 +1014,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FormExamineService_FormExamine">
+          <End Role="FormExamine" Type="Self.FormExamine" Multiplicity="0..1" />
+          <End Role="FormExamineService" Type="Self.FormExamineService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormExamine">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineService">
+              <PropertyRef Name="FormExamineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FormMedical_Clinic">
           <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
           <End Role="FormMedical" Type="Self.FormMedical" Multiplicity="*" />
@@ -1654,6 +1666,10 @@
             <End Role="FormExamine" EntitySet="FormExamine" />
             <End Role="FormExamineMedicine" EntitySet="FormExamineMedicine" />
           </AssociationSet>
+          <AssociationSet Name="FK_FormExamineService_FormExamine" Association="Self.FK_FormExamineService_FormExamine">
+            <End Role="FormExamine" EntitySet="FormExamine" />
+            <End Role="FormExamineService" EntitySet="FormExamineService" />
+          </AssociationSet>
           <AssociationSet Name="FK_FormMedical_Clinic" Association="Self.FK_FormMedical_Clinic">
             <End Role="Clinic" EntitySet="Clinic" />
             <End Role="FormMedical" EntitySet="FormMedical" />
@@ -2088,6 +2104,7 @@
           <NavigationProperty Name="Poli" Relationship="Self.FK_FormExamine_Poli" FromRole="FormExamine" ToRole="Poli" />
           <NavigationProperty Name="FormExamineAttachments" Relationship="Self.FK_FormExamineAttachment_FormExamine" FromRole="FormExamine" ToRole="FormExamineAttachment" />
           <NavigationProperty Name="FormExamineMedicines" Relationship="Self.FK_FormExamineMedicine_FormExamine" FromRole="FormExamine" ToRole="FormExamineMedicine" />
+          <NavigationProperty Name="FormExamineServices" Relationship="Self.FK_FormExamineService_FormExamine" FromRole="FormExamine" ToRole="FormExamineService" />
         </EntityType>
         <EntityType Name="FormExamineAttachment">
           <Key>
@@ -2151,6 +2168,7 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="FormExamine" Relationship="Self.FK_FormExamineService_FormExamine" FromRole="FormExamineService" ToRole="FormExamine" />
         </EntityType>
         <EntityType Name="FormMedical">
           <Key>
@@ -3145,6 +3163,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FormExamineService_FormExamine">
+          <End Role="FormExamine" Type="Self.FormExamine" Multiplicity="0..1" />
+          <End Role="FormExamineService" Type="Self.FormExamineService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormExamine">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineService">
+              <PropertyRef Name="FormExamineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FormExamineLab_LabItem">
           <End Role="LabItem" Type="Self.LabItem" Multiplicity="0..1" />
           <End Role="FormExamineLab" Type="Self.FormExamineLab" Multiplicity="*" />
@@ -3664,6 +3694,10 @@
           <AssociationSet Name="FK_FormExamineMedicine_FormExamine" Association="Self.FK_FormExamineMedicine_FormExamine">
             <End Role="FormExamine" EntitySet="FormExamines" />
             <End Role="FormExamineMedicine" EntitySet="FormExamineMedicines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormExamineService_FormExamine" Association="Self.FK_FormExamineService_FormExamine">
+            <End Role="FormExamine" EntitySet="FormExamines" />
+            <End Role="FormExamineService" EntitySet="FormExamineServices" />
           </AssociationSet>
           <AssociationSet Name="FK_FormExamineLab_LabItem" Association="Self.FK_FormExamineLab_LabItem">
             <End Role="LabItem" EntitySet="LabItems" />
