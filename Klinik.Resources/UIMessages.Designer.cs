@@ -1960,6 +1960,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Radiology Queue.
+        /// </summary>
+        public static string RadiologiQueue {
+            get {
+                return ResourceManager.GetString("RadiologiQueue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Radiology.
         /// </summary>
         public static string Radiology {

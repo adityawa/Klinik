@@ -14,30 +14,30 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Klinik.Features.Laboratorium
+namespace Klinik.Features.Radiologi
 {
-    public class LabHandler : BaseFeatures
+    public class RadiologiHandler : BaseFeatures
     {
-        public LabHandler(IUnitOfWork unitOfWork, KlinikDBEntities context = null)
+        public RadiologiHandler(IUnitOfWork unitOfWork, KlinikDBEntities context = null)
         {
             _unitOfWork = unitOfWork;
             _context = context;
         }
 
-        public LabResponse CreateOrEdit(LabRequest request)
+        public RadiologiResponse CreateOrEdit(RadiologiRequest request)
         {
             int result = 0;
-            var response = new LabResponse { };
+            var response = new RadiologiResponse { };
             var _getDataLabPoli = _unitOfWork.LabItemRepository.Get(x => x.RowStatus == 0);
 
             #region ::DELETE FIRST::
-            var _deleteFormExamineLab = _unitOfWork.FormExamineLabRepository.Get(x => x.FormMedicalID == request.Data.FormMedicalID && x.LabType==Constants.NameConstant.Laboratorium);
+            var _deleteFormExamineLab = _unitOfWork.FormExamineLabRepository.Get(x => x.FormMedicalID == request.Data.FormMedicalID && (x.LabType== Constants.NameConstant.Radiologi || x.LabType==Constants.NameConstant.Radiology));
             foreach (var item1 in _deleteFormExamineLab)
             {
                 _unitOfWork.FormExamineLabRepository.Delete(item1.ID);
             }
 
-            var poliId = PoliHandler.GetPoliIDBasedOnName(Constants.NameConstant.Laboratorium);
+            var poliId = PoliHandler.GetPoliIDBasedOnName(Constants.NameConstant.Radiologi);
             var _deleteFormExamine = _unitOfWork.FormExamineRepository.GetFirstOrDefault(x => x.FormMedicalID == request.Data.FormMedicalID && x.PoliID==poliId);
             if (_deleteFormExamine != null)
             {
@@ -53,7 +53,7 @@ namespace Klinik.Features.Laboratorium
                 var _formExamine = new FormExamine
                 {
                     FormMedicalID = request.Data.FormMedicalID,
-                    PoliID = PoliHandler.GetPoliIDBasedOnName(Constants.NameConstant.Laboratorium),
+                    PoliID = PoliHandler.GetPoliIDBasedOnName(Constants.NameConstant.Radiologi),
                     TransDate = DateTime.Now,
                     CreatedBy = request.Data.Account.UserName,
                     CreatedDate = DateTime.Now
@@ -103,15 +103,15 @@ namespace Klinik.Features.Laboratorium
             return response;
         }
 
-        public LabResponse GetDetail(LabRequest request)
+        public RadiologiResponse GetDetail(RadiologiRequest request)
         {
             throw new NotImplementedException();
         }
 
-        public LabResponse GetDetailPatient(long IdQueuePoli)
+        public RadiologiResponse GetDetailPatient(long IdQueuePoli)
         {
             var qry_poli = _unitOfWork.RegistrationRepository.GetById(IdQueuePoli);
-            var LabResponse = new LabResponse { };
+            var LabResponse = new RadiologiResponse { };
 
             if (qry_poli != null)
             {
@@ -143,7 +143,7 @@ namespace Klinik.Features.Laboratorium
 
         public LoketResponse GetListData(LoketRequest request)
         {
-            var _laboratoriumId = _unitOfWork.PoliRepository.GetFirstOrDefault(x => x.Name == Constants.NameConstant.Laboratorium);
+            var _laboratoriumId = _unitOfWork.PoliRepository.GetFirstOrDefault(x => x.Name == Constants.NameConstant.Radiologi);
             Expression<Func<QueuePoli, bool>> _serachCriteria = x => x.PoliTo == _laboratoriumId.ID;
 
             List<LoketModel> lists = base.GetbaseLoketData(request, _serachCriteria);
@@ -159,19 +159,19 @@ namespace Klinik.Features.Laboratorium
             return response;
         }
 
-        public LabResponse RemoveData(LabRequest request)
+        public RadiologiResponse RemoveData(RadiologiRequest request)
         {
             throw new NotImplementedException();
         }
 
-        public LabResponse GetLabForInput(LabRequest request)
+        public RadiologiResponse GetLabForInput(RadiologiRequest request)
         {
             List<FormExamineLabModel> lists = new List<FormExamineLabModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<FormExamineLab>(true);
 
             var _getQueuePoliData = _unitOfWork.RegistrationRepository.GetById(request.Data.LoketData.Id);
-            searchPredicate = searchPredicate.And(x => x.FormMedicalID == _getQueuePoliData.FormMedicalID && x.LabType==Constants.NameConstant.Laboratorium);
+            searchPredicate = searchPredicate.And(x => x.FormMedicalID == _getQueuePoliData.FormMedicalID &&( x.LabType==Constants.NameConstant.Radiologi || x.LabType == Constants.NameConstant.Radiology));
             qry = _unitOfWork.FormExamineLabRepository.Get(searchPredicate, null);
 
             foreach (var item in qry)
@@ -184,7 +184,7 @@ namespace Klinik.Features.Laboratorium
             int totalRequest = lists.Count();
             var data = lists;
 
-            var response = new LabResponse
+            var response = new RadiologiResponse
             {
                 Draw = request.Draw,
                 RecordsFiltered = totalRequest,
@@ -195,9 +195,9 @@ namespace Klinik.Features.Laboratorium
             return response;
         }
 
-        public LabResponse CreateLabResult(LabRequest request)
+        public RadiologiResponse CreateLabResult(RadiologiRequest request)
         {
-            var response = new LabResponse { };
+            var response = new RadiologiResponse { };
             FormExamineLabModel model = new FormExamineLabModel();
             if (model.LabItemColls == null)
                 model.LabItemColls = new List<FormExamineLabModel>();
@@ -267,9 +267,9 @@ namespace Klinik.Features.Laboratorium
             return response;
         }
 
-        public LabResponse GetDataExamine(long poliID)
+        public RadiologiResponse GetDataExamine(long poliID)
         {
-            var response = new LabResponse { };
+            var response = new RadiologiResponse { };
             var _getformMedicalId = _unitOfWork.RegistrationRepository.GetById(poliID);
             var _qry = _unitOfWork.FormExamineRepository.Get(x => x.FormMedicalID == _getformMedicalId.FormMedicalID).FirstOrDefault();
             if (_qry != null)

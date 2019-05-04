@@ -7,6 +7,7 @@ using Klinik.Entities.Loket;
 using Klinik.Entities.MasterData;
 using Klinik.Features;
 using Klinik.Features.Laboratorium;
+using Klinik.Features.Radiologi;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,12 @@ using System.Web.Mvc;
 
 namespace Klinik.Web.Controllers
 {
-    public class LabController : Controller
+    public class RadiologiController : Controller
     {
         private IUnitOfWork _unitOfWork;
         private KlinikDBEntities _context;
         private ClinicHandler _clinicHandler;
+
         #region ::DROPDOWN::
         private List<SelectListItem> BindDropDownDokter()
         {
@@ -121,7 +123,7 @@ namespace Klinik.Web.Controllers
 
         #region ::CHEKCKLIST TABLE::
         [HttpPost]
-        public ActionResult GetListLabItem()
+        public ActionResult GetListRadiologiItem()
         {
             var _draw = Request.Form.GetValues("draw").FirstOrDefault();
             var _start = Request.Form.GetValues("start").FirstOrDefault();
@@ -146,13 +148,13 @@ namespace Klinik.Web.Controllers
             };
 
 
-            Expression<Func<LabItem, bool>> _serachCriteria = x => x.LabItemCategory.LabType == Constants.NameConstant.Laboratorium;
+            Expression<Func<LabItem, bool>> _serachCriteria = x => x.LabItemCategory.LabType == Constants.NameConstant.Radiology || x.LabItemCategory.LabType==Constants.NameConstant.Radiologi;
             var response = new LabItemHandler(_unitOfWork).GetListData(request, _serachCriteria);
 
             return Json(new { data = response.Data.OrderBy(x => x.LabItemCategoryID), recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetLabItemForInput()
+        public ActionResult GetRadiologiItemForInput()
         {
 
             var _draw = Request.Form.GetValues("draw").FirstOrDefault();
@@ -163,7 +165,7 @@ namespace Klinik.Web.Controllers
             int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
             int _skip = _start != null ? Convert.ToInt32(_start) : 0;
 
-            var request = new LabRequest
+            var request = new RadiologiRequest
             {
                 Draw = _draw,
                 SearchValue = _searchValue,
@@ -180,27 +182,28 @@ namespace Klinik.Web.Controllers
             };
 
 
-            var response = new LabHandler(_unitOfWork, _context).GetLabForInput(request);
+            var response = new RadiologiHandler(_unitOfWork, _context).GetLabForInput(request);
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
-        public LabController(IUnitOfWork unitOfWork, KlinikDBEntities context)
+        public RadiologiController(IUnitOfWork unitOfWork, KlinikDBEntities context)
         {
             _unitOfWork = unitOfWork;
             _context = context;
         }
 
-        public LabController(IUnitOfWork unitOfWork, KlinikDBEntities context, ClinicHandler clinicHandler)
+        public RadiologiController(IUnitOfWork unitOfWork, KlinikDBEntities context, ClinicHandler clinicHandler)
         {
             _unitOfWork = unitOfWork;
             _context = context;
             _clinicHandler = clinicHandler;
         }
+
         // GET: Lab
-        [CustomAuthorize("VIEW_QUEUE_LAB")]
-        public ActionResult ListQueueLaboratorium()
+        [CustomAuthorize("VIEW_QUEUE_RADIOLOGI")]
+        public ActionResult ListQueueRadiologi()
         {
             ViewBag.Status = BindDropDownStatus();
             ViewBag.Clinics = BindDropDownClinic();
@@ -235,15 +238,15 @@ namespace Klinik.Web.Controllers
             if (Session["UserLogon"] != null)
                 request.Data.Account = (AccountModel)Session["UserLogon"];
 
-            var response = new LabHandler(_unitOfWork).GetListData(request);
+            var response = new RadiologiHandler(_unitOfWork).GetListData(request);
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult AddLabItem()
+        public JsonResult AddLabRadiologiItem()
         {
-            LabResponse response = new LabResponse();
+            RadiologiResponse response = new RadiologiResponse();
             FormExamineLabModel _model = new FormExamineLabModel();
             if (Request.Form["FormMedicalID"] != null)
                 _model.FormMedicalID = Convert.ToInt64(Request.Form["FormMedicalID"].ToString());
@@ -258,19 +261,19 @@ namespace Klinik.Web.Controllers
                 _model.LoketData.Id = Convert.ToInt64(Session["QueuePoliId"].ToString());
             }
 
-            var request = new LabRequest
+            var request = new RadiologiRequest
             {
                 Data = _model
             };
 
-            new LabValidator(_unitOfWork, _context).Validate(request, out response);
+            new RadiologiValidator(_unitOfWork, _context).Validate(request, out response);
             return Json(new { Status = response.Status, Message = response.Message }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult AddLabResult()
+        public JsonResult AddLabRadiologiResult()
         {
-            LabResponse response = new LabResponse();
+            RadiologiResponse response = new RadiologiResponse();
             FormExamineLabModel _model = new FormExamineLabModel();
             if (Request.Form["FormMedicalID"] != null)
                 _model.FormMedicalID = Convert.ToInt64(Request.Form["FormMedicalId"].ToString());
@@ -278,9 +281,10 @@ namespace Klinik.Web.Controllers
                 _model.LabItemCollsJs = JsonConvert.DeserializeObject<List<LabItemResultJS>>(Request.Form["LabResults"]);
             if (Session["UserLogon"] != null)
                 _model.Account = (AccountModel)Session["UserLogon"];
-            _model.FormExamine = new FormExamineModel {
-                DoctorID= Request.Form["Doctor"] ==null?0:Convert.ToInt32(Request.Form["Doctor"].ToString()),
-                Result= Request.Form["Conclusion"]
+            _model.FormExamine = new FormExamineModel
+            {
+                DoctorID = Request.Form["Doctor"] == null ? 0 : Convert.ToInt32(Request.Form["Doctor"].ToString()),
+                Result = Request.Form["Conclusion"]
             };
 
             if (Session["QueuePoliId"] != null)
@@ -290,22 +294,21 @@ namespace Klinik.Web.Controllers
                 _model.LoketData.Id = Convert.ToInt64(Session["QueuePoliId"].ToString());
             }
 
-            var request = new LabRequest
+            var request = new RadiologiRequest
             {
                 Data = _model
             };
 
-            new LabValidator(_unitOfWork, _context).ValidateAddResult(request, out response);
+            new RadiologiValidator(_unitOfWork, _context).ValidateAddResult(request, out response);
             return Json(new { Status = response.Status, Message = response.Message }, JsonRequestBehavior.AllowGet);
         }
-
-        [CustomAuthorize("ADD_Lab_Item")]
-        public ActionResult CreateItemLab()
+        [CustomAuthorize("ADD_RADIOLOGI_ITEM")]
+        public ActionResult CreateItemLabRadiologi()
         {
-            LabResponse response = new LabResponse();
+            RadiologiResponse response = new RadiologiResponse();
             if (Request.QueryString["id"] != null)
             {
-                var request = new LabRequest
+                var request = new RadiologiRequest
                 {
                     Data = new FormExamineLabModel
                     {
@@ -319,23 +322,24 @@ namespace Klinik.Web.Controllers
                 if (Session["UserLogon"] != null)
                     request.Data.Account = (AccountModel)Session["UserLogon"];
 
-                LabResponse resp = new LabHandler(_unitOfWork).GetDetailPatient(request.Data.LoketData.Id);
+                RadiologiResponse resp = new RadiologiHandler(_unitOfWork).GetDetailPatient(request.Data.LoketData.Id);
                 FormExamineLabModel _model = resp.Entity;
                 Session["QueuePoliId"] = resp.Entity.LoketData.Id;
-                _model.LabItemsId = LabHandler.GetSelectedLabItem(request.Data.LoketData.Id);
+                _model.LabItemsId = RadiologiHandler.GetSelectedLabItem(request.Data.LoketData.Id);
                 return View(_model);
             }
             ViewBag.LabCategory = BindLabCategory(Constants.NameConstant.Laboratorium);
             return View();
         }
-        [CustomAuthorize("ADD_LAB_RESULT")]
-        public ActionResult InputLabResult()
+
+        [CustomAuthorize("ADD_RADIOLOGI_RESULT")]
+        public ActionResult InputRadiologiResult()
         {
-            LabResponse response = new LabResponse();
-            var _model=new FormExamineLabModel { };
+            RadiologiResponse response = new RadiologiResponse();
+            var _model = new FormExamineLabModel { };
             if (Request.QueryString["id"] != null)
             {
-                var request = new LabRequest
+                var request = new RadiologiRequest
                 {
                     Data = new FormExamineLabModel
                     {
@@ -349,17 +353,17 @@ namespace Klinik.Web.Controllers
                 if (Session["UserLogon"] != null)
                     request.Data.Account = (AccountModel)Session["UserLogon"];
 
-                LabResponse resp = new LabHandler(_unitOfWork).GetDetailPatient(request.Data.LoketData.Id);
-               _model = resp.Entity;
-                LabResponse resp2 = new LabHandler(_unitOfWork).GetDataExamine(request.Data.LoketData.Id);
+                RadiologiResponse resp = new RadiologiHandler(_unitOfWork).GetDetailPatient(request.Data.LoketData.Id);
+                _model = resp.Entity;
+                RadiologiResponse resp2 = new RadiologiHandler(_unitOfWork).GetDataExamine(request.Data.LoketData.Id);
                 if (_model.FormExamine == null)
                     _model.FormExamine = new FormExamineModel();
                 _model.FormExamine.Result = resp2.Entity.FormExamine.Result;
                 _model.FormExamine.DoctorID = resp2.Entity.FormExamine.DoctorID;
                 Session["QueuePoliId"] = resp.Entity.LoketData.Id;
             }
-                ViewBag.DoctorList = BindDropDownDokter();
-                return View(_model);
-            }
+            ViewBag.DoctorList = BindDropDownDokter();
+            return View(_model);
         }
     }
+}

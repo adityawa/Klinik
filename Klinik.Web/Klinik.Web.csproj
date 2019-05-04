@@ -238,6 +238,7 @@
     <Compile Include="Controllers\AdministrationController.cs" />
     <Compile Include="Controllers\LoketController.cs" />
     <Compile Include="Controllers\PreExamineController.cs" />
+    <Compile Include="Controllers\RadiologiController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Datalist\PatientDataList.cs" />
     <Compile Include="Datalist\PatientDataListModel.cs" />
@@ -1444,14 +1445,18 @@
     <Content Include="Views\MasterData\CreateOrEditLabItemCategory.cshtml" />
     <Content Include="Views\MasterData\LabItemList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditLabItem.cshtml" />
-
     <Content Include="Views\Lab\InputLabResult.cshtml" />
-
     <Content Include="Views\Cashier\ListPatien.cshtml" />
+<<<<<<< HEAD
+    <Content Include="Views\Radiologi\ListQueueRadiologi.cshtml" />
+    <Content Include="Views\Radiologi\CreateItemLabRadiologi.cshtml" />
+    <Content Include="Views\Radiologi\InputRadiologiResult.cshtml" />
+=======
     <Content Include="Views\MasterData\ServiceList.cshtml" />
     <Content Include="Views\MasterData\PoliServiceList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditService.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditPoliService.cshtml" />
+>>>>>>> ccc0bc6c116ae8068888c9bc74bae3b090ea41c6
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
