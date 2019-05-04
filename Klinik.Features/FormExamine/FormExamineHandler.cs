@@ -17,9 +17,11 @@ namespace Klinik.Features
         /// Constructor
         /// </summary>
         /// <param name="unitOfWork"></param>
-        public FormExamineHandler(IUnitOfWork unitOfWork)
+        /// <param name="context"></param>
+        public FormExamineHandler(IUnitOfWork unitOfWork, KlinikDBEntities context)
         {
             _unitOfWork = unitOfWork;
+            _context = context;
         }
 
         /// <summary>
@@ -31,9 +33,9 @@ namespace Klinik.Features
         {
             FormExamineResponse response = new FormExamineResponse();
 
-            try
+            if (request.Data.Id > 0)
             {
-                if (request.Data.Id > 0)
+                try
                 {
                     var qry = _unitOfWork.FormExamineRepository.GetById(request.Data.Id);
                     if (qry != null)
@@ -67,121 +69,102 @@ namespace Klinik.Features
                         CommandLog(false, ClinicEnums.Module.FORM_EXAMINE, Constants.Command.EDIT_FORM_EXAMINE, request.Data.Account, request.Data);
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    List<FormExamineMedicine> formExamineMedicine = new List<FormExamineMedicine>();
-                    foreach (var item in request.Data.MedicineDataList)
-                    {
-                        var medicine = Mapper.Map<FormExamineMedicineModel, FormExamineMedicine>(item);
-                        medicine.CreatedBy = request.Data.Account.UserCode;
-                        medicine.CreatedDate = DateTime.Now;
+                    response.Status = false;
+                    response.Message = Messages.GeneralError;
 
-                        formExamineMedicine.Add(medicine);
-                    }
-
-                    foreach (var item in request.Data.LabDataList)
-                    {
-                        var lab = Mapper.Map<FormExamineLabModel, FormExamineLab>(item);
-                        lab.FormMedicalID = request.Data.LoketData.FormMedicalID;
-                        lab.CreatedBy = request.Data.Account.UserCode;
-                        lab.CreatedDate = DateTime.Now;
-
-                        _unitOfWork.FormExamineLabRepository.Insert(lab);
-                        int result = _unitOfWork.Save();
-                        if (result < 0)
-                        {
-                            response.Status = false;
-                            response.Message = string.Format(Messages.AddObjectFailed, "FormExamineLab");
-                            CommandLog(false, ClinicEnums.Module.FORM_EXAMINE, Constants.Command.ADD_FORM_EXAMINE, request.Data.Account, request.Data);
-
-                            return response;
-                        }
-                    }
-
-                    List<FormExamineService> formExamineService = new List<FormExamineService>();
-                    foreach (var item in request.Data.ServiceDataList)
-                    {
-                        var service = Mapper.Map<FormExamineServiceModel, FormExamineService>(item);
-                        service.CreatedBy = request.Data.Account.UserCode;
-                        service.CreatedDate = DateTime.Now;
-
-                        formExamineService.Add(service);
-                    }
-
-                    // update status the old registration to process
-                    QueuePoli oldRegistration = _unitOfWork.RegistrationRepository.GetById(request.Data.LoketData.Id);
-                    oldRegistration.Status = (int)RegistrationStatusEnum.Process;
-                    oldRegistration.ModifiedBy = request.Data.Account.UserCode;
-                    oldRegistration.ModifiedDate = DateTime.Now;
-
-                    _unitOfWork.RegistrationRepository.Update(oldRegistration);
-                    int resultAffected = _unitOfWork.Save();
-                    if (resultAffected < 0)
-                    {
-                        response.Status = false;
-                        response.Message = string.Format(Messages.UpdateObjectFailed, "Registration");
-                        CommandLog(false, ClinicEnums.Module.REGISTRATION, Constants.Command.EDIT_REGISTRATION, request.Data.Account, request.Data);
-
-                        return response;
-                    }
-
-                    // create a new registration
-                    QueuePoli queue = Mapper.Map<LoketModel, QueuePoli>(request.Data.LoketData);
-                    queue.ID = 0; // reset                    
-                    queue.DoctorID = request.Data.DoctorToID == 0 ? (int?)null : request.Data.DoctorToID;
-                    queue.PoliFrom = queue.PoliTo;
-                    queue.PoliTo = request.Data.PoliToID;
-                    queue.CreatedBy = request.Data.Account.UserCode;
-                    queue.CreatedDate = DateTime.Now;
-                    queue.TransactionDate = DateTime.Now;
-                    queue.Status = (int)RegistrationStatusEnum.New;
-                    queue.SortNumber = GenerateSortNumber(request.Data.PoliToID, request.Data.DoctorToID);
-
-                    _unitOfWork.RegistrationRepository.Insert(queue);
-                    resultAffected = _unitOfWork.Save();
-                    if (resultAffected < 0)
-                    {
-                        response.Status = false;
-                        response.Message = string.Format(Messages.AddObjectFailed, "Registration");
-
-                        CommandLog(false, ClinicEnums.Module.REGISTRATION, Constants.Command.ADD_NEW_REGISTRATION, request.Data.Account, request.Data);
-
-                        return response;
-                    }
-
-                    FormExamine formExamine = Mapper.Map<FormExamineModel, FormExamine>(request.Data.ExamineData);
-                    formExamine.CreatedBy = request.Data.Account.UserCode;
-                    formExamine.CreatedDate = DateTime.Now;
-                    formExamine.FormExamineMedicines = formExamineMedicine;
-                    formExamine.FormExamineServices = formExamineService;
-
-                    // save the form examine data
-                    _unitOfWork.FormExamineRepository.Insert(formExamine);
-                    resultAffected = _unitOfWork.Save();
-                    if (resultAffected > 0)
-                    {
-                        response.Message = string.Format(Messages.ObjectHasBeenAdded2, "FormExamine", formExamine.ID);
-
-                        CommandLog(true, ClinicEnums.Module.FORM_EXAMINE, Constants.Command.ADD_NEW_REGISTRATION, request.Data.Account, request.Data);
-                    }
+                    if (request.Data != null && request.Data.Id > 0)
+                        ErrorLog(ClinicEnums.Module.FORM_EXAMINE, Constants.Command.EDIT_FORM_EXAMINE, request.Data.Account, ex);
                     else
-                    {
-                        response.Status = false;
-                        response.Message = string.Format(Messages.AddObjectFailed, "FormExamine");
-
-                        CommandLog(false, ClinicEnums.Module.FORM_EXAMINE, Constants.Command.ADD_NEW_REGISTRATION, request.Data.Account, request.Data);
-                    }
+                        ErrorLog(ClinicEnums.Module.FORM_EXAMINE, Constants.Command.ADD_FORM_EXAMINE, request.Data.Account, ex);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                response.Status = false;
-                response.Message = Messages.GeneralError;
+                using (var transaction = _context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        List<FormExamineMedicine> formExamineMedicine = new List<FormExamineMedicine>();
+                        foreach (var item in request.Data.MedicineDataList)
+                        {
+                            var medicine = Mapper.Map<FormExamineMedicineModel, FormExamineMedicine>(item);
+                            medicine.CreatedBy = request.Data.Account.UserCode;
+                            medicine.CreatedDate = DateTime.Now;
 
-                if (request.Data != null && request.Data.Id > 0)
-                    ErrorLog(ClinicEnums.Module.FORM_EXAMINE, Constants.Command.EDIT_FORM_EXAMINE, request.Data.Account, ex);
-                else
-                    ErrorLog(ClinicEnums.Module.FORM_EXAMINE, Constants.Command.ADD_FORM_EXAMINE, request.Data.Account, ex);
+                            formExamineMedicine.Add(medicine);
+                        }
+
+                        foreach (var item in request.Data.LabDataList)
+                        {
+                            var lab = Mapper.Map<FormExamineLabModel, FormExamineLab>(item);
+                            lab.FormMedicalID = request.Data.LoketData.FormMedicalID;
+                            lab.CreatedBy = request.Data.Account.UserCode;
+                            lab.CreatedDate = DateTime.Now;
+
+                            _context.FormExamineLabs.Add(lab);
+                            _context.SaveChanges();
+                        }
+
+                        List<FormExamineService> formExamineService = new List<FormExamineService>();
+                        foreach (var item in request.Data.ServiceDataList)
+                        {
+                            var service = Mapper.Map<FormExamineServiceModel, FormExamineService>(item);
+                            service.CreatedBy = request.Data.Account.UserCode;
+                            service.CreatedDate = DateTime.Now;
+
+                            formExamineService.Add(service);
+                        }
+
+                        // update status the old registration to process
+                        QueuePoli oldRegistration = _context.QueuePolis.FirstOrDefault(x => x.ID == request.Data.LoketData.Id);
+                        oldRegistration.Status = (int)RegistrationStatusEnum.Process;
+
+                        _context.SaveChanges();
+
+                        // create a new registration
+                        QueuePoli queue = Mapper.Map<LoketModel, QueuePoli>(request.Data.LoketData);
+                        queue.ID = 0; // reset                    
+                        queue.DoctorID = request.Data.DoctorToID == 0 ? (int?)null : request.Data.DoctorToID;
+                        queue.PoliFrom = queue.PoliTo;
+                        queue.PoliTo = request.Data.PoliToID;
+                        queue.CreatedBy = request.Data.Account.UserCode;
+                        queue.CreatedDate = DateTime.Now;
+                        queue.TransactionDate = DateTime.Now;
+                        queue.Status = (int)RegistrationStatusEnum.New;
+                        queue.SortNumber = GenerateSortNumber(request.Data.PoliToID, request.Data.DoctorToID);
+
+                        _context.QueuePolis.Add(queue);
+                        _context.SaveChanges();
+
+                        FormExamine formExamine = Mapper.Map<FormExamineModel, FormExamine>(request.Data.ExamineData);
+                        formExamine.CreatedBy = request.Data.Account.UserCode;
+                        formExamine.CreatedDate = DateTime.Now;
+                        formExamine.FormExamineMedicines = formExamineMedicine;
+                        formExamine.FormExamineServices = formExamineService;
+
+                        // save the form examine data
+                        _context.FormExamines.Add(formExamine);
+                        _context.SaveChanges();
+
+                        transaction.Commit();
+
+                        response.Message = Messages.DataSaved;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+
+                        response.Status = false;
+                        response.Message = Messages.GeneralError;
+
+                        if (request.Data != null && request.Data.Id > 0)
+                            ErrorLog(ClinicEnums.Module.FORM_EXAMINE, Constants.Command.EDIT_FORM_EXAMINE, request.Data.Account, ex);
+                        else
+                            ErrorLog(ClinicEnums.Module.FORM_EXAMINE, Constants.Command.ADD_FORM_EXAMINE, request.Data.Account, ex);
+                    }
+                }
             }
 
             return response;

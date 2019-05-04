@@ -1,4 +1,5 @@
 ﻿using Klinik.Data;
+using Klinik.Data.DataRepository;
 using Klinik.Resources;
 
 namespace Klinik.Features
@@ -12,9 +13,10 @@ namespace Klinik.Features
         /// Constructor
         /// </summary>
         /// <param name="unitOfWork"></param>
-        public FormExamineValidator(IUnitOfWork unitOfWork)
+        public FormExamineValidator(IUnitOfWork unitOfWork, KlinikDBEntities context)
         {
             _unitOfWork = unitOfWork;
+            _context = context;
         }
 
         /// <summary>
@@ -45,7 +47,7 @@ namespace Klinik.Features
 
             if (response.Status)
             {
-                response = new FormExamineHandler(_unitOfWork).CreateOrEdit(request);
+                response = new FormExamineHandler(_unitOfWork, _context).CreateOrEdit(request);
             }
 
             return response;

@@ -210,7 +210,7 @@ namespace Klinik.Web.Controllers
 
             var request = new FormExamineRequest { Data = model, };
 
-            FormExamineResponse _response = new FormExamineValidator(_unitOfWork).Validate(request);
+            FormExamineResponse _response = new FormExamineValidator(_unitOfWork, _context).Validate(request);
             if (_response.Status)
             {
                 // Notify to all
@@ -477,10 +477,9 @@ namespace Klinik.Web.Controllers
             // FormExamineLab
             foreach (var item in labList)
             {
-                string[] values = item.Split('|');
                 FormExamineLabModel labModel = new FormExamineLabModel
                 {
-                    LabItemID = int.Parse(values[0]),
+                    LabItemID = int.Parse(item),
                     LabType = "Laboratorium"
                 };
 
@@ -490,10 +489,9 @@ namespace Klinik.Web.Controllers
             // FormExamineRadiology
             foreach (var item in radiologyList)
             {
-                string[] values = item.Split('|');
                 FormExamineLabModel labModel = new FormExamineLabModel
                 {
-                    LabItemID = int.Parse(values[0]),
+                    LabItemID = int.Parse(item),
                     LabType = "Radiology"
                 };
 
@@ -503,10 +501,9 @@ namespace Klinik.Web.Controllers
             // FormExamineRadiology
             foreach (var item in serviceList)
             {
-                string[] values = item.Split('|');
                 FormExamineServiceModel serviceModel = new FormExamineServiceModel
                 {
-                    ServiceID = int.Parse(values[0])
+                    ServiceID = int.Parse(item)
                 };
 
                 model.ServiceDataList.Add(serviceModel);
