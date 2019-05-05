@@ -1454,6 +1454,7 @@
     <Content Include="Views\MasterData\PoliServiceList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditService.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditPoliService.cshtml" />
+    <Content Include="Views\Cashier\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

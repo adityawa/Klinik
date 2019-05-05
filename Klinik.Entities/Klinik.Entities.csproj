@@ -72,6 +72,7 @@
     <Compile Include="BaseModel.cs" />
     <Compile Include="BaseResponse.cs" />
     <Compile Include="Cashier\CashierModel.cs" />
+    <Compile Include="Cashier\FormMedicalModel.cs" />
     <Compile Include="Document\DocumentModel.cs" />
     <Compile Include="Form\FormExamineAttachmentModel.cs" />
     <Compile Include="Form\FormExamineMedicineModel.cs" />
