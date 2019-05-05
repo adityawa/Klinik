@@ -1,0 +1,81 @@
+﻿@model Klinik.Data.DataRepository.FormMedical
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+        </div>
+        <h5 class="panel-title">Form Pembayaran Patient</h5>
+    </header>
+    <div class="panel-body">
+        <div class="col-lg-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in (IEnumerable<Klinik.Entities.Cashier.CashierModel>)ViewBag.Detail)
+                    {
+                        <tr>
+                            <td>@item.ItemName</td>
+                            <td>@item.Price</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td>@ViewBag.Sum</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="col-lg-6">
+            @using (Html.BeginForm("Save", "Cashier", new { medicalid = ViewBag.Formmedicalid }, FormMethod.Post, new { @class = "form-material form-horizontal" }))
+            {
+            <div class="form-group">
+                <label for="exampleInputEmail1">Total Price</label>
+                    <input type="text" value="@ViewBag.Sum" class="form-control" disabled/>
+                    @Html.HiddenFor(x => x.TotalPrice, new { @Value = ViewBag.Sum })
+                    @Html.ValidationMessageFor(m => m.TotalPrice, "", new { @class = "text-danger" })
+            </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Discount Amount</label>
+                    @Html.TextBoxFor(x => x.DiscountAmount, new { @class = "form-control", @id = "tbCode" })
+                    @Html.ValidationMessageFor(m => m.DiscountAmount, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Discount Percent</label>
+                    @Html.TextBoxFor(x => x.DiscountPercent, new { @class = "form-control", @id = "tbCode" })
+                    @Html.ValidationMessageFor(m => m.DiscountPercent, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Benefit Paid</label>
+                    @Html.TextBoxFor(x => x.BenefitPaid, new { @class = "form-control", @id = "tbCode" })
+                    @Html.ValidationMessageFor(m => m.BenefitPaid, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Benefit Plan</label>
+                    @Html.TextBoxFor(x => x.BenefitPlan, new { @class = "form-control", @id = "tbCode" })
+                    @Html.ValidationMessageFor(m => m.BenefitPlan, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Remark</label>
+                    @Html.TextAreaFor(x => x.Remark, new { @class = "form-control", @id = "tbCode" })
+                    @Html.ValidationMessageFor(m => m.Remark, "", new { @class = "text-danger" })
+                </div>
+                <br />
+                <button type="submit" class="btn btn-primary">Submit</button>
+            }
+            </div>
+    </div>
+</section>
