@@ -34,7 +34,7 @@ namespace Klinik.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult AutoCompleteRadiology(string prefix)
+        public JsonResult AutoCompleteRadiology(string formMedicalID, string prefix)
         {
             List<LabItem> labList = _unitOfWork.LabItemRepository.Get(x => x.LabItemCategory.LabType == "Radiology" && x.RowStatus == 0).ToList();
 
@@ -51,7 +51,7 @@ namespace Klinik.Web.Controllers
                     stock = "911" // hardcoded for now
                 };
 
-                FormExamineLab lab = _unitOfWork.FormExamineLabRepository.GetFirstOrDefault(x => x.LabItemID == item.ID);
+                FormExamineLab lab = _unitOfWork.FormExamineLabRepository.GetFirstOrDefault(x => x.LabItemID == item.ID && x.FormMedicalID.ToString() == formMedicalID);
                 temp.value = lab == null ? string.Empty : lab.Result;
 
                 resultList.Add(temp);
@@ -61,7 +61,7 @@ namespace Klinik.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult AutoCompleteLaborat(string prefix)
+        public JsonResult AutoCompleteLaborat(string formMedicalID, string prefix)
         {
             List<LabItem> labList = _unitOfWork.LabItemRepository.Get(x => x.LabItemCategory.LabType == "Laboratorium" && x.RowStatus == 0).ToList();
 
@@ -78,7 +78,7 @@ namespace Klinik.Web.Controllers
                     stock = "911" // hardcoded for now
                 };
 
-                FormExamineLab lab = _unitOfWork.FormExamineLabRepository.GetFirstOrDefault(x => x.LabItemID == item.ID);
+                FormExamineLab lab = _unitOfWork.FormExamineLabRepository.GetFirstOrDefault(x => x.LabItemID == item.ID && x.FormMedicalID.ToString() == formMedicalID);
                 temp.value = lab == null ? string.Empty : lab.Result;
 
                 resultList.Add(temp);
