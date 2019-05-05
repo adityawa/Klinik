@@ -15,6 +15,7 @@ namespace Klinik.Entities.Poli
         public List<FormExamineLabModel> LabDataList { get; set; }
         public List<FormExamineLabModel> RadiologyDataList { get; set; }
         public List<FormExamineMedicineModel> MedicineDataList { get; set; }
+        public List<FormExamineMedicineModel> InjectionDataList { get; set; }
         public List<FormExamineServiceModel> ServiceDataList { get; set; }
         public List<ServiceModel> DefaultServiceList { get; set; }
         public string PatientAge { get; set; }
@@ -32,6 +33,7 @@ namespace Klinik.Entities.Poli
             LabDataList = new List<FormExamineLabModel>();
             RadiologyDataList = new List<FormExamineLabModel>();
             MedicineDataList = new List<FormExamineMedicineModel>();
+            InjectionDataList = new List<FormExamineMedicineModel>();
             ServiceDataList = new List<FormExamineServiceModel>();
             DefaultServiceList = new List<ServiceModel>();
         }

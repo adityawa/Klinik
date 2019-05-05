@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Klinik.Data.DataRepository;
+using System;
 
 namespace Klinik.Entities.Form
 {
@@ -6,5 +7,6 @@ namespace Klinik.Entities.Form
     {
         public long? FormExamineID { get; set; }
         public int? ServiceID { get; set; }
+        public Service Service { get; set; }
     }
 }

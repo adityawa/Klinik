@@ -120,7 +120,7 @@ namespace Klinik.Common
                 .ForMember(m => m.TransactionDate, map => map.MapFrom(p => p.TransactionDate))
                 .ForMember(m => m.DoctorStr, map => map.MapFrom(p => p.Doctor.Name))
                 .ForMember(m => m.ClinicName, map => map.MapFrom(p => p.Clinic.Name))
-                .ForMember(m=>m.MRNumber, map=>map.MapFrom(p=>p.Patient.MRNumber))
+                .ForMember(m => m.MRNumber, map => map.MapFrom(p => p.Patient.MRNumber))
                 .ForMember(m => m.strIsPreExamine, map => map.MapFrom(p => p.IsPreExamine == true ? "Yes" : "No"));
 
 
@@ -182,20 +182,21 @@ namespace Klinik.Common
 
             CreateMap<FormExamineLabModel, FormExamineLab>();
             CreateMap<FormExamineLab, FormExamineLabModel>()
-                .ForMember(x=>x.LabItemDesc,map=>map.MapFrom(p=>p.LabItem.Name));
+                .ForMember(x => x.LabItemDesc, map => map.MapFrom(p => p.LabItem.Name));
 
             CreateMap<FormExamineServiceModel, FormExamineService>();
             CreateMap<FormExamineService, FormExamineServiceModel>();
 
             CreateMap<FormExamineMedicineModel, FormExamineMedicine>();
-            CreateMap<FormExamineMedicine, FormExamineMedicineModel>();
+            CreateMap<FormExamineMedicine, FormExamineMedicineModel>()
+                .ForMember(x => x.ProductName, map => map.MapFrom(p => p.Product.Name));
 
             CreateMap<LoketModel, PoliExamineModel>();
 
 
             CreateMap<LabItemCategory, LabItemCategoryModel>()
-                .ForMember(x=>x.PoliName, map=>map.MapFrom(p=>p.Poli.Name));
-                
+                .ForMember(x => x.PoliName, map => map.MapFrom(p => p.Poli.Name));
+
 
             CreateMap<ProductModel, Product>();
             CreateMap<Product, ProductModel>();

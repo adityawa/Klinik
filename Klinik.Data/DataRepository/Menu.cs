@@ -18,6 +18,7 @@ namespace Klinik.Data.DataRepository
         public Menu()
         {
             this.Privileges = new HashSet<Privilege>();
+            this.RolePrivileges = new HashSet<RolePrivilege>();
         }
     
         public long ID { get; set; }
@@ -40,5 +41,7 @@ namespace Klinik.Data.DataRepository
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Privilege> Privileges { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RolePrivilege> RolePrivileges { get; set; }
     }
 }

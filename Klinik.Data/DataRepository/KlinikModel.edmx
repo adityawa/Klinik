@@ -624,9 +624,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServicesID" Type="int" />
-          <Property Name="ClinicID" Type="bigint" />
-          <Property Name="PoliID" Type="int" />
+          <Property Name="ServicesID" Type="int" Nullable="false" />
+          <Property Name="ClinicID" Type="bigint" Nullable="false" />
+          <Property Name="PoliID" Type="int" Nullable="false" />
           <Property Name="RowStatus" Type="smallint" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -822,6 +822,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Clinic_City">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clinic">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Doctor_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
@@ -990,6 +1002,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FormExamineLab_FormMedical">
+          <End Role="FormMedical" Type="Self.FormMedical" Multiplicity="0..1" />
+          <End Role="FormExamineLab" Type="Self.FormExamineLab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormMedical">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineLab">
+              <PropertyRef Name="FormMedicalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FormExamineLab_LabItem">
           <End Role="LabItem" Type="Self.LabItem" Multiplicity="0..1" />
           <End Role="FormExamineLab" Type="Self.FormExamineLab" Multiplicity="*" />
@@ -1014,6 +1038,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FormExamineMedicine_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="FormExamineMedicine" Type="Self.FormExamineMedicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineMedicine">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FormExamineService_FormExamine">
           <End Role="FormExamine" Type="Self.FormExamine" Multiplicity="0..1" />
           <End Role="FormExamineService" Type="Self.FormExamineService" Multiplicity="*" />
@@ -1023,6 +1059,18 @@
             </Principal>
             <Dependent Role="FormExamineService">
               <PropertyRef Name="FormExamineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormExamineService_Service">
+          <End Role="Services" Type="Self.Services" Multiplicity="0..1" />
+          <End Role="FormExamineService" Type="Self.FormExamineService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineService">
+              <PropertyRef Name="ServiceID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1143,6 +1191,30 @@
             </Principal>
             <Dependent Role="OrganizationRole">
               <PropertyRef Name="OrgID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PasswordHistory_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="PasswordHistory" Type="Self.PasswordHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PasswordHistory">
+              <PropertyRef Name="OrganizationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Patient_City">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="CityID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1303,7 +1375,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliServices_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="PoliServices" Type="Self.PoliServices" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -1315,7 +1387,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliServices_Poli">
-          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="Poli" Type="Self.Poli" Multiplicity="1" />
           <End Role="PoliServices" Type="Self.PoliServices" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Poli">
@@ -1327,7 +1399,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliServices_Services">
-          <End Role="Services" Type="Self.Services" Multiplicity="0..1" />
+          <End Role="Services" Type="Self.Services" Multiplicity="1" />
           <End Role="PoliServices" Type="Self.PoliServices" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Services">
@@ -1470,6 +1542,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RolePrivilege_Menu">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
+          <End Role="RolePrivilege" Type="Self.RolePrivilege" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RolePrivilege">
+              <PropertyRef Name="MenuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RolePrivilege_OrganizationRole">
           <End Role="OrganizationRole" Type="Self.OrganizationRole" Multiplicity="1" />
           <End Role="RolePrivilege" Type="Self.RolePrivilege" Multiplicity="*" />
@@ -1602,6 +1686,10 @@
             <End Role="MCUPackage" EntitySet="MCUPackage" />
             <End Role="Appointment" EntitySet="Appointment" />
           </AssociationSet>
+          <AssociationSet Name="FK_Clinic_City" Association="Self.FK_Clinic_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Clinic" EntitySet="Clinic" />
+          </AssociationSet>
           <AssociationSet Name="FK_Doctor_Employee" Association="Self.FK_Doctor_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Doctor" EntitySet="Doctor" />
@@ -1658,6 +1746,10 @@
             <End Role="FormExamine" EntitySet="FormExamine" />
             <End Role="FormExamineAttachment" EntitySet="FormExamineAttachment" />
           </AssociationSet>
+          <AssociationSet Name="FK_FormExamineLab_FormMedical" Association="Self.FK_FormExamineLab_FormMedical">
+            <End Role="FormMedical" EntitySet="FormMedical" />
+            <End Role="FormExamineLab" EntitySet="FormExamineLab" />
+          </AssociationSet>
           <AssociationSet Name="FK_FormExamineLab_LabItem" Association="Self.FK_FormExamineLab_LabItem">
             <End Role="LabItem" EntitySet="LabItem" />
             <End Role="FormExamineLab" EntitySet="FormExamineLab" />
@@ -1666,8 +1758,16 @@
             <End Role="FormExamine" EntitySet="FormExamine" />
             <End Role="FormExamineMedicine" EntitySet="FormExamineMedicine" />
           </AssociationSet>
+          <AssociationSet Name="FK_FormExamineMedicine_Product" Association="Self.FK_FormExamineMedicine_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="FormExamineMedicine" EntitySet="FormExamineMedicine" />
+          </AssociationSet>
           <AssociationSet Name="FK_FormExamineService_FormExamine" Association="Self.FK_FormExamineService_FormExamine">
             <End Role="FormExamine" EntitySet="FormExamine" />
+            <End Role="FormExamineService" EntitySet="FormExamineService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormExamineService_Service" Association="Self.FK_FormExamineService_Service">
+            <End Role="Services" EntitySet="Services" />
             <End Role="FormExamineService" EntitySet="FormExamineService" />
           </AssociationSet>
           <AssociationSet Name="FK_FormMedical_Clinic" Association="Self.FK_FormMedical_Clinic">
@@ -1709,6 +1809,14 @@
           <AssociationSet Name="FK_OrganizationRole_Organization" Association="Self.FK_OrganizationRole_Organization">
             <End Role="Organization" EntitySet="Organization" />
             <End Role="OrganizationRole" EntitySet="OrganizationRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PasswordHistory_Organization" Association="Self.FK_PasswordHistory_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="PasswordHistory" EntitySet="PasswordHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Patient_City" Association="Self.FK_Patient_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Patient" EntitySet="Patient" />
           </AssociationSet>
           <AssociationSet Name="FK_Patient_Employee" Association="Self.FK_Patient_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -1818,6 +1926,10 @@
             <End Role="Poli" EntitySet="Poli" />
             <End Role="QueuePoli" EntitySet="QueuePoli" />
           </AssociationSet>
+          <AssociationSet Name="FK_RolePrivilege_Menu" Association="Self.FK_RolePrivilege_Menu">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="RolePrivilege" EntitySet="RolePrivilege" />
+          </AssociationSet>
           <AssociationSet Name="FK_RolePrivilege_OrganizationRole" Association="Self.FK_RolePrivilege_OrganizationRole">
             <End Role="OrganizationRole" EntitySet="OrganizationRole" />
             <End Role="RolePrivilege" EntitySet="RolePrivilege" />
@@ -1894,6 +2006,8 @@
           <Property Name="Kecamatan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Clinics" Relationship="Self.FK_Clinic_City" FromRole="City" ToRole="Clinic" />
+          <NavigationProperty Name="Patients" Relationship="Self.FK_Patient_City" FromRole="City" ToRole="Patient" />
           <NavigationProperty Name="PatientClinics" Relationship="Self.FK_PatientClinic_City" FromRole="City" ToRole="PatientClinic" />
         </EntityType>
         <EntityType Name="Clinic">
@@ -1919,6 +2033,7 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Appointments" Relationship="Self.FK_Appointment_Clinic" FromRole="Clinic" ToRole="Appointment" />
+          <NavigationProperty Name="City" Relationship="Self.FK_Clinic_City" FromRole="Clinic" ToRole="City" />
           <NavigationProperty Name="DoctorClinics" Relationship="Self.FK_DoctorClinic_Clinic" FromRole="Clinic" ToRole="DoctorClinic" />
           <NavigationProperty Name="FormMedicals" Relationship="Self.FK_FormMedical_Clinic" FromRole="Clinic" ToRole="FormMedical" />
           <NavigationProperty Name="Organizations" Relationship="Self.FK_Organization_Clinic" FromRole="Clinic" ToRole="Organization" />
@@ -2136,6 +2251,7 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="FormMedical" Relationship="Self.FK_FormExamineLab_FormMedical" FromRole="FormExamineLab" ToRole="FormMedical" />
           <NavigationProperty Name="LabItem" Relationship="Self.FK_FormExamineLab_LabItem" FromRole="FormExamineLab" ToRole="LabItem" />
         </EntityType>
         <EntityType Name="FormExamineMedicine">
@@ -2155,6 +2271,7 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="FormExamine" Relationship="Self.FK_FormExamineMedicine_FormExamine" FromRole="FormExamineMedicine" ToRole="FormExamine" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_FormExamineMedicine_Product" FromRole="FormExamineMedicine" ToRole="Product" />
         </EntityType>
         <EntityType Name="FormExamineService">
           <Key>
@@ -2169,6 +2286,7 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="FormExamine" Relationship="Self.FK_FormExamineService_FormExamine" FromRole="FormExamineService" ToRole="FormExamine" />
+          <NavigationProperty Name="Service" Relationship="Self.FK_FormExamineService_Service" FromRole="FormExamineService" ToRole="Services" />
         </EntityType>
         <EntityType Name="FormMedical">
           <Key>
@@ -2196,6 +2314,7 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Clinic" Relationship="Self.FK_FormMedical_Clinic" FromRole="FormMedical" ToRole="Clinic" />
           <NavigationProperty Name="FormExamines" Relationship="Self.FK_FormExamine_FormMedical" FromRole="FormMedical" ToRole="FormExamine" />
+          <NavigationProperty Name="FormExamineLabs" Relationship="Self.FK_FormExamineLab_FormMedical" FromRole="FormMedical" ToRole="FormExamineLab" />
           <NavigationProperty Name="Patient" Relationship="Self.FK_FormMedical_Patient" FromRole="FormMedical" ToRole="Patient" />
           <NavigationProperty Name="FormPreExamines" Relationship="Self.FK_FormPreExamine_FormMedical" FromRole="FormMedical" ToRole="FormPreExamine" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_FormMedical" FromRole="FormMedical" ToRole="QueuePoli" />
@@ -2350,6 +2469,7 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Privileges" Relationship="Self.FK_Privilege_Menu" FromRole="Menu" ToRole="Privilege" />
+          <NavigationProperty Name="RolePrivileges" Relationship="Self.FK_RolePrivilege_Menu" FromRole="Menu" ToRole="RolePrivilege" />
         </EntityType>
         <EntityType Name="Organization">
           <Key>
@@ -2367,6 +2487,7 @@
           <NavigationProperty Name="Clinic" Relationship="Self.FK_Organization_Clinic" FromRole="Organization" ToRole="Clinic" />
           <NavigationProperty Name="OrganizationPrivileges" Relationship="Self.FK_OrganizationPrivilege_Organization" FromRole="Organization" ToRole="OrganizationPrivilege" />
           <NavigationProperty Name="OrganizationRoles" Relationship="Self.FK_OrganizationRole_Organization" FromRole="Organization" ToRole="OrganizationRole" />
+          <NavigationProperty Name="PasswordHistories" Relationship="Self.FK_PasswordHistory_Organization" FromRole="Organization" ToRole="PasswordHistory" />
           <NavigationProperty Name="Users" Relationship="Self.FK_User_Organization" FromRole="Organization" ToRole="User" />
         </EntityType>
         <EntityType Name="OrganizationPrivilege">
@@ -2413,6 +2534,7 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_PasswordHistory_Organization" FromRole="PasswordHistory" ToRole="Organization" />
         </EntityType>
         <EntityType Name="Patient">
           <Key>
@@ -2439,6 +2561,7 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="PatientKey" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="City" Relationship="Self.FK_Patient_City" FromRole="Patient" ToRole="City" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_Patient_Employee" FromRole="Patient" ToRole="Employee" />
           <NavigationProperty Name="FormMedicals" Relationship="Self.FK_FormMedical_Patient" FromRole="Patient" ToRole="FormMedical" />
           <NavigationProperty Name="PatientClinics" Relationship="Self.FK_PatientClinic_Patient" FromRole="Patient" ToRole="PatientClinic" />
@@ -2566,9 +2689,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServicesID" Type="Int32" />
-          <Property Name="ClinicID" Type="Int64" />
-          <Property Name="PoliID" Type="Int32" />
+          <Property Name="ServicesID" Type="Int32" Nullable="false" />
+          <Property Name="ClinicID" Type="Int64" Nullable="false" />
+          <Property Name="PoliID" Type="Int32" Nullable="false" />
           <Property Name="RowStatus" Type="Int16" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
@@ -2610,6 +2733,7 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="FormExamineMedicines" Relationship="Self.FK_FormExamineMedicine_Product" FromRole="Product" ToRole="FormExamineMedicine" />
           <NavigationProperty Name="ProductCategory" Relationship="Self.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
           <NavigationProperty Name="ProductUnit" Relationship="Self.FK_Product_ProductUnit" FromRole="Product" ToRole="ProductUnit" />
           <NavigationProperty Name="ProductMedicines" Relationship="Self.FK_ProductMedicine_Product" FromRole="Product" ToRole="ProductMedicine" />
@@ -2701,6 +2825,7 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Menu" Relationship="Self.FK_RolePrivilege_Menu" FromRole="RolePrivilege" ToRole="Menu" />
           <NavigationProperty Name="OrganizationRole" Relationship="Self.FK_RolePrivilege_OrganizationRole" FromRole="RolePrivilege" ToRole="OrganizationRole" />
           <NavigationProperty Name="Privilege" Relationship="Self.FK_RolePrivilege_Privilege" FromRole="RolePrivilege" ToRole="Privilege" />
         </EntityType>
@@ -2717,6 +2842,7 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="FormExamineServices" Relationship="Self.FK_FormExamineService_Service" FromRole="Services" ToRole="FormExamineService" />
           <NavigationProperty Name="PoliServices" Relationship="Self.FK_PoliServices_Services" FromRole="Services" ToRole="PoliServices" />
         </EntityType>
         <EntityType Name="User">
@@ -2788,6 +2914,30 @@
             </Principal>
             <Dependent Role="Appointment">
               <PropertyRef Name="MCUPackageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clinic_City">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clinic">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Patient_City">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="CityID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2888,7 +3038,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliServices_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="PoliServices" Type="Self.PoliService" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -3175,6 +3325,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FormExamineLab_FormMedical">
+          <End Role="FormMedical" Type="Self.FormMedical" Multiplicity="0..1" />
+          <End Role="FormExamineLab" Type="Self.FormExamineLab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormMedical">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineLab">
+              <PropertyRef Name="FormMedicalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FormExamineLab_LabItem">
           <End Role="LabItem" Type="Self.LabItem" Multiplicity="0..1" />
           <End Role="FormExamineLab" Type="Self.FormExamineLab" Multiplicity="*" />
@@ -3184,6 +3346,30 @@
             </Principal>
             <Dependent Role="FormExamineLab">
               <PropertyRef Name="LabItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormExamineMedicine_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="FormExamineMedicine" Type="Self.FormExamineMedicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineMedicine">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormExamineService_Service">
+          <End Role="Services" Type="Self.Service" Multiplicity="0..1" />
+          <End Role="FormExamineService" Type="Self.FormExamineService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineService">
+              <PropertyRef Name="ServiceID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3271,6 +3457,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RolePrivilege_Menu">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
+          <End Role="RolePrivilege" Type="Self.RolePrivilege" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RolePrivilege">
+              <PropertyRef Name="MenuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrganizationPrivilege_Organization">
           <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
           <End Role="OrganizationPrivilege" Type="Self.OrganizationPrivilege" Multiplicity="*" />
@@ -3292,6 +3490,18 @@
             </Principal>
             <Dependent Role="OrganizationRole">
               <PropertyRef Name="OrgID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PasswordHistory_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="PasswordHistory" Type="Self.PasswordHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PasswordHistory">
+              <PropertyRef Name="OrganizationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3404,7 +3614,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliServices_Poli">
-          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="Poli" Type="Self.Poli" Multiplicity="1" />
           <End Role="PoliServices" Type="Self.PoliService" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Poli">
@@ -3440,7 +3650,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PoliServices_Services">
-          <End Role="Services" Type="Self.Service" Multiplicity="0..1" />
+          <End Role="Services" Type="Self.Service" Multiplicity="1" />
           <End Role="PoliServices" Type="Self.PoliService" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Services">
@@ -3571,6 +3781,14 @@
             <End Role="MCUPackage" EntitySet="MCUPackages" />
             <End Role="Appointment" EntitySet="Appointments" />
           </AssociationSet>
+          <AssociationSet Name="FK_Clinic_City" Association="Self.FK_Clinic_City">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Clinic" EntitySet="Clinics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Patient_City" Association="Self.FK_Patient_City">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Patient" EntitySet="Patients" />
+          </AssociationSet>
           <AssociationSet Name="FK_PatientClinic_City" Association="Self.FK_PatientClinic_City">
             <End Role="City" EntitySet="Cities" />
             <End Role="PatientClinic" EntitySet="PatientClinics" />
@@ -3699,9 +3917,21 @@
             <End Role="FormExamine" EntitySet="FormExamines" />
             <End Role="FormExamineService" EntitySet="FormExamineServices" />
           </AssociationSet>
+          <AssociationSet Name="FK_FormExamineLab_FormMedical" Association="Self.FK_FormExamineLab_FormMedical">
+            <End Role="FormMedical" EntitySet="FormMedicals" />
+            <End Role="FormExamineLab" EntitySet="FormExamineLabs" />
+          </AssociationSet>
           <AssociationSet Name="FK_FormExamineLab_LabItem" Association="Self.FK_FormExamineLab_LabItem">
             <End Role="LabItem" EntitySet="LabItems" />
             <End Role="FormExamineLab" EntitySet="FormExamineLabs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormExamineMedicine_Product" Association="Self.FK_FormExamineMedicine_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="FormExamineMedicine" EntitySet="FormExamineMedicines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormExamineService_Service" Association="Self.FK_FormExamineService_Service">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="FormExamineService" EntitySet="FormExamineServices" />
           </AssociationSet>
           <AssociationSet Name="FK_FormMedical_Patient" Association="Self.FK_FormMedical_Patient">
             <End Role="Patient" EntitySet="Patients" />
@@ -3731,6 +3961,10 @@
             <End Role="Menu" EntitySet="Menus" />
             <End Role="Privilege" EntitySet="Privileges" />
           </AssociationSet>
+          <AssociationSet Name="FK_RolePrivilege_Menu" Association="Self.FK_RolePrivilege_Menu">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="RolePrivilege" EntitySet="RolePrivileges" />
+          </AssociationSet>
           <AssociationSet Name="FK_OrganizationPrivilege_Organization" Association="Self.FK_OrganizationPrivilege_Organization">
             <End Role="Organization" EntitySet="Organizations" />
             <End Role="OrganizationPrivilege" EntitySet="OrganizationPrivileges" />
@@ -3738,6 +3972,10 @@
           <AssociationSet Name="FK_OrganizationRole_Organization" Association="Self.FK_OrganizationRole_Organization">
             <End Role="Organization" EntitySet="Organizations" />
             <End Role="OrganizationRole" EntitySet="OrganizationRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PasswordHistory_Organization" Association="Self.FK_PasswordHistory_Organization">
+            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="PasswordHistory" EntitySet="PasswordHistories" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Organization" Association="Self.FK_User_Organization">
             <End Role="Organization" EntitySet="Organizations" />
