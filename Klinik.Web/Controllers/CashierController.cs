@@ -34,10 +34,12 @@ namespace Klinik.Web.Controllers
         public ActionResult Detail(long patienid)
         {
             var response = new CashierHandler(_unitOfWork).GetDetail(patienid);
-            ViewBag.Formmedicalid = _unitOfWork.FormMedicalRepository.Get(a => a.PatientID == patienid).Select(x => x.ID).FirstOrDefault();
+            var formmedical = _unitOfWork.FormMedicalRepository.Get(a => a.PatientID == patienid).FirstOrDefault();
+            ViewBag.Formmedicalid = formmedical;
             ViewBag.Detail = response.Data;
-            ViewBag.Sum = response.Data.Sum(a => a.Price);
-            return View();
+
+            if (response.Data != null) { ViewBag.Sum = response.Data.Sum(a => a.Price); } else { ViewBag.Sum = ""; };
+            return View(formmedical);
         }
 
         [HttpPost]
@@ -45,6 +47,21 @@ namespace Klinik.Web.Controllers
         {
             var response = new CashierHandler(_unitOfWork).update(medicalid, formMedical);
             return RedirectToAction("ListPatien", "Cashier");
+        }
+
+        [HttpGet]
+        public ActionResult Invoice(long patienid)
+        {
+            var response = new CashierHandler(_unitOfWork).GetDetail(patienid);
+            var formmedical = _unitOfWork.FormMedicalRepository.Get(a => a.PatientID == patienid).FirstOrDefault();
+            ViewBag.Formmedicalid = formmedical;
+            ViewBag.Detail = response.Data;
+            ViewBag.ClinicName = formmedical.Clinic.Name;
+            ViewBag.PatienName = formmedical.Patient.Name;
+
+            if (response.Data != null) { ViewBag.Sum = response.Data.Sum(a => a.Price); } else { ViewBag.Sum = ""; };
+            ViewBag.Total = response.Data.Sum(a => a.Price) - formmedical.DiscountAmount;
+            return View(formmedical);
         }
         #endregion
     }
