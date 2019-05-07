@@ -76,10 +76,17 @@ namespace Klinik.Features.Cashier
 
                 
                 data = lists.ToList();
-                cashierResponse = new CashierResponse
+                if (data != null)
                 {
-                    Data = data
-                };
+                    cashierResponse = new CashierResponse
+                    {
+                        Data = data
+                    };
+                }
+                else
+                {
+                    cashierResponse = new CashierResponse();
+                }
             }
 
             return cashierResponse;

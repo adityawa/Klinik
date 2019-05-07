@@ -40,7 +40,7 @@
             </table>
         </div>
         <div class="col-lg-6">
-            @using (Html.BeginForm("Save", "Cashier", new { medicalid = ViewBag.Formmedicalid }, FormMethod.Post, new { @class = "form-material form-horizontal" }))
+            @using (Html.BeginForm("Save", "Cashier", new { medicalid = Model.ID }, FormMethod.Post, new { @class = "form-material form-horizontal" }))
             {
             <div class="form-group">
                 <label for="exampleInputEmail1">Total Price</label>
