@@ -147,6 +147,12 @@ namespace Klinik.Web.Controllers
             List<Menu> menuList = _context.Menus.Where(x => x.IsMenu.Value).ToList();
             List<SelectListItem> _menuList = new List<SelectListItem>();
 
+            _menuList.Add(new SelectListItem
+            {
+                Text = "None",
+                Value = "0"
+            });
+
             foreach (var item in menuList)
             {
                 _menuList.Add(new SelectListItem
