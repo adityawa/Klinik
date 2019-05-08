@@ -19,13 +19,13 @@ namespace Klinik.Features.Cashier
             _unitOfWork = unitOfWork;
         }
 
-        public CashierResponse GetDetail(CashierRequest request)
+        public CashierResponse GetDetail(long patienid)
         {
-            List<CashierModel> list = new List<CashierModel>();
+            List<CashierModel> lists = new List<CashierModel>();
             dynamic data;
             CashierResponse cashierResponse = new CashierResponse();
 
-            long formmedicalid = _unitOfWork.FormMedicalRepository.Get(a => a.PatientID == request.Data.Id).Select(x => x.ID).FirstOrDefault();
+            long formmedicalid = _unitOfWork.FormMedicalRepository.Get(a => a.PatientID == patienid).Select(x => x.ID).FirstOrDefault();
             long examineid = _unitOfWork.FormExamineRepository.Get(x => x.FormMedicalID == formmedicalid).Select(x => x.ID).FirstOrDefault();
             if (formmedicalid != 0)
             {
@@ -39,10 +39,10 @@ namespace Klinik.Features.Cashier
                         var labdata = new CashierModel
                         {
                             ItemName = item.LabItem.Name,
-                            price = item.LabItem.Price
+                            Price = Convert.ToInt32(item.LabItem.Price)
                         };
 
-                        list.Add(labdata);
+                        lists.Add(labdata);
                     }
                 }
 
@@ -52,15 +52,69 @@ namespace Klinik.Features.Cashier
                     {
                         var labdata = new CashierModel
                         {
-                            
+                            ItemName = item.Service.Name,
+                            Price = Convert.ToInt32(item.Service.Price)
                         };
 
-                        list.Add(labdata);
+                        lists.Add(labdata);
                     }
+                }
+
+                if (FormExamineMedicine != null)
+                {
+                    foreach (var item in FormExamineMedicine)
+                    {
+                        var labdata = new CashierModel
+                        {
+                            ItemName = item.Product.Name,
+                            Price = Convert.ToInt32(item.Product.RetailPrice)
+                        };
+
+                        lists.Add(labdata);
+                    }
+                }
+
+                
+                data = lists.ToList();
+                if (data != null)
+                {
+                    cashierResponse = new CashierResponse
+                    {
+                        Data = data
+                    };
+                }
+                else
+                {
+                    cashierResponse = new CashierResponse();
                 }
             }
 
             return cashierResponse;
+        }
+
+        public FormMedical update(long medicalid, FormMedical request)
+        {
+            FormMedical response = new FormMedical();
+            var qry = _unitOfWork.FormMedicalRepository.GetById(medicalid);
+            try
+            {
+                qry.BenefitPaid = request.BenefitPaid;
+                qry.BenefitPlan = request.BenefitPlan;
+                qry.DiscountAmount = request.DiscountAmount;
+                qry.DiscountPercent = request.DiscountPercent;
+                qry.TotalPrice = request.TotalPrice;
+                qry.Remark = request.Remark;
+                _unitOfWork.FormMedicalRepository.Update(qry);
+                _unitOfWork.Save();
+                response = qry;
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return response;
         }
 
     }

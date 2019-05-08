@@ -873,7 +873,7 @@
                 source: function (request, response) {
                     $.ajax({
                         url: '/Poli/AutoCompleteLaborat/',
-                        data: "{ 'prefix': '" + request.term + "'}",
+                        data: "{ 'formMedicalID': '"+ '@Model.LoketData.FormMedicalID' +"', 'prefix': '" + request.term + "'}",
                         dataType: "json",
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
@@ -941,7 +941,7 @@
                 source: function (request, response) {
                     $.ajax({
                         url: '/Poli/AutoCompleteRadiology/',
-                        data: "{ 'prefix': '" + request.term + "'}",
+                        data: "{ 'formMedicalID': '"+ '@Model.LoketData.FormMedicalID' +"', 'prefix': '" + request.term + "'}",
                         dataType: "json",
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
