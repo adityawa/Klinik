@@ -11,6 +11,7 @@ using Klinik.Data.DataRepository;
 
 namespace Klinik.Web.Controllers
 {
+    [CustomAuthorize("VIEW_M_CASHIER")]
     public class CashierController : Controller
     {
 
@@ -24,7 +25,6 @@ namespace Klinik.Web.Controllers
         }
         // GET: Cachier
         #region ::Cachier::
-        [CustomAuthorize("VIEW_M_CASHIER")]
         public ActionResult ListPatien()
         {
             return View();
