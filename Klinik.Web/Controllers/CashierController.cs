@@ -60,7 +60,7 @@ namespace Klinik.Web.Controllers
             ViewBag.PatienName = formmedical.Patient.Name;
 
             if (response.Data != null) { ViewBag.Sum = response.Data.Sum(a => a.Price); } else { ViewBag.Sum = ""; };
-            ViewBag.Total = response.Data.Sum(a => a.Price) - formmedical.DiscountAmount;
+            ViewBag.Total = Convert.ToInt32(response.Data.Sum(a => a.Price)) - Convert.ToInt32(formmedical.DiscountAmount);
             return View(formmedical);
         }
         #endregion
