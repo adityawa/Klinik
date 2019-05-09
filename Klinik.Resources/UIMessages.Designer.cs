@@ -1105,6 +1105,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kasir.
+        /// </summary>
+        public static string Kasir {
+            get {
+                return ResourceManager.GetString("Kasir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KB Date.
         /// </summary>
         public static string KBDate {

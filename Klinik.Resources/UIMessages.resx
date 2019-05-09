@@ -963,4 +963,7 @@
   <data name="Invoice" xml:space="preserve">
     <value>Invoice</value>
   </data>
+  <data name="Kasir" xml:space="preserve">
+    <value>Kasir</value>
+  </data>
 </root>

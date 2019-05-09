@@ -203,7 +203,7 @@ namespace Klinik.Features
 
             // add default filter to show the active data only
 
-            searchPredicate = searchPredicate.And(x => x.Clinic.RowStatus == 0 && x.Clinic.ID == request.ClinicID);
+            searchPredicate = searchPredicate.And(x => x.Poli.RowStatus == 0 && x.Clinic.ID == request.ClinicID);
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
