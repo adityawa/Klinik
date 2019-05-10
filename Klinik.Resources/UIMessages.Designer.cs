@@ -1078,6 +1078,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invoice.
+        /// </summary>
+        public static string Invoice {
+            get {
+                return ResourceManager.GetString("Invoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Menu.
         /// </summary>
         public static string IsMenu {
@@ -1092,6 +1101,15 @@ namespace Klinik.Resources {
         public static string IsPreExamined {
             get {
                 return ResourceManager.GetString("IsPreExamined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kasir.
+        /// </summary>
+        public static string Kasir {
+            get {
+                return ResourceManager.GetString("Kasir", resourceCulture);
             }
         }
         

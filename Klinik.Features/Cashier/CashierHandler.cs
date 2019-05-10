@@ -9,6 +9,7 @@ using Klinik.Entities.Cashier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Klinik.Features.Cashier
 {
@@ -19,17 +20,35 @@ namespace Klinik.Features.Cashier
             _unitOfWork = unitOfWork;
         }
 
-        public CashierResponse GetDetail(long patienid)
+        public LoketResponse GetListData(LoketRequest request)
+        {
+            var _POliId = _unitOfWork.PoliRepository.GetFirstOrDefault(x => x.Name == Constants.NameConstant.Kasir);
+            Expression<Func<QueuePoli, bool>> _serachCriteria = x => x.PoliTo == _POliId.ID;
+
+            List<LoketModel> lists = base.GetbaseLoketData(request, _serachCriteria);
+            int totalRequest = lists.Count();
+            var response = new LoketResponse
+            {
+                Draw = request.Draw,
+                RecordsFiltered = totalRequest,
+                RecordsTotal = totalRequest,
+                Data = lists
+            };
+
+            return response;
+        }
+
+        public CashierResponse GetDetail(long medicalid)
         {
             List<CashierModel> lists = new List<CashierModel>();
             dynamic data;
             CashierResponse cashierResponse = new CashierResponse();
 
-            long formmedicalid = _unitOfWork.FormMedicalRepository.Get(a => a.PatientID == patienid).Select(x => x.ID).FirstOrDefault();
-            long examineid = _unitOfWork.FormExamineRepository.Get(x => x.FormMedicalID == formmedicalid).Select(x => x.ID).FirstOrDefault();
-            if (formmedicalid != 0)
+            //long formmedicalid = _unitOfWork.FormMedicalRepository.Get(a => a.PatientID == patienid).Select(x => x.ID).FirstOrDefault();
+            long examineid = _unitOfWork.FormExamineRepository.Get(x => x.FormMedicalID == medicalid).Select(x => x.ID).FirstOrDefault();
+            if (medicalid != 0)
             {
-                var formexeminelab = _unitOfWork.FormExamineLabRepository.Query(x => x.FormMedicalID == formmedicalid );
+                var formexeminelab = _unitOfWork.FormExamineLabRepository.Query(x => x.FormMedicalID == medicalid);
                 var FormExamineMedicine = _unitOfWork.FormExamineMedicineRepository.Get(x => x.FormExamineID == examineid);
                 var FormExamineservice = _unitOfWork.FormExamineServiceRepository.Get(x => x.FormExamineID == examineid);
                 if(formexeminelab != null)

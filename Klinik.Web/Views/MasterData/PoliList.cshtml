@@ -132,6 +132,19 @@
             "timeOut": "0",
             "showMethod": "fadeIn"
         };
+            },
+            OnchageClinic: function () {
+                $('#clinicid').change(function () {
+                    //var aa = $.post("/MasterData/GetPoliData?clinicid=" + $('#clinicid').val());
+                    var table = $('#tbPoli').DataTable();
+
+                    table.ajax.url('/MasterData/GetPoliData?clinicid=' + $('#clinicid').val()).load();
+                });
+            },
+        }
+        $(document).ready(function () {
+            Site.init();
+        });
         var Delete = function (ID) {
             var r = confirm("@Klinik.Resources.UIMessages.DeleteConfirmation" + ID + " ) ?");
             if (r == true) {
@@ -156,18 +169,5 @@
                         }
                     });
                 }
-            },
-            OnchageClinic: function () {
-                $('#clinicid').change(function () {
-                    //var aa = $.post("/MasterData/GetPoliData?clinicid=" + $('#clinicid').val());
-                    var table = $('#tbPoli').DataTable();
-
-                    table.ajax.url('/MasterData/GetPoliData?clinicid=' + $('#clinicid').val()).load();
-                });
-            },
-        }
-        $(document).ready(function () {
-            Site.init();
-        })
     </script>
 }
