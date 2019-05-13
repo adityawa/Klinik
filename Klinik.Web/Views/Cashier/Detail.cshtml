@@ -42,12 +42,12 @@
         <div class="col-lg-6">
             @using (Html.BeginForm("Save", "Cashier", new { medicalid = Model.ID }, FormMethod.Post, new { @class = "form-material form-horizontal" }))
             {
-            <div class="form-group">
-                <label for="exampleInputEmail1">Total Price</label>
-                    <input type="text" value="@ViewBag.Sum" class="form-control" disabled/>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Total Price</label>
+                    <input type="text" value="@ViewBag.Sum" class="form-control" id="total" disabled />
                     @Html.HiddenFor(x => x.TotalPrice, new { @Value = ViewBag.Sum })
                     @Html.ValidationMessageFor(m => m.TotalPrice, "", new { @class = "text-danger" })
-            </div>
+                </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Discount Amount</label>
                     @Html.TextBoxFor(x => x.DiscountAmount, new { @class = "form-control", @id = "discountamount" })
@@ -76,6 +76,19 @@
                 <br />
                 <button type="submit" class="btn btn-primary">Submit</button>
             }
-            </div>
+        </div>
     </div>
 </section>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var persen = $("#discountpercent");
+            var total = $("#total");
+            persen.keyup(function () {
+                var amount = isNaN(parseInt((persen.val() / 100) * total.val())) ? 0 : ((persen.val() / 100) * total.val())
+                $("#discountamount").val(amount);
+            });
+        });
+    </script>
+}
