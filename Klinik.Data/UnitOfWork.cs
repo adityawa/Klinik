@@ -49,6 +49,8 @@ namespace Klinik.Data
         private IGenericRepository<LabItemCategory> _labItemCategoryRepository;
         private IGenericRepository<Service> _serviceRepository;
         private IGenericRepository<PoliService> _poliServiceRepository;
+        private IGenericRepository<Letter> _letterRepository;
+
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
@@ -501,6 +503,16 @@ namespace Klinik.Data
                 if (_labItemCategoryRepository == null)
                     _labItemCategoryRepository = new GenericRepository<LabItemCategory>(_context);
                 return _labItemCategoryRepository;
+            }
+        }
+
+        public IGenericRepository<Letter> LetterRepository
+        {
+            get
+            {
+                if (_letterRepository == null)
+                    _letterRepository = new GenericRepository<Letter>(_context);
+                return _letterRepository;
             }
         }
 

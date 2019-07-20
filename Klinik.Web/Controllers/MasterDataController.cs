@@ -57,6 +57,8 @@ namespace Klinik.Web.Controllers
             return _poliList;
         }
 
+        
+
         private List<SelectListItem> BindDropDownService()
         {
             List<Service> serviceList = _context.Services.Where(x => x.RowStatus == 0).ToList();

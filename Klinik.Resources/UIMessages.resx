@@ -966,4 +966,28 @@
   <data name="Kasir" xml:space="preserve">
     <value>Kasir</value>
   </data>
+  <data name="LetterCreation" xml:space="preserve">
+    <value>Create Letter</value>
+  </data>
+  <data name="HealthBodyLetter" xml:space="preserve">
+    <value>Surat Rujukan Berbadan Sehat</value>
+  </data>
+  <data name="LabReferenceLetter" xml:space="preserve">
+    <value>Surat Rujukan Lab</value>
+  </data>
+  <data name="MedicalActionAcceptanceLetter" xml:space="preserve">
+    <value>Surat Persetujuan / Penolakan Tindakan / Rujukan Medis</value>
+  </data>
+  <data name="MedicalCekDate" xml:space="preserve">
+    <value>Medical Check Up Date</value>
+  </data>
+  <data name="TakeMedicineReferenceLetter" xml:space="preserve">
+    <value>Surat Rujukan Berobat</value>
+  </data>
+  <data name="DokterPengirim" xml:space="preserve">
+    <value>Dokter Pengirim</value>
+  </data>
+  <data name="SAP" xml:space="preserve">
+    <value>SAP</value>
+  </data>
 </root>

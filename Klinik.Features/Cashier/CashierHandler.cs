@@ -130,7 +130,7 @@ namespace Klinik.Features.Cashier
             }
             catch (Exception ex)
             {
-
+                throw new Exception(ex.Message);
             }
 
             return response;

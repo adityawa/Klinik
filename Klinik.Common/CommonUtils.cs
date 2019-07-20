@@ -1,4 +1,5 @@
-﻿using Klinik.Resources;
+﻿using Klinik.Data.DataRepository;
+using Klinik.Resources;
 using System;
 using System.IO;
 using System.Security.Cryptography;
@@ -14,6 +15,7 @@ namespace Klinik.Common
         private const string _keyEncryptor = "Klinik2019";
         public static string KeyEncryptor { get { return _keyEncryptor; } }
 
+       
         /// <summary>
         /// Encrypt a string.
         /// </summary>
@@ -205,5 +207,7 @@ namespace Klinik.Common
 
             return result;
         }
+
+        
     }
 }

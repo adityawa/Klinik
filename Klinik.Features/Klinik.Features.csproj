@@ -206,6 +206,10 @@
     <Compile Include="Radiologi\RadiologiRequest.cs" />
     <Compile Include="Radiologi\RadiologiResponse.cs" />
     <Compile Include="Radiologi\RadiologiValidator.cs" />
+    <Compile Include="SuratReferensi\SuratLabReferensi\RujukanLabHandler.cs" />
+    <Compile Include="SuratReferensi\SuratLabReferensi\RujukanLabRequest.cs" />
+    <Compile Include="SuratReferensi\SuratLabReferensi\RujukanLabResponse.cs" />
+    <Compile Include="SuratReferensi\SuratLabReferensi\RujukanLabValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Klinik.Common\Klinik.Common.csproj">

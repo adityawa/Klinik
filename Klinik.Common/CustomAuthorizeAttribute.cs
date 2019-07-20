@@ -51,13 +51,7 @@ namespace Klinik.Common
                     IsAuthorized = true;
                 }
 
-                //foreach (var item in _getPrivilegeName)
-                //{
-                //    if (this._privilege_name == item.Privilege_Name)
-                //    {
-                //        IsAuthorized = true;
-                //    }
-                //}
+             
 
                 if (!IsAuthorized)
                 {

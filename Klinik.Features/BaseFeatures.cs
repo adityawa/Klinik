@@ -124,11 +124,20 @@ namespace Klinik.Features
             }
         }
 
-        
+        public long GetLatestAutoNoSurat(string LetterType)
+        {
+            long _number = 0;
+            var result = _unitOfWork.LetterRepository.Get(x => x.LetterType == LetterType && x.Year == DateTime.Now.Year).OrderByDescending(x => x.AutoNumber).FirstOrDefault();
+            if (result != null)
+            {
+                _number = result.AutoNumber;
+            }
+            return _number;
+        }
 
         public List<LoketModel> GetbaseLoketData(LoketRequest request, Expression<Func<QueuePoli, bool>> searchCriteria = null)
         {
-           
+
             List<LoketModel> lists = new List<LoketModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<QueuePoli>(true);
@@ -158,7 +167,7 @@ namespace Klinik.Features
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.Patient.Name.Contains(request.SearchValue) ||
-                 p.Doctor.Name.Contains(request.SearchValue)|| p.Patient.MRNumber.Contains(request.SearchValue) );
+                 p.Doctor.Name.Contains(request.SearchValue) || p.Patient.MRNumber.Contains(request.SearchValue));
             }
 
             if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
@@ -219,8 +228,8 @@ namespace Klinik.Features
                 lists.Add(lokmdl);
             }
             DateTime _start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-            DateTime _end= new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
-            lists = lists.Where(x => x.TransactionDate>=_start && x.TransactionDate<=_end).ToList();
+            DateTime _end = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
+            lists = lists.Where(x => x.TransactionDate >= _start && x.TransactionDate <= _end).ToList();
             int totalRequest = lists.Count();
             var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
 

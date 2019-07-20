@@ -11,7 +11,7 @@ using Klinik.Entities.Loket;
 using Klinik.Entities.Form;
 using Klinik.Entities.PreExamine;
 using Klinik.Entities.Poli;
-
+using Klinik.Entities.Letter;
 
 namespace Klinik.Common
 {
@@ -231,6 +231,10 @@ namespace Klinik.Common
                 .ForMember(m => m.ClinicName, map => map.MapFrom(p => p.Clinic.Name))
                 .ForMember(m => m.PoliName, map => map.MapFrom(p => p.Poli.Name))
                 .ForMember(m => m.ServicesName, map => map.MapFrom(p => p.Service.Name));
+
+            CreateMap<Letter, LabReferenceLetterModel>();
+            CreateMap<LabReferenceLetterModel, Letter>()
+                .ForMember(m=>m.CreatedBy, map=>map.MapFrom(p=>p.Account.UserName));
         }
     }
 }
