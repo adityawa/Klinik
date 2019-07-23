@@ -178,7 +178,7 @@
                 { "data": "StatusStr", "name": "StatusStr", "autoWidth": true },
 
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Cashier/Detail?medicalid=' + full.FormMedicalID + '">@Klinik.Resources.UIMessages.Update</a>  ' + ' | <a class="btn btn-info" href="/Cashier/Invoice?patienid=' + full.Id + '">@Klinik.Resources.UIMessages.Invoice</a>'; }
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Cashier/Detail?medicalid=' + full.FormMedicalID + '">@Klinik.Resources.UIMessages.Update</a>  ' + ' | <a class="btn btn-info" href="/Cashier/Invoice?medicalid=' + full.FormMedicalID + '">@Klinik.Resources.UIMessages.Invoice</a>'; }
                 }
 
             ]
