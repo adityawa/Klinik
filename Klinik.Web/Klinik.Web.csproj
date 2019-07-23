@@ -226,7 +226,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\LabController.cs" />
     <Compile Include="Controllers\CashierController.cs" />
-    <Compile Include="Controllers\LettersController.cs" />
     <Compile Include="Controllers\ParamedicController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1336,6 +1335,7 @@
     <Content Include="Content\Octopus\assets\vendor\jquery-datatables\Readme.md" />
     <Content Include="Content\Octopus\assets\vendor\select2\select2.jquery.json" />
     <Content Include="Content\Octopus\assets\vendor\select2\select2_locale_en.js.template" />
+    <Content Include="fileDoc\Photo\.gitignore" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
@@ -1458,12 +1458,9 @@
     <Content Include="Views\MasterData\CreateOrEditPoliService.cshtml" />
     <Content Include="Views\Cashier\Detail.cshtml" />
     <Content Include="Views\Cashier\Invoice.cshtml" />
-    <Content Include="Views\Letters\SuratRujukan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="fileDoc\Photo\" />
-    <Folder Include="Rdlcs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
