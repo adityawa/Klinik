@@ -18,6 +18,7 @@ namespace Klinik.Data.DataRepository
         public LabItem()
         {
             this.FormExamineLabs = new HashSet<FormExamineLab>();
+            this.SuratRujukanLabKeluars = new HashSet<SuratRujukanLabKeluar>();
         }
     
         public int ID { get; set; }
@@ -35,5 +36,7 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormExamineLab> FormExamineLabs { get; set; }
         public virtual LabItemCategory LabItemCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SuratRujukanLabKeluar> SuratRujukanLabKeluars { get; set; }
     }
 }

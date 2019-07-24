@@ -979,7 +979,7 @@
     <value>Surat Persetujuan / Penolakan Tindakan / Rujukan Medis</value>
   </data>
   <data name="MedicalCekDate" xml:space="preserve">
-    <value>Medical Check Up Date</value>
+    <value>Tanggal Periksa</value>
   </data>
   <data name="TakeMedicineReferenceLetter" xml:space="preserve">
     <value>Surat Rujukan Berobat</value>
@@ -989,5 +989,23 @@
   </data>
   <data name="SAP" xml:space="preserve">
     <value>SAP</value>
+  </data>
+  <data name="Pekerjaan" xml:space="preserve">
+    <value>Pekerjaan</value>
+  </data>
+  <data name="BloodPress" xml:space="preserve">
+    <value>TD</value>
+  </data>
+  <data name="Dinyatakan" xml:space="preserve">
+    <value>Dinyatakan</value>
+  </data>
+  <data name="HR" xml:space="preserve">
+    <value>HR</value>
+  </data>
+  <data name="RR" xml:space="preserve">
+    <value>RR</value>
+  </data>
+  <data name="Visus" xml:space="preserve">
+    <value>Visus</value>
   </data>
 </root>

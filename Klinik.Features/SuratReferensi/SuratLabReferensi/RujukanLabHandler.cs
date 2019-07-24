@@ -5,6 +5,8 @@ using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Letter;
 using Klinik.Entities.Loket;
+using Klinik.Entities.MasterData;
+using Klinik.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,9 +71,12 @@ namespace Klinik.Features.SuratReferensi.SuratLabReferensi
 
                 //get detail patient
                 var _pasien = _unitOfWork.PatientRepository.GetById(request.Data.ForPatient);
-                response.Patient.Name = _pasien.Name;
-                response.Patient.EmployeeID = _pasien.EmployeeID ?? 0;
-               
+                response.Patient = Mapper.Map<Patient, PatientModel>(_pasien);
+                if (response.Entity == null)
+                    response.Entity = new LabReferenceLetterModel();
+                response.Entity.PatientAge = request.Data.PatientAge;
+                response.Entity.strCekdate = request.Data.Cekdate == null ? "" : ((DateTime)request.Data.Cekdate).ToString("MM-dd-yyyy");
+                response.Entity.FormMedicalID = request.Data.FormMedicalID;
                 response.Status = true;
 
             }
@@ -83,6 +88,162 @@ namespace Klinik.Features.SuratReferensi.SuratLabReferensi
             return response;
         }
 
+        public List<LabItemModel> GetPreviousSelectedLabItem(long FormMedicalID)
+        {
 
+            List<int> _selLabItemIds = new List<int>();
+            var qry = _unitOfWork.FormExamineLabRepository.Get(x => x.FormMedicalID == FormMedicalID).Select(p => p.LabItemID);
+            foreach (int iLabItemId in qry)
+            {
+                _selLabItemIds.Add(iLabItemId);
+            }
+
+            List<LabItemModel> lists = new List<LabItemModel>();
+
+            var q = _unitOfWork.LabItemRepository.Get(x => _selLabItemIds.Contains(x.ID));
+            foreach (var item in q)
+            {
+                var mapping = Mapper.Map<LabItem, LabItemModel>(item);
+                lists.Add(mapping);
+            }
+
+            return lists;
+        }
+
+        public RujukanLabResponse SaveAndPreview(RujukanLabRequest request)
+        {
+            var response = new RujukanLabResponse();
+            int result = 0;
+            try
+            {
+                var _existingIds = _unitOfWork.SuratRujukanLabKeluarRepository.Get(x => x.FormMedicalID == request.Data.SuratRujukanLabKeluar.FormMedicalID).Select(x => x.Id);
+                foreach (var _id in _existingIds)
+                {
+                    _unitOfWork.SuratRujukanLabKeluarRepository.Delete(_id);
+                }
+
+                var delResult = _unitOfWork.Save();
+
+                foreach (int labId in request.Data.SuratRujukanLabKeluar.ListOfLabItemId)
+                {
+                    var entity = new SuratRujukanLabKeluar
+                    {
+                        FormMedicalID = request.Data.SuratRujukanLabKeluar.FormMedicalID,
+                        NoSurat = GetNoSurat(request.Data.SuratRujukanLabKeluar.FormMedicalID),
+                        DokterPengirim = request.Data.SuratRujukanLabKeluar.DokterPengirim,
+                        LabItemId = labId,
+                        CreatedDate = DateTime.Now,
+                        CreatedBy = request.Data.Account.UserName
+                    };
+
+                    _unitOfWork.SuratRujukanLabKeluarRepository.Insert(entity);
+                }
+                result = _unitOfWork.Save();
+                if (result > 0)
+                {
+                    if (response.Entity == null)
+                        response.Entity = new LabReferenceLetterModel();
+                    response.Status = true;
+                    response.Entity.FormMedicalID = request.Data.SuratRujukanLabKeluar.FormMedicalID;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = Messages.GeneralError;
+            }
+
+            return response;
+        }
+
+        private string GetNoSurat(long FrmMedId)
+        {
+            var noSurat = string.Empty;
+            var LetterNo = _unitOfWork.LetterRepository
+                .Get(x => x.LetterType == LetterEnum.LabReferenceLetter.ToString() && x.FormMedicalID == FrmMedId)
+                .FirstOrDefault();
+            if (LetterNo != null)
+            {
+                noSurat = $"{ LetterNo.AutoNumber}/klinik/{DateTime.Now.Year}/{DateTime.Now.Month}";
+            }
+
+            return noSurat;
+        }
+
+        public RujukanLabResponse GetDetailSuratRujukanLab(RujukanLabRequest request)
+        {
+            var response = new RujukanLabResponse { };
+            response.Entity = new LabReferenceLetterModel();
+            response.Entity.SuratRujukanLabKeluar = new SuratRujukanKeluarModel();
+            if (request.Data.Account != null)
+            {
+
+                var _detail = _unitOfWork.LetterRepository.Get(x => x.FormMedicalID == request.Data.FormMedicalID).FirstOrDefault();
+                var _miscData = _unitOfWork.SuratRujukanLabKeluarRepository.GetFirstOrDefault(x => x.FormMedicalID == request.Data.FormMedicalID);
+                var suratrujukanlabkeluar = new SuratRujukanKeluarModel
+                {
+                    DokterPengirim = _miscData.DokterPengirim,
+                    NoSurat = _miscData.NoSurat,
+
+                };
+
+                var _detailPatient = _unitOfWork.PatientRepository.GetById(_detail.ForPatient);
+                var _labSelected = _context.SuratRujukanLabKeluars.Where(x => x.FormMedicalID == request.Data.FormMedicalID).Select(x => new
+                {
+                    LabId = x.LabItemId,
+                    LabItemName = x.LabItem.Name,
+                    LabItemCategoryID = x.LabItem.LabItemCategoryID,
+                    Category = x.LabItem.LabItemCategory.Name
+                });
+                List<int> selectedLabId = _labSelected.Select(x => x.LabId).ToList();
+                var _notSelectedLab = _unitOfWork.FormExamineLabRepository
+                    .Get(x => x.FormMedicalID == request.Data.FormMedicalID && !selectedLabId.Contains((int)x.LabItemID))
+                    .Select(x => new
+                    {
+                        LabId = x.LabItemID ?? 0,
+                        LabItemName = x.LabItem.Name,
+                        LabItemCategoryID = x.LabItem.LabItemCategoryID,
+                        Category = x.LabItem.LabItemCategory.Name
+                    });
+
+                response.Entity.PatientAge = _detail.PatientAge;
+                response.Entity.strCekdate = _detail.Cekdate == null ? "" : ((DateTime)_detail.Cekdate).ToString("dd/MM/yyyy");
+                response.Patient = Mapper.Map<Patient, PatientModel>(_detailPatient);
+                if (response.ListLabs == null)
+                    response.ListLabs = new List<LabItemModel>();
+                foreach (var item in _labSelected)
+                {
+                    response.ListLabs.Add(new LabItemModel
+                    {
+                        Id = item.LabId,
+                        Name = item.LabItemName,
+                        LabItemCategoryName = item.Category,
+                        LabItemCategoryID = item.LabItemCategoryID,
+                        Code = "v"
+                    });
+                }
+
+                foreach (var item2 in _notSelectedLab)
+                {
+                    response.ListLabs.Add(new LabItemModel
+                    {
+                        Id = item2.LabId,
+                        Name = item2.LabItemName,
+                        LabItemCategoryName = item2.Category,
+                        LabItemCategoryID = item2.LabItemCategoryID,
+                        Code = ""
+                    });
+                }
+
+                response.Entity.SuratRujukanLabKeluar = suratrujukanlabkeluar;
+            }
+            else
+            {
+                response.Status = false;
+                response.Message = Resources.Messages.UnauthorizedAccess;
+            }
+
+            return response;
+        }
     }
 }

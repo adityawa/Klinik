@@ -203,6 +203,9 @@
     <Compile Include="DataRepository\Service.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataRepository\SuratRujukanLabKeluar.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataRepository\User.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>

@@ -80,6 +80,7 @@
     <Compile Include="Form\FormExamineLabModel.cs" />
     <Compile Include="Form\FormExamineModel.cs" />
     <Compile Include="Form\FormMedicalModel.cs" />
+    <Compile Include="Letter\HealthBodyLetterModel.cs" />
     <Compile Include="Letter\LabReferenceLetterModel.cs" />
     <Compile Include="Letter\LetterModel.cs" />
     <Compile Include="MappingMaster\ClinicPoliModel.cs" />

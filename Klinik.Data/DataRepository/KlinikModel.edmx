@@ -776,6 +776,18 @@
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="SuratRujukanLabKeluar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NoSurat" Type="nvarchar" MaxLength="50" />
+          <Property Name="FormMedicalID" Type="bigint" />
+          <Property Name="DokterPengirim" Type="varchar" MaxLength="50" />
+          <Property Name="LabItemId" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="ID" />
@@ -1599,6 +1611,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SuratRujukanLabKeluar_LabItem">
+          <End Role="LabItem" Type="Self.LabItem" Multiplicity="1" />
+          <End Role="SuratRujukanLabKeluar" Type="Self.SuratRujukanLabKeluar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabItem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SuratRujukanLabKeluar">
+              <PropertyRef Name="LabItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -1694,6 +1718,7 @@
           <EntitySet Name="QueuePoli" EntityType="Self.QueuePoli" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolePrivilege" EntityType="Self.RolePrivilege" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SuratRujukanLabKeluar" EntityType="Self.SuratRujukanLabKeluar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Appointment_Clinic" Association="Self.FK_Appointment_Clinic">
@@ -1959,6 +1984,10 @@
           <AssociationSet Name="FK_RolePrivilege_Privilege" Association="Self.FK_RolePrivilege_Privilege">
             <End Role="Privilege" EntitySet="Privilege" />
             <End Role="RolePrivilege" EntitySet="RolePrivilege" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SuratRujukanLabKeluar_LabItem" Association="Self.FK_SuratRujukanLabKeluar_LabItem">
+            <End Role="LabItem" EntitySet="LabItem" />
+            <End Role="SuratRujukanLabKeluar" EntitySet="SuratRujukanLabKeluar" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Employee" Association="Self.FK_User_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -2403,6 +2432,7 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="FormExamineLabs" Relationship="Self.FK_FormExamineLab_LabItem" FromRole="LabItem" ToRole="FormExamineLab" />
           <NavigationProperty Name="LabItemCategory" Relationship="Self.FK_LabItem_LabItemCategory" FromRole="LabItem" ToRole="LabItemCategory" />
+          <NavigationProperty Name="SuratRujukanLabKeluars" Relationship="KlinikDBModel.FK_SuratRujukanLabKeluar_LabItem" FromRole="LabItem" ToRole="SuratRujukanLabKeluar" />
         </EntityType>
         <EntityType Name="LabItemCategory">
           <Key>
@@ -4071,6 +4101,11 @@
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
           <EntitySet Name="Letters" EntityType="KlinikDBModel.Letter" />
+          <EntitySet Name="SuratRujukanLabKeluars" EntityType="KlinikDBModel.SuratRujukanLabKeluar" />
+          <AssociationSet Name="FK_SuratRujukanLabKeluar_LabItem" Association="KlinikDBModel.FK_SuratRujukanLabKeluar_LabItem">
+            <End Role="LabItem" EntitySet="LabItems" />
+            <End Role="SuratRujukanLabKeluar" EntitySet="SuratRujukanLabKeluars" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Letter">
           <Key>
@@ -4093,6 +4128,31 @@
           <Property Name="FormMedicalID" Type="Int64" />
           <Property Name="Cekdate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="SuratRujukanLabKeluar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NoSurat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FormMedicalID" Type="Int64" />
+          <Property Name="DokterPengirim" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LabItemId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="LabItem" Relationship="KlinikDBModel.FK_SuratRujukanLabKeluar_LabItem" FromRole="SuratRujukanLabKeluar" ToRole="LabItem" />
+        </EntityType>
+        <Association Name="FK_SuratRujukanLabKeluar_LabItem">
+          <End Type="KlinikDBModel.LabItem" Role="LabItem" Multiplicity="1" />
+          <End Type="KlinikDBModel.SuratRujukanLabKeluar" Role="SuratRujukanLabKeluar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LabItem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SuratRujukanLabKeluar">
+              <PropertyRef Name="LabItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4945,6 +5005,19 @@
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="AutoNumber" ColumnName="AutoNumber" />
                 <ScalarProperty Name="LetterType" ColumnName="LetterType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SuratRujukanLabKeluars">
+            <EntityTypeMapping TypeName="KlinikDBModel.SuratRujukanLabKeluar">
+              <MappingFragment StoreEntitySet="SuratRujukanLabKeluar">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LabItemId" ColumnName="LabItemId" />
+                <ScalarProperty Name="DokterPengirim" ColumnName="DokterPengirim" />
+                <ScalarProperty Name="FormMedicalID" ColumnName="FormMedicalID" />
+                <ScalarProperty Name="NoSurat" ColumnName="NoSurat" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

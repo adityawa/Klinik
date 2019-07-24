@@ -50,13 +50,34 @@ namespace Klinik.Features.SuratReferensi.SuratLabReferensi
 
                 if (response.Status)
                 {
-                   response = new RujukanLabHandler(_unitOfWork).SaveSuratRujukanLab(request);
+                    response = new RujukanLabHandler(_unitOfWork).SaveSuratRujukanLab(request);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 response.Status = false;
                 response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
+        public RujukanLabResponse ValidateBeforePreview(RujukanLabRequest request)
+        {
+            var response = new RujukanLabResponse();
+            if (request.Data.SuratRujukanLabKeluar.ListOfLabItemId.Count <= 0)
+                errorFields.Add("At least one Lab Item Should be selected");
+            if (request.Data.SuratRujukanLabKeluar.DokterPengirim==string.Empty)
+                errorFields.Add("Dokter Pengirim");
+
+            if(errorFields.Any())
+            {
+                response.Status = false;
+                response.Message = string.Format(Messages.ValidationErrorFields, String.Join(",", errorFields));
+            }
+            else
+            {
+                response = new RujukanLabHandler(_unitOfWork).SaveAndPreview(request);
             }
 
             return response;

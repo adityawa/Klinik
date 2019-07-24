@@ -73,5 +73,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Letter> Letters { get; set; }
+        public virtual DbSet<SuratRujukanLabKeluar> SuratRujukanLabKeluars { get; set; }
     }
 }

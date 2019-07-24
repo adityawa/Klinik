@@ -235,6 +235,9 @@ namespace Klinik.Common
             CreateMap<Letter, LabReferenceLetterModel>();
             CreateMap<LabReferenceLetterModel, Letter>()
                 .ForMember(m=>m.CreatedBy, map=>map.MapFrom(p=>p.Account.UserName));
+
+            CreateMap<SuratRujukanLabKeluar, SuratRujukanKeluarModel>();
+            CreateMap<SuratRujukanKeluarModel, SuratRujukanLabKeluar>();
         }
     }
 }

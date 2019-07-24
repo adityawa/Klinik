@@ -12,5 +12,6 @@ namespace Klinik.Features.SuratReferensi.SuratLabReferensi
     public class RujukanLabResponse : BaseResponse<LabReferenceLetterModel>
     {
         public PatientModel Patient { get; set; }
+        public List<LabItemModel> ListLabs { get; set; }
     }
 }
