@@ -196,6 +196,121 @@
                     </div>
                 </header>
                 <div>
+                    <div class="col-md-12">                        
+                        <section class="panel" data-toggle="collapse">
+                                <div></div>
+                                <header class="panel-heading">
+                                    <div class="panel-actions">
+                                        <a href="#" class="fa fa-caret-down"></a>
+                                    </div>
+                                    <div>
+                                        <h5 class="panel-title">
+                                            @Klinik.Resources.UIMessages.FormPreExamine
+                                        </h5>
+                                    </div>
+                                </header>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.FormMedical</label>
+                                        @Html.HiddenFor(x => x.Id)
+                                        @Html.HiddenFor(x => x.LoketData.Id)
+                                        <div class="col-md-2">
+                                            @Html.TextBoxFor(x => x.PreExamineData.FormMedicalID, new { @class = "form-control", @id = "tbFormMedical", @readonly = "readonly" })
+                                        </div>
+                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.TransactionDate</label>
+                                        <div class="col-md-2">
+                                            @Html.TextBoxFor(x => x.PreExamineData.strTransDate, new { @class = "form-control", @id = "tbTransDate", @readonly = "readonly" })
+                                        </div>
+                                        <label class="col-md-1 control-label " for="inputDefault" style="text-align:left">
+                                            @Klinik.Resources.UIMessages.Doctor
+                                        </label>
+                                        <div class="col-md-3">
+                                            @Html.TextBoxFor(x => x.PreExamineData.DoctorName, new { @class = "form-control", @id = "tbDoctorPreExamine", @readonly = "readonly" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Temperature</label>
+                                        <div class="col-md-2">
+                                            @Html.TextBoxFor(x => x.PreExamineData.Temperature, new { @class = "form-control", @id = "tbTemperature" })
+                                        </div>
+                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Weight</label>
+                                        <div class="col-md-2">
+                                            @Html.TextBoxFor(x => x.PreExamineData.Weight, new { @class = "form-control", @id = "tbWeight" })
+                                        </div>
+                                        <label class="col-md-1 control-label" for="inputDefault">
+                                            @Klinik.Resources.UIMessages.Height
+                                        </label>
+                                        <div class="col-md-2">
+                                            @Html.TextBoxFor(x => x.PreExamineData.Height, new { @class = "form-control", @id = "tbHeight" })
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Respiratory</label>
+                                        <div class="col-md-2">
+                                            @Html.TextBoxFor(x => x.PreExamineData.Respitory, new { @class = "form-control", @id = "tbRespiratory" })
+                                        </div>
+                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Diastolic</label>
+                                        <div class="col-md-2">
+                                            @Html.TextBoxFor(x => x.PreExamineData.Diastolic, new { @class = "form-control", @id = "tbDiastolic" })
+                                        </div>
+
+                                        <label class="col-md-1 control-label" for="inputDefault">
+                                            @Klinik.Resources.UIMessages.Systolic
+                                        </label>
+                                        <div class="col-md-2">
+                                            @Html.TextBoxFor(x => x.PreExamineData.Systolic, new { @class = "form-control", @id = "tbSystolic" })
+                                        </div>
+                                        <label class="col-md-1 control-label" for="inputDefault" id="lblNomor">
+                                            @Klinik.Resources.UIMessages.DailyGlasses
+                                        </label>
+                                        <div class="col-md-2">
+                                            @Html.TextBoxFor(x => x.PreExamineData.DailyGlasses, new { @class = "form-control", @id = "tbDailyGlasses" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Pulse</label>
+                                        <div class="col-md-2">
+                                            @Html.TextBoxFor(x => x.PreExamineData.Pulse, new { @class = "form-control", @id = "tbPulse" })
+                                        </div>
+                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.LeftEye</label>
+                                        <div class="col-md-2">
+                                            @Html.TextBoxFor(x => x.PreExamineData.LeftEye, new { @class = "form-control", @id = "tbLeftEye" })
+                                        </div>
+                                        <label class="col-md-1 control-label" for="inputDefault">
+                                            @Klinik.Resources.UIMessages.RightEye
+                                        </label>
+                                        <div class="col-md-2">
+                                            @Html.TextBoxFor(x => x.PreExamineData.RightEye, new { @class = "form-control", @id = "tbRightEye" })
+                                        </div>
+                                        <label class="col-md-1 control-label" for="inputDefault" id="lblNomor">
+                                            @Klinik.Resources.UIMessages.ExamineGlasses
+                                        </label>
+                                        <div class="col-md-2">
+                                            @Html.TextBoxFor(x => x.PreExamineData.ExamineGlasses, new { @class = "form-control", @id = "tbExamineGlasses" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Others</label>
+                                        <div class="col-md-5">
+                                            @Html.TextAreaFor(x => x.PreExamineData.Others, new { @class = "form-control", @id = "tbOthers" })
+                                        </div>
+                                        <label class="col-md-1 control-label" for="inputDefault">
+                                            @Klinik.Resources.UIMessages.MenstrualDate
+                                        </label>
+                                        <div class="col-md-2">
+                                            @Html.TextBoxFor(x => x.PreExamineData.strMenstrualDate, new { @class = "form-control", @id = "tbMenstrualDate" })
+                                        </div>
+                                        <label class="col-md-1 control-label" for="inputDefault" id="lblNomor">
+                                            @Klinik.Resources.UIMessages.KBDate
+                                        </label>
+                                        <div class="col-md-2">
+                                            @Html.TextBoxFor(x => x.PreExamineData.strKBDate, new { @class = "form-control", @id = "tbKBDate" })
+                                        </div>
+                                    </div>
+                                </div>
+                        </section>
+                    </div>
                     <div class="col-md-12">
                         <section class="panel">
                             <header class="panel-heading">

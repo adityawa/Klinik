@@ -9,10 +9,11 @@ namespace Klinik.Entities.PreExamine
         public DateTime TransDate { get; set; }
         public string strTransDate { get; set; }
         public int DoctorID { get; set; }
+        public string DoctorName { get; set; }
         public float Temperature { get; set; }
         public float Weight { get; set; }
         public float Height { get; set; }
-        public float Respitory { get; set; }
+        public float Respiratory { get; set; }
         public int Pulse { get; set; }
         public int Systolic { get; set; }
         public int Diastolic { get; set; }
