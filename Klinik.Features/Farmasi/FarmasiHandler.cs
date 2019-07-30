@@ -44,10 +44,9 @@ namespace Klinik.Features.Farmasi
 
         public LoketResponse GetListData(LoketRequest request)
         {
-            var _laboratoriumId = _unitOfWork.PoliRepository.GetFirstOrDefault(x => x.Name == Constants.NameConstant.Laboratorium);
-            Expression<Func<QueuePoli, bool>> _serachCriteria = x => x.PoliTo == _laboratoriumId.ID;
+            Expression<Func<QueuePoli, bool>> _serachCriteria = x => x.PoliTo == request.Data.PoliToID;
 
-            List<LoketModel> lists = base.GetbaseLoketData(request, _serachCriteria);
+            List<LoketModel> lists = base.GetFarmasiBaseLoketData(request, _serachCriteria);
             int totalRequest = lists.Count();
             var response = new LoketResponse
             {
