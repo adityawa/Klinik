@@ -172,7 +172,11 @@ namespace Klinik.Common
             CreateMap<FormMedical, FormMedicalModel>();
 
             CreateMap<PreExamineModel, FormPreExamine>();
-            CreateMap<FormPreExamine, PreExamineModel>();
+            CreateMap<FormPreExamine, PreExamineModel>()
+                .ForMember(x => x.strTransDate, map => map.MapFrom(p => p.TransDate.ToString("dd/MM/yyyy")))                
+                .ForMember(m => m.strKBDate, map => map.MapFrom(p => p.KBDate.HasValue ? p.KBDate.Value.ToString("dd/MM/yyyy") : string.Empty))
+                .ForMember(m => m.strMenstrualDate, map => map.MapFrom(p => p.MenstrualDate.HasValue ? p.MenstrualDate.Value.ToString("dd/MM/yyyy") : string.Empty))
+                .ForMember(x => x.DoctorName, map => map.MapFrom(p => p.Doctor.Name));
 
             CreateMap<FormExamineModel, FormExamine>();
             CreateMap<FormExamine, FormExamineModel>();

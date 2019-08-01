@@ -143,7 +143,6 @@ namespace Klinik.Features
         }
         public List<LoketModel> GetbaseLoketData(LoketRequest request, Expression<Func<QueuePoli, bool>> searchCriteria = null)
         {
-
             List<LoketModel> lists = new List<LoketModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<QueuePoli>(true);
@@ -159,24 +158,24 @@ namespace Klinik.Features
                 searchPredicate = searchPredicate.And(p => p.ClinicID == request.Data.ClinicID);
             }
 
-            if (request.Data.Status != -1)
-            {
-                searchPredicate = searchPredicate.And(p => p.Status == request.Data.Status);
-            }
+			if (request.Data.Status != -1)
+			{
+				searchPredicate = searchPredicate.And(p => p.Status == request.Data.Status);
+			}
 
-            if (request.Data.strIsPreExamine != string.Empty)
-            {
-                bool _isAlreadyPreExamine = Convert.ToBoolean(request.Data.strIsPreExamine);
-                searchPredicate = searchPredicate.And(p => p.IsPreExamine == _isAlreadyPreExamine);
-            }
+			if (request.Data.strIsPreExamine != string.Empty)
+			{
+				bool _isAlreadyPreExamine = Convert.ToBoolean(request.Data.strIsPreExamine);
+				searchPredicate = searchPredicate.And(p => p.IsPreExamine == _isAlreadyPreExamine);
+			}
 
-            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
-            {
-                searchPredicate = searchPredicate.And(p => p.Patient.Name.Contains(request.SearchValue) ||
-                 p.Doctor.Name.Contains(request.SearchValue) || p.Patient.MRNumber.Contains(request.SearchValue));
-            }
+			if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
+			{
+				searchPredicate = searchPredicate.And(p => p.Patient.Name.Contains(request.SearchValue) ||
+				 p.Doctor.Name.Contains(request.SearchValue) || p.Patient.MRNumber.Contains(request.SearchValue));
+			}
 
-            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
+			if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
             {
                 if (request.SortColumnDir == "asc")
                 {
@@ -241,5 +240,88 @@ namespace Klinik.Features
 
             return data;
         }
-    }
+
+		public List<LoketModel> GetFarmasiBaseLoketData(LoketRequest request, Expression<Func<QueuePoli, bool>> searchCriteria = null)
+		{
+			List<LoketModel> lists = new List<LoketModel>();
+			dynamic qry = null;
+			var searchPredicate = PredicateBuilder.New<QueuePoli>(true);
+			searchPredicate = searchPredicate.And(searchCriteria);
+
+			if (request.Data.PoliToID != 0)
+			{
+				searchPredicate = searchPredicate.And(p => p.PoliTo == request.Data.PoliToID);
+			}
+
+			if (request.Data.ClinicID != 0)
+			{
+				searchPredicate = searchPredicate.And(p => p.ClinicID == request.Data.ClinicID);
+			}
+
+			if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
+			{
+				if (request.SortColumnDir == "asc")
+				{
+					switch (request.SortColumn.ToLower())
+					{
+						case "patientname":
+							qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Patient.Name));
+							break;
+						case "doctorstr":
+							qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Doctor.Name));
+							break;
+						case "transactiondatestr":
+							qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.TransactionDate));
+							break;
+						default:
+							qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.ID));
+							break;
+					}
+				}
+				else
+				{
+					switch (request.SortColumn.ToLower())
+					{
+						case "patientname":
+							qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Patient.Name));
+							break;
+						case "doctorstr":
+							qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Doctor.Name));
+							break;
+						case "transactiondatestr":
+							qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.TransactionDate));
+							break;
+						default:
+							qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID));
+							break;
+					}
+				}
+			}
+			else
+			{
+				qry = _unitOfWork.RegistrationRepository.Get(searchPredicate, null);
+			}
+
+			foreach (var item in qry)
+			{
+				LoketModel lokmdl = Mapper.Map<QueuePoli, LoketModel>(item);
+				if (item.Type == (int)RegistrationTypeEnum.MCU)
+				{
+					lokmdl.SortNumberCode = "M-" + string.Format("{0:D3}", item.SortNumber);
+				}
+				else
+				{
+					lokmdl.SortNumberCode = item.Poli1.Code.Trim() + "-" + string.Format("{0:D3}", item.SortNumber);
+				}
+				lists.Add(lokmdl);
+			}
+			DateTime _start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+			DateTime _end = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
+			lists = lists.Where(x => x.TransactionDate >= _start && x.TransactionDate <= _end).ToList();
+			int totalRequest = lists.Count();
+			var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
+
+			return data;
+		}
+	}
 }

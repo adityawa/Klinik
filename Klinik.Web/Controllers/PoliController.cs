@@ -6,6 +6,7 @@ using Klinik.Entities.Form;
 using Klinik.Entities.Loket;
 using Klinik.Entities.MasterData;
 using Klinik.Entities.Poli;
+using Klinik.Entities.PreExamine;
 using Klinik.Features;
 using Klinik.Web.Hubs;
 using System;
@@ -261,6 +262,13 @@ namespace Klinik.Web.Controllers
                 {
                     ServiceModel servModel = Mapper.Map<Service, ServiceModel>(item.Service);
                     model.DefaultServiceList.Add(servModel);
+                }
+
+                // get form examine if any
+                FormPreExamine formPreExamine = _unitOfWork.FormPreExamineRepository.GetFirstOrDefault(x => x.FormMedicalID == model.LoketData.FormMedicalID);
+                if (formPreExamine != null)
+                {
+                    model.PreExamineData = Mapper.Map<FormPreExamine, PreExamineModel>(formPreExamine);
                 }
 
                 // get form examine if any

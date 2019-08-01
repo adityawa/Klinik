@@ -1,4 +1,6 @@
-﻿namespace Klinik.Entities.Form
+﻿using Klinik.Entities.Loket;
+
+namespace Klinik.Entities.Form
 {
     public class FormExamineMedicineModel : BaseModel
     {
@@ -10,5 +12,7 @@
         public string ConcoctionMedicine { get; set; }
         public string RemarkUse { get; set; }
         public int Stock { get; set; }
+        public long FormMedicalID { get; set; }
+        public LoketModel LoketData { get; set; }
     }
 }

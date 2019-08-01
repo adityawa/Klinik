@@ -99,7 +99,7 @@ namespace Klinik.Features
                     _cekExistById.Temperature = request.Data.Temperature;
                     _cekExistById.Weight = request.Data.Weight;
                     _cekExistById.Height = request.Data.Height;
-                    _cekExistById.Respiratory = request.Data.Respitory;
+                    _cekExistById.Respiratory = request.Data.Respiratory;
                     _cekExistById.Pulse = request.Data.Pulse;
                     _cekExistById.Systolic = request.Data.Systolic;
                     _cekExistById.Diastolic = request.Data.Diastolic;
