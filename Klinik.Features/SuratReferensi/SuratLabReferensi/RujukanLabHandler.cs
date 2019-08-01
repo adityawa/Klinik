@@ -61,7 +61,7 @@ namespace Klinik.Features.SuratReferensi.SuratLabReferensi
 
             try
             {
-                var cekExist = _unitOfWork.LetterRepository.Get(x => x.FormMedicalID == request.Data.FormMedicalID);
+                var cekExist = _unitOfWork.LetterRepository.Get(x => x.FormMedicalID == request.Data.FormMedicalID && x.LetterType==request.Data.LetterType);
                 if (!cekExist.Any())
                 {
                     var _entity = Mapper.Map<LabReferenceLetterModel, Letter>(request.Data);

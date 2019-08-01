@@ -1168,6 +1168,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Keperluan.
+        /// </summary>
+        public static string Keperluan {
+            get {
+                return ResourceManager.GetString("Keperluan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KTP No.
         /// </summary>
         public static string KTP {
@@ -1488,6 +1497,15 @@ namespace Klinik.Resources {
         public static string MenuList {
             get {
                 return ResourceManager.GetString("MenuList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Menyatakan.
+        /// </summary>
+        public static string Menyatakan {
+            get {
+                return ResourceManager.GetString("Menyatakan", resourceCulture);
             }
         }
         
@@ -2397,6 +2415,15 @@ namespace Klinik.Resources {
         public static string SaveExamine {
             get {
                 return ResourceManager.GetString("SaveExamine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sebagai.
+        /// </summary>
+        public static string Sebagai {
+            get {
+                return ResourceManager.GetString("Sebagai", resourceCulture);
             }
         }
         

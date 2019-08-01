@@ -229,6 +229,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\LabController.cs" />
     <Compile Include="Controllers\CashierController.cs" />
+    <Compile Include="Controllers\LettersController.cs" />
     <Compile Include="Controllers\ParamedicController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1466,11 +1467,11 @@
     <Content Include="Views\MasterData\CreateOrEditPoliService.cshtml" />
     <Content Include="Views\Cashier\Detail.cshtml" />
     <Content Include="Views\Cashier\Invoice.cshtml" />
-
     <Content Include="Views\Letters\SuratRujukan.cshtml" />
     <Content Include="Views\Letters\PrintSuratRujukanLabKeluar.cshtml" />
     <Content Include="Views\Letters\ExportSuratRujukanLabKeluar2Pdf.cshtml" />
-
+    <Content Include="Views\Letters\ExportSuratBerbadanSehat.cshtml" />
+    <Content Include="Views\Letters\ExportSuratPersetujuanTindakan2Pdf.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -122,9 +122,9 @@
         <AssociationConnector Association="KlinikDBModel.FK_Product_ProductUnit" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_ProductMedicine_Product" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_UserRole_User" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="KlinikDBModel.Letter" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="KlinikDBModel.SuratRujukanLabKeluar" Width="1.5" PointX="10.5" PointY="17" />
         <AssociationConnector Association="KlinikDBModel.FK_SuratRujukanLabKeluar_LabItem" />
+        <EntityTypeShape EntityType="KlinikDBModel.Letter" Width="1.5" PointX="0.75" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

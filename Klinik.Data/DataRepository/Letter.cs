@@ -26,9 +26,10 @@ namespace Klinik.Data.DataRepository
         public System.DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<long> ForPatient { get; set; }
-        public Nullable<long> ResponsiblePerson { get; set; }
+        public string ResponsiblePerson { get; set; }
         public string PatientAge { get; set; }
         public Nullable<long> FormMedicalID { get; set; }
         public Nullable<System.DateTime> Cekdate { get; set; }
+        public string Pekerjaan { get; set; }
     }
 }

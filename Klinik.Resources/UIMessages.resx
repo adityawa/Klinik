@@ -1008,4 +1008,13 @@
   <data name="Visus" xml:space="preserve">
     <value>Visus</value>
   </data>
+  <data name="Keperluan" xml:space="preserve">
+    <value>Keperluan</value>
+  </data>
+  <data name="Menyatakan" xml:space="preserve">
+    <value>Menyatakan</value>
+  </data>
+  <data name="Sebagai" xml:space="preserve">
+    <value>Sebagai</value>
+  </data>
 </root>

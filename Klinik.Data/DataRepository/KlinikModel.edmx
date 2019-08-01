@@ -390,10 +390,11 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ForPatient" Type="bigint" />
-          <Property Name="ResponsiblePerson" Type="bigint" />
+          <Property Name="ResponsiblePerson" Type="nvarchar(max)" />
           <Property Name="PatientAge" Type="varchar" MaxLength="50" />
           <Property Name="FormMedicalID" Type="bigint" />
           <Property Name="Cekdate" Type="datetime" />
+          <Property Name="Pekerjaan" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -4100,34 +4101,13 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-          <EntitySet Name="Letters" EntityType="KlinikDBModel.Letter" />
           <EntitySet Name="SuratRujukanLabKeluars" EntityType="KlinikDBModel.SuratRujukanLabKeluar" />
           <AssociationSet Name="FK_SuratRujukanLabKeluar_LabItem" Association="KlinikDBModel.FK_SuratRujukanLabKeluar_LabItem">
             <End Role="LabItem" EntitySet="LabItems" />
             <End Role="SuratRujukanLabKeluar" EntitySet="SuratRujukanLabKeluars" />
           </AssociationSet>
+          <EntitySet Name="Letters" EntityType="KlinikDBModel.Letter" />
         </EntityContainer>
-        <EntityType Name="Letter">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LetterType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="AutoNumber" Type="Int64" Nullable="false" />
-          <Property Name="Year" Type="Int32" Nullable="false" />
-          <Property Name="Keperluan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Decision" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Treatment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ReferenceTo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ForPatient" Type="Int64" />
-          <Property Name="ResponsiblePerson" Type="Int64" />
-          <Property Name="PatientAge" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FormMedicalID" Type="Int64" />
-          <Property Name="Cekdate" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="SuratRujukanLabKeluar">
           <Key>
             <PropertyRef Name="Id" />
@@ -4153,6 +4133,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Letter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LetterType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AutoNumber" Type="Int64" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Keperluan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Decision" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Treatment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReferenceTo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ForPatient" Type="Int64" />
+          <Property Name="ResponsiblePerson" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PatientAge" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FormMedicalID" Type="Int64" />
+          <Property Name="Cekdate" Type="DateTime" Precision="3" />
+          <Property Name="Pekerjaan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4987,9 +4989,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SuratRujukanLabKeluars">
+            <EntityTypeMapping TypeName="KlinikDBModel.SuratRujukanLabKeluar">
+              <MappingFragment StoreEntitySet="SuratRujukanLabKeluar">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LabItemId" ColumnName="LabItemId" />
+                <ScalarProperty Name="DokterPengirim" ColumnName="DokterPengirim" />
+                <ScalarProperty Name="FormMedicalID" ColumnName="FormMedicalID" />
+                <ScalarProperty Name="NoSurat" ColumnName="NoSurat" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Letters">
             <EntityTypeMapping TypeName="KlinikDBModel.Letter">
               <MappingFragment StoreEntitySet="Letter">
+                <ScalarProperty Name="Pekerjaan" ColumnName="Pekerjaan" />
                 <ScalarProperty Name="Cekdate" ColumnName="Cekdate" />
                 <ScalarProperty Name="FormMedicalID" ColumnName="FormMedicalID" />
                 <ScalarProperty Name="PatientAge" ColumnName="PatientAge" />
@@ -5005,19 +5021,6 @@
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="AutoNumber" ColumnName="AutoNumber" />
                 <ScalarProperty Name="LetterType" ColumnName="LetterType" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SuratRujukanLabKeluars">
-            <EntityTypeMapping TypeName="KlinikDBModel.SuratRujukanLabKeluar">
-              <MappingFragment StoreEntitySet="SuratRujukanLabKeluar">
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="LabItemId" ColumnName="LabItemId" />
-                <ScalarProperty Name="DokterPengirim" ColumnName="DokterPengirim" />
-                <ScalarProperty Name="FormMedicalID" ColumnName="FormMedicalID" />
-                <ScalarProperty Name="NoSurat" ColumnName="NoSurat" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

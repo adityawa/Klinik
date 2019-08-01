@@ -83,6 +83,8 @@
     <Compile Include="Letter\HealthBodyLetterModel.cs" />
     <Compile Include="Letter\LabReferenceLetterModel.cs" />
     <Compile Include="Letter\LetterModel.cs" />
+    <Compile Include="Letter\PersetujuanTindakanModel.cs" />
+    <Compile Include="Letter\RujukanBerobatModel.cs" />
     <Compile Include="MappingMaster\ClinicPoliModel.cs" />
     <Compile Include="MappingMaster\OrganizationPrivilegeModel.cs" />
     <Compile Include="MappingMaster\RolePrivilegeModel.cs" />

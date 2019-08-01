@@ -135,6 +135,12 @@ namespace Klinik.Features
             return _number;
         }
 
+        public string GetSAPBasedEmpId(long employeeId)
+        {
+            if (employeeId == 0)
+                return "0";
+            return _unitOfWork.EmployeeRepository.GetById(employeeId).EmpID ?? "";
+        }
         public List<LoketModel> GetbaseLoketData(LoketRequest request, Expression<Func<QueuePoli, bool>> searchCriteria = null)
         {
 

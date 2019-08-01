@@ -238,6 +238,12 @@ namespace Klinik.Common
 
             CreateMap<SuratRujukanLabKeluar, SuratRujukanKeluarModel>();
             CreateMap<SuratRujukanKeluarModel, SuratRujukanLabKeluar>();
+
+            CreateMap<HealthBodyLetterModel, Letter>();
+            CreateMap<Letter, HealthBodyLetterModel>();
+
+            CreateMap<PersetujuanTindakanModel, Letter>();
+            CreateMap<Letter, PersetujuanTindakanModel>();
         }
     }
 }
