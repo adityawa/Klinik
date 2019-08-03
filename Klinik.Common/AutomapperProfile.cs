@@ -11,7 +11,7 @@ using Klinik.Entities.Loket;
 using Klinik.Entities.Form;
 using Klinik.Entities.PreExamine;
 using Klinik.Entities.Poli;
-
+using Klinik.Entities.Letter;
 
 namespace Klinik.Common
 {
@@ -172,7 +172,11 @@ namespace Klinik.Common
             CreateMap<FormMedical, FormMedicalModel>();
 
             CreateMap<PreExamineModel, FormPreExamine>();
-            CreateMap<FormPreExamine, PreExamineModel>();
+            CreateMap<FormPreExamine, PreExamineModel>()
+                .ForMember(x => x.strTransDate, map => map.MapFrom(p => p.TransDate.ToString("dd/MM/yyyy")))                
+                .ForMember(m => m.strKBDate, map => map.MapFrom(p => p.KBDate.HasValue ? p.KBDate.Value.ToString("dd/MM/yyyy") : string.Empty))
+                .ForMember(m => m.strMenstrualDate, map => map.MapFrom(p => p.MenstrualDate.HasValue ? p.MenstrualDate.Value.ToString("dd/MM/yyyy") : string.Empty))
+                .ForMember(x => x.DoctorName, map => map.MapFrom(p => p.Doctor.Name));
 
             CreateMap<FormExamineModel, FormExamine>();
             CreateMap<FormExamine, FormExamineModel>();
@@ -231,6 +235,19 @@ namespace Klinik.Common
                 .ForMember(m => m.ClinicName, map => map.MapFrom(p => p.Clinic.Name))
                 .ForMember(m => m.PoliName, map => map.MapFrom(p => p.Poli.Name))
                 .ForMember(m => m.ServicesName, map => map.MapFrom(p => p.Service.Name));
+
+            CreateMap<Letter, LabReferenceLetterModel>();
+            CreateMap<LabReferenceLetterModel, Letter>()
+                .ForMember(m=>m.CreatedBy, map=>map.MapFrom(p=>p.Account.UserName));
+
+            CreateMap<SuratRujukanLabKeluar, SuratRujukanKeluarModel>();
+            CreateMap<SuratRujukanKeluarModel, SuratRujukanLabKeluar>();
+
+            CreateMap<HealthBodyLetterModel, Letter>();
+            CreateMap<Letter, HealthBodyLetterModel>();
+
+            CreateMap<PersetujuanTindakanModel, Letter>();
+            CreateMap<Letter, PersetujuanTindakanModel>();
         }
     }
 }

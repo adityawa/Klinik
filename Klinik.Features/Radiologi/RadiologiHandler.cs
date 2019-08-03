@@ -93,7 +93,7 @@ namespace Klinik.Features.Radiologi
                 response.Status = true;
                 response.Message = string.Format(Messages.LabItemAdded, result, request.Data.FormMedicalID);
             }
-            catch (Exception ex)
+            catch 
             {
 
                 response.Status = false;
@@ -259,7 +259,7 @@ namespace Klinik.Features.Radiologi
                     response.Message = Messages.LabResultUpdated;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 response.Status = false;
                 response.Message = Messages.GeneralError;

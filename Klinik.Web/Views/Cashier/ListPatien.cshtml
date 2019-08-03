@@ -43,7 +43,6 @@
                         <th>@Klinik.Resources.UIMessages.PoliTo</th>
                         <th>@Klinik.Resources.UIMessages.Status</th>
                         <th></th>
-                        <th></th>
                     </tr>
                 </thead>
             </table>
@@ -146,21 +145,6 @@
                         "targets": [9],
                         "searchable": false,
                         "orderable": false
-                    },
-                    {
-                        "targets": [10],
-                        "searchable": false,
-                        "orderable": true
-                    },
-                    {
-                        "targets": [11],
-                        "searchable": false,
-                        "orderable": false
-                    },
-                    {
-                        "targets": [12],
-                        "searchable": false,
-                        "orderable": false
                     }
 
                 ],
@@ -178,7 +162,7 @@
                 { "data": "StatusStr", "name": "StatusStr", "autoWidth": true },
 
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Cashier/Detail?medicalid=' + full.FormMedicalID + '">@Klinik.Resources.UIMessages.Update</a>  ' + ' | <a class="btn btn-info" href="/Cashier/Invoice?patienid=' + full.Id + '">@Klinik.Resources.UIMessages.Invoice</a>'; }
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Cashier/Detail?medicalid=' + full.FormMedicalID + '">@Klinik.Resources.UIMessages.Update</a>  ' + ' | <a class="btn btn-info" href="/Cashier/Invoice?medicalid=' + full.FormMedicalID + '">@Klinik.Resources.UIMessages.Invoice</a>'; }
                 }
 
             ]

@@ -140,7 +140,6 @@ namespace Klinik.Features
             List<LabItemModel> lists = new List<LabItemModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<LabItem>(true);
-
             // add default filter to show the active data only
             searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
 

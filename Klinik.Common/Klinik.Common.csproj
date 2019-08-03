@@ -54,8 +54,6 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
@@ -86,6 +84,7 @@
     <Compile Include="CustomAuthorizeAttribute.cs" />
     <Compile Include="Enumerations\ClinicEnums.cs" />
     <Compile Include="Enumerations\LabTypeEnum.cs" />
+    <Compile Include="Enumerations\LetterEnum.cs" />
     <Compile Include="Enumerations\ParamedicTypeEnum.cs" />
     <Compile Include="Enumerations\MedicineTypeEnum.cs" />
     <Compile Include="Enumerations\PoliEnum.cs" />

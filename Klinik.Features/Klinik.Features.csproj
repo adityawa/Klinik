@@ -80,6 +80,10 @@
     <Compile Include="Cashier\CashierResponse.cs" />
     <Compile Include="Cashier\CashierValidator.cs" />
     <Compile Include="Cashier\CashierRequest.cs" />
+    <Compile Include="Farmasi\FarmasiHandler.cs" />
+    <Compile Include="Farmasi\FarmasiRequest.cs" />
+    <Compile Include="Farmasi\FarmasiResponse.cs" />
+    <Compile Include="Farmasi\FarmasiValidator.cs" />
     <Compile Include="IBaseFeatures.cs" />
     <Compile Include="Laboratorium\LabHandler.cs" />
     <Compile Include="Laboratorium\LabRequest.cs" />
@@ -206,6 +210,21 @@
     <Compile Include="Radiologi\RadiologiRequest.cs" />
     <Compile Include="Radiologi\RadiologiResponse.cs" />
     <Compile Include="Radiologi\RadiologiValidator.cs" />
+    <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyHandler.cs" />
+    <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyRequest.cs" />
+    <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyResponse.cs" />
+    <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyValidator.cs" />
+    <Compile Include="SuratReferensi\SuratLabReferensi\RujukanLabHandler.cs" />
+    <Compile Include="SuratReferensi\SuratLabReferensi\RujukanLabRequest.cs" />
+    <Compile Include="SuratReferensi\SuratLabReferensi\RujukanLabResponse.cs" />
+    <Compile Include="SuratReferensi\SuratLabReferensi\RujukanLabValidator.cs" />
+    <Compile Include="SuratReferensi\SuratPersetujuanTindakan\PersetujuanTimdakanValidator.cs" />
+    <Compile Include="SuratReferensi\SuratPersetujuanTindakan\PersetujuanTindakanHandler.cs" />
+    <Compile Include="SuratReferensi\SuratPersetujuanTindakan\PersetujuanTindakanRequest.cs" />
+    <Compile Include="SuratReferensi\SuratPersetujuanTindakan\PersetujuanTindakanResponse.cs" />
+    <Compile Include="SuratReferensi\SuratRujukanBerobat\RujukanBerobatRequest.cs" />
+    <Compile Include="SuratReferensi\SuratRujukanBerobat\RujukanBerobatResponse.cs" />
+    <Compile Include="SuratReferensi\SuratRujukanBerobat\RujukanBerobatValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Klinik.Common\Klinik.Common.csproj">

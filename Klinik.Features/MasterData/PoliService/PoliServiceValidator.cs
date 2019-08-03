@@ -38,17 +38,17 @@ namespace Klinik.Features
             {
                 bool isHavePrivilege = true;
 
-                if (request.Data.ClinicID == null || request.Data.ClinicID <= 0)
+                if (request.Data.ClinicID == 0 || request.Data.ClinicID <= 0)
                 {
                     errorFields.Add("Clinic");
                 }
 
-                if (request.Data.PoliID == null || request.Data.PoliID <= 0)
+                if (request.Data.PoliID == 0 || request.Data.PoliID <= 0)
                 {
                     errorFields.Add("Poli");
                 }
 
-                if (request.Data.ServicesID == null || request.Data.ServicesID <= 0)
+                if (request.Data.ServicesID == 0 || request.Data.ServicesID <= 0)
                 {
                     errorFields.Add("Service");
                 }

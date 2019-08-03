@@ -19,7 +19,7 @@ namespace Klinik.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class UIMessages {
@@ -228,6 +228,15 @@ namespace Klinik.Resources {
         public static string Birthdate {
             get {
                 return ResourceManager.GetString("Birthdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TD.
+        /// </summary>
+        public static string BloodPress {
+            get {
+                return ResourceManager.GetString("BloodPress", resourceCulture);
             }
         }
         
@@ -547,6 +556,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dinyatakan.
+        /// </summary>
+        public static string Dinyatakan {
+            get {
+                return ResourceManager.GetString("Dinyatakan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Doctor.
         /// </summary>
         public static string Doctor {
@@ -606,6 +624,15 @@ namespace Klinik.Resources {
         public static string DoctorType {
             get {
                 return ResourceManager.GetString("DoctorType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dokter Pengirim.
+        /// </summary>
+        public static string DokterPengirim {
+            get {
+                return ResourceManager.GetString("DokterPengirim", resourceCulture);
             }
         }
         
@@ -862,6 +889,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Antrian Farmasi.
+        /// </summary>
+        public static string FarmasiQueue {
+            get {
+                return ResourceManager.GetString("FarmasiQueue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Female.
         /// </summary>
         public static string Female {
@@ -979,6 +1015,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Surat Rujukan Berbadan Sehat.
+        /// </summary>
+        public static string HealthBodyLetter {
+            get {
+                return ResourceManager.GetString("HealthBodyLetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Height.
         /// </summary>
         public static string Height {
@@ -1020,6 +1065,15 @@ namespace Klinik.Resources {
         public static string HPNumber {
             get {
                 return ResourceManager.GetString("HPNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HR.
+        /// </summary>
+        public static string HR {
+            get {
+                return ResourceManager.GetString("HR", resourceCulture);
             }
         }
         
@@ -1123,6 +1177,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Keperluan.
+        /// </summary>
+        public static string Keperluan {
+            get {
+                return ResourceManager.GetString("Keperluan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KTP No.
         /// </summary>
         public static string KTP {
@@ -1213,6 +1276,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Surat Rujukan Lab.
+        /// </summary>
+        public static string LabReferenceLetter {
+            get {
+                return ResourceManager.GetString("LabReferenceLetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
         public static string LabType {
@@ -1263,6 +1335,15 @@ namespace Klinik.Resources {
         public static string LegalNO {
             get {
                 return ResourceManager.GetString("LegalNO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Letter.
+        /// </summary>
+        public static string LetterCreation {
+            get {
+                return ResourceManager.GetString("LetterCreation", resourceCulture);
             }
         }
         
@@ -1357,6 +1438,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Surat Persetujuan / Penolakan Tindakan / Rujukan Medis.
+        /// </summary>
+        public static string MedicalActionAcceptanceLetter {
+            get {
+                return ResourceManager.GetString("MedicalActionAcceptanceLetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tanggal Periksa.
+        /// </summary>
+        public static string MedicalCekDate {
+            get {
+                return ResourceManager.GetString("MedicalCekDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Medicine.
         /// </summary>
         public static string Medicine {
@@ -1407,6 +1506,15 @@ namespace Klinik.Resources {
         public static string MenuList {
             get {
                 return ResourceManager.GetString("MenuList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Menyatakan.
+        /// </summary>
+        public static string Menyatakan {
+            get {
+                return ResourceManager.GetString("Menyatakan", resourceCulture);
             }
         }
         
@@ -1722,6 +1830,15 @@ namespace Klinik.Resources {
         public static string PaymentType {
             get {
                 return ResourceManager.GetString("PaymentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pekerjaan.
+        /// </summary>
+        public static string Pekerjaan {
+            get {
+                return ResourceManager.GetString("Pekerjaan", resourceCulture);
             }
         }
         
@@ -2275,6 +2392,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RR.
+        /// </summary>
+        public static string RR {
+            get {
+                return ResourceManager.GetString("RR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SAP.
+        /// </summary>
+        public static string SAP {
+            get {
+                return ResourceManager.GetString("SAP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
@@ -2289,6 +2424,15 @@ namespace Klinik.Resources {
         public static string SaveExamine {
             get {
                 return ResourceManager.GetString("SaveExamine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sebagai.
+        /// </summary>
+        public static string Sebagai {
+            get {
+                return ResourceManager.GetString("Sebagai", resourceCulture);
             }
         }
         
@@ -2406,6 +2550,15 @@ namespace Klinik.Resources {
         public static string Systolic {
             get {
                 return ResourceManager.GetString("Systolic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Surat Rujukan Berobat.
+        /// </summary>
+        public static string TakeMedicineReferenceLetter {
+            get {
+                return ResourceManager.GetString("TakeMedicineReferenceLetter", resourceCulture);
             }
         }
         
@@ -2563,6 +2716,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Validasi.
+        /// </summary>
+        public static string Validate {
+            get {
+                return ResourceManager.GetString("Validate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Valid From.
         /// </summary>
         public static string ValidFrom {
@@ -2577,6 +2739,15 @@ namespace Klinik.Resources {
         public static string ValidTo {
             get {
                 return ResourceManager.GetString("ValidTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visus.
+        /// </summary>
+        public static string Visus {
+            get {
+                return ResourceManager.GetString("Visus", resourceCulture);
             }
         }
         
