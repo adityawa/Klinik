@@ -25,13 +25,12 @@
 			<table id="tbQueuePoli" class="table table-striped table-bordered dt-responsive" cellspacing="0">
 				<thead>
 					<tr>
-						<th>@Klinik.Resources.UIMessages.ID</th>						
-						<th>@Klinik.Resources.UIMessages.Patient</th>
-						<th>@Klinik.Resources.UIMessages.MRNumber</th>
-						<th>@Klinik.Resources.UIMessages.Doctor</th>
+						<th>@Klinik.Resources.UIMessages.ID</th>		
 						<th>@Klinik.Resources.UIMessages.QueueCode</th>
-						<th>@Klinik.Resources.UIMessages.TransactionDate</th>
-						<th>@Klinik.Resources.UIMessages.PoliFrom</th>						
+						<th>@Klinik.Resources.UIMessages.Patient</th>
+						<th>@Klinik.Resources.UIMessages.PoliFrom</th>
+						<th>@Klinik.Resources.UIMessages.Doctor</th>						
+						<th>@Klinik.Resources.UIMessages.TransactionDate</th>												
 						<th>@Klinik.Resources.UIMessages.Status</th>
 						<th></th>
 					</tr>
@@ -119,22 +118,16 @@
                     "targets": [7],
                     "searchable": false,
                     "orderable": false
-                },
-                {
-                    "targets": [8],
-                    "searchable": false,
-                    "orderable": false
                 }
 
                 ],
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": false },                
-                { "data": "PatientName", "name": "PatientName", "autoWidth": true },
-                { "data": "MRNumber", "name": "MRNumber", "autoWidth": true },
-                { "data": "DoctorStr", "name": "DoctorStr", "autoWidth": true },
-                { "data": "SortNumberCode", "name": "SortNumberCode", "autoWidth": true },
-                { "data": "TransactionDateStr", "name": "TransactionDateStr", "autoWidth": true },
-                { "data": "PoliFromName", "name": "PoliFromName", "autoWidth": true },                
+				{ "data": "SortNumberCode", "name": "SortNumberCode", "autoWidth": true },
+				{ "data": "PatientName", "name": "PatientName", "autoWidth": true },                
+				{ "data": "PoliFromName", "name": "PoliFromName", "autoWidth": true },    
+				{ "data": "DoctorStr", "name": "DoctorStr", "autoWidth": true },                
+                { "data": "TransactionDateStr", "name": "TransactionDateStr", "autoWidth": true },                            
                 { "data": "StatusStr", "name": "StatusStr", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta) {
