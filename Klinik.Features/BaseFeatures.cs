@@ -141,6 +141,7 @@ namespace Klinik.Features
 				return "0";
 			return _unitOfWork.EmployeeRepository.GetById(employeeId).EmpID ?? "";
 		}
+
 		public List<LoketModel> GetbaseLoketData(LoketRequest request, Expression<Func<QueuePoli, bool>> searchCriteria = null)
 		{
 			List<LoketModel> lists = new List<LoketModel>();

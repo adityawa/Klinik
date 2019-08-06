@@ -74,7 +74,7 @@
             "orderMulti": false,
             "pageLength": 10,
             "ajax": {
-				"url": "/Farmasi/GetFarmasiQueueFromPoli?clinics=" + _clinic,
+				"url": "/Pharmacy/GetPharmacyQueueFromPoli?clinics=" + _clinic,
                 "type": "POST",
                 "datatype": "json"
             },
@@ -131,7 +131,7 @@
                 { "data": "StatusStr", "name": "StatusStr", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta) {
-                         return '<a class="btn btn-success" href="/Farmasi/ValidateMedicine?id=' + full.Id + '">@Klinik.Resources.UIMessages.Validate</a>';
+                         return '<a class="btn btn-success" href="/Pharmacy/ValidateMedicine?id=' + full.Id + '">@Klinik.Resources.UIMessages.Validate</a>';
                     }
                 }
             ]

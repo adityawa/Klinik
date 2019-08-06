@@ -7,12 +7,12 @@ using System.Web.Mvc;
 using Klinik.Features;
 using Klinik.Entities.Loket;
 using Klinik.Entities.Account;
-using Klinik.Features.Farmasi;
+using Klinik.Features.Pharmacy;
 using Klinik.Common;
 
 namespace Klinik.Web.Controllers
 {
-    public class FarmasiController : Controller
+    public class PharmacyController : Controller
     {
         private IUnitOfWork _unitOfWork;
         private KlinikDBEntities _context;
@@ -58,13 +58,13 @@ namespace Klinik.Web.Controllers
 		}
 		#endregion
 
-		public FarmasiController(IUnitOfWork unitOfWork, KlinikDBEntities context)
+		public PharmacyController(IUnitOfWork unitOfWork, KlinikDBEntities context)
         {
             _unitOfWork = unitOfWork;
             _context = context;
         }
 
-        // GET: Farmasi
+        // GET: Pharmacy
         public ActionResult PatientList()
         {
 			ViewBag.Clinics = BindDropDownClinic();
@@ -72,7 +72,7 @@ namespace Klinik.Web.Controllers
         }
 
 		[HttpPost]
-		public ActionResult GetFarmasiQueueFromPoli(string clinics, string status)
+		public ActionResult GetPharmacyQueueFromPoli(string clinics, string status)
 		{
 			var _draw = Request.Form.GetValues("draw").FirstOrDefault();
 			var _start = Request.Form.GetValues("start").FirstOrDefault();
@@ -98,7 +98,7 @@ namespace Klinik.Web.Controllers
 			if (Session["UserLogon"] != null)
 				request.Data.Account = (AccountModel)Session["UserLogon"];
 
-			var response = new FarmasiHandler(_unitOfWork).GetListData(request);
+			var response = new PharmacyHandler(_unitOfWork).GetListData(request);
 
 			return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
 		}

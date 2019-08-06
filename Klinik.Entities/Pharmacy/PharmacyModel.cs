@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Klinik.Entities.Farmasi
+namespace Klinik.Entities.Pharmacy
 {
-    public class FarmasiModel : BaseModel
+    public class PharmacyModel : BaseModel
     {
         public int ClinicID { get; set; }
         public int PatientID { get; set; }

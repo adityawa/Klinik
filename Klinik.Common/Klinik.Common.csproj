@@ -83,6 +83,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="CustomAuthorizeAttribute.cs" />
     <Compile Include="Enumerations\ClinicEnums.cs" />
+    <Compile Include="Enumerations\PharmacyStatusEnum.cs" />
     <Compile Include="Enumerations\LabTypeEnum.cs" />
     <Compile Include="Enumerations\LetterEnum.cs" />
     <Compile Include="Enumerations\ParamedicTypeEnum.cs" />

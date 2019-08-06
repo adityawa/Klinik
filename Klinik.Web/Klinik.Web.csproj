@@ -227,7 +227,7 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Base\BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\FarmasiController.cs" />
+    <Compile Include="Controllers\PharmacyController.cs" />
     <Compile Include="Controllers\LabController.cs" />
     <Compile Include="Controllers\CashierController.cs" />
     <Compile Include="Controllers\LettersController.cs" />
@@ -1472,12 +1472,9 @@
     <Content Include="Views\Letters\SuratRujukan.cshtml" />
     <Content Include="Views\Letters\PrintSuratRujukanLabKeluar.cshtml" />
     <Content Include="Views\Letters\ExportSuratRujukanLabKeluar2Pdf.cshtml" />
-
     <Content Include="Views\Letters\ExportSuratBerbadanSehat.cshtml" />
     <Content Include="Views\Letters\ExportSuratPersetujuanTindakan2Pdf.cshtml" />
-
-    <Content Include="Views\Farmasi\PatientList.cshtml" />
-
+    <Content Include="Views\Pharmacy\PatientList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

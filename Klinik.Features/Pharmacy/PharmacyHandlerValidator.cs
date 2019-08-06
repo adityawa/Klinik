@@ -5,23 +5,23 @@ using Klinik.Resources;
 using System;
 using System.Linq;
 
-namespace Klinik.Features.Farmasi
+namespace Klinik.Features.Pharmacy
 {
-    public class FarmasiValidator : BaseFeatures
+    public class PharmacyValidator : BaseFeatures
     {
-        private const string ADD_PRIVILEGE_NAME = "ADD_FARMASI_ITEM";        
-        private const string EDIT_PRIVILEGE_NAME = "EDIT_FARMASI_ITEM";        
+        private const string ADD_PRIVILEGE_NAME = "ADD_Pharmacy_ITEM";        
+        private const string EDIT_PRIVILEGE_NAME = "EDIT_Pharmacy_ITEM";        
 
-        public FarmasiValidator(IUnitOfWork unitOfWork, KlinikDBEntities context)
+        public PharmacyValidator(IUnitOfWork unitOfWork, KlinikDBEntities context)
         {
             _unitOfWork = unitOfWork;
             _context = context;
         }
 
-        public void Validate(FarmasiRequest request, out FarmasiResponse response)
+        public void Validate(PharmacyRequest request, out PharmacyResponse response)
         {
             bool isHavePrivilege = true;
-            response = new FarmasiResponse();
+            response = new PharmacyResponse();
             try
             {
                 if (request.Data.FormMedicalID == 0)
@@ -61,7 +61,7 @@ namespace Klinik.Features.Farmasi
 
             if (response.Status)
             {
-                response = new FarmasiHandler(_unitOfWork, _context).CreateOrEdit(request);
+                response = new PharmacyHandler(_unitOfWork, _context).CreateOrEdit(request);
             }
         }
     }

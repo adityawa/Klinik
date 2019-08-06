@@ -10,36 +10,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Klinik.Features.Farmasi
+namespace Klinik.Features.Pharmacy
 {
-    public class FarmasiHandler : BaseFeatures
+    public class PharmacyHandler : BaseFeatures
     {
-        public FarmasiHandler(IUnitOfWork unitOfWork, KlinikDBEntities context = null)
+        public PharmacyHandler(IUnitOfWork unitOfWork, KlinikDBEntities context = null)
         {
             _unitOfWork = unitOfWork;
             _context = context;
         }
 
-        public FarmasiResponse CreateOrEdit(FarmasiRequest request)
+        public PharmacyResponse CreateOrEdit(PharmacyRequest request)
         {
-            FarmasiResponse response = new FarmasiResponse();
+            PharmacyResponse response = new PharmacyResponse();
 
             return response;
         }
 
-        public static List<Int32> GetSelectedFarmasiItem(long IdQueue)
+        public static List<Int32> GetSelectedPharmacyItem(long IdQueue)
         {
-            List<Int32> farmasiItemIds = new List<Int32>();
+            List<Int32> PharmacyItemIds = new List<Int32>();
             var _getFormMedical = _unitOfWork.RegistrationRepository.GetById(IdQueue);
             if (_getFormMedical != null)
             {
                 var qryLabItems = _unitOfWork.FormExamineMedicineRepository.Get(x => x.FormExamine.FormMedicalID == _getFormMedical.FormMedicalID);
                 foreach (var item in qryLabItems)
                 {
-                    farmasiItemIds.Add((int)item.ID);
+                    PharmacyItemIds.Add((int)item.ID);
                 }
             }
-            return farmasiItemIds;
+            return PharmacyItemIds;
         }
 
         public LoketResponse GetListData(LoketRequest request)
@@ -59,7 +59,7 @@ namespace Klinik.Features.Farmasi
             return response;
         }
 
-        public FarmasiResponse GetFarmasiForInput(FarmasiRequest request)
+        public PharmacyResponse GetPharmacyForInput(PharmacyRequest request)
         {
             List<FormExamineMedicineModel> lists = new List<FormExamineMedicineModel>();
             dynamic qry = null;
@@ -78,7 +78,7 @@ namespace Klinik.Features.Farmasi
             int totalRequest = lists.Count();
             var data = lists;
 
-            var response = new FarmasiResponse
+            var response = new PharmacyResponse
             {
                 Draw = request.Draw,
                 RecordsFiltered = totalRequest,
