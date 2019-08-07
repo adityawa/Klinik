@@ -1026,4 +1026,10 @@
   <data name="RemarkUse" xml:space="preserve">
     <value>Remark Use</value>
   </data>
+  <data name="Prescription" xml:space="preserve">
+    <value>Resep</value>
+  </data>
+  <data name="PrescriptionDetail" xml:space="preserve">
+    <value>Detail Resep</value>
+  </data>
 </root>

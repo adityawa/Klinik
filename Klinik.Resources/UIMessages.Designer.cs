@@ -1942,6 +1942,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resep.
+        /// </summary>
+        public static string Prescription {
+            get {
+                return ResourceManager.GetString("Prescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detail Resep.
+        /// </summary>
+        public static string PrescriptionDetail {
+            get {
+                return ResourceManager.GetString("PrescriptionDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price.
         /// </summary>
         public static string Price {

@@ -122,7 +122,7 @@
 
                 ],
             "columns": [
-                { "data": "Id", "name": "Id", "autoWidth": false },                
+				{ "data": "FormMedicalID", "name": "FormMedicalID", "autoWidth": false },                
 				{ "data": "SortNumberCode", "name": "SortNumberCode", "autoWidth": true },
 				{ "data": "PatientName", "name": "PatientName", "autoWidth": true },                
 				{ "data": "PoliFromName", "name": "PoliFromName", "autoWidth": true },    
@@ -131,7 +131,7 @@
                 { "data": "StatusStr", "name": "StatusStr", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta) {
-                         return '<a class="btn btn-success" href="/Pharmacy/ValidateMedicine?id=' + full.Id + '">@Klinik.Resources.UIMessages.Validate</a>';
+						return '<a class="btn btn-success" href="/Pharmacy/Prescription?id=' + full.FormMedicalID + '">@Klinik.Resources.UIMessages.Validate</a>';
                     }
                 }
             ]

@@ -1475,6 +1475,7 @@
     <Content Include="Views\Letters\ExportSuratBerbadanSehat.cshtml" />
     <Content Include="Views\Letters\ExportSuratPersetujuanTindakan2Pdf.cshtml" />
     <Content Include="Views\Pharmacy\PatientList.cshtml" />
+    <Content Include="Views\Pharmacy\Prescription.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
