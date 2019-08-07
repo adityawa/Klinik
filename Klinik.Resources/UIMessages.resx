@@ -1008,7 +1008,6 @@
   <data name="Visus" xml:space="preserve">
     <value>Visus</value>
   </data>
-
   <data name="Keperluan" xml:space="preserve">
     <value>Keperluan</value>
   </data>
@@ -1017,11 +1016,14 @@
   </data>
   <data name="Sebagai" xml:space="preserve">
     <value>Sebagai</value>
-</data>
+  </data>
   <data name="FarmasiQueue" xml:space="preserve">
     <value>Antrian Farmasi</value>
   </data>
   <data name="Validate" xml:space="preserve">
     <value>Validasi</value>
+  </data>
+  <data name="RemarkUse" xml:space="preserve">
+    <value>Remark Use</value>
   </data>
 </root>
