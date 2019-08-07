@@ -323,6 +323,10 @@ namespace Klinik.Features
 				{
 					lokmdl.SortNumberCode = item.Poli1.Code.Trim() + "-" + string.Format("{0:D3}", item.SortNumber);
 				}
+
+				// modify the status
+				lokmdl.StatusStr = ((PharmacyStatusEnum)lokmdl.Status).ToString();
+
 				lists.Add(lokmdl);
 			}
 			DateTime _start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
