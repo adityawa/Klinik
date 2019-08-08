@@ -17,6 +17,9 @@ using Rotativa.Options;
 using Rotativa;
 using Klinik.Features.SuratReferensi.SuratBadanSehat;
 using Klinik.Features.SuratReferensi.SuratPersetujuanTindakan;
+using Klinik.Features.SuratReferensi.SuratRujukanBerobat;
+using Klinik.Entities.PreExamine;
+using System.Text;
 
 namespace Klinik.Web.Controllers
 {
@@ -222,7 +225,7 @@ namespace Klinik.Web.Controllers
             if (Request.Form["Action"] != null)
                 _model.Action = Request.Form["Action"].ToString();
             if (Request.Form["forPatient"] != null)
-                _model.ForPatient =long.Parse( Request.Form["forPatient"].ToString());
+                _model.ForPatient = long.Parse(Request.Form["forPatient"].ToString());
             if (Session["UserLogon"] != null)
                 _model.Account = (AccountModel)Session["UserLogon"];
             if (_model.PenjaminData == null)
@@ -270,6 +273,40 @@ namespace Klinik.Web.Controllers
             response = new HealthBodyValidator(_unitOfWork, _context).ValidateBeforePreview(request);
 
             return Json(new { Status = response.Status, FormMedicalId = response.Entity.FormMedicalID }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult SaveAndPreviewRujukanBerobat()
+        {
+            var _model = new RujukanBerobatModel();
+            if (_model.InfoRujukanData == null)
+                _model.InfoRujukanData = new InfoRujukan();
+            if (Request.Form["RSRujukan"] != null)
+                _model.InfoRujukanData.RSRujukan = Request.Form["RSRujukan"].ToString();
+            if (Request.Form["Perusahaan"] != null)
+                _model.Perusahaan = Request.Form["Perusahaan"].ToString();
+            if (Request.Form["Phone"] != null)
+                _model.InfoRujukanData.Phone = Request.Form["Phone"] == null ? "" : Request.Form["Phone"].ToString();
+            if (Request.Form["FormMedicalID"] != null)
+                _model.FormMedicalID = Convert.ToInt64(Request.Form["FormMedicalID"].ToString());
+            if (Request.Form["ForPatient"] != null)
+                _model.ForPatient = Request.Form["ForPatient"] == null ? 0 : long.Parse(Request.Form["ForPatient"].ToString());
+            if (Request.Form["NmDokter"] != null)
+                _model.InfoRujukanData.NamaDokter = Request.Form["NmDokter"] == null ? "" : Request.Form["NmDokter"].ToString();
+            if (Request.Form["HariPraktek"] != null)
+                _model.InfoRujukanData.HariPraktek = Request.Form["HariPraktek"] == null ? "" : Request.Form["HariPraktek"].ToString();
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new RujukanBerobatRequest
+            {
+                Data = _model
+            };
+
+            var response = new RujukanBerobatResponse { };
+            response = new RujukanBerobatValidator(_unitOfWork, _context).Validate(request);
+
+            return Json(new { Status = response.Status, FormMedicalId = response.Entity.FormMedicalID, LetterId = response.Entity.Id }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -340,7 +377,7 @@ namespace Klinik.Web.Controllers
             //return View(response.Entity);
             return new PartialViewAsPdf(response.Entity)
             {
-                PageOrientation = Orientation.Landscape,
+                PageOrientation = Orientation.Portrait,
                 PageSize = Size.Folio,
 
                 FileName = "PrintSuratBerbadanSehat.pdf"
@@ -399,10 +436,126 @@ namespace Klinik.Web.Controllers
             // return View(response.Entity);
             return new PartialViewAsPdf(response.Entity)
             {
-                PageOrientation = Orientation.Landscape,
+                PageOrientation = Orientation.Portrait,
                 PageSize = Size.Folio,
 
                 FileName = "SuratPersetujuanTindakan.pdf"
+            };
+        }
+
+        private string ConstructPreExamine(PreExamineModel pre)
+        {
+            string result = string.Empty;
+            StringBuilder sb = new StringBuilder();
+            if (pre != null)
+            {
+                sb.Append(string.Format("Temperature : {0}", pre.Temperature));
+                sb.Append(Environment.NewLine);
+
+                sb.Append(string.Format("Weight : {0}", pre.Weight));
+                sb.Append(Environment.NewLine);
+
+                sb.Append(string.Format("Height : {0}", pre.Height));
+                sb.Append(Environment.NewLine);
+
+                sb.Append(string.Format("Respiratory : {0}", pre.Respiratory));
+                sb.Append(Environment.NewLine);
+
+                sb.Append(string.Format("Pulse : {0}", pre.Pulse));
+                sb.Append(Environment.NewLine);
+
+                sb.Append(string.Format("Systolic : {0}", pre.Systolic));
+                sb.Append(Environment.NewLine);
+
+                sb.Append(string.Format("Diastolic : {0}", pre.Diastolic));
+                sb.Append(Environment.NewLine);
+
+                sb.Append(string.Format("Others : {0}", pre.Others));
+                sb.Append(Environment.NewLine);
+
+                sb.Append(string.Format("Right Eye : {0}", pre.RightEye));
+                sb.Append(Environment.NewLine);
+
+                sb.Append(string.Format("Left Eye : {0}", pre.LeftEye));
+                sb.Append(Environment.NewLine);
+
+                sb.Append(string.Format("Color Blind : {0}", pre.ColorBlind));
+                sb.Append(Environment.NewLine);
+
+                sb.Append(string.Format("Daily Glasses : {0}", pre.DailyGlasses));
+                sb.Append(Environment.NewLine);
+
+                sb.Append(string.Format("Examine Glasses : {0}", pre.ExamineGlasses));
+                sb.Append(Environment.NewLine);
+
+                sb.Append(string.Format("Menstrual Date : {0}", pre.strMenstrualDate));
+                sb.Append(Environment.NewLine);
+
+                sb.Append(string.Format("KB Date : {0}", pre.strKBDate));
+                sb.Append(Environment.NewLine);
+                result = sb.ToString();
+            }
+
+
+            return result;
+
+        }
+        [CustomAuthorize("VIEW_SURAT")]
+        public JsonResult CreateSuratRujukanBerobat()
+        {
+            var _model = new RujukanBerobatModel();
+            if (Request.Form["forPatient"] != null)
+                _model.ForPatient = long.Parse(Request.Form["forPatient"].ToString());
+
+            if (Request.Form["FormMedicalID"] != null)
+                _model.FormMedicalID = long.Parse(Request.Form["FormMedicalID"].ToString());
+
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+            var request = new RujukanBerobatRequest
+            {
+                Data = _model
+            };
+            var response = new RujukanBerobatResponse { };
+            response = new RujukanBerobatHandler(_unitOfWork).GetDetailDataForRujukan(request);
+            return Json(new
+            {
+                Status = response.Status,
+                Message = response.Message,
+                PatientNm = response.Entity.PatientData.Name,
+                SAP = response.Entity.PatientData.SAP,
+                KTP = response.Entity.PatientData.KTPNumber,
+                BPJS = response.Entity.PatientData.BPJSNumber,
+                Gender = response.Entity.PatientData.Gender,
+                Age = $"{response.Entity.PatientData.Umur}/{response.Entity.PatientData.BirthDateStr}",
+                TglLahir = response.Entity.PatientData.BirthDateStr,
+                HubKeluarga = response.Entity.PatientData.familyRelationshipDesc,
+                Diagnosa = response.Entity.FormExamineData.Diagnose,
+                Keluhan = response.Entity.FormExamineData.Anamnesa,
+                PreExamine = ConstructPreExamine(response.Entity.PreExamineData),
+                Terapi = response.Entity.FormExamineData.Therapy,
+                Penunjang = response.Entity.FormExamineData.Result
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("VIEW_SURAT")]
+        public ActionResult ExportSuratRujukanBerobat(string letterId)
+        {
+            long iLetterId = 0;
+            if (!String.IsNullOrEmpty(letterId))
+            {
+                iLetterId = Convert.ToInt64(letterId);
+            }
+            var response = new RujukanBerobatResponse();
+            response = new RujukanBerobatHandler(_unitOfWork).PreparePrintSuratRujukanBerobat(iLetterId);
+            response.Entity.strPemFisik = ConstructPreExamine(response.Entity.PreExamineData);
+            // return View(response.Entity);
+            return new PartialViewAsPdf(response.Entity)
+            {
+                PageOrientation = Orientation.Portrait,
+                PageSize = Size.Folio,
+
+                FileName = "SuratRujukanBerobat.pdf"
             };
         }
     }

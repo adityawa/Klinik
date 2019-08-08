@@ -222,6 +222,7 @@
     <Compile Include="SuratReferensi\SuratPersetujuanTindakan\PersetujuanTindakanHandler.cs" />
     <Compile Include="SuratReferensi\SuratPersetujuanTindakan\PersetujuanTindakanRequest.cs" />
     <Compile Include="SuratReferensi\SuratPersetujuanTindakan\PersetujuanTindakanResponse.cs" />
+    <Compile Include="SuratReferensi\SuratRujukanBerobat\RujukanBerobatHandler.cs" />
     <Compile Include="SuratReferensi\SuratRujukanBerobat\RujukanBerobatRequest.cs" />
     <Compile Include="SuratReferensi\SuratRujukanBerobat\RujukanBerobatResponse.cs" />
     <Compile Include="SuratReferensi\SuratRujukanBerobat\RujukanBerobatValidator.cs" />

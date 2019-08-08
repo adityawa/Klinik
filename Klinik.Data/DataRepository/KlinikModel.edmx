@@ -395,6 +395,7 @@
           <Property Name="FormMedicalID" Type="bigint" />
           <Property Name="Cekdate" Type="datetime" />
           <Property Name="Pekerjaan" Type="nvarchar" MaxLength="50" />
+          <Property Name="OtherInfo" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -4154,6 +4155,7 @@
           <Property Name="FormMedicalID" Type="Int64" />
           <Property Name="Cekdate" Type="DateTime" Precision="3" />
           <Property Name="Pekerjaan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OtherInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -5005,6 +5007,7 @@
           <EntitySetMapping Name="Letters">
             <EntityTypeMapping TypeName="KlinikDBModel.Letter">
               <MappingFragment StoreEntitySet="Letter">
+                <ScalarProperty Name="OtherInfo" ColumnName="OtherInfo" />
                 <ScalarProperty Name="Pekerjaan" ColumnName="Pekerjaan" />
                 <ScalarProperty Name="Cekdate" ColumnName="Cekdate" />
                 <ScalarProperty Name="FormMedicalID" ColumnName="FormMedicalID" />

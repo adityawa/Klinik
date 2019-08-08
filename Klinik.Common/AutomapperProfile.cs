@@ -132,7 +132,9 @@ namespace Klinik.Common
 
             CreateMap<Patient, PatientModel>()
                 .ForMember(x => x.BirthDateStr, map => map.MapFrom(p => p.BirthDate.ToString("dd/MM/yyyy")))
-                .ForMember(x => x.EmployeeName, map => map.MapFrom(p => p.Employee.EmpName));
+                .ForMember(x => x.EmployeeName, map => map.MapFrom(p => p.Employee.EmpName))
+                .ForMember(x => x.SAP, map => map.MapFrom(p => p.Employee.EmpID))
+                .ForMember(x => x.Umur, map => map.MapFrom(p => CommonUtils.GetPatientAge(p.BirthDate)));
 
             CreateMap<PoliFlowTemplateModel, PoliFlowTemplate>();
             CreateMap<PoliFlowTemplate, PoliFlowTemplateModel>()
@@ -173,7 +175,7 @@ namespace Klinik.Common
 
             CreateMap<PreExamineModel, FormPreExamine>();
             CreateMap<FormPreExamine, PreExamineModel>()
-                .ForMember(x => x.strTransDate, map => map.MapFrom(p => p.TransDate.ToString("dd/MM/yyyy")))                
+                .ForMember(x => x.strTransDate, map => map.MapFrom(p => p.TransDate.ToString("dd/MM/yyyy")))
                 .ForMember(m => m.strKBDate, map => map.MapFrom(p => p.KBDate.HasValue ? p.KBDate.Value.ToString("dd/MM/yyyy") : string.Empty))
                 .ForMember(m => m.strMenstrualDate, map => map.MapFrom(p => p.MenstrualDate.HasValue ? p.MenstrualDate.Value.ToString("dd/MM/yyyy") : string.Empty))
                 .ForMember(x => x.DoctorName, map => map.MapFrom(p => p.Doctor.Name));
@@ -238,13 +240,16 @@ namespace Klinik.Common
 
             CreateMap<Letter, LabReferenceLetterModel>();
             CreateMap<LabReferenceLetterModel, Letter>()
-                .ForMember(m=>m.CreatedBy, map=>map.MapFrom(p=>p.Account.UserName));
+                .ForMember(m => m.CreatedBy, map => map.MapFrom(p => p.Account.UserName));
 
             CreateMap<SuratRujukanLabKeluar, SuratRujukanKeluarModel>();
             CreateMap<SuratRujukanKeluarModel, SuratRujukanLabKeluar>();
 
             CreateMap<HealthBodyLetterModel, Letter>();
             CreateMap<Letter, HealthBodyLetterModel>();
+
+            CreateMap<RujukanBerobatModel, Letter>().ForMember(x => x.Pekerjaan, map => map.MapFrom(p => p.Perusahaan));
+            CreateMap<Letter, RujukanBerobatModel>().ForMember(x => x.Perusahaan, map => map.MapFrom(p => p.Pekerjaan));
 
             CreateMap<PersetujuanTindakanModel, Letter>();
             CreateMap<Letter, PersetujuanTindakanModel>();

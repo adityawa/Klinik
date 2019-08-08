@@ -39,5 +39,8 @@ namespace Klinik.Entities.MasterData
         public PatientClinicModel PatientClinic { get; set; }
         public bool IsFromRegistration { get; set; }
         public string HPNumber { get; set; }
+
+        public string SAP { get; set; }
+        public string Umur { get; set; }
     }
 }

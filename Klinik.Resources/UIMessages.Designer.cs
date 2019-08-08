@@ -1177,6 +1177,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Keluhan.
+        /// </summary>
+        public static string Keluhan {
+            get {
+                return ResourceManager.GetString("Keluhan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Keperluan.
         /// </summary>
         public static string Keperluan {
@@ -1839,6 +1848,15 @@ namespace Klinik.Resources {
         public static string Pekerjaan {
             get {
                 return ResourceManager.GetString("Pekerjaan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perusahaan.
+        /// </summary>
+        public static string Perusahaan {
+            get {
+                return ResourceManager.GetString("Perusahaan", resourceCulture);
             }
         }
         
