@@ -10,7 +10,8 @@ namespace Klinik.Entities.Form
         public string ProductName { get; set; }
         public double? Qty { get; set; }
         public string ConcoctionMedicine { get; set; }
-        public string RemarkUse { get; set; }
+		public string Dose { get; set; }
+		public string RemarkUse { get; set; }
         public int Stock { get; set; }
         public long FormMedicalID { get; set; }
         public LoketModel LoketData { get; set; }

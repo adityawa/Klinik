@@ -449,8 +449,9 @@ namespace Klinik.Web.Controllers
                 {
                     ProductID = int.Parse(values[0]),
                     FormExamineID = long.Parse(formExamineID),
-                    Qty = int.Parse(values[2]),
-                    RemarkUse = values[1],
+                    Dose = values[1],
+					Qty = int.Parse(values[2]),					
+					RemarkUse = values[3],
                     TypeID = ((int)MedicineTypeEnum.Medicine).ToString()
                 };
 

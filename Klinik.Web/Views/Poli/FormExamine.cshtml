@@ -367,45 +367,55 @@
                                             </div>
                                             <table class="table table-striped table-bordered dt-responsive" id="table-medicine">
                                                 <thead>
-                                                    <tr style="font-size:13px">
-                                                        <th style="width:50%">@Klinik.Resources.UIMessages.MedicineName</th>
-                                                        <th>@Klinik.Resources.UIMessages.Stock</th>
-                                                        <th>@Klinik.Resources.UIMessages.Dose</th>
-                                                        <th>@Klinik.Resources.UIMessages.Amount</th>
-                                                        <th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
-                                                    </tr>
+													<tr style="font-size:13px">
+														<th style="width:45%">@Klinik.Resources.UIMessages.MedicineName</th>
+														<th style="width:10%">@Klinik.Resources.UIMessages.Stock</th>
+														<th style="width:13%">@Klinik.Resources.UIMessages.Dose</th>
+														<th style="width:10%">@Klinik.Resources.UIMessages.Amount</th>
+														<th style="width:17%">@Klinik.Resources.UIMessages.RemarkUse</th>
+														<th style="width:10%">@Klinik.Resources.UIMessages.Action</th>
+													</tr>
                                                 </thead>
                                                 <tbody style="font-size:13px">
                                                     @foreach (var item in Model.MedicineDataList)
                                                     {
-                                                        <tr>
-                                                            <td style="display: none;">
-                                                                @Html.DisplayFor(modelItem => item.Id)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.ProductName)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Stock)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.RemarkUse)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Qty)
-                                                            </td>
-                                                            <td></td>
-                                                        </tr>
+													<tr>
+														<td style="display: none;">
+															@Html.DisplayFor(modelItem => item.Id)
+														</td>
+														<td>
+															@Html.DisplayFor(modelItem => item.ProductName)
+														</td>
+														<td>
+															@Html.DisplayFor(modelItem => item.Stock)
+														</td>
+														<td>
+															@Html.DisplayFor(modelItem => item.Dose)
+														</td>
+														<td>
+															@Html.DisplayFor(modelItem => item.Qty)
+														</td>
+														<td>
+															@Html.DisplayFor(modelItem => item.RemarkUse)
+														</td>
+														<td></td>
+													</tr>
                                                     }
                                                 </tbody>
                                                 <tfoot>
-                                                    <tr>
-                                                        <td><input id="medicineName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeMedicineNameHere" /><input hidden type="text" id="idMedicine" /></td>
-                                                        <td><input id="medicineStock" type="text" class="form-control" disabled /></td>
-                                                        <td><input id="medicineDose" type="text" class="form-control" /></td>
-                                                        <td><input id="medicineAmount" type="text" class="form-control" /></td>
-                                                        <td><input type="button" id="btnAddMedicine" value="@Klinik.Resources.UIMessages.Add" /></td>
-                                                    </tr>
+													<tr>
+														<td><input id="medicineName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeMedicineNameHere" /><input hidden type="text" id="idMedicine" /></td>
+														<td><input id="medicineStock" type="text" class="form-control" disabled /></td>
+														<td><input id="medicineDose" type="text" class="form-control" /></td>
+														<td><input id="medicineAmount" type="text" class="form-control" /></td>
+														<td>
+															<select class="form-control" id="medicineRemarkUse">
+																<option value="Sebelum Makan">Sebelum Makan</option>
+																<option value="Sesudah Makan">Sesudah Makan</option>
+															</select>															
+														</td>
+														<td><input type="button" id="btnAddMedicine" value="@Klinik.Resources.UIMessages.Add" /></td>
+													</tr>
                                                 </tfoot>
                                             </table>
                                             <div class="row">
@@ -793,7 +803,8 @@
                 var medicineName = $("#medicineName");
                 var medicineStock = $("#medicineStock");
                 var medicineDose = $("#medicineDose");
-                var medicineAmount = $("#medicineAmount");
+				var medicineAmount = $("#medicineAmount");
+				var medicineRemarkUse = $("#medicineRemarkUse");
 
                 //Get the reference of the Table's TBODY element.
                 var tBody = $("#table-medicine > TBODY")[0];
@@ -817,6 +828,9 @@
                 //add jumlah obat
                 cell = $(row.insertCell(-1));
                 cell.html(medicineAmount.val());
+				//add cara pakai obat
+				cell = $(row.insertCell(-1));
+				cell.html(medicineRemarkUse.val());
 
                 //Add Button cell.
                 cell = $(row.insertCell(-1));
@@ -831,7 +845,8 @@
                 medicineName.val("");
                 medicineStock.val("");
                 medicineDose.val("");
-                medicineAmount.val("");
+				medicineAmount.val("");
+				medicineRemarkUse.val("");
             });
 
             var injection = $("#medicineInjectionName");
@@ -1161,11 +1176,11 @@
 
                 var medicineList = [];
                 $('#table-medicine tbody tr').each(function () {
-                    var id = $(this).find('td').eq(0).text().trim();
-                    var medicine = $(this).find('td').eq(1).text().trim();
-                    var dose = $(this).find('td').eq(2).text().trim();
-                    var amount = $(this).find('td').eq(3).text().trim();
-                    var row = id + "|" + medicine + "|" + dose + "|" + amount;
+                    var id = $(this).find('td').eq(0).text().trim();                    
+                    var dose = $(this).find('td').eq(3).text().trim();
+					var amount = $(this).find('td').eq(4).text().trim();
+					var remark = $(this).find('td').eq(5).text().trim();
+					var row = id + "|" + dose + "|" + amount + "|" + remark;
                     medicineList.push(row);
                 });
 

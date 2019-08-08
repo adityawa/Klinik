@@ -256,6 +256,7 @@
           <Property Name="ProductID" Type="int" />
           <Property Name="Qty" Type="float" />
           <Property Name="ConcoctionMedicine" Type="text" />
+		  <Property Name="Dose" Type="varchar" MaxLength="50" />
           <Property Name="RemarkUse" Type="varchar" MaxLength="50" />
           <Property Name="RowStatus" Type="smallint" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
@@ -2316,6 +2317,7 @@
           <Property Name="ProductID" Type="Int32" />
           <Property Name="Qty" Type="Double" />
           <Property Name="ConcoctionMedicine" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+		  <Property Name="Dose" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RemarkUse" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RowStatus" Type="Int16" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -4427,6 +4429,7 @@
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Qty" ColumnName="Qty" />
                 <ScalarProperty Name="ConcoctionMedicine" ColumnName="ConcoctionMedicine" />
+				<ScalarProperty Name="Dose" ColumnName="Dose" />
                 <ScalarProperty Name="RemarkUse" ColumnName="RemarkUse" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />

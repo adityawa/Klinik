@@ -7,34 +7,36 @@ using System.Web.Mvc;
 using Klinik.Features;
 using Klinik.Entities.Loket;
 using Klinik.Entities.Account;
-using Klinik.Features.Farmasi;
+using Klinik.Features.Pharmacy;
 using Klinik.Common;
+using Klinik.Entities.Form;
+using AutoMapper;
 
 namespace Klinik.Web.Controllers
 {
-    public class FarmasiController : Controller
-    {
-        private IUnitOfWork _unitOfWork;
-        private KlinikDBEntities _context;
+	public class PharmacyController : Controller
+	{
+		private IUnitOfWork _unitOfWork;
+		private KlinikDBEntities _context;
 
-        #region ::DROPDOWN::
-        private List<SelectListItem> BindDropDownStatus()
-        {
-            List<SelectListItem> _status = new List<SelectListItem>();
-            _status.Insert(0, new SelectListItem
-            {
-                Text = "Open",
-                Value = "0"
-            });
+		#region ::DROPDOWN::
+		private List<SelectListItem> BindDropDownStatus()
+		{
+			List<SelectListItem> _status = new List<SelectListItem>();
+			_status.Insert(0, new SelectListItem
+			{
+				Text = "Open",
+				Value = "0"
+			});
 
-            _status.Insert(1, new SelectListItem
-            {
-                Text = "Waiting",
-                Value = "1"
-            });
+			_status.Insert(1, new SelectListItem
+			{
+				Text = "Waiting",
+				Value = "1"
+			});
 
-            return _status;
-        }
+			return _status;
+		}
 
 		private List<SelectListItem> BindDropDownClinic()
 		{
@@ -58,21 +60,39 @@ namespace Klinik.Web.Controllers
 		}
 		#endregion
 
-		public FarmasiController(IUnitOfWork unitOfWork, KlinikDBEntities context)
-        {
-            _unitOfWork = unitOfWork;
-            _context = context;
-        }
+		public PharmacyController(IUnitOfWork unitOfWork, KlinikDBEntities context)
+		{
+			_unitOfWork = unitOfWork;
+			_context = context;
+		}
 
-        // GET: Farmasi
-        public ActionResult PatientList()
-        {
+		// GET: Prescription details
+		public ActionResult Prescription()
+		{
+			string id = Request.QueryString["id"];
+			if (id == null)
+				return View("PatientList", "Pharmacy", null);
+
+			List<FormExamineMedicine> medicinelist = _unitOfWork.FormExamineMedicineRepository.Get(x => x.FormExamine.FormMedicalID.Value.ToString() == id && x.RowStatus == 0).ToList();
+			List<FormExamineMedicineModel> medicineModelList = new List<FormExamineMedicineModel>();
+			foreach (var item in medicinelist)
+			{
+				FormExamineMedicineModel medicineModel = Mapper.Map<FormExamineMedicine, FormExamineMedicineModel>(item);
+				medicineModelList.Add(medicineModel);
+			}
+
+			return View(medicineModelList);
+		}
+
+		// GET: Pharmacy
+		public ActionResult PatientList()
+		{
 			ViewBag.Clinics = BindDropDownClinic();
 			return View();
-        }
+		}
 
 		[HttpPost]
-		public ActionResult GetFarmasiQueueFromPoli(string clinics, string status)
+		public ActionResult GetPharmacyQueueFromPoli(string clinics, string status)
 		{
 			var _draw = Request.Form.GetValues("draw").FirstOrDefault();
 			var _start = Request.Form.GetValues("start").FirstOrDefault();
@@ -98,7 +118,7 @@ namespace Klinik.Web.Controllers
 			if (Session["UserLogon"] != null)
 				request.Data.Account = (AccountModel)Session["UserLogon"];
 
-			var response = new FarmasiHandler(_unitOfWork).GetListData(request);
+			var response = new PharmacyHandler(_unitOfWork).GetListData(request);
 
 			return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
 		}

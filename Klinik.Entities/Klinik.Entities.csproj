@@ -74,7 +74,7 @@
     <Compile Include="Cashier\CashierModel.cs" />
     <Compile Include="Cashier\FormMedicalModel.cs" />
     <Compile Include="Document\DocumentModel.cs" />
-    <Compile Include="Farmasi\FarmasiModel.cs" />
+    <Compile Include="Pharmacy\PharmacyModel.cs" />
     <Compile Include="Form\FormExamineAttachmentModel.cs" />
     <Compile Include="Form\FormExamineMedicineModel.cs" />
     <Compile Include="Form\FormExamineServiceModel.cs" />

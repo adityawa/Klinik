@@ -80,10 +80,10 @@
     <Compile Include="Cashier\CashierResponse.cs" />
     <Compile Include="Cashier\CashierValidator.cs" />
     <Compile Include="Cashier\CashierRequest.cs" />
-    <Compile Include="Farmasi\FarmasiHandler.cs" />
-    <Compile Include="Farmasi\FarmasiRequest.cs" />
-    <Compile Include="Farmasi\FarmasiResponse.cs" />
-    <Compile Include="Farmasi\FarmasiValidator.cs" />
+    <Compile Include="Pharmacy\PharmacyHandler.cs" />
+    <Compile Include="Pharmacy\PharmacyHandlerRequest.cs" />
+    <Compile Include="Pharmacy\PharmacyHandlerResponse.cs" />
+    <Compile Include="Pharmacy\PharmacyHandlerValidator.cs" />
     <Compile Include="IBaseFeatures.cs" />
     <Compile Include="Laboratorium\LabHandler.cs" />
     <Compile Include="Laboratorium\LabRequest.cs" />
