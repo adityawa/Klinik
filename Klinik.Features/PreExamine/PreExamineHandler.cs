@@ -111,11 +111,13 @@ namespace Klinik.Features
                     {
                         _cekExistById.MenstrualDate = reformatDate(request.Data.strMenstrualDate);
                     }
+                  
 
                     if (!String.IsNullOrEmpty(request.Data.strKBDate))
                     {
                         _cekExistById.KBDate = reformatDate(request.Data.strKBDate);
                     }
+               
 
                     _cekExistById.DailyGlasses = request.Data.DailyGlasses;
                     _cekExistById.ExamineGlasses = request.Data.ExamineGlasses;
@@ -142,6 +144,10 @@ namespace Klinik.Features
                     if (!String.IsNullOrEmpty(request.Data.strMenstrualDate))
                     {
                         entiti.MenstrualDate = reformatDate(request.Data.strMenstrualDate);
+                    }
+                    else
+                    {
+                        entiti.MenstrualDate = Convert.ToDateTime("1900-01-01");
                     }
 
                     if (!String.IsNullOrEmpty(request.Data.strKBDate))

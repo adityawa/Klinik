@@ -15,7 +15,7 @@ namespace Klinik.Common
         private const string _keyEncryptor = "Klinik2019";
         public static string KeyEncryptor { get { return _keyEncryptor; } }
 
-       
+
         /// <summary>
         /// Encrypt a string.
         /// </summary>
@@ -208,6 +208,12 @@ namespace Klinik.Common
             return result;
         }
 
-        
+        public static DateTime ConvertStringDate2Datetime(string strDate)
+        {
+            if (String.IsNullOrEmpty(strDate) || String.IsNullOrWhiteSpace(strDate))
+                return Convert.ToDateTime("1900-01-01");
+            string[] arrDates = strDate.Split('/');
+            return new DateTime(Convert.ToInt16(arrDates[2]), Convert.ToInt16(arrDates[1]), Convert.ToInt16(arrDates[0]));
+        }
     }
 }

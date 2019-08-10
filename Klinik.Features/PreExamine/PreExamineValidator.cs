@@ -38,7 +38,7 @@ namespace Klinik.Features
             {
                 if (_gender.Patient.Gender.ToLower() == "m")
                 {
-                    if (request.Data.strMenstrualDate != string.Empty || request.Data.strKBDate != string.Empty)
+                    if (request.Data.strMenstrualDate != null || request.Data.strKBDate != null)
                     {
                         response.Status = false;
                         response.Message = Messages.MenstrualDataProhibited;
