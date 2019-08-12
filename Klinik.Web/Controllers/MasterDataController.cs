@@ -2256,5 +2256,109 @@ namespace Klinik.Web.Controllers
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        #region ::GUDANG::
+        [CustomAuthorize("VIEW_M_GUDANG")]
+        public ActionResult GudangList()
+        {
+            return View();
+        }
+
+        [CustomAuthorize("VIEW_M_GUDANG")]
+        [HttpPost]
+        public ActionResult GetGudangData()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new GudangRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            var response = new GudangHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+        [CustomAuthorize("ADD_M_GUDANG", "EDIT_M_GUDANG")]
+        public ActionResult CreateOrEditGudang()
+        {
+            GudangResponse _response = new GudangResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new GudangRequest
+                {
+                    Data = new GudangModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                GudangResponse resp = new GudangHandler(_unitOfWork).GetDetail(request);
+                GudangModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.clinics = BindDropDownClinic();
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.clinics = BindDropDownClinic();
+                ViewBag.ActionType = ClinicEnums.Action.Add;
+                return View();
+            }
+        }
+
+        [CustomAuthorize("ADD_M_GUDANG", "EDIT_M_GUDANG")]
+        [HttpPost]
+        public ActionResult CreateOrEditGudang(GudangModel _model)
+        {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new GudangRequest
+            {
+                Data = _model
+            };
+
+            GudangResponse _response = new GudangResponse();
+
+            new GudangValidator(_unitOfWork).Validate(request, out _response);
+
+            return RedirectToAction("GudangList");
+        }
+
+        [HttpPost]
+        public JsonResult DeleteMasterGudang(int id)
+        {
+            GudangResponse _response = new GudangResponse();
+            var request = new GudangRequest
+            {
+                Data = new GudangModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            new GudangValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

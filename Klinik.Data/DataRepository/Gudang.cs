@@ -12,38 +12,28 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Gudang
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Product()
+        public Gudang()
         {
-            this.ProductMedicines = new HashSet<ProductMedicine>();
             this.DeliveryOrderDetails = new HashSet<DeliveryOrderDetail>();
             this.ProductInGudangs = new HashSet<ProductInGudang>();
-            this.FormExamineMedicines = new HashSet<FormExamineMedicine>();
         }
     
-        public int ID { get; set; }
-        public string Code { get; set; }
-        public string Name { get; set; }
-        public int ProductCategoryID { get; set; }
-        public int ProductUnitID { get; set; }
-        public decimal RetailPrice { get; set; }
-        public Nullable<short> RowStatus { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public long ClinicId { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<short> RowStatus { get; set; }
     
-        public virtual ProductCategory ProductCategory { get; set; }
-        public virtual ProductUnit ProductUnit { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductMedicine> ProductMedicines { get; set; }
+        public virtual Clinic Clinic { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductInGudang> ProductInGudangs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FormExamineMedicine> FormExamineMedicines { get; set; }
     }
 }

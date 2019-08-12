@@ -63,7 +63,8 @@
             MASTER_MEDICINE,
             MASTER_MENU,
             MASTER_SERVICE,
-            MASTER_POLI_SERVICE
+            MASTER_POLI_SERVICE,
+            MASTER_GUDANG
         }
 
         public enum Action

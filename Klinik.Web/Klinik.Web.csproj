@@ -1478,13 +1478,12 @@
     <Content Include="Views\Letters\ExportSuratRujukanLabKeluar2Pdf.cshtml" />
     <Content Include="Views\Letters\ExportSuratBerbadanSehat.cshtml" />
     <Content Include="Views\Letters\ExportSuratPersetujuanTindakan2Pdf.cshtml" />
-
     <Content Include="Views\Farmasi\PatientList.cshtml" />
     <Content Include="Views\Letters\ExportSuratRujukanBerobat.cshtml" />
-
     <Content Include="Views\Pharmacy\PatientList.cshtml" />
     <Content Include="Views\Pharmacy\Prescription.cshtml" />
-
+    <Content Include="Views\MasterData\GudangList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditGudang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

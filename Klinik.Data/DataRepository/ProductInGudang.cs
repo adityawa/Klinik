@@ -12,22 +12,18 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Collections.Generic;
     
-    public partial class FormExamineMedicine
+    public partial class ProductInGudang
     {
-        public long ID { get; set; }
-        public Nullable<long> FormExamineID { get; set; }
-        public string TypeID { get; set; }
-        public Nullable<int> ProductID { get; set; }
-        public Nullable<double> Qty { get; set; }
-        public string ConcoctionMedicine { get; set; }
-        public string RemarkUse { get; set; }
-        public Nullable<short> RowStatus { get; set; }
+        public int id { get; set; }
+        public Nullable<int> GudangId { get; set; }
+        public Nullable<int> ProductId { get; set; }
+        public Nullable<int> stock { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual FormExamine FormExamine { get; set; }
+        public virtual Gudang Gudang { get; set; }
         public virtual Product Product { get; set; }
     }
 }

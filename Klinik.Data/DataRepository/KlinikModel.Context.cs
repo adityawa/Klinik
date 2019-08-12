@@ -39,7 +39,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<FormExamine> FormExamines { get; set; }
         public virtual DbSet<FormExamineAttachment> FormExamineAttachments { get; set; }
         public virtual DbSet<FormExamineLab> FormExamineLabs { get; set; }
-        public virtual DbSet<FormExamineMedicine> FormExamineMedicines { get; set; }
         public virtual DbSet<FormExamineService> FormExamineServices { get; set; }
         public virtual DbSet<FormMedical> FormMedicals { get; set; }
         public virtual DbSet<FormPreExamine> FormPreExamines { get; set; }
@@ -74,5 +73,10 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<SuratRujukanLabKeluar> SuratRujukanLabKeluars { get; set; }
         public virtual DbSet<Letter> Letters { get; set; }
+        public virtual DbSet<DeliveryOrder> DeliveryOrders { get; set; }
+        public virtual DbSet<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
+        public virtual DbSet<Gudang> Gudangs { get; set; }
+        public virtual DbSet<ProductInGudang> ProductInGudangs { get; set; }
+        public virtual DbSet<FormExamineMedicine> FormExamineMedicines { get; set; }
     }
 }
