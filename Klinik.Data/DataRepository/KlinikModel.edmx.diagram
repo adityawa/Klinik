@@ -122,19 +122,20 @@
         <EntityTypeShape EntityType="KlinikDBModel.SuratRujukanLabKeluar" Width="1.5" PointX="10.5" PointY="17" />
         <AssociationConnector Association="KlinikDBModel.FK_SuratRujukanLabKeluar_LabItem" />
         <EntityTypeShape EntityType="KlinikDBModel.Letter" Width="1.5" PointX="0.75" PointY="5.75" />
-        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrder" Width="1.5" PointX="3.375" PointY="5.75" />
-        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderDetail" Width="1.5" PointX="15.75" PointY="46.5" />
         <EntityTypeShape EntityType="KlinikDBModel.Gudang" Width="1.5" PointX="5.25" PointY="58.625" />
         <EntityTypeShape EntityType="KlinikDBModel.ProductInGudang" Width="1.5" PointX="18.75" PointY="41.5" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_Clinic" />
         <AssociationConnector Association="KlinikDBModel.FK_Gudang_Clinic" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_Gudang" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_Product" />
         <AssociationConnector Association="KlinikDBModel.FK_ProductInGudang_Gudang" />
         <AssociationConnector Association="KlinikDBModel.FK_ProductInGudang_Product" />
         <EntityTypeShape EntityType="KlinikDBModel.FormExamineMedicine" Width="1.5" PointX="15.75" PointY="30.625" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicine_FormExamine" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicine_Product" />
+        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderDetail" Width="1.5" PointX="15.75" PointY="46.375" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_Clinic" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_Gudang" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_Product" />
+        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrder" Width="1.5" PointX="3.375" PointY="6" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_DeliveryOrder" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

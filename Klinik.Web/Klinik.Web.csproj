@@ -231,6 +231,7 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Base\BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DeliveryOrderController.cs" />
     <Compile Include="Controllers\PharmacyController.cs" />
     <Compile Include="Controllers\LabController.cs" />
     <Compile Include="Controllers\CashierController.cs" />
@@ -1484,6 +1485,8 @@
     <Content Include="Views\Pharmacy\Prescription.cshtml" />
     <Content Include="Views\MasterData\GudangList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditGudang.cshtml" />
+    <Content Include="Views\DeliveryOrder\DeliveryOrderList.cshtml" />
+    <Content Include="Views\DeliveryOrder\CreateOrEditDeliveryOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

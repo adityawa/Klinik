@@ -27,8 +27,8 @@ namespace Klinik.Data.DataRepository
             this.PoliScheduleMasters = new HashSet<PoliScheduleMaster>();
             this.PoliServices = new HashSet<PoliService>();
             this.QueuePolis = new HashSet<QueuePoli>();
-            this.DeliveryOrderDetails = new HashSet<DeliveryOrderDetail>();
             this.Gudangs = new HashSet<Gudang>();
+            this.DeliveryOrderDetails = new HashSet<DeliveryOrderDetail>();
         }
     
         public long ID { get; set; }
@@ -72,8 +72,8 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QueuePoli> QueuePolis { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Gudang> Gudangs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
     }
 }

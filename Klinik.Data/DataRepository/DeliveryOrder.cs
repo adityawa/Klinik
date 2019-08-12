@@ -14,8 +14,14 @@ namespace Klinik.Data.DataRepository
     
     public partial class DeliveryOrder
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DeliveryOrder()
+        {
+            this.DeliveryOrderDetails = new HashSet<DeliveryOrderDetail>();
+        }
+    
         public int id { get; set; }
-        public Nullable<int> poid { get; set; }
+        public int poid { get; set; }
         public string donumber { get; set; }
         public Nullable<System.DateTime> dodate { get; set; }
         public string dodest { get; set; }
@@ -26,5 +32,8 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
     }
 }

@@ -58,6 +58,8 @@
             public const string ADD_POLI_SERVICE = "Add New Poli Service";
             public const string EDIT_GUDANG = "Edit Form Gudang";
             public const string ADD_GUDANG = "Add New Gudang";
+            public const string EDIT_DELIVERY_ORDER = "Edit Form Delivery order";
+            public const string ADD_DELIVERY_ORDER = "Add New Delivery order";
         }
 
         public static class MasterType

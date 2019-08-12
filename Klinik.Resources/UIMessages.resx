@@ -1041,4 +1041,22 @@
   <data name="GudangList" xml:space="preserve">
     <value>Gudang LIst</value>
   </data>
+  <data name="ApprovedBY" xml:space="preserve">
+    <value>Aporoved By</value>
+  </data>
+  <data name="CreatedBy" xml:space="preserve">
+    <value>Created By</value>
+  </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>Tanggal DO</value>
+  </data>
+  <data name="IDPO" xml:space="preserve">
+    <value>Id PO</value>
+  </data>
+  <data name="NO_DO" xml:space="preserve">
+    <value>Nomer DO</value>
+  </data>
+  <data name="TujuanDO" xml:space="preserve">
+    <value>Tujuan DO</value>
+  </data>
 </root>

@@ -169,6 +169,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aporoved By.
+        /// </summary>
+        public static string ApprovedBY {
+            get {
+                return ResourceManager.GetString("ApprovedBY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure?.
         /// </summary>
         public static string AreYouSure {
@@ -453,6 +462,24 @@ namespace Klinik.Resources {
         public static string Copyright {
             get {
                 return ResourceManager.GetString("Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created By.
+        /// </summary>
+        public static string CreatedBy {
+            get {
+                return ResourceManager.GetString("CreatedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tanggal DO.
+        /// </summary>
+        public static string CreatedDate {
+            get {
+                return ResourceManager.GetString("CreatedDate", resourceCulture);
             }
         }
         
@@ -1114,6 +1141,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Id PO.
+        /// </summary>
+        public static string IDPO {
+            get {
+                return ResourceManager.GetString("IDPO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Injection.
         /// </summary>
         public static string Injection {
@@ -1614,6 +1650,15 @@ namespace Klinik.Resources {
         public static string NewValue {
             get {
                 return ResourceManager.GetString("NewValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nomer DO.
+        /// </summary>
+        public static string NO_DO {
+            get {
+                return ResourceManager.GetString("NO_DO", resourceCulture);
             }
         }
         
@@ -2667,6 +2712,15 @@ namespace Klinik.Resources {
         public static string TransactionDate {
             get {
                 return ResourceManager.GetString("TransactionDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tujuan DO.
+        /// </summary>
+        public static string TujuanDO {
+            get {
+                return ResourceManager.GetString("TujuanDO", resourceCulture);
             }
         }
         

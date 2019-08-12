@@ -52,6 +52,8 @@ namespace Klinik.Data
         private IGenericRepository<Letter> _letterRepository;
         private IGenericRepository<SuratRujukanLabKeluar> _suratRujukanLabKeluarRepository;
         private IGenericRepository<Gudang> _gudangRepository;
+        private IGenericRepository<DeliveryOrder> _deliveryorderRepository;
+        private IGenericRepository<DeliveryOrderDetail> _deliveryorderdetailRepository;
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
@@ -534,6 +536,26 @@ namespace Klinik.Data
                 if (_gudangRepository == null)
                     _gudangRepository = new GenericRepository<Gudang>(_context);
                 return _gudangRepository;
+            }
+        }
+
+        public IGenericRepository<DeliveryOrder> DeliveryOrderRepository
+        {
+            get
+            {
+                if (_deliveryorderRepository == null)
+                    _deliveryorderRepository = new GenericRepository<DeliveryOrder>(_context);
+                return _deliveryorderRepository;
+            }
+        }
+
+        public IGenericRepository<DeliveryOrderDetail> DeliveryOrderDetailRepository
+        {
+            get
+            {
+                if (_deliveryorderdetailRepository == null)
+                    _deliveryorderdetailRepository = new GenericRepository<DeliveryOrderDetail>(_context);
+                return _deliveryorderdetailRepository;
             }
         }
 

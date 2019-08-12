@@ -64,7 +64,8 @@
             MASTER_MENU,
             MASTER_SERVICE,
             MASTER_POLI_SERVICE,
-            MASTER_GUDANG
+            MASTER_GUDANG,
+            MASTER_DELIVERYORDER
         }
 
         public enum Action
