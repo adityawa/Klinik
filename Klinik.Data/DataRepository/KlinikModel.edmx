@@ -103,6 +103,10 @@
           <Property Name="namabarang" Type="nvarchar" MaxLength="50" />
           <Property Name="GudangId" Type="int" />
           <Property Name="ClinicId" Type="bigint" />
+          <Property Name="ProductId_Po" Type="int" />
+          <Property Name="namabarang_po" Type="varchar" MaxLength="50" />
+          <Property Name="qty_po" Type="float" />
+          <Property Name="qty_po_final" Type="float" />
           <Property Name="qty_do" Type="float" />
           <Property Name="remark_do" Type="nvarchar" MaxLength="50" />
           <Property Name="qty_adj" Type="float" />
@@ -975,6 +979,18 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DeliveryOrderDetail_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="DeliveryOrderDetail" Type="Self.DeliveryOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeliveryOrderDetail">
+              <PropertyRef Name="ProductId_Po" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOrderDetail_Product1">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="DeliveryOrderDetail" Type="Self.DeliveryOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>

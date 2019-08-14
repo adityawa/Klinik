@@ -93,6 +93,10 @@ namespace Klinik.Features
                     
                     _unitOfWork.DeliveryOrderRepository.Insert(deliveryorderEntity);
                     int resultAffected = _unitOfWork.Save();
+                    response.Entity = new DeliveryOrderModel
+                    {
+                        Id = deliveryorderEntity.id
+                    };
                     if (resultAffected > 0)
                     {
                         response.Message = string.Format(Messages.ObjectHasBeenAdded, "DeliveryOrder", deliveryorderEntity.donumber, deliveryorderEntity.id);
@@ -104,7 +108,7 @@ namespace Klinik.Features
                         response.Status = false;
                         response.Message = string.Format(Messages.AddObjectFailed, "DeliveryOrder");
 
-                        CommandLog(false, ClinicEnums.Module.MASTER_PRODUCT, Constants.Command.ADD_GUDANG, request.Data.Account, request.Data);
+                        CommandLog(false, ClinicEnums.Module.MASTER_DELIVERYORDER, Constants.Command.ADD_DELIVERY_ORDER, request.Data.Account, request.Data);
                     }
                 }
             }

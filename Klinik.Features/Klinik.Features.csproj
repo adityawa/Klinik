@@ -80,6 +80,10 @@
     <Compile Include="Cashier\CashierResponse.cs" />
     <Compile Include="Cashier\CashierValidator.cs" />
     <Compile Include="Cashier\CashierRequest.cs" />
+    <Compile Include="DeliveryOrderDetail\DeliveryOrderDetailHandler.cs" />
+    <Compile Include="DeliveryOrderDetail\DeliveryOrderDetailRequest.cs" />
+    <Compile Include="DeliveryOrderDetail\DeliveryOrderDetailResponse.cs" />
+    <Compile Include="DeliveryOrderDetail\DeliveryOrderDetailValidator.cs" />
     <Compile Include="DeliveryOrder\DeliveryOrderHandler.cs" />
     <Compile Include="DeliveryOrder\DeliveryOrderRequest.cs" />
     <Compile Include="DeliveryOrder\DeliveryOrderResponse.cs" />

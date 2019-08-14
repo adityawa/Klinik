@@ -60,6 +60,8 @@
             public const string ADD_GUDANG = "Add New Gudang";
             public const string EDIT_DELIVERY_ORDER = "Edit Form Delivery order";
             public const string ADD_DELIVERY_ORDER = "Add New Delivery order";
+            public const string EDIT_DELIVERY_ORDER_DETAIL = "Edit Form Delivery order detail";
+            public const string ADD_DELIVERY_ORDER_DETAIL = "Add New Delivery order detail";
         }
 
         public static class MasterType

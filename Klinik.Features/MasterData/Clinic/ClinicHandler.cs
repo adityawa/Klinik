@@ -303,5 +303,88 @@ namespace Klinik.Features
 
             return response;
         }
+
+        public ClinicResponse GetAllData(ClinicRequest request)
+        {
+            List<ClinicModel> lists = new List<ClinicModel>();
+            dynamic qry = null;
+            var searchPredicate = PredicateBuilder.New<Clinic>(true);
+
+            // add default filter to show the active data only
+            searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
+
+            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
+            {
+                searchPredicate = searchPredicate.And(p => p.Code.Contains(request.SearchValue) || p.Name.Contains(request.SearchValue));
+            }
+
+            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
+            {
+                if (request.SortColumnDir == "asc")
+                {
+                    switch (request.SortColumn.ToLower())
+                    {
+                        case "code":
+                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Code));
+                            break;
+                        case "name":
+                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Name));
+                            break;
+
+                        default:
+                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.ID));
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (request.SortColumn.ToLower())
+                    {
+                        case "code":
+                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Code));
+                            break;
+                        case "name":
+                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Name));
+                            break;
+
+                        default:
+                            qry = _unitOfWork.ClinicRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.ID));
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                qry = _unitOfWork.ClinicRepository.Get(searchPredicate, null);
+            }
+
+            foreach (var item in qry)
+            {
+                var clinicData = Mapper.Map<Clinic, ClinicModel>(item);
+                long _cityId = clinicData.CityId ?? 0;
+                long _clinicTypeId = clinicData.ClinicType ?? 0;
+                var getCityDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.ID == _cityId && x.Type == ClinicEnums.MasterTypes.City.ToString());
+                var getClinicTypeDesc = _unitOfWork.MasterRepository.GetFirstOrDefault(x => x.ID == _clinicTypeId && x.Type == ClinicEnums.MasterTypes.ClinicType.ToString());
+                if (getCityDesc != null)
+                    clinicData.CityDesc = getCityDesc.Name ?? "";
+                if (getClinicTypeDesc != null)
+                    clinicData.ClinicTypeDesc = getClinicTypeDesc.Name ?? "";
+
+                lists.Add(clinicData);
+            }
+
+            int totalRequest = lists.Count();
+            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
+
+            var response = new ClinicResponse
+            {
+                Draw = request.Draw,
+                RecordsFiltered = totalRequest,
+                RecordsTotal = totalRequest,
+                Data = data
+            };
+
+            return response;
+        }
     }
 }

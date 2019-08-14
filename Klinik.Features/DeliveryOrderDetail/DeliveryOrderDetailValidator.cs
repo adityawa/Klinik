@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 namespace Klinik.Features
 {
-    public class DeliveryOrderValidator : BaseFeatures
+    public class DeliveryOrderDetailValidator : BaseFeatures
     {
         private const string ADD_PRIVILEGE_NAME = "ADD_M_DELIVERYORDER";
         private const string EDIT_PRIVILEGE_NAME = "EDIT_M_DELIVERYORDER";
         private const string DELETE_PRIVILEGE_NAME = "DELETE_M_DELIVERYORDER";
 
-        public DeliveryOrderValidator(IUnitOfWork unitOfWork)
+        public DeliveryOrderDetailValidator(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public void Validate(DeliveryOrderRequest request, out DeliveryOrderResponse response)
+        public void Validate(DeliveryOrderDetailRequest request, out DeliveryOrderDetailResponse response)
         {
-            response = new DeliveryOrderResponse();
+            response = new DeliveryOrderDetailResponse();
 
             if (request.Action != null && request.Action.Equals(ClinicEnums.Action.DELETE.ToString()))
             {
@@ -32,9 +32,9 @@ namespace Klinik.Features
             {
                 bool isHavePrivilege = true;
 
-                if (request.Data.donumber == null || String.IsNullOrWhiteSpace(request.Data.donumber))
+                if (request.Data.namabarang == null || String.IsNullOrWhiteSpace(request.Data.namabarang))
                 {
-                    errorFields.Add("Gudang Name");
+                    errorFields.Add("namabarang");
                 }
 
                 if (errorFields.Any())
@@ -61,14 +61,14 @@ namespace Klinik.Features
 
                 if (response.Status)
                 {
-                    response = new DeliveryOrderHandler(_unitOfWork).CreateOrEdit(request);
+                    response = new DeliveryOrderDetailHandler(_unitOfWork).CreateOrEdit(request);
                 }
             }
         }
 
-        private void ValidateForDelete(DeliveryOrderRequest request, out DeliveryOrderResponse response)
+        private void ValidateForDelete(DeliveryOrderDetailRequest request, out DeliveryOrderDetailResponse response)
         {
-            response = new DeliveryOrderResponse();
+            response = new DeliveryOrderDetailResponse();
 
             if (request.Action == ClinicEnums.Action.DELETE.ToString())
             {
@@ -82,7 +82,7 @@ namespace Klinik.Features
 
             if (response.Status)
             {
-                response = new DeliveryOrderHandler(_unitOfWork).RemoveData(request);
+                //response = new DeliveryOrderHandler(_unitOfWork).RemoveData(request);
             }
         }
     }

@@ -3,6 +3,8 @@ using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.DeliveryOrder;
+using Klinik.Entities.DeliveryOrderDetail;
+using Klinik.Entities.MasterData;
 using Klinik.Features;
 using System;
 using System.Collections.Generic;
@@ -23,12 +25,14 @@ namespace Klinik.Web.Controllers
             _context = context;
         }
 
+        [CustomAuthorize("VIEW_M_DELIVERYORDER")]
         // GET: DeliveryOrder
         public ActionResult DeliveryOrderList()
         {
             return View();
         }
-        
+
+        [CustomAuthorize("VIEW_M_DELIVERYORDER")]
         [HttpPost]
         public ActionResult GetDeliveryOrderData()
         {
@@ -57,6 +61,7 @@ namespace Klinik.Web.Controllers
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
+        [CustomAuthorize("ADD_M_DELIVERYORDER", "EDIT_M_DELIVERYORDER")]
         public ActionResult CreateOrEditDeliveryOrder()
         {
             DeliveryOrderResponse _response = new DeliveryOrderResponse();
@@ -83,24 +88,38 @@ namespace Klinik.Web.Controllers
             }
         }
 
+        [CustomAuthorize("ADD_M_DELIVERYORDER", "EDIT_M_DELIVERYORDER")]
         [HttpPost]
-        public ActionResult CreateOrEditDeliveryOrder(DeliveryOrderModel _model)
+        public JsonResult CreateOrEditDeliveryOrder(DeliveryOrderModel _deliveryorder, List<DeliveryOrderDetailModel> deliveryOrderDetailModels)
         {
             if (Session["UserLogon"] != null)
-                _model.Account = (AccountModel)Session["UserLogon"];
+                _deliveryorder.Account = (AccountModel)Session["UserLogon"];
 
             var request = new DeliveryOrderRequest
             {
-                Data = _model
+                Data = _deliveryorder
             };
 
             DeliveryOrderResponse _response = new DeliveryOrderResponse();
 
             new DeliveryOrderValidator(_unitOfWork).Validate(request, out _response);
+            foreach(var item in deliveryOrderDetailModels)
+            {
+                var deliveryorderdetailrequest = new DeliveryOrderDetailRequest
+                {
+                    Data = item
+                };
+                deliveryorderdetailrequest.Data.DeliveryOderId = Convert.ToInt32(_response.Entity.Id);
+                deliveryorderdetailrequest.Data.Account = (AccountModel)Session["UserLogon"];
 
-            return RedirectToAction("GudangList");
+                DeliveryOrderDetailResponse _deliveryorderdetailresponse = new DeliveryOrderDetailResponse();
+                new DeliveryOrderDetailValidator(_unitOfWork).Validate(deliveryorderdetailrequest, out _deliveryorderdetailresponse);
+            }
+
+            return Json(new { data = _response.Data }, JsonRequestBehavior.AllowGet);
         }
 
+        [CustomAuthorize("DELETE_M_DELIVERYORDER")]
         [HttpPost]
         public JsonResult DeleteDeliveryOrder(int id)
         {
@@ -118,6 +137,99 @@ namespace Klinik.Web.Controllers
             new DeliveryOrderValidator(_unitOfWork).Validate(request, out _response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult searchproduct(string prefix)
+        {
+            var _draw = "1";
+            var _start = "0";
+            var _length = "10";
+            var _sortColumn = "Id";
+            var _sortColumnDir = "asc";
+            var _searchValue = prefix;
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new ProductRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+            var response = new ProductResponse();
+            if (request.SearchValue != null)
+            {
+                response = new ProductHandler(_unitOfWork).GetListData(request);
+            }
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult searchgudang(string prefix)
+        {
+            var _draw = "1";
+            var _start = "0";
+            var _length = "10";
+            var _sortColumn = "Id";
+            var _sortColumnDir = "asc";
+            var _searchValue = prefix;
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new GudangRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+            var response = new GudangResponse();
+            if (request.SearchValue != null)
+            {
+                response = new GudangHandler(_unitOfWork).GetListData(request);
+            }
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult searchklinik(string prefix)
+        {
+            var _draw = "1";
+            var _start = "0";
+            var _length = "10";
+            var _sortColumn = "Id";
+            var _sortColumnDir = "asc";
+            var _searchValue = prefix;
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new ClinicRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+            var response = new ClinicResponse();
+            if (request.SearchValue != null)
+            {
+                response = new ClinicHandler(_unitOfWork).GetAllData(request);
+            }
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
     }
 }
