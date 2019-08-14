@@ -73,6 +73,7 @@
     <Compile Include="BaseResponse.cs" />
     <Compile Include="Cashier\CashierModel.cs" />
     <Compile Include="Cashier\FormMedicalModel.cs" />
+    <Compile Include="DeliveryOrderDetail\DeliveryOrderDetailModel.cs" />
     <Compile Include="DeliveryOrder\DeliveryOrderModel.cs" />
     <Compile Include="Document\DocumentModel.cs" />
     <Compile Include="MasterData\GudangModel.cs" />

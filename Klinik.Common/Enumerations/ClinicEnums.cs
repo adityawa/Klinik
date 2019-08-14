@@ -65,7 +65,8 @@
             MASTER_SERVICE,
             MASTER_POLI_SERVICE,
             MASTER_GUDANG,
-            MASTER_DELIVERYORDER
+            MASTER_DELIVERYORDER,
+            MASTER_DELIVERYORDERDETAIL
         }
 
         public enum Action

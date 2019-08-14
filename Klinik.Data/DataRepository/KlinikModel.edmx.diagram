@@ -130,13 +130,14 @@
         <EntityTypeShape EntityType="KlinikDBModel.FormExamineMedicine" Width="1.5" PointX="15.75" PointY="30.625" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicine_FormExamine" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicine_Product" />
-        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderDetail" Width="1.5" PointX="15.75" PointY="46.375" />
+        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrder" Width="1.5" PointX="3.375" PointY="6" />
+        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderDetail" Width="1.5" PointX="18.75" PointY="32.125" />
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_Clinic" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_DeliveryOrder" />
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_Gudang" />
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_Product" />
-        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrder" Width="1.5" PointX="3.375" PointY="6" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_DeliveryOrder" />
-      </Diagram>
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_Product1" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
