@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Klinik.Entities.DeliveryOrderDetail;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,11 @@ namespace Klinik.Entities.DeliveryOrder
         public string dodest { get; set; }
         public Nullable<int> approve_by { get; set; }
         public Nullable<int> approve { get; set; }
+        public List<DeliveryOrderDetailModel> deliveryOrderDetailModels { get; set; }
+        public DeliveryOrderModel()
+        {
+            deliveryOrderDetailModels = new List<DeliveryOrderDetailModel>();
+        }
+
     }
 }

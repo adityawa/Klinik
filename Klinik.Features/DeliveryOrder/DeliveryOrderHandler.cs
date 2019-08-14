@@ -2,6 +2,7 @@
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.DeliveryOrder;
+using Klinik.Entities.DeliveryOrderDetail;
 using Klinik.Resources;
 using LinqKit;
 using System;
@@ -131,6 +132,7 @@ namespace Klinik.Features
             DeliveryOrderResponse response = new DeliveryOrderResponse();
 
             var qry = _unitOfWork.DeliveryOrderRepository.Query(x => x.id == request.Data.Id, null);
+            DeliveryOrderDetailModel newdeliveryOrderdetailModel = new DeliveryOrderDetailModel();
             if (qry.FirstOrDefault() != null)
             {
                 response.Entity = new DeliveryOrderModel
@@ -146,8 +148,29 @@ namespace Klinik.Features
                     CreatedBy = qry.FirstOrDefault().CreatedBy,
                     ModifiedDate = qry.FirstOrDefault().ModifiedDate,
                 };
-            }
 
+                foreach (var item in qry.FirstOrDefault().DeliveryOrderDetails)
+                {
+                    newdeliveryOrderdetailModel.Id = item.id;
+                    newdeliveryOrderdetailModel.DeliveryOderId = qry.FirstOrDefault().id;
+                    newdeliveryOrderdetailModel.ProductId_Po = item.ProductId_Po;
+                    newdeliveryOrderdetailModel.namabarang_po = item.namabarang_po;
+                    newdeliveryOrderdetailModel.qty_po = item.qty_po;
+                    newdeliveryOrderdetailModel.qty_po_final = item.qty_po_final;
+                    newdeliveryOrderdetailModel.ProductId = item.ProductId;
+                    newdeliveryOrderdetailModel.namabarang = item.namabarang;
+                    newdeliveryOrderdetailModel.GudangId = item.GudangId;
+                    newdeliveryOrderdetailModel.ClinicId = item.ClinicId;
+                    newdeliveryOrderdetailModel.qty_do = item.qty_do;
+                    newdeliveryOrderdetailModel.remark_do = item.remark_do;
+                    newdeliveryOrderdetailModel.qty_adj = item.qty_adj;
+                    newdeliveryOrderdetailModel.remark_adj = item.remark_adj;
+                    newdeliveryOrderdetailModel.namagudang = item.Gudang.name;
+                    newdeliveryOrderdetailModel.namaklinik = item.Clinic.Name;
+                    response.Entity.deliveryOrderDetailModels.Add(newdeliveryOrderdetailModel);
+                }
+            }
+            
             return response;
         }
 

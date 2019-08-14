@@ -60,7 +60,25 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                @foreach(var item in Model.deliveryOrderDetailModels)
+                {
+                <tr>
+                    <td hidden>@item.Id</td>
+                    <td>@item.namabarang</td>
+                    <td>@item.namagudang</td>
+                    <td>@item.namaklinik</td>
+                    <td>@item.namabarang_po</td>
+                    <td>@item.qty_po</td>
+                    <td>@item.qty_po_final</td>
+                    <td>@item.qty_do</td>
+                    <td>@item.remark_do</td>
+                    <td>@item.qty_adj</td>
+                    <td>@item.remark_adj</td>
+                    <td><button>Delete</button></td>
+                </tr>
+                }
+            </tbody>
         </table>
         <br />
         <form id="deliveryorderdetail">

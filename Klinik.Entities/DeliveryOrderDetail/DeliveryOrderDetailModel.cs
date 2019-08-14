@@ -9,10 +9,10 @@ namespace Klinik.Entities.DeliveryOrderDetail
     public class DeliveryOrderDetailModel : BaseModel
     {
         public int DeliveryOderId { get; set; }
-        public int ProductId_Po { get; set; }
+        public Nullable<int> ProductId_Po { get; set; }
         public string namabarang_po { get; set; }
-        public double qty_po { get; set; }
-        public double qty_po_final { get; set; }
+        public Nullable<double> qty_po { get; set; }
+        public Nullable<double> qty_po_final { get; set; }
         public int ProductId { get; set; }
         public string namabarang { get; set; }
         public Nullable<int> GudangId { get; set; }
@@ -21,5 +21,7 @@ namespace Klinik.Entities.DeliveryOrderDetail
         public string remark_do { get; set; }
         public Nullable<double> qty_adj { get; set; }
         public string remark_adj { get; set; }
+        public string namagudang { get; set; }
+        public string namaklinik { get; set; }
     }
 }
