@@ -99,6 +99,7 @@
           <Property Name="qty_po" Type="float" Nullable="false" />
           <Property Name="qty_po_final" Type="float" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="ProductId_Po" Type="int" />
           <Property Name="namabarang" Type="nvarchar" MaxLength="50" />
           <Property Name="GudangId" Type="int" />
           <Property Name="ClinicId" Type="bigint" />
@@ -982,6 +983,18 @@
             </Principal>
             <Dependent Role="DeliveryOrderDetail">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOrderDetail_ProductPO">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="DeliveryOrderDetail" Type="Self.DeliveryOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeliveryOrderDetail">
+              <PropertyRef Name="ProductId_Po" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1911,6 +1924,10 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="DeliveryOrderDetail" EntitySet="DeliveryOrderDetail" />
           </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOrderDetail_ProductPO" Association="Self.FK_DeliveryOrderDetail_ProductPO">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DeliveryOrderDetail" EntitySet="DeliveryOrderDetail" />
+          </AssociationSet>
           <AssociationSet Name="FK_Doctor_Employee" Association="Self.FK_Doctor_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Doctor" EntitySet="Doctor" />
@@ -2311,6 +2328,7 @@
           <Property Name="qty_po" Type="Double" Nullable="false" />
           <Property Name="qty_po_final" Type="Double" Nullable="false" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId_Po" Type="Int32" />
           <Property Name="namabarang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="GudangId" Type="Int32" />
           <Property Name="ClinicId" Type="Int64" />
@@ -2327,6 +2345,7 @@
           <NavigationProperty Name="DeliveryOrder" Relationship="Self.FK_DeliveryOrderDetail_DeliveryOrder" FromRole="DeliveryOrderDetail" ToRole="DeliveryOrder" />
           <NavigationProperty Name="Gudang" Relationship="Self.FK_DeliveryOrderDetail_Gudang" FromRole="DeliveryOrderDetail" ToRole="Gudang" />
           <NavigationProperty Name="Product" Relationship="Self.FK_DeliveryOrderDetail_Product" FromRole="DeliveryOrderDetail" ToRole="Product" />
+          <NavigationProperty Name="Product1" Relationship="Self.FK_DeliveryOrderDetail_ProductPO" FromRole="DeliveryOrderDetail" ToRole="Product" />
         </EntityType>
         <EntityType Name="Doctor">
           <Key>
@@ -3059,6 +3078,7 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="DeliveryOrderDetails" Relationship="Self.FK_DeliveryOrderDetail_Product" FromRole="Product" ToRole="DeliveryOrderDetail" />
+          <NavigationProperty Name="DeliveryOrderDetails1" Relationship="Self.FK_DeliveryOrderDetail_ProductPO" FromRole="Product" ToRole="DeliveryOrderDetail" />
           <NavigationProperty Name="FormExamineMedicines" Relationship="Self.FK_FormExamineMedicine_Product" FromRole="Product" ToRole="FormExamineMedicine" />
           <NavigationProperty Name="ProductCategory" Relationship="Self.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
           <NavigationProperty Name="ProductUnit" Relationship="Self.FK_Product_ProductUnit" FromRole="Product" ToRole="ProductUnit" />
@@ -3474,6 +3494,18 @@
             </Principal>
             <Dependent Role="DeliveryOrderDetail">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOrderDetail_ProductPO">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="DeliveryOrderDetail" Type="Self.DeliveryOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeliveryOrderDetail">
+              <PropertyRef Name="ProductId_Po" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4307,6 +4339,10 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="DeliveryOrderDetail" EntitySet="DeliveryOrderDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOrderDetail_ProductPO" Association="Self.FK_DeliveryOrderDetail_ProductPO">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="DeliveryOrderDetail" EntitySet="DeliveryOrderDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_Doctor_Employee" Association="Self.FK_Doctor_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Doctor" EntitySet="Doctors" />
@@ -4644,6 +4680,7 @@
                 <ScalarProperty Name="qty_po" ColumnName="qty_po" />
                 <ScalarProperty Name="qty_po_final" ColumnName="qty_po_final" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductId_Po" ColumnName="ProductId_Po" />
                 <ScalarProperty Name="namabarang" ColumnName="namabarang" />
                 <ScalarProperty Name="GudangId" ColumnName="GudangId" />
                 <ScalarProperty Name="ClinicId" ColumnName="ClinicId" />

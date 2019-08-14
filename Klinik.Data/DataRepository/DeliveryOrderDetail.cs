@@ -20,6 +20,7 @@ namespace Klinik.Data.DataRepository
         public double qty_po { get; set; }
         public double qty_po_final { get; set; }
         public int ProductId { get; set; }
+        public Nullable<int> ProductId_Po { get; set; }
         public string namabarang { get; set; }
         public Nullable<int> GudangId { get; set; }
         public Nullable<long> ClinicId { get; set; }
@@ -37,5 +38,6 @@ namespace Klinik.Data.DataRepository
         public virtual DeliveryOrder DeliveryOrder { get; set; }
         public virtual Gudang Gudang { get; set; }
         public virtual Product Product { get; set; }
+        public virtual Product Product1 { get; set; }
     }
 }
