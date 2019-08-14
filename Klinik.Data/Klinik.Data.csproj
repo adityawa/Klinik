@@ -122,8 +122,8 @@
       <DependentUpon>KlinikModel.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\KlinikModel.cs">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\KlinikModel.Designer.cs">

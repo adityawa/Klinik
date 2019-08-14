@@ -96,17 +96,13 @@
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="DeliveryOderId" Type="int" Nullable="false" />
           <Property Name="namabarang_po" Type="nvarchar" MaxLength="50" />
-          <Property Name="qty_po" Type="float" Nullable="false" />
-          <Property Name="qty_po_final" Type="float" Nullable="false" />
+          <Property Name="qty_po" Type="float" />
+          <Property Name="qty_po_final" Type="float" />
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="ProductId_Po" Type="int" />
           <Property Name="namabarang" Type="nvarchar" MaxLength="50" />
           <Property Name="GudangId" Type="int" />
           <Property Name="ClinicId" Type="bigint" />
-          <Property Name="ProductId_Po" Type="int" />
-          <Property Name="namabarang_po" Type="varchar" MaxLength="50" />
-          <Property Name="qty_po" Type="float" />
-          <Property Name="qty_po_final" Type="float" />
           <Property Name="qty_do" Type="float" />
           <Property Name="remark_do" Type="nvarchar" MaxLength="50" />
           <Property Name="qty_adj" Type="float" />
@@ -979,18 +975,6 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DeliveryOrderDetail_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="DeliveryOrderDetail" Type="Self.DeliveryOrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DeliveryOrderDetail">
-              <PropertyRef Name="ProductId_Po" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DeliveryOrderDetail_Product1">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="DeliveryOrderDetail" Type="Self.DeliveryOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2341,8 +2325,8 @@
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="DeliveryOderId" Type="Int32" Nullable="false" />
           <Property Name="namabarang_po" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="qty_po" Type="Double" Nullable="false" />
-          <Property Name="qty_po_final" Type="Double" Nullable="false" />
+          <Property Name="qty_po" Type="Double" />
+          <Property Name="qty_po_final" Type="Double" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="ProductId_Po" Type="Int32" />
           <Property Name="namabarang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
