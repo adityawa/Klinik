@@ -20,8 +20,8 @@ namespace Klinik.Features
         public DeliveryOrderDetailResponse CreateOrEdit(DeliveryOrderDetailRequest request)
         {
             DeliveryOrderDetailResponse response = new DeliveryOrderDetailResponse();
-            try
-            {
+            //try
+            //{
                 if (request.Data.Id > 0)
                 {
                     var qry = _unitOfWork.DeliveryOrderDetailRepository.GetById(request.Data.Id);
@@ -125,17 +125,17 @@ namespace Klinik.Features
                         CommandLog(false, ClinicEnums.Module.MASTER_DELIVERYORDERDETAIL, Constants.Command.ADD_DELIVERY_ORDER_DETAIL, request.Data.Account, request.Data);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                response.Status = false;
-                response.Message = Messages.GeneralError;
+            //}
+            //catch (Exception ex)
+            //{
+            //    response.Status = false;
+            //    response.Message = Messages.GeneralError;
 
-                if (request.Data != null && request.Data.Id > 0)
-                    ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERDETAIL, Constants.Command.EDIT_DELIVERY_ORDER_DETAIL, request.Data.Account, ex);
-                else
-                    ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERDETAIL, Constants.Command.EDIT_DELIVERY_ORDER_DETAIL, request.Data.Account, ex);
-            }
+            //    if (request.Data != null && request.Data.Id > 0)
+            //        ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERDETAIL, Constants.Command.EDIT_DELIVERY_ORDER_DETAIL, request.Data.Account, ex);
+            //    else
+            //        ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERDETAIL, Constants.Command.EDIT_DELIVERY_ORDER_DETAIL, request.Data.Account, ex);
+            //}
 
             return response;
         }

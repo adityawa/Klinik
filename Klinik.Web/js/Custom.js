@@ -155,6 +155,7 @@
         var el = $("#btnAdd");
         if (!el.length) return;
         $("body").on("click", "#btnAdd", function () {
+            var DeliveryOrderDetailId = $("#DeliveryOrderDetailId");
             var ProductId = $("#ProductId");
             var namabarang = $("#namabarang");
             var GudangId = $("#GudangId");
@@ -176,14 +177,21 @@
 
             //Add id cell.
             var cell = $(row.insertCell(-1));
+            cell.html(DeliveryOrderDetailId.val());
+            cell.hide();
+
+            cell = $(row.insertCell(-1));
             cell.html(ProductId.val());
             cell.hide();
+
             cell = $(row.insertCell(-1));
             cell.html(GudangId.val());
             cell.hide();
+
             cell = $(row.insertCell(-1));
             cell.html(ClinicId.val());
             cell.hide();
+
             cell = $(row.insertCell(-1));
             cell.html(ProductId_Po.val());
             cell.hide();
@@ -217,6 +225,9 @@
             //Add jumlah cell.
             cell = $(row.insertCell(-1));
             cell.html(remark_adj.val());
+            //Add jumlah cell.
+            cell = $(row.insertCell(-1));
+            cell.html('Add');
 
             cell = $(row.insertCell(-1));
             var btnRemove = $("<input />");
@@ -250,6 +261,7 @@
     saveDeliveryOrder: function () {
         $('.saveorderdetail').on('click', function () {
             var _deliveryorder = {};
+            _deliveryorder.Id = $('#Id').val();
             _deliveryorder.donumber = $('#donumber').val();
             _deliveryorder.dodate = $('#dodate').val();
             _deliveryorder.dodest = $('#dodest').val();
@@ -258,18 +270,20 @@
             $("#tblDeliveryOrder TBODY TR").each(function () {
                 var row = $(this);
                 var deliveryOrderDetail = {};
-                deliveryOrderDetail.ProductId = row.find("TD").eq(0).html();
-                deliveryOrderDetail.GudangId = row.find("TD").eq(1).html();
-                deliveryOrderDetail.ClinicId = row.find("TD").eq(2).html();
-                deliveryOrderDetail.ProductId_Po = row.find("TD").eq(3).html();
-                deliveryOrderDetail.namabarang = row.find("TD").eq(4).html();
-                deliveryOrderDetail.namabarang_po = row.find("TD").eq(7).html();
-                deliveryOrderDetail.qty_po = row.find("TD").eq(8).html();
-                deliveryOrderDetail.qty_po_final = row.find("TD").eq(9).html();
-                deliveryOrderDetail.qty_do = row.find("TD").eq(10).html();
-                deliveryOrderDetail.qty_adj = row.find("TD").eq(12).html();
-                deliveryOrderDetail.remark_do = row.find("TD").eq(11).html();
-                deliveryOrderDetail.remark_adj = row.find("TD").eq(13).html();
+                deliveryOrderDetail.Id = row.find("TD").eq(0).html();
+                deliveryOrderDetail.ProductId = row.find("TD").eq(1).html();
+                deliveryOrderDetail.GudangId = row.find("TD").eq(2).html();
+                deliveryOrderDetail.ClinicId = row.find("TD").eq(3).html();
+                deliveryOrderDetail.ProductId_Po = row.find("TD").eq(4).html();
+                deliveryOrderDetail.namabarang = row.find("TD").eq(5).html();
+                deliveryOrderDetail.namabarang_po = row.find("TD").eq(8).html();
+                deliveryOrderDetail.qty_po = row.find("TD").eq(9).html();
+                deliveryOrderDetail.qty_po_final = row.find("TD").eq(10).html();
+                deliveryOrderDetail.qty_do = row.find("TD").eq(11).html();
+                deliveryOrderDetail.qty_adj = row.find("TD").eq(13).html();
+                deliveryOrderDetail.remark_do = row.find("TD").eq(12).html();
+                deliveryOrderDetail.remark_adj = row.find("TD").eq(14).html();
+                deliveryOrderDetail.type = row.find("TD").eq(15).html();
                 deliveryOrderDetailModels.push(deliveryOrderDetail);
             });
             console.log(deliveryOrderDetailModels);

@@ -94,7 +94,7 @@ namespace Klinik.Web.Controllers
         {
             if (Session["UserLogon"] != null)
                 _deliveryorder.Account = (AccountModel)Session["UserLogon"];
-
+            _deliveryorder.Id = Convert.ToInt32(_deliveryorder.Id) > 0 ? _deliveryorder.Id : 0; 
             var request = new DeliveryOrderRequest
             {
                 Data = _deliveryorder

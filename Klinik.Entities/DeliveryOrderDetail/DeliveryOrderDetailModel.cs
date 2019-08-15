@@ -23,5 +23,6 @@ namespace Klinik.Entities.DeliveryOrderDetail
         public string remark_adj { get; set; }
         public string namagudang { get; set; }
         public string namaklinik { get; set; }
+        public Nullable<int> type { get; set; }
     }
 }

@@ -61,10 +61,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(var item in Model.deliveryOrderDetailModels)
+                @if (Model != null)
                 {
+                    foreach (var item in Model.deliveryOrderDetailModels)
+                    {
                 <tr>
                     <td hidden>@item.Id</td>
+                    <td hidden>@item.ProductId</td>
+                    <td hidden>@item.GudangId</td>
+                    <td hidden>@item.ClinicId</td>
+                    <td hidden>@item.ProductId_Po</td>
                     <td>@item.namabarang</td>
                     <td>@item.namagudang</td>
                     <td>@item.namaklinik</td>
@@ -75,22 +81,28 @@
                     <td>@item.remark_do</td>
                     <td>@item.qty_adj</td>
                     <td>@item.remark_adj</td>
-                    <td><button>Delete</button></td>
+                    <td hidden></td>
+                    <td>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </td>
                 </tr>
+                    }
                 }
             </tbody>
         </table>
         <br />
         <form id="deliveryorderdetail">
             <div class="form-group">
+                <input type="text" hidden id="DeliveryOrderDetailId" />
                 <select id="namabarang" class="form-control" style="width:230px"></select>
                 <input type="text" hidden id="ProductId" />
                 <select id="namagudang" class="form-control" style="width:230px"></select>
-                <input type="text" hidden id="GudangId"  />
+                <input type="text" hidden id="GudangId" />
                 <select id="namaklinik" class="form-control" style="width:230px"></select>
                 <input type="text" hidden id="ClinicId" />
                 <select id="namabarang_po" class="form-control" style="width:230px"></select>
-                <input type="text" hidden id="ProductId_Po"  />
+                <input type="text" hidden id="ProductId_Po" />
             </div>
             <div class="form-group">
                <input type="text" class="form-control" placeholder="Qty PO" id="qty_po" value=""/>

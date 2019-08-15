@@ -57,6 +57,10 @@ namespace Klinik.Features
 
                         _unitOfWork.DeliveryOrderRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
+                        response.Entity = new DeliveryOrderModel
+                        {
+                            Id = request.Data.Id
+                        };
                         if (resultAffected > 0)
                         {
                             response.Message = string.Format(Messages.ObjectHasBeenUpdated, "DeliveryOrder", qry.donumber, qry.id);
@@ -89,6 +93,7 @@ namespace Klinik.Features
                         dodest = request.Data.dodest,
                         CreatedBy = request.Data.Account.UserCode,
                         CreatedDate = DateTime.Now,
+                        ModifiedDate = DateTime.Now,
                         RowStatus = 0
                     };
                     
@@ -131,42 +136,46 @@ namespace Klinik.Features
         {
             DeliveryOrderResponse response = new DeliveryOrderResponse();
 
-            var qry = _unitOfWork.DeliveryOrderRepository.Query(x => x.id == request.Data.Id, null);
-            DeliveryOrderDetailModel newdeliveryOrderdetailModel = new DeliveryOrderDetailModel();
-            if (qry.FirstOrDefault() != null)
+            var qry = _unitOfWork.DeliveryOrderRepository.GetById(request.Data.Id);
+            //DeliveryOrderDetailModel newdeliveryOrderdetailModel = new DeliveryOrderDetailModel();
+            if (qry != null)
             {
                 response.Entity = new DeliveryOrderModel
                 {
-                    Id = qry.FirstOrDefault().id,
-                    poid = qry.FirstOrDefault().poid,
-                    donumber = qry.FirstOrDefault().donumber,
-                    dodate = qry.FirstOrDefault().dodate,
-                    dodest = qry.FirstOrDefault().dodest,
-                    approve_by = qry.FirstOrDefault().approve_by,
-                    approve = qry.FirstOrDefault().approve,
-                    ModifiedBy = qry.FirstOrDefault().ModifiedBy,
-                    CreatedBy = qry.FirstOrDefault().CreatedBy,
-                    ModifiedDate = qry.FirstOrDefault().ModifiedDate,
+                    Id = qry.id,
+                    poid = qry.poid,
+                    donumber = qry.donumber,
+                    dodate = qry.dodate,
+                    dodest = qry.dodest,
+                    approve_by = qry.approve_by,
+                    approve = qry.approve,
+                    ModifiedBy = qry.ModifiedBy,
+                    CreatedBy = qry.CreatedBy,
+                    ModifiedDate = qry.ModifiedDate,
                 };
 
-                foreach (var item in qry.FirstOrDefault().DeliveryOrderDetails)
+                foreach (var item in qry.DeliveryOrderDetails)
                 {
-                    newdeliveryOrderdetailModel.Id = item.id;
-                    newdeliveryOrderdetailModel.DeliveryOderId = qry.FirstOrDefault().id;
-                    newdeliveryOrderdetailModel.ProductId_Po = item.ProductId_Po;
-                    newdeliveryOrderdetailModel.namabarang_po = item.namabarang_po;
-                    newdeliveryOrderdetailModel.qty_po = item.qty_po;
-                    newdeliveryOrderdetailModel.qty_po_final = item.qty_po_final;
-                    newdeliveryOrderdetailModel.ProductId = item.ProductId;
-                    newdeliveryOrderdetailModel.namabarang = item.namabarang;
-                    newdeliveryOrderdetailModel.GudangId = item.GudangId;
-                    newdeliveryOrderdetailModel.ClinicId = item.ClinicId;
-                    newdeliveryOrderdetailModel.qty_do = item.qty_do;
-                    newdeliveryOrderdetailModel.remark_do = item.remark_do;
-                    newdeliveryOrderdetailModel.qty_adj = item.qty_adj;
-                    newdeliveryOrderdetailModel.remark_adj = item.remark_adj;
-                    newdeliveryOrderdetailModel.namagudang = item.Gudang.name;
-                    newdeliveryOrderdetailModel.namaklinik = item.Clinic.Name;
+                    var newdeliveryOrderdetailModel = new DeliveryOrderDetailModel
+                    {
+                        Id = item.id,
+                        DeliveryOderId = qry.id,
+                        ProductId_Po = item.ProductId_Po,
+                        namabarang_po = item.namabarang_po,
+                        qty_po = item.qty_po,
+                        qty_po_final = item.qty_po_final,
+                        ProductId = item.ProductId,
+                        namabarang = item.namabarang,
+                        GudangId = item.GudangId,
+                        ClinicId = item.ClinicId,
+                        qty_do = item.qty_do,
+                        remark_do = item.remark_do,
+                        qty_adj = item.qty_adj,
+                        remark_adj = item.remark_adj,
+                        namagudang = item.Gudang.name,
+                        namaklinik = item.Clinic.Name,
+                };
+
                     response.Entity.deliveryOrderDetailModels.Add(newdeliveryOrderdetailModel);
                 }
             }
