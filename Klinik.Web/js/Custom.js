@@ -6,6 +6,7 @@
         Klinik.autocompleteKlinikOne();
         Klinik.autocompleteProductTwo();
         Klinik.saveDeliveryOrder();
+        Klinik.editDeliveryOrderDetail();
     },
     autocompleteProductOne: function () {
         var el = $("#namabarang");
@@ -170,11 +171,9 @@
             var qty_adj = $("#qty_adj");
             var remark_do = $("#remark_do");
             var remark_adj = $("#remark_adj");
-            alert(ProductId.val());
             var tBody = $("#tblDeliveryOrder > TBODY")[0];
             //Add Row.
             var row = tBody.insertRow(-1);
-
             //Add id cell.
             var cell = $(row.insertCell(-1));
             cell.html(DeliveryOrderDetailId.val());
@@ -228,6 +227,7 @@
             //Add jumlah cell.
             cell = $(row.insertCell(-1));
             cell.html('Add');
+            cell.hide();
 
             cell = $(row.insertCell(-1));
             var btnRemove = $("<input />");
@@ -258,6 +258,125 @@
         });
     },
 
+    editDeliveryOrderDetail: function () {
+        $('.edit-deliveryorderdetail').on('click', function () {
+            var getdata = $(this).closest('tr');
+            getdata.find('td:eq(5) select').select2({
+                width: 'resolve',
+                placeholder: 'product..',
+                ajax: {
+                    url: '/DeliveryOrder/searchproduct/',
+                    data: function (params) {
+                        return {
+                            prefix: params.term
+                        };
+                    },
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        var results = [];
+
+                        $.each(data.data, function (index, item) {
+                            results.push({
+                                id: item.Id,
+                                text: item.Name
+                            });
+                        });
+                        return {
+                            results: results
+                        };
+                    }
+                }
+            }).prop('disabled', false);
+
+            getdata.find('td:eq(6) select').select2({
+                width: 'resolve',
+                placeholder: 'gudang..',
+                ajax: {
+                    url: '/DeliveryOrder/searchgudang/',
+                    data: function (params) {
+                        return {
+                            prefix: params.term
+                        };
+                    },
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        var results = [];
+
+                        $.each(data.data, function (index, item) {
+                            results.push({
+                                id: item.Id,
+                                text: item.name
+                            });
+                        });
+                        return {
+                            results: results
+                        };
+                    }
+                }
+            }).prop('disabled', false);
+
+            getdata.find('td:eq(7) select').select2({
+                width: 'resolve',
+                placeholder: 'klinik..',
+                ajax: {
+                    url: '/DeliveryOrder/searchklinik/',
+                    data: function (params) {
+                        return {
+                            prefix: params.term
+                        };
+                    },
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        var results = [];
+                        console.log(data.data);
+                        $.each(data.data, function (index, item) {
+                            results.push({
+                                id: item.Id,
+                                text: item.Name
+                            });
+                        });
+                        return {
+                            results: results
+                        };
+                    }
+                }
+            }).prop('disabled', false);
+
+            getdata.find('td:eq(8) select').select2({
+                width: 'resolve',
+                placeholder: 'product po..',
+                ajax: {
+                    url: '/DeliveryOrder/searchproduct/',
+                    data: function (params) {
+                        return {
+                            prefix: params.term
+                        };
+                    },
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        var results = [];
+
+                        $.each(data.data, function (index, item) {
+                            results.push({
+                                id: item.Id,
+                                text: item.Name
+                            });
+                        });
+                        return {
+                            results: results
+                        };
+                    }
+                }
+            }).prop('disabled', false);
+
+            getdata.find('input').prop('disabled', false);
+        });
+    },
+
     saveDeliveryOrder: function () {
         $('.saveorderdetail').on('click', function () {
             var _deliveryorder = {};
@@ -269,21 +388,22 @@
             var deliveryOrderDetailModels = new Array();
             $("#tblDeliveryOrder TBODY TR").each(function () {
                 var row = $(this);
+                alert(row.closest('tr').find('td:eq(9) input').length);
                 var deliveryOrderDetail = {};
                 deliveryOrderDetail.Id = row.find("TD").eq(0).html();
-                deliveryOrderDetail.ProductId = row.find("TD").eq(1).html();
-                deliveryOrderDetail.GudangId = row.find("TD").eq(2).html();
-                deliveryOrderDetail.ClinicId = row.find("TD").eq(3).html();
-                deliveryOrderDetail.ProductId_Po = row.find("TD").eq(4).html();
-                deliveryOrderDetail.namabarang = row.find("TD").eq(5).html();
-                deliveryOrderDetail.namabarang_po = row.find("TD").eq(8).html();
-                deliveryOrderDetail.qty_po = row.find("TD").eq(9).html();
-                deliveryOrderDetail.qty_po_final = row.find("TD").eq(10).html();
-                deliveryOrderDetail.qty_do = row.find("TD").eq(11).html();
-                deliveryOrderDetail.qty_adj = row.find("TD").eq(13).html();
-                deliveryOrderDetail.remark_do = row.find("TD").eq(12).html();
-                deliveryOrderDetail.remark_adj = row.find("TD").eq(14).html();
-                deliveryOrderDetail.type = row.find("TD").eq(15).html();
+                deliveryOrderDetail.ProductId = row.closest('tr').find('td:eq(5) select').val() > 0 ? row.closest('tr').find('td:eq(5) select').val() : row.find("TD").eq(1).html();
+                deliveryOrderDetail.GudangId = row.closest('tr').find('td:eq(6) select').val() > 0 ? row.closest('tr').find('td:eq(6) select').val() : row.find("TD").eq(2).html();
+                deliveryOrderDetail.ClinicId = row.closest('tr').find('td:eq(7) select').val() > 0 ? row.closest('tr').find('td:eq(7) select').val() : row.find("TD").eq(3).html();
+                deliveryOrderDetail.ProductId_Po = row.closest('tr').find('td:eq(8) select').val() > 0 ? row.closest('tr').find('td:eq(8) select').val() : row.find("TD").eq(4).html();
+                //deliveryOrderDetail.namabarang = row.closest('tr').find('td:eq(5) select').val() > 0 ? row.closest('tr').find('td:eq(5) select').text() : row.closest('tr').find('td:eq(5) select').text();
+                //deliveryOrderDetail.namabarang_po = row.find("TD").eq(8).html();
+                deliveryOrderDetail.qty_po = row.closest('tr').find('td:eq(9) input').length > 0 ? row.closest('tr').find('td:eq(9) input').val() : row.find("TD").eq(9).html();
+                deliveryOrderDetail.qty_po_final = row.closest('tr').find('td:eq(10) input').length > 0 ? row.closest('tr').find('td:eq(10) input').val() : row.find("TD").eq(10).html();
+                deliveryOrderDetail.qty_do = row.closest('tr').find('td:eq(11) input').length > 0 ? row.closest('tr').find('td:eq(11) input').val() : row.find("TD").eq(11).html();
+                deliveryOrderDetail.qty_adj = row.closest('tr').find('td:eq(13) input').length > 0 ? row.closest('tr').find('td:eq(13) input').val() : row.find("TD").eq(13).html();
+                deliveryOrderDetail.remark_do = row.closest('tr').find('td:eq(12) input').length > 0 ? row.closest('tr').find('td:eq(12) input').val() : row.find("TD").eq(12).html();
+                deliveryOrderDetail.remark_adj = row.closest('tr').find('td:eq(14) input').length > 0 ? row.closest('tr').find('td:eq(14) input').val() : row.find("TD").eq(14).html();
+                deliveryOrderDetail.type = row.closest('tr').find('td:eq(15) input').length > 0 ? row.closest('tr').find('td:eq(15) input').val() : row.find("TD").eq(15).html();
                 deliveryOrderDetailModels.push(deliveryOrderDetail);
             });
             console.log(deliveryOrderDetailModels);
@@ -294,7 +414,6 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (r) {
-                    alert(r);
                     window.location.reload();
                 }
             });

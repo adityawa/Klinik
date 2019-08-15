@@ -9,7 +9,7 @@ namespace Klinik.Entities.DeliveryOrderDetail
     public class DeliveryOrderDetailModel : BaseModel
     {
         public int DeliveryOderId { get; set; }
-        public Nullable<int> ProductId_Po { get; set; }
+        public int? ProductId_Po { get; set; }
         public string namabarang_po { get; set; }
         public Nullable<double> qty_po { get; set; }
         public Nullable<double> qty_po_final { get; set; }

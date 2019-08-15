@@ -20,8 +20,8 @@ namespace Klinik.Features
         public DeliveryOrderDetailResponse CreateOrEdit(DeliveryOrderDetailRequest request)
         {
             DeliveryOrderDetailResponse response = new DeliveryOrderDetailResponse();
-            //try
-            //{
+            try
+            {
                 if (request.Data.Id > 0)
                 {
                     var qry = _unitOfWork.DeliveryOrderDetailRepository.GetById(request.Data.Id);
@@ -34,6 +34,7 @@ namespace Klinik.Features
                             ClinicId = qry.ClinicId,
                             DeliveryOderId = qry.DeliveryOderId,
                             ProductId_Po = qry.ProductId_Po,
+                            GudangId = qry.GudangId,
                             qty_po = qry.qty_po,
                             qty_po_final = qry.qty_po_final,
                             qty_do = qry.qty_do,
@@ -54,6 +55,7 @@ namespace Klinik.Features
                         qry.namabarang_po = request.Data.namabarang_po;
                         qry.DeliveryOderId = request.Data.DeliveryOderId;
                         qry.ClinicId = request.Data.ClinicId;
+                        qry.GudangId = request.Data.GudangId;
                         qry.ProductId_Po = request.Data.ProductId_Po;
                         qry.qty_po = request.Data.qty_po;
                         qry.qty_po_final = request.Data.qty_po_final;
@@ -125,17 +127,17 @@ namespace Klinik.Features
                         CommandLog(false, ClinicEnums.Module.MASTER_DELIVERYORDERDETAIL, Constants.Command.ADD_DELIVERY_ORDER_DETAIL, request.Data.Account, request.Data);
                     }
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    response.Status = false;
-            //    response.Message = Messages.GeneralError;
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = Messages.GeneralError;
 
-            //    if (request.Data != null && request.Data.Id > 0)
-            //        ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERDETAIL, Constants.Command.EDIT_DELIVERY_ORDER_DETAIL, request.Data.Account, ex);
-            //    else
-            //        ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERDETAIL, Constants.Command.EDIT_DELIVERY_ORDER_DETAIL, request.Data.Account, ex);
-            //}
+                if (request.Data != null && request.Data.Id > 0)
+                    ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERDETAIL, Constants.Command.EDIT_DELIVERY_ORDER_DETAIL, request.Data.Account, ex);
+                else
+                    ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERDETAIL, Constants.Command.EDIT_DELIVERY_ORDER_DETAIL, request.Data.Account, ex);
+            }
 
             return response;
         }

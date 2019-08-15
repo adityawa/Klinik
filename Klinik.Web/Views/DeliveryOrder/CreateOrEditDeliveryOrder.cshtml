@@ -71,19 +71,19 @@
                     <td hidden>@item.GudangId</td>
                     <td hidden>@item.ClinicId</td>
                     <td hidden>@item.ProductId_Po</td>
-                    <td>@item.namabarang</td>
-                    <td>@item.namagudang</td>
-                    <td>@item.namaklinik</td>
-                    <td>@item.namabarang_po</td>
-                    <td>@item.qty_po</td>
-                    <td>@item.qty_po_final</td>
-                    <td>@item.qty_do</td>
-                    <td>@item.remark_do</td>
-                    <td>@item.qty_adj</td>
-                    <td>@item.remark_adj</td>
+                    <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
+                    <td><select disabled="disabled"><option>@item.namagudang</option></select></td>
+                    <td><select disabled="disabled"><option>@item.namaklinik</option></select></td>
+                    <td><select disabled="disabled"><option>@item.namabarang_po</option></select></td>
+                    <td><input type="text" class="form-control" value="@item.qty_po" disabled="disabled"/></td>
+                    <td><input type="text" class="form-control" value="@item.qty_po_final" disabled="disabled" /></td>
+                    <td><input type="text" class="form-control" value="@item.qty_do" disabled="disabled" /></td>
+                    <td><input type="text" class="form-control" value="@item.remark_do" disabled="disabled" /></td>
+                    <td><input type="text" class="form-control" value="@item.qty_adj" disabled="disabled" /></td>
+                    <td><input type="text" class="form-control" value="@item.remark_adj" disabled="disabled" /></td>
                     <td hidden></td>
                     <td>
-                        <button>Edit</button>
+                        <button class="edit-deliveryorderdetail">Edit</button>
                         <button>Delete</button>
                     </td>
                 </tr>
