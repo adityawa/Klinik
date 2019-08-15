@@ -51,6 +51,7 @@ namespace Klinik.Data
         private IGenericRepository<PoliService> _poliServiceRepository;
         private IGenericRepository<Letter> _letterRepository;
         private IGenericRepository<SuratRujukanLabKeluar> _suratRujukanLabKeluarRepository;
+        private IGenericRepository<PanggilanPoli> _panggilanPoliRepository;
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
@@ -523,6 +524,16 @@ namespace Klinik.Data
                 if (_suratRujukanLabKeluarRepository == null)
                     _suratRujukanLabKeluarRepository = new GenericRepository<SuratRujukanLabKeluar>(_context);
                 return _suratRujukanLabKeluarRepository;
+            }
+        }
+
+        public IGenericRepository<PanggilanPoli> PanggilanPoliRepository
+        {
+            get
+            {
+                if (_panggilanPoliRepository == null)
+                    _panggilanPoliRepository = new GenericRepository<PanggilanPoli>(_context);
+                return _panggilanPoliRepository;
             }
         }
 

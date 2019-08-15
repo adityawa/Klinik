@@ -1,6 +1,8 @@
 ﻿using Klinik.Common;
 using Klinik.Data;
 using Klinik.Resources;
+using System;
+using System.Linq;
 
 namespace Klinik.Features
 {
@@ -159,6 +161,34 @@ namespace Klinik.Features
                 response = new LoketHandler(_unitOfWork).RemoveData(request);
             }
 
+            return response;
+        }
+
+        private LoketResponse ValidateBeforeCall(LoketRequest request)
+        {
+            var response = new LoketResponse();
+            if (request.CallRequest.PoliID <= 0)
+            {
+                errorFields.Add("Poli ID");
+            }
+            if(string.IsNullOrEmpty(request.CallRequest.QueueCode))
+            {
+                errorFields.Add("Queue Code");
+            }
+            if (request.CallRequest.SortNumber<=0)
+            {
+                errorFields.Add("Sort Number");
+            }
+
+            if (errorFields.Any())
+            {
+                response.Status = false;
+                response.Message = string.Format(Messages.ValidationErrorFields, String.Join(",", errorFields));
+            }
+            else
+            {
+                //response=
+            }
             return response;
         }
     }

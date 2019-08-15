@@ -283,4 +283,10 @@ Administrator</value>
   <data name="LabResultUpdated" xml:space="preserve">
     <value>Lab Result successfully updated</value>
   </data>
+  <data name="CallFailed" xml:space="preserve">
+    <value>Send To Call Process Failed</value>
+  </data>
+  <data name="ReadyForCall" xml:space="preserve">
+    <value>Please Wait for Calling...</value>
+  </data>
 </root>

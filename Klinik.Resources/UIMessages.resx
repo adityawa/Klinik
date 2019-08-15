@@ -1023,13 +1023,12 @@
   <data name="Validate" xml:space="preserve">
     <value>Validasi</value>
   </data>
-
   <data name="Perusahaan" xml:space="preserve">
     <value>Perusahaan</value>
   </data>
   <data name="Keluhan" xml:space="preserve">
     <value>Keluhan</value>
-</data>
+  </data>
   <data name="RemarkUse" xml:space="preserve">
     <value>Remark Use</value>
   </data>
@@ -1038,6 +1037,8 @@
   </data>
   <data name="PrescriptionDetail" xml:space="preserve">
     <value>Detail Resep</value>
-
+  </data>
+  <data name="Call" xml:space="preserve">
+    <value>Call</value>
   </data>
 </root>

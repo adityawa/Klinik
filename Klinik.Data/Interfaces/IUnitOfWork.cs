@@ -53,6 +53,8 @@ namespace Klinik.Data
         IGenericRepository<PoliService> PoliServicesRepository { get; }
         IGenericRepository<Letter> LetterRepository { get; }
         IGenericRepository<SuratRujukanLabKeluar> SuratRujukanLabKeluarRepository { get; }
+
+        IGenericRepository<PanggilanPoli> PanggilanPoliRepository { get; }
         int Save();
     }
 }

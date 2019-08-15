@@ -152,6 +152,9 @@
     <Compile Include="DataRepository\OrganizationRole.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataRepository\PanggilanPoli.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataRepository\PasswordHistory.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>

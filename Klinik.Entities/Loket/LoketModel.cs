@@ -43,4 +43,13 @@ namespace Klinik.Entities.Loket
         public string strIsPreExamine { get; set; }
         public long FormMedicalID { get; set; }
     }
+
+    public class PanggilanPoliModel :BaseModel
+    {
+        public string QueueCode { get; set; }
+        public string Status { get; set; }
+        public int PoliID { get; set; }
+
+        public int SortNumber { get; set; }
+    }
 }

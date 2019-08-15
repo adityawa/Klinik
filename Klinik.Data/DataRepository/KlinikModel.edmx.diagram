@@ -19,7 +19,6 @@
         <EntityTypeShape EntityType="KlinikDBModel.FormExamine" Width="1.5" PointX="7.5" PointY="35.5" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.FormExamineAttachment" Width="1.5" PointX="9.75" PointY="33.625" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.FormExamineLab" Width="1.5" PointX="10.5" PointY="37.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormExamineMedicine" Width="1.5" PointX="12.75" PointY="35.25" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.FormExamineService" Width="1.5" PointX="15.75" PointY="36.625" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.FormMedical" Width="1.5" PointX="5.25" PointY="40.125" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.FormPreExamine" Width="1.5" PointX="13.5" PointY="40.125" IsExpanded="true" />
@@ -87,11 +86,9 @@
         <AssociationConnector Association="KlinikDBModel.FK_FormExamine_FormMedical" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamine_Poli" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamineAttachment_FormExamine" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicine_FormExamine" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamineService_FormExamine" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamineLab_FormMedical" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamineLab_LabItem" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicine_Product" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamineService_Service" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormMedical_Patient" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormPreExamine_FormMedical" ManuallyRouted="false" />
@@ -125,6 +122,11 @@
         <EntityTypeShape EntityType="KlinikDBModel.SuratRujukanLabKeluar" Width="1.5" PointX="10.5" PointY="17" />
         <AssociationConnector Association="KlinikDBModel.FK_SuratRujukanLabKeluar_LabItem" />
         <EntityTypeShape EntityType="KlinikDBModel.Letter" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="KlinikDBModel.PanggilanPoli" Width="1.5" PointX="7.5" PointY="14.375" />
+        <AssociationConnector Association="KlinikDBModel.FK_PanggilanPoli_Poli" />
+        <EntityTypeShape EntityType="KlinikDBModel.FormExamineMedicine" Width="1.5" PointX="15.75" PointY="30.625" />
+        <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicine_FormExamine" />
+        <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicine_Product" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
