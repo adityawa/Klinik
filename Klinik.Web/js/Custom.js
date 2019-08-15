@@ -40,7 +40,7 @@
             }
         });
         $(el).change(function () {
-            $("#ProductId").attr("value", el.val());
+            $("#ProductId").val($(el).val());
         });
     },
 
@@ -76,7 +76,7 @@
             }
         });
         $(el).change(function () {
-            $("#GudangId").attr("value", el.val());
+            $("#GudangId").val($(el).val());
         });
     },
 
@@ -112,7 +112,7 @@
             }
         });
         $(el).change(function () {
-            $("#ClinicId").attr("value", el.val());
+            $("#ClinicId").val($(el).val());
         });
     },
 
@@ -148,7 +148,7 @@
             }
         });
         $(el).change(function () {
-            $("#ProductId_Po").attr("value", el.val());
+            $("#ProductId_Po").val($(el).val());
         });
     },
 
@@ -254,7 +254,7 @@
             Klinik.autocompleteGudangOne();
             Klinik.autocompleteKlinikOne();
             Klinik.autocompleteProductTwo();
-            Klinik.addDeliveryOrderDetailItem();
+            //Klinik.addDeliveryOrderDetailItem();
         });
     },
 

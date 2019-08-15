@@ -95,7 +95,11 @@
                 { "data": "CreatedBy", "CreatedBy": "CreatedBy", "autoWidth": true },
                 { "data": "CreatedBy", "CreatedBy": "CreatedBy", "autoWidth": true },
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/DeliveryOrder/CreateOrEditDeliveryOrder?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" }
+                    "render": function (data, type, full, meta)
+                    {
+                        var type = full['approve'] == null ? 'Approve' : 'Print';
+                        return '<a class="btn btn-info" href="/DeliveryOrder/CreateOrEditDeliveryOrder?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" + " |" + '<a class="btn btn-success" href="/DeliveryOrder/PrintDeliveryOrder?id=' + full.Id + '">' + type + '</a>'
+                    }
                 }
 
             ]
@@ -116,12 +120,28 @@
     var Delete = function (ID) {
         var r = confirm("@Klinik.Resources.UIMessages.DeleteConfirmation" + ID + " ) ?");
         if (r == true) {
-            DeleteGudang(ID);
+            DeleteDO(ID);
         }
         return false;
-    }
+        }
 
-        function DeleteGudang(Id) {
+        var Approve = function (ID) {
+            var r = confirm("@Klinik.Resources.UIMessages.ApproveConfirmation" + ID + " ) ?");
+            if (r == true) {
+            ApproveDO(ID);
+        }
+        return false;
+        }
+
+        var Print = function (ID) {
+            var r = confirm("@Klinik.Resources.UIMessages.ApproveConfirmation" + ID + " ) ?");
+            if (r == true) {
+            PrintDO(ID);
+        }
+        return false;
+        }
+
+        function DeleteDO(Id) {
         $.ajax({
             url: '/DeliveryOrder/DeleteDeliveryOrder?id=' + Id,
             type: 'POST',
@@ -137,7 +157,43 @@
                 }
             }
         });
-    }
+        }
+
+        function ApproveDO(Id) {
+        $.ajax({
+            url: '/DeliveryOrder/ApproveDeliveryOrder?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+        }
+
+        function PrintDO(Id) {
+        $.ajax({
+            url: '/DeliveryOrder/PrintDeliveryOrder?id=' + Id,
+            type: 'GET',
+            success: function (result) {
+                if (result.Status) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+        }
     </script>
 }
 

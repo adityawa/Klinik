@@ -11,9 +11,9 @@ namespace Klinik.Features
 {
     public class DeliveryOrderValidator : BaseFeatures
     {
-        private const string ADD_PRIVILEGE_NAME = "ADD_M_DELIVERYORDER";
-        private const string EDIT_PRIVILEGE_NAME = "EDIT_M_DELIVERYORDER";
-        private const string DELETE_PRIVILEGE_NAME = "DELETE_M_DELIVERYORDER";
+        private const string ADD_M_DELIVERYORDER = "ADD_M_DELIVERYORDER";
+        private const string EDIT_M_DELIVERYORDER = "EDIT_M_DELIVERYORDER";
+        private const string DELETE_M_DELIVERYORDER = "DELETE_M_DELIVERYORDER";
 
         public DeliveryOrderValidator(IUnitOfWork unitOfWork)
         {
@@ -24,9 +24,16 @@ namespace Klinik.Features
         {
             response = new DeliveryOrderResponse();
 
-            if (request.Action != null && request.Action.Equals(ClinicEnums.Action.DELETE.ToString()))
+            if ((request.Action != null && request.Action.Equals(ClinicEnums.Action.DELETE.ToString())) || (request.Action != null && request.Action.Equals(ClinicEnums.Action.APPROVE.ToString())))
             {
-                ValidateForDelete(request, out response);
+                if (request.Action != null && request.Action.Equals(ClinicEnums.Action.DELETE.ToString()))
+                {
+                    ValidateForDelete(request, out response);
+                }
+                else
+                {
+                    ValidateForApprove(request, out response);
+                }
             }
             else
             {
@@ -46,11 +53,11 @@ namespace Klinik.Features
                 if (request.Data.Id == 0)
                 {
 
-                    isHavePrivilege = IsHaveAuthorization(ADD_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
+                    isHavePrivilege = IsHaveAuthorization(ADD_M_DELIVERYORDER, request.Data.Account.Privileges.PrivilegeIDs);
                 }
                 else
                 {
-                    isHavePrivilege = IsHaveAuthorization(EDIT_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
+                    isHavePrivilege = IsHaveAuthorization(EDIT_M_DELIVERYORDER, request.Data.Account.Privileges.PrivilegeIDs);
                 }
 
                 if (!isHavePrivilege)
@@ -72,7 +79,7 @@ namespace Klinik.Features
 
             if (request.Action == ClinicEnums.Action.DELETE.ToString())
             {
-                bool isHavePrivilege = IsHaveAuthorization(DELETE_PRIVILEGE_NAME, request.Data.Account.Privileges.PrivilegeIDs);
+                bool isHavePrivilege = IsHaveAuthorization(DELETE_M_DELIVERYORDER, request.Data.Account.Privileges.PrivilegeIDs);
                 if (!isHavePrivilege)
                 {
                     response.Status = false;
@@ -83,6 +90,26 @@ namespace Klinik.Features
             if (response.Status)
             {
                 response = new DeliveryOrderHandler(_unitOfWork).RemoveData(request);
+            }
+        }
+
+        private void ValidateForApprove(DeliveryOrderRequest request, out DeliveryOrderResponse response)
+        {
+            response = new DeliveryOrderResponse();
+
+            if (request.Action == ClinicEnums.Action.APPROVE.ToString())
+            {
+                bool isHavePrivilege = IsHaveAuthorization(EDIT_M_DELIVERYORDER, request.Data.Account.Privileges.PrivilegeIDs);
+                if (!isHavePrivilege)
+                {
+                    response.Status = false;
+                    response.Message = Messages.UnauthorizedAccess;
+                }
+            }
+
+            if (response.Status)
+            {
+                response = new DeliveryOrderHandler(_unitOfWork).ApproveData(request);
             }
         }
     }

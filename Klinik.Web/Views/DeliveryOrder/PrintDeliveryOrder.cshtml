@@ -1,0 +1,84 @@
+﻿@model Klinik.Entities.DeliveryOrder.DeliveryOrderModel
+
+    <html>
+    <head>
+        <title>Report</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="http://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
+
+        body, h1, h2, h3, h4, h5, h6 {
+            font-family: 'Bree Serif', serif;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="col-xs-6">
+                <h1>
+                    <a href="https://twitter.com/tahirtaous">
+                        <img src="~/Content/images/logo-medica.png" height="35" alt="JSOFT Admin" />
+                    </a>
+                </h1>
+            </div>
+            <div class="col-xs-6 text-right">
+                <h1>Report</h1>
+                <h1><small>Order @Model.donumber</small></h1>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-5">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>Detail: <a href="#">@Model.poid</a></h4>
+                        </div>
+                        <div class="panel-body">
+                            <p>
+                                Address <br>
+                                details <br>
+                                more <br>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="col-xs-5 col-xs-offset-2 text-right">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>To : <a href="#">Client Name</a></h4>
+                        </div>
+                        <div class="panel-body">
+                            <p>
+                                Address <br>
+                                details <br>
+                                more <br>
+                            </p>
+                        </div>
+                    </div>
+                </div>*@
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th><h4>Nama Brang</h4></th>
+                            <th><h4>Qty Do</h4></th>
+                            <th><h4>Qty Adj</h4></th>
+                            <th><h4>Remark Do</h4></th>
+                            <th><h4>Remark Adj</h4></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.deliveryOrderDetailModels)
+                        {
+                            <tr>
+                                <td>@item.namabarang</td>
+                                <td><a href="#">@item.qty_do</a></td>
+                                <td class="text-right">@item.qty_adj</td>
+                                <td class="text-right">@item.remark_do</td>
+                                <td class="text-right">@item.remark_adj</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+    </html>

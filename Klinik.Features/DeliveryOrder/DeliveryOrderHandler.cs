@@ -305,5 +305,47 @@ namespace Klinik.Features
 
             return response;
         }
+
+        public DeliveryOrderResponse ApproveData(DeliveryOrderRequest request)
+        {
+            DeliveryOrderResponse response = new DeliveryOrderResponse();
+
+            try
+            {
+                var deliveryoder = _unitOfWork.DeliveryOrderRepository.GetById(request.Data.Id);
+                if (deliveryoder.id > 0)
+                {
+                    deliveryoder.approve = 1;
+                    deliveryoder.ModifiedBy = request.Data.Account.UserCode;
+                    deliveryoder.ModifiedDate = DateTime.Now;
+
+                    _unitOfWork.DeliveryOrderRepository.Update(deliveryoder);
+                    int resultAffected = _unitOfWork.Save();
+                    if (resultAffected > 0)
+                    {
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "DeliveryOrder", deliveryoder.donumber, deliveryoder.id);
+                    }
+                    else
+                    {
+                        response.Status = false;
+                        response.Message = string.Format(Messages.RemoveObjectFailed, "DeliveryOrder");
+                    }
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = string.Format(Messages.RemoveObjectFailed, "DeliveryOrder");
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = Messages.GeneralError;
+
+                ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDER, ClinicEnums.Action.Edit.ToString(), request.Data.Account, ex);
+            }
+
+            return response;
+        }
     }
 }
