@@ -1059,4 +1059,10 @@
   <data name="TujuanDO" xml:space="preserve">
     <value>Tujuan DO</value>
   </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="ApproveConfirmation" xml:space="preserve">
+    <value>Are you sure you want to approve this order?</value>
+  </data>
 </root>

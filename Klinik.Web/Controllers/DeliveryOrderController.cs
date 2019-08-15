@@ -6,10 +6,11 @@ using Klinik.Entities.DeliveryOrder;
 using Klinik.Entities.DeliveryOrderDetail;
 using Klinik.Entities.MasterData;
 using Klinik.Features;
+using Rotativa;
+using Rotativa.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Klinik.Web.Controllers
@@ -94,7 +95,7 @@ namespace Klinik.Web.Controllers
         {
             if (Session["UserLogon"] != null)
                 _deliveryorder.Account = (AccountModel)Session["UserLogon"];
-            _deliveryorder.Id = Convert.ToInt32(_deliveryorder.Id) > 0 ? _deliveryorder.Id : 0; 
+            _deliveryorder.Id = Convert.ToInt32(_deliveryorder.Id) > 0 ? _deliveryorder.Id : 0;
             var request = new DeliveryOrderRequest
             {
                 Data = _deliveryorder
@@ -103,7 +104,7 @@ namespace Klinik.Web.Controllers
             DeliveryOrderResponse _response = new DeliveryOrderResponse();
 
             new DeliveryOrderValidator(_unitOfWork).Validate(request, out _response);
-            foreach(var item in deliveryOrderDetailModels)
+            foreach (var item in deliveryOrderDetailModels)
             {
                 var deliveryorderdetailrequest = new DeliveryOrderDetailRequest
                 {
@@ -156,6 +157,51 @@ namespace Klinik.Web.Controllers
             new DeliveryOrderValidator(_unitOfWork).Validate(request, out _response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("EDIT_M_DELIVERYORDER")]
+        [HttpPost]
+        public JsonResult ApproveDeliveryOrder(int id)
+        {
+            DeliveryOrderResponse _response = new DeliveryOrderResponse();
+            var request = new DeliveryOrderRequest
+            {
+                Data = new DeliveryOrderModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.APPROVE.ToString()
+            };
+
+            new DeliveryOrderValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult PrintDeliveryOrder(int id)
+        {
+            DeliveryOrderResponse _response = new DeliveryOrderResponse();
+
+            var request = new DeliveryOrderRequest
+            {
+                Data = new DeliveryOrderModel
+                {
+                    Id = id
+                }
+            };
+
+            DeliveryOrderResponse resp = new DeliveryOrderHandler(_unitOfWork).GetDetail(request);
+            DeliveryOrderModel _model = resp.Entity;
+            ViewBag.Response = _response;
+            return new PartialViewAsPdf(_model)
+            {
+                PageOrientation = Orientation.Portrait,
+                PageSize = Size.Folio,
+
+                FileName = "DeliveryOrder" + _model.donumber + ".pdf"
+            };
         }
 
         [HttpGet]

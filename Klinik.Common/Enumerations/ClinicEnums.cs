@@ -77,7 +77,8 @@
             Process,
             Hold,
             Finish,
-            Reschedule
+            Reschedule,
+            APPROVE
         }
 
         public enum SourceTable
