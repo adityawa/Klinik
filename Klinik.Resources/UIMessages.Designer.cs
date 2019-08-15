@@ -133,7 +133,7 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Already Pre Examine.
+        ///   Looks up a localized string similar to Pre Examined.
         /// </summary>
         public static string AlreadyPreExamine {
             get {

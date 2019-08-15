@@ -71,10 +71,7 @@ namespace Klinik.Features
                 }
             }
 
-            if (_preexmodel.LoketData == null)
-                _preexmodel.LoketData = new LoketModel();
-
-            _preexmodel.LoketData.Id = _getdetailQueuePoli.ID;
+            _preexmodel.LoketData = Mapper.Map<QueuePoli, LoketModel>(_getdetailQueuePoli); 
 
             var response = new PreExamineResponse
             {
@@ -158,6 +155,7 @@ namespace Klinik.Features
                     {
                         entiti.KBDate = Convert.ToDateTime("1900-01-01");
                     }
+
                     entiti.CreatedBy = request.Data.Account.UserName;
                     entiti.CreatedDate = DateTime.Now;
                     _unitOfWork.FormPreExamineRepository.Insert(entiti);

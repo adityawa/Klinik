@@ -294,6 +294,8 @@
                                         <div class="col-md-5">
                                             @Html.TextAreaFor(x => x.PreExamineData.Others, new { @class = "form-control", @id = "tbOthers" })
                                         </div>
+										@if (Model.LoketData.PatientGender.Equals("Female"))
+										{
                                         <label class="col-md-1 control-label" for="inputDefault">
                                             @Klinik.Resources.UIMessages.MenstrualDate
                                         </label>
@@ -306,6 +308,7 @@
                                         <div class="col-md-2">
                                             @Html.TextBoxFor(x => x.PreExamineData.strKBDate, new { @class = "form-control", @id = "tbKBDate" })
                                         </div>
+										}
                                     </div>
                                 </div>
                         </section>

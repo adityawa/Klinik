@@ -661,7 +661,7 @@
     <value>Number</value>
   </data>
   <data name="AlreadyPreExamine" xml:space="preserve">
-    <value>Already Pre Examine</value>
+    <value>Pre Examined</value>
   </data>
   <data name="QueuePoli" xml:space="preserve">
     <value>Queue Poli</value>

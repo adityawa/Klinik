@@ -40,8 +40,7 @@
                         <th>@Klinik.Resources.UIMessages.PoliFrom</th>
                         <th>@Klinik.Resources.UIMessages.PoliTo</th>
                         <th>@Klinik.Resources.UIMessages.AlreadyPreExamine</th>
-                        <th></th>
-                        <th></th>
+						<th>@Klinik.Resources.UIMessages.Action</th>
                     </tr>
                 </thead>
             </table>
@@ -135,22 +134,17 @@
                     "targets": [7],
                     "searchable": true,
                     "orderable": true
-                    },
-                    {
-                        "targets": [8],
-                        "searchable": false,
-                        "orderable": false
-                    },
-                    {
-                        "targets": [9],
-                        "searchable": false,
-                        "orderable": false
-                    },
-                    {
-                        "targets": [10],
-                        "searchable": false,
-                        "orderable": false
-                    }
+                },
+                {
+                    "targets": [8],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [9],
+                    "searchable": false,
+                    "orderable": false
+                }
                 ],
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": false },
@@ -162,18 +156,14 @@
                 { "data": "PoliFromName", "name": "PoliFromName", "autoWidth": true },
                 { "data": "PoliToName", "name": "PoliToName", "autoWidth": true },
                 { "data": "strIsPreExamine", "name": "strIsPreExamine", "autoWidth": true },
-
-                {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-success" href="/PreExamine/CreateOrEditPreExamine?id=' + full.Id + '">@Klinik.Resources.UIMessages.Process</a>'; }
-                },
-
                 {
                     "render": function (data, type, full, meta) {
-                        if (full.strIsPreExamine == 'Yes') {
-                            return ' <a class="btn btn-info" href="/PreExamine/CreateOrEditPreExamine?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>';
+						if (full.strIsPreExamine == 'Yes') {
+							return '<a class="btn btn-success" href="/PreExamine/CreateOrEditPreExamine?id=' + full.Id + '">@Klinik.Resources.UIMessages.Process</a>' +
+								' | <a class="btn btn-info" href="/PreExamine/CreateOrEditPreExamine?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>';                            
                         }
                         else {
-                            return ''
+                            return '<a class="btn btn-success" href="/PreExamine/CreateOrEditPreExamine?id=' + full.Id + '">@Klinik.Resources.UIMessages.Process</a>';
                         }
                     }
                 }

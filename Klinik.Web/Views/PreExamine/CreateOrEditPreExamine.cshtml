@@ -38,7 +38,6 @@
                     <div class="col-md-3">
                         @Html.DropDownListFor(p => p.DoctorID, (IEnumerable<SelectListItem>)ViewBag.Doctors, new { @class = "form-control", @id = "ddldoctor" })
                     </div>
-
                 </div>
                 <div class="form-group">
                     <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Temperature</label>
@@ -106,6 +105,8 @@
                     <div class="col-md-5">
                         @Html.TextAreaFor(x => x.Others, new { @class = "form-control", @id = "tbOthers" })
                     </div>
+					@if (Model.LoketData.PatientGender.Equals("F"))
+					{
                     <label class="col-md-1 control-label" for="inputDefault">
                         @Klinik.Resources.UIMessages.MenstrualDate
                     </label>
@@ -117,8 +118,8 @@
                     </label>
                     <div class="col-md-2">
                         @Html.TextBoxFor(x => x.strKBDate, new { @class = "form-control", @id = "tbKBDate" })
-                    </div>
-                 
+                    </div>                 
+					}
                 </div>
             </div>
             <footer class="panel-footer">
