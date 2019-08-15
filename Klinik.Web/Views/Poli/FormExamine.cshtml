@@ -3,372 +3,375 @@
 @using Klinik.Entities.Account;
 
 @{
-    Layout = "";
+	Layout = "";
 }
 
 <html class="fixed">
 <head>
-    <!-- Basic -->
-    <title>@Klinik.Resources.UIMessages.HomepageTitle</title>
-    <meta charset="UTF-8">
-    <meta name="keywords" content="Sistem Klinik Online" />
-    <meta name="description" content="Medical Management System">
-    <meta name="author" content="CV Mandiri">
+	<!-- Basic -->
+	<title>@Klinik.Resources.UIMessages.HomepageTitle</title>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="Sistem Klinik Online" />
+	<meta name="description" content="Medical Management System">
+	<meta name="author" content="CV Mandiri">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="~/Content/images/favicon.ico" />
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" href="~/Content/images/favicon.ico" />
 
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<!-- Mobile Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <!-- Web Fonts  -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+	<!-- Web Fonts  -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
 
-    <!-- Vendor CSS -->
-    <link href="~/Content/Octopus/assets/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/Octopus/assets/vendor/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" />
-    <link href="~/Content/Octopus/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
-    <link href="~/Content/Octopus/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" rel="stylesheet" />
-    <link href="~/Content/Octopus/assets/vendor/select2/select2.css" rel="stylesheet" />
-    <link href="~/Content/Octopus/assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" rel="stylesheet" />
-    <link href="~/Content/Octopus/assets/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" />
+	<!-- Vendor CSS -->
+	<link href="~/Content/Octopus/assets/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
+	<link href="~/Content/Octopus/assets/vendor/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" />
+	<link href="~/Content/Octopus/assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
+	<link href="~/Content/Octopus/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" rel="stylesheet" />
+	<link href="~/Content/Octopus/assets/vendor/select2/select2.css" rel="stylesheet" />
+	<link href="~/Content/Octopus/assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" rel="stylesheet" />
+	<link href="~/Content/Octopus/assets/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" />
 
-    <!-- Nuget CSS -->
-    <link href="~/Content/font-awesome.css" rel="stylesheet" />
-    <link href="~/Content/toastr.css" rel="stylesheet" />
+	<!-- Nuget CSS -->
+	<link href="~/Content/font-awesome.css" rel="stylesheet" />
+	<link href="~/Content/toastr.css" rel="stylesheet" />
 
-    <!-- Theme CSS -->
-    <link href="~/Content/Octopus/assets/stylesheets/theme.css" rel="stylesheet" />
-    <link href="~/Content/Octopus/assets/stylesheets/skins/default.css" rel="stylesheet" />
-    <link href="~/Content/Octopus/assets/stylesheets/theme-custom.css" rel="stylesheet" />
-    <link href="~/Scripts/medica/jquery-ui.css" rel="stylesheet" />
+	<!-- Theme CSS -->
+	<link href="~/Content/Octopus/assets/stylesheets/theme.css" rel="stylesheet" />
+	<link href="~/Content/Octopus/assets/stylesheets/skins/default.css" rel="stylesheet" />
+	<link href="~/Content/Octopus/assets/stylesheets/theme-custom.css" rel="stylesheet" />
+	<link href="~/Scripts/medica/jquery-ui.css" rel="stylesheet" />
 
-    <!-- Head Libraries -->
-    <script src="~/Scripts/jquery-3.0.0.js"></script>
-    <script src="~/Content/Octopus/assets/vendor/Modernizr/modernizr.js"></script>
-    <script src="~/Scripts/toastr.js"></script>
+	<!-- Head Libraries -->
+	<script src="~/Scripts/jquery-3.0.0.js"></script>
+	<script src="~/Content/Octopus/assets/vendor/Modernizr/modernizr.js"></script>
+	<script src="~/Scripts/toastr.js"></script>
 
 </head>
 <body>
-    <section class="body">
-        <!-- start: header -->
-        <header class="header">
-            <div class="logo-container">
-                <a href="/Home/Index" class="logo">
-                    <img src="~/Content/images/logo-medica.png" height="35" alt="JSOFT Admin" />
-                </a>
+	<section class="body">
+		<!-- start: header -->
+		<header class="header">
+			<div class="logo-container">
+				<a href="/Home/Index" class="logo">
+					<img src="~/Content/images/logo-medica.png" height="35" alt="JSOFT Admin" />
+				</a>
 
-                <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
-                    <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
-                </div>
-            </div>
+				<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+					<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+				</div>
+			</div>
 
-            <div class="header-right">
-                <span class="separator"></span>
+			<div class="header-right">
+				<span class="separator"></span>
 
-                <div id="userbox" class="userbox">
-                    <a href="#" data-toggle="dropdown">
-                        <figure class="profile-picture">
-                            <img src="~/Content/Octopus/assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
-                        </figure>
-                        <div class="profile-info">
-                            @{
-                                if (Session["UserLogon"] != null)
-                                {
-                                    AccountModel account = (AccountModel)Session["UserLogon"];
-                                    <span class="name">@account.UserName</span>
-                                }
-                            }
-                        </div>
+				<div id="userbox" class="userbox">
+					<a href="#" data-toggle="dropdown">
+						<figure class="profile-picture">
+							<img src="~/Content/Octopus/assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
+						</figure>
+						<div class="profile-info">
+							@{
+								if (Session["UserLogon"] != null)
+								{
+									AccountModel account = (AccountModel)Session["UserLogon"];
+									<span class="name">@account.UserName</span>
+								}
+							}
+						</div>
 
-                        <i class="fa custom-caret"></i>
-                    </a>
+						<i class="fa custom-caret"></i>
+					</a>
 
-                    <div class="dropdown-menu">
-                        <ul class="list-unstyled">
-                            <li class="divider"></li>
-                            <li>
-                                <a role="menuitem" tabindex="-1" href="@Url.Action("ChangePassword","PasswordHistory")"><i class="fa fa-key"></i>@Klinik.Resources.UIMessages.ChangePassword </a>
-                            </li>
-                            <li>
-                                <a role="menuitem" tabindex="-1" href="@Url.Action("Logout","Account")"><i class="fa fa-power-off"></i>@Klinik.Resources.UIMessages.Logout</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+					<div class="dropdown-menu">
+						<ul class="list-unstyled">
+							<li class="divider"></li>
+							<li>
+								<a role="menuitem" tabindex="-1" href="@Url.Action("ChangePassword","PasswordHistory")"><i class="fa fa-key"></i>@Klinik.Resources.UIMessages.ChangePassword </a>
+							</li>
+							<li>
+								<a role="menuitem" tabindex="-1" href="@Url.Action("Logout","Account")"><i class="fa fa-power-off"></i>@Klinik.Resources.UIMessages.Logout</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
 
-        </header>
-        <!-- end: header -->
+		</header>
+		<!-- end: header -->
 
-        <div class="inner-wrapper">
-            <!-- start: sidebar -->
-            <aside id="sidebar-left" class="sidebar-left">
+		<div class="inner-wrapper">
+			<!-- start: sidebar -->
+			<aside id="sidebar-left" class="sidebar-left">
 
-                <div class="sidebar-header">
-                    <div class="sidebar-title">
-                        @Klinik.Resources.UIMessages.Navigation
-                    </div>
-                    <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
-                        <i class="fa fa-bars" aria-label="Toggle sidebar" id="navbartoggle"></i>
-                    </div>
-                </div>
+				<div class="sidebar-header">
+					<div class="sidebar-title">
+						@Klinik.Resources.UIMessages.Navigation
+					</div>
+					<div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+						<i class="fa fa-bars" aria-label="Toggle sidebar" id="navbartoggle"></i>
+					</div>
+				</div>
 
-                <div class="nano">
-                    <div class="nano-content">
-                        <div class="col-md-12">
-                            <section class="panel">
-                                <header class="panel-heading">
-                                    <h2 class="panel-title">@Klinik.Resources.UIMessages.PatientData</h2>
-                                </header>
-                                <div class="panel-body">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="control-label">@Klinik.Resources.UIMessages.Name</label>
-                                            <input type="text" class="form-control" readOnly value="@Model.LoketData.PatientName">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="control-label">@Klinik.Resources.UIMessages.Address</label>
-                                            <input type="url" class="form-control" readOnly value="@Model.LoketData.PatientAddress">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="control-label">@Klinik.Resources.UIMessages.Birthdate</label>
-                                            <input type="url" class="form-control" readOnly value="@Model.LoketData.PatientBirthDateStr">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="control-label">@Klinik.Resources.UIMessages.Age</label>
-                                            <input type="url" class="form-control" readOnly value="@Model.PatientAge">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="control-label">@Klinik.Resources.UIMessages.Gender</label>
-                                            <input type="url" class="form-control" readOnly value="@Model.LoketData.PatientGender">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="control-label">@Klinik.Resources.UIMessages.Necessity</label>
-                                            <input type="url" class="form-control" readOnly value="@Model.NecessityTypeStr">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="control-label">@Klinik.Resources.UIMessages.PaymentType</label>
-                                            <input type="url" class="form-control" readOnly value="@Model.PaymentTypeStr">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label class="control-label">@Klinik.Resources.UIMessages.HPNumber</label>
-                                            <input type="url" class="form-control" readOnly value="@Model.LoketData.PatientHPNumber">
-                                        </div>
-                                    </div>
-                                </div>
-                                <footer class="panel-footer">                                    
-                                    <button class="btn btn-danger btn-block" onclick="location.href='@Url.Action("PatientList", "Poli")'">@Klinik.Resources.UIMessages.Back</button>
-                                </footer>
-                            </section>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-            <!-- end: sidebar -->
+				<div class="nano">
+					<div class="nano-content">
+						<div class="col-md-12">
+							<section class="panel">
+								<header class="panel-heading">
+									<h2 class="panel-title">@Klinik.Resources.UIMessages.PatientData</h2>
+								</header>
+								<div class="panel-body">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label class="control-label">@Klinik.Resources.UIMessages.Name</label>
+											<input type="text" class="form-control" readOnly value="@Model.LoketData.PatientName">
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label class="control-label">@Klinik.Resources.UIMessages.Address</label>
+											<input type="url" class="form-control" readOnly value="@Model.LoketData.PatientAddress">
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label class="control-label">@Klinik.Resources.UIMessages.Birthdate</label>
+											<input type="url" class="form-control" readOnly value="@Model.LoketData.PatientBirthDateStr">
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label class="control-label">@Klinik.Resources.UIMessages.Age</label>
+											<input type="url" class="form-control" readOnly value="@Model.PatientAge">
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label class="control-label">@Klinik.Resources.UIMessages.Gender</label>
+											<input type="url" class="form-control" readOnly value="@Model.LoketData.PatientGender">
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label class="control-label">@Klinik.Resources.UIMessages.Necessity</label>
+											<input type="url" class="form-control" readOnly value="@Model.NecessityTypeStr">
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label class="control-label">@Klinik.Resources.UIMessages.PaymentType</label>
+											<input type="url" class="form-control" readOnly value="@Model.PaymentTypeStr">
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<div class="form-group">
+											<label class="control-label">@Klinik.Resources.UIMessages.HPNumber</label>
+											<input type="url" class="form-control" readOnly value="@Model.LoketData.PatientHPNumber">
+										</div>
+									</div>
+								</div>
+								<footer class="panel-footer">
+									<button class="btn btn-danger btn-block" onclick="location.href='@Url.Action("PatientList", "Poli")'">@Klinik.Resources.UIMessages.Back</button>
+								</footer>
+							</section>
+						</div>
+					</div>
+				</div>
+			</aside>
+			<!-- end: sidebar -->
 
-            <section role="main" class="content-body">
-                <header class="page-header">
-                    <div class="right-wrapper pull-right">
-                        <ol class="breadcrumbs">
-                            <li>
-                                <a href="/Home/Index">
-                                    <i class="fa fa-home"></i>
-                                </a>
-                            </li>
-                            <li><span>@Klinik.Resources.UIMessages.Dashboard</span></li>
-                        </ol>
-                    </div>
-                </header>
-                <div>
-                    <div class="col-md-12">                        
-                        <section class="panel" data-toggle="collapse">
-                                <div></div>
-                                <header class="panel-heading">
-                                    <div class="panel-actions">
-                                        <a href="#" class="fa fa-caret-down"></a>
-                                    </div>
-                                    <div>
-                                        <h5 class="panel-title">
-                                            @Klinik.Resources.UIMessages.FormPreExamine
-                                        </h5>
-                                    </div>
-                                </header>
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.FormMedical</label>
-                                        @Html.HiddenFor(x => x.Id)
-                                        @Html.HiddenFor(x => x.LoketData.Id)
-                                        <div class="col-md-2">
-                                            @Html.TextBoxFor(x => x.PreExamineData.FormMedicalID, new { @class = "form-control", @id = "tbFormMedical", @readonly = "readonly" })
-                                        </div>
-                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.TransactionDate</label>
-                                        <div class="col-md-2">
-                                            @Html.TextBoxFor(x => x.PreExamineData.strTransDate, new { @class = "form-control", @id = "tbTransDate", @readonly = "readonly" })
-                                        </div>
-                                        <label class="col-md-1 control-label " for="inputDefault" style="text-align:left">
-                                            @Klinik.Resources.UIMessages.Doctor
-                                        </label>
-                                        <div class="col-md-3">
-                                            @Html.TextBoxFor(x => x.PreExamineData.DoctorName, new { @class = "form-control", @id = "tbDoctorPreExamine", @readonly = "readonly" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Temperature</label>
-                                        <div class="col-md-2">
-                                            @Html.TextBoxFor(x => x.PreExamineData.Temperature, new { @class = "form-control", @id = "tbTemperature" })
-                                        </div>
-                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Weight</label>
-                                        <div class="col-md-2">
-                                            @Html.TextBoxFor(x => x.PreExamineData.Weight, new { @class = "form-control", @id = "tbWeight" })
-                                        </div>
-                                        <label class="col-md-1 control-label" for="inputDefault">
-                                            @Klinik.Resources.UIMessages.Height
-                                        </label>
-                                        <div class="col-md-2">
-                                            @Html.TextBoxFor(x => x.PreExamineData.Height, new { @class = "form-control", @id = "tbHeight" })
-                                        </div>
+			<section role="main" class="content-body">
+				<header class="page-header">
+					<div class="right-wrapper pull-right">
+						<ol class="breadcrumbs">
+							<li>
+								<a href="/Home/Index">
+									<i class="fa fa-home"></i>
+								</a>
+							</li>
+							<li><span>@Klinik.Resources.UIMessages.Dashboard</span></li>
+						</ol>
+					</div>
+				</header>
+				<div>
+					@if (Model.PreExamineData.Id > 0)
+					{
+						<div class="col-md-12">
+							<section class="panel" data-toggle="collapse">
+								<div></div>
+								<header class="panel-heading">
+									<div class="panel-actions">
+										<a href="#" class="fa fa-caret-down"></a>
+									</div>
+									<div>
+										<h5 class="panel-title">
+											@Klinik.Resources.UIMessages.FormPreExamine
+										</h5>
+									</div>
+								</header>
+								<div class="panel-body">
+									<div class="form-group">
+										<label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.FormMedical</label>
+										@Html.HiddenFor(x => x.Id)
+										@Html.HiddenFor(x => x.LoketData.Id)
+										<div class="col-md-2">
+											@Html.TextBoxFor(x => x.PreExamineData.FormMedicalID, new { @class = "form-control", @id = "tbFormMedical", @readonly = "readonly" })
+										</div>
+										<label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.TransactionDate</label>
+										<div class="col-md-2">
+											@Html.TextBoxFor(x => x.PreExamineData.strTransDate, new { @class = "form-control", @id = "tbTransDate", @readonly = "readonly" })
+										</div>
+										<label class="col-md-1 control-label " for="inputDefault" style="text-align:left">
+											@Klinik.Resources.UIMessages.Doctor
+										</label>
+										<div class="col-md-3">
+											@Html.TextBoxFor(x => x.PreExamineData.DoctorName, new { @class = "form-control", @id = "tbDoctorPreExamine", @readonly = "readonly" })
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Temperature</label>
+										<div class="col-md-2">
+											@Html.TextBoxFor(x => x.PreExamineData.Temperature, new { @class = "form-control", @id = "tbTemperature" })
+										</div>
+										<label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Weight</label>
+										<div class="col-md-2">
+											@Html.TextBoxFor(x => x.PreExamineData.Weight, new { @class = "form-control", @id = "tbWeight" })
+										</div>
+										<label class="col-md-1 control-label" for="inputDefault">
+											@Klinik.Resources.UIMessages.Height
+										</label>
+										<div class="col-md-2">
+											@Html.TextBoxFor(x => x.PreExamineData.Height, new { @class = "form-control", @id = "tbHeight" })
+										</div>
 
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Respiratory</label>
-                                        <div class="col-md-2">
-                                            @Html.TextBoxFor(x => x.PreExamineData.Respiratory, new { @class = "form-control", @id = "tbRespiratory" })
-                                        </div>
-                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Diastolic</label>
-                                        <div class="col-md-2">
-                                            @Html.TextBoxFor(x => x.PreExamineData.Diastolic, new { @class = "form-control", @id = "tbDiastolic" })
-                                        </div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Respiratory</label>
+										<div class="col-md-2">
+											@Html.TextBoxFor(x => x.PreExamineData.Respiratory, new { @class = "form-control", @id = "tbRespiratory" })
+										</div>
+										<label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Diastolic</label>
+										<div class="col-md-2">
+											@Html.TextBoxFor(x => x.PreExamineData.Diastolic, new { @class = "form-control", @id = "tbDiastolic" })
+										</div>
 
-                                        <label class="col-md-1 control-label" for="inputDefault">
-                                            @Klinik.Resources.UIMessages.Systolic
-                                        </label>
-                                        <div class="col-md-2">
-                                            @Html.TextBoxFor(x => x.PreExamineData.Systolic, new { @class = "form-control", @id = "tbSystolic" })
-                                        </div>
-                                        <label class="col-md-1 control-label" for="inputDefault" id="lblNomor">
-                                            @Klinik.Resources.UIMessages.DailyGlasses
-                                        </label>
-                                        <div class="col-md-2">
-                                            @Html.TextBoxFor(x => x.PreExamineData.DailyGlasses, new { @class = "form-control", @id = "tbDailyGlasses" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Pulse</label>
-                                        <div class="col-md-2">
-                                            @Html.TextBoxFor(x => x.PreExamineData.Pulse, new { @class = "form-control", @id = "tbPulse" })
-                                        </div>
-                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.LeftEye</label>
-                                        <div class="col-md-2">
-                                            @Html.TextBoxFor(x => x.PreExamineData.LeftEye, new { @class = "form-control", @id = "tbLeftEye" })
-                                        </div>
-                                        <label class="col-md-1 control-label" for="inputDefault">
-                                            @Klinik.Resources.UIMessages.RightEye
-                                        </label>
-                                        <div class="col-md-2">
-                                            @Html.TextBoxFor(x => x.PreExamineData.RightEye, new { @class = "form-control", @id = "tbRightEye" })
-                                        </div>
-                                        <label class="col-md-1 control-label" for="inputDefault" id="lblNomor">
-                                            @Klinik.Resources.UIMessages.ExamineGlasses
-                                        </label>
-                                        <div class="col-md-2">
-                                            @Html.TextBoxFor(x => x.PreExamineData.ExamineGlasses, new { @class = "form-control", @id = "tbExamineGlasses" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Others</label>
-                                        <div class="col-md-5">
-                                            @Html.TextAreaFor(x => x.PreExamineData.Others, new { @class = "form-control", @id = "tbOthers" })
-                                        </div>
+										<label class="col-md-1 control-label" for="inputDefault">
+											@Klinik.Resources.UIMessages.Systolic
+										</label>
+										<div class="col-md-2">
+											@Html.TextBoxFor(x => x.PreExamineData.Systolic, new { @class = "form-control", @id = "tbSystolic" })
+										</div>
+										<label class="col-md-1 control-label" for="inputDefault" id="lblNomor">
+											@Klinik.Resources.UIMessages.DailyGlasses
+										</label>
+										<div class="col-md-2">
+											@Html.TextBoxFor(x => x.PreExamineData.DailyGlasses, new { @class = "form-control", @id = "tbDailyGlasses" })
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Pulse</label>
+										<div class="col-md-2">
+											@Html.TextBoxFor(x => x.PreExamineData.Pulse, new { @class = "form-control", @id = "tbPulse" })
+										</div>
+										<label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.LeftEye</label>
+										<div class="col-md-2">
+											@Html.TextBoxFor(x => x.PreExamineData.LeftEye, new { @class = "form-control", @id = "tbLeftEye" })
+										</div>
+										<label class="col-md-1 control-label" for="inputDefault">
+											@Klinik.Resources.UIMessages.RightEye
+										</label>
+										<div class="col-md-2">
+											@Html.TextBoxFor(x => x.PreExamineData.RightEye, new { @class = "form-control", @id = "tbRightEye" })
+										</div>
+										<label class="col-md-1 control-label" for="inputDefault" id="lblNomor">
+											@Klinik.Resources.UIMessages.ExamineGlasses
+										</label>
+										<div class="col-md-2">
+											@Html.TextBoxFor(x => x.PreExamineData.ExamineGlasses, new { @class = "form-control", @id = "tbExamineGlasses" })
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Others</label>
+										<div class="col-md-5">
+											@Html.TextAreaFor(x => x.PreExamineData.Others, new { @class = "form-control", @id = "tbOthers" })
+										</div>
 										@if (Model.LoketData.PatientGender.Equals("Female"))
 										{
-                                        <label class="col-md-1 control-label" for="inputDefault">
-                                            @Klinik.Resources.UIMessages.MenstrualDate
-                                        </label>
-                                        <div class="col-md-2">
-                                            @Html.TextBoxFor(x => x.PreExamineData.strMenstrualDate, new { @class = "form-control", @id = "tbMenstrualDate" })
-                                        </div>
-                                        <label class="col-md-1 control-label" for="inputDefault" id="lblNomor">
-                                            @Klinik.Resources.UIMessages.KBDate
-                                        </label>
-                                        <div class="col-md-2">
-                                            @Html.TextBoxFor(x => x.PreExamineData.strKBDate, new { @class = "form-control", @id = "tbKBDate" })
-                                        </div>
+											<label class="col-md-1 control-label" for="inputDefault">
+												@Klinik.Resources.UIMessages.MenstrualDate
+											</label>
+											<div class="col-md-2">
+												@Html.TextBoxFor(x => x.PreExamineData.strMenstrualDate, new { @class = "form-control", @id = "tbMenstrualDate" })
+											</div>
+											<label class="col-md-1 control-label" for="inputDefault" id="lblNomor">
+												@Klinik.Resources.UIMessages.KBDate
+											</label>
+											<div class="col-md-2">
+												@Html.TextBoxFor(x => x.PreExamineData.strKBDate, new { @class = "form-control", @id = "tbKBDate" })
+											</div>
 										}
-                                    </div>
-                                </div>
-                        </section>
-                    </div>
-                    <div class="col-md-12">
-                        <section class="panel">
-                            <header class="panel-heading">
-                                <div class="panel-actions">
-                                    <a href="#" class="fa fa-caret-down"></a>
-                                </div>
-                                <div>
-                                    <h5 class="panel-title">
-                                        @Klinik.Resources.UIMessages.FormExamine
-                                    </h5>
-                                </div>
-                            </header>
-                            <div class="panel-body">
-                                @Html.HiddenFor(x => x.Id, new { @id = "formExamineID" })
-                                @Html.HiddenFor(x => x.LoketData.Id, new { @id = "loketID" })
-                                <div class="tabs">
-                                    <ul class="nav nav-tabs nav-justified">
-                                        <li class="active">
-                                            <a href="#tabBasicExamine" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Examine</a>
-                                        </li>
-                                        <li>
-                                            <a href="#tabMedicine" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Medicine</a>
-                                        </li>
-                                        <li>
-                                            <a href="#tabService" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Service</a>
-                                        </li>
-                                        <li>
-                                            <a href="#tabLab" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Laboratory</a>
-                                        </li>
-                                        <li>
-                                            <a href="#tabRadiologi" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Radiology</a>
-                                        </li>
-                                        <li>
-                                            <a href="#tabResult" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Result</a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div id="tabBasicExamine" class="tab-pane active">
-                                            <label>@Klinik.Resources.UIMessages.Anamnesa</label>
-                                            @Html.TextAreaFor(x => x.ExamineData.Anamnesa, new { @class = "form-control", @id = "txtAnamnesa", @required = "", @tabindex = "1", @rows = "4" })
-                                            <label>@Klinik.Resources.UIMessages.Diagnose</label>
-                                            @Html.TextAreaFor(x => x.ExamineData.Diagnose, new { @class = "form-control", @id = "txtDiagnose", @required = "", @tabindex = "2", @rows = "4" })
-                                            <label>@Klinik.Resources.UIMessages.Theraphy</label>
-                                            @Html.TextAreaFor(x => x.ExamineData.Therapy, new { @class = "form-control", @id = "txtTherapy", @tabindex = "3", @rows = "4" })
-                                        </div>
-                                        <div id="tabMedicine" class="tab-pane">
-                                            <label>@Klinik.Resources.UIMessages.ConcoctionMedicine</label>
-                                            @Html.TextAreaFor(x => x.ConcoctionMedicine, new { @class = "form-control", @id = "txtConcoction", @rows = "4" })
-                                            <div><br /></div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <button type="button" class="btn btn-primary btn-block disabled">@Klinik.Resources.UIMessages.MedicineList</button>
-                                                </div>
-                                            </div>
-                                            <table class="table table-striped table-bordered dt-responsive" id="table-medicine">
-                                                <thead>
+									</div>
+								</div>
+							</section>
+						</div>
+					}
+					<div class="col-md-12">
+						<section class="panel">
+							<header class="panel-heading">
+								<div class="panel-actions">
+									<a href="#" class="fa fa-caret-down"></a>
+								</div>
+								<div>
+									<h5 class="panel-title">
+										@Klinik.Resources.UIMessages.FormExamine
+									</h5>
+								</div>
+							</header>
+							<div class="panel-body">
+								@Html.HiddenFor(x => x.Id, new { @id = "formExamineID" })
+								@Html.HiddenFor(x => x.LoketData.Id, new { @id = "loketID" })
+								<div class="tabs">
+									<ul class="nav nav-tabs nav-justified">
+										<li class="active">
+											<a href="#tabBasicExamine" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Examine</a>
+										</li>
+										<li>
+											<a href="#tabMedicine" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Medicine</a>
+										</li>
+										<li>
+											<a href="#tabService" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Service</a>
+										</li>
+										<li>
+											<a href="#tabLab" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Laboratory</a>
+										</li>
+										<li>
+											<a href="#tabRadiologi" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Radiology</a>
+										</li>
+										<li>
+											<a href="#tabResult" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Result</a>
+										</li>
+									</ul>
+									<div class="tab-content">
+										<div id="tabBasicExamine" class="tab-pane active">
+											<label>@Klinik.Resources.UIMessages.Anamnesa</label>
+											@Html.TextAreaFor(x => x.ExamineData.Anamnesa, new { @class = "form-control", @id = "txtAnamnesa", @required = "", @tabindex = "1", @rows = "4" })
+											<label>@Klinik.Resources.UIMessages.Diagnose</label>
+											@Html.TextAreaFor(x => x.ExamineData.Diagnose, new { @class = "form-control", @id = "txtDiagnose", @required = "", @tabindex = "2", @rows = "4" })
+											<label>@Klinik.Resources.UIMessages.Theraphy</label>
+											@Html.TextAreaFor(x => x.ExamineData.Therapy, new { @class = "form-control", @id = "txtTherapy", @tabindex = "3", @rows = "4" })
+										</div>
+										<div id="tabMedicine" class="tab-pane">
+											<label>@Klinik.Resources.UIMessages.ConcoctionMedicine</label>
+											@Html.TextAreaFor(x => x.ConcoctionMedicine, new { @class = "form-control", @id = "txtConcoction", @rows = "4" })
+											<div><br /></div>
+											<div class="row">
+												<div class="col-md-12">
+													<button type="button" class="btn btn-primary btn-block disabled">@Klinik.Resources.UIMessages.MedicineList</button>
+												</div>
+											</div>
+											<table class="table table-striped table-bordered dt-responsive" id="table-medicine">
+												<thead>
 													<tr style="font-size:13px">
 														<th style="width:45%">@Klinik.Resources.UIMessages.MedicineName</th>
 														<th style="width:10%">@Klinik.Resources.UIMessages.Stock</th>
@@ -377,34 +380,34 @@
 														<th style="width:17%">@Klinik.Resources.UIMessages.RemarkUse</th>
 														<th style="width:10%">@Klinik.Resources.UIMessages.Action</th>
 													</tr>
-                                                </thead>
-                                                <tbody style="font-size:13px">
-                                                    @foreach (var item in Model.MedicineDataList)
-                                                    {
-													<tr>
-														<td style="display: none;">
-															@Html.DisplayFor(modelItem => item.Id)
-														</td>
-														<td>
-															@Html.DisplayFor(modelItem => item.ProductName)
-														</td>
-														<td>
-															@Html.DisplayFor(modelItem => item.Stock)
-														</td>
-														<td>
-															@Html.DisplayFor(modelItem => item.Dose)
-														</td>
-														<td>
-															@Html.DisplayFor(modelItem => item.Qty)
-														</td>
-														<td>
-															@Html.DisplayFor(modelItem => item.RemarkUse)
-														</td>
-														<td></td>
-													</tr>
-                                                    }
-                                                </tbody>
-                                                <tfoot>
+												</thead>
+												<tbody style="font-size:13px">
+													@foreach (var item in Model.MedicineDataList)
+													{
+														<tr>
+															<td style="display: none;">
+																@Html.DisplayFor(modelItem => item.Id)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.ProductName)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.Stock)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.Dose)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.Qty)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.RemarkUse)
+															</td>
+															<td></td>
+														</tr>
+													}
+												</tbody>
+												<tfoot>
 													<tr>
 														<td><input id="medicineName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeMedicineNameHere" /><input hidden type="text" id="idMedicine" /></td>
 														<td><input id="medicineStock" type="text" class="form-control" disabled /></td>
@@ -414,294 +417,294 @@
 															<select class="form-control" id="medicineRemarkUse">
 																<option value="Sebelum Makan">Sebelum Makan</option>
 																<option value="Sesudah Makan">Sesudah Makan</option>
-															</select>															
+															</select>
 														</td>
 														<td><input type="button" id="btnAddMedicine" value="@Klinik.Resources.UIMessages.Add" /></td>
 													</tr>
-                                                </tfoot>
-                                            </table>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <button type="button" class="btn btn-primary btn-block disabled">@Klinik.Resources.UIMessages.InjectionList</button>
-                                                </div>
-                                            </div>
-                                            <table class="table table-striped table-bordered dt-responsive" id="table-injection">
-                                                <thead>
-                                                    <tr style="font-size:13px">
-                                                        <th style="width:50%">@Klinik.Resources.UIMessages.MedicineName</th>
-                                                        <th>@Klinik.Resources.UIMessages.Stock</th>
-                                                        <th>@Klinik.Resources.UIMessages.Volume</th>
-                                                        <th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody style="font-size:13px">
-                                                    @foreach (var item in Model.InjectionDataList)
-                                                    {
-                                                        <tr>
-                                                            <td style="display: none;">
-                                                                @Html.DisplayFor(modelItem => item.Id)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.ProductName)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Stock)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.RemarkUse)
-                                                            </td>
-                                                            <td></td>
-                                                        </tr>
-                                                    }
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td><input id="medicineInjectionName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeMedicineNameHere" /><input hidden type="text" id="idMedicineInjection" /></td>
-                                                        <td><input id="medicineInjectionStock" type="text" class="form-control" disabled /></td>
-                                                        <td><input id="medicineInjectionVolume" type="text" class="form-control" /></td>
-                                                        <td><input type="button" id="btnAddMedicineInjection" value="@Klinik.Resources.UIMessages.Add" /></td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                        <div id="tabService" class="tab-pane">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <button type="button" class="btn btn-primary btn-block disabled">@Klinik.Resources.UIMessages.ServiceList</button>
-                                                </div>
-                                            </div>
-                                            <table class="table table-striped table-bordered dt-responsive" id="table-service">
-                                                <thead>
-                                                    <tr style="font-size:13px">
-                                                        <th style="width:50%">@Klinik.Resources.UIMessages.Service</th>
-                                                        <th>@Klinik.Resources.UIMessages.Code</th>
-                                                        <th>@Klinik.Resources.UIMessages.Price</th>
-                                                        <th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody style="font-size:13px">
-                                                    @foreach (var item in Model.DefaultServiceList)
-                                                    {
-                                                        <tr>
-                                                            <td style="display: none;">
-                                                                @Html.DisplayFor(modelItem => item.Id)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Name)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Code)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Price)
-                                                            </td>
-                                                            <td></td>
-                                                        </tr>
-                                                    }
-                                                    @foreach (var item in Model.ServiceDataList)
-                                                    {
-                                                        <tr>
-                                                            <td style="display: none;">
-                                                                @Html.DisplayFor(modelItem => item.Id)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Service.Name)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Service.Code)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Service.Price)
-                                                            </td>
-                                                            <td></td>
-                                                        </tr>
-                                                    }
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td><input id="serviceName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeServiceNameHere" /><input hidden type="text" id="idService" /></td>
-                                                        <td><input id="serviceCode" type="text" class="form-control" disabled /></td>
-                                                        <td><input id="servicePrice" type="text" class="form-control" disabled /></td>
-                                                        <td><input type="button" id="btnAddService" value="@Klinik.Resources.UIMessages.Add" /></td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                        <div id="tabLab" class="tab-pane">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <button type="button" class="btn btn-primary btn-block disabled">@Klinik.Resources.UIMessages.LaboratList</button>
-                                                </div>
-                                            </div>
-                                            <table class="table table-striped table-bordered dt-responsive" id="table-lab">
-                                                <thead>
-                                                    <tr style="font-size:13px">
-                                                        <th style="width:50%">@Klinik.Resources.UIMessages.Laboratory</th>
-                                                        <th>@Klinik.Resources.UIMessages.Result</th>
-                                                        <th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody style="font-size:13px">
-                                                    @foreach (var item in Model.LabDataList)
-                                                    {
-                                                        <tr>
-                                                            <td style="display: none;">
-                                                                @Html.DisplayFor(modelItem => item.Id)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.LabItemDesc)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Result)
-                                                            </td>
-                                                            <td></td>
-                                                        </tr>
-                                                    }
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td><input id="laboratName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeLabNameHere" /><input hidden type="text" id="idLaborat" /></td>
-                                                        <td><input id="laboratResult" type="text" class="form-control" disabled /></td>
-                                                        <td><input type="button" id="btnAddLab" value="@Klinik.Resources.UIMessages.Add" /></td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                        <div id="tabRadiologi" class="tab-pane">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <button type="button" class="btn btn-primary btn-block disabled">@Klinik.Resources.UIMessages.RadiologyList</button>
-                                                </div>
-                                            </div>
-                                            <table class="table table-striped table-bordered dt-responsive" id="table-radiology">
-                                                <thead>
-                                                    <tr style="font-size:13px">
-                                                        <th style="width:50%">@Klinik.Resources.UIMessages.Radiology</th>
-                                                        <th>@Klinik.Resources.UIMessages.Result</th>
-                                                        <th>@Klinik.Resources.UIMessages.Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody style="font-size:13px">
-                                                    @foreach (var item in Model.RadiologyDataList)
-                                                    {
-                                                        <tr>
-                                                            <td style="display: none;">
-                                                                @Html.DisplayFor(modelItem => item.Id)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.LabItemDesc)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Result)
-                                                            </td>
-                                                            <td></td>
-                                                        </tr>
-                                                    }
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td><input id="radiologyName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeRadiologyNameHere" /><input hidden type="text" id="idRadiology" /></td>
-                                                        <td><input id="radiologyResult" type="text" class="form-control" disabled /></td>
-                                                        <td><input type="button" id="btnAddRadiology" value="@Klinik.Resources.UIMessages.Add" /></td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                        <div id="tabResult" class="tab-pane">
-                                            <div class="row">
-                                                <div class="form-group col-md-6">
-                                                    <div class="row text-right">
-                                                        <div class="form-group col-md-6">
-                                                            <label class="control-label">@Klinik.Resources.UIMessages.FinalState</label>
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            @Html.DropDownListFor(p => p.ExamineData.Result, (IEnumerable<SelectListItem>)ViewBag.FinalStateList, new { @class = "form-control", @id = "ddlfinalstate" })
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <div class="row text-right">
-                                                        <div class="form-group col-md-6">
-                                                            <label class="control-label">@Klinik.Resources.UIMessages.ForwardTo</label>
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            @Html.DropDownListFor(p => p.PoliToID, (IEnumerable<SelectListItem>)ViewBag.PoliList, new { @class = "form-control", @id = "ddlpolito" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="row text-right">
-                                                        <div class="form-group col-md-6">
-                                                            <label class="control-label" id="lbDoctor">@Klinik.Resources.UIMessages.Doctor</label>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            @Html.DropDownListFor(p => p.DoctorToID, (IEnumerable<SelectListItem>)ViewBag.DoctorList, new { @class = "form-control", @id = "ddldoctor" })
-                                                        </div>
-                                                    </div>
-                                                    <div><br /></div>
-                                                    <div class="row">
-                                                        <div class="form-group col-md-6"></div>
-                                                        <div class="form-group col-md-6">
-                                                            <button type="submit" class="btn btn-success btn-block" id="btnSave">Finish Examine</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </section>
+												</tfoot>
+											</table>
+											<div class="row">
+												<div class="col-md-12">
+													<button type="button" class="btn btn-primary btn-block disabled">@Klinik.Resources.UIMessages.InjectionList</button>
+												</div>
+											</div>
+											<table class="table table-striped table-bordered dt-responsive" id="table-injection">
+												<thead>
+													<tr style="font-size:13px">
+														<th style="width:50%">@Klinik.Resources.UIMessages.MedicineName</th>
+														<th>@Klinik.Resources.UIMessages.Stock</th>
+														<th>@Klinik.Resources.UIMessages.Volume</th>
+														<th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
+													</tr>
+												</thead>
+												<tbody style="font-size:13px">
+													@foreach (var item in Model.InjectionDataList)
+													{
+														<tr>
+															<td style="display: none;">
+																@Html.DisplayFor(modelItem => item.Id)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.ProductName)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.Stock)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.RemarkUse)
+															</td>
+															<td></td>
+														</tr>
+													}
+												</tbody>
+												<tfoot>
+													<tr>
+														<td><input id="medicineInjectionName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeMedicineNameHere" /><input hidden type="text" id="idMedicineInjection" /></td>
+														<td><input id="medicineInjectionStock" type="text" class="form-control" disabled /></td>
+														<td><input id="medicineInjectionVolume" type="text" class="form-control" /></td>
+														<td><input type="button" id="btnAddMedicineInjection" value="@Klinik.Resources.UIMessages.Add" /></td>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+										<div id="tabService" class="tab-pane">
+											<div class="row">
+												<div class="col-md-12">
+													<button type="button" class="btn btn-primary btn-block disabled">@Klinik.Resources.UIMessages.ServiceList</button>
+												</div>
+											</div>
+											<table class="table table-striped table-bordered dt-responsive" id="table-service">
+												<thead>
+													<tr style="font-size:13px">
+														<th style="width:50%">@Klinik.Resources.UIMessages.Service</th>
+														<th>@Klinik.Resources.UIMessages.Code</th>
+														<th>@Klinik.Resources.UIMessages.Price</th>
+														<th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
+													</tr>
+												</thead>
+												<tbody style="font-size:13px">
+													@foreach (var item in Model.DefaultServiceList)
+													{
+														<tr>
+															<td style="display: none;">
+																@Html.DisplayFor(modelItem => item.Id)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.Name)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.Code)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.Price)
+															</td>
+															<td></td>
+														</tr>
+													}
+													@foreach (var item in Model.ServiceDataList)
+													{
+														<tr>
+															<td style="display: none;">
+																@Html.DisplayFor(modelItem => item.Id)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.Service.Name)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.Service.Code)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.Service.Price)
+															</td>
+															<td></td>
+														</tr>
+													}
+												</tbody>
+												<tfoot>
+													<tr>
+														<td><input id="serviceName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeServiceNameHere" /><input hidden type="text" id="idService" /></td>
+														<td><input id="serviceCode" type="text" class="form-control" disabled /></td>
+														<td><input id="servicePrice" type="text" class="form-control" disabled /></td>
+														<td><input type="button" id="btnAddService" value="@Klinik.Resources.UIMessages.Add" /></td>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+										<div id="tabLab" class="tab-pane">
+											<div class="row">
+												<div class="col-md-12">
+													<button type="button" class="btn btn-primary btn-block disabled">@Klinik.Resources.UIMessages.LaboratList</button>
+												</div>
+											</div>
+											<table class="table table-striped table-bordered dt-responsive" id="table-lab">
+												<thead>
+													<tr style="font-size:13px">
+														<th style="width:50%">@Klinik.Resources.UIMessages.Laboratory</th>
+														<th>@Klinik.Resources.UIMessages.Result</th>
+														<th style="width:7%">@Klinik.Resources.UIMessages.Action</th>
+													</tr>
+												</thead>
+												<tbody style="font-size:13px">
+													@foreach (var item in Model.LabDataList)
+													{
+														<tr>
+															<td style="display: none;">
+																@Html.DisplayFor(modelItem => item.Id)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.LabItemDesc)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.Result)
+															</td>
+															<td></td>
+														</tr>
+													}
+												</tbody>
+												<tfoot>
+													<tr>
+														<td><input id="laboratName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeLabNameHere" /><input hidden type="text" id="idLaborat" /></td>
+														<td><input id="laboratResult" type="text" class="form-control" disabled /></td>
+														<td><input type="button" id="btnAddLab" value="@Klinik.Resources.UIMessages.Add" /></td>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+										<div id="tabRadiologi" class="tab-pane">
+											<div class="row">
+												<div class="col-md-12">
+													<button type="button" class="btn btn-primary btn-block disabled">@Klinik.Resources.UIMessages.RadiologyList</button>
+												</div>
+											</div>
+											<table class="table table-striped table-bordered dt-responsive" id="table-radiology">
+												<thead>
+													<tr style="font-size:13px">
+														<th style="width:50%">@Klinik.Resources.UIMessages.Radiology</th>
+														<th>@Klinik.Resources.UIMessages.Result</th>
+														<th>@Klinik.Resources.UIMessages.Action</th>
+													</tr>
+												</thead>
+												<tbody style="font-size:13px">
+													@foreach (var item in Model.RadiologyDataList)
+													{
+														<tr>
+															<td style="display: none;">
+																@Html.DisplayFor(modelItem => item.Id)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.LabItemDesc)
+															</td>
+															<td>
+																@Html.DisplayFor(modelItem => item.Result)
+															</td>
+															<td></td>
+														</tr>
+													}
+												</tbody>
+												<tfoot>
+													<tr>
+														<td><input id="radiologyName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeRadiologyNameHere" /><input hidden type="text" id="idRadiology" /></td>
+														<td><input id="radiologyResult" type="text" class="form-control" disabled /></td>
+														<td><input type="button" id="btnAddRadiology" value="@Klinik.Resources.UIMessages.Add" /></td>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+										<div id="tabResult" class="tab-pane">
+											<div class="row">
+												<div class="form-group col-md-6">
+													<div class="row text-right">
+														<div class="form-group col-md-6">
+															<label class="control-label">@Klinik.Resources.UIMessages.FinalState</label>
+														</div>
+														<div class="form-group col-md-6">
+															@Html.DropDownListFor(p => p.ExamineData.Result, (IEnumerable<SelectListItem>)ViewBag.FinalStateList, new { @class = "form-control", @id = "ddlfinalstate" })
+														</div>
+													</div>
+												</div>
+												<div class="form-group col-md-6">
+													<div class="row text-right">
+														<div class="form-group col-md-6">
+															<label class="control-label">@Klinik.Resources.UIMessages.ForwardTo</label>
+														</div>
+														<div class="form-group col-md-6">
+															@Html.DropDownListFor(p => p.PoliToID, (IEnumerable<SelectListItem>)ViewBag.PoliList, new { @class = "form-control", @id = "ddlpolito" })
+														</div>
+													</div>
+													<div class="row text-right">
+														<div class="form-group col-md-6">
+															<label class="control-label" id="lbDoctor">@Klinik.Resources.UIMessages.Doctor</label>
+														</div>
+														<div class="col-md-6">
+															@Html.DropDownListFor(p => p.DoctorToID, (IEnumerable<SelectListItem>)ViewBag.DoctorList, new { @class = "form-control", @id = "ddldoctor" })
+														</div>
+													</div>
+													<div><br /></div>
+													<div class="row">
+														<div class="form-group col-md-6"></div>
+														<div class="form-group col-md-6">
+															<button type="submit" class="btn btn-success btn-block" id="btnSave">Finish Examine</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+			</section>
+		</div>
+	</section>
 
-    <div id="dialog" class="modal-block mfp-hide">
-        <section class="panel">
-            <header class="panel-heading">
-                <h2 class="panel-title">@Klinik.Resources.UIMessages.AreYouSure</h2>
-            </header>
-            <div class="panel-body">
-                <div class="modal-wrapper">
-                    <div class="modal-text">
-                        <p>@Klinik.Resources.UIMessages.AreYouSureDelete</p>
-                    </div>
-                </div>
-            </div>
-            <footer class="panel-footer">
-                <div class="row">
-                    <div class="col-md-12 text-right">
-                        <button id="dialogConfirm" class="btn btn-primary">Confirm</button>
-                        <button id="dialogCancel" class="btn btn-default">Cancel</button>
-                    </div>
-                </div>
-            </footer>
-        </section>
-    </div>
+	<div id="dialog" class="modal-block mfp-hide">
+		<section class="panel">
+			<header class="panel-heading">
+				<h2 class="panel-title">@Klinik.Resources.UIMessages.AreYouSure</h2>
+			</header>
+			<div class="panel-body">
+				<div class="modal-wrapper">
+					<div class="modal-text">
+						<p>@Klinik.Resources.UIMessages.AreYouSureDelete</p>
+					</div>
+				</div>
+			</div>
+			<footer class="panel-footer">
+				<div class="row">
+					<div class="col-md-12 text-right">
+						<button id="dialogConfirm" class="btn btn-primary">Confirm</button>
+						<button id="dialogCancel" class="btn btn-default">Cancel</button>
+					</div>
+				</div>
+			</footer>
+		</section>
+	</div>
 
-    <!-- Specific Page Vendor -->
-    <script src="~/Content/Octopus/assets/vendor/select2/select2.js"></script>
-    <script src="~/Content/Octopus/assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
-    <script src="~/Content/Octopus/assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
-    <script src="~/Content/Octopus/assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
-    <script src="~/Content/Octopus/assets/vendor/magnific-popup/magnific-popup.js"></script>
+	<!-- Specific Page Vendor -->
+	<script src="~/Content/Octopus/assets/vendor/select2/select2.js"></script>
+	<script src="~/Content/Octopus/assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+	<script src="~/Content/Octopus/assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
+	<script src="~/Content/Octopus/assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
+	<script src="~/Content/Octopus/assets/vendor/magnific-popup/magnific-popup.js"></script>
 
-    <!-- Vendor -->
-    <script src="~/Content/Octopus/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
-    <script src="~/Content/Octopus/assets/vendor/bootstrap/js/bootstrap.js"></script>
-    <script src="~/Content/Octopus/assets/vendor/nanoscroller/nanoscroller.js"></script>
-    <script src="~/Content/Octopus/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script src="~/Content/Octopus/assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
-    <script src="~/Content/Octopus/assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
-    <script src="~/Content/Octopus/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+	<!-- Vendor -->
+	<script src="~/Content/Octopus/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+	<script src="~/Content/Octopus/assets/vendor/bootstrap/js/bootstrap.js"></script>
+	<script src="~/Content/Octopus/assets/vendor/nanoscroller/nanoscroller.js"></script>
+	<script src="~/Content/Octopus/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	<script src="~/Content/Octopus/assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+	<script src="~/Content/Octopus/assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js"></script>
+	<script src="~/Content/Octopus/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
 
-    <!-- Theme -->
-    <script src="~/Content/Octopus/assets/javascripts/theme.js"></script>
-    <script src="~/Content/Octopus/assets/javascripts/theme.custom.js"></script>
-    <script src="~/Content/Octopus/assets/javascripts/theme.init.js"></script>
-    <script src="~/Scripts/medica/jquery-1.10.2.js"></script>
-    <script src="~/Scripts/medica/jquery-ui.js"></script>
-    <script type="text/javascript" lang="en">
+	<!-- Theme -->
+	<script src="~/Content/Octopus/assets/javascripts/theme.js"></script>
+	<script src="~/Content/Octopus/assets/javascripts/theme.custom.js"></script>
+	<script src="~/Content/Octopus/assets/javascripts/theme.init.js"></script>
+	<script src="~/Scripts/medica/jquery-1.10.2.js"></script>
+	<script src="~/Scripts/medica/jquery-ui.js"></script>
+	<script type="text/javascript" lang="en">
         function Remove(button) {
             //Determine the reference of the Row using the Button.
             var row = $(button).closest("TR");
@@ -1165,7 +1168,8 @@
                 "showMethod": "fadeIn"
             };
 
-            $('#btnSave').click(function () {
+			$('#btnSave').click(function () {
+				$('#btnSave').attr('disabled', 'disabled');
                 var formExamineID = $('#formExamineID').val();
                 var loketID = $('#loketID').val();
                 var anamnesa = $('#txtAnamnesa').val();
@@ -1178,7 +1182,7 @@
 
                 var medicineList = [];
                 $('#table-medicine tbody tr').each(function () {
-                    var id = $(this).find('td').eq(0).text().trim();                    
+                    var id = $(this).find('td').eq(0).text().trim();
                     var dose = $(this).find('td').eq(3).text().trim();
 					var amount = $(this).find('td').eq(4).text().trim();
 					var remark = $(this).find('td').eq(5).text().trim();
@@ -1247,7 +1251,7 @@
                 });
             });
         });
-    </script>
+	</script>
 </body>
 </html>
 
