@@ -127,6 +127,8 @@
     <Compile Include="Poli\PatientListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Loket\LoketModel.cs" />
+    <Compile Include="PurchaseOrderDetail\PurchaseOrderDetailModel.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">

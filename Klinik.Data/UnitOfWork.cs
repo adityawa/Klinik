@@ -56,6 +56,8 @@ namespace Klinik.Data
         private IGenericRepository<DeliveryOrderDetail> _deliveryorderdetailRepository;
         private IGenericRepository<DeliveryOrderPusat> _deliveryorderpusatRepository;
         private IGenericRepository<DeliveryOrderPusatDetail> _deliveryorderpusatdetailRepository;
+        private IGenericRepository<PurchaseOrder> _purchaseorderRepository;
+        private IGenericRepository<PurchaseOrderDetail> _purchaseorderdetailRepository;
 
         private bool disposed = false;
 
@@ -579,6 +581,26 @@ namespace Klinik.Data
                 if (_deliveryorderpusatdetailRepository == null)
                     _deliveryorderpusatdetailRepository = new GenericRepository<DeliveryOrderPusatDetail>(_context);
                 return _deliveryorderpusatdetailRepository;
+            }
+        }
+
+        public IGenericRepository<PurchaseOrder> PurchaseOrderRepository
+        {
+            get
+            {
+                if (_purchaseorderRepository == null)
+                    _purchaseorderRepository = new GenericRepository<PurchaseOrder>(_context);
+                return _purchaseorderRepository;
+            }
+        }
+
+        public IGenericRepository<PurchaseOrderDetail> PurchaseOrderDetailRepository
+        {
+            get
+            {
+                if (_purchaseorderdetailRepository == null)
+                    _purchaseorderdetailRepository = new GenericRepository<PurchaseOrderDetail>(_context);
+                return _purchaseorderdetailRepository;
             }
         }
 

@@ -143,6 +143,10 @@
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_DeliveryOrderPusat" />
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Gudang" />
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Product" />
+        <EntityTypeShape EntityType="KlinikDBModel.PurchaseOrderDetail" Width="1.5" PointX="15.75" PointY="29.625" />
+        <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrderDetail_Product" />
+        <EntityTypeShape EntityType="KlinikDBModel.PurchaseOrder" Width="1.5" PointX="0.75" PointY="7" />
+        <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrderDetail_PurchaseOrder" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

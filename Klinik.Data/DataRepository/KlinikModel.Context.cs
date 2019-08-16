@@ -80,5 +80,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<FormExamineMedicine> FormExamineMedicines { get; set; }
         public virtual DbSet<DeliveryOrderPusat> DeliveryOrderPusats { get; set; }
         public virtual DbSet<DeliveryOrderPusatDetail> DeliveryOrderPusatDetails { get; set; }
+        public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
+        public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
     }
 }
