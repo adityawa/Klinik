@@ -33,7 +33,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Speech" />
     <Reference Include="System.Xml.Linq" />
@@ -67,6 +75,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -79,6 +88,34 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Klinik.Common\Klinik.Common.csproj">
+      <Project>{e5c9d610-f530-4d0e-8d9e-2a729ccbff23}</Project>
+      <Name>Klinik.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
+      <Project>{53291442-9a4c-4416-8871-8c94d7636404}</Project>
+      <Name>Klinik.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Klinik.Entities\Klinik.Entities.csproj">
+      <Project>{0a81b9b4-7d64-412d-8e86-8ae9d22cf53f}</Project>
+      <Name>Klinik.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Suara\0.wav" />
+    <Content Include="Suara\1.wav" />
+    <Content Include="Suara\2.wav" />
+    <Content Include="Suara\3.wav" />
+    <Content Include="Suara\4.wav" />
+    <Content Include="Suara\5.wav" />
+    <Content Include="Suara\6.wav" />
+    <Content Include="Suara\7.wav" />
+    <Content Include="Suara\8.wav" />
+    <Content Include="Suara\9.wav" />
+    <Content Include="Suara\B.wav" />
+    <Content Include="Suara\M.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
