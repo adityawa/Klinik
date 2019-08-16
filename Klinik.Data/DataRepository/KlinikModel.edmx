@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AppConfig">
           <Key>
             <PropertyRef Name="ID" />
@@ -76,42 +76,86 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="poid" Type="int" Nullable="false" />
-          <Property Name="donumber" Type="nvarchar" MaxLength="50" />
-          <Property Name="dodate" Type="datetime" />
-          <Property Name="dodest" Type="nvarchar" MaxLength="50" />
+          <Property Name="donumber" Type="varchar" MaxLength="20" />
+          <Property Name="dodate" Type="date" />
+          <Property Name="dodest" Type="varchar" MaxLength="30" />
           <Property Name="approve_by" Type="int" />
           <Property Name="approve" Type="int" />
-          <Property Name="RowStatus" Type="smallint" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="RowStatus" Type="smallint" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="20" />
           <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="DeliveryOrderDetail">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DeliveryOderId" Type="int" Nullable="false" />
-          <Property Name="namabarang_po" Type="nvarchar" MaxLength="50" />
-          <Property Name="qty_po" Type="float" />
-          <Property Name="qty_po_final" Type="float" />
           <Property Name="ProductId" Type="int" Nullable="false" />
-          <Property Name="ProductId_Po" Type="int" />
-          <Property Name="namabarang" Type="nvarchar" MaxLength="50" />
+          <Property Name="namabarang" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="GudangId" Type="int" />
           <Property Name="ClinicId" Type="bigint" />
+          <Property Name="ProductId_Po" Type="int" />
+          <Property Name="namabarang_po" Type="varchar" MaxLength="50" />
+          <Property Name="qty_po" Type="float" />
+          <Property Name="qty_po_final" Type="float" />
           <Property Name="qty_do" Type="float" />
-          <Property Name="remark_do" Type="nvarchar" MaxLength="50" />
+          <Property Name="remark_do" Type="varchar" MaxLength="30" />
           <Property Name="qty_adj" Type="float" />
-          <Property Name="remark_adj" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="RowStatus" Type="smallint" />
+          <Property Name="remark_adj" Type="varchar" MaxLength="30" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="RowStatus" Type="smallint" />
+        </EntityType>
+        <EntityType Name="DeliveryOrderPusat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="poid" Type="int" Nullable="false" />
+          <Property Name="donumber" Type="varchar" MaxLength="20" />
+          <Property Name="dodate" Type="date" />
+          <Property Name="dodest" Type="varchar" MaxLength="30" />
+          <Property Name="approve_by" Type="int" />
+          <Property Name="approve" Type="int" />
+          <Property Name="RowStatus" Type="smallint" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="20" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="StatusSop" Type="int" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DeliveryOrderPusatDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeliveryOderPusatId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="namabarang" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="GudangId" Type="int" />
+          <Property Name="namagudang" Type="varchar" MaxLength="150" />
+          <Property Name="ClinicId" Type="bigint" />
+          <Property Name="namaklinik" Type="varchar" MaxLength="150" />
+          <Property Name="ProductId_Po" Type="int" />
+          <Property Name="namabarang_po" Type="varchar" MaxLength="50" />
+          <Property Name="qty_po" Type="float" />
+          <Property Name="qty_po_final" Type="float" />
+          <Property Name="qty_do" Type="float" />
+          <Property Name="remark_do" Type="varchar" MaxLength="30" />
+          <Property Name="qty_adj" Type="float" />
+          <Property Name="remark_adj" Type="varchar" MaxLength="30" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="RowStatus" Type="smallint" />
         </EntityType>
         <EntityType Name="Doctor">
           <Key>
@@ -295,9 +339,8 @@
           <Property Name="FormExamineID" Type="bigint" />
           <Property Name="TypeID" Type="nvarchar" MaxLength="250" />
           <Property Name="ProductID" Type="int" />
-          <Property Name="ConcoctionMedicine" Type="text" />
           <Property Name="Qty" Type="float" />
-          <Property Name="Dose" Type="nvarchar" MaxLength="50" />
+          <Property Name="ConcoctionMedicine" Type="text" />
           <Property Name="RemarkUse" Type="varchar" MaxLength="50" />
           <Property Name="RowStatus" Type="smallint" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
@@ -390,14 +433,14 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ClinicId" Type="bigint" Nullable="false" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="RowStatus" Type="smallint" />
         </EntityType>
         <EntityType Name="LabItem">
           <Key>
@@ -757,15 +800,15 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GudangId" Type="int" />
           <Property Name="ProductId" Type="int" />
           <Property Name="stock" Type="int" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="RowStatus" Type="int" />
         </EntityType>
         <EntityType Name="ProductMedicine">
           <Key>
@@ -975,14 +1018,62 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DeliveryOrderDetail_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
           <End Role="DeliveryOrderDetail" Type="Self.DeliveryOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="DeliveryOrderDetail">
-              <PropertyRef Name="ProductId" />
+              <PropertyRef Name="ProductId_Po" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOrderPusatDetail_Clinic">
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
+          <End Role="DeliveryOrderPusatDetail" Type="Self.DeliveryOrderPusatDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeliveryOrderPusatDetail">
+              <PropertyRef Name="ClinicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOrderPusatDetail_DeliveryOrderPusat">
+          <End Role="DeliveryOrderPusat" Type="Self.DeliveryOrderPusat" Multiplicity="1" />
+          <End Role="DeliveryOrderPusatDetail" Type="Self.DeliveryOrderPusatDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryOrderPusat">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DeliveryOrderPusatDetail">
+              <PropertyRef Name="DeliveryOderPusatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOrderPusatDetail_Gudang">
+          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
+          <End Role="DeliveryOrderPusatDetail" Type="Self.DeliveryOrderPusatDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DeliveryOrderPusatDetail">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOrderPusatDetail_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="DeliveryOrderPusatDetail" Type="Self.DeliveryOrderPusatDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeliveryOrderPusatDetail">
+              <PropertyRef Name="ProductId_Po" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1833,6 +1924,8 @@
           <EntitySet Name="Clinic" EntityType="Self.Clinic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeliveryOrder" EntityType="Self.DeliveryOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeliveryOrderDetail" EntityType="Self.DeliveryOrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryOrderPusat" EntityType="Self.DeliveryOrderPusat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryOrderPusatDetail" EntityType="Self.DeliveryOrderPusatDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DoctorClinic" EntityType="Self.DoctorClinic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
@@ -1911,6 +2004,22 @@
           <AssociationSet Name="FK_DeliveryOrderDetail_Product" Association="Self.FK_DeliveryOrderDetail_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="DeliveryOrderDetail" EntitySet="DeliveryOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOrderPusatDetail_Clinic" Association="Self.FK_DeliveryOrderPusatDetail_Clinic">
+            <End Role="Clinic" EntitySet="Clinic" />
+            <End Role="DeliveryOrderPusatDetail" EntitySet="DeliveryOrderPusatDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOrderPusatDetail_DeliveryOrderPusat" Association="Self.FK_DeliveryOrderPusatDetail_DeliveryOrderPusat">
+            <End Role="DeliveryOrderPusat" EntitySet="DeliveryOrderPusat" />
+            <End Role="DeliveryOrderPusatDetail" EntitySet="DeliveryOrderPusatDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOrderPusatDetail_Gudang" Association="Self.FK_DeliveryOrderPusatDetail_Gudang">
+            <End Role="Gudang" EntitySet="Gudang" />
+            <End Role="DeliveryOrderPusatDetail" EntitySet="DeliveryOrderPusatDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOrderPusatDetail_Product" Association="Self.FK_DeliveryOrderPusatDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DeliveryOrderPusatDetail" EntitySet="DeliveryOrderPusatDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_Doctor_Employee" Association="Self.FK_Doctor_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -2193,8 +2302,7 @@
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KlinikDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2283,6 +2391,7 @@
           <NavigationProperty Name="PoliScheduleMasters" Relationship="Self.FK_PoliScheduleMaster_Clinic" FromRole="Clinic" ToRole="PoliScheduleMaster" />
           <NavigationProperty Name="PoliServices" Relationship="Self.FK_PoliServices_Clinic" FromRole="Clinic" ToRole="PoliServices" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_Clinic" FromRole="Clinic" ToRole="QueuePoli" />
+          <NavigationProperty Name="DeliveryOrderPusatDetails" Relationship="KlinikDBModel.FK_DeliveryOrderPusatDetail_Clinic" FromRole="Clinic" ToRole="DeliveryOrderPusatDetail" />
         </EntityType>
         <EntityType Name="DeliveryOrder">
           <Key>
@@ -2290,15 +2399,15 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="poid" Type="Int32" Nullable="false" />
-          <Property Name="donumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="dodate" Type="DateTime" Precision="3" />
-          <Property Name="dodest" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="donumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="dodate" Type="DateTime" Precision="0" />
+          <Property Name="dodest" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="approve_by" Type="Int32" />
           <Property Name="approve" Type="Int32" />
-          <Property Name="RowStatus" Type="Int16" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RowStatus" Type="Int16" />
+          <Property Name="CreatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="DeliveryOrderDetails" Relationship="Self.FK_DeliveryOrderDetail_DeliveryOrder" FromRole="DeliveryOrder" ToRole="DeliveryOrderDetail" />
         </EntityType>
@@ -2308,18 +2417,18 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="DeliveryOderId" Type="Int32" Nullable="false" />
-          <Property Name="namabarang_po" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="namabarang_po" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="qty_po" Type="Double" />
           <Property Name="qty_po_final" Type="Double" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="ProductId_Po" Type="Int32" />
-          <Property Name="namabarang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="namabarang" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GudangId" Type="Int32" />
           <Property Name="ClinicId" Type="Int64" />
           <Property Name="qty_do" Type="Double" />
-          <Property Name="remark_do" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="remark_do" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="qty_adj" Type="Double" />
-          <Property Name="remark_adj" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="remark_adj" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="RowStatus" Type="Int16" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
@@ -2329,6 +2438,7 @@
           <NavigationProperty Name="DeliveryOrder" Relationship="Self.FK_DeliveryOrderDetail_DeliveryOrder" FromRole="DeliveryOrderDetail" ToRole="DeliveryOrder" />
           <NavigationProperty Name="Gudang" Relationship="Self.FK_DeliveryOrderDetail_Gudang" FromRole="DeliveryOrderDetail" ToRole="Gudang" />
           <NavigationProperty Name="Product" Relationship="Self.FK_DeliveryOrderDetail_Product" FromRole="DeliveryOrderDetail" ToRole="Product" />
+          <NavigationProperty Name="Product1" Relationship="KlinikDBModel.FK_DeliveryOrderDetail_Product1" FromRole="DeliveryOrderDetail" ToRole="Product" />
         </EntityType>
         <EntityType Name="Doctor">
           <Key>
@@ -2504,8 +2614,8 @@
           <NavigationProperty Name="FormMedical" Relationship="Self.FK_FormExamine_FormMedical" FromRole="FormExamine" ToRole="FormMedical" />
           <NavigationProperty Name="Poli" Relationship="Self.FK_FormExamine_Poli" FromRole="FormExamine" ToRole="Poli" />
           <NavigationProperty Name="FormExamineAttachments" Relationship="Self.FK_FormExamineAttachment_FormExamine" FromRole="FormExamine" ToRole="FormExamineAttachment" />
-          <NavigationProperty Name="FormExamineMedicines" Relationship="Self.FK_FormExamineMedicine_FormExamine" FromRole="FormExamine" ToRole="FormExamineMedicine" />
           <NavigationProperty Name="FormExamineServices" Relationship="Self.FK_FormExamineService_FormExamine" FromRole="FormExamine" ToRole="FormExamineService" />
+          <NavigationProperty Name="FormExamineMedicines" Relationship="KlinikDBModel.FK_FormExamineMedicine_FormExamine" FromRole="FormExamine" ToRole="FormExamineMedicine" />
         </EntityType>
         <EntityType Name="FormExamineAttachment">
           <Key>
@@ -2539,26 +2649,6 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="FormMedical" Relationship="Self.FK_FormExamineLab_FormMedical" FromRole="FormExamineLab" ToRole="FormMedical" />
           <NavigationProperty Name="LabItem" Relationship="Self.FK_FormExamineLab_LabItem" FromRole="FormExamineLab" ToRole="LabItem" />
-        </EntityType>
-        <EntityType Name="FormExamineMedicine">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FormExamineID" Type="Int64" />
-          <Property Name="TypeID" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ProductID" Type="Int32" />
-          <Property Name="ConcoctionMedicine" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Qty" Type="Double" />
-          <Property Name="Dose" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RemarkUse" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="FormExamine" Relationship="Self.FK_FormExamineMedicine_FormExamine" FromRole="FormExamineMedicine" ToRole="FormExamine" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_FormExamineMedicine_Product" FromRole="FormExamineMedicine" ToRole="Product" />
         </EntityType>
         <EntityType Name="FormExamineService">
           <Key>
@@ -2657,16 +2747,17 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ClinicId" Type="Int64" Nullable="false" />
           <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Clinic" Relationship="Self.FK_Gudang_Clinic" FromRole="Gudang" ToRole="Clinic" />
           <NavigationProperty Name="DeliveryOrderDetails" Relationship="Self.FK_DeliveryOrderDetail_Gudang" FromRole="Gudang" ToRole="DeliveryOrderDetail" />
           <NavigationProperty Name="ProductInGudangs" Relationship="Self.FK_ProductInGudang_Gudang" FromRole="Gudang" ToRole="ProductInGudang" />
+          <NavigationProperty Name="DeliveryOrderPusatDetails" Relationship="KlinikDBModel.FK_DeliveryOrderPusatDetail_Gudang" FromRole="Gudang" ToRole="DeliveryOrderPusatDetail" />
         </EntityType>
         <EntityType Name="LabItem">
           <Key>
@@ -3061,11 +3152,13 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="DeliveryOrderDetails" Relationship="Self.FK_DeliveryOrderDetail_Product" FromRole="Product" ToRole="DeliveryOrderDetail" />
-          <NavigationProperty Name="FormExamineMedicines" Relationship="Self.FK_FormExamineMedicine_Product" FromRole="Product" ToRole="FormExamineMedicine" />
           <NavigationProperty Name="ProductCategory" Relationship="Self.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
           <NavigationProperty Name="ProductUnit" Relationship="Self.FK_Product_ProductUnit" FromRole="Product" ToRole="ProductUnit" />
           <NavigationProperty Name="ProductInGudangs" Relationship="Self.FK_ProductInGudang_Product" FromRole="Product" ToRole="ProductInGudang" />
           <NavigationProperty Name="ProductMedicines" Relationship="Self.FK_ProductMedicine_Product" FromRole="Product" ToRole="ProductMedicine" />
+          <NavigationProperty Name="DeliveryOrderDetails1" Relationship="KlinikDBModel.FK_DeliveryOrderDetail_Product1" FromRole="Product" ToRole="DeliveryOrderDetail" />
+          <NavigationProperty Name="FormExamineMedicines" Relationship="KlinikDBModel.FK_FormExamineMedicine_Product" FromRole="Product" ToRole="FormExamineMedicine" />
+          <NavigationProperty Name="DeliveryOrderPusatDetails" Relationship="KlinikDBModel.FK_DeliveryOrderPusatDetail_Product" FromRole="Product" ToRole="DeliveryOrderPusatDetail" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -3089,9 +3182,9 @@
           <Property Name="ProductId" Type="Int32" />
           <Property Name="stock" Type="Int32" />
           <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Gudang" Relationship="Self.FK_ProductInGudang_Gudang" FromRole="ProductInGudang" ToRole="Gudang" />
           <NavigationProperty Name="Product" Relationship="Self.FK_ProductInGudang_Product" FromRole="ProductInGudang" ToRole="Product" />
@@ -3719,18 +3812,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FormExamineMedicine_FormExamine">
-          <End Role="FormExamine" Type="Self.FormExamine" Multiplicity="0..1" />
-          <End Role="FormExamineMedicine" Type="Self.FormExamineMedicine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FormExamine">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FormExamineMedicine">
-              <PropertyRef Name="FormExamineID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_FormExamineService_FormExamine">
           <End Role="FormExamine" Type="Self.FormExamine" Multiplicity="0..1" />
           <End Role="FormExamineService" Type="Self.FormExamineService" Multiplicity="*" />
@@ -3764,18 +3845,6 @@
             </Principal>
             <Dependent Role="FormExamineLab">
               <PropertyRef Name="LabItemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FormExamineMedicine_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="FormExamineMedicine" Type="Self.FormExamineMedicine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FormExamineMedicine">
-              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4192,7 +4261,6 @@
           <EntitySet Name="FormExamines" EntityType="Self.FormExamine" />
           <EntitySet Name="FormExamineAttachments" EntityType="Self.FormExamineAttachment" />
           <EntitySet Name="FormExamineLabs" EntityType="Self.FormExamineLab" />
-          <EntitySet Name="FormExamineMedicines" EntityType="Self.FormExamineMedicine" />
           <EntitySet Name="FormExamineServices" EntityType="Self.FormExamineService" />
           <EntitySet Name="FormMedicals" EntityType="Self.FormMedical" />
           <EntitySet Name="FormPreExamines" EntityType="Self.FormPreExamine" />
@@ -4389,10 +4457,6 @@
             <End Role="FormExamine" EntitySet="FormExamines" />
             <End Role="FormExamineAttachment" EntitySet="FormExamineAttachments" />
           </AssociationSet>
-          <AssociationSet Name="FK_FormExamineMedicine_FormExamine" Association="Self.FK_FormExamineMedicine_FormExamine">
-            <End Role="FormExamine" EntitySet="FormExamines" />
-            <End Role="FormExamineMedicine" EntitySet="FormExamineMedicines" />
-          </AssociationSet>
           <AssociationSet Name="FK_FormExamineService_FormExamine" Association="Self.FK_FormExamineService_FormExamine">
             <End Role="FormExamine" EntitySet="FormExamines" />
             <End Role="FormExamineService" EntitySet="FormExamineServices" />
@@ -4404,10 +4468,6 @@
           <AssociationSet Name="FK_FormExamineLab_LabItem" Association="Self.FK_FormExamineLab_LabItem">
             <End Role="LabItem" EntitySet="LabItems" />
             <End Role="FormExamineLab" EntitySet="FormExamineLabs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FormExamineMedicine_Product" Association="Self.FK_FormExamineMedicine_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="FormExamineMedicine" EntitySet="FormExamineMedicines" />
           </AssociationSet>
           <AssociationSet Name="FK_FormExamineService_Service" Association="Self.FK_FormExamineService_Service">
             <End Role="Services" EntitySet="Services" />
@@ -4541,8 +4601,191 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-        </EntityContainer>
-      </Schema>
+          <AssociationSet Name="FK_DeliveryOrderDetail_Product1" Association="KlinikDBModel.FK_DeliveryOrderDetail_Product1">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="DeliveryOrderDetail" EntitySet="DeliveryOrderDetails" />
+          </AssociationSet>
+          <EntitySet Name="FormExamineMedicines" EntityType="KlinikDBModel.FormExamineMedicine" />
+          <AssociationSet Name="FK_FormExamineMedicine_FormExamine" Association="KlinikDBModel.FK_FormExamineMedicine_FormExamine">
+            <End Role="FormExamine" EntitySet="FormExamines" />
+            <End Role="FormExamineMedicine" EntitySet="FormExamineMedicines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormExamineMedicine_Product" Association="KlinikDBModel.FK_FormExamineMedicine_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="FormExamineMedicine" EntitySet="FormExamineMedicines" />
+          </AssociationSet>
+          <EntitySet Name="DeliveryOrderPusats" EntityType="KlinikDBModel.DeliveryOrderPusat" />
+          <EntitySet Name="DeliveryOrderPusatDetails" EntityType="KlinikDBModel.DeliveryOrderPusatDetail" />
+          <AssociationSet Name="FK_DeliveryOrderPusatDetail_Clinic" Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="DeliveryOrderPusatDetail" EntitySet="DeliveryOrderPusatDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOrderPusatDetail_DeliveryOrderPusat" Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_DeliveryOrderPusat">
+            <End Role="DeliveryOrderPusat" EntitySet="DeliveryOrderPusats" />
+            <End Role="DeliveryOrderPusatDetail" EntitySet="DeliveryOrderPusatDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOrderPusatDetail_Gudang" Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="DeliveryOrderPusatDetail" EntitySet="DeliveryOrderPusatDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOrderPusatDetail_Product" Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="DeliveryOrderPusatDetail" EntitySet="DeliveryOrderPusatDetails" />
+          </AssociationSet>
+          </EntityContainer>
+        <Association Name="FK_DeliveryOrderDetail_Product1">
+          <End Type="KlinikDBModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.DeliveryOrderDetail" Role="DeliveryOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeliveryOrderDetail">
+              <PropertyRef Name="ProductId_Po" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FormExamineMedicine">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormExamineID" Type="Int64" />
+          <Property Name="TypeID" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="Qty" Type="Double" />
+          <Property Name="ConcoctionMedicine" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RemarkUse" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="FormExamine" Relationship="KlinikDBModel.FK_FormExamineMedicine_FormExamine" FromRole="FormExamineMedicine" ToRole="FormExamine" />
+          <NavigationProperty Name="Product" Relationship="KlinikDBModel.FK_FormExamineMedicine_Product" FromRole="FormExamineMedicine" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_FormExamineMedicine_FormExamine">
+          <End Type="KlinikDBModel.FormExamine" Role="FormExamine" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.FormExamineMedicine" Role="FormExamineMedicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormExamine">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineMedicine">
+              <PropertyRef Name="FormExamineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormExamineMedicine_Product">
+          <End Type="KlinikDBModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.FormExamineMedicine" Role="FormExamineMedicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineMedicine">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DeliveryOrderPusat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="poid" Type="Int32" Nullable="false" />
+          <Property Name="donumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="dodate" Type="DateTime" Precision="0" />
+          <Property Name="dodest" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="approve_by" Type="Int32" />
+          <Property Name="approve" Type="Int32" />
+          <Property Name="RowStatus" Type="Int16" />
+          <Property Name="CreatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="StatusSop" Type="Int32" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DeliveryOrderPusatDetails" Relationship="KlinikDBModel.FK_DeliveryOrderPusatDetail_DeliveryOrderPusat" FromRole="DeliveryOrderPusat" ToRole="DeliveryOrderPusatDetail" />
+        </EntityType>
+        <EntityType Name="DeliveryOrderPusatDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeliveryOderPusatId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="namabarang" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="GudangId" Type="Int32" />
+          <Property Name="namagudang" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ClinicId" Type="Int64" />
+          <Property Name="namaklinik" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ProductId_Po" Type="Int32" />
+          <Property Name="namabarang_po" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="qty_po" Type="Double" />
+          <Property Name="qty_po_final" Type="Double" />
+          <Property Name="qty_do" Type="Double" />
+          <Property Name="remark_do" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="qty_adj" Type="Double" />
+          <Property Name="remark_adj" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowStatus" Type="Int16" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_DeliveryOrderPusatDetail_Clinic" FromRole="DeliveryOrderPusatDetail" ToRole="Clinic" />
+          <NavigationProperty Name="DeliveryOrderPusat" Relationship="KlinikDBModel.FK_DeliveryOrderPusatDetail_DeliveryOrderPusat" FromRole="DeliveryOrderPusatDetail" ToRole="DeliveryOrderPusat" />
+          <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_DeliveryOrderPusatDetail_Gudang" FromRole="DeliveryOrderPusatDetail" ToRole="Gudang" />
+          <NavigationProperty Name="Product" Relationship="KlinikDBModel.FK_DeliveryOrderPusatDetail_Product" FromRole="DeliveryOrderPusatDetail" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_DeliveryOrderPusatDetail_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.DeliveryOrderPusatDetail" Role="DeliveryOrderPusatDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeliveryOrderPusatDetail">
+              <PropertyRef Name="ClinicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOrderPusatDetail_DeliveryOrderPusat">
+          <End Type="KlinikDBModel.DeliveryOrderPusat" Role="DeliveryOrderPusat" Multiplicity="1" />
+          <End Type="KlinikDBModel.DeliveryOrderPusatDetail" Role="DeliveryOrderPusatDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryOrderPusat">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DeliveryOrderPusatDetail">
+              <PropertyRef Name="DeliveryOderPusatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOrderPusatDetail_Gudang">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.DeliveryOrderPusatDetail" Role="DeliveryOrderPusatDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DeliveryOrderPusatDetail">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOrderPusatDetail_Product">
+          <End Type="KlinikDBModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.DeliveryOrderPusatDetail" Role="DeliveryOrderPusatDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeliveryOrderPusatDetail">
+              <PropertyRef Name="ProductId_Po" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -4838,25 +5081,6 @@
                 <ScalarProperty Name="LabItemID" ColumnName="LabItemID" />
                 <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="ResultIndicator" ColumnName="ResultIndicator" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FormExamineMedicines">
-            <EntityTypeMapping TypeName="KlinikDBModel.FormExamineMedicine">
-              <MappingFragment StoreEntitySet="FormExamineMedicine">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="FormExamineID" ColumnName="FormExamineID" />
-                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="ConcoctionMedicine" ColumnName="ConcoctionMedicine" />
-                <ScalarProperty Name="Qty" ColumnName="Qty" />
-                <ScalarProperty Name="Dose" ColumnName="Dose" />
-                <ScalarProperty Name="RemarkUse" ColumnName="RemarkUse" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -5483,6 +5707,70 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FormExamineMedicines">
+            <EntityTypeMapping TypeName="KlinikDBModel.FormExamineMedicine">
+              <MappingFragment StoreEntitySet="FormExamineMedicine">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="RemarkUse" ColumnName="RemarkUse" />
+                <ScalarProperty Name="ConcoctionMedicine" ColumnName="ConcoctionMedicine" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="FormExamineID" ColumnName="FormExamineID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryOrderPusats">
+            <EntityTypeMapping TypeName="KlinikDBModel.DeliveryOrderPusat">
+              <MappingFragment StoreEntitySet="DeliveryOrderPusat">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="StatusSop" ColumnName="StatusSop" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="approve" ColumnName="approve" />
+                <ScalarProperty Name="approve_by" ColumnName="approve_by" />
+                <ScalarProperty Name="dodest" ColumnName="dodest" />
+                <ScalarProperty Name="dodate" ColumnName="dodate" />
+                <ScalarProperty Name="donumber" ColumnName="donumber" />
+                <ScalarProperty Name="poid" ColumnName="poid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryOrderPusatDetails">
+            <EntityTypeMapping TypeName="KlinikDBModel.DeliveryOrderPusatDetail">
+              <MappingFragment StoreEntitySet="DeliveryOrderPusatDetail">
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="remark_adj" ColumnName="remark_adj" />
+                <ScalarProperty Name="qty_adj" ColumnName="qty_adj" />
+                <ScalarProperty Name="remark_do" ColumnName="remark_do" />
+                <ScalarProperty Name="qty_do" ColumnName="qty_do" />
+                <ScalarProperty Name="qty_po_final" ColumnName="qty_po_final" />
+                <ScalarProperty Name="qty_po" ColumnName="qty_po" />
+                <ScalarProperty Name="namabarang_po" ColumnName="namabarang_po" />
+                <ScalarProperty Name="ProductId_Po" ColumnName="ProductId_Po" />
+                <ScalarProperty Name="namaklinik" ColumnName="namaklinik" />
+                <ScalarProperty Name="ClinicId" ColumnName="ClinicId" />
+                <ScalarProperty Name="namagudang" ColumnName="namagudang" />
+                <ScalarProperty Name="GudangId" ColumnName="GudangId" />
+                <ScalarProperty Name="namabarang" ColumnName="namabarang" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="DeliveryOderPusatId" ColumnName="DeliveryOderPusatId" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

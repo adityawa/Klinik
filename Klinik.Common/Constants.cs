@@ -62,6 +62,10 @@
             public const string ADD_DELIVERY_ORDER = "Add New Delivery order";
             public const string EDIT_DELIVERY_ORDER_DETAIL = "Edit Form Delivery order detail";
             public const string ADD_DELIVERY_ORDER_DETAIL = "Add New Delivery order detail";
+            public const string ADD_DELIVERY_ORDER_PUSAT = "Add New Delivery order pusat";
+            public const string EDIT_DELIVERY_ORDER_PUSAT = "Edit Form Delivery order pusat";
+            public const string EDIT_DELIVERY_ORDER_PUSAT_DETAIL = "Edit Form Delivery order pusat detail";
+            public const string ADD_DELIVERY_ORDER_PUSAT_DETAIL = "Add New Delivery order pusat detail";
         }
 
         public static class MasterType

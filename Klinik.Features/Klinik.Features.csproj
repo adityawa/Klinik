@@ -84,6 +84,14 @@
     <Compile Include="DeliveryOrderDetail\DeliveryOrderDetailRequest.cs" />
     <Compile Include="DeliveryOrderDetail\DeliveryOrderDetailResponse.cs" />
     <Compile Include="DeliveryOrderDetail\DeliveryOrderDetailValidator.cs" />
+    <Compile Include="DeliveryOrderPusatDetail\DeliveryOrderPusatDetailHandler.cs" />
+    <Compile Include="DeliveryOrderPusatDetail\DeliveryOrderPusatDetailRequest.cs" />
+    <Compile Include="DeliveryOrderPusatDetail\DeliveryOrderPusatDetailResponse.cs" />
+    <Compile Include="DeliveryOrderPusatDetail\DeliveryOrderPusatDetailValidator.cs" />
+    <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatHandler.cs" />
+    <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatRequest.cs" />
+    <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatResponse.cs" />
+    <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatValidator.cs" />
     <Compile Include="DeliveryOrder\DeliveryOrderHandler.cs" />
     <Compile Include="DeliveryOrder\DeliveryOrderRequest.cs" />
     <Compile Include="DeliveryOrder\DeliveryOrderResponse.cs" />

@@ -1065,4 +1065,10 @@
   <data name="ApproveConfirmation" xml:space="preserve">
     <value>Are you sure you want to approve this order?</value>
   </data>
+  <data name="DeliveryOrderList" xml:space="preserve">
+    <value>Delivery Order List</value>
+  </data>
+  <data name="DeliveryOrderPusatList" xml:space="preserve">
+    <value>Deliver Order Pusat List</value>
+  </data>
 </root>

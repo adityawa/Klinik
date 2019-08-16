@@ -342,7 +342,7 @@ namespace Klinik.Features
                 response.Status = false;
                 response.Message = Messages.GeneralError;
 
-                ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDER, ClinicEnums.Action.Edit.ToString(), request.Data.Account, ex);
+                ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDER, ClinicEnums.Action.APPROVE.ToString(), request.Data.Account, ex);
             }
 
             return response;

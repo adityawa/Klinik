@@ -388,7 +388,6 @@
             var deliveryOrderDetailModels = new Array();
             $("#tblDeliveryOrder TBODY TR").each(function () {
                 var row = $(this);
-                alert(row.closest('tr').find('td:eq(9) input').length);
                 var deliveryOrderDetail = {};
                 deliveryOrderDetail.Id = row.find("TD").eq(0).html();
                 deliveryOrderDetail.ProductId = row.closest('tr').find('td:eq(5) select').val() > 0 ? row.closest('tr').find('td:eq(5) select').val() : row.find("TD").eq(1).html();
@@ -409,7 +408,7 @@
             console.log(deliveryOrderDetailModels);
             $.ajax({
                 type: "POST",
-                url: "/DeliveryOrder/CreateOrEditDeliveryOrder",
+                url: $(this).data('url'),
                 data: JSON.stringify({ _deliveryorder: _deliveryorder, deliveryOrderDetailModels: deliveryOrderDetailModels }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",

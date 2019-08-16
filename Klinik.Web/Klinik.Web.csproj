@@ -238,6 +238,7 @@
     <Compile Include="Base\BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DeliveryOrderController.cs" />
+    <Compile Include="Controllers\DeliveryOrderPusatController.cs" />
     <Compile Include="Controllers\PharmacyController.cs" />
     <Compile Include="Controllers\LabController.cs" />
     <Compile Include="Controllers\CashierController.cs" />
@@ -1498,6 +1499,9 @@
     <Content Include="Views\DeliveryOrder\DeliveryOrderList.cshtml" />
     <Content Include="Views\DeliveryOrder\CreateOrEditDeliveryOrder.cshtml" />
     <Content Include="Views\DeliveryOrder\PrintDeliveryOrder.cshtml" />
+    <Content Include="Views\DeliveryOrderPusat\DeliveryOrderPusatList.cshtml" />
+    <Content Include="Views\DeliveryOrderPusat\CreateOrEditDeliveryOrderPusat.cshtml" />
+    <Content Include="Views\DeliveryOrderPusat\PrintDeliveryOrderPusat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

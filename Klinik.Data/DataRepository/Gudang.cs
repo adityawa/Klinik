@@ -19,6 +19,7 @@ namespace Klinik.Data.DataRepository
         {
             this.DeliveryOrderDetails = new HashSet<DeliveryOrderDetail>();
             this.ProductInGudangs = new HashSet<ProductInGudang>();
+            this.DeliveryOrderPusatDetails = new HashSet<DeliveryOrderPusatDetail>();
         }
     
         public int id { get; set; }
@@ -35,5 +36,7 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductInGudang> ProductInGudangs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeliveryOrderPusatDetail> DeliveryOrderPusatDetails { get; set; }
     }
 }

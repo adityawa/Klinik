@@ -68,6 +68,12 @@
     <Compile Include="DataRepository\DeliveryOrderDetail.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataRepository\DeliveryOrderPusat.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataRepository\DeliveryOrderPusatDetail.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataRepository\Doctor.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>

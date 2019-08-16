@@ -56,6 +56,8 @@ namespace Klinik.Data
         IGenericRepository<Gudang> GudangRepository { get; }
         IGenericRepository<DeliveryOrder> DeliveryOrderRepository { get; }
         IGenericRepository<DeliveryOrderDetail> DeliveryOrderDetailRepository { get; }
+        IGenericRepository<DeliveryOrderPusat> DeliveryOrderPusatRepository { get; }
+        IGenericRepository<DeliveryOrderPusatDetail> DeliveryOrderPusatDetailRepository { get; }
         int Save();
     }
 }

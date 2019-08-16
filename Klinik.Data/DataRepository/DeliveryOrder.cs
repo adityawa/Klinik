@@ -27,7 +27,7 @@ namespace Klinik.Data.DataRepository
         public string dodest { get; set; }
         public Nullable<int> approve_by { get; set; }
         public Nullable<int> approve { get; set; }
-        public short RowStatus { get; set; }
+        public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
