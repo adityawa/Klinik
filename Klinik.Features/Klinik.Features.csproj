@@ -226,6 +226,10 @@
     <Compile Include="PreExamine\PreExamineResponse.cs" />
     <Compile Include="PreExamine\PreExamineValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseOrderDetail\PurchaseOrderDetailHandler.cs" />
+    <Compile Include="PurchaseOrderDetail\PurchaseOrderDetailRequest.cs" />
+    <Compile Include="PurchaseOrderDetail\PurchaseOrderDetailResponse.cs" />
+    <Compile Include="PurchaseOrderDetail\PurchaseOrderDetailValidator.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderHandler.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderRequest.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderResponse.cs" />
