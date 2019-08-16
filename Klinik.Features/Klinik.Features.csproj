@@ -226,6 +226,10 @@
     <Compile Include="PreExamine\PreExamineResponse.cs" />
     <Compile Include="PreExamine\PreExamineValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderHandler.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderRequest.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderResponse.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderValidator.cs" />
     <Compile Include="Radiologi\RadiologiHandler.cs" />
     <Compile Include="Radiologi\RadiologiRequest.cs" />
     <Compile Include="Radiologi\RadiologiResponse.cs" />
