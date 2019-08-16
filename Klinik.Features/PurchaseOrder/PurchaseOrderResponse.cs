@@ -1,5 +1,5 @@
 ﻿using Klinik.Entities;
-using Klinik.Entities.PurchaseOrder;;
+using Klinik.Entities.PurchaseOrder;
 
 namespace Klinik.Features
 {
