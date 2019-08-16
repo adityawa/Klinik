@@ -249,6 +249,7 @@
     </Content>
     <Content Include="DB\DBKlinik_24072019.sql" />
     <Content Include="DB\DB_GenScripts_20190810.sql" />
+    <Content Include="DB\MandeKlinik16-08-2019.sql" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -263,6 +264,7 @@
     <None Include="DataRepository\KlinikModel.edmx.diagram">
       <DependentUpon>KlinikModel.edmx</DependentUpon>
     </None>
+    <None Include="DB\KlinikDB_20190303" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
