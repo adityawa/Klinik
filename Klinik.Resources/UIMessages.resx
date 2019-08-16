@@ -1071,4 +1071,19 @@
   <data name="DeliveryOrderPusatList" xml:space="preserve">
     <value>Deliver Order Pusat List</value>
   </data>
+  <data name="PoNumber" xml:space="preserve">
+    <value>Nomer Po</value>
+  </data>
+  <data name="RequestBy" xml:space="preserve">
+    <value>Request By</value>
+  </data>
+  <data name="DatePO" xml:space="preserve">
+    <value>Tanggal DO</value>
+  </data>
+  <data name="NO_PO" xml:space="preserve">
+    <value>Nomer PO</value>
+  </data>
+  <data name="TujuanPO" xml:space="preserve">
+    <value>Tujuan PO</value>
+  </data>
 </root>

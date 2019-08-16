@@ -1143,6 +1143,7 @@
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="js\Custom.js" />
+    <Content Include="js\PurchaseOrder.js" />
     <Content Include="Rotativa\help-wkhtmltoimage.txt" />
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe" />
@@ -1503,10 +1504,12 @@
     <Content Include="Views\DeliveryOrderPusat\DeliveryOrderPusatList.cshtml" />
     <Content Include="Views\DeliveryOrderPusat\CreateOrEditDeliveryOrderPusat.cshtml" />
     <Content Include="Views\DeliveryOrderPusat\PrintDeliveryOrderPusat.cshtml" />
+    <Content Include="Views\PurchaseOrder\PurchaseOrderList.cshtml" />
+    <Content Include="Views\PurchaseOrder\CreateOrEditPurchaseOrder.cshtml" />
+    <Content Include="Views\PurchaseOrder\PrintPurchaseOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\PurchaseOrder\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

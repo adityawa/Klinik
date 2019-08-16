@@ -1,5 +1,8 @@
-﻿using Klinik.Data;
+﻿using Klinik.Common;
+using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Entities.PurchaseOrderDetail;
+using Klinik.Resources;
 using System;
 
 namespace Klinik.Features
@@ -14,21 +17,27 @@ namespace Klinik.Features
         public PurchaseOrderDetailResponse CreateOrEdit(PurchaseOrderDetailRequest request)
         {
             PurchaseOrderDetailResponse response = new PurchaseOrderDetailResponse();
-
             try
             {
                 if (request.Data.Id > 0)
                 {
-                    var qry = _unitOfWork.PurchaseOrderDetailRepository.GetById(request.Data.Id);
+                    Data.DataRepository.PurchaseOrderDetail qry = _unitOfWork.PurchaseOrderDetailRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
-                        var _oldentity = new Data.DataRepository.PurchaseOrderDetail
+                        Data.DataRepository.PurchaseOrderDetail _oldentity = new Data.DataRepository.PurchaseOrderDetail
                         {
                             PurchaseOrderId = qry.PurchaseOrderId,
                             ProductId = qry.ProductId,
                             namabarang = qry.namabarang,
                             tot_pemakaian = qry.tot_pemakaian,
                             sisa_stok = qry.sisa_stok,
+                            qty = qry.qty,
+                            qty_add = qry.qty_add,
+                            reason_add = qry.reason_add,
+                            total = qry.total,
+                            nama_by_ho = qry.nama_by_ho,
+                            qty_by_ho = qry.qty_by_ho,
+                            remark_by_ho = qry.remark_by_ho,
                             ModifiedBy = qry.ModifiedBy,
                             CreatedBy = qry.CreatedBy,
                             CreatedDate = qry.CreatedDate,
@@ -37,72 +46,87 @@ namespace Klinik.Features
                         };
 
                         // update data
-                        qry.PurchaseRequestId = qry.PurchaseRequestId;
-                        qry.ponumber = request.Data.ponumber;
-                        qry.podate = request.Data.podate;
+                        qry.PurchaseOrderId = request.Data.PurchaseOrderId;
+                        qry.ProductId = request.Data.ProductId;
+                        qry.namabarang = request.Data.namabarang;
+                        qry.tot_pemakaian = request.Data.tot_pemakaian;
+                        qry.sisa_stok = request.Data.sisa_stok;
+                        qry.qty = request.Data.qty;
+                        qry.qty_add = request.Data.qty_add;
+                        qry.reason_add = request.Data.reason_add;
+                        qry.total = request.Data.total;
+                        qry.nama_by_ho = request.Data.nama_by_ho;
+                        qry.qty_by_ho = request.Data.qty_by_ho;
+                        qry.remark_by_ho = request.Data.remark_by_ho;
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.ModifiedDate = DateTime.Now;
-                        qry.RowStatus = 0;
 
-                        _unitOfWork.PurchaseOrderRepository.Update(qry);
+                        _unitOfWork.PurchaseOrderDetailRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
-                        response.Entity = new PurchaseOrderModel
+                        response.Entity = new PurchaseOrderDetailModel
                         {
                             Id = request.Data.Id
                         };
                         if (resultAffected > 0)
                         {
-                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, "PurchaseOrder", qry.ponumber, qry.id);
+                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, "PurchaseOrderDetail", qry.namabarang, qry.id);
 
-                            CommandLog(true, ClinicEnums.Module.MASTER_PURCHASEORDER, Constants.Command.EDIT_PURCHASE_ORDER, request.Data.Account, request.Data, _oldentity);
+                            CommandLog(true, ClinicEnums.Module.MASTER_PURCHASEORDER, Constants.Command.EDIT_PURCHASE_ORDER_DETAIL, request.Data.Account, request.Data, _oldentity);
                         }
                         else
                         {
                             response.Status = false;
-                            response.Message = string.Format(Messages.UpdateObjectFailed, "PurchaseOrder");
+                            response.Message = string.Format(Messages.UpdateObjectFailed, "PurchaseOrderDetail");
 
-                            CommandLog(false, ClinicEnums.Module.MASTER_PURCHASEORDER, Constants.Command.EDIT_PURCHASE_ORDER, request.Data.Account, request.Data, _oldentity);
+                            CommandLog(false, ClinicEnums.Module.MASTER_PURCHASEORDERDETAIL, Constants.Command.EDIT_PURCHASE_ORDER_DETAIL, request.Data.Account, request.Data, _oldentity);
                         }
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = string.Format(Messages.UpdateObjectFailed, "PurchaseOrder");
+                        response.Message = string.Format(Messages.UpdateObjectFailed, "PurchaseOrderDetail");
 
-                        CommandLog(false, ClinicEnums.Module.MASTER_PURCHASEORDER, Constants.Command.EDIT_PURCHASE_ORDER, request.Data.Account, request.Data);
+                        CommandLog(false, ClinicEnums.Module.MASTER_PURCHASEORDERDETAIL, Constants.Command.EDIT_PURCHASE_ORDER_DETAIL, request.Data.Account, request.Data);
                     }
                 }
                 else
                 {
-                    var purhcaseorderEntity = new PurchaseOrder
+                    Data.DataRepository.PurchaseOrderDetail purhcaseorderdetailEntity = new Data.DataRepository.PurchaseOrderDetail
                     {
-                        PurchaseRequestId = request.Data.PurchaseRequestId,
-                        ponumber = request.Data.ponumber,
-                        podate = request.Data.podate,
-                        CreatedBy = request.Data.Account.UserCode,
-                        CreatedDate = DateTime.Now,
+                        PurchaseOrderId = request.Data.PurchaseOrderId,
+                        ProductId = request.Data.ProductId,
+                        namabarang = request.Data.namabarang,
+                        tot_pemakaian = request.Data.tot_pemakaian,
+                        sisa_stok = request.Data.sisa_stok,
+                        qty = request.Data.qty,
+                        qty_add = request.Data.qty_add,
+                        reason_add = request.Data.reason_add,
+                        total = request.Data.total,
+                        nama_by_ho = request.Data.nama_by_ho,
+                        qty_by_ho = request.Data.qty_by_ho,
+                        remark_by_ho = request.Data.remark_by_ho,
+                        ModifiedBy = request.Data.Account.UserCode,
                         ModifiedDate = DateTime.Now,
-                        RowStatus = 0
                     };
 
-                    _unitOfWork.PurchaseOrderRepository.Insert(purhcaseorderEntity);
+                    _unitOfWork.PurchaseOrderDetailRepository.Insert(purhcaseorderdetailEntity);
                     int resultAffected = _unitOfWork.Save();
-                    response.Entity = new PurchaseOrderModel
+                    response.Entity = new PurchaseOrderDetailModel
                     {
-                        Id = purhcaseorderEntity.id
+                        Id = purhcaseorderdetailEntity.id
                     };
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "PurchaseOrder", purhcaseorderEntity.ponumber, purhcaseorderEntity.id);
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "PurchaseOrderDetail", purhcaseorderdetailEntity.namabarang, purhcaseorderdetailEntity.id);
 
-                        CommandLog(true, ClinicEnums.Module.MASTER_PURCHASEORDER, Constants.Command.ADD_PURCHASE_ORDER, request.Data.Account, request.Data);
+                        CommandLog(true, ClinicEnums.Module.MASTER_PURCHASEORDERDETAIL, Constants.Command.ADD_PURCHASE_ORDER_DETAIL, request.Data.Account, request.Data);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = string.Format(Messages.AddObjectFailed, "PurchaseOrder");
+                        response.Message = string.Format(Messages.AddObjectFailed, "PurchaseOrderDetail");
 
-                        CommandLog(false, ClinicEnums.Module.MASTER_PURCHASEORDER, Constants.Command.ADD_PURCHASE_ORDER, request.Data.Account, request.Data);
+                        CommandLog(false, ClinicEnums.Module.MASTER_PURCHASEORDERDETAIL, Constants.Command.ADD_PURCHASE_ORDER_DETAIL, request.Data.Account, request.Data);
                     }
                 }
             }
@@ -112,9 +136,13 @@ namespace Klinik.Features
                 response.Message = Messages.GeneralError;
 
                 if (request.Data != null && request.Data.Id > 0)
-                    ErrorLog(ClinicEnums.Module.MASTER_PURCHASEORDER, Constants.Command.EDIT_PURCHASE_ORDER, request.Data.Account, ex);
+                {
+                    ErrorLog(ClinicEnums.Module.MASTER_PURCHASEORDERDETAIL, Constants.Command.EDIT_PURCHASE_ORDER_DETAIL, request.Data.Account, ex);
+                }
                 else
-                    ErrorLog(ClinicEnums.Module.MASTER_PURCHASEORDER, Constants.Command.EDIT_PURCHASE_ORDER, request.Data.Account, ex);
+                {
+                    ErrorLog(ClinicEnums.Module.MASTER_PURCHASEORDERDETAIL, Constants.Command.EDIT_PURCHASE_ORDER_DETAIL, request.Data.Account, ex);
+                }
             }
 
             return response;

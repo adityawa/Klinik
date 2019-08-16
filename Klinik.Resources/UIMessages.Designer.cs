@@ -529,6 +529,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tanggal DO.
+        /// </summary>
+        public static string DatePO {
+            get {
+                return ResourceManager.GetString("DatePO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Day.
         /// </summary>
         public static string Day {
@@ -1699,6 +1708,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nomer PO.
+        /// </summary>
+        public static string NO_PO {
+            get {
+                return ResourceManager.GetString("NO_PO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tidak Aktif.
         /// </summary>
         public static string NonActive {
@@ -2037,6 +2055,15 @@ namespace Klinik.Resources {
         public static string PoliType {
             get {
                 return ResourceManager.GetString("PoliType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nomer Po.
+        /// </summary>
+        public static string PoNumber {
+            get {
+                return ResourceManager.GetString("PoNumber", resourceCulture);
             }
         }
         
@@ -2401,6 +2428,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request By.
+        /// </summary>
+        public static string RequestBy {
+            get {
+                return ResourceManager.GetString("RequestBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reschedule.
         /// </summary>
         public static string Reschedule {
@@ -2757,6 +2793,15 @@ namespace Klinik.Resources {
         public static string TujuanDO {
             get {
                 return ResourceManager.GetString("TujuanDO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tujuan PO.
+        /// </summary>
+        public static string TujuanPO {
+            get {
+                return ResourceManager.GetString("TujuanPO", resourceCulture);
             }
         }
         

@@ -1,4 +1,4 @@
-﻿@model Klinik.Entities.DeliveryOrder.DeliveryOrderModel
+﻿@model Klinik.Entities.PurchaseOrder.PurchaseOrderModel
 
 @{
     ViewBag.Title = "DeliveryOrderList";
@@ -20,10 +20,11 @@
                 <thead>
                     <tr>
                         <th>@Klinik.Resources.UIMessages.IDPO</th>
-                        <th>@Klinik.Resources.UIMessages.NO_DO</th>
-                        <th>@Klinik.Resources.UIMessages.CreatedDate</th>
-                        <th>@Klinik.Resources.UIMessages.TujuanDO</th>
+                        <th>@Klinik.Resources.UIMessages.PoNumber</th>
+                        <th>Tanggal Po</th>
+                        <th>@Klinik.Resources.UIMessages.RequestBy</th>
                         <th>@Klinik.Resources.UIMessages.ApprovedBY</th>
+                        <th>@Klinik.Resources.UIMessages.Approve</th>
                         <th>@Klinik.Resources.UIMessages.CreatedBy</th>
                         <th>@Klinik.Resources.UIMessages.Action</th>
                     </tr>
@@ -38,7 +39,7 @@
     $(document).ready(function () {
 
         $('#btnAdd').click(function (e) {
-            window.location.href = "/DeliveryOrder/CreateOrEditDeliveryOrder";
+            window.location.href = "/PurchaseOrder/CreateOrEditPurchaseOrder";
         });
 
         $('#tbProduct').dataTable({
@@ -49,7 +50,7 @@
             "orderMulti": false,
             "pageLength": 10,
             "ajax": {
-                "url": "/DeliveryOrder/GetDeliveryOrderData",
+                "url": "/PurchaseOrder/GetPurchaseOrderData",
                 "type": "POST",
                 "datatype": "json"
             },
@@ -84,22 +85,33 @@
                     "targets": [5],
                     "searchable": true,
                     "orderable": false
+                },
+                {
+                    "targets": [6],
+                    "searchable": true,
+                    "orderable": false
+                },
+                {
+                    "targets": [7],
+                    "searchable": true,
+                    "orderable": false
                 }
                 ],
 
             "columns": [
                 { "data": "Id", "Id": "Id", "autoWidth": false },
-                { "data": "donumber", "donumber": "donumber", "autoWidth": true },
-                { "data": "CreatedDate", "CreatedDate": "CreatedDate", "autoWidth": true },
-                { "data": "dodest", "dodest": "dodest", "autoWidth": false },
-                { "data": "CreatedBy", "CreatedBy": "CreatedBy", "autoWidth": true },
+                { "data": "ponumber", "ponumber": "ponumber", "autoWidth": true },
+                { "data": "podate", "podate": "podate", "autoWidth": true },
+                { "data": "request_by", "request_by": "request_by", "autoWidth": false },
+                { "data": "approve_by", "approve_by": "approve_by", "autoWidth": true },
+                { "data": "approve", "approve": "approve", "autoWidth": true },
                 { "data": "CreatedBy", "CreatedBy": "CreatedBy", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta)
                     {
-                        var type = full['approve'] == null ? 'Approve' : 'Print';
-                        var button = full['approve'] == null ? "<button class='btn btn-success' onclick='" + type + "(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Approve</button>" : '<a class="btn btn-success" href="/DeliveryOrder/PrintDeliveryOrder?id=' + full.Id + '">' + type + '</a>';
-                        return '<a class="btn btn-info" href="/DeliveryOrder/CreateOrEditDeliveryOrder?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" + " |" + Button
+                         var type = full['approve'] == null ? 'Approve' : 'Print';
+                        var button = full['approve'] == null ? "<button class='btn btn-success' onclick='" + type + "(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Approve</button>" : '<a class="btn btn-success" href="/PurchaseOrder/PrintPurchaseOrder?id=' + full.Id + '">' + type + '</a>';
+                        return '<a class="btn btn-info" href="/PurchaseOrder/CreateOrEditPurchaseOrder?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" + " |" + Button
                     }
                 }
 
@@ -144,7 +156,7 @@
 
         function DeleteDO(Id) {
         $.ajax({
-            url: '/DeliveryOrder/DeleteDeliveryOrder?id=' + Id,
+            url: 'PurchaseOrder/DeletePurchaseOrder?id=' + Id,
             type: 'POST',
             success: function (result) {
                 if (result.Status) {
@@ -162,7 +174,7 @@
 
         function ApproveDO(Id) {
         $.ajax({
-            url: '/DeliveryOrder/ApproveDeliveryOrder?id=' + Id,
+            url: '/PurchaseOrder/ApprovePurchaseOrder?id=' + Id,
             type: 'POST',
             success: function (result) {
                 if (result.Status) {
@@ -180,7 +192,7 @@
 
         function PrintDO(Id) {
         $.ajax({
-            url: '/DeliveryOrder/PrintDeliveryOrder?id=' + Id,
+            url: '/PurchaseOrder/PrintPurchaseOrder?id=' + Id,
             type: 'GET',
             success: function (result) {
                 if (result.Status) {
@@ -197,4 +209,5 @@
         }
     </script>
 }
+
 

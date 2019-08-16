@@ -1,0 +1,171 @@
+﻿@model Klinik.Entities.PurchaseOrder.PurchaseOrderModel
+@{
+    ViewBag.Title = "CreateOrEditDeliveryOrderPusat";
+}
+@section Styles{
+    <link href="~/Content/Login/vendor/select2/select2.min.css" rel="stylesheet" />
+}
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+        </div>
+        <h5 class="panel-title">Form @ViewBag.ActionType Purchase Order</h5>
+    </header>
+    <div class="panel-body">
+        <form class="form-horizontal">
+            @Html.HiddenFor(x => x.Id)
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.NO_DO</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.ponumber, new { @class = "form-control", @id = "ponumber" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.CreatedDate</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.podate, new { @class = "form-control", @id = "dodate" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.TujuanDO</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.request_by, new { @class = "form-control", @id = "dodest" })
+                </div>
+            </div>
+            <br />
+        </form>
+    </div>
+    <div class="panel-body">
+        <table id="tblDeliveryOrder" class="table color-table success-table">
+            <thead>
+                <tr>
+                    <th hidden>Id Obat</th>
+                    <th>Nama Obat</th>
+                    <th>Nama Gudang</th>
+                    <th>Nama Klinik</th>
+                    <th>Nama Brang PO</th>
+                    <th>Qty PO</th>
+                    <th>Qty PO Final</th>
+                    <th>Qty DO</th>
+                    <th>Remark DO</th>
+                    <th>Qty Adj</th>
+                    <th>Remark Adj</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model.purchaseOrderdetailModels)
+                    {
+                        <tr>
+                            <td hidden></td>
+                            <td hidden></td>
+                            <td hidden></td>
+                            <td hidden></td>
+                            <td hidden></td>
+                            <td><select disabled="disabled"><option></option></select></td>
+                            <td><select disabled="disabled"><option></option></select></td>
+                            <td><select disabled="disabled"><option></option></select></td>
+                            <td><select disabled="disabled"><option></option></select></td>
+                            <td><input type="text" class="form-control" value="" disabled="disabled" /></td>
+                            <td><input type="text" class="form-control" value="" disabled="disabled" /></td>
+                            <td><input type="text" class="form-control" value="" disabled="disabled" /></td>
+                            <td><input type="text" class="form-control" value="" disabled="disabled" /></td>
+                            <td><input type="text" class="form-control" value="" disabled="disabled" /></td>
+                            <td><input type="text" class="form-control" value="" disabled="disabled" /></td>
+                            <td hidden></td>
+                            <td>
+                                <button class="edit-deliveryorderdetail">Edit</button>
+                                <button>Delete</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <br />
+        <form id="deliveryorderdetail">
+            <div class="form-group">
+                <input type="text" hidden id="DeliveryOrderDetailId" />
+                <select id="namabarang" class="form-control" style="width:230px"></select>
+                <input type="text" hidden id="ProductId" />
+                <select id="namagudang" class="form-control" style="width:230px"></select>
+                <input type="text" hidden id="GudangId" />
+                <select id="namaklinik" class="form-control" style="width:230px"></select>
+                <input type="text" hidden id="ClinicId" />
+                <select id="namabarang_po" class="form-control" style="width:230px"></select>
+                <input type="text" hidden id="ProductId_Po" />
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Qty PO" id="qty_po" value="" />
+                <input type="text" class="form-control" placeholder="QTY PO Final" id="qty_po_final" value="" />
+                <input type="text" class="form-control" placeholder="Qty DO" id="qty_do" value="" />
+                <input type="text" class="form-control" placeholder="Qty Adj" id="qty_adj" value="" />
+            </div>
+            <div class="form-group">
+                <textarea type="text" class="namaobat form-control" placeholder="Remark DO" id="remark_do"></textarea>
+                <br />
+                <textarea type="text" class="namaobat form-control" placeholder="Remark Adj" id="remark_adj"></textarea>
+            </div>
+            <input type="button" id="btnAdd" value="Add" />
+        </form>
+        <footer class="panel-footer">
+            <button type="submit" class="btn btn-primary saveorderdetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrder/CreateOrEditPurchaseOrder">@Klinik.Resources.UIMessages.Save</button>
+            <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+        </footer>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/Custom.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#btnreset').click(function (e) {
+                window.location.href = "/PurchaseOrder/PurchaseOrderList";
+            });
+
+            toastr.options = {
+                "closeButton": false,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "0",
+                "hideDuration": "0",
+                "timeOut": "2000",
+                "showMethod": "fadeIn"
+            };
+
+            var _temp="@ViewBag.Response";
+            var _arrMsg = _temp.split(";");
+
+            if (_arrMsg.length > 1) {
+                if (_arrMsg[0] == "True") {
+                    toastr.success(_arrMsg[1]);
+                }
+                else {
+                    toastr.options.closeButton = true;
+                    toastr.options.timeOut = 0;
+                    toastr.error(_arrMsg[1]);
+                }
+            }
+        });
+
+    </script>
+    <script type="text/javascript">
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblDeliveryOrder")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+    </script>
+}

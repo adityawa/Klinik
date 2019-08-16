@@ -2,9 +2,12 @@
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
+using Klinik.Entities.MasterData;
 using Klinik.Entities.PurchaseOrder;
 using Klinik.Entities.PurchaseOrderDetail;
 using Klinik.Features;
+using Rotativa;
+using Rotativa.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,7 +92,7 @@ namespace Klinik.Web.Controllers
             }
         }
 
-        [CustomAuthorize("ADD_M_DELIVERYORDER", "EDIT_M_DELIVERYORDER")]
+        [CustomAuthorize("ADD_M_PURCHASEORDER", "EDIT_M_PURCHASEORDER")]
         [HttpPost]
         public JsonResult CreateOrEditPurchaseOrder(PurchaseOrderModel _purchaseorder, List<PurchaseOrderDetailModel> purchaseOrderDetailModels)
         {
@@ -110,8 +113,8 @@ namespace Klinik.Web.Controllers
                 {
                     Data = item
                 };
-                deliveryorderdetailrequest.Data.DeliveryOderId = Convert.ToInt32(_response.Entity.Id);
-                deliveryorderdetailrequest.Data.Account = (AccountModel)Session["UserLogon"];
+                purchaseorderdetailrequest.Data.PurchaseOrderId = Convert.ToInt32(_response.Entity.Id);
+                purchaseorderdetailrequest.Data.Account = (AccountModel)Session["UserLogon"];
                 //
                 var requestnamabarang = new ProductRequest
                 {
@@ -120,23 +123,58 @@ namespace Klinik.Web.Controllers
                         Id = item.ProductId
                     }
                 };
-                var requestnamabarangpo = new ProductRequest
-                {
-                    Data = new ProductModel
-                    {
-                        Id = Convert.ToInt32(item.ProductId_Po)
-                    }
-                };
 
                 ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
-                ProductResponse namabarangpo = new ProductHandler(_unitOfWork).GetDetail(requestnamabarangpo);
-                deliveryorderdetailrequest.Data.namabarang = namabarang.Entity.Name;
-                deliveryorderdetailrequest.Data.namabarang_po = namabarangpo.Entity.Name;
-                DeliveryOrderDetailResponse _deliveryorderdetailresponse = new DeliveryOrderDetailResponse();
-                new DeliveryOrderDetailValidator(_unitOfWork).Validate(deliveryorderdetailrequest, out _deliveryorderdetailresponse);
+                purchaseorderdetailrequest.Data.namabarang = namabarang.Entity.Name;
+                PurchaseOrderDetailResponse _purchaseorderdetailresponse = new PurchaseOrderDetailResponse();
+                new PurchaseOrderDetailValidator(_unitOfWork).Validate(purchaseorderdetailrequest, out _purchaseorderdetailresponse);
             }
 
             return Json(new { data = _response.Data }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("DELETE_M_PURCHASEORDER")]
+        [HttpPost]
+        public JsonResult DeletePurchaseOrder(int id)
+        {
+            PurchaseOrderResponse _response = new PurchaseOrderResponse();
+            var request = new PurchaseOrderRequest
+            {
+                Data = new PurchaseOrderModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            new PurchaseOrderValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult PrintPurchaseOrder(int id)
+        {
+            PurchaseOrderResponse _response = new PurchaseOrderResponse();
+
+            var request = new PurchaseOrderRequest
+            {
+                Data = new PurchaseOrderModel
+                {
+                    Id = id
+                }
+            };
+
+            PurchaseOrderResponse resp = new PurchaseOrderHandler(_unitOfWork).GetDetail(request);
+            PurchaseOrderModel _model = resp.Entity;
+            ViewBag.Response = _response;
+            return new PartialViewAsPdf(_model)
+            {
+                PageOrientation = Orientation.Portrait,
+                PageSize = Size.Folio,
+
+                FileName = "PurchaseOrder" + _model.ponumber + ".pdf"
+            };
         }
     }
 }

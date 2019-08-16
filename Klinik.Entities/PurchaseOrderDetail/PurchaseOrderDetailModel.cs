@@ -21,10 +21,6 @@ namespace Klinik.Entities.PurchaseOrderDetail
         public string nama_by_ho { get; set; }
         public Nullable<double> qty_by_ho { get; set; }
         public string remark_by_ho { get; set; }
-        public string createdby { get; set; }
-        public Nullable<System.DateTime> createdate { get; set; }
-        public Nullable<System.DateTime> lastupdate { get; set; }
         public Nullable<int> statusop { get; set; }
-        public string lastupdateby { get; set; }
     }
 }

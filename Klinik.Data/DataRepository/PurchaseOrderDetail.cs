@@ -27,11 +27,12 @@ namespace Klinik.Data.DataRepository
         public string nama_by_ho { get; set; }
         public Nullable<double> qty_by_ho { get; set; }
         public string remark_by_ho { get; set; }
-        public string createdby { get; set; }
-        public Nullable<System.DateTime> createdate { get; set; }
-        public Nullable<System.DateTime> lastupdate { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public string ModifiedBy { get; set; }
         public Nullable<int> statusop { get; set; }
-        public string lastupdateby { get; set; }
+        public Nullable<int> RowStatus { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual PurchaseOrder PurchaseOrder { get; set; }
