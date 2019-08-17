@@ -167,6 +167,9 @@
     <Compile Include="DataRepository\OrganizationRole.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataRepository\PanggilanPoli.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataRepository\PasswordHistory.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
@@ -218,6 +221,12 @@
     <Compile Include="DataRepository\PurchaseOrderDetail.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataRepository\PurchaseOrderPusat.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataRepository\PurchaseOrderPusatDetail.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataRepository\QueuePoli.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
@@ -234,6 +243,9 @@
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\UserRole.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataRepository\Vendor.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GenericRepository.cs" />
@@ -253,8 +265,7 @@
       <DependentUpon>KlinikModel.edmx</DependentUpon>
       <LastGenOutput>KlinikModel.cs</LastGenOutput>
     </Content>
-    <Content Include="DB\DBKlinik_24072019.sql" />
-    <Content Include="DB\DB_GenScripts_20190810.sql" />
+    <Content Include="DB\DBKlinikDev_20190817.sql" />
     <Content Include="DB\MandeKlinik16-08-2019.sql" />
   </ItemGroup>
   <ItemGroup>
@@ -262,11 +273,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="DataRepository\KlinikModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>KlinikModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="App.Config" />
     <None Include="DataRepository\KlinikModel.edmx.diagram">
       <DependentUpon>KlinikModel.edmx</DependentUpon>
     </None>

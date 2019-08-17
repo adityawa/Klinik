@@ -9,7 +9,6 @@ namespace Klinik.Entities.PurchaseOrder
 {
     public class PurchaseOrderModel : BaseModel
     {
-        public int id { get; set; }
         public Nullable<int> PurchaseRequestId { get; set; }
         public string ponumber { get; set; }
         public Nullable<System.DateTime> podate { get; set; }

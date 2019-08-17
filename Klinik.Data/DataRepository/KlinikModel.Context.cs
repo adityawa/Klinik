@@ -59,6 +59,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<Organization> Organizations { get; set; }
         public virtual DbSet<OrganizationPrivilege> OrganizationPrivileges { get; set; }
         public virtual DbSet<OrganizationRole> OrganizationRoles { get; set; }
+        public virtual DbSet<PanggilanPoli> PanggilanPolis { get; set; }
         public virtual DbSet<PasswordHistory> PasswordHistories { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<PatientClinic> PatientClinics { get; set; }
@@ -75,12 +76,15 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<ProductMedicine> ProductMedicines { get; set; }
         public virtual DbSet<ProductUnit> ProductUnits { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
-        public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
         public virtual DbSet<QueuePoli> QueuePolis { get; set; }
         public virtual DbSet<RolePrivilege> RolePrivileges { get; set; }
         public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<SuratRujukanLabKeluar> SuratRujukanLabKeluars { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
+        public virtual DbSet<PurchaseOrderPusat> PurchaseOrderPusats { get; set; }
+        public virtual DbSet<PurchaseOrderPusatDetail> PurchaseOrderPusatDetails { get; set; }
+        public virtual DbSet<Vendor> Vendors { get; set; }
     }
 }

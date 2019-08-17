@@ -70,7 +70,8 @@
             MASTER_DELIVERYORDERPUSAT,
             MASTER_DELIVERYORDERPUSATDETAIL,
             MASTER_PURCHASEORDER,
-            MASTER_PURCHASEORDERDETAIL
+            MASTER_PURCHASEORDERDETAIL,
+            MASTER_VENDOR
         }
 
         public enum Action

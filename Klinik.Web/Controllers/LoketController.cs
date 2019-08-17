@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using Klinik.Features;
+using Klinik.Common.Enumerations;
 
 namespace Klinik.Web.Controllers
 {
@@ -448,6 +449,48 @@ namespace Klinik.Web.Controllers
             }
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult SendForCalling(int id)
+        {
+            var response = new LoketResponse { Status = false };
+            var _loketModel = new LoketModel
+            {
+                Id = id
+            };
+            var request = new LoketRequest
+            {
+                Data = _loketModel
+            };
+            response = new LoketHandler(_unitOfWork).GetDetail(request);
+            if (response != null)
+            {
+                var _callModel = new PanggilanPoliModel
+                {
+                    PoliID = response.Entity.PoliToID,
+                    SortNumber = response.Entity.SortNumber,
+                    Status = CallStatusEnum.CallStatus.READY.ToString(),
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"],
+                    QueueCode = response.Entity.SortNumberCode
+                };
+
+                var _requestCall = new LoketRequest
+                {
+                    CallRequest = _callModel,
+
+                };
+
+                response = new LoketResponse();
+                response = new LoketHandler(_unitOfWork).SendForCall(_requestCall);
+
+            }
+
+            return Json(new
+            {
+                Status = response.Status,
+                Message = response.Message
+            }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

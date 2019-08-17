@@ -4,149 +4,155 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="be4df595dd0e4e69b5174c8f9c1e81f2" Name="Diagram1">
-        <EntityTypeShape EntityType="KlinikDBModel.AppConfig" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Appointment" Width="1.5" PointX="5.25" PointY="61.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.City" Width="1.5" PointX="0.75" PointY="62.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Clinic" Width="1.5" PointX="3" PointY="60.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrder" Width="1.5" PointX="5.25" PointY="73.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderDetail" Width="1.5" PointX="7.5" PointY="72.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderPusat" Width="1.5" PointX="8.25" PointY="79.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderPusatDetail" Width="1.5" PointX="10.5" PointY="72.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Doctor" Width="1.5" PointX="5.25" PointY="47.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.DoctorClinic" Width="1.5" PointX="8.25" PointY="62.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Employee" Width="1.5" PointX="0.75" PointY="52.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.EmployeeAssignment" Width="1.5" PointX="12.75" PointY="44.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.EmployeeStatu" Width="1.5" PointX="1.5" PointY="48.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FamilyRelationship" Width="1.5" PointX="1.5" PointY="44.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FileArchieve" Width="1.5" PointX="7.5" PointY="45" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormExamine" Width="1.5" PointX="7.5" PointY="50.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormExamineAttachment" Width="1.5" PointX="9.75" PointY="48.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormExamineLab" Width="1.5" PointX="10.5" PointY="52.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormExamineMedicine" Width="1.5" PointX="16.5" PointY="57.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormExamineService" Width="1.5" PointX="12.75" PointY="50.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormMedical" Width="1.5" PointX="5.25" PointY="54.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormPreExamine" Width="1.5" PointX="13.5" PointY="54.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.GeneralMaster" Width="1.5" PointX="1.5" PointY="69.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Gudang" Width="1.5" PointX="5.25" PointY="87.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.LabItem" Width="1.5" PointX="8.25" PointY="37" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.LabItemCategory" Width="1.5" PointX="6" PointY="37.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Letter" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Log" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.MCUPackage" Width="1.5" PointX="3" PointY="73.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Medicine" Width="1.5" PointX="13.25" PointY="73.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Menu" Width="1.5" PointX="3" PointY="97.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Organization" Width="1.5" PointX="5.25" PointY="92.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.OrganizationPrivilege" Width="1.5" PointX="7.5" PointY="91.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.OrganizationRole" Width="1.5" PointX="7.5" PointY="95" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PasswordHistory" Width="1.5" PointX="7.5" PointY="98.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Patient" Width="1.5" PointX="3" PointY="52.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PatientClinic" Width="1.5" PointX="8.25" PointY="56.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Poli" Width="1.5" PointX="5.25" PointY="42.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PoliClinic" Width="1.5" PointX="8.25" PointY="66.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PoliFlowTemplate" Width="1.5" PointX="4.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PoliSchedule" Width="1.5" PointX="5.25" PointY="67.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PoliScheduleMaster" Width="1.5" PointX="11.25" PointY="61.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PoliService" Width="1.5" PointX="11.25" PointY="57.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Privilege" Width="1.5" PointX="5.25" PointY="98.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Product" Width="1.5" PointX="13.25" PointY="67.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.ProductCategory" Width="1.5" PointX="11" PointY="66.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.ProductInGudang" Width="1.5" PointX="7.5" PointY="87.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.ProductMedicine" Width="1.5" PointX="15.5" PointY="69.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.ProductUnit" Width="1.5" PointX="11" PointY="79.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PurchaseOrder" Width="1.5" PointX="16.25" PointY="74" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PurchaseOrderDetail" Width="1.5" PointX="18.5" PointY="67.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.QueuePoli" Width="1.5" PointX="15.5" PointY="62.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.RolePrivilege" Width="1.5" PointX="9.75" PointY="94.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Service" Width="1.5" PointX="10.5" PointY="44.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.SuratRujukanLabKeluar" Width="1.5" PointX="10.5" PointY="37.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.User" Width="1.5" PointX="10.5" PointY="89.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.UserRole" Width="1.5" PointX="12.75" PointY="95.125" IsExpanded="true" />
-        <AssociationConnector Association="KlinikDBModel.FK_Appointment_Clinic" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Appointment_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Appointment_MCUPackage" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Clinic_City" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Patient_City" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PatientClinic_City" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_Clinic" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Clinic" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DoctorClinic_Clinic" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormMedical_Clinic" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Gudang_Clinic" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Organization_Clinic" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PatientClinic_Clinic" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PoliClinic_Clinic" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PoliSchedule_Clinic" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PoliScheduleMaster_Clinic" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PoliServices_Clinic" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Product_Clinic" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_QueuePoli_Clinic" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_DeliveryOrder" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_Gudang" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_DeliveryOrderPusat" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Gudang" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Doctor_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DoctorClinic_Doctor" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamine_Doctor" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormPreExamine_Doctor" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PoliSchedule_Doctor" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PoliScheduleMaster_Doctor" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_QueuePoli_Doctor" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DoctorClinic_FileArchieve" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Employee_EmployeeStatus" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Employee_FamilyRelationship" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Employee_GeneralMaster" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_EmployeeAssignment_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Patient_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_User_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_EmployeeAssignment_EmployeeStatus" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamineAttachment_FileArchieve" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PatientClinic_FileArchieve" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamine_FormMedical" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamine_Poli" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamineAttachment_FormExamine" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicine_FormExamine" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamineService_FormExamine" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamineLab_FormMedical" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamineLab_LabItem" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicine_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamineService_Service" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormMedical_Patient" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormPreExamine_FormMedical" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_QueuePoli_FormMedical" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_ProductInGudang_Gudang" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_LabItem_LabItemCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_SuratRujukanLabKeluar_LabItem" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_LabItemCategory_Poli" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_ProductMedicine_Medicine" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Privilege_Menu" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_RolePrivilege_Menu" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_OrganizationPrivilege_Organization" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_OrganizationRole_Organization" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PasswordHistory_Organization" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_User_Organization" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_OrganizationPrivilege_Privilege" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_RolePrivilege_OrganizationRole" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_UserRole_OrganizationRole" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PatientClinic_Patient" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_QueuePoli_Patient" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PoliClinic_Poli" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PoliSchedule_Poli" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PoliScheduleMaster_Poli" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PoliServices_Poli" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_QueuePoli_PoliFrom" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_QueuePoli_PoliTo" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PoliServices_Services" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_RolePrivilege_Privilege" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Product_ProductCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Product_ProductUnit" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_ProductInGudang_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_ProductMedicine_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrderDetail_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrderDetail_PurchaseOrder" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_UserRole_User" ManuallyRouted="false" />
+      <Diagram DiagramId="f9be90d2bcf842fc9e230b7fe43848b5" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="KlinikModel.AppConfig" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.Appointment" Width="1.5" PointX="5.25" PointY="56.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.City" Width="1.5" PointX="0.75" PointY="57" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.Clinic" Width="1.5" PointX="3" PointY="54.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.DeliveryOrder" Width="1.5" PointX="5.25" PointY="68.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.DeliveryOrderDetail" Width="1.5" PointX="7.5" PointY="67.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.DeliveryOrderPusat" Width="1.5" PointX="8.25" PointY="74.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.DeliveryOrderPusatDetail" Width="1.5" PointX="10.5" PointY="67.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.Doctor" Width="1.5" PointX="5.25" PointY="42" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.DoctorClinic" Width="1.5" PointX="8.25" PointY="56.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.Employee" Width="1.5" PointX="0.75" PointY="47.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.EmployeeAssignment" Width="1.5" PointX="15.75" PointY="50.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.EmployeeStatu" Width="1.5" PointX="1.5" PointY="43.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.FamilyRelationship" Width="1.5" PointX="1.5" PointY="39.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.FileArchieve" Width="1.5" PointX="7.5" PointY="39.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.FormExamine" Width="1.5" PointX="7.5" PointY="44.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.FormExamineAttachment" Width="1.5" PointX="9.75" PointY="43" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.FormExamineLab" Width="1.5" PointX="10.5" PointY="46.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.FormExamineMedicine" Width="1.5" PointX="12.75" PointY="44.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.FormExamineService" Width="1.5" PointX="15.75" PointY="46" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.FormMedical" Width="1.5" PointX="5.25" PointY="49.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.FormPreExamine" Width="1.5" PointX="13.5" PointY="49.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.GeneralMaster" Width="1.5" PointX="1.5" PointY="63.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.Gudang" Width="1.5" PointX="5.25" PointY="81.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.LabItem" Width="1.5" PointX="8.25" PointY="27.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.LabItemCategory" Width="1.5" PointX="6" PointY="28" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.Letter" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.Log" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.MCUPackage" Width="1.5" PointX="3" PointY="67.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.Medicine" Width="1.5" PointX="10.5" PointY="29.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.Menu" Width="1.5" PointX="3" PointY="92" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.Organization" Width="1.5" PointX="5.25" PointY="87.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.OrganizationPrivilege" Width="1.5" PointX="7.5" PointY="85.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.OrganizationRole" Width="1.5" PointX="7.5" PointY="89.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.PanggilanPoli" Width="1.5" PointX="4.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.PasswordHistory" Width="1.5" PointX="7.5" PointY="93.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.Patient" Width="1.5" PointX="3" PointY="47.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.PatientClinic" Width="1.5" PointX="8.25" PointY="51.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.Poli" Width="1.5" PointX="5.25" PointY="36.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.PoliClinic" Width="1.5" PointX="8.25" PointY="61" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.PoliFlowTemplate" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.PoliSchedule" Width="1.5" PointX="5.25" PointY="62.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.PoliScheduleMaster" Width="1.5" PointX="11.25" PointY="56.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.PoliService" Width="1.5" PointX="11.25" PointY="51.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.Privilege" Width="1.5" PointX="5.25" PointY="92.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.Product" Width="1.5" PointX="10.5" PointY="33.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.ProductCategory" Width="1.5" PointX="8.25" PointY="32.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.ProductInGudang" Width="1.5" PointX="7.5" PointY="82" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.ProductMedicine" Width="1.5" PointX="12.75" PointY="34" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.ProductUnit" Width="1.5" PointX="8.25" PointY="35.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.PurchaseOrder" Width="1.5" PointX="13.5" PointY="28.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.QueuePoli" Width="1.5" PointX="13.5" PointY="56.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.RolePrivilege" Width="1.5" PointX="9.75" PointY="89.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.Service" Width="1.5" PointX="13.5" PointY="40" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.SuratRujukanLabKeluar" Width="1.5" PointX="10.5" PointY="25.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.User" Width="1.5" PointX="10.5" PointY="84.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikModel.UserRole" Width="1.5" PointX="12.75" PointY="89.75" IsExpanded="true" />
+        <AssociationConnector Association="KlinikModel.FK_Appointment_Clinic" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_Appointment_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_Appointment_MCUPackage" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_Clinic_City" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_Patient_City" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PatientClinic_City" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_DeliveryOrderDetail_Clinic" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_DeliveryOrderPusatDetail_Clinic" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_DoctorClinic_Clinic" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_FormMedical_Clinic" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_Gudang_Clinic" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_Organization_Clinic" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PatientClinic_Clinic" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PoliClinic_Clinic" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PoliSchedule_Clinic" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PoliScheduleMaster_Clinic" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PoliServices_Clinic" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_QueuePoli_Clinic" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_DeliveryOrderDetail_DeliveryOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_DeliveryOrderDetail_Gudang" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_DeliveryOrderDetail_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_DeliveryOrderPusatDetail_DeliveryOrderPusat" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_DeliveryOrderPusatDetail_Gudang" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_DeliveryOrderPusatDetail_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_Doctor_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_DoctorClinic_Doctor" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_FormExamine_Doctor" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_FormPreExamine_Doctor" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PoliSchedule_Doctor" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PoliScheduleMaster_Doctor" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_QueuePoli_Doctor" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_DoctorClinic_FileArchieve" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_Employee_EmployeeStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_Employee_FamilyRelationship" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_Employee_GeneralMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_EmployeeAssignment_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_Patient_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_User_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_EmployeeAssignment_EmployeeStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_FormExamineAttachment_FileArchieve" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PatientClinic_FileArchieve" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_FormExamine_FormMedical" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_FormExamine_Poli" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_FormExamineAttachment_FormExamine" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_FormExamineMedicine_FormExamine" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_FormExamineService_FormExamine" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_FormExamineLab_FormMedical" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_FormExamineLab_LabItem" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_FormExamineMedicine_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_FormExamineService_Service" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_FormMedical_Patient" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_FormPreExamine_FormMedical" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_QueuePoli_FormMedical" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_ProductInGudang_Gudang" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_LabItem_LabItemCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_SuratRujukanLabKeluar_LabItem" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_LabItemCategory_Poli" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_ProductMedicine_Medicine" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_Privilege_Menu" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_RolePrivilege_Menu" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_OrganizationPrivilege_Organization" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_OrganizationRole_Organization" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PasswordHistory_Organization" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_User_Organization" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_OrganizationPrivilege_Privilege" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_RolePrivilege_OrganizationRole" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_UserRole_OrganizationRole" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PatientClinic_Patient" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_QueuePoli_Patient" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PoliClinic_Poli" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PoliSchedule_Poli" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PoliScheduleMaster_Poli" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PoliServices_Poli" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_QueuePoli_PoliFrom" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_QueuePoli_PoliTo" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_PoliServices_Services" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_RolePrivilege_Privilege" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_Product_ProductCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_Product_ProductUnit" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_ProductInGudang_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_ProductMedicine_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikModel.FK_UserRole_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="KlinikModel.PurchaseOrderDetail" Width="1.5" PointX="15.75" PointY="30.625" />
+        <AssociationConnector Association="KlinikModel.FK_PurchaseOrderDetail_Product" />
+        <AssociationConnector Association="KlinikModel.FK_PurchaseOrderDetail_PurchaseOrder" />
+        <EntityTypeShape EntityType="KlinikModel.PurchaseOrderPusat" Width="1.5" PointX="13.5" PointY="20.375" />
+        <EntityTypeShape EntityType="KlinikModel.PurchaseOrderPusatDetail" Width="1.5" PointX="15.75" PointY="36.5" />
+        <EntityTypeShape EntityType="KlinikModel.Vendor" Width="1.5" PointX="13.5" PointY="25" />
+        <AssociationConnector Association="KlinikModel.FK_PurchaseOrderPusatDetail_Product" />
+        <AssociationConnector Association="KlinikModel.FK_PurchaseOrderPusatDetail_PurchaseOrderPusat" />
+        <AssociationConnector Association="KlinikModel.FK_PurchaseOrderPusatDetail_Vendor" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

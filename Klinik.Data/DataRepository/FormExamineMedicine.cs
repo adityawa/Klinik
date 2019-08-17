@@ -18,9 +18,9 @@ namespace Klinik.Data.DataRepository
         public Nullable<long> FormExamineID { get; set; }
         public string TypeID { get; set; }
         public Nullable<int> ProductID { get; set; }
-        public string ConcoctionMedicine { get; set; }
         public Nullable<double> Qty { get; set; }
         public string Dose { get; set; }
+        public string ConcoctionMedicine { get; set; }
         public string RemarkUse { get; set; }
         public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }

@@ -104,36 +104,38 @@ namespace Klinik.Web.Controllers
             DeliveryOrderResponse _response = new DeliveryOrderResponse();
 
             new DeliveryOrderValidator(_unitOfWork).Validate(request, out _response);
-            foreach (var item in deliveryOrderDetailModels)
-            {
-                var deliveryorderdetailrequest = new DeliveryOrderDetailRequest
+            if (deliveryOrderDetailModels != null) { 
+                foreach (var item in deliveryOrderDetailModels)
                 {
-                    Data = item
-                };
-                deliveryorderdetailrequest.Data.DeliveryOderId = Convert.ToInt32(_response.Entity.Id);
-                deliveryorderdetailrequest.Data.Account = (AccountModel)Session["UserLogon"];
-                //
-                var requestnamabarang = new ProductRequest
-                {
-                    Data = new ProductModel
+                    var deliveryorderdetailrequest = new DeliveryOrderDetailRequest
                     {
-                        Id = item.ProductId
-                    }
-                };
-                var requestnamabarangpo = new ProductRequest
-                {
-                    Data = new ProductModel
+                        Data = item
+                    };
+                    deliveryorderdetailrequest.Data.DeliveryOderId = Convert.ToInt32(_response.Entity.Id);
+                    deliveryorderdetailrequest.Data.Account = (AccountModel)Session["UserLogon"];
+                    //
+                    var requestnamabarang = new ProductRequest
                     {
-                        Id = Convert.ToInt32(item.ProductId_Po)
-                    }
-                };
+                        Data = new ProductModel
+                        {
+                            Id = item.ProductId
+                        }
+                    };
+                    var requestnamabarangpo = new ProductRequest
+                    {
+                        Data = new ProductModel
+                        {
+                            Id = Convert.ToInt32(item.ProductId_Po)
+                        }
+                    };
 
-                ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
-                ProductResponse namabarangpo = new ProductHandler(_unitOfWork).GetDetail(requestnamabarangpo);
-                deliveryorderdetailrequest.Data.namabarang = namabarang.Entity.Name;
-                deliveryorderdetailrequest.Data.namabarang_po = namabarangpo.Entity.Name;
-                DeliveryOrderDetailResponse _deliveryorderdetailresponse = new DeliveryOrderDetailResponse();
-                new DeliveryOrderDetailValidator(_unitOfWork).Validate(deliveryorderdetailrequest, out _deliveryorderdetailresponse);
+                    ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
+                    ProductResponse namabarangpo = new ProductHandler(_unitOfWork).GetDetail(requestnamabarangpo);
+                    deliveryorderdetailrequest.Data.namabarang = namabarang.Entity.Name;
+                    deliveryorderdetailrequest.Data.namabarang_po = namabarangpo.Entity.Name;
+                    DeliveryOrderDetailResponse _deliveryorderdetailresponse = new DeliveryOrderDetailResponse();
+                    new DeliveryOrderDetailValidator(_unitOfWork).Validate(deliveryorderdetailrequest, out _deliveryorderdetailresponse);
+                }
             }
 
             return Json(new { data = _response.Data }, JsonRequestBehavior.AllowGet);
