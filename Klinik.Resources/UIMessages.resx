@@ -1097,5 +1097,11 @@
   </data>
   <data name="PurchaseOrderPusatList" xml:space="preserve">
     <value>Purchase Order Pusat List</value>
+    </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Unit</value>
   </data>
 </root>
