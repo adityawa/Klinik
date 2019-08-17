@@ -38,6 +38,5 @@ namespace Klinik.Data.DataRepository
         public virtual DeliveryOrder DeliveryOrder { get; set; }
         public virtual Gudang Gudang { get; set; }
         public virtual Product Product { get; set; }
-        public virtual Product Product1 { get; set; }
     }
 }

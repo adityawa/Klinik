@@ -260,6 +260,8 @@
     <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Datalist\PatientDataList.cs" />
     <Compile Include="Datalist\PatientDataListModel.cs" />
+    <Compile Include="Datalist\ProductDataList.cs" />
+    <Compile Include="Datalist\ProductDataListModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

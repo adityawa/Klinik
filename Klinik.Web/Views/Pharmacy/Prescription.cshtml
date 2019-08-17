@@ -41,9 +41,9 @@
 								<td>@item.Dose</td>
 								<td>@item.Qty</td>
 								<td>@item.RemarkUse</td>
-								<td><input type="text"/></td>
-								<td><input type="text"/></td>
-								<td><input type="text"/></td>
+								<td><input type="text" /></td>
+								<td><input type="text" /></td>
+								<td><input type="text" /></td>
 								<td><button>Confirm</button></td>
 							</tr>
 						}
@@ -53,3 +53,24 @@
 		</div>
 	</div>
 </section>
+
+@section Scripts {
+	<script src="~/Scripts/jquery-ui.js"></script>
+	<script src="~/Scripts/MvcDatalist/mvc-datalist.js"></script>
+	<script>
+        [].forEach.call(document.getElementsByClassName('datalist'), function (element) {
+            new MvcDatalist(element);
+        });
+
+        new MvcDatalist(document.querySelector('.datalist'), {
+            events: {
+                select: function (data, triggerChanges) {
+                    for (var i = 0; i < data.length; i++) {
+						var productName = document.getElementById("productName");
+						if (productName != null) { productName.value = data[i].Name; }
+                    }
+                }
+            }
+        });
+	</script>
+}

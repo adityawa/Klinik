@@ -19,6 +19,7 @@ namespace Klinik.Data.DataRepository
         {
             this.Appointments = new HashSet<Appointment>();
             this.DeliveryOrderDetails = new HashSet<DeliveryOrderDetail>();
+            this.DeliveryOrderPusatDetails = new HashSet<DeliveryOrderPusatDetail>();
             this.DoctorClinics = new HashSet<DoctorClinic>();
             this.FormMedicals = new HashSet<FormMedical>();
             this.Gudangs = new HashSet<Gudang>();
@@ -28,8 +29,8 @@ namespace Klinik.Data.DataRepository
             this.PoliSchedules = new HashSet<PoliSchedule>();
             this.PoliScheduleMasters = new HashSet<PoliScheduleMaster>();
             this.PoliServices = new HashSet<PoliService>();
+            this.Products = new HashSet<Product>();
             this.QueuePolis = new HashSet<QueuePoli>();
-            this.DeliveryOrderPusatDetails = new HashSet<DeliveryOrderPusatDetail>();
         }
     
         public long ID { get; set; }
@@ -57,6 +58,8 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeliveryOrderPusatDetail> DeliveryOrderPusatDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DoctorClinic> DoctorClinics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormMedical> FormMedicals { get; set; }
@@ -75,8 +78,8 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PoliService> PoliServices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<QueuePoli> QueuePolis { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DeliveryOrderPusatDetail> DeliveryOrderPusatDetails { get; set; }
+        public virtual ICollection<QueuePoli> QueuePolis { get; set; }
     }
 }
