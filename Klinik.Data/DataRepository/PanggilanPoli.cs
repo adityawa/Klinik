@@ -21,7 +21,5 @@ namespace Klinik.Data.DataRepository
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public int SortNumber { get; set; }
-    
-        public virtual Poli Poli { get; set; }
     }
 }

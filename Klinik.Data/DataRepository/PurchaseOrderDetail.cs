@@ -18,9 +18,9 @@ namespace Klinik.Data.DataRepository
         public int PurchaseOrderId { get; set; }
         public int ProductId { get; set; }
         public string namabarang { get; set; }
-        public double tot_pemakaian { get; set; }
-        public double sisa_stok { get; set; }
-        public double qty { get; set; }
+        public Nullable<double> tot_pemakaian { get; set; }
+        public Nullable<double> sisa_stok { get; set; }
+        public Nullable<double> qty { get; set; }
         public Nullable<double> qty_add { get; set; }
         public string reason_add { get; set; }
         public double total { get; set; }
@@ -31,8 +31,8 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
-        public Nullable<int> statusop { get; set; }
         public Nullable<int> RowStatus { get; set; }
+        public Nullable<int> statusop { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual PurchaseOrder PurchaseOrder { get; set; }

@@ -107,29 +107,30 @@ namespace Klinik.Web.Controllers
             PurchaseOrderResponse _response = new PurchaseOrderResponse();
 
             new PurchaseOrderValidator(_unitOfWork).Validate(request, out _response);
-            foreach (var item in purchaseOrderDetailModels)
-            {
-                var purchaseorderdetailrequest = new PurchaseOrderDetailRequest
+            if(purchaseOrderDetailModels != null) { 
+                foreach (var item in purchaseOrderDetailModels)
                 {
-                    Data = item
-                };
-                purchaseorderdetailrequest.Data.PurchaseOrderId = Convert.ToInt32(_response.Entity.Id);
-                purchaseorderdetailrequest.Data.Account = (AccountModel)Session["UserLogon"];
-                //
-                var requestnamabarang = new ProductRequest
-                {
-                    Data = new ProductModel
+                    var purchaseorderdetailrequest = new PurchaseOrderDetailRequest
                     {
-                        Id = item.ProductId
-                    }
-                };
+                        Data = item
+                    };
+                    purchaseorderdetailrequest.Data.PurchaseOrderId = Convert.ToInt32(_response.Entity.Id);
+                    purchaseorderdetailrequest.Data.Account = (AccountModel)Session["UserLogon"];
+                    //
+                    var requestnamabarang = new ProductRequest
+                    {
+                        Data = new ProductModel
+                        {
+                            Id = item.ProductId
+                        }
+                    };
 
-                ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
-                purchaseorderdetailrequest.Data.namabarang = namabarang.Entity.Name;
-                PurchaseOrderDetailResponse _purchaseorderdetailresponse = new PurchaseOrderDetailResponse();
-                new PurchaseOrderDetailValidator(_unitOfWork).Validate(purchaseorderdetailrequest, out _purchaseorderdetailresponse);
+                    ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
+                    purchaseorderdetailrequest.Data.namabarang = namabarang.Entity.Name;
+                    PurchaseOrderDetailResponse _purchaseorderdetailresponse = new PurchaseOrderDetailResponse();
+                    new PurchaseOrderDetailValidator(_unitOfWork).Validate(purchaseorderdetailrequest, out _purchaseorderdetailresponse);
+                }
             }
-
             return Json(new { data = _response.Data }, JsonRequestBehavior.AllowGet);
         }
 
@@ -146,6 +147,26 @@ namespace Klinik.Web.Controllers
                     Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
                 },
                 Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            new PurchaseOrderValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("EDIT_M_DELIVERYORDER")]
+        [HttpPost]
+        public JsonResult ApprovePurchaseOrder(int id)
+        {
+            PurchaseOrderResponse _response = new PurchaseOrderResponse();
+            var request = new PurchaseOrderRequest
+            {
+                Data = new PurchaseOrderModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.APPROVE.ToString()
             };
 
             new PurchaseOrderValidator(_unitOfWork).Validate(request, out _response);

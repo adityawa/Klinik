@@ -105,55 +105,58 @@ namespace Klinik.Web.Controllers
             DeliveryOrderPusatResponse _response = new DeliveryOrderPusatResponse();
 
             new DeliveryOrderPusatValidator(_unitOfWork).Validate(request, out _response);
-            foreach (var item in deliveryOrderDetailModels)
+            if (deliveryOrderDetailModels != null)
             {
-                var deliveryorderpusatdetailrequest = new DeliveryOrderPusatDetailRequest
+                foreach (var item in deliveryOrderDetailModels)
                 {
-                    Data = item
-                };
-                deliveryorderpusatdetailrequest.Data.DeliveryOderPusatId = Convert.ToInt32(_response.Entity.Id);
-                deliveryorderpusatdetailrequest.Data.Account = (AccountModel)Session["UserLogon"];
-                //
-                var requestnamabarang = new ProductRequest
-                {
-                    Data = new ProductModel
+                    var deliveryorderpusatdetailrequest = new DeliveryOrderPusatDetailRequest
                     {
-                        Id = item.ProductId
-                    }
-                };
-                var requestnamabarangpo = new ProductRequest
-                {
-                    Data = new ProductModel
+                        Data = item
+                    };
+                    deliveryorderpusatdetailrequest.Data.DeliveryOderPusatId = Convert.ToInt32(_response.Entity.Id);
+                    deliveryorderpusatdetailrequest.Data.Account = (AccountModel)Session["UserLogon"];
+                    //
+                    var requestnamabarang = new ProductRequest
                     {
-                        Id = Convert.ToInt32(item.ProductId_Po)
-                    }
-                };
+                        Data = new ProductModel
+                        {
+                            Id = item.ProductId
+                        }
+                    };
+                    var requestnamabarangpo = new ProductRequest
+                    {
+                        Data = new ProductModel
+                        {
+                            Id = Convert.ToInt32(item.ProductId_Po)
+                        }
+                    };
 
-                var requestnamaklink = new ClinicRequest
-                {
-                    Data = new ClinicModel
+                    var requestnamaklink = new ClinicRequest
                     {
-                        Id = Convert.ToInt32(item.ClinicId)
-                    }
-                };
-                var requestnamagudang = new GudangRequest
-                {
-                    Data = new GudangModel
+                        Data = new ClinicModel
+                        {
+                            Id = Convert.ToInt32(item.ClinicId)
+                        }
+                    };
+                    var requestnamagudang = new GudangRequest
                     {
-                        Id = Convert.ToInt32(item.GudangId)
-                    }
-                };
+                        Data = new GudangModel
+                        {
+                            Id = Convert.ToInt32(item.GudangId)
+                        }
+                    };
 
-                ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
-                ProductResponse namabarangpo = new ProductHandler(_unitOfWork).GetDetail(requestnamabarangpo);
-                ClinicResponse namaklinik = new ClinicHandler(_unitOfWork).GetDetail(requestnamaklink);
-                GudangResponse namagudang = new GudangHandler(_unitOfWork).GetDetail(requestnamagudang);
-                deliveryorderpusatdetailrequest.Data.namabarang = namabarang.Entity.Name;
-                deliveryorderpusatdetailrequest.Data.namabarang_po = namabarangpo.Entity.Name;
-                deliveryorderpusatdetailrequest.Data.namaklinik = namaklinik.Entity.Name;
-                deliveryorderpusatdetailrequest.Data.namagudang = namagudang.Entity.name;
-                DeliveryOrderPusatDetailResponse _deliveryorderpusatdetailresponse = new DeliveryOrderPusatDetailResponse();
-                new DeliveryOrderPusatDetailValidator(_unitOfWork).Validate(deliveryorderpusatdetailrequest, out _deliveryorderpusatdetailresponse);
+                    ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
+                    ProductResponse namabarangpo = new ProductHandler(_unitOfWork).GetDetail(requestnamabarangpo);
+                    ClinicResponse namaklinik = new ClinicHandler(_unitOfWork).GetDetail(requestnamaklink);
+                    GudangResponse namagudang = new GudangHandler(_unitOfWork).GetDetail(requestnamagudang);
+                    deliveryorderpusatdetailrequest.Data.namabarang = namabarang.Entity.Name;
+                    deliveryorderpusatdetailrequest.Data.namabarang_po = namabarangpo.Entity.Name;
+                    deliveryorderpusatdetailrequest.Data.namaklinik = namaklinik.Entity.Name;
+                    deliveryorderpusatdetailrequest.Data.namagudang = namagudang.Entity.name;
+                    DeliveryOrderPusatDetailResponse _deliveryorderpusatdetailresponse = new DeliveryOrderPusatDetailResponse();
+                    new DeliveryOrderPusatDetailValidator(_unitOfWork).Validate(deliveryorderpusatdetailrequest, out _deliveryorderpusatdetailresponse);
+                }
             }
 
             return Json(new { data = _response.Data }, JsonRequestBehavior.AllowGet);

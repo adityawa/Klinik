@@ -105,8 +105,8 @@ namespace Klinik.Features
                         nama_by_ho = request.Data.nama_by_ho,
                         qty_by_ho = request.Data.qty_by_ho,
                         remark_by_ho = request.Data.remark_by_ho,
-                        ModifiedBy = request.Data.Account.UserCode,
-                        ModifiedDate = DateTime.Now,
+                        CreatedBy = request.Data.Account.UserCode,
+                        CreatedDate = DateTime.Now,
                     };
 
                     _unitOfWork.PurchaseOrderDetailRepository.Insert(purhcaseorderdetailEntity);

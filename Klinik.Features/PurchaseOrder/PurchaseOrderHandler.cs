@@ -49,6 +49,7 @@ namespace Klinik.Features
                         qry.PurchaseRequestId = qry.PurchaseRequestId;
                         qry.ponumber = request.Data.ponumber;
                         qry.podate = request.Data.podate;
+                        qry.request_by = request.Data.request_by;
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.ModifiedDate = DateTime.Now;
                         qry.RowStatus = 0;
@@ -88,6 +89,7 @@ namespace Klinik.Features
                         PurchaseRequestId = request.Data.PurchaseRequestId,
                         ponumber = request.Data.ponumber,
                         podate = request.Data.podate,
+                        request_by = request.Data.request_by,
                         CreatedBy = request.Data.Account.UserCode,
                         CreatedDate = DateTime.Now,
                         ModifiedDate = DateTime.Now,
@@ -144,6 +146,7 @@ namespace Klinik.Features
                     ponumber = qry.ponumber,
                     podate = qry.podate,
                     approve_by = qry.approve_by,
+                    request_by = qry.request_by,
                     approve = qry.approve,
                     ModifiedBy = qry.ModifiedBy,
                     CreatedBy = qry.CreatedBy,
@@ -228,15 +231,16 @@ namespace Klinik.Features
             {
                 var prData = new PurchaseOrderModel
                 {
-                    Id = qry.id,
-                    PurchaseRequestId = qry.PurchaseRequestId,
-                    ponumber = qry.ponumber,
-                    podate = qry.podate,
-                    approve_by = qry.approve_by,
-                    approve = qry.approve,
-                    ModifiedBy = qry.ModifiedBy,
-                    CreatedBy = qry.CreatedBy,
-                    ModifiedDate = qry.ModifiedDate,
+                    Id = item.id,
+                    PurchaseRequestId = item.PurchaseRequestId,
+                    ponumber = item.ponumber,
+                    podate = item.podate,
+                    approve_by = item.approve_by,
+                    approve = item.approve,
+                    request_by = item.request_by,
+                    ModifiedBy = item.ModifiedBy,
+                    CreatedBy = item.CreatedBy,
+                    ModifiedDate = item.ModifiedDate,
                 };
 
                 lists.Add(prData);
@@ -308,6 +312,7 @@ namespace Klinik.Features
                 if (deliveryoder.id > 0)
                 {
                     deliveryoder.approve = 1;
+                    deliveryoder.approve_by = request.Data.Account.UserCode;
                     deliveryoder.ModifiedBy = request.Data.Account.UserCode;
                     deliveryoder.ModifiedDate = DateTime.Now;
 

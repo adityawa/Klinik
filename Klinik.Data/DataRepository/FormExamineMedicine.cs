@@ -19,6 +19,7 @@ namespace Klinik.Data.DataRepository
         public string TypeID { get; set; }
         public Nullable<int> ProductID { get; set; }
         public Nullable<double> Qty { get; set; }
+        public string Dose { get; set; }
         public string ConcoctionMedicine { get; set; }
         public string RemarkUse { get; set; }
         public Nullable<short> RowStatus { get; set; }
