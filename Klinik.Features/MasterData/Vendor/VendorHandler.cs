@@ -37,6 +37,7 @@ namespace Klinik.Features
                             CreatedDate = qry.CreatedDate,
                             ModifiedBy = qry.ModifiedBy,
                             ModifiedDate = qry.ModifiedDate,
+                            RowStatus = qry.RowStatus,
                         };
 
                         // update data
@@ -74,8 +75,9 @@ namespace Klinik.Features
                     {
                         namavendor = request.Data.namavendor,
                         CreatedBy = request.Data.Account.UserCode,
-                        CreatedDate = DateTime.Now
-                };
+                        CreatedDate = DateTime.Now,
+                        RowStatus = 0,
+                    };
 
                     _unitOfWork.VendorRepository.Insert(vendorEntity);
                     int resultAffected = _unitOfWork.Save();
@@ -117,6 +119,7 @@ namespace Klinik.Features
             {
                 response.Entity = new VendorModel
                 {
+                    Id = qry.FirstOrDefault().id,
                     namavendor = qry.FirstOrDefault().namavendor,
                     CreatedBy = qry.FirstOrDefault().CreatedBy,
                     CreatedDate = Convert.ToDateTime(qry.FirstOrDefault().CreatedDate),
@@ -180,6 +183,7 @@ namespace Klinik.Features
             {
                 var prData = new VendorModel
                 {
+                    Id = item.id,
                     namavendor = item.namavendor,
                     CreatedBy = item.CreatedBy,
                     CreatedDate = item.CreatedDate,
