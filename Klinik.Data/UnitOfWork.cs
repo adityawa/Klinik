@@ -51,6 +51,7 @@ namespace Klinik.Data
         private IGenericRepository<PoliService> _poliServiceRepository;
         private IGenericRepository<Letter> _letterRepository;
         private IGenericRepository<SuratRujukanLabKeluar> _suratRujukanLabKeluarRepository;
+
         private IGenericRepository<Gudang> _gudangRepository;
         private IGenericRepository<DeliveryOrder> _deliveryorderRepository;
         private IGenericRepository<DeliveryOrderDetail> _deliveryorderdetailRepository;
@@ -58,6 +59,9 @@ namespace Klinik.Data
         private IGenericRepository<DeliveryOrderPusatDetail> _deliveryorderpusatdetailRepository;
         private IGenericRepository<PurchaseOrder> _purchaseorderRepository;
         private IGenericRepository<PurchaseOrderDetail> _purchaseorderdetailRepository;
+
+
+        private IGenericRepository<PanggilanPoli> _panggilanPoliRepository;
 
         private bool disposed = false;
 
@@ -534,6 +538,7 @@ namespace Klinik.Data
             }
         }
 
+
         public IGenericRepository<Gudang> GudangRepository
         {
             get
@@ -601,6 +606,16 @@ namespace Klinik.Data
                 if (_purchaseorderdetailRepository == null)
                     _purchaseorderdetailRepository = new GenericRepository<PurchaseOrderDetail>(_context);
                 return _purchaseorderdetailRepository;
+            }
+        }
+        public IGenericRepository<PanggilanPoli> PanggilanPoliRepository
+        {
+            get
+            {
+                if (_panggilanPoliRepository == null)
+                    _panggilanPoliRepository = new GenericRepository<PanggilanPoli>(_context);
+                return _panggilanPoliRepository;
+
             }
         }
 

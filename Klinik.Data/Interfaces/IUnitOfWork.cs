@@ -53,6 +53,7 @@ namespace Klinik.Data
         IGenericRepository<PoliService> PoliServicesRepository { get; }
         IGenericRepository<Letter> LetterRepository { get; }
         IGenericRepository<SuratRujukanLabKeluar> SuratRujukanLabKeluarRepository { get; }
+
         IGenericRepository<Gudang> GudangRepository { get; }
         IGenericRepository<DeliveryOrder> DeliveryOrderRepository { get; }
         IGenericRepository<DeliveryOrderDetail> DeliveryOrderDetailRepository { get; }
@@ -60,6 +61,10 @@ namespace Klinik.Data
         IGenericRepository<DeliveryOrderPusatDetail> DeliveryOrderPusatDetailRepository { get; }
         IGenericRepository<PurchaseOrder> PurchaseOrderRepository { get; }
         IGenericRepository<PurchaseOrderDetail> PurchaseOrderDetailRepository { get; }
+
+
+        IGenericRepository<PanggilanPoli> PanggilanPoliRepository { get; }
+
         int Save();
     }
 }

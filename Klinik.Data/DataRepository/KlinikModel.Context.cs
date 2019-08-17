@@ -48,7 +48,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<Gudang> Gudangs { get; set; }
         public virtual DbSet<LabItem> LabItems { get; set; }
         public virtual DbSet<LabItemCategory> LabItemCategories { get; set; }
-        public virtual DbSet<Letter> Letters { get; set; }
+       
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<MCUPackage> MCUPackages { get; set; }
         public virtual DbSet<Medicine> Medicines { get; set; }
@@ -74,13 +74,20 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<QueuePoli> QueuePolis { get; set; }
         public virtual DbSet<RolePrivilege> RolePrivileges { get; set; }
         public virtual DbSet<Service> Services { get; set; }
-        public virtual DbSet<SuratRujukanLabKeluar> SuratRujukanLabKeluars { get; set; }
+      
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
-        public virtual DbSet<FormExamineMedicine> FormExamineMedicines { get; set; }
+
+     
         public virtual DbSet<DeliveryOrderPusat> DeliveryOrderPusats { get; set; }
         public virtual DbSet<DeliveryOrderPusatDetail> DeliveryOrderPusatDetails { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
+
+        public virtual DbSet<SuratRujukanLabKeluar> SuratRujukanLabKeluars { get; set; }
+        public virtual DbSet<Letter> Letters { get; set; }
+        public virtual DbSet<PanggilanPoli> PanggilanPolis { get; set; }
+        public virtual DbSet<FormExamineMedicine> FormExamineMedicines { get; set; }
+
     }
 }

@@ -204,7 +204,14 @@ namespace Klinik.Features
                 // reformat gender
                 response.Entity.PatientGender = response.Entity.PatientGender == "M" ? Messages.Male : Messages.Female;
                 response.Entity.PatientType = response.Entity.PatientType == "2" ? Messages.Company : Messages.General;
-
+                if (response.Entity.Type == (int)RegistrationTypeEnum.MCU)
+                {
+                    response.Entity.SortNumberCode = "M-" + string.Format("{0:D3}", qry.SortNumber);
+                }
+                else
+                {
+                    response.Entity.SortNumberCode = qry.Poli1.Code.Trim() + "-" + string.Format("{0:D3}", qry.SortNumber);
+                }
                 FormMedical formMedical = _unitOfWork.FormMedicalRepository.GetFirstOrDefault(x => x.ID == qry.FormMedicalID);
                 if (formMedical != null)
                 {
@@ -518,6 +525,34 @@ namespace Klinik.Features
                 response.Status = false;
                 response.Message = Messages.GeneralError;
             }
+
+            return response;
+        }
+
+        
+        public LoketResponse SendForCall(LoketRequest request)
+        {
+            var response = new LoketResponse();
+            int result = 0;
+            try
+            {
+                var entity = Mapper.Map<PanggilanPoliModel, PanggilanPoli>(request.CallRequest);
+                entity.CreatedBy = request.CallRequest.Account.UserName;
+                entity.CreatedDate = DateTime.Now;
+                _unitOfWork.PanggilanPoliRepository.Insert(entity);
+                result = _unitOfWork.Save();
+                if (result > 0)
+                {
+                    response.Status = true;
+                    response.Message = Messages.ReadyForCall;
+                }
+            }
+            catch(Exception ex)
+            {
+                response.Status = false;
+                response.Message = Messages.CallFailed;
+            }
+           
 
             return response;
         }

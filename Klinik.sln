@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2042
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Klinik.Web", "Klinik.Web\Klinik.Web.csproj", "{65C62B94-CC9F-4AA5-BD06-B42EF7AB2038}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Klinik.WebApi", "Klinik.WebApi\Klinik.WebApi.csproj", "{C43BCC4C-80D8-4E2E-AE04-599358F36A39}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Klinik.Interfaces", "Klinik.Interfaces\Klinik.Interfaces.csproj", "{6604E37F-D994-4395-ADA9-6C5A0A561857}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Klinik.WinFormVoice", "Klinik.WinFormVoice\Klinik.WinFormVoice.csproj", "{31112DD5-B7B2-4EB9-B884-F8CF89A46AA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{6604E37F-D994-4395-ADA9-6C5A0A561857}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6604E37F-D994-4395-ADA9-6C5A0A561857}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6604E37F-D994-4395-ADA9-6C5A0A561857}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31112DD5-B7B2-4EB9-B884-F8CF89A46AA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31112DD5-B7B2-4EB9-B884-F8CF89A46AA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31112DD5-B7B2-4EB9-B884-F8CF89A46AA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31112DD5-B7B2-4EB9-B884-F8CF89A46AA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
