@@ -129,6 +129,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Loket\LoketModel.cs" />
     <Compile Include="PurchaseOrderDetail\PurchaseOrderDetailModel.cs" />
+    <Compile Include="PurchaseOrderPusatDetail\PurchaseOrderPusatDetailModel.cs" />
+    <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatModel.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderModel.cs" />
   </ItemGroup>
   <ItemGroup>
