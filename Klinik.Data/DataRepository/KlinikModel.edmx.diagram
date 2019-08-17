@@ -147,6 +147,12 @@
         <EntityTypeShape EntityType="KlinikModel.PurchaseOrderDetail" Width="1.5" PointX="15.75" PointY="30.625" />
         <AssociationConnector Association="KlinikModel.FK_PurchaseOrderDetail_Product" />
         <AssociationConnector Association="KlinikModel.FK_PurchaseOrderDetail_PurchaseOrder" />
+        <EntityTypeShape EntityType="KlinikModel.PurchaseOrderPusat" Width="1.5" PointX="13.5" PointY="20.375" />
+        <EntityTypeShape EntityType="KlinikModel.PurchaseOrderPusatDetail" Width="1.5" PointX="15.75" PointY="36.5" />
+        <EntityTypeShape EntityType="KlinikModel.Vendor" Width="1.5" PointX="13.5" PointY="25" />
+        <AssociationConnector Association="KlinikModel.FK_PurchaseOrderPusatDetail_Product" />
+        <AssociationConnector Association="KlinikModel.FK_PurchaseOrderPusatDetail_PurchaseOrderPusat" />
+        <AssociationConnector Association="KlinikModel.FK_PurchaseOrderPusatDetail_Vendor" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -4,6 +4,7 @@
 }
 @section Styles{
     <link href="~/Content/Login/vendor/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/Custom/Custom.css" rel="stylesheet" />
 }
 <section class="panel">
     <header class="panel-heading">
@@ -37,77 +38,107 @@
         </form>
     </div>
     <div class="panel-body">
-        <table id="tblPurchaseOrder" class="table color-table success-table">
-            <thead>
-                <tr>
-                    <th hidden>Id Obat</th>
-                    <th>Nama Obat</th>
-                    <th>Total Pemakaian</th>
-                    <th>Sisa Stock</th>
-                    <th>Qty</th>
-                    <th>Qty add</th>
-                    <th>Reason add</th>
-                    <th>Total</th>
-                    <th>Nama By HO</th>
-                    <th>Qty By HP</th>
-                    <th>Remark By HO</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null)
-                {
-                    foreach (var item in Model.purchaseOrderdetailModels)
-                    {
-                <tr>
-                    <td hidden>@item.Id</td>
-                    <td hidden>@item.ProductId</td>
-                    <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
-                    <td><input type="text" class="form-control" value="@item.tot_pemakaian" disabled="disabled" /></td>
-                    <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
-                    <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
-                    <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
-                    <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
-                    <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
-                    <td><input type="text" class="form-control" value="@item.nama_by_ho" disabled="disabled" /></td>
-                    <td><input type="text" class="form-control" value="@item.qty_by_ho" disabled="disabled" /></td>
-                    <td><input type="text" class="form-control" value="@item.remark_by_ho" disabled="disabled" /></td>
-                    <td>
-                        <button class="edit-purchaseorderdetail">Edit</button>
-                        <button>Delete</button>
-                    </td>
-                </tr>
-                    }
-                }
-            </tbody>
-        </table>
-        <br />
-        <form id="purchaseorderdetail">
-            <div class="form-group">
-                <input type="text" hidden id="PurchaseOrderDetailId" />
-                <select id="namabarang" class="form-control" style="width:230px"></select>
-                <input type="text" hidden id="ProductId" />
+            <div class="scrollTable">
+                <table id="tblPurchaseOrder" class="table color-table success-table">
+                    <thead>
+                        <tr>
+                            <th hidden>Id Obat</th>
+                            <th>Nama Obat</th>
+                            <th>Total Pemakaian</th>
+                            <th>Sisa Stock</th>
+                            <th>Qty</th>
+                            <th>Qty add</th>
+                            <th>Reason add</th>
+                            <th>Total</th>
+                            <th>Nama By HO</th>
+                            <th>Qty By HP</th>
+                            <th>Remark By HO</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model.purchaseOrderdetailModels)
+                            {
+                                <tr>
+                                    <td hidden>@item.Id</td>
+                                    <td hidden>@item.ProductId</td>
+                                    <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
+                                    <td><input type="text" class="form-control" value="@item.tot_pemakaian" disabled="disabled" /></td>
+                                    <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
+                                    <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
+                                    <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
+                                    <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
+                                    <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
+                                    <td><input type="text" class="form-control" value="@item.nama_by_ho" disabled="disabled" /></td>
+                                    <td><input type="text" class="form-control" value="@item.qty_by_ho" disabled="disabled" /></td>
+                                    <td><input type="text" class="form-control" value="@item.remark_by_ho" disabled="disabled" /></td>
+                                    <td>
+                                        <button class="edit-purchaseorderdetail btn btn-success btn-sm">Edit</button>
+                                        <button class="btn btn-danger btn-sm">Delete</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
             </div>
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="tot_pemakaian" id="tot_pemakaian" value="" />
-                <input type="text" class="form-control" placeholder="sisa_stok" id="sisa_stok" value="" />
-                <input type="text" class="form-control" placeholder="qty" id="qty" value="" />
-                <input type="text" class="form-control" placeholder="qty_add" id="qty_add" value="" />
-                <input type="text" class="form-control" placeholder="reason_add" id="reason_add" value="" />
-                <input type="text" class="form-control" placeholder="total" id="total" value="" />
-                <input type="text" class="form-control" placeholder="nama_by_ho" id="nama_by_ho" value="" />
-                <input type="text" class="form-control" placeholder="qty_by_ho" id="qty_by_ho" value="" />
-            </div>
-            <div class="form-group">
-                <textarea type="text" class="namaobat form-control" placeholder="remark_by_ho" id="remark_by_ho"></textarea>
-            </div>
-            <input type="button" id="btnAdd" value="Add" />
-        </form>
-        <footer class="panel-footer">
-            <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrder/CreateOrEditPurchaseOrder">@Klinik.Resources.UIMessages.Save</button>
-            <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
-        </footer>
-    </div>
+            <br />
+            <form id="purchaseorderdetail">
+                    <div class="form-group">
+                    <input type="text" hidden id="PurchaseOrderDetailId" />
+                    <input type="text" hidden id="ProductId" />
+                        <div class="row">
+                            <div class="col-md-3">
+                                <select id="namabarang" class="form-control" style="width:230px"></select>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="tot_pemakaian" id="tot_pemakaian" value="" />
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="sisa_stok" id="sisa_stok" value="" />
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="qty" id="qty" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="qty_add" id="qty_add" value="" />
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="reason_add" id="reason_add" value="" />
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="total" id="total" value="" />
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="nama_by_ho" id="nama_by_ho" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row marginbutton">
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="qty_by_ho" id="qty_by_ho" value="" />
+                            </div>
+                            <div class="col-md-9">
+                                <textarea type="text" class="namaobat form-control" placeholder="remark_by_ho" id="remark_by_ho"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="col-md-12 text-right">
+                        <input type="button" id="btnAdd" class="btn btn-success float-right" value="Add" />
+                    </footer>
+</form>
+            <footer class="panel-footer">
+                <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrder/CreateOrEditPurchaseOrder">@Klinik.Resources.UIMessages.Save</button>
+                <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+            </footer>
+        </div>
 </section>
 
 @section Scripts {

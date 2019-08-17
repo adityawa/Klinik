@@ -1092,4 +1092,7 @@
   <data name="PurchaseOrderList" xml:space="preserve">
     <value>PurchaseOrderList</value>
   </data>
+  <data name="VendorList" xml:space="preserve">
+    <value>Vendor List</value>
+  </data>
 </root>

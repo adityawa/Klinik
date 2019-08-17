@@ -1,0 +1,13 @@
+﻿
+.scrollTable
+{
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.scrollTable table {
+    width: 150%;
+}
+.marginbutton{
+    margin-bottom:20px
+}

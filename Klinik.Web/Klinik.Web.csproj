@@ -336,6 +336,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Custom\custom-select.css" />
     <Content Include="Content\Custom\custom-select.min.js" />
+    <Content Include="Content\Custom\Custom.css" />
     <Content Include="Content\Custom\jquery-ui.css" />
     <Content Include="Content\Custom\jquery-ui.min.js" />
     <Content Include="Content\font-awesome.css" />
@@ -1507,9 +1508,12 @@
     <Content Include="Views\PurchaseOrder\PurchaseOrderList.cshtml" />
     <Content Include="Views\PurchaseOrder\CreateOrEditPurchaseOrder.cshtml" />
     <Content Include="Views\PurchaseOrder\PrintPurchaseOrder.cshtml" />
+    <Content Include="Views\MasterData\VendorList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditVendor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Vendor\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -2360,5 +2360,109 @@ namespace Klinik.Web.Controllers
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        #region ::VENDOR::
+        [CustomAuthorize("VIEW_M_VENDOR")]
+        public ActionResult VendorList()
+        {
+            return View();
+        }
+
+        [CustomAuthorize("VIEW_M_VENDOR")]
+        [HttpPost]
+        public ActionResult GetVendorData()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new VendorRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            var response = new VendorHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("ADD_M_VENDOR", "EDIT_M_VENDOR")]
+        public ActionResult CreateOrEditVendor()
+        {
+            GudangResponse _response = new GudangResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new VendorRequest
+                {
+                    Data = new VendorModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                VendorResponse resp = new VendorHandler(_unitOfWork).GetDetail(request);
+                VendorModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.ActionType = ClinicEnums.Action.Add;
+                return View();
+            }
+        }
+
+        [CustomAuthorize("ADD_M_VENDOR", "EDIT_M_VENDOR")]
+        [HttpPost]
+        public ActionResult CreateOrEditVendor(VendorModel _model)
+        {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new VendorRequest
+            {
+                Data = _model
+            };
+
+            VendorResponse _response = new VendorResponse();
+
+            new VendorValidator(_unitOfWork).Validate(request, out _response);
+
+            return RedirectToAction("VendorList");
+        }
+
+        [CustomAuthorize("DELETE_M_VENDOR")]
+        [HttpPost]
+        public JsonResult DeleteMasterVendor(int id)
+        {
+            VendorResponse _response = new VendorResponse();
+            var request = new VendorRequest
+            {
+                Data = new VendorModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            new VendorValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

@@ -70,6 +70,8 @@
             public const string ADD_PURCHASE_ORDER = "Add New Purchase order";
             public const string EDIT_PURCHASE_ORDER_DETAIL = "Edit Form Purchase order detail";
             public const string ADD_PURCHASE_ORDER_DETAIL= "Add New Purchase order detail";
+            public const string EDIT_VENDOR = "Edit Form Vendor";
+            public const string ADD_VENDOR = "Add New Vendor";
         }
 
         public static class MasterType

@@ -110,8 +110,8 @@
                     "render": function (data, type, full, meta)
                     {
                          var type = full['approve'] == null ? 'Approve' : 'Print';
-                        var button = full['approve'] == null ? "<button class='btn btn-success' onclick='" + type + "(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Approve</button>" : '<a class="btn btn-success" href="/PurchaseOrder/PrintPurchaseOrder?id=' + full.Id + '">' + type + '</a>';
-                        return '<a class="btn btn-info" href="/PurchaseOrder/CreateOrEditPurchaseOrder?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" + " |" + button
+                        var button = full['approve'] == null ? "<button class='btn btn-success btn-sm' onclick='" + type + "(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Approve</button>" : '<a class="btn btn-success btn-sm" href="/PurchaseOrder/PrintPurchaseOrder?id=' + full.Id + '">' + type + '</a>';
+                        return '<a class="btn btn-info btn-sm" href="/PurchaseOrder/CreateOrEditPurchaseOrder?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger btn-sm' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" + " |" + button
                     }
                 }
 

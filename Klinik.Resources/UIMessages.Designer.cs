@@ -2950,6 +2950,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vendor List.
+        /// </summary>
+        public static string VendorList {
+            get {
+                return ResourceManager.GetString("VendorList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Visus.
         /// </summary>
         public static string Visus {

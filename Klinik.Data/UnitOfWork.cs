@@ -59,6 +59,7 @@ namespace Klinik.Data
         private IGenericRepository<DeliveryOrderPusatDetail> _deliveryorderpusatdetailRepository;
         private IGenericRepository<PurchaseOrder> _purchaseorderRepository;
         private IGenericRepository<PurchaseOrderDetail> _purchaseorderdetailRepository;
+        private IGenericRepository<Vendor> _vendorRepository;
 
 
         private IGenericRepository<PanggilanPoli> _panggilanPoliRepository;
@@ -615,6 +616,17 @@ namespace Klinik.Data
                 if (_panggilanPoliRepository == null)
                     _panggilanPoliRepository = new GenericRepository<PanggilanPoli>(_context);
                 return _panggilanPoliRepository;
+
+            }
+        }
+
+        public IGenericRepository<Vendor> VendorRepository
+        {
+            get
+            {
+                if (_vendorRepository == null)
+                    _vendorRepository = new GenericRepository<Vendor>(_context);
+                return _vendorRepository;
 
             }
         }
