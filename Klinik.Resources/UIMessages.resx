@@ -1095,6 +1095,9 @@
   <data name="VendorList" xml:space="preserve">
     <value>Vendor List</value>
   </data>
+  <data name="PurchaseOrderPusatList" xml:space="preserve">
+    <value>Purchase Order Pusat List</value>
+    </data>
   <data name="Category" xml:space="preserve">
     <value>Category</value>
   </data>

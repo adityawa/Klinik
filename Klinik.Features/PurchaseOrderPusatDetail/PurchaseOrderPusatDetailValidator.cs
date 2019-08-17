@@ -2,23 +2,27 @@
 using Klinik.Data;
 using Klinik.Resources;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Klinik.Features
 {
-    public class PurchaseOrderDetailValidator : BaseFeatures
+    public class PurchaseOrderPusatDetailValidator : BaseFeatures
     {
-        private const string ADD_M_PURCHASEORDER = "ADD_M_PURCHASEORDER";
-        private const string EDIT_M_PURCHASEORDER = "EDIT_M_PURCHASEORDER";
-        private const string DELETE_M_PURCHASEORDER = "DELETE_M_PURCHASEORDER";
-        public PurchaseOrderDetailValidator(IUnitOfWork unitOfWork)
+        private const string ADD_M_PURCHASEORDERPUSAT = "ADD_M_PURCHASEORDERPUSAT";
+        private const string EDIT_M_PURCHASEORDERPUSAT = "EDIT_M_PURCHASEORDERPUSAT";
+        private const string DELETE_M_PURCHASEORDERPUSAT = "DELETE_M_PURCHASEORDERPUSAT";
+
+        public PurchaseOrderPusatDetailValidator(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public void Validate(PurchaseOrderDetailRequest request, out PurchaseOrderDetailResponse response)
+        public void Validate(PurchaseOrderPusatDetailRequest request, out PurchaseOrderPusatDetailResponse response)
         {
-            response = new PurchaseOrderDetailResponse();
+            response = new PurchaseOrderPusatDetailResponse();
 
             if (request.Action != null && request.Action.Equals(ClinicEnums.Action.DELETE.ToString()))
             {
@@ -30,7 +34,7 @@ namespace Klinik.Features
 
                 if (request.Data.namabarang == null || String.IsNullOrWhiteSpace(request.Data.namabarang))
                 {
-                    errorFields.Add("namabarang");
+                    errorFields.Add("ponumber");
                 }
 
                 if (errorFields.Any())
@@ -42,11 +46,11 @@ namespace Klinik.Features
                 if (request.Data.Id == 0)
                 {
 
-                    isHavePrivilege = IsHaveAuthorization(ADD_M_PURCHASEORDER, request.Data.Account.Privileges.PrivilegeIDs);
+                    isHavePrivilege = IsHaveAuthorization(ADD_M_PURCHASEORDERPUSAT, request.Data.Account.Privileges.PrivilegeIDs);
                 }
                 else
                 {
-                    isHavePrivilege = IsHaveAuthorization(EDIT_M_PURCHASEORDER, request.Data.Account.Privileges.PrivilegeIDs);
+                    isHavePrivilege = IsHaveAuthorization(EDIT_M_PURCHASEORDERPUSAT, request.Data.Account.Privileges.PrivilegeIDs);
                 }
 
                 if (!isHavePrivilege)
@@ -57,18 +61,18 @@ namespace Klinik.Features
 
                 if (response.Status)
                 {
-                    response = new PurchaseOrderDetailHandler(_unitOfWork).CreateOrEdit(request);
+                    response = new PurchaseOrderPusatDetailHandler(_unitOfWork).CreateOrEdit(request);
                 }
             }
         }
 
-        private void ValidateForDelete(PurchaseOrderDetailRequest request, out PurchaseOrderDetailResponse response)
+        private void ValidateForDelete(PurchaseOrderPusatDetailRequest request, out PurchaseOrderPusatDetailResponse response)
         {
-            response = new PurchaseOrderDetailResponse();
+            response = new PurchaseOrderPusatDetailResponse();
 
             if (request.Action == ClinicEnums.Action.DELETE.ToString())
             {
-                bool isHavePrivilege = IsHaveAuthorization(DELETE_M_PURCHASEORDER, request.Data.Account.Privileges.PrivilegeIDs);
+                bool isHavePrivilege = IsHaveAuthorization(DELETE_M_PURCHASEORDERPUSAT, request.Data.Account.Privileges.PrivilegeIDs);
                 if (!isHavePrivilege)
                 {
                     response.Status = false;

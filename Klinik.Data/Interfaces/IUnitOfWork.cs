@@ -63,6 +63,8 @@ namespace Klinik.Data
         IGenericRepository<PurchaseOrderDetail> PurchaseOrderDetailRepository { get; }
         IGenericRepository<PanggilanPoli> PanggilanPoliRepository { get; }
         IGenericRepository<Vendor> VendorRepository { get; }
+        IGenericRepository<PurchaseOrderPusat> PurchaseOrderPusatRepository { get; }
+        IGenericRepository<PurchaseOrderPusatDetail> PurchaseOrderPusatDetailRepository { get; }
 
         int Save();
     }

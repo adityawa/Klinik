@@ -1,0 +1,221 @@
+﻿@model Klinik.Entities.PurchaseOrderPusat.PurchaseOrderPusatModel
+
+@{
+    ViewBag.Title = "CreateOrEditDeliveryOrderPusat";
+}
+@section Styles{
+    <link href="~/Content/Login/vendor/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/Custom/Custom.css" rel="stylesheet" />
+}
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+        </div>
+        <h5 class="panel-title">Form @ViewBag.ActionType Purchase Order Pusat</h5>
+    </header>
+    <div class="panel-body">
+        <form class="form-horizontal">
+            @Html.HiddenFor(x => x.Id)
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.NO_DO</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.ponumber, new { @class = "form-control", @id = "ponumber" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.CreatedDate</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.podate, new { @class = "form-control", @id = "podate" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.RequestBy</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.request_by, new { @class = "form-control", @id = "request_by" })
+                </div>
+            </div>
+            <br />
+        </form>
+    </div>
+    <div class="panel-body">
+        <div class="scrollTable">
+            <table id="tblPurchaseOrderPusat" class="table color-table success-table">
+                <thead>
+                    <tr>
+                        <th hidden>Id Obat</th>
+                        <th>Nama Obat</th>
+                        <th>Nama Vendor</th>
+                        <th>Satuan</th>
+                        <th>Harga</th>
+                        <th>Stock Prev</th>
+                        <th>Total Request</th>
+                        <th>Total Distribusi</th>
+                        <th>Sisa Stock</th>
+                        <th>Qty</th>
+                        <th>Qty Add</th>
+                        <th>Reason Add</th>
+                        <th>Total</th>
+                        <th>Qty Unit</th>
+                        <th>Qty Box</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model.purchaseOrderdetailpusatModels)
+                        {
+                    <tr>
+                        <td hidden>@item.Id</td>
+                        <td hidden>@item.ProductId</td>
+                        <td hidden>@item.VendorId</td>
+                        <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
+                        <td><select disabled="disabled"><option>@item.namavendor</option></select></td>
+                        <td><input type="text" class="form-control" value="@item.satuan" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.harga" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.stok_prev" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.total_req" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.total_dist" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.qty_unit" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.qty_box" disabled="disabled" /></td>
+                        <td>
+                            <button class="edit-purchaseorderpusatdetail btn btn-success btn-sm">Edit</button>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <form id="purchaseorderpusatdetail">
+            <div class="form-group">
+                <input type="text" hidden id="PurchaseOrderPusatDetailId" />
+                <input type="text" hidden id="ProductId" />
+                <input type="text" hidden id="VendorId" />
+                <div class="row">
+                    <div class="col-md-3">
+                        <select id="namabarang" class="form-control" style="width:230px"></select>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="namavendor" class="form-control" style="width:230px"></select>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="satuan" id="satuan" value="" />
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="harga" id="harga" value="" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="stok_prev" id="stok_prev" value="" />
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="total_req" id="total_req" value="" />
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="total_dist" id="total_dist" value="" />
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="sisa_stok" id="sisa_stok" value="" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="qty" id="qty" value="" />
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="qty_add" id="qty_add" value="" />
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="qty_box" id="qty_box" value="" />
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="total" id="total" value="" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row marginbutton">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="qty_unit" id="qty_unit" value="" />
+                    </div>
+                    <div class="col-md-9">
+                        <textarea type="text" class="namaobat form-control" placeholder="reason_add" id="reason_add"></textarea>
+                    </div>
+                </div>
+            </div>
+            <footer class="col-md-12 text-right">
+                <input type="button" id="btnAdd" class="btn btn-success float-right" value="Add" />
+            </footer>
+        </form>
+        <footer class="panel-footer">
+            <button type="submit" class="btn btn-primary savepurchasepusardetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrderPusat/CreateOrEditPurchaseOrderPusat">@Klinik.Resources.UIMessages.Save</button>
+            <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+        </footer>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/PurchaseOrderPusat.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#btnreset').click(function (e) {
+                window.location.href = "/PurchaseOrderPusat/PurchaseOrderPusatList";
+            });
+
+            toastr.options = {
+                "closeButton": false,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "0",
+                "hideDuration": "0",
+                "timeOut": "2000",
+                "showMethod": "fadeIn"
+            };
+
+            var _temp="@ViewBag.Response";
+            var _arrMsg = _temp.split(";");
+
+            if (_arrMsg.length > 1) {
+                if (_arrMsg[0] == "True") {
+                    toastr.success(_arrMsg[1]);
+                }
+                else {
+                    toastr.options.closeButton = true;
+                    toastr.options.timeOut = 0;
+                    toastr.error(_arrMsg[1]);
+                }
+            }
+        });
+
+    </script>
+    <script type="text/javascript">
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblPurchaseOrderPusat")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+    </script>
+}

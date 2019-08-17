@@ -20,9 +20,7 @@ namespace Klinik.Web.Controllers
     {
         private IUnitOfWork _unitOfWork;
         private KlinikDBEntities _context;
-        private const string ADD_M_PURCHASEORDER = "ADD_M_PURCHASEORDER";
-        private const string EDIT_M_PURCHASEORDER = "EDIT_M_PURCHASEORDER";
-        private const string DELETE_M_PURCHASEORDER = "DELETE_M_PURCHASEORDER";
+
         // GET: PurchaseOrder
         public PurchaseOrderController(IUnitOfWork unitOfWork, KlinikDBEntities context)
         {
@@ -174,6 +172,7 @@ namespace Klinik.Web.Controllers
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
 
+        [CustomAuthorize("VIEW_M_PURCHASEORDER")]
         public ActionResult PrintPurchaseOrder(int id)
         {
             PurchaseOrderResponse _response = new PurchaseOrderResponse();
