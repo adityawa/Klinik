@@ -1038,7 +1038,6 @@
   <data name="PrescriptionDetail" xml:space="preserve">
     <value>Detail Resep</value>
   </data>
-
   <data name="GudangList" xml:space="preserve">
     <value>Gudang LIst</value>
   </data>
@@ -1086,9 +1085,11 @@
   </data>
   <data name="TujuanPO" xml:space="preserve">
     <value>Tujuan PO</value>
-</data>
+  </data>
   <data name="Call" xml:space="preserve">
     <value>Call</value>
-
+  </data>
+  <data name="PurchaseOrderList" xml:space="preserve">
+    <value>PurchaseOrderList</value>
   </data>
 </root>
