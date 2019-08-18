@@ -15,6 +15,7 @@ namespace Klinik.Entities.DeliveryOrderPusat
         public string dodest { get; set; }
         public Nullable<int> approve_by { get; set; }
         public Nullable<int> approve { get; set; }
+        public string createformat { get; set; }
         public List<DeliveryOrderPusatDetailModel> deliveryOrderDetailpusatModels { get; set; }
         public DeliveryOrderPusatModel()
         {

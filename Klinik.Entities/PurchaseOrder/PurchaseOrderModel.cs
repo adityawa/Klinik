@@ -16,6 +16,7 @@ namespace Klinik.Entities.PurchaseOrder
         public string approve_by { get; set; }
         public Nullable<int> approve { get; set; }
         public Nullable<int> statusop { get; set; }
+        public string createformat { get; set; }
         public List<PurchaseOrderDetailModel> purchaseOrderdetailModels { get; set; }
         public PurchaseOrderModel()
         {

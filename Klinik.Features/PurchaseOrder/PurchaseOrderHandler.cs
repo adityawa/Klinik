@@ -241,6 +241,7 @@ namespace Klinik.Features
                     ModifiedBy = item.ModifiedBy,
                     CreatedBy = item.CreatedBy,
                     ModifiedDate = item.ModifiedDate,
+                    createformat = GeneralHandler.FormatDate(item.CreatedDate)
                 };
 
                 lists.Add(prData);
