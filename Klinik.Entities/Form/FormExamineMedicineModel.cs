@@ -15,5 +15,11 @@ namespace Klinik.Entities.Form
         public int Stock { get; set; }
         public long FormMedicalID { get; set; }
         public LoketModel LoketData { get; set; }
-    }
+		public FormExamineMedicineDetailModel Detail { get; set; }
+
+		public FormExamineMedicineModel()
+		{
+			Detail = new FormExamineMedicineDetailModel();
+		}
+	}
 }

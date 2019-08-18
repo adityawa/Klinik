@@ -11,14 +11,12 @@ using Klinik.Features.Pharmacy;
 using Klinik.Common;
 using Klinik.Entities.Form;
 using AutoMapper;
+using Klinik.Entities.Pharmacy;
 
 namespace Klinik.Web.Controllers
 {
-	public class PharmacyController : Controller
+	public class PharmacyController : BaseController
 	{
-		private IUnitOfWork _unitOfWork;
-		private KlinikDBEntities _context;
-
 		#region ::DROPDOWN::
 		private List<SelectListItem> BindDropDownStatus()
 		{
@@ -60,10 +58,9 @@ namespace Klinik.Web.Controllers
 		}
 		#endregion
 
-		public PharmacyController(IUnitOfWork unitOfWork, KlinikDBEntities context)
+		public PharmacyController(IUnitOfWork unitOfWork, KlinikDBEntities context) :
+			base(unitOfWork, context)
 		{
-			_unitOfWork = unitOfWork;
-			_context = context;
 		}
 
 		// GET: Prescription details
@@ -74,14 +71,30 @@ namespace Klinik.Web.Controllers
 				return View("PatientList", "Pharmacy", null);
 
 			List<FormExamineMedicine> medicinelist = _unitOfWork.FormExamineMedicineRepository.Get(x => x.FormExamine.FormMedicalID.Value.ToString() == id && x.RowStatus == 0).ToList();
-			List<FormExamineMedicineModel> medicineModelList = new List<FormExamineMedicineModel>();
+			PrescriptionModel prescriptionModel = new PrescriptionModel();
 			foreach (var item in medicinelist)
 			{
 				FormExamineMedicineModel medicineModel = Mapper.Map<FormExamineMedicine, FormExamineMedicineModel>(item);
-				medicineModelList.Add(medicineModel);
+				FormExamineMedicineDetail detail = _unitOfWork.FormExamineMedicineDetailRepository.Get(x => x.FormExamineMedicineID.Value == item.ID && x.RowStatus == 0).FirstOrDefault();
+				if (detail != null)
+				{
+					medicineModel.Detail = Mapper.Map<FormExamineMedicineDetail, FormExamineMedicineDetailModel>(detail);
+				}
+
+				prescriptionModel.Medicines.Add(medicineModel);
 			}
 
-			return View(medicineModelList);
+			return View(prescriptionModel);
+		}
+
+		[HttpPost]
+		public ActionResult Prescription(PrescriptionModel model)
+		{			
+			var request = new PharmacyRequest { Data = model, Account = Account };
+
+			PharmacyResponse _response = new PharmacyValidator(_unitOfWork, _context).Validate(request);
+
+			return View();
 		}
 
 		// GET: Pharmacy

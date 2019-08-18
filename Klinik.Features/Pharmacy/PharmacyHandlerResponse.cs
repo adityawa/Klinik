@@ -1,9 +1,9 @@
 ﻿using Klinik.Entities;
-using Klinik.Entities.Form;
+using Klinik.Entities.Pharmacy;
 
 namespace Klinik.Features.Pharmacy
 {
-    public class PharmacyResponse : BaseResponse<FormExamineMedicineModel>
+	public class PharmacyResponse : BaseResponse<PrescriptionModel>
     {        
     }
 }

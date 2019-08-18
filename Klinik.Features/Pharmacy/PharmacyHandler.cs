@@ -4,7 +4,7 @@ using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Form;
 using Klinik.Entities.Loket;
-using LinqKit;
+using Klinik.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,81 +12,84 @@ using System.Linq.Expressions;
 
 namespace Klinik.Features.Pharmacy
 {
-    public class PharmacyHandler : BaseFeatures
-    {
-        public PharmacyHandler(IUnitOfWork unitOfWork, KlinikDBEntities context = null)
-        {
-            _unitOfWork = unitOfWork;
-            _context = context;
-        }
+	public class PharmacyHandler : BaseFeatures
+	{
+		public PharmacyHandler(IUnitOfWork unitOfWork, KlinikDBEntities context = null)
+		{
+			_unitOfWork = unitOfWork;
+			_context = context;
+		}
 
-        public PharmacyResponse CreateOrEdit(PharmacyRequest request)
-        {
-            PharmacyResponse response = new PharmacyResponse();
+		public PharmacyResponse CreateOrEdit(PharmacyRequest request)
+		{
+			PharmacyResponse response = new PharmacyResponse();
 
-            return response;
-        }
+			using (var transaction = _context.Database.BeginTransaction())
+			{
+				try
+				{
+					var queue = _context.QueuePolis.FirstOrDefault(x => x.FormMedicalID == request.Data.Medicines.First().FormMedicalID
+								&& x.PoliTo == (int)PoliEnum.Farmasi
+								&& x.RowStatus == 0);
 
-        public static List<Int32> GetSelectedPharmacyItem(long IdQueue)
-        {
-            List<Int32> PharmacyItemIds = new List<Int32>();
-            var _getFormMedical = _unitOfWork.RegistrationRepository.GetById(IdQueue);
-            if (_getFormMedical != null)
-            {
-                var qryLabItems = _unitOfWork.FormExamineMedicineRepository.Get(x => x.FormExamine.FormMedicalID == _getFormMedical.FormMedicalID);
-                foreach (var item in qryLabItems)
-                {
-                    PharmacyItemIds.Add((int)item.ID);
-                }
-            }
-            return PharmacyItemIds;
-        }
+					// set as waiting
+					queue.Status = 1;
+					_context.SaveChanges();
 
-        public LoketResponse GetListData(LoketRequest request)
-        {
-            Expression<Func<QueuePoli, bool>> _serachCriteria = x => x.PoliTo == request.Data.PoliToID;
+					foreach (var item in request.Data.Medicines)
+					{
+						FormExamineMedicineDetail detail = Mapper.Map<FormExamineMedicineDetailModel, FormExamineMedicineDetail>(item.Detail);
+						_context.FormExamineMedicineDetails.Add(detail);
+					}
 
-            List<LoketModel> lists = base.GetFarmasiBaseLoketData(request, _serachCriteria);
-            int totalRequest = lists.Count();
-            var response = new LoketResponse
-            {
-                Draw = request.Draw,
-                RecordsFiltered = totalRequest,
-                RecordsTotal = totalRequest,
-                Data = lists
-            };
+					_context.SaveChanges();
+					transaction.Commit();
+					response.Message = Messages.DataSaved;
+				}
+				catch (Exception ex)
+				{
+					transaction.Rollback();
 
-            return response;
-        }
+					response.Status = false;
+					response.Message = Messages.GeneralError;
 
-        public PharmacyResponse GetPharmacyForInput(PharmacyRequest request)
-        {
-            List<FormExamineMedicineModel> lists = new List<FormExamineMedicineModel>();
-            dynamic qry = null;
-            var searchPredicate = PredicateBuilder.New<FormExamineMedicine>(true);
+					ErrorLog(ClinicEnums.Module.PHARMACY, Constants.Command.EDIT_FORM_EXAMINE_MEDICINE, request.Account, ex);
+				}
+			}
 
-            searchPredicate = searchPredicate.And(x => x.FormExamine.FormMedicalID == request.Data.LoketData.FormMedicalID);
-            qry = _unitOfWork.FormExamineMedicineRepository.Get(searchPredicate, null);
+			return response;
+		}
 
-            foreach (var item in qry)
-            {
-                var prData = Mapper.Map<FormExamineLab, FormExamineLabModel>(item);
+		public static List<Int32> GetSelectedPharmacyItem(long IdQueue)
+		{
+			List<Int32> PharmacyItemIds = new List<Int32>();
+			var _getFormMedical = _unitOfWork.RegistrationRepository.GetById(IdQueue);
+			if (_getFormMedical != null)
+			{
+				var qryLabItems = _unitOfWork.FormExamineMedicineRepository.Get(x => x.FormExamine.FormMedicalID == _getFormMedical.FormMedicalID);
+				foreach (var item in qryLabItems)
+				{
+					PharmacyItemIds.Add((int)item.ID);
+				}
+			}
+			return PharmacyItemIds;
+		}
 
-                lists.Add(prData);
-            }
+		public LoketResponse GetListData(LoketRequest request)
+		{
+			Expression<Func<QueuePoli, bool>> _serachCriteria = x => x.PoliTo == request.Data.PoliToID;
 
-            int totalRequest = lists.Count();
-            var data = lists;
+			List<LoketModel> lists = base.GetFarmasiBaseLoketData(request, _serachCriteria);
+			int totalRequest = lists.Count();
+			var response = new LoketResponse
+			{
+				Draw = request.Draw,
+				RecordsFiltered = totalRequest,
+				RecordsTotal = totalRequest,
+				Data = lists
+			};
 
-            var response = new PharmacyResponse
-            {
-                Draw = request.Draw,
-                RecordsFiltered = totalRequest,
-                RecordsTotal = totalRequest,
-                Data = data
-            };
-
-            return response;
-        }
-    }
+			return response;
+		}
+	}
 }

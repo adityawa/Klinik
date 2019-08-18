@@ -53,8 +53,8 @@
             FormPreExamine,
             MASTER_POLI,
             MASTER_POLI_CLINIC,
-            FORM_EXAMINE,
-            MASTER_PRODUCT,
+            FORM_EXAMINE,			
+			MASTER_PRODUCT,
             MASTER_PRODUCT_CATEGORY,
             MASTER_PRODUCT_MEDICINE,
             MASTER_PRODUCT_UNIT,
@@ -78,6 +78,7 @@
             MASTER_PURCHASEREQUESTDETAIL,
             MASTER_PURCHASEREQUESTPUSAT,
             MASTER_PURCHASEREQUESTPUSATDETAIL,
+			PHARMACY
         }
 
         public enum Action

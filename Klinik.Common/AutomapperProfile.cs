@@ -257,6 +257,9 @@ namespace Klinik.Common
             CreateMap<Letter, PersetujuanTindakanModel>();
             CreateMap<PanggilanPoliModel, PanggilanPoli>();
             CreateMap<PanggilanPoli, PanggilanPoliModel>();
-        }
+
+			CreateMap<FormExamineMedicineDetail, FormExamineMedicineDetailModel>();				
+			CreateMap<FormExamineMedicineDetailModel, FormExamineMedicineDetail>();				
+		}
     }
 }
