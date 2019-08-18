@@ -152,7 +152,9 @@
     <script src="~/js/PurchaseOrder.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-
+            $('#podate').datepicker({
+                autoclose: true
+            });
             $('#btnreset').click(function (e) {
                 window.location.href = "/PurchaseOrder/PurchaseOrderList";
             });

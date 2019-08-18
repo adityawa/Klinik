@@ -159,7 +159,9 @@
     <script src="~/js/Custom.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-
+            $('#dodate').datepicker({
+                autoclose: true
+            });
             $('#btnreset').click(function (e) {
                 window.location.href = "/DeliveryOrder/DeliveryOrderPusatList";
             });
