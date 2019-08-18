@@ -178,7 +178,9 @@
     <script src="~/js/PurchaseOrderPusat.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-
+            $('#podate').datepicker({
+                autoclose: true
+            });
             $('#btnreset').click(function (e) {
                 window.location.href = "/PurchaseOrderPusat/PurchaseOrderPusatList";
             });
