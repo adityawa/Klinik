@@ -2293,6 +2293,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PurchaseRequestList.
+        /// </summary>
+        public static string PurchaseRequestList {
+            get {
+                return ResourceManager.GetString("PurchaseRequestList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PurchaseRequestPusatList.
+        /// </summary>
+        public static string PurchaseRequestPusatList {
+            get {
+                return ResourceManager.GetString("PurchaseRequestPusatList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Queue Code.
         /// </summary>
         public static string QueueCode {

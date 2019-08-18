@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 namespace Klinik.Features
 {
-    public class PurchaseOrderPusatDetailValidator : BaseFeatures
+    public class PurchaseRequestPusatDetailValidator : BaseFeatures
     {
-        private const string ADD_M_PURCHASEORDERPUSAT = "ADD_M_PURCHASEORDERPUSAT";
-        private const string EDIT_M_PURCHASEORDERPUSAT = "EDIT_M_PURCHASEORDERPUSAT";
-        private const string DELETE_M_PURCHASEORDERPUSAT = "DELETE_M_PURCHASEORDERPUSAT";
+        private const string ADD_M_PURCHASEREQUESTPUSAT = "ADD_M_PURCHASEREQUESTPUSAT";
+        private const string EDIT_M_PURCHASEREQUESTPUSAT = "EDIT_M_PURCHASEREQUESTPUSAT";
+        private const string DELETE_M_PURCHASEREQUESTPUSAT = "DELETE_M_PURCHASEREQUESTPUSAT";
 
-        public PurchaseOrderPusatDetailValidator(IUnitOfWork unitOfWork)
+        public PurchaseRequestPusatDetailValidator(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public void Validate(PurchaseOrderPusatDetailRequest request, out PurchaseOrderPusatDetailResponse response)
+        public void Validate(PurchaseRequestPusatDetailRequest request, out PurchaseRequestPusatDetailResponse response)
         {
-            response = new PurchaseOrderPusatDetailResponse();
+            response = new PurchaseRequestPusatDetailResponse();
 
             if (request.Action != null && request.Action.Equals(ClinicEnums.Action.DELETE.ToString()))
             {
@@ -46,11 +46,11 @@ namespace Klinik.Features
                 if (request.Data.Id == 0)
                 {
 
-                    isHavePrivilege = IsHaveAuthorization(ADD_M_PURCHASEORDERPUSAT, request.Data.Account.Privileges.PrivilegeIDs);
+                    isHavePrivilege = IsHaveAuthorization(ADD_M_PURCHASEREQUESTPUSAT, request.Data.Account.Privileges.PrivilegeIDs);
                 }
                 else
                 {
-                    isHavePrivilege = IsHaveAuthorization(EDIT_M_PURCHASEORDERPUSAT, request.Data.Account.Privileges.PrivilegeIDs);
+                    isHavePrivilege = IsHaveAuthorization(EDIT_M_PURCHASEREQUESTPUSAT, request.Data.Account.Privileges.PrivilegeIDs);
                 }
 
                 if (!isHavePrivilege)
@@ -61,18 +61,18 @@ namespace Klinik.Features
 
                 if (response.Status)
                 {
-                    response = new PurchaseOrderPusatDetailHandler(_unitOfWork).CreateOrEdit(request);
+                    response = new PurchaseRequestPusatDetailHandler(_unitOfWork).CreateOrEdit(request);
                 }
             }
         }
 
-        private void ValidateForDelete(PurchaseOrderPusatDetailRequest request, out PurchaseOrderPusatDetailResponse response)
+        private void ValidateForDelete(PurchaseRequestPusatDetailRequest request, out PurchaseRequestPusatDetailResponse response)
         {
-            response = new PurchaseOrderPusatDetailResponse();
+            response = new PurchaseRequestPusatDetailResponse();
 
             if (request.Action == ClinicEnums.Action.DELETE.ToString())
             {
-                bool isHavePrivilege = IsHaveAuthorization(DELETE_M_PURCHASEORDERPUSAT, request.Data.Account.Privileges.PrivilegeIDs);
+                bool isHavePrivilege = IsHaveAuthorization(DELETE_M_PURCHASEREQUESTPUSAT, request.Data.Account.Privileges.PrivilegeIDs);
                 if (!isHavePrivilege)
                 {
                     response.Status = false;

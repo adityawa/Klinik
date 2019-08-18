@@ -1116,4 +1116,10 @@
   <data name="PrNumber" xml:space="preserve">
     <value>Number PR</value>
   </data>
+  <data name="PurchaseRequestPusatList" xml:space="preserve">
+    <value>PurchaseRequestPusatList</value>
+  </data>
+  <data name="PurchaseRequestList" xml:space="preserve">
+    <value>PurchaseRequestList</value>
+  </data>
 </root>

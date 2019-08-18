@@ -258,6 +258,7 @@
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\PurchaseOrderPusatController.cs" />
     <Compile Include="Controllers\PurchaseRequestController.cs" />
+    <Compile Include="Controllers\PurchaseRequestPusatController.cs" />
     <Compile Include="Controllers\RadiologiController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Datalist\PatientDataList.cs" />
@@ -1148,6 +1149,7 @@
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="js\Custom.js" />
+    <Content Include="js\PurchaseReqestPusat.js" />
     <Content Include="js\PurchaseRequest.js" />
     <Content Include="js\PurchaseOrderPusat.js" />
     <Content Include="js\PurchaseOrder.js" />
@@ -1522,6 +1524,9 @@
     <Content Include="Views\PurchaseRequest\PurchaseRequestList.cshtml" />
     <Content Include="Views\PurchaseRequest\CreateOrEditPurchaseRequest.cshtml" />
     <Content Include="Views\PurchaseRequest\PrintPurchaseRequest.cshtml" />
+    <Content Include="Views\PurchaseRequestPusat\PurchaseRequestPusatList.cshtml" />
+    <Content Include="Views\PurchaseRequestPusat\CreateOrEditPurchaseRequestPusat.cshtml" />
+    <Content Include="Views\PurchaseRequestPusat\PrintPurchaseRequestPusat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

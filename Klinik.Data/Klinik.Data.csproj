@@ -233,6 +233,12 @@
     <Compile Include="DataRepository\PurchaseRequestDetail.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataRepository\PurchaseRequestPusat.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataRepository\PurchaseRequestPusatDetail.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataRepository\QueuePoli.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>

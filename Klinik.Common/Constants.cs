@@ -80,6 +80,10 @@
             public const string ADD_PURCHASE_REQUEST_DETAIL = "Add New Purchase request detail";
             public const string EDIT_PURCHASE_REQUEST = "Edit Form Purchase request";
             public const string ADD_PURCHASE_REQUEST = "Add New Purchase request";
+            public const string EDIT_PURCHASE_REQUEST_PUSAT_DETAIL = "Edit Form Purchase request pusat detail";
+            public const string ADD_PURCHASE_REQUEST_PUSAT_DETAIL = "Add New Purchase request pusat detail";
+            public const string EDIT_PURCHASE_REQUEST_PUSAT = "Edit Form Purchase request pusat";
+            public const string ADD_PURCHASE_REQUEST_PUSAT = "Add New Purchase request pusat";
         }
 
         public static class MasterType

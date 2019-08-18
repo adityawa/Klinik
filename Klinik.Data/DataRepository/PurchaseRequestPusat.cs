@@ -12,25 +12,27 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Collections.Generic;
     
-    public partial class Vendor
+    public partial class PurchaseRequestPusat
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Vendor()
+        public PurchaseRequestPusat()
         {
-            this.PurchaseOrderPusatDetails = new HashSet<PurchaseOrderPusatDetail>();
             this.PurchaseRequestPusatDetails = new HashSet<PurchaseRequestPusatDetail>();
         }
     
         public int id { get; set; }
-        public string namavendor { get; set; }
-        public Nullable<short> RowStatus { get; set; }
+        public string prnumber { get; set; }
+        public Nullable<System.DateTime> prdate { get; set; }
+        public string request_by { get; set; }
+        public string approve_by { get; set; }
+        public Nullable<int> approve { get; set; }
+        public Nullable<int> RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
-        public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<int> statusop { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseOrderPusatDetail> PurchaseOrderPusatDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseRequestPusatDetail> PurchaseRequestPusatDetails { get; set; }
     }

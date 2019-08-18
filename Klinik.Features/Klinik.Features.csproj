@@ -251,6 +251,14 @@
     <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailRequest.cs" />
     <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailResponse.cs" />
     <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailValidator.cs" />
+    <Compile Include="PurchaseRequestPusatDetail\PurchaseRequestPusatDetailHandler.cs" />
+    <Compile Include="PurchaseRequestPusatDetail\PurchaseRequestPusatDetailRequest.cs" />
+    <Compile Include="PurchaseRequestPusatDetail\PurchaseRequestPusatDetailResponse.cs" />
+    <Compile Include="PurchaseRequestPusatDetail\PurchaseRequestPusatDetailValidator.cs" />
+    <Compile Include="PurchaseRequestPusat\PurchaseRequestPusatHandler.cs" />
+    <Compile Include="PurchaseRequestPusat\PurchaseRequestPusatRequest.cs" />
+    <Compile Include="PurchaseRequestPusat\PurchaseRequestPusatResponse.cs" />
+    <Compile Include="PurchaseRequestPusat\PurchaseRequestPusatValidator.cs" />
     <Compile Include="PurchaseRequest\PurchaseRequestHandler.cs" />
     <Compile Include="PurchaseRequest\PurchaseRequestRequest.cs" />
     <Compile Include="PurchaseRequest\PurchaseRequestResponse.cs" />

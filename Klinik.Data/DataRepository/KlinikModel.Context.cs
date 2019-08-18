@@ -88,5 +88,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<PurchaseRequest> PurchaseRequests { get; set; }
         public virtual DbSet<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
+        public virtual DbSet<PurchaseRequestPusat> PurchaseRequestPusats { get; set; }
+        public virtual DbSet<PurchaseRequestPusatDetail> PurchaseRequestPusatDetails { get; set; }
     }
 }

@@ -19,10 +19,6 @@ namespace Klinik.Web.Controllers
 {
     public class PurchaseRequestController : Controller
     {
-        private const string ADD_M_PURCHASEREQUEST = "ADD_M_PURCHASEREQUEST";
-        private const string EDIT_M_PURCHASEREQUEST = "EDIT_M_PURCHASEREQUEST";
-        private const string DELETE_M_PURCHASEREQUEST = "DELETE_M_PURCHASEREQUEST";
-        
         private IUnitOfWork _unitOfWork;
         private KlinikDBEntities _context;
 
