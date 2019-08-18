@@ -43,6 +43,7 @@
 								<td>@item.RemarkUse</td>
 								<td>
 									<input type="text" id="@("medicineName"+(counter-1))" />
+									<input hidden type="text" id="@("idMedicine"+(counter-1))" />
 									<a class="modal-with-form" data-rowno="@(counter-1)" href="#modalForm">&nbsp;.....</a>
 								</td>
 								<td><input type="text" /></td>
@@ -153,8 +154,12 @@
 					{ "data": "RetailPrice", "name": "RetailPrice", "autoWidth": true },
 					{ "data": "ProductCategoryName", "name": "ProductCategoryName", "autoWidth": true },
 					{ "data": "ProductUnitName", "name": "ProductUnitName", "autoWidth": true },
-					{
-						"render": function (data, type, full, meta) { return "<button class='btn btn-info modal-dismiss' onclick='OnSelectProduct(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.SelectFile</button>"; }											
+					{						
+						"render": function (data, type, full, meta) {
+							var name = full['Name'];
+							var id = full['Id'];
+							return '<button class="btn btn-info modal-dismiss" onclick="OnSelectProduct(\'' + id + '\',\'' + name + '\')" >@Klinik.Resources.UIMessages.Select</button>';
+						}											
 					}
 				]
 			});
@@ -164,9 +169,10 @@
 			});
 		});
 
-		var OnSelectProduct = function (Name) {
+		var OnSelectProduct = function (Id, Name) {
 			var rowNum = $('#rowno').val();
-			$('#medicineName' + rowNum).val(Name);
+			$('#idMedicine' + rowNum).val(Id);
+			$('#medicineName' + rowNum).val(Name);			
 		}
 	</script>
 }

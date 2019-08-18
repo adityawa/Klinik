@@ -1097,11 +1097,14 @@
   </data>
   <data name="PurchaseOrderPusatList" xml:space="preserve">
     <value>Purchase Order Pusat List</value>
-    </data>
+  </data>
   <data name="Category" xml:space="preserve">
     <value>Category</value>
   </data>
   <data name="Unit" xml:space="preserve">
     <value>Unit</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
   </data>
 </root>
