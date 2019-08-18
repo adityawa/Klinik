@@ -7,6 +7,8 @@
         Klinik.autocompleteProductTwo();
         Klinik.saveDeliveryOrder();
         Klinik.editDeliveryOrderDetail();
+        Klinik.searchpurchaceorder();
+        Klinik.searchpurchaceorderpusat();
     },
     autocompleteProductOne: function () {
         var el = $("#namabarang");
@@ -381,6 +383,7 @@
         $('.saveorderdetail').on('click', function () {
             var _deliveryorder = {};
             _deliveryorder.Id = $('#Id').val();
+            _deliveryorder.poid = $('#ponumber').length > 0 ? $('#ponumber').val() : $('#popusatnumber').val();
             _deliveryorder.donumber = $('#donumber').val();
             _deliveryorder.dodate = $('#dodate').val();
             _deliveryorder.dodest = $('#dodest').val();
@@ -416,6 +419,72 @@
                     window.location.reload();
                 }
             });
+        });
+    },
+
+    searchpurchaceorder: function () {
+        var el = $("#ponumber");
+        if (!el.length) return;
+
+        $('#ponumber').select2({
+            width: 'resolve',
+            placeholder: 'po..',
+            ajax: {
+                url: '/General/searchpurchaseorder/',
+                data: function (params) {
+                    return {
+                        prefix: params.term
+                    };
+                },
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    var results = [];
+
+                    $.each(data.data, function (index, item) {
+                        results.push({
+                            id: item.Id,
+                            text: item.ponumber
+                        });
+                    });
+                    return {
+                        results: results
+                    };
+                }
+            }
+        });
+    },
+
+    searchpurchaceorderpusat: function () {
+        var el = $("#popusatnumber");
+        if (!el.length) return;
+
+        $('#popusatnumber').select2({
+            width: 'resolve',
+            placeholder: 'popusat..',
+            ajax: {
+                url: '/General/searchpurchaseorder/',
+                data: function (params) {
+                    return {
+                        prefix: params.term
+                    };
+                },
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    var results = [];
+
+                    $.each(data.data, function (index, item) {
+                        results.push({
+                            id: item.Id,
+                            text: item.ponumber
+                        });
+                    });
+                    return {
+                        results: results
+                    };
+                }
+            }
         });
     }
 };

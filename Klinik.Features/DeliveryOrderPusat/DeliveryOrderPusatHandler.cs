@@ -47,7 +47,7 @@ namespace Klinik.Features
                         };
 
                         // update data
-                        qry.poid = qry.id;
+                        qry.poid = request.Data.poid > 0 ? request.Data.poid : qry.poid;
                         qry.donumber = request.Data.donumber;
                         qry.dodate = request.Data.dodate;
                         qry.dodest = request.Data.dodest;

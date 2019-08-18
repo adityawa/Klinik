@@ -5,6 +5,7 @@
         Klinik.autocompleteVendor();
         Klinik.savePurchaseOrderPusat();
         Klinik.editPurchaseOrderPusatDetail();
+        Klinik.searchpurchacerequest();
     },
 
     autocompleteProductOne: function () {
@@ -177,6 +178,7 @@
         $('.savepurchasepusardetail').on('click', function () {
             var _purchaseorderpusat = {};
             _purchaseorderpusat.Id = $('#Id').val();
+            _purchaseorderpusat.PurchaseRequestId = $('#PurchaseRequestId').val();
             _purchaseorderpusat.ponumber = $('#ponumber').val();
             _purchaseorderpusat.podate = $('#podate').val();
             _purchaseorderpusat.request_by = $('#request_by').val();
@@ -279,6 +281,39 @@
             }).prop('disabled', false);
 
             getdata.find('input').prop('disabled', false);
+        });
+    },
+
+    searchpurchacerequest: function () {
+        var el = $("#PurchaseRequestId");
+        if (!el.length) return;
+
+        $('#PurchaseRequestId').select2({
+            width: 'resolve',
+            placeholder: 'purchacerequest..',
+            ajax: {
+                url: '/General/searchpurchaserequestpusat/',
+                data: function (params) {
+                    return {
+                        prefix: params.term
+                    };
+                },
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    var results = [];
+
+                    $.each(data.data, function (index, item) {
+                        results.push({
+                            id: item.Id,
+                            text: item.prnumber
+                        });
+                    });
+                    return {
+                        results: results
+                    };
+                }
+            }
         });
     }
 };

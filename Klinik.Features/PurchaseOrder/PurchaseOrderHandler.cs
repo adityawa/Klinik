@@ -46,7 +46,7 @@ namespace Klinik.Features
                         };
 
                         // update data
-                        qry.PurchaseRequestId = qry.PurchaseRequestId;
+                        qry.PurchaseRequestId = request.Data.PurchaseRequestId > 0 ? request.Data.PurchaseRequestId : qry.PurchaseRequestId;
                         qry.ponumber = request.Data.ponumber;
                         qry.podate = request.Data.podate;
                         qry.request_by = request.Data.request_by;

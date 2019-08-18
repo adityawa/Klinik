@@ -4,6 +4,7 @@
         Klinik.autocompleteProductOne();
         Klinik.savePurchaseOrder();
         Klinik.editPurchaseOrderDetail();
+        Klinik.searchpurchacerequest();
     },
 
     autocompleteProductOne: function () {
@@ -117,6 +118,7 @@
             var _purchaseorder = {};
             _purchaseorder.Id = $('#Id').val();
             _purchaseorder.ponumber = $('#ponumber').val();
+            _purchaseorder.PurchaseRequestId = $('#PurchaseRequestId').val();
             _purchaseorder.podate = $('#podate').val();
             _purchaseorder.request_by = $('#request_by').val();
             var purchaseOrderDetailModels = new Array();
@@ -182,6 +184,39 @@
             }).prop('disabled', false);
 
             getdata.find('input').prop('disabled', false);
+        });
+    },
+
+    searchpurchacerequest: function () {
+        var el = $("#PurchaseRequestId");
+        if (!el.length) return;
+
+        $('#PurchaseRequestId').select2({
+            width: 'resolve',
+            placeholder: 'purchacerequest..',
+            ajax: {
+                url: '/General/searchpurchaserequest/',
+                data: function (params) {
+                    return {
+                        prefix: params.term
+                    };
+                },
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    var results = [];
+
+                    $.each(data.data, function (index, item) {
+                        results.push({
+                            id: item.Id,
+                            text: item.prnumber
+                        });
+                    });
+                    return {
+                        results: results
+                    };
+                }
+            }
         });
     }
 };

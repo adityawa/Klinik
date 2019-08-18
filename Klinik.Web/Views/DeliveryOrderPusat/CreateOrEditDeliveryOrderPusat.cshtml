@@ -23,6 +23,12 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">PO ID</label>
+                <div class="col-md-4">
+                    <select class="form-control" id="popusatnumber" name="poid"></select>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.CreatedDate</label>
                 <div class="col-md-4">
                     @Html.TextBoxFor(x => x.dodate, new { @class = "form-control", @id = "dodate" })
