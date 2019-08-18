@@ -70,6 +70,8 @@ namespace Klinik.Data
         IGenericRepository<PurchaseRequestPusat> PurchaseRequestPusatRepository { get; }
         IGenericRepository<PurchaseRequestPusatDetail> PurchaseRequestPusatDetailRepository { get; }
 
-        int Save();
+		IGenericRepository<FormExamineMedicineDetail> FormExamineMedicineDetailRepository { get; }
+
+		int Save();
     }
 }

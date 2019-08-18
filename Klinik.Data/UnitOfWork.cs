@@ -67,8 +67,8 @@ namespace Klinik.Data
         private IGenericRepository<PurchaseRequestPusat> _purchaserequestpusatRepository;
         private IGenericRepository<PurchaseRequestPusatDetail> _purchaserequestpusatdetailRepository;
 
-
-        private IGenericRepository<PanggilanPoli> _panggilanPoliRepository;
+		private IGenericRepository<PanggilanPoli> _panggilanPoliRepository;
+		private IGenericRepository<FormExamineMedicineDetail> _formExamineMedicineDetailRepository;
 
         private bool disposed = false;
 
@@ -615,6 +615,7 @@ namespace Klinik.Data
                 return _purchaseorderdetailRepository;
             }
         }
+
         public IGenericRepository<PanggilanPoli> PanggilanPoliRepository
         {
             get
@@ -622,7 +623,6 @@ namespace Klinik.Data
                 if (_panggilanPoliRepository == null)
                     _panggilanPoliRepository = new GenericRepository<PanggilanPoli>(_context);
                 return _panggilanPoliRepository;
-
             }
         }
 
@@ -633,7 +633,6 @@ namespace Klinik.Data
                 if (_vendorRepository == null)
                     _vendorRepository = new GenericRepository<Vendor>(_context);
                 return _vendorRepository;
-
             }
         }
 
@@ -697,7 +696,17 @@ namespace Klinik.Data
             }
         }
 
-        public virtual void Dispose(bool disposing)
+		public IGenericRepository<FormExamineMedicineDetail> FormExamineMedicineDetailRepository
+		{
+			get
+			{
+				if (_formExamineMedicineDetailRepository == null)
+					_formExamineMedicineDetailRepository = new GenericRepository<FormExamineMedicineDetail>(_context);
+				return _formExamineMedicineDetailRepository;
+			}
+		}
+
+		public virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
             {

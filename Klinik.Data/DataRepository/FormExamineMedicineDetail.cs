@@ -12,31 +12,19 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Collections.Generic;
     
-    public partial class FormExamineMedicine
+    public partial class FormExamineMedicineDetail
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public FormExamineMedicine()
-        {
-            this.FormExamineMedicineDetails = new HashSet<FormExamineMedicineDetail>();
-        }
-    
         public long ID { get; set; }
-        public Nullable<long> FormExamineID { get; set; }
-        public string TypeID { get; set; }
+        public Nullable<long> FormExamineMedicineID { get; set; }
         public Nullable<int> ProductID { get; set; }
         public Nullable<double> Qty { get; set; }
-        public string Dose { get; set; }
-        public string ConcoctionMedicine { get; set; }
-        public string RemarkUse { get; set; }
+        public string Note { get; set; }
         public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual FormExamine FormExamine { get; set; }
-        public virtual Product Product { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FormExamineMedicineDetail> FormExamineMedicineDetails { get; set; }
+        public virtual FormExamineMedicine FormExamineMedicine { get; set; }
     }
 }

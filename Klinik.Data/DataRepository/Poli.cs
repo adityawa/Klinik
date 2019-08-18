@@ -19,13 +19,13 @@ namespace Klinik.Data.DataRepository
         {
             this.FormExamines = new HashSet<FormExamine>();
             this.LabItemCategories = new HashSet<LabItemCategory>();
+            this.PanggilanPolis = new HashSet<PanggilanPoli>();
             this.PoliClinics = new HashSet<PoliClinic>();
             this.PoliSchedules = new HashSet<PoliSchedule>();
             this.PoliScheduleMasters = new HashSet<PoliScheduleMaster>();
             this.PoliServices = new HashSet<PoliService>();
             this.QueuePolis = new HashSet<QueuePoli>();
             this.QueuePolis1 = new HashSet<QueuePoli>();
-            this.PanggilanPolis = new HashSet<PanggilanPoli>();
         }
     
         public int ID { get; set; }
@@ -43,6 +43,8 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LabItemCategory> LabItemCategories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PanggilanPoli> PanggilanPolis { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PoliClinic> PoliClinics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PoliSchedule> PoliSchedules { get; set; }
@@ -54,7 +56,5 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<QueuePoli> QueuePolis { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QueuePoli> QueuePolis1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PanggilanPoli> PanggilanPolis { get; set; }
     }
 }
