@@ -247,6 +247,14 @@
     <Compile Include="PurchaseOrder\PurchaseOrderRequest.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderResponse.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderValidator.cs" />
+    <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailHandler.cs" />
+    <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailRequest.cs" />
+    <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailResponse.cs" />
+    <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailValidator.cs" />
+    <Compile Include="PurchaseRequest\PurchaseRequestHandler.cs" />
+    <Compile Include="PurchaseRequest\PurchaseRequestRequest.cs" />
+    <Compile Include="PurchaseRequest\PurchaseRequestResponse.cs" />
+    <Compile Include="PurchaseRequest\PurchaseRequestValidator.cs" />
     <Compile Include="Radiologi\RadiologiHandler.cs" />
     <Compile Include="Radiologi\RadiologiRequest.cs" />
     <Compile Include="Radiologi\RadiologiResponse.cs" />

@@ -1107,4 +1107,13 @@
   <data name="Select" xml:space="preserve">
     <value>Select</value>
   </data>
+  <data name="NoPr" xml:space="preserve">
+    <value>No Pr</value>
+  </data>
+  <data name="IDPR" xml:space="preserve">
+    <value>Id Pr</value>
+  </data>
+  <data name="PrNumber" xml:space="preserve">
+    <value>Number PR</value>
+  </data>
 </root>

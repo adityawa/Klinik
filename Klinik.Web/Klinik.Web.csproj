@@ -257,6 +257,7 @@
     <Compile Include="Controllers\PreExamineController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\PurchaseOrderPusatController.cs" />
+    <Compile Include="Controllers\PurchaseRequestController.cs" />
     <Compile Include="Controllers\RadiologiController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Datalist\PatientDataList.cs" />
@@ -1147,6 +1148,7 @@
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="js\Custom.js" />
+    <Content Include="js\PurchaseRequest.js" />
     <Content Include="js\PurchaseOrderPusat.js" />
     <Content Include="js\PurchaseOrder.js" />
     <Content Include="Rotativa\help-wkhtmltoimage.txt" />
@@ -1517,6 +1519,9 @@
     <Content Include="Views\PurchaseOrderPusat\PurchaseOrderPusatList.cshtml" />
     <Content Include="Views\PurchaseOrderPusat\CreateOrEditPurchaseOrderPusat.cshtml" />
     <Content Include="Views\PurchaseOrderPusat\PrintPurchaseOrderPusat.cshtml" />
+    <Content Include="Views\PurchaseRequest\PurchaseRequestList.cshtml" />
+    <Content Include="Views\PurchaseRequest\CreateOrEditPurchaseRequest.cshtml" />
+    <Content Include="Views\PurchaseRequest\PrintPurchaseRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

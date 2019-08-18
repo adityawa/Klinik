@@ -62,6 +62,8 @@ namespace Klinik.Data
         private IGenericRepository<Vendor> _vendorRepository;
         private IGenericRepository<PurchaseOrderPusat> _purchaseorderpusatRepository;
         private IGenericRepository<PurchaseOrderPusatDetail> _purchaseorderpusatdetailRepository;
+        private IGenericRepository<PurchaseRequest> _purchaserequestRepository;
+        private IGenericRepository<PurchaseRequestDetail> _purchaserequestdetailRepository;
 
 
         private IGenericRepository<PanggilanPoli> _panggilanPoliRepository;
@@ -650,6 +652,26 @@ namespace Klinik.Data
                 if (_purchaseorderpusatdetailRepository == null)
                     _purchaseorderpusatdetailRepository = new GenericRepository<PurchaseOrderPusatDetail>(_context);
                 return _purchaseorderpusatdetailRepository;
+            }
+        }
+
+        public IGenericRepository<PurchaseRequest> PurchaseRequestRepository
+        {
+            get
+            {
+                if (_purchaserequestRepository == null)
+                    _purchaserequestRepository = new GenericRepository<PurchaseRequest>(_context);
+                return _purchaserequestRepository;
+            }
+        }
+
+        public IGenericRepository<PurchaseRequestDetail> PurchaseRequestDetailRepository
+        {
+            get
+            {
+                if (_purchaserequestdetailRepository == null)
+                    _purchaserequestdetailRepository = new GenericRepository<PurchaseRequestDetail>(_context);
+                return _purchaserequestdetailRepository;
             }
         }
 

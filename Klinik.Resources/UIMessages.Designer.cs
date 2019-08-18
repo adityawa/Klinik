@@ -19,7 +19,7 @@ namespace Klinik.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class UIMessages {
@@ -1213,6 +1213,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Id Pr.
+        /// </summary>
+        public static string IDPR {
+            get {
+                return ResourceManager.GetString("IDPR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Injection.
         /// </summary>
         public static string Injection {
@@ -1744,6 +1753,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Pr.
+        /// </summary>
+        public static string NoPr {
+            get {
+                return ResourceManager.GetString("NoPr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Normal.
         /// </summary>
         public static string Normal {
@@ -2136,6 +2154,15 @@ namespace Klinik.Resources {
         public static string PrivilegeList {
             get {
                 return ResourceManager.GetString("PrivilegeList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number PR.
+        /// </summary>
+        public static string PrNumber {
+            get {
+                return ResourceManager.GetString("PrNumber", resourceCulture);
             }
         }
         

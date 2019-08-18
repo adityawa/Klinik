@@ -132,6 +132,8 @@
     <Compile Include="PurchaseOrderPusatDetail\PurchaseOrderPusatDetailModel.cs" />
     <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatModel.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderModel.cs" />
+    <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailModel.cs" />
+    <Compile Include="PurchaseRequest\PurchaseRequestModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
