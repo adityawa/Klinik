@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3f09652e5a4e46888907bfdc46faf3eb" Name="Diagram1">
+      <Diagram DiagramId="3f09652e5a4e46888907bfdc46faf3eb" Name="Diagram1" ZoomLevel="55">
         <EntityTypeShape EntityType="KlinikDBModel.AppConfig" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Appointment" Width="1.5" PointX="5.25" PointY="72.625" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.City" Width="1.5" PointX="0.75" PointY="73.375" IsExpanded="true" />
@@ -166,6 +166,23 @@
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_PurchaseRequestPusat" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_Vendor" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_UserRole_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="KlinikDBModel.stok" Width="1.5" PointX="21.875" PointY="72.875" />
+        <EntityTypeShape EntityType="KlinikDBModel.stok_bulanan" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="KlinikDBModel.stok1" Width="1.5" PointX="21.875" PointY="67.875" />
+        <EntityTypeShape EntityType="KlinikDBModel.substitute" Width="1.5" PointX="24.125" PointY="79.875" />
+        <AssociationConnector Association="KlinikDBModel.FK_stok_m_Clinic" />
+        <AssociationConnector Association="KlinikDBModel.FK_stoks_m_Clinic" />
+        <AssociationConnector Association="KlinikDBModel.FK_stok_m_Product" />
+        <AssociationConnector Association="KlinikDBModel.FK_stoks_m_Product" />
+        <AssociationConnector Association="KlinikDBModel.FK_substitute_Product" />
+        <AssociationConnector Association="KlinikDBModel.FK_substitute_PurchaseOrderDetail" />
+        <EntityTypeShape EntityType="KlinikDBModel.HistoryProductInGudang" Width="1.5" PointX="18.5" PointY="90.625" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrder_PurchaseOrder" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusat_PurchaseOrderPusat" />
+        <AssociationConnector Association="KlinikDBModel.FK_HistoryProductInGudang_Gudang" />
+        <AssociationConnector Association="KlinikDBModel.FK_HistoryProductInGudang_Product" />
+        <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrder_PurchaseRequest" />
+        <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrderPusat_PurchaseRequestPusat" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
