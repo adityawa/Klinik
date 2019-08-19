@@ -1,128 +1,138 @@
 ﻿@model Klinik.Entities.Pharmacy.PrescriptionModel
 
 @{
-    ViewBag.Title = "Prescription";
+	ViewBag.Title = "Prescription";
+}
+
+@section Styles {
+	<style>
+		.form-horizontal {
+			display: flex;
+			align-items: center;
+		}
+	</style>
 }
 
 <section class="panel">
-    @using (Html.BeginForm())
-    {
-        <header class="panel-heading">
-            <h5 class="panel-title">
-                Prescription Validation
-            </h5>
-        </header>
+	@using (Html.BeginForm())
+	{
+		<header class="panel-heading">
+			<h5 class="panel-title">
+				Prescription Validation
+			</h5>
+		</header>
 
-        <div class="panel-body">
-            <div style="width:100%; margin:0 auto">
-                <table id="tbPrescription" class="table table-striped table-bordered dt-responsive" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th style="width:20px;">NO</th>
-                            <th>@Klinik.Resources.UIMessages.MedicineName</th>
-                            <th>@Klinik.Resources.UIMessages.Dose</th>
-                            <th style="width:30px;">@Klinik.Resources.UIMessages.Amount</th>
-                            <th>@Klinik.Resources.UIMessages.RemarkUse</th>
-                            <th>@Klinik.Resources.UIMessages.MedicineName</th>
-                            <th>@Klinik.Resources.UIMessages.Amount</th>
-                            <th>@Klinik.Resources.UIMessages.Note</th>
-                            <th>@Klinik.Resources.UIMessages.Process</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            @Html.HiddenFor(m => m.FormMedicalID)
-                            int counter = 1;
-                            foreach (var item in Model.Medicines)
-                            {
-                                <tr>
-                                    <td>
-                                        @(counter++)
-                                        @Html.HiddenFor(m => m.Medicines[counter - 2].Id)
-                                    </td>
-                                    <td>
-                                        @Html.HiddenFor(m => m.Medicines[counter - 2].ProductName)
-                                        @Html.DisplayFor(m => m.Medicines[counter - 2].ProductName)
-                                    </td>
-                                    <td>
-                                        @Html.HiddenFor(m => m.Medicines[counter - 2].Dose)
-                                        @Html.DisplayFor(m => m.Medicines[counter - 2].Dose)
-                                    </td>
-                                    <td>
-                                        @Html.HiddenFor(m => m.Medicines[counter - 2].Qty)
-                                        @Html.DisplayFor(m => m.Medicines[counter - 2].Qty)
-                                    </td>
-                                    <td>
-                                        @Html.HiddenFor(m => m.Medicines[counter - 2].RemarkUse)
-                                        @Html.DisplayFor(m => m.Medicines[counter - 2].RemarkUse)
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.ProductName, new { @id = "medicineName" + (counter - 1) })
-                                        @Html.HiddenFor(m => m.Medicines[counter - 2].Detail.ProductID, new { @id = "idMedicine" + (counter - 1) })
-                                        <a class="modal-with-form" data-rowno="@(counter - 1)" href="#modalForm">&nbsp;.....</a>
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.Qty, new { @id = "amount" + (counter - 1) })
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.Note, new { @id = "note" + (counter - 1) })
-                                    </td>
-                                    <td>
-                                        @Html.HiddenFor(m => m.Medicines[counter - 2].Detail.ProcessType, new { @id = "processhidden" + (counter - 1) })
-                                        @Html.DisplayFor(m => m.Medicines[counter - 2].Detail.ProcessType, new { @id = "process" + (counter - 1) })
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-                <!-- Modal Form -->
-                <div id="modalForm" class="modal-block modal-block-primary mfp-hide">
-                    <section class="panel">
-                        <header class="panel-heading">
-                            <h5 class="panel-title">
-                                @Klinik.Resources.UIMessages.ProductList
-                            </h5>
-                        </header>
-                        <div class="panel-body">
-                            <div style="width:100%; margin:0 auto">
-                                <input type="hidden" id="rowno" name="rowno" />
-                                <table id="tableProductList" class="table table-striped table-bordered dt-responsive" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>@Klinik.Resources.UIMessages.ID</th>
-                                            <th>@Klinik.Resources.UIMessages.Code</th>
-                                            <th>@Klinik.Resources.UIMessages.Name</th>
-                                            <th>@Klinik.Resources.UIMessages.Price</th>
-                                            <th>@Klinik.Resources.UIMessages.Category</th>
-                                            <th>@Klinik.Resources.UIMessages.Unit</th>
-                                            <th>@Klinik.Resources.UIMessages.Action</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <footer class="panel-footer">
-                            <div class="row">
-                                <div class="col-md-12 text-right">
-                                    <button class="btn btn-primary modal-dismiss">Close</button>
-                                </div>
-                            </div>
-                        </footer>
-                    </section>
-                </div>
-            </div>
-        </div>
+		<div class="panel-body">
+			<div style="width:100%; margin:0 auto">
+				<table id="tbPrescription" class="table table-striped table-bordered dt-responsive" cellspacing="0">
+					<thead>
+						<tr>
+							<th style="width:20px;">NO</th>
+							<th>@Klinik.Resources.UIMessages.MedicineName</th>
+							<th>@Klinik.Resources.UIMessages.Dose</th>
+							<th style="width:30px;">@Klinik.Resources.UIMessages.Amount</th>
+							<th>@Klinik.Resources.UIMessages.RemarkUse</th>
+							<th>@Klinik.Resources.UIMessages.MedicineName</th>
+							<th>@Klinik.Resources.UIMessages.Amount</th>
+							<th>@Klinik.Resources.UIMessages.Note</th>
+							<th>@Klinik.Resources.UIMessages.Process</th>
+						</tr>
+					</thead>
+					<tbody>
+						@{
+							@Html.HiddenFor(m => m.FormMedicalID)
+							int counter = 1;
+							foreach (var item in Model.Medicines)
+							{
+								<tr>
+									<td>
+										@(counter++)
+										@Html.HiddenFor(m => m.Medicines[counter - 2].Id)
+									</td>
+									<td>
+										@Html.HiddenFor(m => m.Medicines[counter - 2].ProductName)
+										@Html.DisplayFor(m => m.Medicines[counter - 2].ProductName)
+									</td>
+									<td>
+										@Html.HiddenFor(m => m.Medicines[counter - 2].Dose)
+										@Html.DisplayFor(m => m.Medicines[counter - 2].Dose)
+									</td>
+									<td>
+										@Html.HiddenFor(m => m.Medicines[counter - 2].Qty)
+										@Html.DisplayFor(m => m.Medicines[counter - 2].Qty, new { @id = "qtcReceipt" + (counter - 1) })
+									</td>
+									<td>
+										@Html.HiddenFor(m => m.Medicines[counter - 2].RemarkUse)
+										@Html.DisplayFor(m => m.Medicines[counter - 2].RemarkUse)
+									</td>
+									<td>
+										<div class="form-horizontal">
+											@Html.HiddenFor(m => m.Medicines[counter - 2].Detail.ProductID, new { @id = "idMedicine" + (counter - 1) })
+											@Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.ProductName, new { @class = "form-control", @id = "medicineName" + (counter - 1) })&nbsp;
+											<a class="fa fa-search fa-lg modal-with-form" data-rowno="@(counter - 1)" href="#modalForm"></a>
+										</div>
+									</td>
+									<td>
+										@Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.Qty, new { @class = "form-control", @style = "width:60px;", @id = "amount" + (counter - 1) })
+									</td>
+									<td>
+										@Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.Note, new { @class = "form-control", @id = "note" + (counter - 1) })
+									</td>
+									<td>
+										@Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.ProcessType, new { @class = "form-control", @style = "width:80px;", @id = "process" + (counter - 1) })
+									</td>
+								</tr>
+							}
+						}
+					</tbody>
+				</table>
+				<!-- Modal Form -->
+				<div id="modalForm" class="modal-block modal-block-primary mfp-hide">
+					<section class="panel">
+						<header class="panel-heading">
+							<h5 class="panel-title">
+								@Klinik.Resources.UIMessages.ProductList
+							</h5>
+						</header>
+						<div class="panel-body">
+							<div style="width:100%; margin:0 auto">
+								<input type="hidden" id="rowno" name="rowno" />
+								<table id="tableProductList" class="table table-striped table-bordered dt-responsive" cellspacing="0">
+									<thead>
+										<tr>
+											<th>@Klinik.Resources.UIMessages.ID</th>
+											<th>@Klinik.Resources.UIMessages.Code</th>
+											<th>@Klinik.Resources.UIMessages.Name</th>
+											<th>@Klinik.Resources.UIMessages.Price</th>
+											<th>@Klinik.Resources.UIMessages.Category</th>
+											<th>@Klinik.Resources.UIMessages.Unit</th>
+											<th>@Klinik.Resources.UIMessages.Action</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+						<footer class="panel-footer">
+							<div class="row">
+								<div class="col-md-12 text-right">
+									<button class="btn btn-primary modal-dismiss">Close</button>
+								</div>
+							</div>
+						</footer>
+					</section>
+				</div>
+			</div>
+		</div>
 
-        <div class="panel-footer">
-            <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
-            <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
-        </div>
-    }
+		<div class="panel-footer">
+			<button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
+			<button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+		</div>
+	}
 </section>
 
 @section Scripts {
-    <script type="text/javascript">
+	<script type="text/javascript">
 		$(document).ready(function () {
 			$('#btnreset').click(function (e) {
 				window.location.href = "/Pharmacy/PatientList";
@@ -230,5 +240,5 @@
 			$('#idMedicine' + rowNum).val(Id);
 			$('#medicineName' + rowNum).val(Name);
 		}
-    </script>
+	</script>
 }
