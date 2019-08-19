@@ -292,4 +292,13 @@ Administrator</value>
   <data name="PrescriptionValidationSuccess" xml:space="preserve">
     <value>Prescription has been validated successfully</value>
   </data>
+  <data name="MedicineQtyNotMatchInvalid" xml:space="preserve">
+    <value>If medicine quantity is different. The Note should not be empty</value>
+  </data>
+  <data name="MedicineRacikInvalid" xml:space="preserve">
+    <value>Process ( Racik ) is invalid. Its medicine name should be blank</value>
+  </data>
+  <data name="MedicineRequestInvalid" xml:space="preserve">
+    <value>Process ( Request ) is invalid. Its medicine name should be blank</value>
+  </data>
 </root>

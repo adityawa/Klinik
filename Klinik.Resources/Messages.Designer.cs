@@ -266,6 +266,33 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If medicine quantity is different. The Note should not be empty.
+        /// </summary>
+        public static string MedicineQtyNotMatchInvalid {
+            get {
+                return ResourceManager.GetString("MedicineQtyNotMatchInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process ( Racik ) is invalid. Its medicine name should be blank.
+        /// </summary>
+        public static string MedicineRacikInvalid {
+            get {
+                return ResourceManager.GetString("MedicineRacikInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process ( Request ) is invalid. Its medicine name should be blank.
+        /// </summary>
+        public static string MedicineRequestInvalid {
+            get {
+                return ResourceManager.GetString("MedicineRequestInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Menstrual and KB Date is only for woman. Don&apos;t fill if patient is a men.
         /// </summary>
         public static string MenstrualDataProhibited {
