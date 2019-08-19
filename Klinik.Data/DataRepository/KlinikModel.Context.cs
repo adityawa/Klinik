@@ -91,5 +91,10 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
+        public virtual DbSet<stok> stoks { get; set; }
+        public virtual DbSet<stok_bulanan> stok_bulanan { get; set; }
+        public virtual DbSet<stok1> stoks1 { get; set; }
+        public virtual DbSet<substitute> substitutes { get; set; }
+        public virtual DbSet<HistoryProductInGudang> HistoryProductInGudangs { get; set; }
     }
 }

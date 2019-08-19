@@ -14,6 +14,12 @@ namespace Klinik.Data.DataRepository
     
     public partial class PurchaseOrderDetail
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PurchaseOrderDetail()
+        {
+            this.substitutes = new HashSet<substitute>();
+        }
+    
         public int id { get; set; }
         public int PurchaseOrderId { get; set; }
         public int ProductId { get; set; }
@@ -36,5 +42,7 @@ namespace Klinik.Data.DataRepository
     
         public virtual Product Product { get; set; }
         public virtual PurchaseOrder PurchaseOrder { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<substitute> substitutes { get; set; }
     }
 }

@@ -442,10 +442,14 @@
                     var results = [];
 
                     $.each(data.data, function (index, item) {
-                        results.push({
-                            id: item.Id,
-                            text: item.ponumber
-                        });
+                        if (item.approve >= 1) {
+                            results.push({
+                                id: item.Id,
+                                text: item.ponumber
+                            });
+                        } else {
+                            return true;
+                        }
                     });
                     return {
                         results: results
@@ -475,10 +479,14 @@
                     var results = [];
 
                     $.each(data.data, function (index, item) {
-                        results.push({
-                            id: item.Id,
-                            text: item.ponumber
-                        });
+                        if (item.approve > 1) {
+                            results.push({
+                                id: item.Id,
+                                text: item.ponumber
+                            });
+                        } else {
+                            return true;
+                        }
                     });
                     return {
                         results: results

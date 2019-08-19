@@ -304,10 +304,14 @@
                     var results = [];
 
                     $.each(data.data, function (index, item) {
-                        results.push({
-                            id: item.Id,
-                            text: item.prnumber
-                        });
+                        if (item.approve >= 1) {
+                            results.push({
+                                id: item.Id,
+                                text: item.prnumber
+                            });
+                        } else {
+                            return true;
+                        }
                     });
                     return {
                         results: results
