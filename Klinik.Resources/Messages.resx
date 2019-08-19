@@ -289,4 +289,7 @@ Administrator</value>
   <data name="ReadyForCall" xml:space="preserve">
     <value>Please Wait for Calling...</value>
   </data>
+  <data name="PrescriptionValidationSuccess" xml:space="preserve">
+    <value>Prescription has been validated successfully</value>
+  </data>
 </root>

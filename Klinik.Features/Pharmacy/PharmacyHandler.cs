@@ -38,17 +38,32 @@ namespace Klinik.Features.Pharmacy
 
                     foreach (var item in request.Data.Medicines)
                     {
-                        FormExamineMedicineDetail detail = Mapper.Map<FormExamineMedicineDetailModel, FormExamineMedicineDetail>(item.Detail);
-                        detail.CreatedBy = request.Account.UserCode;
-                        detail.CreatedDate = DateTime.Now;
-                        detail.FormExamineMedicineID = item.Id;
+						var existEntity = _context.FormExamineMedicineDetails.FirstOrDefault(x => x.FormExamineMedicineID == item.Id);
+						if (existEntity == null)
+						{
+							FormExamineMedicineDetail detail = Mapper.Map<FormExamineMedicineDetailModel, FormExamineMedicineDetail>(item.Detail);
+							detail.CreatedBy = request.Account.UserCode;
+							detail.CreatedDate = DateTime.Now;
+							detail.FormExamineMedicineID = item.Id;
 
-                        _context.FormExamineMedicineDetails.Add(detail);
+							_context.FormExamineMedicineDetails.Add(detail);
+							_context.SaveChanges();
+						}
+						else
+						{
+							existEntity.ProductID = item.Detail.ProductID;
+							existEntity.ProductName = item.Detail.ProductName;
+							existEntity.Qty = item.Detail.Qty;
+							existEntity.Note = item.Detail.Note;
+							existEntity.ProcessType = item.Detail.ProcessType;
+							existEntity.ModifiedBy = request.Account.UserCode;
+							existEntity.ModifiedDate = DateTime.Now;
+							_context.SaveChanges();
+						}
                     }
-
-                    _context.SaveChanges();
+                    
                     transaction.Commit();
-                    response.Message = Messages.DataSaved;
+                    response.Message = Messages.PrescriptionValidationSuccess;
                 }
                 catch (Exception ex)
                 {
