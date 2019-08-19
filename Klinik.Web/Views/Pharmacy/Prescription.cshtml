@@ -1,104 +1,128 @@
 ﻿@model Klinik.Entities.Pharmacy.PrescriptionModel
 
 @{
-	ViewBag.Title = "Prescription";
+    ViewBag.Title = "Prescription";
 }
 
 <section class="panel">
-	<form class="form-horizontal form-bordered" method="post" action="/Pharmacy/Prescription">
-		<header class="panel-heading">
-			<h5 class="panel-title">
-				Prescription Validation
-			</h5>
-		</header>
+    @using (Html.BeginForm())
+    {
+        <header class="panel-heading">
+            <h5 class="panel-title">
+                Prescription Validation
+            </h5>
+        </header>
 
-		<div class="panel-body">
-			<div style="width:100%; margin:0 auto">
-				<table id="tbPrescription" class="table table-striped table-bordered dt-responsive" cellspacing="0">
-					<thead>
-						<tr>
-							<th style="width:20px;">NO</th>
-							<th>@Klinik.Resources.UIMessages.MedicineName</th>
-							<th>@Klinik.Resources.UIMessages.Dose</th>
-							<th style="width:30px;">@Klinik.Resources.UIMessages.Amount</th>
-							<th>@Klinik.Resources.UIMessages.RemarkUse</th>
-							<th>@Klinik.Resources.UIMessages.MedicineName</th>
-							<th>@Klinik.Resources.UIMessages.Amount</th>
-							<th>@Klinik.Resources.UIMessages.Note</th>
-							<th>@Klinik.Resources.UIMessages.Process</th>
-						</tr>
-					</thead>
-					<tbody>
-						@{
-							int counter = 1;
-							foreach (var item in Model.Medicines)
-							{
-								<tr>
-									<td>@(counter++)</td>
-									<td>@item.ProductName</td>
-									<td>@item.Dose</td>
-									<td>@item.Qty</td>
-									<td>@item.RemarkUse</td>
-									<td>
-										<input type="text" id="@("medicineName"+(counter-1))" value="@item.Detail.ProductName" />
-										<input hidden type="text" id="@("idMedicine"+(counter-1))" value="@item.Detail.ProductID" />
-										<a class="modal-with-form" data-rowno="@(counter-1)" href="#modalForm">&nbsp;.....</a>
-									</td>
-									<td><input type="text" id="@("amount"+(counter-1))" value="@item.Detail.Qty" /></td>
-									<td><input type="text" id="@("note"+(counter-1))" value="@item.Detail.Note" /> </td>
-									<td id="@("process"+(counter-1))">@item.Detail.ProcessType</td>
-								</tr>
-							}
-						}
-					</tbody>
-				</table>
-				<!-- Modal Form -->
-				<div id="modalForm" class="modal-block modal-block-primary mfp-hide">
-					<section class="panel">
-						<header class="panel-heading">
-							<h5 class="panel-title">
-								@Klinik.Resources.UIMessages.ProductList
-							</h5>
-						</header>
-						<div class="panel-body">
-							<div style="width:100%; margin:0 auto">
-								<input type="hidden" id="rowno" name="rowno" />
-								<table id="tableProductList" class="table table-striped table-bordered dt-responsive" cellspacing="0">
-									<thead>
-										<tr>
-											<th>@Klinik.Resources.UIMessages.ID</th>
-											<th>@Klinik.Resources.UIMessages.Code</th>
-											<th>@Klinik.Resources.UIMessages.Name</th>
-											<th>@Klinik.Resources.UIMessages.Price</th>
-											<th>@Klinik.Resources.UIMessages.Category</th>
-											<th>@Klinik.Resources.UIMessages.Unit</th>
-											<th>@Klinik.Resources.UIMessages.Action</th>
-										</tr>
-									</thead>
-								</table>
-							</div>
-						</div>
-						<footer class="panel-footer">
-							<div class="row">
-								<div class="col-md-12 text-right">
-									<button class="btn btn-primary modal-dismiss">Close</button>
-								</div>
-							</div>
-						</footer>
-					</section>
-				</div>
-			</div>
-		</div>
+        <div class="panel-body">
+            <div style="width:100%; margin:0 auto">
+                <table id="tbPrescription" class="table table-striped table-bordered dt-responsive" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th style="width:20px;">NO</th>
+                            <th>@Klinik.Resources.UIMessages.MedicineName</th>
+                            <th>@Klinik.Resources.UIMessages.Dose</th>
+                            <th style="width:30px;">@Klinik.Resources.UIMessages.Amount</th>
+                            <th>@Klinik.Resources.UIMessages.RemarkUse</th>
+                            <th>@Klinik.Resources.UIMessages.MedicineName</th>
+                            <th>@Klinik.Resources.UIMessages.Amount</th>
+                            <th>@Klinik.Resources.UIMessages.Note</th>
+                            <th>@Klinik.Resources.UIMessages.Process</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            @Html.HiddenFor(m => m.FormMedicalID)
+                            int counter = 1;
+                            foreach (var item in Model.Medicines)
+                            {
+                                <tr>
+                                    <td>
+                                        @(counter++)
+                                        @Html.HiddenFor(m => m.Medicines[counter - 2].Id)
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(m => m.Medicines[counter - 2].ProductName)
+                                        @Html.DisplayFor(m => m.Medicines[counter - 2].ProductName)
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(m => m.Medicines[counter - 2].Dose)
+                                        @Html.DisplayFor(m => m.Medicines[counter - 2].Dose)
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(m => m.Medicines[counter - 2].Qty)
+                                        @Html.DisplayFor(m => m.Medicines[counter - 2].Qty)
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(m => m.Medicines[counter - 2].RemarkUse)
+                                        @Html.DisplayFor(m => m.Medicines[counter - 2].RemarkUse)
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.ProductName, new { @id = "medicineName" + (counter - 1) })
+                                        @Html.HiddenFor(m => m.Medicines[counter - 2].Detail.ProductID, new { @id = "idMedicine" + (counter - 1) })
+                                        <a class="modal-with-form" data-rowno="@(counter - 1)" href="#modalForm">&nbsp;.....</a>
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.Qty, new { @id = "amount" + (counter - 1) })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.Note, new { @id = "note" + (counter - 1) })
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(m => m.Medicines[counter - 2].Detail.ProcessType, new { @id = "processhidden" + (counter - 1) })
+                                        @Html.DisplayFor(m => m.Medicines[counter - 2].Detail.ProcessType, new { @id = "process" + (counter - 1) })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <!-- Modal Form -->
+                <div id="modalForm" class="modal-block modal-block-primary mfp-hide">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            <h5 class="panel-title">
+                                @Klinik.Resources.UIMessages.ProductList
+                            </h5>
+                        </header>
+                        <div class="panel-body">
+                            <div style="width:100%; margin:0 auto">
+                                <input type="hidden" id="rowno" name="rowno" />
+                                <table id="tableProductList" class="table table-striped table-bordered dt-responsive" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>@Klinik.Resources.UIMessages.ID</th>
+                                            <th>@Klinik.Resources.UIMessages.Code</th>
+                                            <th>@Klinik.Resources.UIMessages.Name</th>
+                                            <th>@Klinik.Resources.UIMessages.Price</th>
+                                            <th>@Klinik.Resources.UIMessages.Category</th>
+                                            <th>@Klinik.Resources.UIMessages.Unit</th>
+                                            <th>@Klinik.Resources.UIMessages.Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <footer class="panel-footer">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button class="btn btn-primary modal-dismiss">Close</button>
+                                </div>
+                            </div>
+                        </footer>
+                    </section>
+                </div>
+            </div>
+        </div>
 
-		<div class="panel-footer">
-			<button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
-			<button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
-		</div>
-	</form>
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
+            <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+        </div>
+    }
 </section>
 
 @section Scripts {
-	<script type="text/javascript">
+    <script type="text/javascript">
 		$(document).ready(function () {
 			$('#btnreset').click(function (e) {
 				window.location.href = "/Pharmacy/PatientList";
@@ -174,7 +198,31 @@
 
 			$('.modal-with-form').click(function () {
 				$('#rowno').val($(this).data('rowno'));
-			});
+            });
+
+            toastr.options = {
+                "closeButton": false,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "0",
+                "hideDuration": "0",
+                "timeOut": "2000",
+                "showMethod": "fadeIn"
+            };
+
+            var _temp="@ViewBag.Response";
+            var _arrMsg = _temp.split(";");
+
+            if (_arrMsg.length > 1) {
+                if (_arrMsg[0] == "True") {
+                    toastr.success(_arrMsg[1]);
+                }
+                else {
+                    toastr.options.closeButton = true;
+                    toastr.options.timeOut = 0;
+                    toastr.error(_arrMsg[1]);
+                }
+            }
 		});
 
 		var OnSelectProduct = function (Id, Name) {
@@ -182,5 +230,5 @@
 			$('#idMedicine' + rowNum).val(Id);
 			$('#medicineName' + rowNum).val(Name);
 		}
-	</script>
+    </script>
 }

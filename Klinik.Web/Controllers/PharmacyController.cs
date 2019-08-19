@@ -15,158 +15,161 @@ using Klinik.Entities.Pharmacy;
 
 namespace Klinik.Web.Controllers
 {
-	public class PharmacyController : BaseController
-	{
-		#region ::DROPDOWN::
-		private List<SelectListItem> BindDropDownStatus()
-		{
-			List<SelectListItem> _status = new List<SelectListItem>();
-			_status.Insert(0, new SelectListItem
-			{
-				Text = "Open",
-				Value = "0"
-			});
+    public class PharmacyController : BaseController
+    {
+        #region ::DROPDOWN::
+        private List<SelectListItem> BindDropDownStatus()
+        {
+            List<SelectListItem> _status = new List<SelectListItem>();
+            _status.Insert(0, new SelectListItem
+            {
+                Text = "Open",
+                Value = "0"
+            });
 
-			_status.Insert(1, new SelectListItem
-			{
-				Text = "Waiting",
-				Value = "1"
-			});
+            _status.Insert(1, new SelectListItem
+            {
+                Text = "Waiting",
+                Value = "1"
+            });
 
-			return _status;
-		}
+            return _status;
+        }
 
-		private List<SelectListItem> BindDropDownClinic()
-		{
-			List<SelectListItem> _authorizedClinics = new List<SelectListItem>();
-			if (Session["UserLogon"] != null)
-			{
-				var _account = (AccountModel)Session["UserLogon"];
+        private List<SelectListItem> BindDropDownClinic()
+        {
+            List<SelectListItem> _authorizedClinics = new List<SelectListItem>();
+            if (Session["UserLogon"] != null)
+            {
+                var _account = (AccountModel)Session["UserLogon"];
 
-				var _getClinics = new ClinicHandler(_unitOfWork).GetAllClinic(_account.ClinicID);
-				foreach (var item in _getClinics)
-				{
-					_authorizedClinics.Add(new SelectListItem
-					{
-						Text = item.Name,
-						Value = item.Id.ToString()
-					});
-				}
-			}
+                var _getClinics = new ClinicHandler(_unitOfWork).GetAllClinic(_account.ClinicID);
+                foreach (var item in _getClinics)
+                {
+                    _authorizedClinics.Add(new SelectListItem
+                    {
+                        Text = item.Name,
+                        Value = item.Id.ToString()
+                    });
+                }
+            }
 
-			return _authorizedClinics;
-		}
-		#endregion
+            return _authorizedClinics;
+        }
+        #endregion
 
-		public PharmacyController(IUnitOfWork unitOfWork, KlinikDBEntities context) :
-			base(unitOfWork, context)
-		{
-		}
+        public PharmacyController(IUnitOfWork unitOfWork, KlinikDBEntities context) :
+            base(unitOfWork, context)
+        {
+        }
 
-		// GET: Prescription details
-		public ActionResult Prescription()
-		{
-			string id = Request.QueryString["id"];
-			if (id == null)
-				return View("PatientList", "Pharmacy", null);
+        // GET: Prescription details
+        public ActionResult Prescription()
+        {
+            string id = Request.QueryString["id"];
+            if (string.IsNullOrEmpty(id))
+                return View("PatientList", "Pharmacy", null);
 
-			List<FormExamineMedicine> medicinelist = _unitOfWork.FormExamineMedicineRepository.Get(x => x.FormExamine.FormMedicalID.Value.ToString() == id && x.RowStatus == 0).ToList();
-			PrescriptionModel prescriptionModel = new PrescriptionModel();
-			foreach (var item in medicinelist)
-			{
-				FormExamineMedicineModel medicineModel = Mapper.Map<FormExamineMedicine, FormExamineMedicineModel>(item);
-				FormExamineMedicineDetail detail = _unitOfWork.FormExamineMedicineDetailRepository.Get(x => x.FormExamineMedicineID.Value == item.ID && x.RowStatus == 0).FirstOrDefault();
-				if (detail != null)
-				{
-					medicineModel.Detail = Mapper.Map<FormExamineMedicineDetail, FormExamineMedicineDetailModel>(detail);
-				}
+            List<FormExamineMedicine> medicinelist = _unitOfWork.FormExamineMedicineRepository.Get(x => x.FormExamine.FormMedicalID.Value.ToString() == id && x.RowStatus == 0).ToList();
+            PrescriptionModel prescriptionModel = new PrescriptionModel();
+            prescriptionModel.FormMedicalID = long.Parse(id);
 
-				prescriptionModel.Medicines.Add(medicineModel);
-			}
+            foreach (var item in medicinelist)
+            {
+                FormExamineMedicineModel medicineModel = Mapper.Map<FormExamineMedicine, FormExamineMedicineModel>(item);
+                FormExamineMedicineDetail detail = _unitOfWork.FormExamineMedicineDetailRepository.Get(x => x.FormExamineMedicineID.Value == item.ID && x.RowStatus == 0).FirstOrDefault();
+                if (detail != null)
+                {
+                    medicineModel.Detail = Mapper.Map<FormExamineMedicineDetail, FormExamineMedicineDetailModel>(detail);
+                }
 
-			return View(prescriptionModel);
-		}
+                prescriptionModel.Medicines.Add(medicineModel);
+            }
 
-		[HttpPost]
-		public ActionResult Prescription(PrescriptionModel model)
-		{			
-			var request = new PharmacyRequest { Data = model, Account = Account };
+            return View(prescriptionModel);
+        }
 
-			PharmacyResponse _response = new PharmacyValidator(_unitOfWork, _context).Validate(request);
+        [HttpPost]
+        public ActionResult Prescription(PrescriptionModel model)
+        {
+            var request = new PharmacyRequest { Data = model, Account = Account };
 
-			return View();
-		}
+            PharmacyResponse _response = new PharmacyValidator(_unitOfWork, _context).Validate(request);
+            ViewBag.Response = $"{_response.Status};{_response.Message}";
 
-		// GET: Pharmacy
-		public ActionResult PatientList()
-		{
-			ViewBag.Clinics = BindDropDownClinic();
-			return View();
-		}
+            return View(model);
+        }
 
-		public ActionResult ModalPopUp()
-		{
-			return View();
-		}
+        // GET: Pharmacy
+        public ActionResult PatientList()
+        {
+            ViewBag.Clinics = BindDropDownClinic();
+            return View();
+        }
 
-		[HttpPost]
-		public ActionResult GetProductList()
-		{
-			var _draw = Request.Form.GetValues("draw").FirstOrDefault();
-			var _start = Request.Form.GetValues("start").FirstOrDefault();
-			var _length = Request.Form.GetValues("length").FirstOrDefault();
-			var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
-			var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
-			var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+        public ActionResult ModalPopUp()
+        {
+            return View();
+        }
 
-			int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
-			int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+        [HttpPost]
+        public ActionResult GetProductList()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
 
-			var request = new ProductRequest
-			{
-				Draw = _draw,
-				SearchValue = _searchValue,
-				SortColumn = _sortColumn,
-				SortColumnDir = _sortColumnDir,
-				PageSize = _pageSize,
-				Skip = _skip
-			};
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
 
-			var response = new ProductHandler(_unitOfWork).GetListData(request);
+            var request = new ProductRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
 
-			return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
-		}
+            var response = new ProductHandler(_unitOfWork).GetListData(request);
 
-		[HttpPost]
-		public ActionResult GetPharmacyQueueFromPoli(string clinics, string status)
-		{
-			var _draw = Request.Form.GetValues("draw").FirstOrDefault();
-			var _start = Request.Form.GetValues("start").FirstOrDefault();
-			var _length = Request.Form.GetValues("length").FirstOrDefault();
-			var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
-			var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
-			var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
 
-			int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
-			int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+        [HttpPost]
+        public ActionResult GetPharmacyQueueFromPoli(string clinics, string status)
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
 
-			var request = new LoketRequest
-			{
-				Draw = _draw,
-				SearchValue = _searchValue,
-				SortColumn = _sortColumn,
-				SortColumnDir = _sortColumnDir,
-				PageSize = _pageSize,
-				Skip = _skip,
-				Data = new LoketModel { ClinicID = Convert.ToInt32(clinics), PoliToID = (int)PoliEnum.Farmasi }
-			};
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
 
-			if (Session["UserLogon"] != null)
-				request.Data.Account = (AccountModel)Session["UserLogon"];
+            var request = new LoketRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip,
+                Data = new LoketModel { ClinicID = Convert.ToInt32(clinics), PoliToID = (int)PoliEnum.Farmasi }
+            };
 
-			var response = new PharmacyHandler(_unitOfWork).GetListData(request);
+            if (Session["UserLogon"] != null)
+                request.Data.Account = (AccountModel)Session["UserLogon"];
 
-			return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
-		}
-	}
+            var response = new PharmacyHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+    }
 }
