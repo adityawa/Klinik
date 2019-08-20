@@ -340,7 +340,7 @@
     <value>Status</value>
   </data>
   <data name="RegistrationType" xml:space="preserve">
-    <value>Registration Type</value>
+    <value>Reg. Type</value>
   </data>
   <data name="Remark" xml:space="preserve">
     <value>Remark</value>
@@ -1124,5 +1124,26 @@
   </data>
   <data name="Note" xml:space="preserve">
     <value>Note</value>
+  </data>
+  <data name="Blood" xml:space="preserve">
+    <value>Blood</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="MRN" xml:space="preserve">
+    <value>MRN</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="PrintCard" xml:space="preserve">
+    <value>Print Card</value>
+  </data>
+  <data name="Queue" xml:space="preserve">
+    <value>Queue</value>
   </data>
 </root>
