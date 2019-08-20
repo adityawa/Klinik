@@ -85,7 +85,9 @@
             public const string EDIT_PURCHASE_REQUEST_PUSAT = "Edit Form Purchase request pusat";
             public const string ADD_PURCHASE_REQUEST_PUSAT = "Add New Purchase request pusat";
 			public const string EDIT_FORM_EXAMINE_MEDICINE = "Edit Form Examine Medicine";
-		}
+            public const string EDIT_PRODCUTINGUDANG = "Edit Form Product In Gudang";
+            public const string ADD_PRODCUTINGUDANG = "Add New Product In Gudang";
+        }
 
         public static class MasterType
         {

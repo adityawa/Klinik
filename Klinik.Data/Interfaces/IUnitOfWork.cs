@@ -71,7 +71,9 @@ namespace Klinik.Data
         IGenericRepository<PurchaseRequestPusatDetail> PurchaseRequestPusatDetailRepository { get; }
 
 		IGenericRepository<FormExamineMedicineDetail> FormExamineMedicineDetailRepository { get; }
+        IGenericRepository<ProductInGudang> ProductInGudangRepository { get; }
+        IGenericRepository<HistoryProductInGudang> HistoryProductInGudangRepository { get; }
 
-		int Save();
+        int Save();
     }
 }

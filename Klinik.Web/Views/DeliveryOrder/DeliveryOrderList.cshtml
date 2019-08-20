@@ -97,9 +97,18 @@
                 {
                     "render": function (data, type, full, meta)
                     {
-                        var type = full['approve'] == null ? 'Approve' : 'Print';
-                        var button = full['approve'] == null ? "<button class='btn btn-success btn-sm' onclick='" + type + "(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Approve</button>" : '<a class="btn btn-success btn-sm" href="/DeliveryOrder/PrintDeliveryOrder?id=' + full.Id + '">' + type + '</a>';
-                        return '<a class="btn btn-info btn-sm" href="/DeliveryOrder/CreateOrEditDeliveryOrder?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger btn-sm' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" + " |" + button
+                        var type = "";
+                        var button = "";
+                        var buttonrecived = "";
+                        var buttondelete = "";
+                        var editorview = full['Recived'] != null ? "View" : "Edit";
+                        if ( full['Recived'] == null) {
+                            type = full['approve'] == null ? 'Approve' : 'Print';
+                            button = full['approve'] == null ? " | <button class='btn btn-success btn-sm' onclick='" + type + "(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Approve</button>" : '<a class="btn btn-success btn-sm" href="/DeliveryOrder/PrintDeliveryOrder?id=' + full.Id + '">' + type + '</a>';
+                            buttonrecived = full['approve'] != null ? ' | <a class="btn btn-success btn-sm" href="/DeliveryOrder/ReceivedOrder?id=' + full.Id + '">Recived</a>' : "";
+                            buttondelete = " | <button class='btn btn-danger btn-sm' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>";
+                        }
+                        return '<a class="btn btn-info btn-sm" href="/DeliveryOrder/CreateOrEditDeliveryOrder?id=' + full.Id + '">' + editorview + '</a>  ' + buttondelete + button + buttonrecived
                     }
                 }
 

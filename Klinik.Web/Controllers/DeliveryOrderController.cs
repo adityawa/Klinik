@@ -5,6 +5,7 @@ using Klinik.Entities.Account;
 using Klinik.Entities.DeliveryOrder;
 using Klinik.Entities.DeliveryOrderDetail;
 using Klinik.Entities.MasterData;
+using Klinik.Entities.ProductInGudang;
 using Klinik.Features;
 using Rotativa;
 using Rotativa.Options;
@@ -204,6 +205,45 @@ namespace Klinik.Web.Controllers
 
                 FileName = "DeliveryOrder" + _model.donumber + ".pdf"
             };
+        }
+
+        public ActionResult ReceivedOrder(int id)
+        {
+            DeliveryOrderResponse _response = new DeliveryOrderResponse();
+
+            var request = new DeliveryOrderRequest
+            {
+                Data = new DeliveryOrderModel
+                {
+                    Id = id
+                }
+            };
+
+            DeliveryOrderResponse resp = new DeliveryOrderHandler(_unitOfWork).GetDetail(request);
+            resp.Entity.Account = (AccountModel)Session["UserLogon"];
+            resp.Entity.Recived = 1;
+            var receiveddeliveryorder = new DeliveryOrderRequest
+            {
+                Data = resp.Entity
+            };
+            new DeliveryOrderValidator(_unitOfWork).Validate(receiveddeliveryorder, out _response);
+            DeliveryOrderModel _model = resp.Entity;
+            foreach(var item in resp.Entity.deliveryOrderDetailModels )
+            {
+                var requestproductingudang = new ProductInGudangRequest
+                {
+                    Data = new ProductInGudangModel
+                    {
+                        Account = (AccountModel)Session["UserLogon"],
+                        GudangId = item.GudangId,
+                        ProductId = item.ProductId_Po,
+                        stock = Convert.ToInt32(item.qty_po) > 0 ? Convert.ToInt32(item.qty_po) : Convert.ToInt32(item.qty_po_final),
+                    }
+                };
+
+                var saveproductingudang = new ProductInGudangHandler(_unitOfWork).CreateOrEdit(requestproductingudang);
+            }
+            return RedirectToAction("DeliveryOrderList");
         }
 
         [HttpGet]

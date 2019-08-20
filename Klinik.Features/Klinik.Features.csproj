@@ -230,6 +230,10 @@
     <Compile Include="PreExamine\PreExamineRequest.cs" />
     <Compile Include="PreExamine\PreExamineResponse.cs" />
     <Compile Include="PreExamine\PreExamineValidator.cs" />
+    <Compile Include="ProductInGudang\ProductInGudangHandler.cs" />
+    <Compile Include="ProductInGudang\ProductInGudangRequest.cs" />
+    <Compile Include="ProductInGudang\ProductInGudangResponse.cs" />
+    <Compile Include="ProductInGudang\ProductInGudangValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseOrderDetail\PurchaseOrderDetailHandler.cs" />
     <Compile Include="PurchaseOrderDetail\PurchaseOrderDetailRequest.cs" />

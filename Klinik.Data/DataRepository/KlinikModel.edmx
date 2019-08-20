@@ -88,6 +88,7 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="Recived" Type="int" />
         </EntityType>
         <EntityType Name="DeliveryOrderDetail">
           <Key>
@@ -3121,6 +3122,7 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="DeliveryOrderDetails" Relationship="Self.FK_DeliveryOrderDetail_DeliveryOrder" FromRole="DeliveryOrder" ToRole="DeliveryOrderDetail" />
           <NavigationProperty Name="PurchaseOrder" Relationship="KlinikDBModel.FK_DeliveryOrder_PurchaseOrder" FromRole="DeliveryOrder" ToRole="PurchaseOrder" />
+          <Property Name="Recived" Type="Int32" />
         </EntityType>
         <EntityType Name="DeliveryOrderDetail">
           <Key>
@@ -6311,6 +6313,7 @@
           <EntitySetMapping Name="DeliveryOrders">
             <EntityTypeMapping TypeName="KlinikDBModel.DeliveryOrder">
               <MappingFragment StoreEntitySet="DeliveryOrder">
+                <ScalarProperty Name="Recived" ColumnName="Recived" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="poid" ColumnName="poid" />
                 <ScalarProperty Name="donumber" ColumnName="donumber" />

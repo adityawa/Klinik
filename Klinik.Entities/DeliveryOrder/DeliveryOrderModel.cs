@@ -17,6 +17,7 @@ namespace Klinik.Entities.DeliveryOrder
         public Nullable<int> approve { get; set; }
         public List<DeliveryOrderDetailModel> deliveryOrderDetailModels { get; set; }
         public string createformat { get; set; }
+        public Nullable<int> Recived { get; set; }
         public DeliveryOrderModel()
         {
             deliveryOrderDetailModels = new List<DeliveryOrderDetailModel>();

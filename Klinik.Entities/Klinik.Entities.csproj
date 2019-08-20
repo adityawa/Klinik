@@ -79,6 +79,7 @@
     <Compile Include="DeliveryOrder\DeliveryOrderModel.cs" />
     <Compile Include="Document\DocumentModel.cs" />
     <Compile Include="Form\FormExamineMedicineDetailModel.cs" />
+    <Compile Include="HistoryProductInGudang\HistoryProductInGudangModel.cs" />
     <Compile Include="MasterData\GudangModel.cs" />
     <Compile Include="MasterData\VendorModel.cs" />
     <Compile Include="Pharmacy\PharmacyModel.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Poli\PoliExamineModel.cs" />
     <Compile Include="PreExamine\PreExamineModel.cs" />
     <Compile Include="Poli\PatientListModel.cs" />
+    <Compile Include="ProductInGudang\ProductInGudangModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Loket\LoketModel.cs" />
     <Compile Include="PurchaseOrderDetail\PurchaseOrderDetailModel.cs" />

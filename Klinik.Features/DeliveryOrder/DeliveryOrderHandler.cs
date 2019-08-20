@@ -43,6 +43,7 @@ namespace Klinik.Features
                             CreatedBy = qry.CreatedBy,
                             CreatedDate = qry.CreatedDate,
                             ModifiedDate = qry.ModifiedDate,
+                            Recived = qry.Recived,
                             RowStatus = qry.RowStatus
                         };
 
@@ -52,6 +53,7 @@ namespace Klinik.Features
                         qry.dodate = request.Data.dodate;
                         qry.dodest = request.Data.dodest;
                         qry.ModifiedBy = request.Data.Account.UserCode;
+                        qry.Recived = request.Data.Recived;
                         qry.ModifiedDate = DateTime.Now;
                         qry.RowStatus = 0;
 
@@ -150,6 +152,7 @@ namespace Klinik.Features
                     approve_by = qry.approve_by,
                     approve = qry.approve,
                     ModifiedBy = qry.ModifiedBy,
+                    Recived = qry.Recived,
                     CreatedBy = qry.CreatedBy,
                     ModifiedDate = qry.ModifiedDate,
                 };
@@ -245,6 +248,7 @@ namespace Klinik.Features
                     ModifiedBy = item.ModifiedBy,
                     CreatedBy = item.CreatedBy,
                     ModifiedDate = item.ModifiedDate,
+                    Recived = item.Recived,
                     createformat = GeneralHandler.FormatDate(item.CreatedDate)
                 };
 
