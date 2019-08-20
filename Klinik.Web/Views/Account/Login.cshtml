@@ -36,12 +36,12 @@
     <div class="limiter">
         <div class="container-loginMMS">
             <div class="wrap-loginMMS">
-                <div class="loginMMS-form-title" style="background-image: url(../../Content/images/bg-login.jpg);">
+                <div class="loginMMS-form-title" style="background-image: url(../../Content/images/bg-login-m.jpg);">
                 </div>
 
                 @using (Html.BeginForm("SignIn", "Account", FormMethod.Post, new { @class = "loginMMS-form validate-form" }))
                 {
-                    <div class="wrap-inputMMS validate-input m-b-26" data-validate="Username is required">
+                    <div class="wrap-inputMMS validate-input m-b-18" data-validate="Username is required">
                         <span class="label-inputMMS">@Klinik.Resources.UIMessages.Username</span>
                         @Html.TextBoxFor(x => x.UserName, null, new { @class = "inputMMS", @id = "tbUserName", @placeholder = @Klinik.Resources.UIMessages.EnterUsername, @Value = "adminsuper" })
                         <span class="focus-inputMMS"></span>
@@ -53,13 +53,13 @@
                         <span class="focus-inputMMS"></span>
                     </div>
 
-                    <div class="wrap-inputMMS validate-input m-b-26" data-validate="Organization is required">
+                    <div class="wrap-inputMMS validate-input m-b-18" data-validate="Organization is required">
                         <span class="label-inputMMS">@Klinik.Resources.UIMessages.Organization</span>
                         @Html.TextBoxFor(x => x.Organization, null, new { @class = "inputMMS", @id = "tbOrganization", @placeholder = @Klinik.Resources.UIMessages.EnterOrganizationCode, @Value = "M008" })
                         <span class="focus-inputMMS"></span>
                     </div>
 
-                    <div class="flex-sb-m w-full p-b-30">
+                    <div class="flex-sb-m w-full p-b-18">
                         <div class="contact100-form-checkbox">
                             <input class="input-checkboxMMS" id="ckb1" type="checkbox" name="remember-me">
                             <label class="label-checkboxMMS" for="ckb1">
