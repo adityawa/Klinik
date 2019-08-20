@@ -176,13 +176,13 @@
         <AssociationConnector Association="KlinikDBModel.FK_stoks_m_Product" />
         <AssociationConnector Association="KlinikDBModel.FK_substitute_Product" />
         <AssociationConnector Association="KlinikDBModel.FK_substitute_PurchaseOrderDetail" />
-        <EntityTypeShape EntityType="KlinikDBModel.HistoryProductInGudang" Width="1.5" PointX="18.5" PointY="90.625" />
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrder_PurchaseOrder" />
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusat_PurchaseOrderPusat" />
-        <AssociationConnector Association="KlinikDBModel.FK_HistoryProductInGudang_Gudang" />
-        <AssociationConnector Association="KlinikDBModel.FK_HistoryProductInGudang_Product" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrder_PurchaseRequest" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrderPusat_PurchaseRequestPusat" />
+        <EntityTypeShape EntityType="KlinikDBModel.HistoryProductInGudang" Width="1.5" PointX="18.5" PointY="90.625" />
+        <AssociationConnector Association="KlinikDBModel.FK_HistoryProductInGudang_Gudang" />
+        <AssociationConnector Association="KlinikDBModel.FK_HistoryProductInGudang_Product" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
