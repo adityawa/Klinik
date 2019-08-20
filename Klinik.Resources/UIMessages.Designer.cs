@@ -259,6 +259,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blood.
+        /// </summary>
+        public static string Blood {
+            get {
+                return ResourceManager.GetString("Blood", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TD.
         /// </summary>
         public static string BloodPress {
@@ -543,6 +552,15 @@ namespace Klinik.Resources {
         public static string Dashboard {
             get {
                 return ResourceManager.GetString("Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
             }
         }
         
@@ -1083,6 +1101,15 @@ namespace Klinik.Resources {
         public static string ForwardTo {
             get {
                 return ResourceManager.GetString("ForwardTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        public static string From {
+            get {
+                return ResourceManager.GetString("From", resourceCulture);
             }
         }
         
@@ -1663,6 +1690,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MRN.
+        /// </summary>
+        public static string MRN {
+            get {
+                return ResourceManager.GetString("MRN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MR Number.
         /// </summary>
         public static string MRNumber {
@@ -1987,6 +2023,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Payment.
+        /// </summary>
+        public static string Payment {
+            get {
+                return ResourceManager.GetString("Payment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Payment Type.
         /// </summary>
         public static string PaymentType {
@@ -2145,6 +2190,15 @@ namespace Klinik.Resources {
         public static string Price {
             get {
                 return ResourceManager.GetString("Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print Card.
+        /// </summary>
+        public static string PrintCard {
+            get {
+                return ResourceManager.GetString("PrintCard", resourceCulture);
             }
         }
         
@@ -2320,6 +2374,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Queue.
+        /// </summary>
+        public static string Queue {
+            get {
+                return ResourceManager.GetString("Queue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Queue Code.
         /// </summary>
         public static string QueueCode {
@@ -2455,7 +2518,7 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registration Type.
+        ///   Looks up a localized string similar to Reg. Type.
         /// </summary>
         public static string RegistrationType {
             get {
