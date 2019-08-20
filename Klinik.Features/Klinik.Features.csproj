@@ -97,6 +97,9 @@
     <Compile Include="DeliveryOrder\DeliveryOrderResponse.cs" />
     <Compile Include="DeliveryOrder\DeliveryOrderValidator.cs" />
     <Compile Include="General\GeneralHandler.cs" />
+    <Compile Include="HistoryProductInGudang\HistoryProductInGudangHandler.cs" />
+    <Compile Include="HistoryProductInGudang\HistoryProductInGudangRequest.cs" />
+    <Compile Include="HistoryProductInGudang\HistoryProductInGudangResponse.cs" />
     <Compile Include="MasterData\Gudang\GudangHandler.cs" />
     <Compile Include="MasterData\Gudang\GudangRequest.cs" />
     <Compile Include="MasterData\Gudang\GudangResponse.cs" />

@@ -19,7 +19,7 @@ namespace Klinik.Data.DataRepository
         public int GudangId { get; set; }
         public int value { get; set; }
         public System.DateTime CreatedDate { get; set; }
-        public System.DateTime CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
     
         public virtual Gudang Gudang { get; set; }
         public virtual Product Product { get; set; }

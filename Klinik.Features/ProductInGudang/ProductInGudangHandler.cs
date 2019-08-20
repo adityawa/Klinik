@@ -22,7 +22,7 @@ namespace Klinik.Features
             ProductInGudangResponse response = new ProductInGudangResponse();
 
             var get = _unitOfWork.ProductInGudangRepository.Query(x => x.ProductId == request.Data.ProductId && x.GudangId == request.Data.GudangId, null);
-            var testing = get.FirstOrDefault().id;
+            
             var qry = new Data.DataRepository.ProductInGudang();
             if (get.Count() > 0)
             {

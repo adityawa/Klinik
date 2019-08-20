@@ -470,7 +470,7 @@
           <Property Name="GudangId" Type="int" Nullable="false" />
           <Property Name="value" Type="int" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="CreatedBy" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="LabItem">
           <Key>
@@ -5983,7 +5983,6 @@
             <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
             <End Role="substitute" EntitySet="substitutes" />
           </AssociationSet>
-          <EntitySet Name="HistoryProductInGudangs" EntityType="KlinikDBModel.HistoryProductInGudang" />
           <AssociationSet Name="FK_DeliveryOrder_PurchaseOrder" Association="KlinikDBModel.FK_DeliveryOrder_PurchaseOrder">
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
             <End Role="DeliveryOrder" EntitySet="DeliveryOrders" />
@@ -5992,14 +5991,6 @@
             <End Role="PurchaseOrderPusat" EntitySet="PurchaseOrderPusats" />
             <End Role="DeliveryOrderPusat" EntitySet="DeliveryOrderPusats" />
           </AssociationSet>
-          <AssociationSet Name="FK_HistoryProductInGudang_Gudang" Association="KlinikDBModel.FK_HistoryProductInGudang_Gudang">
-            <End Role="Gudang" EntitySet="Gudangs" />
-            <End Role="HistoryProductInGudang" EntitySet="HistoryProductInGudangs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HistoryProductInGudang_Product" Association="KlinikDBModel.FK_HistoryProductInGudang_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="HistoryProductInGudang" EntitySet="HistoryProductInGudangs" />
-          </AssociationSet>
           <AssociationSet Name="FK_PurchaseOrder_PurchaseRequest" Association="KlinikDBModel.FK_PurchaseOrder_PurchaseRequest">
             <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
@@ -6007,6 +5998,15 @@
           <AssociationSet Name="FK_PurchaseOrderPusat_PurchaseRequestPusat" Association="KlinikDBModel.FK_PurchaseOrderPusat_PurchaseRequestPusat">
             <End Role="PurchaseRequestPusat" EntitySet="PurchaseRequestPusats" />
             <End Role="PurchaseOrderPusat" EntitySet="PurchaseOrderPusats" />
+          </AssociationSet>
+          <EntitySet Name="HistoryProductInGudangs" EntityType="KlinikDBModel.HistoryProductInGudang" />
+          <AssociationSet Name="FK_HistoryProductInGudang_Gudang" Association="KlinikDBModel.FK_HistoryProductInGudang_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="HistoryProductInGudang" EntitySet="HistoryProductInGudangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryProductInGudang_Product" Association="KlinikDBModel.FK_HistoryProductInGudang_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="HistoryProductInGudang" EntitySet="HistoryProductInGudangs" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="stok">
@@ -6148,19 +6148,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="HistoryProductInGudang">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="GudangId" Type="Int32" Nullable="false" />
-          <Property Name="value" Type="Int32" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreatedBy" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_HistoryProductInGudang_Gudang" FromRole="HistoryProductInGudang" ToRole="Gudang" />
-          <NavigationProperty Name="Product" Relationship="KlinikDBModel.FK_HistoryProductInGudang_Product" FromRole="HistoryProductInGudang" ToRole="Product" />
-        </EntityType>
         <Association Name="FK_DeliveryOrder_PurchaseOrder">
           <End Type="KlinikDBModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="1" />
           <End Type="KlinikDBModel.DeliveryOrder" Role="DeliveryOrder" Multiplicity="*" />
@@ -6185,30 +6172,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HistoryProductInGudang_Gudang">
-          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="1" />
-          <End Type="KlinikDBModel.HistoryProductInGudang" Role="HistoryProductInGudang" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gudang">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HistoryProductInGudang">
-              <PropertyRef Name="GudangId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HistoryProductInGudang_Product">
-          <End Type="KlinikDBModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="KlinikDBModel.HistoryProductInGudang" Role="HistoryProductInGudang" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="HistoryProductInGudang">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PurchaseOrder_PurchaseRequest">
           <End Type="KlinikDBModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="0..1" />
           <End Type="KlinikDBModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
@@ -6230,6 +6193,43 @@
             </Principal>
             <Dependent Role="PurchaseOrderPusat">
               <PropertyRef Name="PurchaseRequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="HistoryProductInGudang">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="GudangId" Type="Int32" Nullable="false" />
+          <Property Name="value" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_HistoryProductInGudang_Gudang" FromRole="HistoryProductInGudang" ToRole="Gudang" />
+          <NavigationProperty Name="Product" Relationship="KlinikDBModel.FK_HistoryProductInGudang_Product" FromRole="HistoryProductInGudang" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_HistoryProductInGudang_Gudang">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="1" />
+          <End Type="KlinikDBModel.HistoryProductInGudang" Role="HistoryProductInGudang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HistoryProductInGudang">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryProductInGudang_Product">
+          <End Type="KlinikDBModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="KlinikDBModel.HistoryProductInGudang" Role="HistoryProductInGudang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistoryProductInGudang">
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

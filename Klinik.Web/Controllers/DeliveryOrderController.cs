@@ -4,6 +4,7 @@ using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.DeliveryOrder;
 using Klinik.Entities.DeliveryOrderDetail;
+using Klinik.Entities.HistoryProductInGudang;
 using Klinik.Entities.MasterData;
 using Klinik.Entities.ProductInGudang;
 using Klinik.Features;
@@ -241,7 +242,19 @@ namespace Klinik.Web.Controllers
                     }
                 };
 
+                var requesthistoryproductingudang = new HistoryProductInGudangRequest
+                {
+                    Data = new HistoryProductInGudangModel
+                    {
+                        Account = (AccountModel)Session["UserLogon"],
+                        GudangId = Convert.ToInt32(item.GudangId),
+                        ProductId = Convert.ToInt32(item.ProductId_Po),
+                        value = Convert.ToInt32(item.qty_po) > 0 ? Convert.ToInt32(item.qty_po) : Convert.ToInt32(item.qty_po_final),
+                    }
+                };
+
                 var saveproductingudang = new ProductInGudangHandler(_unitOfWork).CreateOrEdit(requestproductingudang);
+                var savehistoryproductingudang = new HistoryProductInGudangHandler(_unitOfWork).CreateOrEdit(requesthistoryproductingudang);
             }
             return RedirectToAction("DeliveryOrderList");
         }
