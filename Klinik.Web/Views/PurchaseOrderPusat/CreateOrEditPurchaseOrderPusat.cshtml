@@ -47,6 +47,7 @@
     <div class="panel-body">
         <div class="scrollTable">
             <table id="tblPurchaseOrderPusat" class="table color-table success-table">
+                <caption class="headertable">@Klinik.Resources.UIMessages.PurchaseOrderPusatDetailList</caption>
                 <thead>
                     <tr>
                         <th hidden>Id Obat</th>
@@ -72,29 +73,29 @@
                     {
                         foreach (var item in Model.purchaseOrderdetailpusatModels)
                         {
-                    <tr>
-                        <td hidden>@item.Id</td>
-                        <td hidden>@item.ProductId</td>
-                        <td hidden>@item.VendorId</td>
-                        <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
-                        <td><select disabled="disabled"><option>@item.namavendor</option></select></td>
-                        <td><input type="text" class="form-control" value="@item.satuan" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.harga" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.stok_prev" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.total_req" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.total_dist" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.qty_unit" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.qty_box" disabled="disabled" /></td>
-                        <td>
-                            <button class="edit-purchaseorderpusatdetail btn btn-success btn-sm">Edit</button>
-                            <button class="btn btn-danger btn-sm">Delete</button>
-                        </td>
-                    </tr>
+                            <tr>
+                                <td hidden>@item.Id</td>
+                                <td hidden>@item.ProductId</td>
+                                <td hidden>@item.VendorId</td>
+                                <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
+                                <td><select disabled="disabled"><option>@item.namavendor</option></select></td>
+                                <td><input type="text" class="form-control" value="@item.satuan" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.harga" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.stok_prev" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.total_req" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.total_dist" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_unit" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_box" disabled="disabled" /></td>
+                                <td>
+                                    <button class="edit-purchaseorderpusatdetail btn btn-success btn-sm">Edit</button>
+                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                </td>
+                            </tr>
                         }
                     }
                 </tbody>

@@ -19,7 +19,7 @@ namespace Klinik.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class UIMessages {
@@ -603,9 +603,27 @@ namespace Klinik.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Delivery Order List.
         /// </summary>
+        public static string DeliveryOrderDetailList {
+            get {
+                return ResourceManager.GetString("DeliveryOrderDetailList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delivery Order List.
+        /// </summary>
         public static string DeliveryOrderList {
             get {
                 return ResourceManager.GetString("DeliveryOrderList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delivery Order Pusat Detail List.
+        /// </summary>
+        public static string DeliveryOrderPusatDetailList {
+            get {
+                return ResourceManager.GetString("DeliveryOrderPusatDetailList", resourceCulture);
             }
         }
         
@@ -2338,11 +2356,29 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Purchase Order Detail List.
+        /// </summary>
+        public static string PurchaseOrderDetailList {
+            get {
+                return ResourceManager.GetString("PurchaseOrderDetailList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PurchaseOrderList.
         /// </summary>
         public static string PurchaseOrderList {
             get {
                 return ResourceManager.GetString("PurchaseOrderList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purchase Order Pusat Detail List.
+        /// </summary>
+        public static string PurchaseOrderPusatDetailList {
+            get {
+                return ResourceManager.GetString("PurchaseOrderPusatDetailList", resourceCulture);
             }
         }
         

@@ -45,52 +45,53 @@
         </form>
     </div>
     <div class="panel-body">
-            <div class="scrollTable">
-                <table id="tblPurchaseOrder" class="table color-table success-table">
-                    <thead>
-                        <tr>
-                            <th hidden>Id Obat</th>
-                            <th>Nama Obat</th>
-                            <th>Total Pemakaian</th>
-                            <th>Sisa Stock</th>
-                            <th>Qty</th>
-                            <th>Qty add</th>
-                            <th>Reason add</th>
-                            <th>Total</th>
-                            <th>Nama By HO</th>
-                            <th>Qty By HP</th>
-                            <th>Remark By HO</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model != null)
+        <div class="scrollTable">
+            <table id="tblPurchaseOrder" class="table color-table success-table">
+                <caption class="headertable">@Klinik.Resources.UIMessages.PurchaseOrderDetailList</caption>
+                <thead>
+                    <tr>
+                        <th hidden>Id Obat</th>
+                        <th>Nama Obat</th>
+                        <th>Total Pemakaian</th>
+                        <th>Sisa Stock</th>
+                        <th>Qty</th>
+                        <th>Qty add</th>
+                        <th>Reason add</th>
+                        <th>Total</th>
+                        <th>Nama By HO</th>
+                        <th>Qty By HP</th>
+                        <th>Remark By HO</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model.purchaseOrderdetailModels)
                         {
-                            foreach (var item in Model.purchaseOrderdetailModels)
-                            {
-                                <tr>
-                                    <td hidden>@item.Id</td>
-                                    <td hidden>@item.ProductId</td>
-                                    <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
-                                    <td><input type="text" class="form-control" value="@item.tot_pemakaian" disabled="disabled" /></td>
-                                    <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
-                                    <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
-                                    <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
-                                    <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
-                                    <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
-                                    <td><input type="text" class="form-control" value="@item.nama_by_ho" disabled="disabled" /></td>
-                                    <td><input type="text" class="form-control" value="@item.qty_by_ho" disabled="disabled" /></td>
-                                    <td><input type="text" class="form-control" value="@item.remark_by_ho" disabled="disabled" /></td>
-                                    <td>
-                                        <button class="edit-purchaseorderdetail btn btn-success btn-sm">Edit</button>
-                                        <button class="btn btn-danger btn-sm">Delete</button>
-                                    </td>
-                                </tr>
-                            }
+                            <tr>
+                                <td hidden>@item.Id</td>
+                                <td hidden>@item.ProductId</td>
+                                <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
+                                <td><input type="text" class="form-control" value="@item.tot_pemakaian" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.nama_by_ho" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_by_ho" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.remark_by_ho" disabled="disabled" /></td>
+                                <td>
+                                    <button class="edit-purchaseorderdetail btn btn-success btn-sm">Edit</button>
+                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                </td>
+                            </tr>
                         }
-                    </tbody>
-                </table>
-            </div>
+                    }
+                </tbody>
+            </table>
+        </div>
             <br />
             <form id="purchaseorderdetail">
                     <div class="form-group">
