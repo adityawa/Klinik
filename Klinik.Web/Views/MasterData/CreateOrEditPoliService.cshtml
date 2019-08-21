@@ -6,40 +6,39 @@
 }
 
 <section class="panel">
-    <header class="panel-heading">
-        <div class="panel-actions">
-            <a href="#" class="fa fa-caret-down"></a>
-        </div>
-        <h5 class="panel-title">Form @ViewBag.ActionType Lab Item</h5>
-    </header>
-    <div class="panel-body">
-        <form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditPoliService">
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Clinic</label>
-                <div class="col-md-4">
-                    @Html.HiddenFor(x => x.Id)
-                    @Html.DropDownListFor(p => p.ClinicID, (IEnumerable<SelectListItem>)ViewBag.ClinicList, new { @class = "form-control", @id = "ddlClinic" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Poli</label>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(p => p.PoliID, (IEnumerable<SelectListItem>)ViewBag.PoliList, new { @class = "form-control", @id = "ddlPoli" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Service</label>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(p => p.ServicesID, (IEnumerable<SelectListItem>)ViewBag.ServiceList, new { @class = "form-control", @id = "ddlService" })
-                </div>
-            </div>
-            <br />
-            <footer class="panel-footer">
-                <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
-                <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
-            </footer>
-        </form>
-    </div>
+	<form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditPoliService">
+		<header class="panel-heading">
+			<div class="panel-actions">
+				<a href="#" class="fa fa-caret-down"></a>
+			</div>
+			<h5 class="panel-title">Form @ViewBag.ActionType Lab Item</h5>
+		</header>
+		<div class="panel-body">
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Clinic</label>
+				<div class="col-md-4">
+					@Html.HiddenFor(x => x.Id)
+					@Html.DropDownListFor(p => p.ClinicID, (IEnumerable<SelectListItem>)ViewBag.ClinicList, new { @class = "form-control", @id = "ddlClinic" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Poli</label>
+				<div class="col-md-4">
+					@Html.DropDownListFor(p => p.PoliID, (IEnumerable<SelectListItem>)ViewBag.PoliList, new { @class = "form-control", @id = "ddlPoli" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Service</label>
+				<div class="col-md-4">
+					@Html.DropDownListFor(p => p.ServicesID, (IEnumerable<SelectListItem>)ViewBag.ServiceList, new { @class = "form-control", @id = "ddlService" })
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
+			<button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+		</div>
+	</form>
 </section>
 
 @section Scripts {

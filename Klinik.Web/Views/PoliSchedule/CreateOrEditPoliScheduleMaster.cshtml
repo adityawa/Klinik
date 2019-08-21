@@ -8,62 +8,61 @@
 <link href="~/Content/jquery.timepicker.css" rel="stylesheet" />
 
 <section class="panel">
-    <header class="panel-heading">
-        <div class="panel-actions">
-            <a href="#" class="fa fa-caret-down"></a>
-        </div>
-        <h5 class="panel-title">Form @ViewBag.ActionType Poli Schedule Master</h5>
-    </header>
-    <div class="panel-body">
-        <form class="form-horizontal form-bordered" method="post" action="/PoliSchedule/CreateOrEditPoliScheduleMaster">
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Clinic</label>
-                <div class="col-md-4">
-                    @Html.HiddenFor(x => x.Id)
-                    @Html.DropDownListFor(x => x.ClinicID, (IEnumerable<SelectListItem>)ViewBag.Clinics, new { @class = "form-control", @id = "ddlclinic" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Poli</label>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(x => x.PoliID, (IEnumerable<SelectListItem>)ViewBag.Polis, new { @class = "form-control", @id = "ddlpoli" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">
-                    @Klinik.Resources.UIMessages.Doctor
-                </label>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(x => x.DoctorID, (IEnumerable<SelectListItem>)ViewBag.Doctors, new { @class = "form-control", @id = "ddldoctor" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">
-                    @Klinik.Resources.UIMessages.Day
-                </label>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(x => x.Day, (IEnumerable<SelectListItem>)ViewBag.Days, new { @class = "form-control", @id = "ddlday" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.StartTime</label>
-                <div class="col-md-1">
-                    @Html.TextBoxFor(x => x.StartTimeStr, new { @class = "form-control", @id = "tbStartTime" })
-                </div>
-                <label class="col-md-2 control-label" for="inputDefault">
-                    @Klinik.Resources.UIMessages.EndTime
-                </label>
-                <div class="col-md-1">
-                    @Html.TextBoxFor(x => x.EndTimeStr, new { @class = "form-control", @id = "tbEndTime" })
-                </div>
-            </div>
-            <br />
-            <footer class="panel-footer">
-                <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
-                <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
-            </footer>
-        </form>
-    </div>
+	<form class="form-horizontal form-bordered" method="post" action="/PoliSchedule/CreateOrEditPoliScheduleMaster">
+		<header class="panel-heading">
+			<div class="panel-actions">
+				<a href="#" class="fa fa-caret-down"></a>
+			</div>
+			<h5 class="panel-title">Form @ViewBag.ActionType Poli Schedule Master</h5>
+		</header>
+		<div class="panel-body">
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Clinic</label>
+				<div class="col-md-4">
+					@Html.HiddenFor(x => x.Id)
+					@Html.DropDownListFor(x => x.ClinicID, (IEnumerable<SelectListItem>)ViewBag.Clinics, new { @class = "form-control", @id = "ddlclinic" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Poli</label>
+				<div class="col-md-4">
+					@Html.DropDownListFor(x => x.PoliID, (IEnumerable<SelectListItem>)ViewBag.Polis, new { @class = "form-control", @id = "ddlpoli" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">
+					@Klinik.Resources.UIMessages.Doctor
+				</label>
+				<div class="col-md-4">
+					@Html.DropDownListFor(x => x.DoctorID, (IEnumerable<SelectListItem>)ViewBag.Doctors, new { @class = "form-control", @id = "ddldoctor" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">
+					@Klinik.Resources.UIMessages.Day
+				</label>
+				<div class="col-md-4">
+					@Html.DropDownListFor(x => x.Day, (IEnumerable<SelectListItem>)ViewBag.Days, new { @class = "form-control", @id = "ddlday" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.StartTime</label>
+				<div class="col-md-1">
+					@Html.TextBoxFor(x => x.StartTimeStr, new { @class = "form-control", @id = "tbStartTime" })
+				</div>
+				<label class="col-md-2 control-label" for="inputDefault">
+					@Klinik.Resources.UIMessages.EndTime
+				</label>
+				<div class="col-md-1">
+					@Html.TextBoxFor(x => x.EndTimeStr, new { @class = "form-control", @id = "tbEndTime" })
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
+			<button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+		</div>
+	</form>
 </section>
 
 @section Scripts {

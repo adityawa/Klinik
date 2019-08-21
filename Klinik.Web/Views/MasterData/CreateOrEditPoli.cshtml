@@ -6,43 +6,42 @@
 }
 
 <section class="panel">
-    <header class="panel-heading">
-        <div class="panel-actions">
-            <a href="#" class="fa fa-caret-down"></a>
-        </div>
-        <h5 class="panel-title">Form @ViewBag.ActionType Poli</h5>
-    </header>
-    <div class="panel-body">
-        <form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditPoli">
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Code</label>
-                <div class="col-md-4">
-                    @Html.HiddenFor(x => x.Id)
-                    @Html.TextBoxFor(x => x.Code, new { @class = "form-control", @id = "tbOrgCode" })
-                    @Html.ValidationMessageFor(m => m.Code, "", new { @class = "text-danger" }    )
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Name</label>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @id = "tbOrgCode" })
-                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PoliType</label>
-                <div class="col-md-4">
-                    @Html.DropDownList("Type", null, "-- PIlih Type ---", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <br />
-            <footer class="panel-footer">
-                <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
-                <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
-            </footer>
-        </form>
-    </div>
+	<form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditPoli">
+		<header class="panel-heading">
+			<div class="panel-actions">
+				<a href="#" class="fa fa-caret-down"></a>
+			</div>
+			<h5 class="panel-title">Form @ViewBag.ActionType Poli</h5>
+		</header>
+		<div class="panel-body">
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Code</label>
+				<div class="col-md-4">
+					@Html.HiddenFor(x => x.Id)
+					@Html.TextBoxFor(x => x.Code, new { @class = "form-control", @id = "tbOrgCode" })
+					@Html.ValidationMessageFor(m => m.Code, "", new { @class = "text-danger" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Name</label>
+				<div class="col-md-4">
+					@Html.TextBoxFor(x => x.Name, new { @class = "form-control", @id = "tbOrgCode" })
+					@Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PoliType</label>
+				<div class="col-md-4">
+					@Html.DropDownList("Type", null, "-- PIlih Type ---", new { @class = "form-control" })
+					@Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
+			<button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+		</div>
+	</form>
 </section>
 
 @section Scripts {

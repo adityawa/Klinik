@@ -26,12 +26,9 @@
                         <th>@Klinik.Resources.UIMessages.Name</th>
                         <th>@Klinik.Resources.UIMessages.Controller</th>
                         <th>@Klinik.Resources.UIMessages.Action</th>
-                        <th>@Klinik.Resources.UIMessages.Level</th>
-                        <th>@Klinik.Resources.UIMessages.Icon</th>
                         <th>@Klinik.Resources.UIMessages.HasChild</th>
                         <th>@Klinik.Resources.UIMessages.IsMenu</th>
                         <th>@Klinik.Resources.UIMessages.PageLink</th>
-                        <th>@Klinik.Resources.UIMessages.SortIndex</th>
                         <th>@Klinik.Resources.UIMessages.Action</th>
                     </tr>
                 </thead>
@@ -111,21 +108,6 @@
                     "targets": [9],
                     "searchable": false,
                     "orderable": false
-                },
-                {
-                    "targets": [10],
-                    "searchable": false,
-                    "orderable": false
-                },
-                {
-                    "targets": [11],
-                    "searchable": false,
-                    "orderable": false
-                },
-                {
-                    "targets": [12],
-                    "searchable": false,
-                    "orderable": false
                 }
                 ],
 
@@ -136,12 +118,9 @@
                 { "data": "Name", "name": "Name", "autoWidth": true },
                 { "data": "Controller", "name": "Controller", "autoWidth": true },
                 { "data": "Action", "name": "Action", "autoWidth": true },
-                { "data": "Level", "name": "Level", "autoWidth": true },
-                { "data": "Icon", "name": "Icon", "autoWidth": true },
                 { "data": "HasChild", "name": "HasChild", "autoWidth": true },
                 { "data": "IsMenu", "name": "IsMenu", "autoWidth": true },
                 { "data": "PageLink", "name": "PageLink", "autoWidth": true },
-                { "data": "SortIndex", "name": "SortIndex", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditMenu?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" }
                 }
