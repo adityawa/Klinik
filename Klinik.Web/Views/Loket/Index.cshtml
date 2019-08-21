@@ -52,7 +52,7 @@
                             @Html.DropDownListFor(p => p.PoliToID, (IEnumerable<SelectListItem>)ViewBag.PoliList, new { @class = "form-control", @id = "ddlpolito" })
                         </div>
                         <div class="col-md-1"></div>
-                        <div class="col-md-2"><button type="button" class="btn btn-success btn-block" onclick="location.href='@Url.Action(" CreateFromRegistration", "Patient" )'">@Klinik.Resources.UIMessages.NewPatient</button></div>
+                        <div class="col-md-2"><button type="button" class="btn btn-success btn-block" onclick="location.href='@Url.Action("CreateFromRegistration", "Patient" )'">@Klinik.Resources.UIMessages.NewPatient</button></div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.MRN</label>
