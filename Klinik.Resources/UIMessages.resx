@@ -1158,4 +1158,7 @@
   <data name="PurchaseOrderPusatDetailList" xml:space="preserve">
     <value>Purchase Order Pusat Detail List</value>
   </data>
+  <data name="Validation" xml:space="preserve">
+    <value>Validation</value>
+  </data>
 </root>
