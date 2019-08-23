@@ -26,5 +26,7 @@ namespace Klinik.Entities.PurchaseOrderPusatDetail
         public Nullable<double> qty_unit { get; set; }
         public Nullable<double> qty_box { get; set; }
         public Nullable<int> statusop { get; set; }
+        public Nullable<int> OrderNumber { get; set; }
+        public Nullable<bool> Verified { get; set; }
     }
 }

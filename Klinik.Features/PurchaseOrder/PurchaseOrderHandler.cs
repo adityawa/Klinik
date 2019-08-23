@@ -153,7 +153,7 @@ namespace Klinik.Features
                     ModifiedDate = qry.ModifiedDate,
                 };
 
-                foreach (var item in qry.PurchaseOrderDetails)
+                foreach (var item in qry.PurchaseOrderDetails.OrderBy(a => a.OrderNumber))
                 {
                     var newpurchaseOrderdetailModel = new PurchaseOrderDetailModel
                     {
@@ -170,6 +170,8 @@ namespace Klinik.Features
                         nama_by_ho = item.nama_by_ho,
                         qty_by_ho = item.qty_by_ho,
                         remark_by_ho = item.remark_by_ho,
+                        OrderNumber = item.OrderNumber,
+                        Verified = item.Verified
                     };
 
                     response.Entity.purchaseOrderdetailModels.Add(newpurchaseOrderdetailModel);

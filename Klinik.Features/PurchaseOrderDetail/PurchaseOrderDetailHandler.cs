@@ -42,7 +42,9 @@ namespace Klinik.Features
                             CreatedBy = qry.CreatedBy,
                             CreatedDate = qry.CreatedDate,
                             ModifiedDate = qry.ModifiedDate,
-                            RowStatus = qry.RowStatus
+                            RowStatus = qry.RowStatus,
+                            OrderNumber = qry.OrderNumber,
+                            Verified = qry.Verified,
                         };
 
                         // update data
@@ -60,6 +62,8 @@ namespace Klinik.Features
                         qry.remark_by_ho = request.Data.remark_by_ho;
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.ModifiedDate = DateTime.Now;
+                        qry.OrderNumber = request.Data.OrderNumber;
+                        qry.Verified = request.Data.Verified;
 
                         _unitOfWork.PurchaseOrderDetailRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
@@ -107,7 +111,9 @@ namespace Klinik.Features
                         remark_by_ho = request.Data.remark_by_ho,
                         CreatedBy = request.Data.Account.UserCode,
                         CreatedDate = DateTime.Now,
-                    };
+                        OrderNumber = request.Data.OrderNumber,
+                        Verified = request.Data.Verified,
+                };
 
                     _unitOfWork.PurchaseOrderDetailRepository.Insert(purhcaseorderdetailEntity);
                     int resultAffected = _unitOfWork.Save();

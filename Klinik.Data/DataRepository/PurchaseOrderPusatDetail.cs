@@ -38,6 +38,8 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<int> statusop { get; set; }
+        public Nullable<int> OrderNumber { get; set; }
+        public Nullable<bool> Verified { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual PurchaseOrderPusat PurchaseOrderPusat { get; set; }

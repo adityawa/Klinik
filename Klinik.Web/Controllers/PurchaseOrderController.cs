@@ -105,9 +105,11 @@ namespace Klinik.Web.Controllers
             PurchaseOrderResponse _response = new PurchaseOrderResponse();
 
             new PurchaseOrderValidator(_unitOfWork).Validate(request, out _response);
-            if(purchaseOrderDetailModels != null) { 
+            if(purchaseOrderDetailModels != null) {
+                int i = 0;
                 foreach (var item in purchaseOrderDetailModels)
                 {
+                    item.OrderNumber = i + 1;
                     var purchaseorderdetailrequest = new PurchaseOrderDetailRequest
                     {
                         Data = item
@@ -127,6 +129,7 @@ namespace Klinik.Web.Controllers
                     purchaseorderdetailrequest.Data.namabarang = namabarang.Entity.Name;
                     PurchaseOrderDetailResponse _purchaseorderdetailresponse = new PurchaseOrderDetailResponse();
                     new PurchaseOrderDetailValidator(_unitOfWork).Validate(purchaseorderdetailrequest, out _purchaseorderdetailresponse);
+                    i++;
                 }
             }
             return Json(new { data = _response.Data }, JsonRequestBehavior.AllowGet);

@@ -20,5 +20,7 @@ namespace Klinik.Entities.PurchaseOrderDetail
         public string nama_by_ho { get; set; }
         public Nullable<double> qty_by_ho { get; set; }
         public string remark_by_ho { get; set; }
+        public Nullable<int> OrderNumber { get; set; }
+        public Nullable<bool> Verified { get; set; }
     }
 }

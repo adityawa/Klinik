@@ -50,6 +50,7 @@
                 <caption class="headertable">@Klinik.Resources.UIMessages.PurchaseOrderDetailList</caption>
                 <thead>
                     <tr>
+                        <th><input type="checkbox" class="checkall"></th>
                         <th hidden>Id Obat</th>
                         <th>Nama Obat</th>
                         <th>Total Pemakaian</th>
@@ -70,7 +71,8 @@
                         foreach (var item in Model.purchaseOrderdetailModels)
                         {
                             <tr>
-                                <td hidden>@item.Id</td>
+                                <td><input type="checkbox" value="@(item.Verified == true ? "true" : "false")" @(item.Verified == true ? "checked" : "")></td>
+                                <td hidden class="podetail">@item.Id</td>
                                 <td hidden>@item.ProductId</td>
                                 <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
                                 <td><input type="text" class="form-control" value="@item.tot_pemakaian" disabled="disabled" /></td>
@@ -85,6 +87,7 @@
                                 <td>
                                     <button class="edit-purchaseorderdetail btn btn-success btn-sm">Edit</button>
                                     <button class="btn btn-danger btn-sm">Delete</button>
+                                    <button class="btn btn-info btn-sm subtitusi">Subtitusi</button>
                                 </td>
                             </tr>
                         }

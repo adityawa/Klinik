@@ -5,6 +5,9 @@
         Klinik.savePurchaseOrder();
         Klinik.editPurchaseOrderDetail();
         Klinik.searchpurchacerequest();
+        Klinik.duplicaterowtable();
+        Klinik.checkall();
+        Klinik.checkbox();
     },
 
     autocompleteProductOne: function () {
@@ -122,23 +125,25 @@
             _purchaseorder.podate = $('#podate').val();
             _purchaseorder.request_by = $('#request_by').val();
             var purchaseOrderDetailModels = new Array();
-            $("#tblPurchaseOrder TBODY TR").each(function () {
+            $("#tblPurchaseOrder TBODY TR").each(function (item, key) {
                 var row = $(this);
                 var purchaseOrderDetail = {};
-                purchaseOrderDetail.Id = row.find("TD").eq(0).html();
-                purchaseOrderDetail.ProductId = row.closest('tr').find('td:eq(2) select').val() > 0 ? row.closest('tr').find('td:eq(2) select').val() : row.find("TD").eq(1).html();
-                purchaseOrderDetail.tot_pemakaian = row.closest('tr').find('td:eq(3) input').length > 0 ? row.closest('tr').find('td:eq(3) input').val() : row.find("TD").eq(3).html();
-                purchaseOrderDetail.sisa_stok = row.closest('tr').find('td:eq(4) input').length > 0 ? row.closest('tr').find('td:eq(4) input').val() : row.find("TD").eq(4).html();
-                purchaseOrderDetail.qty = row.closest('tr').find('td:eq(5) input').length > 0 ? row.closest('tr').find('td:eq(5) input').val() : row.find("TD").eq(5).html();
-                purchaseOrderDetail.qty_add = row.closest('tr').find('td:eq(6) input').length > 0 ? row.closest('tr').find('td:eq(6) input').val() : row.find("TD").eq(6).html();
-                purchaseOrderDetail.reason_add = row.closest('tr').find('td:eq(7) input').length > 0 ? row.closest('tr').find('td:eq(7) input').val() : row.find("TD").eq(7).html();
-                purchaseOrderDetail.total = row.closest('tr').find('td:eq(8) input').length > 0 ? row.closest('tr').find('td:eq(8) input').val() : row.find("TD").eq(8).html();
-                purchaseOrderDetail.nama_by_ho = row.closest('tr').find('td:eq(9) input').length > 0 ? row.closest('tr').find('td:eq(9) input').val() : row.find("TD").eq(9).html();
-                purchaseOrderDetail.qty_by_ho = row.closest('tr').find('td:eq(10) input').length > 0 ? row.closest('tr').find('td:eq(10) input').val() : row.find("TD").eq(10).html();
-                purchaseOrderDetail.remark_by_ho = row.closest('tr').find('td:eq(11) input').length > 0 ? row.closest('tr').find('td:eq(11) input').val() : row.find("TD").eq(11).html();
+                purchaseOrderDetail.Id = row.find("TD").eq(1).html();
+                purchaseOrderDetail.ProductId = row.closest('tr').find('td:eq(3) select').val() > 0 ? row.closest('tr').find('td:eq(3) select').val() : row.find("TD").eq(2).html();
+                purchaseOrderDetail.tot_pemakaian = row.closest('tr').find('td:eq(4) input').length > 0 ? row.closest('tr').find('td:eq(4) input').val() : row.find("TD").eq(4).html();
+                purchaseOrderDetail.sisa_stok = row.closest('tr').find('td:eq(5) input').length > 0 ? row.closest('tr').find('td:eq(5) input').val() : row.find("TD").eq(5).html();
+                purchaseOrderDetail.qty = row.closest('tr').find('td:eq(6) input').length > 0 ? row.closest('tr').find('td:eq(6) input').val() : row.find("TD").eq(6).html();
+                purchaseOrderDetail.qty_add = row.closest('tr').find('td:eq(7) input').length > 0 ? row.closest('tr').find('td:eq(7) input').val() : row.find("TD").eq(7).html();
+                purchaseOrderDetail.reason_add = row.closest('tr').find('td:eq(8) input').length > 0 ? row.closest('tr').find('td:eq(8) input').val() : row.find("TD").eq(8).html();
+                purchaseOrderDetail.total = row.closest('tr').find('td:eq(9) input').length > 0 ? row.closest('tr').find('td:eq(9) input').val() : row.find("TD").eq(9).html();
+                purchaseOrderDetail.nama_by_ho = row.closest('tr').find('td:eq(10) input').length > 0 ? row.closest('tr').find('td:eq(10) input').val() : row.find("TD").eq(10).html();
+                purchaseOrderDetail.qty_by_ho = row.closest('tr').find('td:eq(11) input').length > 0 ? row.closest('tr').find('td:eq(11) input').val() : row.find("TD").eq(11).html();
+                purchaseOrderDetail.remark_by_ho = row.closest('tr').find('td:eq(12) input').length > 0 ? row.closest('tr').find('td:eq(12) input').val() : row.find("TD").eq(12).html();
+                purchaseOrderDetail.Verified = row.closest('tr').find('td:eq(0) input[type="checkbox"]').val();
                 purchaseOrderDetailModels.push(purchaseOrderDetail);
             });
             console.log(purchaseOrderDetailModels);
+            purchaseOrderDetailModels.sort();
             $.ajax({
                 type: "POST",
                 url: $(this).data('url'),
@@ -155,7 +160,7 @@
     editPurchaseOrderDetail: function () {
         $('.edit-purchaseorderdetail').on('click', function () {
             var getdata = $(this).closest('tr');
-            getdata.find('td:eq(2) select').select2({
+            getdata.find('td:eq(3) select').select2({
                 width: 'resolve',
                 placeholder: 'product..',
                 ajax: {
@@ -220,6 +225,44 @@
                         results: results
                     };
                 }
+            }
+        });
+    },
+
+    duplicaterowtable: function () {
+        var el = $(".subtitusi");
+        if (!el.length) return;
+
+        $(el).on('click', function () {
+            var $tr = $(this).closest('tr');
+            var $clone = $tr.clone();
+            $clone.find(".podetail").text('');
+            $tr.after($clone);
+            Klinik.editPurchaseOrderDetail();
+            Klinik.autocompleteProductOne();
+        });
+    },
+
+    checkall: function () {
+        var el = $('.checkall');
+        if (!el.length) return;
+
+        $(el).click(function () {
+            if ($(this).prop("checked") == true) {
+                $('input:checkbox').not(this).prop('checked', this.checked).val('true');
+            } else {
+                $('input:checkbox').not(this).prop('checked', this.checked).val('false');
+            }
+        });
+    },
+
+    checkbox: function () {
+        var el = $('input[type="checkbox"]');
+        $(el).click(function () {
+            if ($(this).prop("checked") == true) {
+                $(this).prop('checked', this.checked).val('true');
+            } else {
+                $(this).prop('checked', this.checked).val('false');
             }
         });
     }

@@ -921,6 +921,8 @@
           <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
           <Property Name="RowStatus" Type="int" />
           <Property Name="statusop" Type="int" />
+          <Property Name="OrderNumber" Type="int" />
+          <Property Name="Verified" Type="bit" />
         </EntityType>
         <EntityType Name="PurchaseOrderPusat">
           <Key>
@@ -968,6 +970,8 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="statusop" Type="int" />
+          <Property Name="OrderNumber" Type="int" />
+          <Property Name="Verified" Type="bit" />
         </EntityType>
         <EntityType Name="PurchaseRequest">
           <Key>
@@ -4091,6 +4095,8 @@
           <NavigationProperty Name="Product" Relationship="Self.FK_PurchaseOrderDetail_Product" FromRole="PurchaseOrderDetail" ToRole="Product" />
           <NavigationProperty Name="PurchaseOrder" Relationship="Self.FK_PurchaseOrderDetail_PurchaseOrder" FromRole="PurchaseOrderDetail" ToRole="PurchaseOrder" />
           <NavigationProperty Name="substitutes" Relationship="KlinikDBModel.FK_substitute_PurchaseOrderDetail" FromRole="PurchaseOrderDetail" ToRole="substitute" />
+          <Property Name="OrderNumber" Type="Int32" />
+          <Property Name="Verified" Type="Boolean" />
         </EntityType>
         <EntityType Name="PurchaseOrderPusat">
           <Key>
@@ -4144,6 +4150,8 @@
           <NavigationProperty Name="Product" Relationship="Self.FK_PurchaseOrderPusatDetail_Product" FromRole="PurchaseOrderPusatDetail" ToRole="Product" />
           <NavigationProperty Name="PurchaseOrderPusat" Relationship="Self.FK_PurchaseOrderPusatDetail_PurchaseOrderPusat" FromRole="PurchaseOrderPusatDetail" ToRole="PurchaseOrderPusat" />
           <NavigationProperty Name="Vendor" Relationship="Self.FK_PurchaseOrderPusatDetail_Vendor" FromRole="PurchaseOrderPusatDetail" ToRole="Vendor" />
+          <Property Name="OrderNumber" Type="Int32" />
+          <Property Name="Verified" Type="Boolean" />
         </EntityType>
         <EntityType Name="PurchaseRequest">
           <Key>
@@ -7176,6 +7184,8 @@
           <EntitySetMapping Name="PurchaseOrderDetails">
             <EntityTypeMapping TypeName="KlinikDBModel.PurchaseOrderDetail">
               <MappingFragment StoreEntitySet="PurchaseOrderDetail">
+                <ScalarProperty Name="Verified" ColumnName="Verified" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
@@ -7220,6 +7230,8 @@
           <EntitySetMapping Name="PurchaseOrderPusatDetails">
             <EntityTypeMapping TypeName="KlinikDBModel.PurchaseOrderPusatDetail">
               <MappingFragment StoreEntitySet="PurchaseOrderPusatDetail">
+                <ScalarProperty Name="Verified" ColumnName="Verified" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="PurchaseOrderPusatId" ColumnName="PurchaseOrderPusatId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
