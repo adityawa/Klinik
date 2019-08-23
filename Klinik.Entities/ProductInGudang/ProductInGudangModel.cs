@@ -9,6 +9,9 @@ namespace Klinik.Entities.ProductInGudang
         public Nullable<int> ProductId { get; set; }
         public Nullable<int> stock { get; set; }
 
+        public string ProductName { get; set; }
+        public string GudangName { get; set; }
+
         public virtual GudangModel Gudang { get; set; }
         public virtual ProductModel Product { get; set; }
     }

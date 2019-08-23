@@ -1161,4 +1161,10 @@
   <data name="Validation" xml:space="preserve">
     <value>Validation</value>
   </data>
+  <data name="ProductInGudangList" xml:space="preserve">
+    <value>Product In Gudang List</value>
+  </data>
+  <data name="GudangName" xml:space="preserve">
+    <value>Nama Gudang</value>
+  </data>
 </root>

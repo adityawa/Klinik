@@ -1,5 +1,6 @@
 ﻿using Klinik.Common;
 using Klinik.Data;
+using Klinik.Entities.ProductInGudang;
 using Klinik.Resources;
 using LinqKit;
 using System;
@@ -99,12 +100,97 @@ namespace Klinik.Features
 
         public ProductInGudangResponse GetDetail(ProductInGudangRequest request)
         {
-            throw new NotImplementedException();
+            ProductInGudangResponse response = new ProductInGudangResponse();
+
+            var qry = _unitOfWork.ProductInGudangRepository.GetById(request.Data.Id);
+            if (qry != null)
+            {
+                response.Entity = new ProductInGudangModel
+                {
+                   ProductId = qry.ProductId,
+                   GudangId = qry.GudangId,
+                   ProductName = qry.Product.Name,
+                   GudangName = qry.Gudang.name,
+                   stock = qry.stock
+                };
+            }
+
+            return response;
         }
 
         public ProductInGudangResponse GetListData(ProductInGudangRequest request)
         {
-            throw new NotImplementedException();
+            List<ProductInGudangModel> lists = new List<ProductInGudangModel>();
+            dynamic qry = null;
+            var searchPredicate = PredicateBuilder.New<Data.DataRepository.ProductInGudang>(true);
+
+            // add default filter to show the active data only
+            searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
+
+            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
+            {
+                searchPredicate = searchPredicate.And(p => p.Product.Name.Contains(request.SearchValue));
+            }
+
+            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
+            {
+                if (request.SortColumnDir == "asc")
+                {
+                    switch (request.SortColumn.ToLower())
+                    {
+                        case "ProductName":
+                            qry = _unitOfWork.ProductInGudangRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Product.Name));
+                            break;
+
+                        default:
+                            qry = _unitOfWork.ProductInGudangRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.id));
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (request.SortColumn.ToLower())
+                    {
+                        case "ProductName":
+                            qry = _unitOfWork.ProductInGudangRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Product.Name));
+                            break;
+
+                        default:
+                            qry = _unitOfWork.ProductInGudangRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.id));
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                qry = _unitOfWork.ProductInGudangRepository.Get(searchPredicate, null);
+            }
+
+            foreach (var item in qry)
+            {
+                var prData = new ProductInGudangModel
+                {
+                    Id = item.id,
+                    ProductName = item.Product.Name,
+                    GudangName = item.Gudang.name,
+                    stock = item.stock
+                };
+
+                lists.Add(prData);
+            }
+
+            int totalRequest = lists.Count();
+            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
+
+            var response = new ProductInGudangResponse
+            {
+                Draw = request.Draw,
+                RecordsFiltered = totalRequest,
+                RecordsTotal = totalRequest,
+                Data = data
+            };
+
+            return response;
         }
 
         public ProductInGudangResponse RemoveData(ProductInGudangRequest request)

@@ -19,7 +19,7 @@ namespace Klinik.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class UIMessages {
@@ -1146,6 +1146,15 @@ namespace Klinik.Resources {
         public static string GudangList {
             get {
                 return ResourceManager.GetString("GudangList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nama Gudang.
+        /// </summary>
+        public static string GudangName {
+            get {
+                return ResourceManager.GetString("GudangName", resourceCulture);
             }
         }
         
@@ -2289,6 +2298,15 @@ namespace Klinik.Resources {
         public static string ProductCategoryList {
             get {
                 return ResourceManager.GetString("ProductCategoryList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product In Gudang List.
+        /// </summary>
+        public static string ProductInGudangList {
+            get {
+                return ResourceManager.GetString("ProductInGudangList", resourceCulture);
             }
         }
         

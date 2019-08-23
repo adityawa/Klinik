@@ -3,6 +3,7 @@ using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
+using Klinik.Entities.ProductInGudang;
 using Klinik.Features;
 using System;
 using System.Collections.Generic;
@@ -2463,6 +2464,92 @@ namespace Klinik.Web.Controllers
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+        #region ::PRODUCTINGUDANG::
+        [CustomAuthorize("VIEW_M_PRODUCTINGUDANG")]
+        public ActionResult ProductInGudangList()
+        {
+            return View();
+        }
+
+        [CustomAuthorize("VIEW_M_PRODUCTINGUDANG")]
+        public ActionResult ProductInGudangData()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new ProductInGudangRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            var response = new ProductInGudangHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("ADD_M_PRODUCTINGUDANG", "EDIT_M_PRODUCTINGUDANG")]
+        public ActionResult CreateOrEditProductInGudang()
+        {
+            ProductInGudangResponse _response = new ProductInGudangResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new ProductInGudangRequest
+                {
+                    Data = new ProductInGudangModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                ProductInGudangResponse resp = new ProductInGudangHandler(_unitOfWork).GetDetail(request);
+                ProductInGudangModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.ActionType = ClinicEnums.Action.Add;
+                return View();
+            }
+        }
+
+        [CustomAuthorize("ADD_M_PRODUCTINGUDANG", "EDIT_M_PRODUCTINGUDANG")]
+        [HttpPost]
+        public ActionResult CreateOrEditProductInGudang(ProductInGudangModel _model)
+        {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new ProductInGudangRequest
+            {
+                Data = _model
+            };
+
+            ProductInGudangResponse _response = new ProductInGudangResponse();
+
+            new ProductInGudangValidator(_unitOfWork).Validate(request, out _response);
+            ViewBag.Response = $"{_response.Status};{_response.Message}";
+            ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
+
+            return RedirectToAction("ProductInGudangList");
+        }
+
         #endregion
     }
 }
