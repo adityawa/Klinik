@@ -1,7 +1,10 @@
 ﻿@model Klinik.Entities.PurchaseRequest.PurchaseRequestModel
+@using Klinik.Entities.Account
 
 @{
     ViewBag.Title = "CreateOrEditDeliveryRequest";
+    var account = (AccountModel)Session["UserLogon"];
+    var requestby = Model != null ? Model.request_by : account.UserName;
 }
 @section Styles{
     <link href="~/Content/Login/vendor/select2/select2.min.css" rel="stylesheet" />
@@ -26,13 +29,14 @@
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.CreatedDate</label>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(x => x.prdate, new { @class = "form-control", @id = "prdate" })
+                    @Html.TextBoxFor(x => x.prdate, new { @class = "form-control", @id = "prdate", @placeholder="Purchase Request Date" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.RequestBy</label>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(x => x.request_by, new { @class = "form-control", @id = "request_by" })
+                    <input type="text" class="form-control" readonly value="@requestby"/>
+                    @Html.HiddenFor(x => x.request_by, new { @class = "form-control", @id = "request_by", @Value=""+requestby+""})
                 </div>
             </div>
             <br />
@@ -84,10 +88,44 @@
                         }
                     }
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th hidden>Id Obat</th>
+                        <th>Nama Obat</th>
+                        <th>New Product</th>
+                        <th>Total Pemakaian</th>
+                        <th>Sisa Stock</th>
+                        <th>Qty</th>
+                        <th>Qty add</th>
+                        <th>Reason add</th>
+                        <th>Total</th>
+                        <th>Nama By HO</th>
+                        <th>Qty By HP</th>
+                        <th>Remark By HO</th>
+                        <th hidden>Type</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td hidden><input type="text" hidden id="PurchaseRequestDetailId" /></td>
+                        <td hidden><input type="text" hidden id="ProductId" /></td>
+                        <td><select id="namabarang" class="form-control" style="display:block"></select><input type="text" id="newproductname" class="form-control" style="display:none" placeholder="New Product"/></td>
+                        <td><input type="checkbox" id="newproduct"/></td>
+                        <td><input type="text" class="form-control" placeholder="tot_pemakaian" id="tot_pemakaian" value="" readonly/></td>
+                        <td><input type="text" class="form-control" placeholder="sisa_stok" id="sisa_stok" value="" /></td>
+                        <td><input type="text" class="form-control" placeholder="qty" id="qty" value="" /></td>
+                        <td><input type="text" class="form-control" placeholder="qty_add" id="qty_add" value="" /></td>
+                        <td><input type="text" class="form-control" placeholder="reason_add" id="reason_add" value="" /></td>
+                        <td><input type="text" class="form-control" placeholder="total" id="total" value="" /></td>
+                        <td><input type="text" class="form-control" placeholder="nama_by_ho" id="nama_by_ho" value="" /></td>
+                        <td><input type="text" class="form-control" placeholder="qty_by_ho" id="qty_by_ho" value="" /></td>
+                        <td><input type="text" class="form-control" placeholder="remark_by_ho" id="remark_by_ho" value="" /></td>
+                        <td><input type="button" id="btnAdd" class="btn btn-success float-right" value="Add" /></td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
         <br />
-        <form id="purchaseorderdetail">
+        @*<form id="purchaseorderdetail">
             <div class="form-group">
                 <input type="text" hidden id="PurchaseRequestDetailId" />
                 <input type="text" hidden id="ProductId" />
@@ -135,7 +173,7 @@
             <footer class="col-md-12 text-right">
                 <input type="button" id="btnAdd" class="btn btn-success float-right" value="Add" />
             </footer>
-        </form>
+        </form>*@
         <footer class="panel-footer">
             <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseRequest/CreateOrEditPurchaseRequest">@Klinik.Resources.UIMessages.Save</button>
             <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>

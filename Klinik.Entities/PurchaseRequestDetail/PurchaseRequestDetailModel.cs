@@ -9,7 +9,7 @@ namespace Klinik.Entities.PurchaseRequestDetail
     public class PurchaseRequestDetailModel : BaseModel
     {
         public int PurchaseRequestId { get; set; }
-        public int ProductId { get; set; }
+        public Nullable<int> ProductId { get; set; }
         public string namabarang { get; set; }
         public Nullable<double> tot_pemakaian { get; set; }
         public Nullable<double> sisa_stok { get; set; }

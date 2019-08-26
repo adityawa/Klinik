@@ -61,7 +61,6 @@
         <EntityTypeShape EntityType="KlinikDBModel.PurchaseOrderPusat" Width="1.5" PointX="19.25" PointY="85" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.PurchaseOrderPusatDetail" Width="1.5" PointX="21.5" PointY="77.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.PurchaseRequest" Width="1.5" PointX="13.25" PointY="88" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PurchaseRequestDetail" Width="1.5" PointX="15.5" PointY="84.25" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.PurchaseRequestPusat" Width="1.5" PointX="16.25" PointY="60.25" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.PurchaseRequestPusatDetail" Width="1.5" PointX="18.5" PointY="70.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.QueuePoli" Width="1.5" PointX="15.5" PointY="73.125" IsExpanded="true" />
@@ -157,12 +156,10 @@
         <AssociationConnector Association="KlinikDBModel.FK_ProductMedicine_Product" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrderDetail_Product" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrderPusatDetail_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestDetail_Product" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_Product" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrderDetail_PurchaseOrder" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrderPusatDetail_PurchaseOrderPusat" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrderPusatDetail_Vendor" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestDetail_PurchaseRequest" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_PurchaseRequestPusat" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_Vendor" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_UserRole_User" ManuallyRouted="false" />
@@ -183,6 +180,9 @@
         <EntityTypeShape EntityType="KlinikDBModel.HistoryProductInGudang" Width="1.5" PointX="18.5" PointY="90.625" />
         <AssociationConnector Association="KlinikDBModel.FK_HistoryProductInGudang_Gudang" />
         <AssociationConnector Association="KlinikDBModel.FK_HistoryProductInGudang_Product" />
+        <EntityTypeShape EntityType="KlinikDBModel.PurchaseRequestDetail" Width="1.5" PointX="15.5" PointY="84.375" />
+        <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestDetail_Product" />
+        <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestDetail_PurchaseRequest" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

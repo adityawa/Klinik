@@ -17,8 +17,8 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PurchaseRequest()
         {
-            this.PurchaseRequestDetails = new HashSet<PurchaseRequestDetail>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
+            this.PurchaseRequestDetails = new HashSet<PurchaseRequestDetail>();
         }
     
         public int id { get; set; }
@@ -35,8 +35,8 @@ namespace Klinik.Data.DataRepository
         public Nullable<int> statusop { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
     }
 }

@@ -996,7 +996,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PurchaseRequestId" Type="int" Nullable="false" />
-          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" />
           <Property Name="namabarang" Type="varchar" MaxLength="30" />
           <Property Name="tot_pemakaian" Type="float" />
           <Property Name="sisa_stok" Type="float" />
@@ -2214,7 +2214,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PurchaseRequestDetail_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
           <End Role="PurchaseRequestDetail" Type="Self.PurchaseRequestDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -3982,12 +3982,12 @@
           <NavigationProperty Name="ProductMedicines" Relationship="Self.FK_ProductMedicine_Product" FromRole="Product" ToRole="ProductMedicine" />
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="Self.FK_PurchaseOrderDetail_Product" FromRole="Product" ToRole="PurchaseOrderDetail" />
           <NavigationProperty Name="PurchaseOrderPusatDetails" Relationship="Self.FK_PurchaseOrderPusatDetail_Product" FromRole="Product" ToRole="PurchaseOrderPusatDetail" />
-          <NavigationProperty Name="PurchaseRequestDetails" Relationship="Self.FK_PurchaseRequestDetail_Product" FromRole="Product" ToRole="PurchaseRequestDetail" />
           <NavigationProperty Name="PurchaseRequestPusatDetails" Relationship="Self.FK_PurchaseRequestPusatDetail_Product" FromRole="Product" ToRole="PurchaseRequestPusatDetail" />
           <NavigationProperty Name="stoks" Relationship="KlinikDBModel.FK_stok_m_Product" FromRole="Product" ToRole="stok" />
           <NavigationProperty Name="stoks1" Relationship="KlinikDBModel.FK_stoks_m_Product" FromRole="Product" ToRole="stok1" />
           <NavigationProperty Name="substitutes" Relationship="KlinikDBModel.FK_substitute_Product" FromRole="Product" ToRole="substitute" />
           <NavigationProperty Name="HistoryProductInGudangs" Relationship="KlinikDBModel.FK_HistoryProductInGudang_Product" FromRole="Product" ToRole="HistoryProductInGudang" />
+          <NavigationProperty Name="PurchaseRequestDetails" Relationship="KlinikDBModel.FK_PurchaseRequestDetail_Product" FromRole="Product" ToRole="PurchaseRequestDetail" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -4169,34 +4169,8 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="statusop" Type="Int32" />
-          <NavigationProperty Name="PurchaseRequestDetails" Relationship="Self.FK_PurchaseRequestDetail_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseRequestDetail" />
           <NavigationProperty Name="PurchaseOrders" Relationship="KlinikDBModel.FK_PurchaseOrder_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseOrder" />
-        </EntityType>
-        <EntityType Name="PurchaseRequestDetail">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PurchaseRequestId" Type="Int32" Nullable="false" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="namabarang" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="tot_pemakaian" Type="Double" />
-          <Property Name="sisa_stok" Type="Double" />
-          <Property Name="qty" Type="Double" />
-          <Property Name="qty_add" Type="Double" />
-          <Property Name="reason_add" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="total" Type="Double" Nullable="false" />
-          <Property Name="nama_by_ho" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="qty_by_ho" Type="Double" />
-          <Property Name="remark_by_ho" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="RowStatus" Type="Int32" />
-          <Property Name="statusop" Type="Int32" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_PurchaseRequestDetail_Product" FromRole="PurchaseRequestDetail" ToRole="Product" />
-          <NavigationProperty Name="PurchaseRequest" Relationship="Self.FK_PurchaseRequestDetail_PurchaseRequest" FromRole="PurchaseRequestDetail" ToRole="PurchaseRequest" />
+          <NavigationProperty Name="PurchaseRequestDetails" Relationship="KlinikDBModel.FK_PurchaseRequestDetail_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseRequestDetail" />
         </EntityType>
         <EntityType Name="PurchaseRequestPusat">
           <Key>
@@ -5408,18 +5382,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PurchaseRequestDetail_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
-          <End Role="PurchaseRequestDetail" Type="Self.PurchaseRequestDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PurchaseRequestDetail">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PurchaseRequestPusatDetail_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="PurchaseRequestPusatDetail" Type="Self.PurchaseRequestPusatDetail" Multiplicity="*" />
@@ -5465,18 +5427,6 @@
             </Principal>
             <Dependent Role="PurchaseOrderPusatDetail">
               <PropertyRef Name="VendorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseRequestDetail_PurchaseRequest">
-          <End Role="PurchaseRequest" Type="Self.PurchaseRequest" Multiplicity="1" />
-          <End Role="PurchaseRequestDetail" Type="Self.PurchaseRequestDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PurchaseRequest">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="PurchaseRequestDetail">
-              <PropertyRef Name="PurchaseRequestId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5573,7 +5523,6 @@
           <EntitySet Name="PurchaseOrderPusats" EntityType="Self.PurchaseOrderPusat" />
           <EntitySet Name="PurchaseOrderPusatDetails" EntityType="Self.PurchaseOrderPusatDetail" />
           <EntitySet Name="PurchaseRequests" EntityType="Self.PurchaseRequest" />
-          <EntitySet Name="PurchaseRequestDetails" EntityType="Self.PurchaseRequestDetail" />
           <EntitySet Name="PurchaseRequestPusats" EntityType="Self.PurchaseRequestPusat" />
           <EntitySet Name="PurchaseRequestPusatDetails" EntityType="Self.PurchaseRequestPusatDetail" />
           <EntitySet Name="QueuePolis" EntityType="Self.QueuePoli" />
@@ -5927,10 +5876,6 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="PurchaseOrderPusatDetail" EntitySet="PurchaseOrderPusatDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_PurchaseRequestDetail_Product" Association="Self.FK_PurchaseRequestDetail_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_PurchaseRequestPusatDetail_Product" Association="Self.FK_PurchaseRequestPusatDetail_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="PurchaseRequestPusatDetail" EntitySet="PurchaseRequestPusatDetails" />
@@ -5946,10 +5891,6 @@
           <AssociationSet Name="FK_PurchaseOrderPusatDetail_Vendor" Association="Self.FK_PurchaseOrderPusatDetail_Vendor">
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="PurchaseOrderPusatDetail" EntitySet="PurchaseOrderPusatDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseRequestDetail_PurchaseRequest" Association="Self.FK_PurchaseRequestDetail_PurchaseRequest">
-            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
-            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseRequestPusatDetail_PurchaseRequestPusat" Association="Self.FK_PurchaseRequestPusatDetail_PurchaseRequestPusat">
             <End Role="PurchaseRequestPusat" EntitySet="PurchaseRequestPusats" />
@@ -6015,6 +5956,15 @@
           <AssociationSet Name="FK_HistoryProductInGudang_Product" Association="KlinikDBModel.FK_HistoryProductInGudang_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="HistoryProductInGudang" EntitySet="HistoryProductInGudangs" />
+          </AssociationSet>
+          <EntitySet Name="PurchaseRequestDetails" EntityType="KlinikDBModel.PurchaseRequestDetail" />
+          <AssociationSet Name="FK_PurchaseRequestDetail_Product" Association="KlinikDBModel.FK_PurchaseRequestDetail_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestDetail_PurchaseRequest" Association="KlinikDBModel.FK_PurchaseRequestDetail_PurchaseRequest">
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+            <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetails" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="stok">
@@ -6238,6 +6188,56 @@
             </Principal>
             <Dependent Role="HistoryProductInGudang">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PurchaseRequestDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurchaseRequestId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="namabarang" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="tot_pemakaian" Type="Double" />
+          <Property Name="sisa_stok" Type="Double" />
+          <Property Name="qty" Type="Double" />
+          <Property Name="qty_add" Type="Double" />
+          <Property Name="reason_add" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="total" Type="Double" Nullable="false" />
+          <Property Name="nama_by_ho" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="qty_by_ho" Type="Double" />
+          <Property Name="remark_by_ho" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int32" />
+          <Property Name="statusop" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="KlinikDBModel.FK_PurchaseRequestDetail_Product" FromRole="PurchaseRequestDetail" ToRole="Product" />
+          <NavigationProperty Name="PurchaseRequest" Relationship="KlinikDBModel.FK_PurchaseRequestDetail_PurchaseRequest" FromRole="PurchaseRequestDetail" ToRole="PurchaseRequest" />
+        </EntityType>
+        <Association Name="FK_PurchaseRequestDetail_Product">
+          <End Type="KlinikDBModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.PurchaseRequestDetail" Role="PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestDetail_PurchaseRequest">
+          <End Type="KlinikDBModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="1" />
+          <End Type="KlinikDBModel.PurchaseRequestDetail" Role="PurchaseRequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseRequest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestDetail">
+              <PropertyRef Name="PurchaseRequestId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7277,31 +7277,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PurchaseRequestDetails">
-            <EntityTypeMapping TypeName="KlinikDBModel.PurchaseRequestDetail">
-              <MappingFragment StoreEntitySet="PurchaseRequestDetail">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="PurchaseRequestId" ColumnName="PurchaseRequestId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="namabarang" ColumnName="namabarang" />
-                <ScalarProperty Name="tot_pemakaian" ColumnName="tot_pemakaian" />
-                <ScalarProperty Name="sisa_stok" ColumnName="sisa_stok" />
-                <ScalarProperty Name="qty" ColumnName="qty" />
-                <ScalarProperty Name="qty_add" ColumnName="qty_add" />
-                <ScalarProperty Name="reason_add" ColumnName="reason_add" />
-                <ScalarProperty Name="total" ColumnName="total" />
-                <ScalarProperty Name="nama_by_ho" ColumnName="nama_by_ho" />
-                <ScalarProperty Name="qty_by_ho" ColumnName="qty_by_ho" />
-                <ScalarProperty Name="remark_by_ho" ColumnName="remark_by_ho" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="statusop" ColumnName="statusop" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PurchaseRequestPusats">
             <EntityTypeMapping TypeName="KlinikDBModel.PurchaseRequestPusat">
               <MappingFragment StoreEntitySet="PurchaseRequestPusat">
@@ -7534,6 +7509,31 @@
                 <ScalarProperty Name="value" ColumnName="value" />
                 <ScalarProperty Name="GudangId" ColumnName="GudangId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseRequestDetails">
+            <EntityTypeMapping TypeName="KlinikDBModel.PurchaseRequestDetail">
+              <MappingFragment StoreEntitySet="PurchaseRequestDetail">
+                <ScalarProperty Name="statusop" ColumnName="statusop" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="remark_by_ho" ColumnName="remark_by_ho" />
+                <ScalarProperty Name="qty_by_ho" ColumnName="qty_by_ho" />
+                <ScalarProperty Name="nama_by_ho" ColumnName="nama_by_ho" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="reason_add" ColumnName="reason_add" />
+                <ScalarProperty Name="qty_add" ColumnName="qty_add" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="sisa_stok" ColumnName="sisa_stok" />
+                <ScalarProperty Name="tot_pemakaian" ColumnName="tot_pemakaian" />
+                <ScalarProperty Name="namabarang" ColumnName="namabarang" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="PurchaseRequestId" ColumnName="PurchaseRequestId" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

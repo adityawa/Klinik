@@ -81,7 +81,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<PurchaseOrderPusat> PurchaseOrderPusats { get; set; }
         public virtual DbSet<PurchaseOrderPusatDetail> PurchaseOrderPusatDetails { get; set; }
         public virtual DbSet<PurchaseRequest> PurchaseRequests { get; set; }
-        public virtual DbSet<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
         public virtual DbSet<PurchaseRequestPusat> PurchaseRequestPusats { get; set; }
         public virtual DbSet<PurchaseRequestPusatDetail> PurchaseRequestPusatDetails { get; set; }
         public virtual DbSet<QueuePoli> QueuePolis { get; set; }
@@ -96,5 +95,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<stok1> stoks1 { get; set; }
         public virtual DbSet<substitute> substitutes { get; set; }
         public virtual DbSet<HistoryProductInGudang> HistoryProductInGudangs { get; set; }
+        public virtual DbSet<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
     }
 }

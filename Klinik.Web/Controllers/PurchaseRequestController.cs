@@ -85,8 +85,10 @@ namespace Klinik.Web.Controllers
             }
             else
             {
+                //var getlastnumber = _context.PurchaseRequests.OrderBy(a => a.CreatedDate).Select(a => a.prnumber).FirstOrDefault();
                 ViewBag.Response = _response;
                 ViewBag.ActionType = ClinicEnums.Action.Add;
+                //ViewBag.prnumber = "PR"+((AccountModel)Session["UserLogon"]).UserCode+DateTime.Now.Year+DateTime.Now.Month+"00001";
                 return View();
             }
         }
@@ -121,12 +123,12 @@ namespace Klinik.Web.Controllers
                     {
                         Data = new ProductModel
                         {
-                            Id = item.ProductId
+                            Id = Convert.ToInt32(item.ProductId)
                         }
                     };
 
                     ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
-                    purchaserequestdetailrequest.Data.namabarang = namabarang.Entity.Name;
+                    purchaserequestdetailrequest.Data.namabarang = purchaserequestdetailrequest.Data.namabarang != null ? purchaserequestdetailrequest.Data.namabarang : namabarang.Entity.Name ;
                     PurchaseRequestDetailResponse _purchaserequestdetailresponse = new PurchaseRequestDetailResponse();
                     new PurchaseRequestDetailValidator(_unitOfWork).Validate(purchaserequestdetailrequest, out _purchaserequestdetailresponse);
                 }

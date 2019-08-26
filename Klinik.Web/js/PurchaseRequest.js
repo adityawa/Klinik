@@ -4,6 +4,7 @@
         Klinik.autocompleteProductOne();
         Klinik.savePurchaseOrder();
         Klinik.editPurchaseOrderDetail();
+        Klinik.checkednewproduct();
     },
 
     autocompleteProductOne: function () {
@@ -58,8 +59,9 @@
             var nama_by_ho = $("#nama_by_ho");
             var qty_by_ho = $("#qty_by_ho");
             var remark_by_ho = $("#remark_by_ho");
+            var newproductname = $("#newproductname");
             var tBody = $("#tblPurchaseOrder > TBODY")[0];
-
+            alert(newproductname.val());
             //Add Row.
             var row = tBody.insertRow(-1);
             //Add id cell.
@@ -72,7 +74,7 @@
             cell.hide();
 
             cell = $(row.insertCell(-1));
-            cell.html(namabarang.text());
+            cell.html($('#newproduct').prop("checked") == false ? namabarang.text() : newproductname.val());
 
             cell = $(row.insertCell(-1));
             cell.html(tot_pemakaian.val());
@@ -102,6 +104,10 @@
             cell.html(remark_by_ho.val());
 
             cell = $(row.insertCell(-1));
+            cell.html($('#newproduct').prop('checked'));
+            cell.hide();
+
+            cell = $(row.insertCell(-1));
             var btnRemove = $("<input />");
             btnRemove.attr("type", "button");
             btnRemove.attr("onclick", "Remove(this);");
@@ -123,8 +129,14 @@
             $("#tblPurchaseOrder TBODY TR").each(function () {
                 var row = $(this);
                 var purchaseRequestDetail = {};
+                //alert(row.find("TD").eq(2).html());
                 purchaseRequestDetail.Id = row.find("TD").eq(0).html();
                 purchaseRequestDetail.ProductId = row.closest('tr').find('td:eq(2) select').val() > 0 ? row.closest('tr').find('td:eq(2) select').val() : row.find("TD").eq(1).html();
+                if (row.find("TD").eq(12).html() == "true") {
+                    purchaseRequestDetail.namabarang = row.find("TD").eq(2).html();
+                    alert('asdf')
+                }
+                alert(purchaseRequestDetail.namabarang);
                 purchaseRequestDetail.tot_pemakaian = row.closest('tr').find('td:eq(3) input').length > 0 ? row.closest('tr').find('td:eq(3) input').val() : row.find("TD").eq(3).html();
                 purchaseRequestDetail.sisa_stok = row.closest('tr').find('td:eq(4) input').length > 0 ? row.closest('tr').find('td:eq(4) input').val() : row.find("TD").eq(4).html();
                 purchaseRequestDetail.qty = row.closest('tr').find('td:eq(5) input').length > 0 ? row.closest('tr').find('td:eq(5) input').val() : row.find("TD").eq(5).html();
@@ -182,6 +194,24 @@
             }).prop('disabled', false);
 
             getdata.find('input').prop('disabled', false);
+        });
+    },
+
+    checkednewproduct: function () {
+        var el = $('#newproduct');
+
+        if (!el.length) return;
+
+        el.click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#namabarang").hide();
+                $(".select2").remove();
+                $("#newproductname").show();
+            } else {
+                $("#namabarang").show();
+                Klinik.autocompleteProductOne();
+                $("#newproductname").hide();
+            }
         });
     }
 };
