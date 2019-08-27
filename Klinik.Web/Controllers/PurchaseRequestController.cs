@@ -176,6 +176,26 @@ namespace Klinik.Web.Controllers
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
 
+        [CustomAuthorize("EDIT_M_PURCHASEREQUEST")]
+        [HttpPost]
+        public JsonResult ValidationPurchaseRequest(int id)
+        {
+            PurchaseRequestResponse _response = new PurchaseRequestResponse();
+            var request = new PurchaseRequestRequest
+            {
+                Data = new PurchaseRequestModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.VALIDASI.ToString()
+            };
+
+            new PurchaseRequestValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
         [CustomAuthorize("VIEW_M_PURCHASEREQUEST")]
         public ActionResult PrintPurchaseRequest(int id)
         {

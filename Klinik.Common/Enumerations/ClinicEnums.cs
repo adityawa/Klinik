@@ -91,7 +91,8 @@
             Hold,
             Finish,
             Reschedule,
-            APPROVE
+            APPROVE,
+            VALIDASI
         }
 
         public enum SourceTable

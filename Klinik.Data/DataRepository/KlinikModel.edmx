@@ -989,6 +989,7 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="statusop" Type="int" />
+          <Property Name="Validasi" Type="int" />
         </EntityType>
         <EntityType Name="PurchaseRequestDetail">
           <Key>
@@ -4171,6 +4172,7 @@
           <Property Name="statusop" Type="Int32" />
           <NavigationProperty Name="PurchaseOrders" Relationship="KlinikDBModel.FK_PurchaseOrder_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseOrder" />
           <NavigationProperty Name="PurchaseRequestDetails" Relationship="KlinikDBModel.FK_PurchaseRequestDetail_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseRequestDetail" />
+          <Property Name="Validasi" Type="Int32" />
         </EntityType>
         <EntityType Name="PurchaseRequestPusat">
           <Key>
@@ -7262,6 +7264,7 @@
           <EntitySetMapping Name="PurchaseRequests">
             <EntityTypeMapping TypeName="KlinikDBModel.PurchaseRequest">
               <MappingFragment StoreEntitySet="PurchaseRequest">
+                <ScalarProperty Name="Validasi" ColumnName="Validasi" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="prnumber" ColumnName="prnumber" />
                 <ScalarProperty Name="prdate" ColumnName="prdate" />

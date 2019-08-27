@@ -1,5 +1,6 @@
 ﻿using Klinik.Common;
 using Klinik.Data;
+using Klinik.Data.DataRepository;
 using Klinik.Entities.PurchaseRequest;
 using Klinik.Entities.PurchaseRequestDetail;
 using Klinik.Resources;
@@ -17,6 +18,7 @@ namespace Klinik.Features
         public PurchaseRequestHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            _context = new KlinikDBEntities();
         }
 
         public PurchaseRequestResponse CreateOrEdit(PurchaseRequestRequest request)
@@ -221,8 +223,10 @@ namespace Klinik.Features
             {
                 qry = _unitOfWork.PurchaseRequestRepository.Get(searchPredicate, null);
             }
-
-            foreach (var item in qry)
+            List<Data.DataRepository.PurchaseRequest> purchaseRequests = new List<Data.DataRepository.PurchaseRequest>();
+            purchaseRequests = qry;
+            var a = _unitOfWork.PurchaseRequestRepository.Get(searchPredicate, null).FirstOrDefault().PurchaseOrders.FirstOrDefault().ponumber;
+            foreach (var item in purchaseRequests)
             {
                 var prData = new PurchaseRequestModel
                 {
@@ -235,7 +239,16 @@ namespace Klinik.Features
                     ModifiedBy = item.ModifiedBy,
                     CreatedBy = item.CreatedBy,
                     ModifiedDate = item.ModifiedDate,
-                    createformat = GeneralHandler.FormatDate(item.CreatedDate)
+                    poid = item.PurchaseOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().id : 0,
+                    doid = item.PurchaseOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.FirstOrDefault().id : 0 : 0,
+                    ponumber = item.PurchaseOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().ponumber : "",
+                    createpo = item.PurchaseOrders.Count > 0 ? GeneralHandler.FormatDate(Convert.ToDateTime(item.PurchaseOrders.FirstOrDefault().podate)) : null,
+                    donumber = item.PurchaseOrders.Count > 0  ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.FirstOrDefault().donumber : "" : "",
+                    createdo = item.PurchaseOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.Count > 0 ? GeneralHandler.FormatDate(Convert.ToDateTime(item.PurchaseOrders.FirstOrDefault().DeliveryOrders.FirstOrDefault().dodate)) : null : null,
+                    Validasi = item.Validasi,
+                    Recived = item.PurchaseOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.FirstOrDefault().Recived : 0 : 0,
+                    namaklinik = _context.Users.Where(x => x.UserName == item.request_by).FirstOrDefault().Organization.Clinic != null ? _context.Users.Where(x => x.UserName == item.request_by).FirstOrDefault().Organization.Clinic.Name : "",
+                    createformat = GeneralHandler.FormatDate(Convert.ToDateTime(item.CreatedDate))
                 };
 
                 lists.Add(prData);
@@ -307,6 +320,49 @@ namespace Klinik.Features
                 if (deliveryoder.id > 0)
                 {
                     deliveryoder.approve = 1;
+                    deliveryoder.approve_by = request.Data.Account.UserCode;
+                    deliveryoder.ModifiedBy = request.Data.Account.UserCode;
+                    deliveryoder.ModifiedDate = DateTime.Now;
+
+                    _unitOfWork.PurchaseRequestRepository.Update(deliveryoder);
+                    int resultAffected = _unitOfWork.Save();
+                    if (resultAffected > 0)
+                    {
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "PurchaseRequest", deliveryoder.prnumber, deliveryoder.id);
+                    }
+                    else
+                    {
+                        response.Status = false;
+                        response.Message = string.Format(Messages.RemoveObjectFailed, "PurchaseRequest");
+                    }
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = string.Format(Messages.RemoveObjectFailed, "PurchaseRequest");
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = Messages.GeneralError;
+
+                ErrorLog(ClinicEnums.Module.MASTER_PURCHASEREQUEST, ClinicEnums.Action.APPROVE.ToString(), request.Data.Account, ex);
+            }
+
+            return response;
+        }
+
+        public PurchaseRequestResponse ValidasiData(PurchaseRequestRequest request)
+        {
+            PurchaseRequestResponse response = new PurchaseRequestResponse();
+
+            try
+            {
+                var deliveryoder = _unitOfWork.PurchaseRequestRepository.GetById(request.Data.Id);
+                if (deliveryoder.id > 0)
+                {
+                    deliveryoder.Validasi = 1;
                     deliveryoder.approve_by = request.Data.Account.UserCode;
                     deliveryoder.ModifiedBy = request.Data.Account.UserCode;
                     deliveryoder.ModifiedDate = DateTime.Now;

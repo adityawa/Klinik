@@ -24,15 +24,19 @@ namespace Klinik.Features.PurchaseRequest
         {
             response = new PurchaseRequestResponse();
 
-            if ((request.Action != null && request.Action.Equals(ClinicEnums.Action.DELETE.ToString())) || (request.Action != null && request.Action.Equals(ClinicEnums.Action.APPROVE.ToString())))
+            if ((request.Action != null && request.Action.Equals(ClinicEnums.Action.DELETE.ToString())) || (request.Action != null && request.Action.Equals(ClinicEnums.Action.APPROVE.ToString())) || (request.Action != null && request.Action.Equals(ClinicEnums.Action.VALIDASI.ToString())))
             {
                 if (request.Action != null && request.Action.Equals(ClinicEnums.Action.DELETE.ToString()))
                 {
                     ValidateForDelete(request, out response);
                 }
-                else
+                else if(request.Action.Equals(ClinicEnums.Action.APPROVE.ToString()))
                 {
                     ValidateForApprove(request, out response);
+                }
+                else
+                {
+                    ValidateForValidasi(request, out response);
                 }
             }
             else
@@ -110,6 +114,26 @@ namespace Klinik.Features.PurchaseRequest
             if (response.Status)
             {
                 response = new PurchaseRequestHandler(_unitOfWork).ApproveData(request);
+            }
+        }
+
+        private void ValidateForValidasi(PurchaseRequestRequest request, out PurchaseRequestResponse response)
+        {
+            response = new PurchaseRequestResponse();
+
+            if (request.Action == ClinicEnums.Action.VALIDASI.ToString())
+            {
+                bool isHavePrivilege = IsHaveAuthorization(EDIT_M_PURCHASEREQUEST, request.Data.Account.Privileges.PrivilegeIDs);
+                if (!isHavePrivilege)
+                {
+                    response.Status = false;
+                    response.Message = Messages.UnauthorizedAccess;
+                }
+            }
+
+            if (response.Status)
+            {
+                response = new PurchaseRequestHandler(_unitOfWork).ValidasiData(request);
             }
         }
     }
