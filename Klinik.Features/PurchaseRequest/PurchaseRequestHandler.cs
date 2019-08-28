@@ -228,7 +228,7 @@ namespace Klinik.Features
             }
             List<Data.DataRepository.PurchaseRequest> purchaseRequests = new List<Data.DataRepository.PurchaseRequest>();
             purchaseRequests = qry;
-            var a = _unitOfWork.PurchaseRequestRepository.Get(searchPredicate, null).FirstOrDefault().PurchaseOrders.FirstOrDefault().ponumber;
+
             foreach (var item in purchaseRequests)
             {
                 var prData = new PurchaseRequestModel

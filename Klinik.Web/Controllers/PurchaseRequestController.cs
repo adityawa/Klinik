@@ -69,6 +69,7 @@ namespace Klinik.Web.Controllers
         public ActionResult CreateOrEditPurchaseRequest()
         {
             var lastprnumber = _context.PurchaseRequests.OrderByDescending(x => x.CreatedDate).Select(a => a.prnumber).FirstOrDefault();
+            DateTime? getmonth = _context.PurchaseRequests.OrderByDescending(x => x.CreatedDate).Select(a => a.CreatedDate).FirstOrDefault();
             var substring = lastprnumber.Substring(lastprnumber.Length - 5);
 
             var removezero = substring.TrimStart(new Char[] { '0' });
@@ -79,6 +80,10 @@ namespace Klinik.Web.Controllers
             if (Convert.ToInt32((lenght.Length + zeroCount)) > 5)
             {
                 string a = "asdf";
+            }
+            if(getmonth.Value.Month != DateTime.Now.Month)
+            {
+                newprnumber = 1;
             }
             string prnumber = Regex.Replace(substring, "[1-9]", "") + Convert.ToString(newprnumber);
             PurchaseRequestResponse _response = new PurchaseRequestResponse();

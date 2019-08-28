@@ -267,6 +267,7 @@
                 success: function (r) {
                     $('.image-loading').hide();
                     row.find('input').prop('disabled', true);
+                    row.find('select').prop('disabled', false);
                     row.find('.edit-purchaseorderdetail').show();
                     row.find('.delete-purchaseorderdetail').show();
                 }
