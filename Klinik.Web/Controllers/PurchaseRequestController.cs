@@ -85,10 +85,9 @@ namespace Klinik.Web.Controllers
             }
             else
             {
-                //var getlastnumber = _context.PurchaseRequests.OrderBy(a => a.CreatedDate).Select(a => a.prnumber).FirstOrDefault();
                 ViewBag.Response = _response;
                 ViewBag.ActionType = ClinicEnums.Action.Add;
-                //ViewBag.prnumber = "PR"+((AccountModel)Session["UserLogon"]).UserCode+DateTime.Now.Year+DateTime.Now.Month+"00001";
+                ViewBag.prnumber = "PR" + ((AccountModel)Session["UserLogon"]).UserCode + DateTime.Now.Year + DateTime.Now.Month + "00001";
                 return View();
             }
         }
@@ -100,6 +99,8 @@ namespace Klinik.Web.Controllers
             if (Session["UserLogon"] != null)
                 _purchaserequest.Account = (AccountModel)Session["UserLogon"];
             _purchaserequest.Id = Convert.ToInt32(_purchaserequest.Id) > 0 ? _purchaserequest.Id : 0;
+            var gudangid = _unitOfWork.GudangRepository.Query(a => a.ClinicId == _purchaserequest.Account.ClinicID).Select(x => x.id).FirstOrDefault();
+            _purchaserequest.GudangId = gudangid;
             var request = new PurchaseRequestRequest
             {
                 Data = _purchaserequest
@@ -220,5 +221,32 @@ namespace Klinik.Web.Controllers
                 FileName = "PurchaseRequest" + _model.prnumber + ".pdf"
             };
         }
+
+        #region ::PURCHASEREQUESTDETAIL::
+        [CustomAuthorize("EDIT_M_PURCHASEREQUEST")]
+        [HttpPost]
+        public ActionResult EditPurchaseRequestDetail(PurchaseRequestDetailModel purchaseRequestDetail)
+        {
+            if (Session["UserLogon"] != null)
+                purchaseRequestDetail.Account = (AccountModel)Session["UserLogon"];
+            PurchaseRequestDetailResponse _purchaserequestdetailresponse = new PurchaseRequestDetailResponse();
+            var purchaserequestdetailrequest = new PurchaseRequestDetailRequest
+            {
+                Data = purchaseRequestDetail
+            };
+            var requestnamabarang = new ProductRequest
+            {
+                Data = new ProductModel
+                {
+                    Id = Convert.ToInt32(purchaseRequestDetail.ProductId)
+                }
+            };
+
+            ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
+            purchaserequestdetailrequest.Data.namabarang = purchaserequestdetailrequest.Data.namabarang != null ? purchaserequestdetailrequest.Data.namabarang : namabarang.Entity.Name;
+            new PurchaseRequestDetailValidator(_unitOfWork).Validate(purchaserequestdetailrequest, out _purchaserequestdetailresponse);
+            return Json(new { data = _purchaserequestdetailresponse.Data }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

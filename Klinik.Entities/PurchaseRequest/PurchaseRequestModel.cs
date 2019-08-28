@@ -29,6 +29,8 @@ namespace Klinik.Entities.PurchaseRequest
         public Nullable<int> Validasi { get; set; }
         public Nullable<int> Recived { get; set; }
         public string namaklinik { get; set; }
+        public string namaGudang { get; set; }
+        public Nullable<int> GudangId { get; set; }
         public PurchaseRequestModel()
         {
             purchaserequestdetailModels = new List<PurchaseRequestDetailModel>();

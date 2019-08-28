@@ -28,6 +28,8 @@ namespace Klinik.Entities.Account
 
         public long ClinicID { get; set; }
 
+        public long GudangID { get; set; }
+
         public AccountModel()
         {
             Roles = new List<long>();

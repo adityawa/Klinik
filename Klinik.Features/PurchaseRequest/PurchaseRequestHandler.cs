@@ -42,6 +42,7 @@ namespace Klinik.Features
                             CreatedBy = qry.CreatedBy,
                             CreatedDate = qry.CreatedDate,
                             ModifiedDate = qry.ModifiedDate,
+                            GudangId = qry.GudangId,
                             RowStatus = qry.RowStatus
                         };
 
@@ -51,6 +52,7 @@ namespace Klinik.Features
                         qry.request_by = request.Data.request_by;
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.ModifiedDate = DateTime.Now;
+                        qry.GudangId = request.Data.GudangId;
                         qry.RowStatus = 0;
 
                         _unitOfWork.PurchaseRequestRepository.Update(qry);
@@ -91,6 +93,7 @@ namespace Klinik.Features
                         CreatedBy = request.Data.Account.UserCode,
                         CreatedDate = DateTime.Now,
                         ModifiedDate = DateTime.Now,
+                        GudangId = request.Data.GudangId,
                         RowStatus = 0
                     };
 

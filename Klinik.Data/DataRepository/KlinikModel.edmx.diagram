@@ -183,6 +183,7 @@
         <EntityTypeShape EntityType="KlinikDBModel.PurchaseRequestDetail" Width="1.5" PointX="15.5" PointY="84.375" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestDetail_Product" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestDetail_PurchaseRequest" />
+        <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequest_Gudang" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

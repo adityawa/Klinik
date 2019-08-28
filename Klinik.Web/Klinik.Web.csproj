@@ -354,6 +354,7 @@
     <Content Include="Content\images\garuda.png" />
     <Content Include="Content\images\inpex-logo.png" />
     <Content Include="Content\images\inpex-logo1.png" />
+    <Content Include="Content\images\loading.gif" />
     <Content Include="Content\images\logo-depag.jpg" />
     <Content Include="Content\images\logo-medica.png" />
     <Content Include="Content\images\logo.png" />

@@ -5,8 +5,22 @@
         Klinik.savePurchaseOrder();
         Klinik.editPurchaseOrderDetail();
         Klinik.checkednewproduct();
+        Klinik.total();
+        Klinik.saverowPurchaseorderDetail();
     },
 
+    total: function () {
+        var el = $('#total');
+        if (!el.length) return;
+
+        var qtyadd = $('#qty_add');
+        var qtyrequest = $('#qty');
+        var qty_by_ho = $('#qty_by_ho');
+        qtyadd.keyup(function () {
+            el.val(parseInt(qtyadd.val()) + parseInt(qtyrequest.val()));
+            qty_by_ho.val(el.val());
+        });
+    },
     autocompleteProductOne: function () {
         var el = $("#namabarang");
         if (!el.length) return;
@@ -40,6 +54,7 @@
         });
         $(el).change(function () {
             $("#ProductId").val($(el).val());
+            $('#nama_by_ho').val($(el).text());
         });
     },
 
@@ -136,7 +151,6 @@
                     purchaseRequestDetail.namabarang = row.find("TD").eq(2).html();
                     alert('asdf')
                 }
-                alert(purchaseRequestDetail.namabarang);
                 purchaseRequestDetail.tot_pemakaian = row.closest('tr').find('td:eq(3) input').length > 0 ? row.closest('tr').find('td:eq(3) input').val() : row.find("TD").eq(3).html();
                 purchaseRequestDetail.sisa_stok = row.closest('tr').find('td:eq(4) input').length > 0 ? row.closest('tr').find('td:eq(4) input').val() : row.find("TD").eq(4).html();
                 purchaseRequestDetail.qty = row.closest('tr').find('td:eq(5) input').length > 0 ? row.closest('tr').find('td:eq(5) input').val() : row.find("TD").eq(5).html();
@@ -156,7 +170,8 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (r) {
-                    window.location.reload();
+                    //window.location.reload();
+                    window.location.href = '/PurchaseRequest/PurchaseRequestList';
                 }
             });
         });
@@ -194,6 +209,8 @@
             }).prop('disabled', false);
 
             getdata.find('input').prop('disabled', false);
+            $(this).hide();
+            getdata.find('.save-purchaseorderdetail').show();
         });
     },
 
@@ -212,6 +229,49 @@
                 Klinik.autocompleteProductOne();
                 $("#newproductname").hide();
             }
+        });
+    },
+
+    saverowPurchaseorderDetail: function () {
+        var el = $(".save-purchaseorderdetail");
+        if (!el.length) return;
+
+        $(el).on('click', function () {
+            $(this).hide();
+            var row = $(this).closest('tr');
+            row.find('.delete-purchaseorderdetail').hide();
+            row.find('.image-loading').show();
+            var purchaseRequestDetail = {};
+            purchaseRequestDetail.PurchaseRequestId = $('#Id').val();
+            purchaseRequestDetail.Id = row.find("TD").eq(0).html();
+            purchaseRequestDetail.ProductId = row.closest('tr').find('td:eq(2) select').val() > 0 ? row.closest('tr').find('td:eq(2) select').val() : row.find("TD").eq(1).html();
+            if (row.find("TD").eq(12).html() == "true") {
+                purchaseRequestDetail.namabarang = row.find("TD").eq(2).html();
+                alert('asdf')
+            }
+            purchaseRequestDetail.tot_pemakaian = row.closest('tr').find('td:eq(3) input').length > 0 ? row.closest('tr').find('td:eq(3) input').val() : row.find("TD").eq(3).html();
+            purchaseRequestDetail.sisa_stok = row.closest('tr').find('td:eq(4) input').length > 0 ? row.closest('tr').find('td:eq(4) input').val() : row.find("TD").eq(4).html();
+            purchaseRequestDetail.qty = row.closest('tr').find('td:eq(5) input').length > 0 ? row.closest('tr').find('td:eq(5) input').val() : row.find("TD").eq(5).html();
+            purchaseRequestDetail.qty_add = row.closest('tr').find('td:eq(6) input').length > 0 ? row.closest('tr').find('td:eq(6) input').val() : row.find("TD").eq(6).html();
+            purchaseRequestDetail.reason_add = row.closest('tr').find('td:eq(7) input').length > 0 ? row.closest('tr').find('td:eq(7) input').val() : row.find("TD").eq(7).html();
+            purchaseRequestDetail.total = row.closest('tr').find('td:eq(8) input').length > 0 ? row.closest('tr').find('td:eq(8) input').val() : row.find("TD").eq(8).html();
+            purchaseRequestDetail.nama_by_ho = row.closest('tr').find('td:eq(9) input').length > 0 ? row.closest('tr').find('td:eq(9) input').val() : row.find("TD").eq(9).html();
+            purchaseRequestDetail.qty_by_ho = row.closest('tr').find('td:eq(10) input').length > 0 ? row.closest('tr').find('td:eq(10) input').val() : row.find("TD").eq(10).html();
+            purchaseRequestDetail.remark_by_ho = row.closest('tr').find('td:eq(11) input').length > 0 ? row.closest('tr').find('td:eq(11) input').val() : row.find("TD").eq(11).html();
+            console.log(purchaseRequestDetail);
+            $.ajax({
+                type: "POST",
+                url: $(this).data('url'),
+                data: JSON.stringify({ purchaseRequestDetail: purchaseRequestDetail }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    $('.image-loading').hide();
+                    row.find('input').prop('disabled', true);
+                    row.find('.edit-purchaseorderdetail').show();
+                    row.find('.delete-purchaseorderdetail').show();
+                }
+            });
         });
     }
 };
