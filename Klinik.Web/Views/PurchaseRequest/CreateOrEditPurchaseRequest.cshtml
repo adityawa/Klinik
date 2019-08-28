@@ -5,7 +5,7 @@
     ViewBag.Title = "CreateOrEditDeliveryRequest";
     var account = (AccountModel)Session["UserLogon"];
     var requestby = Model != null ? Model.request_by : account.UserName;
-    var prnumber = Model != null ? Model.prdate : ViewBag.prnumber;
+    var prnumber = Model != null ? Model.prnumber : ViewBag.prnumber;
 }
 @section Styles{
     <link href="~/Content/Login/vendor/select2/select2.min.css" rel="stylesheet" />
@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.NoPr</label>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(x => x.prnumber, new { @class = "form-control", @id = "prnumber", @Value = prnumber })
+                    @Html.TextBoxFor(x => x.prnumber, new { @class = "form-control", @id = "prnumber", @Value = prnumber, @disabled="disabled" })
                 </div>
             </div>
             <div class="form-group">

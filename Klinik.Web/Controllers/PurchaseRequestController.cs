@@ -12,6 +12,7 @@ using Rotativa.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -67,6 +68,19 @@ namespace Klinik.Web.Controllers
         [CustomAuthorize("ADD_M_PURCHASEREQUEST", "EDIT_M_PURCHASEREQUEST")]
         public ActionResult CreateOrEditPurchaseRequest()
         {
+            var lastprnumber = _context.PurchaseRequests.OrderByDescending(x => x.CreatedDate).Select(a => a.prnumber).FirstOrDefault();
+            var substring = lastprnumber.Substring(lastprnumber.Length - 5);
+
+            var removezero = substring.TrimStart(new Char[] { '0' });
+            int? newprnumber = Convert.ToInt32(removezero) + 1;
+            char matchChar = '0';
+            int? zeroCount = substring.Count(x => x == matchChar);
+            string lenght = Convert.ToString(newprnumber);
+            if (Convert.ToInt32((lenght.Length + zeroCount)) > 5)
+            {
+                string a = "asdf";
+            }
+            string prnumber = Regex.Replace(substring, "[1-9]", "") + Convert.ToString(newprnumber);
             PurchaseRequestResponse _response = new PurchaseRequestResponse();
             if (Request.QueryString["id"] != null)
             {
@@ -87,7 +101,7 @@ namespace Klinik.Web.Controllers
             {
                 ViewBag.Response = _response;
                 ViewBag.ActionType = ClinicEnums.Action.Add;
-                ViewBag.prnumber = "PR" + ((AccountModel)Session["UserLogon"]).UserCode + DateTime.Now.Year + DateTime.Now.Month + "00001";
+                ViewBag.prnumber = "PR" + ((AccountModel)Session["UserLogon"]).Organization + DateTime.Now.Year + DateTime.Now.Month + prnumber;
                 return View();
             }
         }

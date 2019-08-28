@@ -12,5 +12,12 @@ namespace Klinik.Features
         {
            return dateTime.ToString("MM/dd/yy");
         }
+
+        public static string stringincrement(string increment, DateTime dateTime)
+        {
+            var newstring = "";
+
+            return newstring; 
+        }
     }
 }

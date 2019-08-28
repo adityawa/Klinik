@@ -76,7 +76,6 @@
             var remark_by_ho = $("#remark_by_ho");
             var newproductname = $("#newproductname");
             var tBody = $("#tblPurchaseOrder > TBODY")[0];
-            alert(newproductname.val());
             //Add Row.
             var row = tBody.insertRow(-1);
             //Add id cell.
