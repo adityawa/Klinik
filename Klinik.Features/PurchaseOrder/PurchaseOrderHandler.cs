@@ -154,6 +154,10 @@ namespace Klinik.Features
                     ModifiedBy = qry.ModifiedBy,
                     CreatedBy = qry.CreatedBy,
                     ModifiedDate = qry.ModifiedDate,
+                    prrequestby = qry.PurchaseRequest.request_by,
+                    prvalidationby = qry.PurchaseRequest.ModifiedBy,
+                    prdate = qry.PurchaseRequest.prdate,
+                    prnumber = qry.PurchaseRequest.prnumber
                 };
 
                 foreach (var item in qry.PurchaseOrderDetails.OrderBy(a => a.OrderNumber))

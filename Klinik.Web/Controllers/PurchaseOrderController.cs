@@ -199,5 +199,32 @@ namespace Klinik.Web.Controllers
                 FileName = "PurchaseOrder" + _model.ponumber + ".pdf"
             };
         }
+
+        #region ::PURCHASEORDERDETAIL::
+        [CustomAuthorize("EDIT_M_PURCHASEREQUEST")]
+        [HttpPost]
+        public ActionResult EditPurchaseOrderDetail(PurchaseOrderDetailModel purchaseOrderDetail)
+        {
+            if (Session["UserLogon"] != null)
+                purchaseOrderDetail.Account = (AccountModel)Session["UserLogon"];
+            PurchaseOrderDetailResponse _purchaseorderdetailresponse = new PurchaseOrderDetailResponse();
+            var purchaserequestdetailrequest = new PurchaseOrderDetailRequest
+            {
+                Data = purchaseOrderDetail
+            };
+            var requestnamabarang = new ProductRequest
+            {
+                Data = new ProductModel
+                {
+                    Id = Convert.ToInt32(purchaseOrderDetail.ProductId)
+                }
+            };
+
+            ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
+            purchaserequestdetailrequest.Data.namabarang = purchaserequestdetailrequest.Data.namabarang != null ? purchaserequestdetailrequest.Data.namabarang : namabarang.Entity.Name;
+            new PurchaseOrderDetailValidator(_unitOfWork).Validate(purchaserequestdetailrequest, out _purchaseorderdetailresponse);
+            return Json(new { data = _purchaseorderdetailresponse.Data }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

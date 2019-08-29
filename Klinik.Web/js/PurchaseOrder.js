@@ -8,6 +8,7 @@
         Klinik.duplicaterowtable();
         Klinik.checkall();
         Klinik.checkbox();
+        Klinik.savePoPerRow();
     },
 
     autocompleteProductOne: function () {
@@ -139,7 +140,7 @@
                 purchaseOrderDetail.nama_by_ho = row.closest('tr').find('td:eq(10) input').length > 0 ? row.closest('tr').find('td:eq(10) input').val() : row.find("TD").eq(10).html();
                 purchaseOrderDetail.qty_by_ho = row.closest('tr').find('td:eq(11) input').length > 0 ? row.closest('tr').find('td:eq(11) input').val() : row.find("TD").eq(11).html();
                 purchaseOrderDetail.remark_by_ho = row.closest('tr').find('td:eq(12) input').length > 0 ? row.closest('tr').find('td:eq(12) input').val() : row.find("TD").eq(12).html();
-                purchaseOrderDetail.Verified = row.closest('tr').find('td:eq(0) input[type="checkbox"]').val();
+                purchaseOrderDetail.Verified = row.closest('tr').find('td:eq(13) input[type="checkbox"]').val();
                 purchaseOrderDetailModels.push(purchaseOrderDetail);
             });
             console.log(purchaseOrderDetailModels);
@@ -186,9 +187,11 @@
                         };
                     }
                 }
-            }).prop('disabled', false);
+            });
 
-            getdata.find('input').prop('disabled', false);
+            $('input[type="checkbox"]').prop('disabled', false);
+            $(this).hide();
+            getdata.find('.save-purchaseorderdetail').show();
         });
     },
 
@@ -265,7 +268,46 @@
                 $(this).prop('checked', this.checked).val('false');
             }
         });
+    },
+
+    savePoPerRow: function () {
+        var el = $(".save-purchaseorderdetail");
+        if (!el.length) return;
+
+        $(el).on('click', function () {
+            $(this).hide();
+            var row = $(this).closest('tr');
+            row.find('.delete-purchaseorderdetail').hide();
+            row.find('.image-loading').show();
+            var purchaseOrderDetail = {};
+            purchaseOrderDetail.Id = row.find("TD").eq(1).html();
+            purchaseOrderDetail.ProductId = row.closest('tr').find('td:eq(3) select').val() > 0 ? row.closest('tr').find('td:eq(3) select').val() : row.find("TD").eq(2).html();
+            purchaseOrderDetail.tot_pemakaian = row.closest('tr').find('td:eq(4) input').length > 0 ? row.closest('tr').find('td:eq(4) input').val() : row.find("TD").eq(4).html();
+            purchaseOrderDetail.sisa_stok = row.closest('tr').find('td:eq(5) input').length > 0 ? row.closest('tr').find('td:eq(5) input').val() : row.find("TD").eq(5).html();
+            purchaseOrderDetail.qty = row.closest('tr').find('td:eq(6) input').length > 0 ? row.closest('tr').find('td:eq(6) input').val() : row.find("TD").eq(6).html();
+            purchaseOrderDetail.qty_add = row.closest('tr').find('td:eq(7) input').length > 0 ? row.closest('tr').find('td:eq(7) input').val() : row.find("TD").eq(7).html();
+            purchaseOrderDetail.reason_add = row.closest('tr').find('td:eq(8) input').length > 0 ? row.closest('tr').find('td:eq(8) input').val() : row.find("TD").eq(8).html();
+            purchaseOrderDetail.total = row.closest('tr').find('td:eq(9) input').length > 0 ? row.closest('tr').find('td:eq(9) input').val() : row.find("TD").eq(9).html();
+            purchaseOrderDetail.nama_by_ho = row.closest('tr').find('td:eq(10) input').length > 0 ? row.closest('tr').find('td:eq(10) input').val() : row.find("TD").eq(10).html();
+            purchaseOrderDetail.qty_by_ho = row.closest('tr').find('td:eq(11) input').length > 0 ? row.closest('tr').find('td:eq(11) input').val() : row.find("TD").eq(11).html();
+            purchaseOrderDetail.remark_by_ho = row.closest('tr').find('td:eq(12) input').length > 0 ? row.closest('tr').find('td:eq(12) input').val() : row.find("TD").eq(12).html();
+            purchaseOrderDetail.Verified = row.closest('tr').find('td:eq(13) input[type="checkbox"]').val();
+            $.ajax({
+                type: "POST",
+                url: $(this).data('url'),
+                data: JSON.stringify({ purchaseOrderDetail: purchaseOrderDetail }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    $('.image-loading').hide();
+                    row.find('.edit-purchaseorderdetail').show();
+                    row.find('.delete-purchaseorderdetail').show();
+                }
+            });
+        });
     }
+
+
 };
 $(document).ready(function () {
     Klinik.init();
