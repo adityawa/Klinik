@@ -12,6 +12,10 @@ using Klinik.Entities.Form;
 using Klinik.Entities.PreExamine;
 using Klinik.Entities.Poli;
 using Klinik.Entities.Letter;
+using Klinik.Entities.PurchaseOrder;
+using Klinik.Entities.PurchaseOrderDetail;
+using Klinik.Entities.PurchaseRequestDetail;
+using Klinik.Entities.PurchaseRequest;
 
 namespace Klinik.Common
 {
@@ -259,7 +263,19 @@ namespace Klinik.Common
             CreateMap<PanggilanPoli, PanggilanPoliModel>();
 
 			CreateMap<FormExamineMedicineDetail, FormExamineMedicineDetailModel>();				
-			CreateMap<FormExamineMedicineDetailModel, FormExamineMedicineDetail>();				
-		}
+			CreateMap<FormExamineMedicineDetailModel, FormExamineMedicineDetail>();
+
+            CreateMap<PurchaseOrderModel, PurchaseOrder>();
+            CreateMap<PurchaseOrderDetailModel, PurchaseOrderDetail>();
+
+            CreateMap<PurchaseRequestModel, PurchaseRequest>();
+            CreateMap<PurchaseRequestDetailModel, PurchaseRequestDetail>();
+
+            CreateMap<PurchaseRequest, PurchaseRequestModel>();
+            CreateMap<PurchaseRequestDetail, PurchaseRequestDetailModel> ();
+
+            CreateMap<PurchaseRequestModel, PurchaseOrderModel>();
+            CreateMap<PurchaseRequestDetailModel, PurchaseOrderDetailModel>();
+        }
     }
 }

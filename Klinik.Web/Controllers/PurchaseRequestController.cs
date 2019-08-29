@@ -1,8 +1,11 @@
-﻿using Klinik.Common;
+﻿using AutoMapper;
+using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
+using Klinik.Entities.PurchaseOrder;
+using Klinik.Entities.PurchaseOrderDetail;
 using Klinik.Entities.PurchaseRequest;
 using Klinik.Entities.PurchaseRequestDetail;
 using Klinik.Features;
@@ -198,6 +201,8 @@ namespace Klinik.Web.Controllers
             };
 
             new PurchaseRequestValidator(_unitOfWork).Validate(request, out _response);
+            _response.Entity.Account = (AccountModel)Session["UserLogon"];
+            new  CreatePoByPr(_unitOfWork).Create(_response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }

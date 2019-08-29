@@ -17,10 +17,13 @@ namespace Klinik.Entities.PurchaseOrder
         public Nullable<int> approve { get; set; }
         public Nullable<int> statusop { get; set; }
         public string createformat { get; set; }
-        public List<PurchaseOrderDetailModel> purchaseOrderdetailModels { get; set; }
+        public Nullable<int> Validasi { get; set; }
+        public Nullable<int> GudangId { get; set; }
+
+        public List<PurchaseOrderDetailModel> PurchaseOrderDetails { get; set; }
         public PurchaseOrderModel()
         {
-            purchaseOrderdetailModels = new List<PurchaseOrderDetailModel>();
+            PurchaseOrderDetails = new List<PurchaseOrderDetailModel>();
         }
     }
 }

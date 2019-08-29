@@ -184,6 +184,7 @@
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestDetail_Product" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestDetail_PurchaseRequest" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequest_Gudang" />
+        <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrder_Gudang" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

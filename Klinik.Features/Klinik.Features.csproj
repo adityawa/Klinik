@@ -250,6 +250,7 @@
     <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatRequest.cs" />
     <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatResponse.cs" />
     <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatValidator.cs" />
+    <Compile Include="PurchaseOrder\CreatePoByPr.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderHandler.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderRequest.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderResponse.cs" />

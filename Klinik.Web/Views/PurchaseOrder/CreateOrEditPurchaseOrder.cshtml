@@ -68,7 +68,7 @@
                 <tbody>
                     @if (Model != null)
                     {
-                        foreach (var item in Model.purchaseOrderdetailModels)
+                        foreach (var item in Model.PurchaseOrderDetails)
                         {
                             <tr>
                                 <td><input type="checkbox" value="@(item.Verified == true ? "true" : "false")" @(item.Verified == true ? "checked" : "")></td>

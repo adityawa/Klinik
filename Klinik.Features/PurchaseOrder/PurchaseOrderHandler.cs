@@ -42,7 +42,9 @@ namespace Klinik.Features
                             CreatedBy = qry.CreatedBy,
                             CreatedDate = qry.CreatedDate,
                             ModifiedDate = qry.ModifiedDate,
-                            RowStatus = qry.RowStatus
+                            RowStatus = qry.RowStatus,
+                            Validasi = qry.Validasi,
+                            GudangId = qry.GudangId
                         };
 
                         // update data
@@ -93,6 +95,7 @@ namespace Klinik.Features
                         CreatedBy = request.Data.Account.UserCode,
                         CreatedDate = DateTime.Now,
                         ModifiedDate = DateTime.Now,
+                        GudangId = request.Data.GudangId,
                         RowStatus = 0
                     };
 
@@ -174,7 +177,7 @@ namespace Klinik.Features
                         Verified = item.Verified
                     };
 
-                    response.Entity.purchaseOrderdetailModels.Add(newpurchaseOrderdetailModel);
+                    response.Entity.PurchaseOrderDetails.Add(newpurchaseOrderdetailModel);
                 }
             }
 
