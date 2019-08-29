@@ -39,8 +39,8 @@ namespace Klinik.Data.DataRepository
         public string ModifiedBy { get; set; }
         public Nullable<int> statusop { get; set; }
     
-        public virtual Product Product { get; set; }
         public virtual PurchaseOrderPusat PurchaseOrderPusat { get; set; }
         public virtual Vendor Vendor { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

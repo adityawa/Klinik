@@ -12,10 +12,15 @@ namespace Klinik.Entities.Form
         public string ConcoctionMedicine { get; set; }
 		public string Dose { get; set; }
 		public string RemarkUse { get; set; }
-        public int Stock { get; set; }
+        public decimal Stock { get; set; }
         public long FormMedicalID { get; set; }
+
+        public string MedicineJenis { get; set; }
+
+        public string Process { get; set; }
         public LoketModel LoketData { get; set; }
 		public FormExamineMedicineDetailModel Detail { get; set; }
+       
 
 		public FormExamineMedicineModel()
 		{

@@ -131,8 +131,8 @@
                 { "data": "StatusStr", "name": "StatusStr", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta) {
-						return '<a class="btn btn-success" href="/Pharmacy/Prescription?id=' + full.FormMedicalID + '">@Klinik.Resources.UIMessages.Validate</a> '
-							+ ' | <button class="btn btn-primary disabled">@Klinik.Resources.UIMessages.Process</button>'; 
+						return '<a class="btn btn-success" href="/Pharmacy/Prescription?id=' + full.FormMedicalID + '">@Klinik.Resources.UIMessages.Process</a> '
+							+ ' | <button class="btn btn-primary" style="visibility:hidden">@Klinik.Resources.UIMessages.Process</button>'; 
                     }
                 }
             ]

@@ -195,9 +195,12 @@ namespace Klinik.Common
             CreateMap<FormExamineServiceModel, FormExamineService>();
             CreateMap<FormExamineService, FormExamineServiceModel>();
 
-            CreateMap<FormExamineMedicineModel, FormExamineMedicine>();
+            CreateMap<FormExamineMedicineModel, FormExamineMedicine>()
+                .ForMember(x => x.JenisObat, map => map.MapFrom(p => p.MedicineJenis));
+
             CreateMap<FormExamineMedicine, FormExamineMedicineModel>()
-                .ForMember(x => x.ProductName, map => map.MapFrom(p => p.Product.Name));
+                .ForMember(x => x.ProductName, map => map.MapFrom(p => p.TypeID != "1" ? p.ConcoctionMedicine : p.Product.Name))
+                .ForMember(x => x.MedicineJenis, map => map.MapFrom(p => p.JenisObat));
 
             CreateMap<LoketModel, PoliExamineModel>();
 
@@ -207,7 +210,9 @@ namespace Klinik.Common
 
 
             CreateMap<ProductModel, Product>();
+
             CreateMap<Product, ProductModel>();
+               
 
             CreateMap<ProductUnitModel, ProductUnit>();
             CreateMap<ProductUnit, ProductUnitModel>();
@@ -258,8 +263,8 @@ namespace Klinik.Common
             CreateMap<PanggilanPoliModel, PanggilanPoli>();
             CreateMap<PanggilanPoli, PanggilanPoliModel>();
 
-			CreateMap<FormExamineMedicineDetail, FormExamineMedicineDetailModel>();				
-			CreateMap<FormExamineMedicineDetailModel, FormExamineMedicineDetail>();				
-		}
+            CreateMap<FormExamineMedicineDetail, FormExamineMedicineDetailModel>();
+            CreateMap<FormExamineMedicineDetailModel, FormExamineMedicineDetail>();
+        }
     }
 }

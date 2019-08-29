@@ -44,7 +44,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<FormExamineAttachment> FormExamineAttachments { get; set; }
         public virtual DbSet<FormExamineLab> FormExamineLabs { get; set; }
         public virtual DbSet<FormExamineMedicine> FormExamineMedicines { get; set; }
-        public virtual DbSet<FormExamineMedicineDetail> FormExamineMedicineDetails { get; set; }
         public virtual DbSet<FormExamineService> FormExamineServices { get; set; }
         public virtual DbSet<FormMedical> FormMedicals { get; set; }
         public virtual DbSet<FormPreExamine> FormPreExamines { get; set; }
@@ -71,9 +70,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<PoliScheduleMaster> PoliScheduleMasters { get; set; }
         public virtual DbSet<PoliService> PoliServices { get; set; }
         public virtual DbSet<Privilege> Privileges { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }
-        public virtual DbSet<ProductInGudang> ProductInGudangs { get; set; }
         public virtual DbSet<ProductMedicine> ProductMedicines { get; set; }
         public virtual DbSet<ProductUnit> ProductUnits { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
@@ -96,5 +93,8 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<stok1> stoks1 { get; set; }
         public virtual DbSet<substitute> substitutes { get; set; }
         public virtual DbSet<HistoryProductInGudang> HistoryProductInGudangs { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProductInGudang> ProductInGudangs { get; set; }
+        public virtual DbSet<FormExamineMedicineDetail> FormExamineMedicineDetails { get; set; }
     }
 }

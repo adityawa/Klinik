@@ -12,5 +12,9 @@ namespace Klinik.Entities
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
         public AccountModel Account { get; set; }
+
+        
     }
+
+    
 }

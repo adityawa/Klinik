@@ -33,6 +33,7 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public string JenisObat { get; set; }
     
         public virtual FormExamine FormExamine { get; set; }
         public virtual Product Product { get; set; }
