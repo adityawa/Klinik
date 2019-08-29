@@ -70,22 +70,8 @@ namespace Klinik.Web.Controllers
         {
             var lastprnumber = _context.PurchaseRequests.OrderByDescending(x => x.CreatedDate).Select(a => a.prnumber).FirstOrDefault();
             DateTime? getmonth = _context.PurchaseRequests.OrderByDescending(x => x.CreatedDate).Select(a => a.CreatedDate).FirstOrDefault();
-            var substring = lastprnumber.Substring(lastprnumber.Length - 5);
-
-            var removezero = substring.TrimStart(new Char[] { '0' });
-            int? newprnumber = Convert.ToInt32(removezero) + 1;
-            char matchChar = '0';
-            int? zeroCount = substring.Count(x => x == matchChar);
-            string lenght = Convert.ToString(newprnumber);
-            if (Convert.ToInt32((lenght.Length + zeroCount)) > 5)
-            {
-                string a = "asdf";
-            }
-            if(getmonth.Value.Month != DateTime.Now.Month)
-            {
-                newprnumber = 1;
-            }
-            string prnumber = Regex.Replace(substring, "[1-9]", "") + Convert.ToString(newprnumber);
+            DateTime? month = getmonth != null ? getmonth : DateTime.Now;
+            string prnumber = lastprnumber != null ?  GeneralHandler.stringincrement(lastprnumber, Convert.ToDateTime(month)) : "0001";
             PurchaseRequestResponse _response = new PurchaseRequestResponse();
             if (Request.QueryString["id"] != null)
             {

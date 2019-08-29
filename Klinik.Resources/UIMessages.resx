@@ -1167,4 +1167,7 @@
   <data name="GudangName" xml:space="preserve">
     <value>Nama Gudang</value>
   </data>
+  <data name="ValidationConfirmation" xml:space="preserve">
+    <value>Apakah kanan diproses lebih lanjut untuk menjadi PO?</value>
+  </data>
 </root>

@@ -3148,6 +3148,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apakah kanan diproses lebih lanjut untuk menjadi PO?.
+        /// </summary>
+        public static string ValidationConfirmation {
+            get {
+                return ResourceManager.GetString("ValidationConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Valid From.
         /// </summary>
         public static string ValidFrom {

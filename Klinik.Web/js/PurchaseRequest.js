@@ -128,7 +128,14 @@
             btnRemove.val("Remove");
             cell.append(btnRemove);
 
-            $('#purchaseorderdetail input[type="text"], textarea').val('');
+            //$('#purchaseorderdetail input[type="text"], textarea').val('');
+            $('#qty_add').val('');
+            $('#reason_add').val('');
+            $('#nama_by_ho').val('');
+            $('#namabarang').select2('data', null)
+            $('#namabarang').text('');
+            Klinik.autocompleteProductOne();
+
         });
     },
 

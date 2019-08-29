@@ -108,7 +108,7 @@
                         <th hidden>Type</th>
                         <th>Action</th>
                     </tr>
-                    <tr>
+                    <tr id="purchaseorderdetail">
                         <td hidden><input type="text" hidden id="PurchaseRequestDetailId" /></td>
                         <td hidden><input type="text" hidden id="ProductId" /></td>
                         <td><select id="namabarang" class="form-control" style="display:block"></select><input type="text" id="newproductname" class="form-control" style="display:none" placeholder="New Product"/></td>
@@ -229,7 +229,7 @@
             var name = $("TD", row).eq(0).html();
             if (confirm("Do you want to delete: " + name)) {
                 //Get the reference of the Table.
-                var table = $("#tblDeliveryOrder")[0];
+                var table = $("#tblPurchaseOrder")[0];
 
                 //Delete the Table row using it's Index.
                 table.deleteRow(row[0].rowIndex);
