@@ -48,7 +48,6 @@ namespace Klinik.Features
                         };
 
                         // update data
-                        qry.PurchaseOrderId = request.Data.PurchaseOrderId;
                         qry.ProductId = request.Data.ProductId;
                         qry.namabarang = request.Data.namabarang;
                         qry.tot_pemakaian = request.Data.tot_pemakaian;

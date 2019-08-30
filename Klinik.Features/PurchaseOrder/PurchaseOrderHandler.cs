@@ -53,6 +53,7 @@ namespace Klinik.Features
                         qry.podate = request.Data.podate;
                         qry.request_by = request.Data.request_by;
                         qry.ModifiedBy = request.Data.Account.UserCode;
+                        qry.Validasi = request.Data.Validasi;
                         qry.ModifiedDate = DateTime.Now;
                         qry.RowStatus = 0;
 
@@ -250,6 +251,7 @@ namespace Klinik.Features
                     ModifiedBy = item.ModifiedBy,
                     CreatedBy = item.CreatedBy,
                     ModifiedDate = item.ModifiedDate,
+                    Validasi = item.Validasi,
                     createformat = GeneralHandler.FormatDate(item.CreatedDate)
                 };
 
@@ -350,6 +352,56 @@ namespace Klinik.Features
                 response.Message = Messages.GeneralError;
 
                 ErrorLog(ClinicEnums.Module.MASTER_PURCHASEORDER, ClinicEnums.Action.APPROVE.ToString(), request.Data.Account, ex);
+            }
+
+            return response;
+        }
+
+        public PurchaseOrderResponse ValidasiData(PurchaseOrderRequest request)
+        {
+            PurchaseOrderResponse response = new PurchaseOrderResponse();
+
+            try
+            {
+                var purchaseorder = _unitOfWork.PurchaseOrderRepository.GetById(request.Data.Id);
+                if (purchaseorder.id > 0)
+                {
+                    purchaseorder.Validasi = 1;
+                    purchaseorder.approve_by = request.Data.Account.UserCode;
+                    purchaseorder.ModifiedBy = request.Data.Account.UserCode;
+                    purchaseorder.ModifiedDate = DateTime.Now;
+
+                    _unitOfWork.PurchaseOrderRepository.Update(purchaseorder);
+                    int resultAffected = _unitOfWork.Save();
+                    if (resultAffected > 0)
+                    {
+                        var purchaseorderdetail = _unitOfWork.PurchaseRequestDetailRepository.Query(a => a.PurchaseRequestId == purchaseorder.id).ToList();
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "PurchaseRequest", purchaseorder.ponumber, purchaseorder.id);
+                        //response.Entity = Mapper.Map<Data.DataRepository.PurchaseRequest, PurchaseRequestModel>(deliveryoder);
+                        //foreach (var item in purchaseorderdetail)
+                        //{
+                        //    var _purchaseRequestDetail = Mapper.Map<Data.DataRepository.PurchaseRequestDetail, PurchaseRequestDetailModel>(item);
+                        //    response.Entity.purchaserequestdetailModels.Add(_purchaseRequestDetail);
+                        //}
+                    }
+                    else
+                    {
+                        response.Status = false;
+                        response.Message = string.Format(Messages.RemoveObjectFailed, "PurchaseRequest");
+                    }
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = string.Format(Messages.RemoveObjectFailed, "PurchaseRequest");
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = Messages.GeneralError;
+
+                ErrorLog(ClinicEnums.Module.MASTER_PURCHASEREQUEST, ClinicEnums.Action.APPROVE.ToString(), request.Data.Account, ex);
             }
 
             return response;

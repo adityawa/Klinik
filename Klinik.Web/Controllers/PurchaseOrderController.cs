@@ -175,6 +175,28 @@ namespace Klinik.Web.Controllers
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
 
+        [CustomAuthorize("EDIT_M_PURCHASEREQUEST")]
+        [HttpPost]
+        public JsonResult ValidationPurchaseOrder(int id)
+        {
+            PurchaseOrderResponse _response = new PurchaseOrderResponse();
+            var request = new PurchaseOrderRequest
+            {
+                Data = new PurchaseOrderModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.VALIDASI.ToString()
+            };
+
+            new PurchaseOrderValidator(_unitOfWork).Validate(request, out _response);
+            //_response.Entity.Account = (AccountModel)Session["UserLogon"];
+            //new CreatePoByPr(_unitOfWork).Create(_response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
         [CustomAuthorize("VIEW_M_PURCHASEORDER")]
         public ActionResult PrintPurchaseOrder(int id)
         {

@@ -3148,7 +3148,7 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apakah kanan diproses lebih lanjut untuk menjadi PO?.
+        ///   Looks up a localized string similar to Apakah kanan diproses lebih lanjut untuk menjadi.
         /// </summary>
         public static string ValidationConfirmation {
             get {
