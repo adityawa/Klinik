@@ -36,6 +36,7 @@ namespace Klinik.Data.DataRepository
         public Nullable<int> statusop { get; set; }
         public Nullable<int> Validasi { get; set; }
         public Nullable<int> GudangId { get; set; }
+        public Nullable<int> SourceId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
@@ -43,5 +44,6 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<DeliveryOrder> DeliveryOrders { get; set; }
         public virtual PurchaseRequest PurchaseRequest { get; set; }
         public virtual Gudang Gudang { get; set; }
+        public virtual Gudang Gudang1 { get; set; }
     }
 }

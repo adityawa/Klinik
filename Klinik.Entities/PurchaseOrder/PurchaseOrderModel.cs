@@ -19,10 +19,12 @@ namespace Klinik.Entities.PurchaseOrder
         public string createformat { get; set; }
         public Nullable<int> Validasi { get; set; }
         public Nullable<int> GudangId { get; set; }
+        public Nullable<int> SourceId { get; set; }
         public string prnumber { get; set; }
         public Nullable<System.DateTime> prdate { get; set; }
         public string prrequestby { get; set; }
         public string prvalidationby { get; set; }
+        public string sourcename { get; set; }
         public List<PurchaseOrderDetailModel> PurchaseOrderDetails { get; set; }
         public PurchaseOrderModel()
         {

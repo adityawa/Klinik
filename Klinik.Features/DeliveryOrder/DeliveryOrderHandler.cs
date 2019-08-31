@@ -45,7 +45,9 @@ namespace Klinik.Features
                             CreatedDate = qry.CreatedDate,
                             ModifiedDate = qry.ModifiedDate,
                             Recived = qry.Recived,
-                            RowStatus = qry.RowStatus
+                            RowStatus = qry.RowStatus,
+                            GudangId = qry.GudangId,
+                            SourceId = qry.SourceId
                         };
 
                         // update data
@@ -56,6 +58,8 @@ namespace Klinik.Features
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.Recived = request.Data.Recived;
                         qry.ModifiedDate = DateTime.Now;
+                        qry.GudangId = request.Data.GudangId;
+                        qry.SourceId = request.Data.SourceId;
                         qry.RowStatus = 0;
 
                         _unitOfWork.DeliveryOrderRepository.Update(qry);
@@ -96,7 +100,8 @@ namespace Klinik.Features
                         dodest = request.Data.dodest,
                         CreatedBy = request.Data.Account.UserCode,
                         CreatedDate = DateTime.Now,
-                        ModifiedDate = DateTime.Now,
+                        GudangId = request.Data.GudangId,
+                        SourceId = request.Data.SourceId,
                         RowStatus = 0
                     };
                     
@@ -144,6 +149,8 @@ namespace Klinik.Features
             if (qry != null)
             {
                 response.Entity = Mapper.Map<DeliveryOrder, DeliveryOrderModel>(qry);
+                response.Entity.gudangasal = qry.Gudang1.name;
+                response.Entity.gudangtujuan = qry.Gudang.name;
 
                 foreach (var item in qry.DeliveryOrderDetails)
                 {

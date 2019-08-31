@@ -338,5 +338,32 @@ namespace Klinik.Web.Controllers
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
+
+        #region ::DELIVERYORDERDETAIL::
+        [CustomAuthorize("EDIT_M_PURCHASEREQUEST")]
+        [HttpPost]
+        public ActionResult EditDeliveryOrderDetail(DeliveryOrderDetailModel deliveryorderdetail)
+        {
+            if (Session["UserLogon"] != null)
+                deliveryorderdetail.Account = (AccountModel)Session["UserLogon"];
+            DeliveryOrderDetailResponse _purchaseorderdetailresponse = new DeliveryOrderDetailResponse();
+            var purchaserequestdetailrequest = new DeliveryOrderDetailRequest
+            {
+                Data = deliveryorderdetail
+            };
+            var requestnamabarang = new ProductRequest
+            {
+                Data = new ProductModel
+                {
+                    Id = Convert.ToInt32(deliveryorderdetail.ProductId)
+                }
+            };
+
+            ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
+            purchaserequestdetailrequest.Data.namabarang = purchaserequestdetailrequest.Data.namabarang != null ? purchaserequestdetailrequest.Data.namabarang : namabarang.Entity.Name;
+            new DeliveryOrderDetailValidator(_unitOfWork).Validate(purchaserequestdetailrequest, out _purchaseorderdetailresponse);
+            return Json(new { data = _purchaseorderdetailresponse.Data }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

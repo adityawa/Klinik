@@ -45,7 +45,8 @@ namespace Klinik.Features
                             ModifiedDate = qry.ModifiedDate,
                             RowStatus = qry.RowStatus,
                             Validasi = qry.Validasi,
-                            GudangId = qry.GudangId
+                            GudangId = qry.GudangId,
+                            SourceId = qry.SourceId,
                         };
 
                         // update data
@@ -56,6 +57,7 @@ namespace Klinik.Features
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.Validasi = request.Data.Validasi;
                         qry.ModifiedDate = DateTime.Now;
+                        qry.SourceId = request.Data.SourceId != null ? request.Data.SourceId : qry.SourceId;
                         qry.RowStatus = 0;
 
                         _unitOfWork.PurchaseOrderRepository.Update(qry);
@@ -159,7 +161,8 @@ namespace Klinik.Features
                     prrequestby = qry.PurchaseRequest.request_by,
                     prvalidationby = qry.PurchaseRequest.ModifiedBy,
                     prdate = qry.PurchaseRequest.prdate,
-                    prnumber = qry.PurchaseRequest.prnumber
+                    prnumber = qry.PurchaseRequest.prnumber,
+                    sourcename = qry.SourceId != null ? qry.Gudang1.name : ""
                 };
 
                 foreach (var item in qry.PurchaseOrderDetails.OrderBy(a => a.OrderNumber))

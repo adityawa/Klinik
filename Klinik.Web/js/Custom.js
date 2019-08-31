@@ -9,6 +9,7 @@
         Klinik.editDeliveryOrderDetail();
         Klinik.searchpurchaceorder();
         Klinik.searchpurchaceorderpusat();
+        Klinik.saveOrderdetailPerRow();
     },
     autocompleteProductOne: function () {
         var el = $("#namabarang");
@@ -289,93 +290,13 @@
                         };
                     }
                 }
-            }).prop('disabled', false);
+            });
 
-            getdata.find('td:eq(6) select').select2({
-                width: 'resolve',
-                placeholder: 'gudang..',
-                ajax: {
-                    url: '/DeliveryOrder/searchgudang/',
-                    data: function (params) {
-                        return {
-                            prefix: params.term
-                        };
-                    },
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function (data) {
-                        var results = [];
-
-                        $.each(data.data, function (index, item) {
-                            results.push({
-                                id: item.Id,
-                                text: item.name
-                            });
-                        });
-                        return {
-                            results: results
-                        };
-                    }
-                }
-            }).prop('disabled', false);
-
-            getdata.find('td:eq(7) select').select2({
-                width: 'resolve',
-                placeholder: 'klinik..',
-                ajax: {
-                    url: '/DeliveryOrder/searchklinik/',
-                    data: function (params) {
-                        return {
-                            prefix: params.term
-                        };
-                    },
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function (data) {
-                        var results = [];
-                        console.log(data.data);
-                        $.each(data.data, function (index, item) {
-                            results.push({
-                                id: item.Id,
-                                text: item.Name
-                            });
-                        });
-                        return {
-                            results: results
-                        };
-                    }
-                }
-            }).prop('disabled', false);
-
-            getdata.find('td:eq(8) select').select2({
-                width: 'resolve',
-                placeholder: 'product po..',
-                ajax: {
-                    url: '/DeliveryOrder/searchproduct/',
-                    data: function (params) {
-                        return {
-                            prefix: params.term
-                        };
-                    },
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function (data) {
-                        var results = [];
-
-                        $.each(data.data, function (index, item) {
-                            results.push({
-                                id: item.Id,
-                                text: item.Name
-                            });
-                        });
-                        return {
-                            results: results
-                        };
-                    }
-                }
-            }).prop('disabled', false);
-
-            getdata.find('input').prop('disabled', false);
+            getdata.find('td:eq(7) input').prop('disabled', false);
+            getdata.find('td:eq(8) input').prop('disabled', false);
+            $(this).hide();
+            getdata.find('.save-deliveryorderdetail').show();
+            Klinik.saveOrderdetailPerRow();
         });
     },
 
@@ -493,6 +414,39 @@
                     };
                 }
             }
+        });
+    },
+
+    saveOrderdetailPerRow: function () {
+        var el = $(".save-deliveryorderdetail");
+        if (!el.length) return;
+
+        $(el).on('click', function () {
+            $(this).hide();
+            var row = $(this).closest('tr');
+            row.find('.delete-deliveryorderdetail').hide();
+            row.find('.image-loading').show();
+            var deliveryorderdetail = {};
+            deliveryorderdetail.Id = row.find("TD").eq(0).html();
+            deliveryorderdetail.ProductId = row.find("TD").eq(1).html();
+            deliveryorderdetail.ProductId = row.find("TD").eq(1).html();
+            deliveryorderdetail.qty_adj = row.find('td:eq(7) input').val();
+            deliveryorderdetail.remark_adj = row.find('td:eq(8) input').val();
+
+            $.ajax({
+                type: "POST",
+                url: $(this).data('url'),
+                data: JSON.stringify({ deliveryorderdetail: deliveryorderdetail }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    $('.image-loading').hide();
+                    row.find('.edit-deliveryorderdetail').show();
+                    row.find('.delete-deliveryorderdetail').show();
+                    row.find('td:eq(7) input').prop('disabled', true);
+                    row.find('td:eq(8) input').prop('disabled', true);
+                }
+            });
         });
     }
 };

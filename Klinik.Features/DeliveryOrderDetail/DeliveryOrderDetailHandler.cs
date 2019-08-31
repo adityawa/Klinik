@@ -32,13 +32,13 @@ namespace Klinik.Features
                         var _oldentity = Mapper.Map<DeliveryOrderDetail, DeliveryOrderDetailModel>(qry);
 
                         // update data
-                        qry.DeliveryOderId = request.Data.DeliveryOderId;
-                        qry.ProductId = request.Data.ProductId;
-                        qry.namabarang = request.Data.namabarang;
-                        qry.qty_request = request.Data.qty_request;
-                        qry.nama_by_ho = request.Data.nama_by_ho;
-                        qry.qty_by_HP = request.Data.qty_by_HP;
-                        qry.remark_by_ho = request.Data.remark_by_ho;
+                        qry.DeliveryOderId = _oldentity.DeliveryOderId;
+                        qry.ProductId = _oldentity.ProductId;
+                        qry.namabarang = _oldentity.namabarang;
+                        qry.qty_request = _oldentity.qty_request;
+                        qry.nama_by_ho = _oldentity.nama_by_ho;
+                        qry.qty_by_HP = _oldentity.qty_by_HP;
+                        qry.remark_by_ho = _oldentity.remark_by_ho;
                         qry.qty_adj = request.Data.qty_adj;
                         qry.remark_adj = request.Data.remark_adj;
                         qry.ModifiedBy = request.Data.Account.UserCode;

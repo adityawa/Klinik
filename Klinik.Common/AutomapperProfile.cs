@@ -282,7 +282,9 @@ namespace Klinik.Common
             CreateMap<PurchaseOrder, PurchaseOrderModel>();
             CreateMap<PurchaseOrderDetail, PurchaseOrderDetailModel>();
 
-            CreateMap<PurchaseOrderModel, DeliveryOrderModel>();
+            CreateMap<PurchaseOrderModel, DeliveryOrderModel>()
+                .ForMember(m => m.GudangId, map => map.MapFrom(p => p.GudangId))
+                .ForMember(m => m.SourceId, map => map.MapFrom(p => p.SourceId));
             CreateMap<PurchaseOrderDetailModel, DeliveryOrderDetailModel>()
                 .ForMember(m => m.qty_request, map => map.MapFrom(p => p.total))
                 .ForMember(m => m.qty_by_HP, map => map.MapFrom(p => p.qty_by_ho));
@@ -295,7 +297,8 @@ namespace Klinik.Common
                 .ForMember(m => m.podate, map => map.MapFrom(p => p.PurchaseOrder.podate))
                 .ForMember(m => m.prnumber, map => map.MapFrom(p => p.PurchaseOrder.PurchaseRequest.prnumber))
                 .ForMember(m => m.prdate, map => map.MapFrom(p => p.PurchaseOrder.PurchaseRequest.prdate))
-                .ForMember(m => m.prrequestby, map => map.MapFrom(p => p.PurchaseOrder.PurchaseRequest.request_by));
+                .ForMember(m => m.prrequestby, map => map.MapFrom(p => p.PurchaseOrder.PurchaseRequest.request_by))
+                .ForMember(m => m.processby, map => map.MapFrom(p => p.PurchaseOrder.ModifiedBy));
         }
     }
 }

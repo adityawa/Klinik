@@ -184,6 +184,8 @@
         <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderDetail" Width="1.5" PointX="21.5" PointY="85.75" />
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_DeliveryOrder" />
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_Product" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrder_Source" />
+        <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrder_Source" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

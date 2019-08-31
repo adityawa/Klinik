@@ -58,6 +58,12 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="col-md-2 control-label" for="inputDefault">Tujuan DO</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.gudangtujuan, new { @class = "form-control", @id = "dodate", @disabled = "disabled" })
+            </div>
+        </div>
+        <div class="form-group">
             <label class="col-md-2 control-label" for="inputDefault">Send By</label>
             <div class="col-md-2">
                 @Html.TextBoxFor(x => x.sendby, new { @class = "form-control", @id = "dodate", @disabled = "disabled" })
@@ -97,8 +103,10 @@
                                 <td><input type="text" class="form-control" value="@item.remark_adj" disabled="disabled" /></td>
                                 <td hidden></td>
                                 <td>
+                                    <button class="save-deliveryorderdetail btn btn-success btn-sm" data-url="/DeliveryOrder/EditDeliveryOrderDetail" style="display:none;">Save</button>
                                     <button class="edit-deliveryorderdetail btn btn-success btn-sm">Edit</button>
-                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                    <button class="btn btn-danger btn-sm delete-deliveryorderdetail">Delete</button>
+                                    <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
                                 </td>
                             </tr>
                         }

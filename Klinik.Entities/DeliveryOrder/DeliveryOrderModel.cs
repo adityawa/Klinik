@@ -19,6 +19,7 @@ namespace Klinik.Entities.DeliveryOrder
         public string createformat { get; set; }
         public Nullable<int> Recived { get; set; }
         public Nullable<int> GudangId { get; set; }
+        public Nullable<int> SourceId { get; set; }
         public string gudangasal { get; set; }
         public string gudangtujuan { get; set; }
         public string sendby { get; set; }

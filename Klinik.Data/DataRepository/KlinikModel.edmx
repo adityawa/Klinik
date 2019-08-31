@@ -90,6 +90,8 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="Recived" Type="int" />
           <Property Name="GudangId" Type="int" />
+          <Property Name="SendBy" Type="varchar" MaxLength="100" />
+          <Property Name="SourceId" Type="int" />
         </EntityType>
         <EntityType Name="DeliveryOrderDetail">
           <Key>
@@ -896,6 +898,7 @@
           <Property Name="statusop" Type="int" />
           <Property Name="Validasi" Type="int" />
           <Property Name="GudangId" Type="int" />
+          <Property Name="SourceId" Type="int" />
         </EntityType>
         <EntityType Name="PurchaseOrderDetail">
           <Key>
@@ -1299,6 +1302,18 @@
             </Principal>
             <Dependent Role="DeliveryOrder">
               <PropertyRef Name="poid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOrder_Source">
+          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
+          <End Role="DeliveryOrder" Type="Self.DeliveryOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DeliveryOrder">
+              <PropertyRef Name="SourceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2142,6 +2157,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PurchaseOrder_Source">
+          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PurchaseOrderDetail_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="PurchaseOrderDetail" Type="Self.PurchaseOrderDetail" Multiplicity="*" />
@@ -2622,6 +2649,10 @@
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
             <End Role="DeliveryOrder" EntitySet="DeliveryOrder" />
           </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOrder_Source" Association="Self.FK_DeliveryOrder_Source">
+            <End Role="Gudang" EntitySet="Gudang" />
+            <End Role="DeliveryOrder" EntitySet="DeliveryOrder" />
+          </AssociationSet>
           <AssociationSet Name="FK_DeliveryOrderDetail_DeliveryOrder" Association="Self.FK_DeliveryOrderDetail_DeliveryOrder">
             <End Role="DeliveryOrder" EntitySet="DeliveryOrder" />
             <End Role="DeliveryOrderDetail" EntitySet="DeliveryOrderDetail" />
@@ -2902,6 +2933,10 @@
             <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
           </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrder_Source" Association="Self.FK_PurchaseOrder_Source">
+            <End Role="Gudang" EntitySet="Gudang" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
           <AssociationSet Name="FK_PurchaseOrderDetail_Product" Association="Self.FK_PurchaseOrderDetail_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetail" />
@@ -3145,6 +3180,9 @@
           <Property Name="GudangId" Type="Int32" />
           <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_DeliveryOrder_Gudang" FromRole="DeliveryOrder" ToRole="Gudang" />
           <NavigationProperty Name="DeliveryOrderDetails" Relationship="KlinikDBModel.FK_DeliveryOrderDetail_DeliveryOrder" FromRole="DeliveryOrder" ToRole="DeliveryOrderDetail" />
+          <Property Name="SendBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SourceId" Type="Int32" />
+          <NavigationProperty Name="Gudang1" Relationship="KlinikDBModel.FK_DeliveryOrder_Source" FromRole="DeliveryOrder" ToRole="Gudang" />
         </EntityType>
         <EntityType Name="DeliveryOrderPusat">
           <Key>
@@ -3556,6 +3594,8 @@
           <NavigationProperty Name="PurchaseRequests" Relationship="KlinikDBModel.FK_PurchaseRequest_Gudang" FromRole="Gudang" ToRole="PurchaseRequest" />
           <NavigationProperty Name="PurchaseOrders" Relationship="KlinikDBModel.FK_PurchaseOrder_Gudang" FromRole="Gudang" ToRole="PurchaseOrder" />
           <NavigationProperty Name="DeliveryOrders" Relationship="KlinikDBModel.FK_DeliveryOrder_Gudang" FromRole="Gudang" ToRole="DeliveryOrder" />
+          <NavigationProperty Name="DeliveryOrders1" Relationship="KlinikDBModel.FK_DeliveryOrder_Source" FromRole="Gudang" ToRole="DeliveryOrder" />
+          <NavigationProperty Name="PurchaseOrders1" Relationship="KlinikDBModel.FK_PurchaseOrder_Source" FromRole="Gudang" ToRole="PurchaseOrder" />
         </EntityType>
         <EntityType Name="LabItem">
           <Key>
@@ -4063,6 +4103,8 @@
           <Property Name="Validasi" Type="Int32" />
           <Property Name="GudangId" Type="Int32" />
           <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_PurchaseOrder_Gudang" FromRole="PurchaseOrder" ToRole="Gudang" />
+          <Property Name="SourceId" Type="Int32" />
+          <NavigationProperty Name="Gudang1" Relationship="KlinikDBModel.FK_PurchaseOrder_Source" FromRole="PurchaseOrder" ToRole="Gudang" />
         </EntityType>
         <EntityType Name="PurchaseOrderDetail">
           <Key>
@@ -5920,6 +5962,14 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="DeliveryOrderDetail" EntitySet="DeliveryOrderDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOrder_Source" Association="KlinikDBModel.FK_DeliveryOrder_Source">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="DeliveryOrder" EntitySet="DeliveryOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrder_Source" Association="KlinikDBModel.FK_PurchaseOrder_Source">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="stok">
           <Key>
@@ -6277,6 +6327,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DeliveryOrder_Source">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.DeliveryOrder" Role="DeliveryOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DeliveryOrder">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrder_Source">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6357,6 +6431,8 @@
           <EntitySetMapping Name="DeliveryOrders">
             <EntityTypeMapping TypeName="KlinikDBModel.DeliveryOrder">
               <MappingFragment StoreEntitySet="DeliveryOrder">
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="SendBy" ColumnName="SendBy" />
                 <ScalarProperty Name="GudangId" ColumnName="GudangId" />
                 <ScalarProperty Name="Recived" ColumnName="Recived" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -7177,6 +7253,7 @@
           <EntitySetMapping Name="PurchaseOrders">
             <EntityTypeMapping TypeName="KlinikDBModel.PurchaseOrder">
               <MappingFragment StoreEntitySet="PurchaseOrder">
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
                 <ScalarProperty Name="GudangId" ColumnName="GudangId" />
                 <ScalarProperty Name="Validasi" ColumnName="Validasi" />
                 <ScalarProperty Name="id" ColumnName="id" />

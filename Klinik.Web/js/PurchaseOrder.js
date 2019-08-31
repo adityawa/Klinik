@@ -8,6 +8,7 @@
         Klinik.duplicaterowtable();
         Klinik.checkall();
         Klinik.checkbox();
+        Klinik.autocompleteGudangOne();
         Klinik.savePoPerRow();
     },
 
@@ -125,6 +126,7 @@
             _purchaseorder.PurchaseRequestId = $('#PurchaseRequestId').val();
             _purchaseorder.podate = $('#podate').val();
             _purchaseorder.request_by = $('#request_by').val();
+            _purchaseorder.SourceId = $('#namagudang').val();
             var purchaseOrderDetailModels = new Array();
             $("#tblPurchaseOrder TBODY TR").each(function (item, key) {
                 var row = $(this);
@@ -306,6 +308,42 @@
                     row.find('input[type="checkbox"]').prop('disabled', true);
                 }
             });
+        });
+    },
+
+    autocompleteGudangOne: function () {
+        var el = $("#namagudang");
+        if (!el.length) return;
+
+        $('#namagudang').select2({
+            width: 'resolve',
+            placeholder: 'gudang..',
+            ajax: {
+                url: '/DeliveryOrder/searchgudang/',
+                data: function (params) {
+                    return {
+                        prefix: params.term
+                    };
+                },
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    var results = [];
+
+                    $.each(data.data, function (index, item) {
+                        results.push({
+                            id: item.Id,
+                            text: item.name
+                        });
+                    });
+                    return {
+                        results: results
+                    };
+                }
+            }
+        });
+        $(el).change(function () {
+            $("#GudangId").val($(el).val());
         });
     }
 
