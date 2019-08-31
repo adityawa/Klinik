@@ -18,7 +18,6 @@ namespace Klinik.Data.DataRepository
         public Clinic()
         {
             this.Appointments = new HashSet<Appointment>();
-            this.DeliveryOrderDetails = new HashSet<DeliveryOrderDetail>();
             this.DeliveryOrderPusatDetails = new HashSet<DeliveryOrderPusatDetail>();
             this.DoctorClinics = new HashSet<DoctorClinic>();
             this.FormMedicals = new HashSet<FormMedical>();
@@ -57,8 +56,6 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointments { get; set; }
         public virtual City City { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryOrderPusatDetail> DeliveryOrderPusatDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

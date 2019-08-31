@@ -123,18 +123,9 @@ namespace Klinik.Web.Controllers
                             Id = item.ProductId
                         }
                     };
-                    var requestnamabarangpo = new ProductRequest
-                    {
-                        Data = new ProductModel
-                        {
-                            Id = Convert.ToInt32(item.ProductId_Po)
-                        }
-                    };
 
                     ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
-                    ProductResponse namabarangpo = new ProductHandler(_unitOfWork).GetDetail(requestnamabarangpo);
                     deliveryorderdetailrequest.Data.namabarang = namabarang.Entity.Name;
-                    deliveryorderdetailrequest.Data.namabarang_po = namabarangpo.Entity.Name;
                     DeliveryOrderDetailResponse _deliveryorderdetailresponse = new DeliveryOrderDetailResponse();
                     new DeliveryOrderDetailValidator(_unitOfWork).Validate(deliveryorderdetailrequest, out _deliveryorderdetailresponse);
                 }
@@ -236,9 +227,7 @@ namespace Klinik.Web.Controllers
                     Data = new ProductInGudangModel
                     {
                         Account = (AccountModel)Session["UserLogon"],
-                        GudangId = item.GudangId,
-                        ProductId = item.ProductId_Po,
-                        stock = Convert.ToInt32(item.qty_po) > 0 ? Convert.ToInt32(item.qty_po) : Convert.ToInt32(item.qty_po_final),
+                        stock = Convert.ToInt32(item.qty_request) > 0 ? Convert.ToInt32(item.qty_request) : Convert.ToInt32(item.qty_request),
                     }
                 };
 
@@ -247,9 +236,7 @@ namespace Klinik.Web.Controllers
                     Data = new HistoryProductInGudangModel
                     {
                         Account = (AccountModel)Session["UserLogon"],
-                        GudangId = Convert.ToInt32(item.GudangId),
-                        ProductId = Convert.ToInt32(item.ProductId_Po),
-                        value = Convert.ToInt32(item.qty_po) > 0 ? Convert.ToInt32(item.qty_po) : Convert.ToInt32(item.qty_po_final),
+                        value = Convert.ToInt32(item.qty_request) > 0 ? Convert.ToInt32(item.qty_request) : Convert.ToInt32(item.qty_request),
                     }
                 };
 

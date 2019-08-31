@@ -92,6 +92,7 @@
     <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatRequest.cs" />
     <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatResponse.cs" />
     <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatValidator.cs" />
+    <Compile Include="DeliveryOrder\CreateDoByPo.cs" />
     <Compile Include="DeliveryOrder\DeliveryOrderHandler.cs" />
     <Compile Include="DeliveryOrder\DeliveryOrderRequest.cs" />
     <Compile Include="DeliveryOrder\DeliveryOrderResponse.cs" />

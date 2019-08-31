@@ -18,14 +18,10 @@ namespace Klinik.Data.DataRepository
         public int DeliveryOderId { get; set; }
         public int ProductId { get; set; }
         public string namabarang { get; set; }
-        public Nullable<int> GudangId { get; set; }
-        public Nullable<long> ClinicId { get; set; }
-        public Nullable<int> ProductId_Po { get; set; }
-        public string namabarang_po { get; set; }
-        public Nullable<double> qty_po { get; set; }
-        public Nullable<double> qty_po_final { get; set; }
-        public Nullable<double> qty_do { get; set; }
-        public string remark_do { get; set; }
+        public Nullable<double> qty_request { get; set; }
+        public string nama_by_ho { get; set; }
+        public Nullable<double> qty_by_HP { get; set; }
+        public string remark_by_ho { get; set; }
         public Nullable<double> qty_adj { get; set; }
         public string remark_adj { get; set; }
         public string CreatedBy { get; set; }
@@ -34,9 +30,7 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<short> RowStatus { get; set; }
     
-        public virtual Clinic Clinic { get; set; }
         public virtual DeliveryOrder DeliveryOrder { get; set; }
-        public virtual Gudang Gudang { get; set; }
         public virtual Product Product { get; set; }
     }
 }

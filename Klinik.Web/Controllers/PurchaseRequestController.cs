@@ -74,7 +74,7 @@ namespace Klinik.Web.Controllers
             var lastprnumber = _context.PurchaseRequests.OrderByDescending(x => x.CreatedDate).Select(a => a.prnumber).FirstOrDefault();
             DateTime? getmonth = _context.PurchaseRequests.OrderByDescending(x => x.CreatedDate).Select(a => a.CreatedDate).FirstOrDefault();
             DateTime? month = getmonth != null ? getmonth : DateTime.Now;
-            string prnumber = lastprnumber != null ?  GeneralHandler.stringincrement(lastprnumber, Convert.ToDateTime(month)) : "0001";
+            string prnumber = lastprnumber != null ?  GeneralHandler.stringincrement(lastprnumber, Convert.ToDateTime(month)) : "00001";
             PurchaseRequestResponse _response = new PurchaseRequestResponse();
             if (Request.QueryString["id"] != null)
             {
@@ -108,7 +108,7 @@ namespace Klinik.Web.Controllers
                 _purchaserequest.Account = (AccountModel)Session["UserLogon"];
             _purchaserequest.Id = Convert.ToInt32(_purchaserequest.Id) > 0 ? _purchaserequest.Id : 0;
             var gudangid = _unitOfWork.GudangRepository.Query(a => a.ClinicId == _purchaserequest.Account.ClinicID).Select(x => x.id).FirstOrDefault();
-            _purchaserequest.GudangId = gudangid;
+            _purchaserequest.GudangId = gudangid > 0 ? gudangid : 0;
             var request = new PurchaseRequestRequest
             {
                 Data = _purchaserequest

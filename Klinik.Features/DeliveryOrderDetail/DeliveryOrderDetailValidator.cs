@@ -32,11 +32,6 @@ namespace Klinik.Features
             {
                 bool isHavePrivilege = true;
 
-                if (request.Data.namabarang == null || String.IsNullOrWhiteSpace(request.Data.namabarang))
-                {
-                    errorFields.Add("namabarang");
-                }
-
                 if (errorFields.Any())
                 {
                     response.Status = false;

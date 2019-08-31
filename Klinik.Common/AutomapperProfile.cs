@@ -16,6 +16,8 @@ using Klinik.Entities.PurchaseOrder;
 using Klinik.Entities.PurchaseOrderDetail;
 using Klinik.Entities.PurchaseRequestDetail;
 using Klinik.Entities.PurchaseRequest;
+using Klinik.Entities.DeliveryOrder;
+using Klinik.Entities.DeliveryOrderDetail;
 
 namespace Klinik.Common
 {
@@ -276,6 +278,24 @@ namespace Klinik.Common
 
             CreateMap<PurchaseRequestModel, PurchaseOrderModel>();
             CreateMap<PurchaseRequestDetailModel, PurchaseOrderDetailModel>();
+
+            CreateMap<PurchaseOrder, PurchaseOrderModel>();
+            CreateMap<PurchaseOrderDetail, PurchaseOrderDetailModel>();
+
+            CreateMap<PurchaseOrderModel, DeliveryOrderModel>();
+            CreateMap<PurchaseOrderDetailModel, DeliveryOrderDetailModel>()
+                .ForMember(m => m.qty_request, map => map.MapFrom(p => p.total))
+                .ForMember(m => m.qty_by_HP, map => map.MapFrom(p => p.qty_by_ho));
+
+            CreateMap<DeliveryOrderDetail, DeliveryOrderDetailModel>();
+            CreateMap<DeliveryOrderDetailModel, DeliveryOrderDetail>();
+
+            CreateMap<DeliveryOrder, DeliveryOrderModel>()
+                .ForMember(m => m.ponumber, map => map.MapFrom(p => p.PurchaseOrder.ponumber))
+                .ForMember(m => m.podate, map => map.MapFrom(p => p.PurchaseOrder.podate))
+                .ForMember(m => m.prnumber, map => map.MapFrom(p => p.PurchaseOrder.PurchaseRequest.prnumber))
+                .ForMember(m => m.prdate, map => map.MapFrom(p => p.PurchaseOrder.PurchaseRequest.prdate))
+                .ForMember(m => m.prrequestby, map => map.MapFrom(p => p.PurchaseOrder.PurchaseRequest.request_by));
         }
     }
 }

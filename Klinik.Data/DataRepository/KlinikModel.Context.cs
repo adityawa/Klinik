@@ -30,7 +30,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Clinic> Clinics { get; set; }
         public virtual DbSet<DeliveryOrder> DeliveryOrders { get; set; }
-        public virtual DbSet<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
         public virtual DbSet<DeliveryOrderPusat> DeliveryOrderPusats { get; set; }
         public virtual DbSet<DeliveryOrderPusatDetail> DeliveryOrderPusatDetails { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
@@ -96,5 +95,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<substitute> substitutes { get; set; }
         public virtual DbSet<HistoryProductInGudang> HistoryProductInGudangs { get; set; }
         public virtual DbSet<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
+        public virtual DbSet<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
     }
 }

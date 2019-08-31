@@ -1,4 +1,5 @@
-﻿using Klinik.Common;
+﻿using AutoMapper;
+using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.DeliveryOrder;
@@ -31,7 +32,7 @@ namespace Klinik.Features
                     var qry = _unitOfWork.DeliveryOrderRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
-                        var _oldentity = new DeliveryOrder
+                        var _oldentity = new Data.DataRepository.DeliveryOrder
                         { 
                             poid = qry.poid,
                             donumber = qry.donumber,
@@ -48,7 +49,7 @@ namespace Klinik.Features
                         };
 
                         // update data
-                        qry.poid = request.Data.poid > 0 ? request.Data.poid : qry.poid;
+                        qry.poid = request.Data.poid > 0 ? Convert.ToInt32(request.Data.poid) : qry.poid;
                         qry.donumber = request.Data.donumber;
                         qry.dodate = request.Data.dodate;
                         qry.dodest = request.Data.dodest;
@@ -87,9 +88,9 @@ namespace Klinik.Features
                 }
                 else
                 {
-                    var deliveryorderEntity = new DeliveryOrder
+                    var deliveryorderEntity = new Data.DataRepository.DeliveryOrder
                     {
-                        poid = request.Data.poid,
+                        poid = Convert.ToInt32(request.Data.poid),
                         donumber = request.Data.donumber,
                         dodate = request.Data.dodate,
                         dodest = request.Data.dodest,
@@ -142,42 +143,11 @@ namespace Klinik.Features
             //DeliveryOrderDetailModel newdeliveryOrderdetailModel = new DeliveryOrderDetailModel();
             if (qry != null)
             {
-                response.Entity = new DeliveryOrderModel
-                {
-                    Id = qry.id,
-                    poid = qry.poid,
-                    donumber = qry.donumber,
-                    dodate = qry.dodate,
-                    dodest = qry.dodest,
-                    approve_by = qry.approve_by,
-                    approve = qry.approve,
-                    ModifiedBy = qry.ModifiedBy,
-                    Recived = qry.Recived,
-                    CreatedBy = qry.CreatedBy,
-                    ModifiedDate = qry.ModifiedDate,
-                };
+                response.Entity = Mapper.Map<DeliveryOrder, DeliveryOrderModel>(qry);
 
                 foreach (var item in qry.DeliveryOrderDetails)
                 {
-                    var newdeliveryOrderdetailModel = new DeliveryOrderDetailModel
-                    {
-                        Id = item.id,
-                        DeliveryOderId = qry.id,
-                        ProductId_Po = item.ProductId_Po,
-                        namabarang_po = item.namabarang_po,
-                        qty_po = item.qty_po,
-                        qty_po_final = item.qty_po_final,
-                        ProductId = item.ProductId,
-                        namabarang = item.namabarang,
-                        GudangId = item.GudangId,
-                        ClinicId = item.ClinicId,
-                        qty_do = item.qty_do,
-                        remark_do = item.remark_do,
-                        qty_adj = item.qty_adj,
-                        remark_adj = item.remark_adj,
-                        namagudang = item.Gudang.name,
-                        namaklinik = item.Clinic.Name,
-                };
+                    var newdeliveryOrderdetailModel = Mapper.Map<DeliveryOrderDetail, DeliveryOrderDetailModel>(item);
 
                     response.Entity.deliveryOrderDetailModels.Add(newdeliveryOrderdetailModel);
                 }
@@ -190,7 +160,7 @@ namespace Klinik.Features
         {
             List<DeliveryOrderModel> lists = new List<DeliveryOrderModel>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.New<DeliveryOrder>(true);
+            var searchPredicate = PredicateBuilder.New<Data.DataRepository.DeliveryOrder>(true);
 
             // add default filter to show the active data only
             searchPredicate = searchPredicate.And(x => x.RowStatus == 0);

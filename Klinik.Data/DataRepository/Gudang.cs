@@ -17,12 +17,12 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Gudang()
         {
-            this.DeliveryOrderDetails = new HashSet<DeliveryOrderDetail>();
             this.DeliveryOrderPusatDetails = new HashSet<DeliveryOrderPusatDetail>();
             this.ProductInGudangs = new HashSet<ProductInGudang>();
             this.HistoryProductInGudangs = new HashSet<HistoryProductInGudang>();
             this.PurchaseRequests = new HashSet<PurchaseRequest>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
+            this.DeliveryOrders = new HashSet<DeliveryOrder>();
         }
     
         public int id { get; set; }
@@ -36,8 +36,6 @@ namespace Klinik.Data.DataRepository
     
         public virtual Clinic Clinic { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryOrderPusatDetail> DeliveryOrderPusatDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductInGudang> ProductInGudangs { get; set; }
@@ -47,5 +45,7 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<PurchaseRequest> PurchaseRequests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeliveryOrder> DeliveryOrders { get; set; }
     }
 }

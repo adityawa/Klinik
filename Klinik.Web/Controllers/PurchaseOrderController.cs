@@ -191,8 +191,8 @@ namespace Klinik.Web.Controllers
             };
 
             new PurchaseOrderValidator(_unitOfWork).Validate(request, out _response);
-            //_response.Entity.Account = (AccountModel)Session["UserLogon"];
-            //new CreatePoByPr(_unitOfWork).Create(_response);
+            _response.Entity.Account = (AccountModel)Session["UserLogon"];
+            new CreateDoByPo(_unitOfWork).Create(_response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }

@@ -1,6 +1,8 @@
-﻿using Klinik.Common;
+﻿using AutoMapper;
+using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Entities.DeliveryOrderDetail;
 using Klinik.Resources;
 using System;
 using System.Collections.Generic;
@@ -27,42 +29,18 @@ namespace Klinik.Features
                     var qry = _unitOfWork.DeliveryOrderDetailRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
-                        var _oldentity = new DeliveryOrderDetail
-                        {
-                            ProductId = qry.ProductId,
-                            namabarang = qry.namabarang,
-                            ClinicId = qry.ClinicId,
-                            DeliveryOderId = qry.DeliveryOderId,
-                            ProductId_Po = qry.ProductId_Po,
-                            GudangId = qry.GudangId,
-                            qty_po = qry.qty_po,
-                            qty_po_final = qry.qty_po_final,
-                            qty_do = qry.qty_do,
-                            qty_adj = qry.qty_adj,
-                            remark_adj = qry.remark_adj,
-                            remark_do = qry.remark_do,
-                            CreatedBy = qry.CreatedBy,
-                            CreatedDate = qry.CreatedDate,
-                            namabarang_po = qry.namabarang_po,
-                            ModifiedBy = qry.ModifiedBy,
-                            ModifiedDate = qry.ModifiedDate,
-                            RowStatus = qry.RowStatus
-                        };
+                        var _oldentity = Mapper.Map<DeliveryOrderDetail, DeliveryOrderDetailModel>(qry);
 
                         // update data
+                        qry.DeliveryOderId = request.Data.DeliveryOderId;
                         qry.ProductId = request.Data.ProductId;
                         qry.namabarang = request.Data.namabarang;
-                        qry.namabarang_po = request.Data.namabarang_po;
-                        qry.DeliveryOderId = request.Data.DeliveryOderId;
-                        qry.ClinicId = request.Data.ClinicId;
-                        qry.GudangId = request.Data.GudangId;
-                        qry.ProductId_Po = request.Data.ProductId_Po;
-                        qry.qty_po = request.Data.qty_po;
-                        qry.qty_po_final = request.Data.qty_po_final;
-                        qry.qty_do = request.Data.qty_do;
+                        qry.qty_request = request.Data.qty_request;
+                        qry.nama_by_ho = request.Data.nama_by_ho;
+                        qry.qty_by_HP = request.Data.qty_by_HP;
+                        qry.remark_by_ho = request.Data.remark_by_ho;
                         qry.qty_adj = request.Data.qty_adj;
                         qry.remark_adj = request.Data.remark_adj;
-                        qry.remark_do = request.Data.remark_do;
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.ModifiedDate = DateTime.Now;
 
@@ -92,24 +70,7 @@ namespace Klinik.Features
                 }
                 else
                 {
-                    var deliveryorderdetailEntity = new DeliveryOrderDetail
-                    {
-                        ProductId = request.Data.ProductId,
-                        DeliveryOderId = request.Data.DeliveryOderId,
-                        namabarang = request.Data.namabarang,
-                        namabarang_po = request.Data.namabarang_po,
-                        GudangId = request.Data.GudangId,
-                        ClinicId = request.Data.ClinicId,
-                        ProductId_Po = request.Data.ProductId_Po,
-                        qty_po = request.Data.qty_po,
-                        qty_po_final = request.Data.qty_po_final,
-                        qty_do = request.Data.qty_do,
-                        qty_adj = request.Data.qty_adj,
-                        remark_adj = request.Data.remark_adj,
-                        remark_do = request.Data.remark_do,
-                        CreatedBy = request.Data.Account.UserCode,
-                        CreatedDate = DateTime.Now,
-                    };
+                    var deliveryorderdetailEntity = Mapper.Map<DeliveryOrderDetailModel, DeliveryOrderDetail>(request.Data);
 
                     _unitOfWork.DeliveryOrderDetailRepository.Insert(deliveryorderdetailEntity);
                     int resultAffected = _unitOfWork.Save();
