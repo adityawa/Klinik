@@ -112,6 +112,7 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="RowStatus" Type="smallint" />
+          <Property Name="Recived" Type="bit" />
         </EntityType>
         <EntityType Name="DeliveryOrderPusat">
           <Key>
@@ -6302,6 +6303,7 @@
           <Property Name="RowStatus" Type="Int16" />
           <NavigationProperty Name="DeliveryOrder" Relationship="KlinikDBModel.FK_DeliveryOrderDetail_DeliveryOrder" FromRole="DeliveryOrderDetail" ToRole="DeliveryOrder" />
           <NavigationProperty Name="Product" Relationship="KlinikDBModel.FK_DeliveryOrderDetail_Product" FromRole="DeliveryOrderDetail" ToRole="Product" />
+          <Property Name="Recived" Type="Boolean" />
         </EntityType>
         <Association Name="FK_DeliveryOrderDetail_DeliveryOrder">
           <End Type="KlinikDBModel.DeliveryOrder" Role="DeliveryOrder" Multiplicity="1" />
@@ -7634,6 +7636,7 @@
           <EntitySetMapping Name="DeliveryOrderDetails">
             <EntityTypeMapping TypeName="KlinikDBModel.DeliveryOrderDetail">
               <MappingFragment StoreEntitySet="DeliveryOrderDetail">
+                <ScalarProperty Name="Recived" ColumnName="Recived" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />

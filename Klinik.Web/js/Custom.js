@@ -10,6 +10,8 @@
         Klinik.searchpurchaceorder();
         Klinik.searchpurchaceorderpusat();
         Klinik.saveOrderdetailPerRow();
+        Klinik.checkall();
+        Klinik.checkbox();
     },
     autocompleteProductOne: function () {
         var el = $("#namabarang");
@@ -296,6 +298,7 @@
             getdata.find('td:eq(8) input').prop('disabled', false);
             $(this).hide();
             getdata.find('.save-deliveryorderdetail').show();
+            getdata.find('input[type="checkbox"]').prop('disabled', false);
             Klinik.saveOrderdetailPerRow();
         });
     },
@@ -314,19 +317,12 @@
                 var row = $(this);
                 var deliveryOrderDetail = {};
                 deliveryOrderDetail.Id = row.find("TD").eq(0).html();
-                deliveryOrderDetail.ProductId = row.closest('tr').find('td:eq(5) select').val() > 0 ? row.closest('tr').find('td:eq(5) select').val() : row.find("TD").eq(1).html();
-                deliveryOrderDetail.GudangId = row.closest('tr').find('td:eq(6) select').val() > 0 ? row.closest('tr').find('td:eq(6) select').val() : row.find("TD").eq(2).html();
-                deliveryOrderDetail.ClinicId = row.closest('tr').find('td:eq(7) select').val() > 0 ? row.closest('tr').find('td:eq(7) select').val() : row.find("TD").eq(3).html();
-                deliveryOrderDetail.ProductId_Po = row.closest('tr').find('td:eq(8) select').val() > 0 ? row.closest('tr').find('td:eq(8) select').val() : row.find("TD").eq(4).html();
-                //deliveryOrderDetail.namabarang = row.closest('tr').find('td:eq(5) select').val() > 0 ? row.closest('tr').find('td:eq(5) select').text() : row.closest('tr').find('td:eq(5) select').text();
-                //deliveryOrderDetail.namabarang_po = row.find("TD").eq(8).html();
-                deliveryOrderDetail.qty_po = row.closest('tr').find('td:eq(9) input').length > 0 ? row.closest('tr').find('td:eq(9) input').val() : row.find("TD").eq(9).html();
-                deliveryOrderDetail.qty_po_final = row.closest('tr').find('td:eq(10) input').length > 0 ? row.closest('tr').find('td:eq(10) input').val() : row.find("TD").eq(10).html();
-                deliveryOrderDetail.qty_do = row.closest('tr').find('td:eq(11) input').length > 0 ? row.closest('tr').find('td:eq(11) input').val() : row.find("TD").eq(11).html();
-                deliveryOrderDetail.qty_adj = row.closest('tr').find('td:eq(13) input').length > 0 ? row.closest('tr').find('td:eq(13) input').val() : row.find("TD").eq(13).html();
-                deliveryOrderDetail.remark_do = row.closest('tr').find('td:eq(12) input').length > 0 ? row.closest('tr').find('td:eq(12) input').val() : row.find("TD").eq(12).html();
-                deliveryOrderDetail.remark_adj = row.closest('tr').find('td:eq(14) input').length > 0 ? row.closest('tr').find('td:eq(14) input').val() : row.find("TD").eq(14).html();
-                deliveryOrderDetail.type = row.closest('tr').find('td:eq(15) input').length > 0 ? row.closest('tr').find('td:eq(15) input').val() : row.find("TD").eq(15).html();
+                deliveryOrderDetail.DeliveryOderId = $('#Id').val();
+                deliveryOrderDetail.ProductId = row.find("TD").eq(1).html();
+                deliveryOrderDetail.ProductId = row.find("TD").eq(1).html();
+                deliveryOrderDetail.qty_adj = row.find('td:eq(7) input').val();
+                deliveryOrderDetail.remark_adj = row.find('td:eq(8) input').val();
+                deliveryOrderDetail.Recived = row.find('td:eq(9) input[type="checkbox"]').val();
                 deliveryOrderDetailModels.push(deliveryOrderDetail);
             });
             console.log(deliveryOrderDetailModels);
@@ -432,6 +428,7 @@
             deliveryorderdetail.ProductId = row.find("TD").eq(1).html();
             deliveryorderdetail.qty_adj = row.find('td:eq(7) input').val();
             deliveryorderdetail.remark_adj = row.find('td:eq(8) input').val();
+            deliveryorderdetail.Recived = row.find('td:eq(9) input[type="checkbox"]').val();
 
             $.ajax({
                 type: "POST",
@@ -445,10 +442,35 @@
                     row.find('.delete-deliveryorderdetail').show();
                     row.find('td:eq(7) input').prop('disabled', true);
                     row.find('td:eq(8) input').prop('disabled', true);
+                    row.find('input[type="checkbox"]').prop('disabled', true);
                 }
             });
         });
-    }
+    },
+
+    checkall: function () {
+        var el = $('.checkall');
+        if (!el.length) return;
+
+        $(el).click(function () {
+            if ($(this).prop("checked") == true) {
+                $('input:checkbox').not(this).prop('checked', this.checked).val('true');
+            } else {
+                $('input:checkbox').not(this).prop('checked', this.checked).val('false');
+            }
+        });
+    },
+
+    checkbox: function () {
+        var el = $('input[type="checkbox"]');
+        $(el).click(function () {
+            if ($(this).prop("checked") == true) {
+                $(this).prop('checked', this.checked).val('true');
+            } else {
+                $(this).prop('checked', this.checked).val('false');
+            }
+        });
+    },
 };
 
 $(document).ready(function () {

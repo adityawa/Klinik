@@ -22,7 +22,7 @@
             </div>
             <label class="col-md-2 control-label" for="inputDefault">No PO</label>
             <div class="col-md-2">
-                @Html.TextBoxFor(x => x.ponumber, new { @class = "form-control", @id = "ponumber", @disabled = "disabled" })
+                <input type="text" disabled value="@Model.ponumber" class="form-control"/>
             </div>
             <label class="col-md-2 control-label" for="inputDefault">No PR</label>
             <div class="col-md-2">
@@ -46,27 +46,27 @@
         <div class="form-group">
             <label class="col-md-2 control-label" for="inputDefault">Source</label>
             <div class="col-md-2">
-                @Html.TextBoxFor(x => x.gudangasal, new { @class = "form-control", @id = "dodate", @disabled = "disabled" })
+                @Html.TextBoxFor(x => x.gudangasal, new { @class = "form-control", @id = "gudangasal", @disabled = "disabled" })
             </div>
             <label class="col-md-2 control-label" for="inputDefault">Process BY</label>
             <div class="col-md-2">
-                @Html.TextBoxFor(x => x.processby, new { @class = "form-control", @id = "dodate", @disabled = "disabled" })
+                @Html.TextBoxFor(x => x.processby, new { @class = "form-control", @id = "processby", @disabled = "disabled" })
             </div>
             <label class="col-md-2 control-label" for="inputDefault">Request By</label>
             <div class="col-md-2">
-                @Html.TextBoxFor(x => x.prrequestby, new { @class = "form-control", @id = "dodate", @disabled = "disabled" })
+                @Html.TextBoxFor(x => x.prrequestby, new { @class = "form-control", @id = "prrequestby", @disabled = "disabled" })
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-2 control-label" for="inputDefault">Tujuan DO</label>
             <div class="col-md-2">
-                @Html.TextBoxFor(x => x.gudangtujuan, new { @class = "form-control", @id = "dodate", @disabled = "disabled" })
+                @Html.TextBoxFor(x => x.gudangtujuan, new { @class = "form-control", @id = "gudangtujuan", @disabled = "disabled" })
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-2 control-label" for="inputDefault">Send By</label>
             <div class="col-md-2">
-                @Html.TextBoxFor(x => x.sendby, new { @class = "form-control", @id = "dodate", @disabled = "disabled" })
+                @Html.TextBoxFor(x => x.sendby, new { @class = "form-control", @id = "sendby", @disabled = "disabled" })
             </div>
         </div>
     </div>
@@ -83,6 +83,7 @@
                         <th>Remark By HO</th>
                         <th>Qty Adjustment</th>
                         <th>Remark Adjustment</th>
+                        <th>Recived@*<input type="checkbox" class="checkall">*@</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -101,7 +102,7 @@
                                 <td><input type="text" class="form-control" value="@item.remark_by_ho" disabled="disabled" /></td>
                                 <td><input type="text" class="form-control" value="@item.qty_adj" disabled="disabled" /></td>
                                 <td><input type="text" class="form-control" value="@item.remark_adj" disabled="disabled" /></td>
-                                <td hidden></td>
+                                <td><input type="checkbox" value="@(item.Recived == true ? "true" : "false")" @(item.Recived == true ? "checked" : "") disabled></td>
                                 <td>
                                     <button class="save-deliveryorderdetail btn btn-success btn-sm" data-url="/DeliveryOrder/EditDeliveryOrderDetail" style="display:none;">Save</button>
                                     <button class="edit-deliveryorderdetail btn btn-success btn-sm">Edit</button>
@@ -168,6 +169,7 @@
 
 @section Scripts {
     <script src="~/js/Custom.js"></script>
+    <script src="~/js/General.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#dodate').datepicker({

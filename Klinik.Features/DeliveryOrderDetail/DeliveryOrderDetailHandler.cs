@@ -42,6 +42,7 @@ namespace Klinik.Features
                         qry.qty_adj = request.Data.qty_adj;
                         qry.remark_adj = request.Data.remark_adj;
                         qry.ModifiedBy = request.Data.Account.UserCode;
+                        qry.Recived = request.Data.Recived;
                         qry.ModifiedDate = DateTime.Now;
 
                         _unitOfWork.DeliveryOrderDetailRepository.Update(qry);

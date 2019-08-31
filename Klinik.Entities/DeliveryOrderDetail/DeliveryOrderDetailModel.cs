@@ -17,5 +17,7 @@ namespace Klinik.Entities.DeliveryOrderDetail
         public string remark_by_ho { get; set; }
         public Nullable<double> qty_adj { get; set; }
         public string remark_adj { get; set; }
+
+        public Nullable<bool> Recived { get; set; }
     }
 }

@@ -95,17 +95,18 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public JsonResult CreateOrEditDeliveryOrder(DeliveryOrderModel _deliveryorder, List<DeliveryOrderDetailModel> deliveryOrderDetailModels)
         {
-            if (Session["UserLogon"] != null)
-                _deliveryorder.Account = (AccountModel)Session["UserLogon"];
-            _deliveryorder.Id = Convert.ToInt32(_deliveryorder.Id) > 0 ? _deliveryorder.Id : 0;
-            var request = new DeliveryOrderRequest
-            {
-                Data = _deliveryorder
-            };
+            //if (Session["UserLogon"] != null)
+            //    _deliveryorder.Account = (AccountModel)Session["UserLogon"];
+            //_deliveryorder.Id = Convert.ToInt32(_deliveryorder.Id) > 0 ? _deliveryorder.Id : 0;
+            //var request = new DeliveryOrderRequest
+            //{
+            //    Data = _deliveryorder
+            //};
 
-            DeliveryOrderResponse _response = new DeliveryOrderResponse();
+            //DeliveryOrderResponse _response = new DeliveryOrderResponse();
 
-            new DeliveryOrderValidator(_unitOfWork).Validate(request, out _response);
+            //new DeliveryOrderValidator(_unitOfWork).Validate(request, out _response);
+            DeliveryOrderDetailResponse _deliveryorderdetailresponse = new DeliveryOrderDetailResponse();
             if (deliveryOrderDetailModels != null) { 
                 foreach (var item in deliveryOrderDetailModels)
                 {
@@ -113,7 +114,6 @@ namespace Klinik.Web.Controllers
                     {
                         Data = item
                     };
-                    deliveryorderdetailrequest.Data.DeliveryOderId = Convert.ToInt32(_response.Entity.Id);
                     deliveryorderdetailrequest.Data.Account = (AccountModel)Session["UserLogon"];
                     //
                     var requestnamabarang = new ProductRequest
@@ -126,12 +126,11 @@ namespace Klinik.Web.Controllers
 
                     ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
                     deliveryorderdetailrequest.Data.namabarang = namabarang.Entity.Name;
-                    DeliveryOrderDetailResponse _deliveryorderdetailresponse = new DeliveryOrderDetailResponse();
                     new DeliveryOrderDetailValidator(_unitOfWork).Validate(deliveryorderdetailrequest, out _deliveryorderdetailresponse);
                 }
             }
 
-            return Json(new { data = _response.Data }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = _deliveryorderdetailresponse.Data }, JsonRequestBehavior.AllowGet);
         }
 
         [CustomAuthorize("DELETE_M_DELIVERYORDER")]
