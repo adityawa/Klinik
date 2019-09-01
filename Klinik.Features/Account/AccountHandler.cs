@@ -41,6 +41,7 @@ namespace Klinik.Features
 
             //get Org ID
             var _getOrganization = _unitOfWork.OrganizationRepository.GetFirstOrDefault(x => x.OrgCode == request.Data.Organization);
+            var gudangid = _unitOfWork.GudangRepository.GetFirstOrDefault(a => a.ClinicId == _getOrganization.KlinikID);
             if (_getOrganization != null)
             {
                 var _getByUname = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName == request.Data.UserName && x.Status == true && x.ExpiredDate > DateTime.Now && x.OrganizationID == _getOrganization.ID);
@@ -54,6 +55,7 @@ namespace Klinik.Features
                         response.Entity.EmployeeID = _getByUname.EmployeeID ?? 0;
                         response.Entity.Organization = _getOrganization.OrgCode;
                         response.Entity.ClinicID = _getOrganization.KlinikID ?? 0;
+                        response.Entity.GudangID =   gudangid.id > 0 ? gudangid.id : 0;
                         var _getRoles = _unitOfWork.UserRoleRepository.Get(x => x.UserID == response.Entity.UserID);
 
                         foreach (var role in _getRoles)

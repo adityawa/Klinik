@@ -4,6 +4,7 @@ using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.PurchaseRequest;
 using Klinik.Entities.PurchaseRequestDetail;
+using Klinik.Features.Account;
 using Klinik.Resources;
 using LinqKit;
 using System;
@@ -185,9 +186,8 @@ namespace Klinik.Features
             List<PurchaseRequestModel> lists = new List<PurchaseRequestModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<Data.DataRepository.PurchaseRequest>(true);
-
             // add default filter to show the active data only
-            searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
+            searchPredicate = searchPredicate.And(x => x.RowStatus == 0 && x.GudangId == OneLoginSession.Account.GudangID);
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {

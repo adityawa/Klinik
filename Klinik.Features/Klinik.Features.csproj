@@ -67,6 +67,7 @@
     <Compile Include="Account\AccountRequest.cs" />
     <Compile Include="Account\AccountResponse.cs" />
     <Compile Include="Account\AccountValidator.cs" />
+    <Compile Include="Account\OneLoginSession.cs" />
     <Compile Include="Account\PasswordHistory\PasswordHistoryHandler.cs" />
     <Compile Include="Account\PasswordHistory\PasswordHistoryRequest.cs" />
     <Compile Include="Account\PasswordHistory\PasswordHistoryResponse.cs" />

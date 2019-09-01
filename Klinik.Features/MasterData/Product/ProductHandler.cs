@@ -83,6 +83,10 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
+                        response.Entity = new ProductModel
+                        {
+                            Id = productEntity.ID
+                        };
                         response.Message = string.Format(Messages.ObjectHasBeenAdded, "Product", productEntity.Name, productEntity.ID);
 
                         CommandLog(true, ClinicEnums.Module.MASTER_PRODUCT, Constants.Command.ADD_PRODUCT, request.Data.Account, request.Data);

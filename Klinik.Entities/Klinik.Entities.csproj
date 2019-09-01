@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\AccountModelSession.cs" />
     <Compile Include="Account\AccountModel.cs" />
     <Compile Include="Account\PasswordHistoryModel.cs" />
     <Compile Include="Account\ResetPasswordModel.cs" />

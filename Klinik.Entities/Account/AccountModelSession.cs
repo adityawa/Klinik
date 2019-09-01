@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Klinik.Entities.Account
 {
-    public class AccountModel
+    public class AccountModelSession
     {
         [Required(ErrorMessage = "Please fill User Name")]
         public string UserName { get; set; }
@@ -30,7 +30,7 @@ namespace Klinik.Entities.Account
 
         public int GudangID { get; set; }
 
-        public AccountModel()
+        public AccountModelSession()
         {
             Roles = new List<long>();
             Privileges = new RolePrivilegeModel();

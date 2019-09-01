@@ -11,6 +11,7 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using System.Linq;
+using Klinik.Features.Account;
 
 namespace Klinik.Web.Controllers
 {
@@ -156,6 +157,7 @@ namespace Klinik.Web.Controllers
 
 				if (response.Entity.Privileges.PrivilegeIDs != null)
 				{
+                    OneLoginSession.Account = response.Entity;
 					IList<MenuModel> Menu = new MenuHandler(_unitOfWork).GetMenuBasedOnPrivilege(response.Entity.Privileges.PrivilegeIDs);
 					Session["AuthMenu"] = Menu;
 					if (Menu.Any(x => x.Name == "VIEW_POLI_PATIENT_LIST"))
@@ -185,7 +187,8 @@ namespace Klinik.Web.Controllers
 			{
 				HttpContext.Session.Clear();
 				Session.Abandon();
-				return RedirectToAction("Login", "Account");
+                OneLoginSession.Account = new AccountModel();
+                return RedirectToAction("Login", "Account");
 			}
 			catch (Exception)
 			{

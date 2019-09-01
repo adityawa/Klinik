@@ -137,7 +137,7 @@ namespace Klinik.Web.Controllers
                     };
 
                     ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
-                    purchaserequestdetailrequest.Data.namabarang = purchaserequestdetailrequest.Data.namabarang != null ? purchaserequestdetailrequest.Data.namabarang : namabarang.Entity.Name ;
+                    purchaserequestdetailrequest.Data.namabarang = namabarang.Entity.Name ;
                     PurchaseRequestDetailResponse _purchaserequestdetailresponse = new PurchaseRequestDetailResponse();
                     new PurchaseRequestDetailValidator(_unitOfWork).Validate(purchaserequestdetailrequest, out _purchaserequestdetailresponse);
                 }
@@ -256,6 +256,26 @@ namespace Klinik.Web.Controllers
             purchaserequestdetailrequest.Data.namabarang = purchaserequestdetailrequest.Data.namabarang != null ? purchaserequestdetailrequest.Data.namabarang : namabarang.Entity.Name;
             new PurchaseRequestDetailValidator(_unitOfWork).Validate(purchaserequestdetailrequest, out _purchaserequestdetailresponse);
             return Json(new { data = _purchaserequestdetailresponse.Data }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region ::PURCHASEREQUESTADDNEWPROCUT::
+        [CustomAuthorize("ADD_M_PURCHASEORDER", "EDIT_M_PURCHASEORDER")]
+        [HttpPost]
+        public JsonResult CreateOrEditNewProduct(ProductModel productRequest)
+        {
+            if (Session["UserLogon"] != null)
+                productRequest.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new ProductRequest
+            {
+                Data = productRequest
+            };
+
+            ProductResponse _response = new ProductResponse();
+
+            new ProductValidator(_unitOfWork).Validate(request, out _response);
+            return Json(new { data = _response.Entity }, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

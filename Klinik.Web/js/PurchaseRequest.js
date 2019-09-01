@@ -7,6 +7,7 @@
         Klinik.checkednewproduct();
         Klinik.total();
         Klinik.saverowPurchaseorderDetail();
+        Klinik.CreateNewProduct();
     },
 
     total: function () {
@@ -24,6 +25,8 @@
     autocompleteProductOne: function () {
         var el = $("#namabarang");
         if (!el.length) return;
+
+        var buttonaddnew = '<button class="add-product">Add New</button>';
 
         $('#namabarang').select2({
             width: 'resolve',
@@ -133,7 +136,10 @@
             $('#reason_add').val('');
             $('#nama_by_ho').val('');
             $('#namabarang').select2('data', null)
-            $('#namabarang').text('');
+            $('#namabarang').text('').show();
+            $('#newproductname').val('').hide();
+            $('#namabarang').prop('checked', false);
+            $('.addnewproduct').hide();
             Klinik.autocompleteProductOne();
 
         });
@@ -150,13 +156,11 @@
             $("#tblPurchaseOrder TBODY TR").each(function () {
                 var row = $(this);
                 var purchaseRequestDetail = {};
-                //alert(row.find("TD").eq(2).html());
+                var newproductid = 0;
+
                 purchaseRequestDetail.Id = row.find("TD").eq(0).html();
                 purchaseRequestDetail.ProductId = row.closest('tr').find('td:eq(2) select').val() > 0 ? row.closest('tr').find('td:eq(2) select').val() : row.find("TD").eq(1).html();
-                if (row.find("TD").eq(12).html() == "true") {
-                    purchaseRequestDetail.namabarang = row.find("TD").eq(2).html();
-                    alert('asdf')
-                }
+                
                 purchaseRequestDetail.tot_pemakaian = row.closest('tr').find('td:eq(3) input').length > 0 ? row.closest('tr').find('td:eq(3) input').val() : row.find("TD").eq(3).html();
                 purchaseRequestDetail.sisa_stok = row.closest('tr').find('td:eq(4) input').length > 0 ? row.closest('tr').find('td:eq(4) input').val() : row.find("TD").eq(4).html();
                 purchaseRequestDetail.qty = row.closest('tr').find('td:eq(5) input').length > 0 ? row.closest('tr').find('td:eq(5) input').val() : row.find("TD").eq(5).html();
@@ -230,10 +234,12 @@
                 $("#namabarang").hide();
                 $(".select2").remove();
                 $("#newproductname").show();
+                $(".addnewproduct").show();
             } else {
                 $("#namabarang").show();
                 Klinik.autocompleteProductOne();
                 $("#newproductname").hide();
+                $(".addnewproduct").hide();
             }
         });
     },
@@ -277,6 +283,32 @@
                     row.find('select').prop('disabled', false);
                     row.find('.edit-purchaseorderdetail').show();
                     row.find('.delete-purchaseorderdetail').show();
+                }
+            });
+        });
+    },
+
+    CreateNewProduct: function () {
+
+        var el = $('.addnewproduct')
+        if (!el.length) return;
+
+        el.click(function () {
+            var productRequest = {};
+            productRequest.Name = $('#newproductname').val();
+            productRequest.ProductCategoryID = 1;
+            productRequest.ProductUnitID = 1;
+            productRequest.RetailPrice = 100000;
+            $.ajax({
+                type: "POST",
+                url: '/PurchaseRequest/CreateOrEditNewProduct',
+                data: JSON.stringify({ productRequest: productRequest }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    console.log(r.data.Id);
+                    $('#ProductId').val(r.data.Id);
+                    $('#nama_by_ho').val($('#newproductname').val());
                 }
             });
         });
