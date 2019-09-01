@@ -149,7 +149,7 @@ namespace Klinik.Features
             if (qry != null)
             {
                 response.Entity = Mapper.Map<DeliveryOrder, DeliveryOrderModel>(qry);
-                response.Entity.gudangasal = qry.Gudang1.name;
+                response.Entity.gudangasal = qry.Gudang1 != null ? qry.Gudang1.name : "";
                 response.Entity.gudangtujuan = qry.Gudang.name;
 
                 foreach (var item in qry.DeliveryOrderDetails)
