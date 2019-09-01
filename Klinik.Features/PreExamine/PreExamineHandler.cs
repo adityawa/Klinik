@@ -81,6 +81,46 @@ namespace Klinik.Features
             return response;
         }
 
+        public PreExamineModel GetDetailNotPreExamine(long loketID)
+        {
+            var _getdetailQueuePoli = _unitOfWork.RegistrationRepository.GetById(loketID);
+            long formMedicalID = _getdetailQueuePoli.FormMedicalID.Value;
+
+            var _preexmodel = new PreExamineModel
+            {
+                DoctorID = _getdetailQueuePoli.DoctorID ?? 0,
+                FormMedicalID = formMedicalID,
+                strTransDate = _getdetailQueuePoli.TransactionDate.ToString("dd/MM/yyyy"),
+            };
+
+            //cek data preexamine
+            var _preExamineData = _unitOfWork.FormPreExamineRepository.GetFirstOrDefault(x => x.FormMedicalID == formMedicalID);
+            if (_preExamineData != null)
+            {
+                _preexmodel = Mapper.Map<FormPreExamine, PreExamineModel>(_preExamineData);
+                if (_preexmodel.strTransDate == "" || _preexmodel.strTransDate == null)
+                {
+                    _preexmodel.strTransDate = _getdetailQueuePoli.TransactionDate.ToString("dd/MM/yyyy");
+                }
+
+                if (_preExamineData.MenstrualDate != null)
+                {
+                    _preexmodel.strMenstrualDate = _preExamineData.MenstrualDate.Value.ToString("dd/MM/yyyy").Contains("1900") ? "" : _preExamineData.MenstrualDate.Value.ToString("dd/MM/yyyy");
+                }
+
+                if (_preExamineData.KBDate != null)
+                {
+                    _preexmodel.strKBDate = _preExamineData.KBDate.Value.ToString("dd/MM/yyyy").Contains("1900") ? "" : _preExamineData.KBDate.Value.ToString("dd/MM/yyyy");
+                }
+            }
+
+            _preexmodel.LoketData = Mapper.Map<QueuePoli, LoketModel>(_getdetailQueuePoli);
+
+          
+
+            return _preexmodel;
+        }
+
         public PreExamineResponse CreateOrEdit(PreExamineRequest request)
         {
             int resultAffected = 0;
@@ -190,6 +230,14 @@ namespace Klinik.Features
                     ErrorLog(ClinicEnums.Module.FormPreExamine, Constants.Command.EDIT_FORM_PREEXAMINE, request.Data.Account, ex);
                 else
                     ErrorLog(ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.ADD_NEW_FORM_PREEXAMINE, request.Data.Account, ex);
+            }
+
+            finally
+            {
+                var _entity = GetDetailNotPreExamine(request.Data.LoketData.Id);
+                if (response.Entity == null)
+                    response.Entity = new PreExamineModel();
+                response.Entity = _entity;
             }
             return response;
         }
