@@ -11,7 +11,6 @@
         </div>
         <h5 class="panel-title">
             @Klinik.Resources.UIMessages.DeliveryOrderList
-            <button id="btnAdd" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;@Klinik.Resources.UIMessages.AddNew</button>
         </h5>
     </header>
     <div class="panel-body">
@@ -36,10 +35,6 @@
 @section Scripts {
     <script type="text/javascript">
     $(document).ready(function () {
-
-        $('#btnAdd').click(function (e) {
-            window.location.href = "/DeliveryOrder/CreateOrEditDeliveryOrder";
-        });
 
         $('#tbProduct').dataTable({
             "autoWidth": false,
