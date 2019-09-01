@@ -179,7 +179,7 @@ namespace Klinik.Web.Controllers
         {
             if (Session["UserLogon"] != null)
                 _model.Account = (AccountModel)Session["UserLogon"];
-
+            var loketId = _model.LoketData.Id;
 
             var request = new PreExamineRequest
             {
@@ -191,7 +191,7 @@ namespace Klinik.Web.Controllers
             ViewBag.Response = $"{_response.Status};{_response.Message}";
             ViewBag.Doctors = BindDropDownDokter();
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
-            return View();
+            return View(_response.Entity);
         }
     }
 }
