@@ -368,6 +368,8 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="Status" Type="varchar" MaxLength="5" />
+          <Property Name="TanggalAmbilObat" Type="datetime" />
+          <Property Name="TanggalReadyObat" Type="datetime" />
         </EntityType>
         <EntityType Name="FormExamineService">
           <Key>
@@ -6223,6 +6225,8 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalAmbilObat" Type="DateTime" Precision="3" />
+          <Property Name="TanggalReadyObat" Type="DateTime" Precision="3" />
           <NavigationProperty Name="FormExamineMedicine" Relationship="KlinikDBModel.FK_FormExamineMedicineDetail_FormExamineMedicine" FromRole="FormExamineMedicineDetail" ToRole="FormExamineMedicine" />
         </EntityType>
         <Association Name="FK_FormExamineMedicineDetail_FormExamineMedicine">
@@ -7516,6 +7520,8 @@
           <EntitySetMapping Name="FormExamineMedicineDetails">
             <EntityTypeMapping TypeName="KlinikDBModel.FormExamineMedicineDetail">
               <MappingFragment StoreEntitySet="FormExamineMedicineDetail">
+                <ScalarProperty Name="TanggalReadyObat" ColumnName="TanggalReadyObat" />
+                <ScalarProperty Name="TanggalAmbilObat" ColumnName="TanggalAmbilObat" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />

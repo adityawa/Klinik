@@ -1146,4 +1146,10 @@
   <data name="Queue" xml:space="preserve">
     <value>Queue</value>
   </data>
+  <data name="AntrianPengambilanObat" xml:space="preserve">
+    <value>Antrian Pengambilan Obat</value>
+  </data>
+  <data name="ListObatPasien" xml:space="preserve">
+    <value>List Obat Pasien</value>
+  </data>
 </root>

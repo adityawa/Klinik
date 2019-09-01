@@ -5,4 +5,9 @@
 		Open,
         Waiting,
 	}
+
+    public enum StatusAmbilObat
+    {
+        R
+    }
 }

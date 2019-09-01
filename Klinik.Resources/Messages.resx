@@ -304,4 +304,7 @@ Administrator</value>
   <data name="PrescriptionProcessSuccess" xml:space="preserve">
     <value>Prescription Process Success</value>
   </data>
+  <data name="DataHasBeenUpdated" xml:space="preserve">
+    <value>Data has been Updated</value>
+  </data>
 </root>

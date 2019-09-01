@@ -181,7 +181,7 @@
         <AssociationConnector Association="KlinikDBModel.FK_stok_m_Product" />
         <AssociationConnector Association="KlinikDBModel.FK_stoks_m_Product" />
         <AssociationConnector Association="KlinikDBModel.FK_substitute_Product" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormExamineMedicineDetail" Width="1.5" PointX="18.75" PointY="65.625" />
+        <EntityTypeShape EntityType="KlinikDBModel.FormExamineMedicineDetail" Width="1.5" PointX="18.75" PointY="65.5" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicineDetail_FormExamineMedicine" />
         </Diagram>
     </edmx:Diagrams>

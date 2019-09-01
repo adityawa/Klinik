@@ -97,6 +97,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data has been Updated.
+        /// </summary>
+        public static string DataHasBeenUpdated {
+            get {
+                return ResourceManager.GetString("DataHasBeenUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data Successfully Saved.
         /// </summary>
         public static string DataSaved {

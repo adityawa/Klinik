@@ -82,6 +82,7 @@
     <Compile Include="HistoryProductInGudang\HistoryProductInGudangModel.cs" />
     <Compile Include="MasterData\GudangModel.cs" />
     <Compile Include="MasterData\VendorModel.cs" />
+    <Compile Include="Pharmacy\PengambilanObatModel.cs" />
     <Compile Include="Pharmacy\PharmacyModel.cs" />
     <Compile Include="Form\FormExamineAttachmentModel.cs" />
     <Compile Include="Form\FormExamineMedicineModel.cs" />

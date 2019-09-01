@@ -12,6 +12,7 @@ using Klinik.Common;
 using Klinik.Entities.Form;
 using AutoMapper;
 using Klinik.Entities.Pharmacy;
+using Newtonsoft.Json;
 
 namespace Klinik.Web.Controllers
 {
@@ -150,6 +151,11 @@ namespace Klinik.Web.Controllers
             return View();
         }
 
+        public ActionResult PengambilanObat()
+        {
+            return View();
+        }
+
         public ActionResult ModalPopUp()
         {
             return View();
@@ -218,6 +224,109 @@ namespace Klinik.Web.Controllers
             var response = new PharmacyHandler(_unitOfWork).GetListData(request);
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult GetListPengambilanObat()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new PharmacyRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip,
+                
+            };
+
+            if (Session["UserLogon"] != null)
+                request.Account = (AccountModel)Session["UserLogon"];
+
+            var response = new PharmacyHandler(_unitOfWork).GetListPengambilanObat(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ListAllGivenMedicine()
+        {
+            long _formMedId = 0;
+            if (Request.QueryString["frmmedid"] != null)
+            {
+                _formMedId = Convert.ToInt64(Request.QueryString["frmmedid"].ToString());
+            }
+            var _model = new FormExamineMedicineDetailModel
+            {
+
+            };
+            _model.IdDetailsChecked = new PharmacyHandler(_unitOfWork).GetMedicineWasReceivedByPatient(_formMedId);
+            return View(_model);
+        }
+
+        [HttpPost]
+        public ActionResult GetListObatPasien()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+         //   var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+          //  var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new PharmacyRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+              
+                PageSize = _pageSize,
+                Skip = _skip,
+
+            };
+
+            if (Session["UserLogon"] != null)
+                request.Account = (AccountModel)Session["UserLogon"];
+
+            long _formMedId = 0;
+            if (Request.QueryString["frmmedid"] != null)
+            {
+                _formMedId = Convert.ToInt64(Request.QueryString["frmmedid"].ToString());
+            }
+
+            if (request.Data == null)
+                request.Data = new PrescriptionModel();
+            request.Data.FormMedicalID = _formMedId;
+            var response = new PharmacyHandler(_unitOfWork).ListAllObat(request);
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateStatusObat()
+        {
+            var response = new PharmacyResponse();
+            var request = new PharmacyRequest
+            {
+                
+            };
+            if (Request.Form["idFrmMedDetail"] != null)
+                request.idSelectedobat = JsonConvert.DeserializeObject<List<long>>(Request.Form["idFrmMedDetail"]);
+            if (Session["UserLogon"] != null)
+                request.Account = (AccountModel)Session["UserLogon"];
+
+            response = new PharmacyHandler(_unitOfWork, _context).UpdateStatusObat(request);
+            return Json(new { Status = response.Status.ToString().TrimStart(), Message = response.Message }, JsonRequestBehavior.AllowGet);
         }
     }
 }
