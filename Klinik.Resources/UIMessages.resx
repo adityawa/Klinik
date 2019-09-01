@@ -1152,4 +1152,7 @@
   <data name="ListObatPasien" xml:space="preserve">
     <value>List Obat Pasien</value>
   </data>
+  <data name="TanggalPeriksa" xml:space="preserve">
+    <value>Tanggal Periksa</value>
+  </data>
 </root>

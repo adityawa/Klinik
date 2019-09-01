@@ -22,6 +22,7 @@
                     <tr>
                         <th>@Klinik.Resources.UIMessages.FormMedical</th>
                         <th>@Klinik.Resources.UIMessages.Name</th>
+                        <th>@Klinik.Resources.UIMessages.TanggalPeriksa</th>
                         <th>@Klinik.Resources.UIMessages.Action</th>
                     </tr>
                 </thead>
@@ -86,7 +87,7 @@
             "columns": [
 				{ "data": "FormMedicalID", "name": "FormMedicalID", "autoWidth": false },
 				{ "data": "PatientName", "name": "PatientName", "autoWidth": true },
-				
+				{ "data": "TglPeriksa", "name": "TglPeriksa", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta) {
                         return '<a class="btn btn-success" href="/Pharmacy/ListAllGivenMedicine?frmmedid=' + full.FormMedicalID + '">@Klinik.Resources.UIMessages.Process</a>';

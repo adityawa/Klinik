@@ -81,24 +81,6 @@ namespace Klinik.Web.Controllers
             foreach (var item in medicinelist)
             {
                 FormExamineMedicineModel medicineModel = Mapper.Map<FormExamineMedicine, FormExamineMedicineModel>(item);
-                //if (medicineModel.MedicineJenis != null)
-                //{
-                //    switch (medicineModel.MedicineJenis.ToLower())
-                //    {
-                //        case "racikan":
-                //            medicineModel.Process = "Racik";
-                //            break;
-
-                //        case "non racikan":
-                //            medicineModel.Process = "Request";
-                //            break;
-
-                //        default:
-                //            medicineModel.Process = string.Empty;
-                //            break;
-                //    }
-                //}
-
                
                 FormExamineMedicineDetail detail = _unitOfWork.FormExamineMedicineDetailRepository.Get(x => x.FormExamineMedicineID.Value == item.ID && x.RowStatus == 0).FirstOrDefault();
                 if (detail != null)
@@ -151,6 +133,7 @@ namespace Klinik.Web.Controllers
             return View();
         }
 
+        [CustomAuthorize("VIEW_PENGAMBILAN_OBAT")]
         public ActionResult PengambilanObat()
         {
             return View();
@@ -258,6 +241,7 @@ namespace Klinik.Web.Controllers
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
+        [CustomAuthorize("VIEW_PENGAMBILAN_OBAT")]
         public ActionResult ListAllGivenMedicine()
         {
             long _formMedId = 0;
@@ -270,6 +254,9 @@ namespace Klinik.Web.Controllers
 
             };
             _model.IdDetailsChecked = new PharmacyHandler(_unitOfWork).GetMedicineWasReceivedByPatient(_formMedId);
+            var _pasien = new PharmacyHandler(_unitOfWork).GetPatientDataBasedOnFrmMedical(_formMedId);
+            ViewBag.NamaPatient = _pasien.Name;
+            ViewBag.Birthdate = _pasien.BirthDateStr;
             return View(_model);
         }
 

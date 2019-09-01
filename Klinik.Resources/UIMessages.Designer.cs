@@ -2914,6 +2914,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tanggal Periksa.
+        /// </summary>
+        public static string TanggalPeriksa {
+            get {
+                return ResourceManager.GetString("TanggalPeriksa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Temperatur.
         /// </summary>
         public static string Temperature {

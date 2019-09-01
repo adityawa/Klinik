@@ -334,7 +334,7 @@ namespace Klinik.Features.Pharmacy
             var _get_frmExId = _unitOfWork.FormExamineRepository.Get(x => x.FormMedicalID == frmMedId).Select(x => x.ID).ToList();
             var _hdr = _unitOfWork.FormExamineMedicineRepository.Get(x => _get_frmExId.Contains(x.FormExamineID ?? 0));
             List<long> FrmExMedHdrIds = _hdr.Select(x => x.ID).ToList();
-            var selectedIds = _unitOfWork.FormExamineMedicineDetailRepository.Get(x => FrmExMedHdrIds.Contains(x.FormExamineMedicineID ?? 0) && x.Status!=null).Select(x => x.ID).ToList();
+            var selectedIds = _unitOfWork.FormExamineMedicineDetailRepository.Get(x => FrmExMedHdrIds.Contains(x.FormExamineMedicineID ?? 0) && x.Status != null).Select(x => x.ID).ToList();
             return selectedIds;
         }
 
@@ -420,6 +420,8 @@ namespace Klinik.Features.Pharmacy
 
             return response;
         }
+
+       
 
     }
 }

@@ -13,6 +13,7 @@ using Klinik.Entities.PreExamine;
 using Klinik.Entities.Poli;
 using Klinik.Entities.Letter;
 using Klinik.Entities.Pharmacy;
+using System;
 
 namespace Klinik.Common
 {
@@ -269,7 +270,8 @@ namespace Klinik.Common
 
             CreateMap<FormExamineMedicineDetail, PrescriptionModel>()
                 .ForMember(x => x.FormMedicalID, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.FormMedicalID))
-                .ForMember(x => x.PatientName, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.FormMedical.Patient.Name));
+                .ForMember(x => x.PatientName, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.FormMedical.Patient.Name))
+                .ForMember(x => x.TglPeriksa, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.TransDate == null ? "" : ((DateTime)p.FormExamineMedicine.FormExamine.TransDate).ToString("dd-MM-yyyy")));
         }
     }
 }
