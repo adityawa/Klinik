@@ -13,6 +13,8 @@ namespace Klinik.Features
 {
     public class ProductHandler : BaseFeatures, IBaseFeatures<ProductResponse, ProductRequest>
     {
+        private const string ORAL = "oral";
+        private const string CONCOCTION = "concoction";
         /// <summary>
         /// Constructor
         /// </summary>
@@ -142,9 +144,14 @@ namespace Klinik.Features
             List<ProductModel> lists = new List<ProductModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<Product>(true);
-
+          
             // add default filter to show the active data only
             searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
+            if (request.IsForShowInFarmasi == true)
+            {
+                searchPredicate = searchPredicate.And(x => x.Code != null);
+            }
+                
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
@@ -185,12 +192,22 @@ namespace Klinik.Features
                 qry = _unitOfWork.ProductRepository.Get(searchPredicate, null);
             }
 
+            var temp = (IEnumerable<Product>)qry;
+            var productIdS = temp.Select(x => x.ID).Distinct().ToList();
+            var gudangs = _unitOfWork.GudangRepository.Get(x => x.ClinicId == request.Data.Account.ClinicID).Select(x=>x.id).ToList();
+            var stockCollection = _unitOfWork.ProductInGudangRepository.Get(x => productIdS.Contains(x.ProductId??0) && gudangs.Contains(x.GudangId??0)).Select(x=>new {
+                x.ProductId,
+                x.stock
+            });
             foreach (var item in qry)
             {
-                var prData = Mapper.Map<Product, ProductModel>(item);
-
+                var prData = new ProductModel();
+                prData = Mapper.Map<Product, ProductModel>(item);
+                prData.stock =Convert.ToDecimal( stockCollection.SingleOrDefault(x => x.ProductId == prData.Id)==null?0: stockCollection.SingleOrDefault(x => x.ProductId == prData.Id).stock);
                 lists.Add(prData);
             }
+
+
 
             int totalRequest = lists.Count();
             var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();

@@ -19,7 +19,7 @@ namespace Klinik.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Messages {
@@ -93,6 +93,15 @@ namespace Klinik.Resources {
         public static string Company {
             get {
                 return ResourceManager.GetString("Company", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data has been Updated.
+        /// </summary>
+        public static string DataHasBeenUpdated {
+            get {
+                return ResourceManager.GetString("DataHasBeenUpdated", resourceCulture);
             }
         }
         
@@ -424,6 +433,15 @@ namespace Klinik.Resources {
         public static string PatientNotRegistered {
             get {
                 return ResourceManager.GetString("PatientNotRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prescription Process Success.
+        /// </summary>
+        public static string PrescriptionProcessSuccess {
+            get {
+                return ResourceManager.GetString("PrescriptionProcessSuccess", resourceCulture);
             }
         }
         

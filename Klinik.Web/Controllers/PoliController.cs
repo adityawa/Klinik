@@ -189,12 +189,15 @@ namespace Klinik.Web.Controllers
             string finalState,
             string poliToID,
             string doctorToID,
+            List<string> concoctionMedicineList,
             List<string> medicineList,
             List<string> injectionList,
             List<string> labList,
             List<string> radiologyList,
             List<string> serviceList)
         {
+            if (concoctionMedicineList == null)
+                concoctionMedicineList = new List<string>();
             if (medicineList == null)
                 medicineList = new List<string>();
             if (injectionList == null)
@@ -206,7 +209,7 @@ namespace Klinik.Web.Controllers
             if (serviceList == null)
                 serviceList = new List<string>();
 
-            PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, poliToID, doctorToID, medicineList, injectionList, labList, radiologyList, serviceList);
+            PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, poliToID, doctorToID, concoctionMedicineList, medicineList, injectionList, labList, radiologyList, serviceList);
             model.Account = Account;
 
             var request = new FormExamineRequest { Data = model, };
@@ -281,12 +284,12 @@ namespace Klinik.Web.Controllers
                     List<FormExamineMedicine> formExamineMedicines = _unitOfWork.FormExamineMedicineRepository.Get(x => x.FormExamineID == formExamine.ID);
                     foreach (var formExamineMedicine in formExamineMedicines)
                     {
-                        if (formExamineMedicine.TypeID == ((int)MedicineTypeEnum.Medicine).ToString())
+                        if (formExamineMedicine.TypeID == ((int)MedicineTypeEnum.Medicine).ToString() || formExamineMedicine.TypeID == ((int)MedicineTypeEnum.Concoction).ToString())
                             model.MedicineDataList.Add(Mapper.Map<FormExamineMedicine, FormExamineMedicineModel>(formExamineMedicine));
                         else if (formExamineMedicine.TypeID == ((int)MedicineTypeEnum.Injection).ToString())
                             model.InjectionDataList.Add(Mapper.Map<FormExamineMedicine, FormExamineMedicineModel>(formExamineMedicine));
-                        else if (formExamineMedicine.TypeID == ((int)MedicineTypeEnum.Concoction).ToString())
-                            model.ConcoctionMedicine = formExamineMedicine.ConcoctionMedicine;
+                        //else if (formExamineMedicine.TypeID == ((int)MedicineTypeEnum.Concoction).ToString())
+                        //    model.ConcoctionMedicine = formExamineMedicine.ConcoctionMedicine;
                     }
 
                     // get form examine lab and radiology if any
@@ -413,6 +416,7 @@ namespace Klinik.Web.Controllers
             string finalState,
             string poliToID,
             string doctorToID,
+            List<string> concoctionMedicineList,
             List<string> medicineList,
             List<string> injectionList,
             List<string> labList,
@@ -450,9 +454,27 @@ namespace Klinik.Web.Controllers
                     ProductID = int.Parse(values[0]),
                     FormExamineID = long.Parse(formExamineID),
                     Dose = values[1],
-					Qty = int.Parse(values[2]),					
-					RemarkUse = values[3],
+                    Qty = int.Parse(values[2]),
+                    RemarkUse = values[3],
                     TypeID = ((int)MedicineTypeEnum.Medicine).ToString()
+                };
+
+                model.MedicineDataList.Add(medModel);
+            }
+
+            //concoction Medicine
+            foreach (var item in concoctionMedicineList)
+            {
+                string[] values = item.Split('|');
+                FormExamineMedicineModel medModel = new FormExamineMedicineModel
+                {
+                    ConcoctionMedicine = values[0],
+                    FormExamineID = long.Parse(formExamineID),
+                    Dose = values[1],
+                    MedicineJenis = values[2],
+                    RemarkUse = values[3],
+                    Qty = Convert.ToDouble(values[4]),
+                    TypeID = ((int)MedicineTypeEnum.Concoction).ToString()
                 };
 
                 model.MedicineDataList.Add(medModel);

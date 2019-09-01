@@ -42,5 +42,7 @@ namespace Klinik.Entities.Pharmacy
         public string PaymentNumber { get; set; }
         public bool IsPreExamined { get; set; }
         public string PatientAge { get; set; }
+
+        public long FormExamineID { get; set; }
     }
 }

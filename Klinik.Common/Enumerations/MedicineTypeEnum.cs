@@ -4,7 +4,8 @@
     {
         Medicine = 1,
         Injection,
-        Concoction
+        Concoction,
+        REQUEST
     }
 }
 

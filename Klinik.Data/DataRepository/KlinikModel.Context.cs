@@ -30,6 +30,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Clinic> Clinics { get; set; }
         public virtual DbSet<DeliveryOrder> DeliveryOrders { get; set; }
+        public virtual DbSet<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
         public virtual DbSet<DeliveryOrderPusat> DeliveryOrderPusats { get; set; }
         public virtual DbSet<DeliveryOrderPusatDetail> DeliveryOrderPusatDetails { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
@@ -42,13 +43,13 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<FormExamine> FormExamines { get; set; }
         public virtual DbSet<FormExamineAttachment> FormExamineAttachments { get; set; }
         public virtual DbSet<FormExamineLab> FormExamineLabs { get; set; }
-        public virtual DbSet<FormExamineMedicine> FormExamineMedicines { get; set; }
         public virtual DbSet<FormExamineMedicineDetail> FormExamineMedicineDetails { get; set; }
         public virtual DbSet<FormExamineService> FormExamineServices { get; set; }
         public virtual DbSet<FormMedical> FormMedicals { get; set; }
         public virtual DbSet<FormPreExamine> FormPreExamines { get; set; }
         public virtual DbSet<GeneralMaster> GeneralMasters { get; set; }
         public virtual DbSet<Gudang> Gudangs { get; set; }
+        public virtual DbSet<HistoryProductInGudang> HistoryProductInGudangs { get; set; }
         public virtual DbSet<LabItem> LabItems { get; set; }
         public virtual DbSet<LabItemCategory> LabItemCategories { get; set; }
         public virtual DbSet<Letter> Letters { get; set; }
@@ -80,21 +81,20 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<PurchaseOrderPusat> PurchaseOrderPusats { get; set; }
         public virtual DbSet<PurchaseOrderPusatDetail> PurchaseOrderPusatDetails { get; set; }
         public virtual DbSet<PurchaseRequest> PurchaseRequests { get; set; }
+        public virtual DbSet<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
         public virtual DbSet<PurchaseRequestPusat> PurchaseRequestPusats { get; set; }
         public virtual DbSet<PurchaseRequestPusatDetail> PurchaseRequestPusatDetails { get; set; }
         public virtual DbSet<QueuePoli> QueuePolis { get; set; }
         public virtual DbSet<RolePrivilege> RolePrivileges { get; set; }
         public virtual DbSet<Service> Services { get; set; }
-        public virtual DbSet<SuratRujukanLabKeluar> SuratRujukanLabKeluars { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UserRole> UserRoles { get; set; }
-        public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<stok> stoks { get; set; }
         public virtual DbSet<stok_bulanan> stok_bulanan { get; set; }
         public virtual DbSet<stok1> stoks1 { get; set; }
         public virtual DbSet<substitute> substitutes { get; set; }
-        public virtual DbSet<HistoryProductInGudang> HistoryProductInGudangs { get; set; }
-        public virtual DbSet<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
-        public virtual DbSet<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
+        public virtual DbSet<SuratRujukanLabKeluar> SuratRujukanLabKeluars { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<Vendor> Vendors { get; set; }
+        public virtual DbSet<FormExamineMedicine> FormExamineMedicines { get; set; }
     }
 }

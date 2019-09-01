@@ -301,4 +301,10 @@ Administrator</value>
   <data name="MedicineRequestInvalid" xml:space="preserve">
     <value>Process ( Request ) is invalid. Its medicine name should be blank</value>
   </data>
+  <data name="PrescriptionProcessSuccess" xml:space="preserve">
+    <value>Prescription Process Success</value>
+  </data>
+  <data name="DataHasBeenUpdated" xml:space="preserve">
+    <value>Data has been Updated</value>
+  </data>
 </root>

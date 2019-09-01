@@ -169,6 +169,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Antrian Pengambilan Obat.
+        /// </summary>
+        public static string AntrianPengambilanObat {
+            get {
+                return ResourceManager.GetString("AntrianPengambilanObat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Approve.
         /// </summary>
         public static string Approve {
@@ -1533,6 +1542,15 @@ namespace Klinik.Resources {
         public static string Level {
             get {
                 return ResourceManager.GetString("Level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List Obat Pasien.
+        /// </summary>
+        public static string ListObatPasien {
+            get {
+                return ResourceManager.GetString("ListObatPasien", resourceCulture);
             }
         }
         
@@ -2946,6 +2964,15 @@ namespace Klinik.Resources {
         public static string TakeMedicineReferenceLetter {
             get {
                 return ResourceManager.GetString("TakeMedicineReferenceLetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tanggal Periksa.
+        /// </summary>
+        public static string TanggalPeriksa {
+            get {
+                return ResourceManager.GetString("TanggalPeriksa", resourceCulture);
             }
         }
         

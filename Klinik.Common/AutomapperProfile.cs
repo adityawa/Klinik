@@ -12,12 +12,17 @@ using Klinik.Entities.Form;
 using Klinik.Entities.PreExamine;
 using Klinik.Entities.Poli;
 using Klinik.Entities.Letter;
+
 using Klinik.Entities.PurchaseOrder;
 using Klinik.Entities.PurchaseOrderDetail;
 using Klinik.Entities.PurchaseRequestDetail;
 using Klinik.Entities.PurchaseRequest;
 using Klinik.Entities.DeliveryOrder;
 using Klinik.Entities.DeliveryOrderDetail;
+
+using Klinik.Entities.Pharmacy;
+using System;
+
 
 namespace Klinik.Common
 {
@@ -201,9 +206,12 @@ namespace Klinik.Common
             CreateMap<FormExamineServiceModel, FormExamineService>();
             CreateMap<FormExamineService, FormExamineServiceModel>();
 
-            CreateMap<FormExamineMedicineModel, FormExamineMedicine>();
+            CreateMap<FormExamineMedicineModel, FormExamineMedicine>()
+                .ForMember(x => x.JenisObat, map => map.MapFrom(p => p.MedicineJenis));
+
             CreateMap<FormExamineMedicine, FormExamineMedicineModel>()
-                .ForMember(x => x.ProductName, map => map.MapFrom(p => p.Product.Name));
+                .ForMember(x => x.ProductName, map => map.MapFrom(p => p.TypeID != "1" ? p.ConcoctionMedicine : p.Product.Name))
+                .ForMember(x => x.MedicineJenis, map => map.MapFrom(p => p.JenisObat));
 
             CreateMap<LoketModel, PoliExamineModel>();
 
@@ -213,7 +221,9 @@ namespace Klinik.Common
 
 
             CreateMap<ProductModel, Product>();
+
             CreateMap<Product, ProductModel>();
+               
 
             CreateMap<ProductUnitModel, ProductUnit>();
             CreateMap<ProductUnit, ProductUnitModel>();
@@ -264,6 +274,7 @@ namespace Klinik.Common
             CreateMap<PanggilanPoliModel, PanggilanPoli>();
             CreateMap<PanggilanPoli, PanggilanPoliModel>();
 
+
 			CreateMap<FormExamineMedicineDetail, FormExamineMedicineDetailModel>();				
 			CreateMap<FormExamineMedicineDetailModel, FormExamineMedicineDetail>();
 
@@ -299,6 +310,15 @@ namespace Klinik.Common
                 .ForMember(m => m.prdate, map => map.MapFrom(p => p.PurchaseOrder.PurchaseRequest.prdate))
                 .ForMember(m => m.prrequestby, map => map.MapFrom(p => p.PurchaseOrder.PurchaseRequest.request_by))
                 .ForMember(m => m.processby, map => map.MapFrom(p => p.PurchaseOrder.ModifiedBy));
+
+            CreateMap<FormExamineMedicineDetail, FormExamineMedicineDetailModel>();
+            CreateMap<FormExamineMedicineDetailModel, FormExamineMedicineDetail>();
+
+            CreateMap<FormExamineMedicineDetail, PrescriptionModel>()
+                .ForMember(x => x.FormMedicalID, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.FormMedicalID))
+                .ForMember(x => x.PatientName, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.FormMedical.Patient.Name))
+                .ForMember(x => x.TglPeriksa, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.TransDate == null ? "" : ((DateTime)p.FormExamineMedicine.FormExamine.TransDate).ToString("dd-MM-yyyy")));
+
         }
     }
 }
