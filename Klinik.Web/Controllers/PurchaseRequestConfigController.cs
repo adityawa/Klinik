@@ -1,6 +1,7 @@
 ﻿using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Entities.Account;
 using Klinik.Entities.PurchaseRequestConfig;
 using Klinik.Features;
 using System;
@@ -82,6 +83,43 @@ namespace Klinik.Web.Controllers
                 ViewBag.ActionType = ClinicEnums.Action.Add;
                 return View();
             }
+        }
+
+        [CustomAuthorize("ADD_M_PURCHASEREQUESTCONFIG", "EDIT_M_PURCHASEREQUESTCONFIG")]
+        [HttpPost]
+        public ActionResult CreateOrEditPurchaseRequest(PurchaseRequestConfigModel _purchaserequestconfig)
+        {
+            _purchaserequestconfig.Account = (AccountModel)Session["UserLogon"];
+            var request = new PurchaseRequestConfigRequest
+            {
+                Data = _purchaserequestconfig
+            };
+
+            PurchaseRequestConfigResponse _response = new PurchaseRequestConfigResponse();
+
+            new PurchaseRequestConfigValidator(_unitOfWork).Validate(request, out _response);
+
+            return RedirectToAction("PurchaseRequestConfigList");
+        }
+
+        [CustomAuthorize("DELETE_M_PURCHASEREQUESTCONFIG")]
+        [HttpPost]
+        public JsonResult DeletePurchaseRequestConfig(int id)
+        {
+            PurchaseRequestConfigResponse _response = new PurchaseRequestConfigResponse();
+            var request = new PurchaseRequestConfigRequest
+            {
+                Data = new PurchaseRequestConfigModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            new PurchaseRequestConfigValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
     }
 }

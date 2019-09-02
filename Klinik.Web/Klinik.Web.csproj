@@ -1536,11 +1536,12 @@
     <Content Include="Views\MasterData\CreateOrEditProductInGudang.cshtml" />
     <Content Include="Views\Pharmacy\PengambilanObat.cshtml" />
     <Content Include="Views\Pharmacy\ListAllGivenMedicine.cshtml" />
+    <Content Include="Views\PurchaseRequestConfig\PurchaseRequestConfigList.cshtml" />
+    <Content Include="Views\PurchaseRequestConfig\CreateOrEditPurchaseRequestConfig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\General\" />
-    <Folder Include="Views\PurchaseRequestConfig\" />
     <Folder Include="Views\Vendor\" />
   </ItemGroup>
   <ItemGroup>

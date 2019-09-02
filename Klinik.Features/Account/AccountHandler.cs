@@ -55,7 +55,7 @@ namespace Klinik.Features
                         response.Entity.EmployeeID = _getByUname.EmployeeID ?? 0;
                         response.Entity.Organization = _getOrganization.OrgCode;
                         response.Entity.ClinicID = _getOrganization.KlinikID ?? 0;
-                        response.Entity.GudangID =   gudangid.id > 0 ? gudangid.id : 0;
+                        response.Entity.GudangID =   gudangid != null ? gudangid.id : 0;
                         var _getRoles = _unitOfWork.UserRoleRepository.Get(x => x.UserID == response.Entity.UserID);
 
                         foreach (var role in _getRoles)

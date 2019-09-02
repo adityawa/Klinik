@@ -54,6 +54,7 @@ namespace Klinik.Features
                     var insertdata = Mapper.Map<PurchaseRequestConfigModel, Data.DataRepository.PurchaseRequestConfig>(request.Data);
                     insertdata.CreatedBy = request.Data.Account.UserCode;
                     insertdata.CreatedDate = DateTime.Now;
+                    insertdata.GudangId = OneLoginSession.Account.GudangID;
 
                     _unitOfWork.PurchaseRequestConfigRepository.Insert(insertdata);
 
@@ -144,7 +145,44 @@ namespace Klinik.Features
 
         public PurchaseRequestConfigResponse RemoveData(PurchaseRequestConfigRequest request)
         {
-            throw new NotImplementedException();
+            PurchaseRequestConfigResponse response = new PurchaseRequestConfigResponse();
+
+            try
+            {
+                var purchaseorderconfig = _unitOfWork.PurchaseRequestConfigRepository.GetById(request.Data.Id);
+                if (purchaseorderconfig.id > 0)
+                {
+                    purchaseorderconfig.RowStatus = -1;
+                    purchaseorderconfig.ModifiedBy = request.Data.Account.UserCode;
+                    purchaseorderconfig.ModifiedDate = DateTime.Now;
+
+                    _unitOfWork.PurchaseRequestConfigRepository.Update(purchaseorderconfig);
+                    int resultAffected = _unitOfWork.Save();
+                    if (resultAffected > 0)
+                    {
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "Gudang", purchaseorderconfig.Gudang.name, purchaseorderconfig.id);
+                    }
+                    else
+                    {
+                        response.Status = false;
+                        response.Message = string.Format(Messages.RemoveObjectFailed, "Config");
+                    }
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = string.Format(Messages.RemoveObjectFailed, "Config");
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = Messages.GeneralError;
+
+                ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDER, ClinicEnums.Action.APPROVE.ToString(), request.Data.Account, ex);
+            }
+
+            return response;
         }
     }
 }
