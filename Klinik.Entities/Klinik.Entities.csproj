@@ -138,6 +138,7 @@
     <Compile Include="PurchaseOrderPusatDetail\PurchaseOrderPusatDetailModel.cs" />
     <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatModel.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderModel.cs" />
+    <Compile Include="PurchaseRequestConfig\PurchaseRequestConfigModel.cs" />
     <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailModel.cs" />
     <Compile Include="PurchaseRequestPusatDetail\PurchaseRequestPusatDetailModel.cs" />
     <Compile Include="PurchaseRequestPusat\PurchaseRequestPusatModel.cs" />

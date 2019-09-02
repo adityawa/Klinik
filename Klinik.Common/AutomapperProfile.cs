@@ -317,7 +317,12 @@ namespace Klinik.Common
             CreateMap<FormExamineMedicineDetail, PrescriptionModel>()
                 .ForMember(x => x.FormMedicalID, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.FormMedicalID))
                 .ForMember(x => x.PatientName, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.FormMedical.Patient.Name))
-                .ForMember(x => x.TglPeriksa, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.TransDate == null ? "" : ((DateTime)p.FormExamineMedicine.FormExamine.TransDate).ToString("dd-MM-yyyy")));
+                .ForMember(x => x.TglPeriksa, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.TransDate == null ? "" : 
+                ((DateTime)p.FormExamineMedicine.FormExamine.TransDate).ToString("dd-MM-yyyy")));
+
+            CreateMap<PurchaseRequestConfig, PurchaseRequestModel>();
+            CreateMap<PurchaseRequestModel, PurchaseRequestConfig> ();
+
 
         }
     }

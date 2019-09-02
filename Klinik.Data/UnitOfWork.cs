@@ -72,6 +72,8 @@ namespace Klinik.Data
         private IGenericRepository<PanggilanPoli> _panggilanPoliRepository;
 		private IGenericRepository<FormExamineMedicineDetail> _formExamineMedicineDetailRepository;
 
+        private IGenericRepository<PurchaseRequestConfig> _purchaseRequestConfigRepository;
+
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
@@ -725,6 +727,16 @@ namespace Klinik.Data
                 if (_historyprodcutingudangRepository == null)
                     _historyprodcutingudangRepository = new GenericRepository<HistoryProductInGudang>(_context);
                 return _historyprodcutingudangRepository;
+            }
+        }
+
+        public IGenericRepository<PurchaseRequestConfig> PurchaseRequestConfigRepository
+        {
+            get
+            {
+                if (_purchaseRequestConfigRepository == null)
+                    _purchaseRequestConfigRepository = new GenericRepository<PurchaseRequestConfig>(_context);
+                return _purchaseRequestConfigRepository;
             }
         }
 
