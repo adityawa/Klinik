@@ -193,6 +193,8 @@
 
             getdata.find('input[type="checkbox"]').prop('disabled', false);
             $(this).hide();
+            getdata.find('td:eq(10) input[type="text"]').prop('disabled', false);
+            getdata.find('td:eq(11) input[type="text"]').prop('disabled', false);
             getdata.find('.save-purchaseorderdetail').show();
         });
     },
@@ -281,6 +283,7 @@
             var row = $(this).closest('tr');
             row.find('.delete-purchaseorderdetail').hide();
             row.find('.image-loading').show();
+            row.find('.subtitusi').hide();
             var purchaseOrderDetail = {};
             purchaseOrderDetail.Id = row.find("TD").eq(0).html();
             purchaseOrderDetail.ProductId = row.closest('tr').find('td:eq(2) select').val() > 0 ? row.closest('tr').find('td:eq(2) select').val() : row.find("TD").eq(1).html();
@@ -305,6 +308,7 @@
                     $('.image-loading').hide();
                     row.find('.edit-purchaseorderdetail').show();
                     row.find('.delete-purchaseorderdetail').show();
+                    row.find('.subtitusi').show();
                     row.find('input[type="checkbox"]').prop('disabled', true);
                 }
             });

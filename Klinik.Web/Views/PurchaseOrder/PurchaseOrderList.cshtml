@@ -113,10 +113,10 @@
                         var approve = full.approve != null ? "" : " | <button class='btn btn-success btn-xs' onclick='Approve(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Approve</button>";
                         
 
-                        if (@GeneralHandler.authorized("VALIDATION_M_PURCHASEORDER")) {
+                        if (!@GeneralHandler.authorized("VALIDATION_M_PURCHASEORDER")) {
                             valisasi = "";
                         }
-                        if (@GeneralHandler.authorized("APPROVE_M_PURCHASEORDER")) {
+                        if (!@GeneralHandler.authorized("APPROVE_M_PURCHASEORDER")) {
                             approve = "";
                         }
                         var button = valisasi + approve;
