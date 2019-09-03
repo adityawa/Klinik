@@ -22,7 +22,7 @@ using Klinik.Entities.DeliveryOrderDetail;
 
 using Klinik.Entities.Pharmacy;
 using System;
-
+using Klinik.Entities.PurchaseRequestConfig;
 
 namespace Klinik.Common
 {
@@ -320,8 +320,8 @@ namespace Klinik.Common
                 .ForMember(x => x.TglPeriksa, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.TransDate == null ? "" : 
                 ((DateTime)p.FormExamineMedicine.FormExamine.TransDate).ToString("dd-MM-yyyy")));
 
-            CreateMap<PurchaseRequestConfig, PurchaseRequestModel>();
-            CreateMap<PurchaseRequestModel, PurchaseRequestConfig> ();
+            CreateMap<PurchaseRequestConfig, PurchaseRequestConfigModel>();
+            CreateMap<PurchaseRequestConfigModel, PurchaseRequestConfig> ();
 
 
         }
