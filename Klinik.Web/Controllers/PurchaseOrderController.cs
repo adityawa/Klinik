@@ -59,6 +59,11 @@ namespace Klinik.Web.Controllers
             };
 
             var response = new PurchaseOrderHandler(_unitOfWork).GetListData(request);
+            var check = GeneralHandler.authorized("VALIDATION_M_PURCHASEORDER");
+            if (GeneralHandler.authorized("VALIDATION_M_PURCHASEORDER") == "false" && GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "false")
+            {
+                response.Data.Where(a => a.approve != null);
+            }
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
@@ -155,7 +160,7 @@ namespace Klinik.Web.Controllers
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
 
-        [CustomAuthorize("EDIT_M_DELIVERYORDER")]
+        [CustomAuthorize("APPROVE_M_PURCHASEORDER")]
         [HttpPost]
         public JsonResult ApprovePurchaseOrder(int id)
         {
@@ -175,7 +180,7 @@ namespace Klinik.Web.Controllers
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
 
-        [CustomAuthorize("EDIT_M_PURCHASEREQUEST")]
+        [CustomAuthorize("VALIDATION_M_PURCHASEORDER")]
         [HttpPost]
         public JsonResult ValidationPurchaseOrder(int id)
         {

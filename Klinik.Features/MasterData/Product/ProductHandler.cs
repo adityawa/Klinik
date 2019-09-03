@@ -3,6 +3,7 @@ using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.MasterData;
+using Klinik.Features.Account;
 using Klinik.Resources;
 using LinqKit;
 using System;
@@ -141,6 +142,7 @@ namespace Klinik.Features
         /// <returns></returns>
         public ProductResponse GetListData(ProductRequest request)
         {
+            request.Data.Account = OneLoginSession.Account;
             List<ProductModel> lists = new List<ProductModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<Product>(true);

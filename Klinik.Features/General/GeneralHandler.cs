@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Klinik.Data.DataRepository;
+using Klinik.Entities.Account;
+using Klinik.Features.Account;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +12,7 @@ namespace Klinik.Features
 {
     public class GeneralHandler
     {
+        private static string[] _privilege_names;
         public static string FormatDate(DateTime dateTime)
         {
            return dateTime.ToString("MM/dd/yy");
@@ -36,6 +40,24 @@ namespace Klinik.Features
             }
             string prnumber = zerofinal + Convert.ToString(newprnumber);
             return prnumber; 
+        }
+
+        public static string authorized(params string[] privilege_name)
+        {
+            var _context = new KlinikDBEntities();
+            _privilege_names = privilege_name;
+            var account = OneLoginSession.Account;
+            string IsAuthorized = "true";
+            List<long> PrivilegeIds = account.Privileges.PrivilegeIDs;
+            var _getPrivilegeName = _context.Privileges.Where(x => PrivilegeIds.Contains(x.ID)).Select(x => x.Privilege_Name);
+
+            var cek_authorizes = _getPrivilegeName.Where(p => _privilege_names.Contains(p.ToString()));
+            if (cek_authorizes.Any())
+            {
+                IsAuthorized = "false";
+            }
+
+            return IsAuthorized;
         }
     }
 }
