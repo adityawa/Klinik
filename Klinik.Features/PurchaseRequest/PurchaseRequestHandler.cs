@@ -252,7 +252,8 @@ namespace Klinik.Features
                     Validasi = item.Validasi,
                     Recived = item.PurchaseOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.FirstOrDefault().Recived : 0 : 0,
                     namaklinik = _context.Users.Where(x => x.UserName == item.request_by).FirstOrDefault().Organization.Clinic != null ? _context.Users.Where(x => x.UserName == item.request_by).FirstOrDefault().Organization.Clinic.Name : "",
-                    createformat = GeneralHandler.FormatDate(Convert.ToDateTime(item.CreatedDate))
+                    createformat = GeneralHandler.FormatDate(Convert.ToDateTime(item.CreatedDate)),
+                    Account = OneLoginSession.Account
                 };
 
                 lists.Add(prData);

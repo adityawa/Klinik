@@ -60,7 +60,11 @@ namespace Klinik.Web.Controllers
                 SortColumn = _sortColumn,
                 SortColumnDir = _sortColumnDir,
                 PageSize = _pageSize,
-                Skip = _skip
+                Skip = _skip,
+                Data = new PurchaseRequestModel
+                {
+                    Account = (AccountModel)Session["UserLogon"]
+                }
             };
 
             var response = new PurchaseRequestHandler(_unitOfWork).GetListData(request);
@@ -165,7 +169,7 @@ namespace Klinik.Web.Controllers
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
 
-        [CustomAuthorize("EDIT_M_PURCHASEREQUEST")]
+        [CustomAuthorize("APPROVE_M_PURCHASEREQUEST")]
         [HttpPost]
         public JsonResult ApprovePurchaseRequest(int id)
         {
@@ -185,7 +189,7 @@ namespace Klinik.Web.Controllers
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
 
-        [CustomAuthorize("EDIT_M_PURCHASEREQUEST")]
+        [CustomAuthorize("VALIDATION_M_PURCHASEREQUEST")]
         [HttpPost]
         public JsonResult ValidationPurchaseRequest(int id)
         {

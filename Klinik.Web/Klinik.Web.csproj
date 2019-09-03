@@ -258,6 +258,7 @@
     <Compile Include="Controllers\PreExamineController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\PurchaseOrderPusatController.cs" />
+    <Compile Include="Controllers\PurchaseRequestConfigController.cs" />
     <Compile Include="Controllers\PurchaseRequestController.cs" />
     <Compile Include="Controllers\PurchaseRequestPusatController.cs" />
     <Compile Include="Controllers\RadiologiController.cs" />
@@ -1543,6 +1544,10 @@
     <Content Include="Views\Pharmacy\PengambilanObat.cshtml" />
     <Content Include="Views\Pharmacy\ListAllGivenMedicine.cshtml" />
     <Content Include="Views\Shared\_Layout_1.cshtml" />
+
+    <Content Include="Views\PurchaseRequestConfig\PurchaseRequestConfigList.cshtml" />
+    <Content Include="Views\PurchaseRequestConfig\CreateOrEditPurchaseRequestConfig.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AppConfig">
           <Key>
             <PropertyRef Name="ID" />
@@ -998,6 +998,19 @@
           <Property Name="statusop" Type="int" />
           <Property Name="Validasi" Type="int" />
           <Property Name="GudangId" Type="int" />
+        </EntityType>
+        <EntityType Name="PurchaseRequestConfig">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GudangId" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="20" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+          <Property Name="RowStatus" Type="int" />
         </EntityType>
         <EntityType Name="PurchaseRequestDetail">
           <Key>
@@ -2258,6 +2271,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PurchaseRequestConfig_Gudang">
+          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
+          <End Role="PurchaseRequestConfig" Type="Self.PurchaseRequestConfig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestConfig">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PurchaseRequestDetail_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
           <End Role="PurchaseRequestDetail" Type="Self.PurchaseRequestDetail" Multiplicity="*" />
@@ -2616,6 +2641,7 @@
           <EntitySet Name="PurchaseOrderPusat" EntityType="Self.PurchaseOrderPusat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseOrderPusatDetail" EntityType="Self.PurchaseOrderPusatDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseRequest" EntityType="Self.PurchaseRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseRequestConfig" EntityType="Self.PurchaseRequestConfig" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseRequestDetail" EntityType="Self.PurchaseRequestDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseRequestPusat" EntityType="Self.PurchaseRequestPusat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseRequestPusatDetail" EntityType="Self.PurchaseRequestPusatDetail" Schema="dbo" store:Type="Tables" />
@@ -2970,6 +2996,10 @@
             <End Role="Gudang" EntitySet="Gudang" />
             <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
           </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestConfig_Gudang" Association="Self.FK_PurchaseRequestConfig_Gudang">
+            <End Role="Gudang" EntitySet="Gudang" />
+            <End Role="PurchaseRequestConfig" EntitySet="PurchaseRequestConfig" />
+          </AssociationSet>
           <AssociationSet Name="FK_PurchaseRequestDetail_Product" Association="Self.FK_PurchaseRequestDetail_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetail" />
@@ -3071,7 +3101,8 @@
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KlinikDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -3436,8 +3467,8 @@
           <NavigationProperty Name="FormMedical" Relationship="Self.FK_FormExamine_FormMedical" FromRole="FormExamine" ToRole="FormMedical" />
           <NavigationProperty Name="Poli" Relationship="Self.FK_FormExamine_Poli" FromRole="FormExamine" ToRole="Poli" />
           <NavigationProperty Name="FormExamineAttachments" Relationship="Self.FK_FormExamineAttachment_FormExamine" FromRole="FormExamine" ToRole="FormExamineAttachment" />
+          <NavigationProperty Name="FormExamineMedicines" Relationship="Self.FK_FormExamineMedicine_FormExamine" FromRole="FormExamine" ToRole="FormExamineMedicine" />
           <NavigationProperty Name="FormExamineServices" Relationship="Self.FK_FormExamineService_FormExamine" FromRole="FormExamine" ToRole="FormExamineService" />
-          <NavigationProperty Name="FormExamineMedicines" Relationship="KlinikDBModel.FK_FormExamineMedicine_FormExamine" FromRole="FormExamine" ToRole="FormExamineMedicine" />
         </EntityType>
         <EntityType Name="FormExamineAttachment">
           <Key>
@@ -3472,6 +3503,28 @@
           <NavigationProperty Name="FormMedical" Relationship="Self.FK_FormExamineLab_FormMedical" FromRole="FormExamineLab" ToRole="FormMedical" />
           <NavigationProperty Name="LabItem" Relationship="Self.FK_FormExamineLab_LabItem" FromRole="FormExamineLab" ToRole="LabItem" />
         </EntityType>
+        <EntityType Name="FormExamineMedicine">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormExamineID" Type="Int64" />
+          <Property Name="TypeID" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="Qty" Type="Double" />
+          <Property Name="Dose" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ConcoctionMedicine" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RemarkUse" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="JenisObat" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FormExamine" Relationship="Self.FK_FormExamineMedicine_FormExamine" FromRole="FormExamineMedicine" ToRole="FormExamine" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_FormExamineMedicine_Product" FromRole="FormExamineMedicine" ToRole="Product" />
+          <NavigationProperty Name="FormExamineMedicineDetails" Relationship="Self.FK_FormExamineMedicineDetail_FormExamineMedicine" FromRole="FormExamineMedicine" ToRole="FormExamineMedicineDetail" />
+        </EntityType>
         <EntityType Name="FormExamineMedicineDetail">
           <Key>
             <PropertyRef Name="ID" />
@@ -3488,10 +3541,10 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="FormExamineMedicine" Relationship="KlinikDBModel.FK_FormExamineMedicineDetail_FormExamineMedicine" FromRole="FormExamineMedicineDetail" ToRole="FormExamineMedicine" />
           <Property Name="Status" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="TanggalAmbilObat" Type="DateTime" Precision="3" />
           <Property Name="TanggalReadyObat" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="FormExamineMedicine" Relationship="Self.FK_FormExamineMedicineDetail_FormExamineMedicine" FromRole="FormExamineMedicineDetail" ToRole="FormExamineMedicine" />
         </EntityType>
         <EntityType Name="FormExamineService">
           <Key>
@@ -3606,6 +3659,7 @@
           <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_PurchaseOrder_Gudang" FromRole="Gudang" ToRole="PurchaseOrder" />
           <NavigationProperty Name="PurchaseOrders1" Relationship="Self.FK_PurchaseOrder_Source" FromRole="Gudang" ToRole="PurchaseOrder" />
           <NavigationProperty Name="PurchaseRequests" Relationship="Self.FK_PurchaseRequest_Gudang" FromRole="Gudang" ToRole="PurchaseRequest" />
+          <NavigationProperty Name="PurchaseRequestConfigs" Relationship="Self.FK_PurchaseRequestConfig_Gudang" FromRole="Gudang" ToRole="PurchaseRequestConfig" />
         </EntityType>
         <EntityType Name="HistoryProductInGudang">
           <Key>
@@ -4030,6 +4084,7 @@
           <NavigationProperty Name="Clinic" Relationship="Self.FK_Product_Clinic" FromRole="Product" ToRole="Clinic" />
           <NavigationProperty Name="DeliveryOrderDetails" Relationship="Self.FK_DeliveryOrderDetail_Product" FromRole="Product" ToRole="DeliveryOrderDetail" />
           <NavigationProperty Name="DeliveryOrderPusatDetails" Relationship="Self.FK_DeliveryOrderPusatDetail_Product" FromRole="Product" ToRole="DeliveryOrderPusatDetail" />
+          <NavigationProperty Name="FormExamineMedicines" Relationship="Self.FK_FormExamineMedicine_Product" FromRole="Product" ToRole="FormExamineMedicine" />
           <NavigationProperty Name="HistoryProductInGudangs" Relationship="Self.FK_HistoryProductInGudang_Product" FromRole="Product" ToRole="HistoryProductInGudang" />
           <NavigationProperty Name="ProductCategory" Relationship="Self.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
           <NavigationProperty Name="ProductUnit" Relationship="Self.FK_Product_ProductUnit" FromRole="Product" ToRole="ProductUnit" />
@@ -4042,7 +4097,6 @@
           <NavigationProperty Name="stoks" Relationship="Self.FK_stok_m_Product" FromRole="Product" ToRole="stok" />
           <NavigationProperty Name="stoks1" Relationship="Self.FK_stoks_m_Product" FromRole="Product" ToRole="stoks" />
           <NavigationProperty Name="substitutes" Relationship="Self.FK_substitute_Product" FromRole="Product" ToRole="substitute" />
-          <NavigationProperty Name="FormExamineMedicines" Relationship="KlinikDBModel.FK_FormExamineMedicine_Product" FromRole="Product" ToRole="FormExamineMedicine" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -4234,6 +4288,20 @@
           <NavigationProperty Name="Gudang" Relationship="Self.FK_PurchaseRequest_Gudang" FromRole="PurchaseRequest" ToRole="Gudang" />
           <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_PurchaseOrder_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseOrder" />
           <NavigationProperty Name="PurchaseRequestDetails" Relationship="Self.FK_PurchaseRequestDetail_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseRequestDetail" />
+        </EntityType>
+        <EntityType Name="PurchaseRequestConfig">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GudangId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int32" />
+          <NavigationProperty Name="Gudang" Relationship="Self.FK_PurchaseRequestConfig_Gudang" FromRole="PurchaseRequestConfig" ToRole="Gudang" />
         </EntityType>
         <EntityType Name="PurchaseRequestDetail">
           <Key>
@@ -5094,6 +5162,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FormExamineMedicine_FormExamine">
+          <End Role="FormExamine" Type="Self.FormExamine" Multiplicity="0..1" />
+          <End Role="FormExamineMedicine" Type="Self.FormExamineMedicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormExamine">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineMedicine">
+              <PropertyRef Name="FormExamineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FormExamineService_FormExamine">
           <End Role="FormExamine" Type="Self.FormExamine" Multiplicity="0..1" />
           <End Role="FormExamineService" Type="Self.FormExamineService" Multiplicity="*" />
@@ -5127,6 +5207,30 @@
             </Principal>
             <Dependent Role="FormExamineLab">
               <PropertyRef Name="LabItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormExamineMedicine_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="FormExamineMedicine" Type="Self.FormExamineMedicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineMedicine">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormExamineMedicineDetail_FormExamineMedicine">
+          <End Role="FormExamineMedicine" Type="Self.FormExamineMedicine" Multiplicity="0..1" />
+          <End Role="FormExamineMedicineDetail" Type="Self.FormExamineMedicineDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormExamineMedicine">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormExamineMedicineDetail">
+              <PropertyRef Name="FormExamineMedicineID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5234,6 +5338,18 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="PurchaseRequest">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestConfig_Gudang">
+          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
+          <End Role="PurchaseRequestConfig" Type="Self.PurchaseRequestConfig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestConfig">
               <PropertyRef Name="GudangId" />
             </Dependent>
           </ReferentialConstraint>
@@ -5790,7 +5906,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="KlinikDBEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="KlinikDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AppConfigs" EntityType="Self.AppConfig" />
           <EntitySet Name="Appointments" EntityType="Self.Appointment" />
           <EntitySet Name="Cities" EntityType="Self.City" />
@@ -5809,6 +5925,7 @@
           <EntitySet Name="FormExamines" EntityType="Self.FormExamine" />
           <EntitySet Name="FormExamineAttachments" EntityType="Self.FormExamineAttachment" />
           <EntitySet Name="FormExamineLabs" EntityType="Self.FormExamineLab" />
+          <EntitySet Name="FormExamineMedicines" EntityType="Self.FormExamineMedicine" />
           <EntitySet Name="FormExamineMedicineDetails" EntityType="Self.FormExamineMedicineDetail" />
           <EntitySet Name="FormExamineServices" EntityType="Self.FormExamineService" />
           <EntitySet Name="FormMedicals" EntityType="Self.FormMedical" />
@@ -5847,6 +5964,7 @@
           <EntitySet Name="PurchaseOrderPusats" EntityType="Self.PurchaseOrderPusat" />
           <EntitySet Name="PurchaseOrderPusatDetails" EntityType="Self.PurchaseOrderPusatDetail" />
           <EntitySet Name="PurchaseRequests" EntityType="Self.PurchaseRequest" />
+          <EntitySet Name="PurchaseRequestConfigs" EntityType="Self.PurchaseRequestConfig" />
           <EntitySet Name="PurchaseRequestDetails" EntityType="Self.PurchaseRequestDetail" />
           <EntitySet Name="PurchaseRequestPusats" EntityType="Self.PurchaseRequestPusat" />
           <EntitySet Name="PurchaseRequestPusatDetails" EntityType="Self.PurchaseRequestPusatDetail" />
@@ -6057,6 +6175,10 @@
             <End Role="FormExamine" EntitySet="FormExamines" />
             <End Role="FormExamineAttachment" EntitySet="FormExamineAttachments" />
           </AssociationSet>
+          <AssociationSet Name="FK_FormExamineMedicine_FormExamine" Association="Self.FK_FormExamineMedicine_FormExamine">
+            <End Role="FormExamine" EntitySet="FormExamines" />
+            <End Role="FormExamineMedicine" EntitySet="FormExamineMedicines" />
+          </AssociationSet>
           <AssociationSet Name="FK_FormExamineService_FormExamine" Association="Self.FK_FormExamineService_FormExamine">
             <End Role="FormExamine" EntitySet="FormExamines" />
             <End Role="FormExamineService" EntitySet="FormExamineServices" />
@@ -6068,6 +6190,14 @@
           <AssociationSet Name="FK_FormExamineLab_LabItem" Association="Self.FK_FormExamineLab_LabItem">
             <End Role="LabItem" EntitySet="LabItems" />
             <End Role="FormExamineLab" EntitySet="FormExamineLabs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormExamineMedicine_Product" Association="Self.FK_FormExamineMedicine_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="FormExamineMedicine" EntitySet="FormExamineMedicines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormExamineMedicineDetail_FormExamineMedicine" Association="Self.FK_FormExamineMedicineDetail_FormExamineMedicine">
+            <End Role="FormExamineMedicine" EntitySet="FormExamineMedicines" />
+            <End Role="FormExamineMedicineDetail" EntitySet="FormExamineMedicineDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_FormExamineService_Service" Association="Self.FK_FormExamineService_Service">
             <End Role="Services" EntitySet="Services" />
@@ -6104,6 +6234,10 @@
           <AssociationSet Name="FK_PurchaseRequest_Gudang" Association="Self.FK_PurchaseRequest_Gudang">
             <End Role="Gudang" EntitySet="Gudangs" />
             <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestConfig_Gudang" Association="Self.FK_PurchaseRequestConfig_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="PurchaseRequestConfig" EntitySet="PurchaseRequestConfigs" />
           </AssociationSet>
           <AssociationSet Name="FK_HistoryProductInGudang_Product" Association="Self.FK_HistoryProductInGudang_Product">
             <End Role="Product" EntitySet="Products" />
@@ -6289,84 +6423,13 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-          <EntitySet Name="FormExamineMedicines" EntityType="KlinikDBModel.FormExamineMedicine" />
-          <AssociationSet Name="FK_FormExamineMedicine_FormExamine" Association="KlinikDBModel.FK_FormExamineMedicine_FormExamine">
-            <End Role="FormExamine" EntitySet="FormExamines" />
-            <End Role="FormExamineMedicine" EntitySet="FormExamineMedicines" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FormExamineMedicine_Product" Association="KlinikDBModel.FK_FormExamineMedicine_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="FormExamineMedicine" EntitySet="FormExamineMedicines" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FormExamineMedicineDetail_FormExamineMedicine" Association="KlinikDBModel.FK_FormExamineMedicineDetail_FormExamineMedicine">
-            <End Role="FormExamineMedicine" EntitySet="FormExamineMedicines" />
-            <End Role="FormExamineMedicineDetail" EntitySet="FormExamineMedicineDetails" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="FormExamineMedicine">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FormExamineID" Type="Int64" />
-          <Property Name="TypeID" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ProductID" Type="Int32" />
-          <Property Name="Qty" Type="Double" />
-          <Property Name="Dose" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ConcoctionMedicine" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="RemarkUse" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="JenisObat" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="FormExamine" Relationship="KlinikDBModel.FK_FormExamineMedicine_FormExamine" FromRole="FormExamineMedicine" ToRole="FormExamine" />
-          <NavigationProperty Name="Product" Relationship="KlinikDBModel.FK_FormExamineMedicine_Product" FromRole="FormExamineMedicine" ToRole="Product" />
-          <NavigationProperty Name="FormExamineMedicineDetails" Relationship="KlinikDBModel.FK_FormExamineMedicineDetail_FormExamineMedicine" FromRole="FormExamineMedicine" ToRole="FormExamineMedicineDetail" />
-        </EntityType>
-        <Association Name="FK_FormExamineMedicine_FormExamine">
-          <End Type="KlinikDBModel.FormExamine" Role="FormExamine" Multiplicity="0..1" />
-          <End Type="KlinikDBModel.FormExamineMedicine" Role="FormExamineMedicine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FormExamine">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FormExamineMedicine">
-              <PropertyRef Name="FormExamineID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FormExamineMedicine_Product">
-          <End Type="KlinikDBModel.Product" Role="Product" Multiplicity="0..1" />
-          <End Type="KlinikDBModel.FormExamineMedicine" Role="FormExamineMedicine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FormExamineMedicine">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FormExamineMedicineDetail_FormExamineMedicine">
-          <End Type="KlinikDBModel.FormExamineMedicine" Role="FormExamineMedicine" Multiplicity="0..1" />
-          <End Type="KlinikDBModel.FormExamineMedicineDetail" Role="FormExamineMedicineDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FormExamineMedicine">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FormExamineMedicineDetail">
-              <PropertyRef Name="FormExamineMedicineID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="KlinikDBModelStoreContainer" CdmEntityContainer="KlinikDBEntities1">
+        <EntityContainerMapping StorageEntityContainer="KlinikDBModelStoreContainer" CdmEntityContainer="KlinikDBEntities">
           <EntitySetMapping Name="AppConfigs">
             <EntityTypeMapping TypeName="KlinikDBModel.AppConfig">
               <MappingFragment StoreEntitySet="AppConfig">
@@ -6712,12 +6775,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="FormExamineMedicines">
+            <EntityTypeMapping TypeName="KlinikDBModel.FormExamineMedicine">
+              <MappingFragment StoreEntitySet="FormExamineMedicine">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FormExamineID" ColumnName="FormExamineID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="Dose" ColumnName="Dose" />
+                <ScalarProperty Name="ConcoctionMedicine" ColumnName="ConcoctionMedicine" />
+                <ScalarProperty Name="RemarkUse" ColumnName="RemarkUse" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="JenisObat" ColumnName="JenisObat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="FormExamineMedicineDetails">
             <EntityTypeMapping TypeName="KlinikDBModel.FormExamineMedicineDetail">
               <MappingFragment StoreEntitySet="FormExamineMedicineDetail">
-                <ScalarProperty Name="TanggalReadyObat" ColumnName="TanggalReadyObat" />
-                <ScalarProperty Name="TanggalAmbilObat" ColumnName="TanggalAmbilObat" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="FormExamineMedicineID" ColumnName="FormExamineMedicineID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
@@ -6730,6 +6810,9 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TanggalAmbilObat" ColumnName="TanggalAmbilObat" />
+                <ScalarProperty Name="TanggalReadyObat" ColumnName="TanggalReadyObat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -7398,6 +7481,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseRequestConfigs">
+            <EntityTypeMapping TypeName="KlinikDBModel.PurchaseRequestConfig">
+              <MappingFragment StoreEntitySet="PurchaseRequestConfig">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="GudangId" ColumnName="GudangId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PurchaseRequestDetails">
             <EntityTypeMapping TypeName="KlinikDBModel.PurchaseRequestDetail">
               <MappingFragment StoreEntitySet="PurchaseRequestDetail">
@@ -7644,26 +7741,6 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FormExamineMedicines">
-            <EntityTypeMapping TypeName="KlinikDBModel.FormExamineMedicine">
-              <MappingFragment StoreEntitySet="FormExamineMedicine">
-                <ScalarProperty Name="JenisObat" ColumnName="JenisObat" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="RemarkUse" ColumnName="RemarkUse" />
-                <ScalarProperty Name="ConcoctionMedicine" ColumnName="ConcoctionMedicine" />
-                <ScalarProperty Name="Dose" ColumnName="Dose" />
-                <ScalarProperty Name="Qty" ColumnName="Qty" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
-                <ScalarProperty Name="FormExamineID" ColumnName="FormExamineID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

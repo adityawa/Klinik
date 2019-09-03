@@ -257,6 +257,10 @@
     <Compile Include="PurchaseOrder\PurchaseOrderRequest.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderResponse.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderValidator.cs" />
+    <Compile Include="PurchaseRequestConfig\PurchaseRequestConfigHandler.cs" />
+    <Compile Include="PurchaseRequestConfig\PurchaseRequestConfigRequest.cs" />
+    <Compile Include="PurchaseRequestConfig\PurchaseRequestConfigResponse.cs" />
+    <Compile Include="PurchaseRequestConfig\PurchaseRequestConfigValidator.cs" />
     <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailHandler.cs" />
     <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailRequest.cs" />
     <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailResponse.cs" />

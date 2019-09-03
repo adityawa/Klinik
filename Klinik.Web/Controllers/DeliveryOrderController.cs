@@ -265,8 +265,13 @@ namespace Klinik.Web.Controllers
                 SortColumn = _sortColumn,
                 SortColumnDir = _sortColumnDir,
                 PageSize = _pageSize,
-                Skip = _skip
+                Skip = _skip,
+                Data = new ProductModel
+                {
+                    Account = (AccountModel)Session["UserLogon"]
+                }
             };
+
             var response = new ProductResponse();
             if (request.SearchValue != null)
             {

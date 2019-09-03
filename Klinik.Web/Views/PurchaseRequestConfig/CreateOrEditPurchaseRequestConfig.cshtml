@@ -1,0 +1,76 @@
+﻿@model Klinik.Entities.PurchaseRequestConfig.PurchaseRequestConfigModel
+@{
+    ViewBag.Title = "CreateOrEditPurchaseRequestConfig";
+}
+
+<section class="panel">
+    <form class="form-horizontal form-bordered" method="post" action="/PurchaseRequestConfig/CreateOrEditPurchaseRequest">
+        <header class="panel-heading">
+            <div class="panel-actions">
+                <a href="#" class="fa fa-caret-down"></a>
+            </div>
+            <h5 class="panel-title">Form @ViewBag.ActionType Purchase Order Config</h5>
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault"></label>
+                <div class="col-md-4">
+                    @Html.HiddenFor(x => x.Id)
+                    @Html.TextBoxFor(x => x.StartDate, new { @class = "form-control", @id = "StartDate", @autocomplete="off" })
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
+            <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+        $('#StartDate').datepicker({
+                autoclose: true
+        });
+
+        $('#btnreset').click(function (e) {
+             window.location.href = "/MasterData/ClinicList";
+        });
+
+        $('#ddlcity').select2();
+        $('#ddlclinicType').select2();
+        $('#tbLegalDate').datepicker({
+            format: "dd/mm/yyyy",
+            changeMonth: true,
+            changeYear: true
+        });
+
+        toastr.options = {
+            "closeButton": false,
+            "positionClass": "toast-top-full-width",
+            "onclick": null,
+            "showDuration": "0",
+            "hideDuration": "0",
+            "timeOut": "2000",
+            "showMethod": "fadeIn"
+        };
+
+        var _temp="@ViewBag.Response";
+        var _arrMsg = _temp.split(";");
+
+        if (_arrMsg.length > 1) {
+            if (_arrMsg[0] == "True") {
+                toastr.success(_arrMsg[1]);
+            }
+            else {
+                toastr.options.closeButton = true;
+                toastr.options.timeOut = 0;
+                toastr.error(_arrMsg[1]);
+            }
+        }
+    });
+
+    </script>
+}
+

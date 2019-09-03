@@ -4,77 +4,79 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8161901516724ab58b7939ad6245f1e2" Name="Diagram1">
+      <Diagram DiagramId="61127881b441403697569aebf87d31b4" Name="Diagram1">
         <EntityTypeShape EntityType="KlinikDBModel.AppConfig" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Appointment" Width="1.5" PointX="5.25" PointY="79.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.City" Width="1.5" PointX="0.75" PointY="80" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Clinic" Width="1.5" PointX="3" PointY="77.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrder" Width="1.5" PointX="7.5" PointY="97.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderDetail" Width="1.5" PointX="15.5" PointY="91.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderPusat" Width="1.5" PointX="5.25" PointY="89.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderPusatDetail" Width="1.5" PointX="7.5" PointY="87.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Doctor" Width="1.5" PointX="5.25" PointY="64.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.DoctorClinic" Width="1.5" PointX="8.25" PointY="79.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Employee" Width="1.5" PointX="0.75" PointY="70.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.EmployeeAssignment" Width="1.5" PointX="15.75" PointY="69.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.EmployeeStatu" Width="1.5" PointX="1.5" PointY="66.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FamilyRelationship" Width="1.5" PointX="1.5" PointY="62.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FileArchieve" Width="1.5" PointX="7.5" PointY="62.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormExamine" Width="1.5" PointX="7.5" PointY="67.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormExamineAttachment" Width="1.5" PointX="9.75" PointY="66" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormExamineLab" Width="1.5" PointX="10.5" PointY="69.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormExamineMedicineDetail" Width="1.5" PointX="18.75" PointY="74.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormExamineService" Width="1.5" PointX="12.75" PointY="68" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormMedical" Width="1.5" PointX="5.25" PointY="72.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormPreExamine" Width="1.5" PointX="13.5" PointY="72.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.GeneralMaster" Width="1.5" PointX="1.5" PointY="86.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Gudang" Width="1.5" PointX="5.25" PointY="98.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.HistoryProductInGudang" Width="1.5" PointX="10.5" PointY="99" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.LabItem" Width="1.5" PointX="8.25" PointY="54.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.LabItemCategory" Width="1.5" PointX="6" PointY="54.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.Appointment" Width="1.5" PointX="5.25" PointY="81.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.City" Width="1.5" PointX="0.75" PointY="82" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.Clinic" Width="1.5" PointX="3" PointY="79.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrder" Width="1.5" PointX="7.5" PointY="99.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderDetail" Width="1.5" PointX="15.5" PointY="93.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderPusat" Width="1.5" PointX="5.25" PointY="91.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderPusatDetail" Width="1.5" PointX="7.5" PointY="89.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.Doctor" Width="1.5" PointX="5.25" PointY="66.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.DoctorClinic" Width="1.5" PointX="8.25" PointY="81.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.Employee" Width="1.5" PointX="0.75" PointY="72.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.EmployeeAssignment" Width="1.5" PointX="15.75" PointY="70.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.EmployeeStatu" Width="1.5" PointX="1.5" PointY="68.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.FamilyRelationship" Width="1.5" PointX="1.5" PointY="64.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.FileArchieve" Width="1.5" PointX="7.5" PointY="64.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.FormExamine" Width="1.5" PointX="7.5" PointY="69.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.FormExamineAttachment" Width="1.5" PointX="9.75" PointY="68" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.FormExamineLab" Width="1.5" PointX="10.5" PointY="71.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.FormExamineMedicine" Width="1.5" PointX="16.5" PointY="76.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.FormExamineMedicineDetail" Width="1.5" PointX="18.75" PointY="76.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.FormExamineService" Width="1.5" PointX="12.75" PointY="70" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.FormMedical" Width="1.5" PointX="5.25" PointY="74.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.FormPreExamine" Width="1.5" PointX="13.5" PointY="74.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.GeneralMaster" Width="1.5" PointX="1.5" PointY="88.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.Gudang" Width="1.5" PointX="5.25" PointY="100.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.HistoryProductInGudang" Width="1.5" PointX="10.5" PointY="101" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.LabItem" Width="1.5" PointX="8.25" PointY="56.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.LabItemCategory" Width="1.5" PointX="6" PointY="56.875" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Letter" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Log" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.MCUPackage" Width="1.5" PointX="3" PointY="90.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Medicine" Width="1.5" PointX="13.25" PointY="92.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Menu" Width="1.5" PointX="6" PointY="122.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Organization" Width="1.5" PointX="5.25" PointY="104.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.OrganizationPrivilege" Width="1.5" PointX="10.5" PointY="103.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.OrganizationRole" Width="1.5" PointX="7.5" PointY="106.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PanggilanPoli" Width="1.5" PointX="7.5" PointY="50.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PasswordHistory" Width="1.5" PointX="7.5" PointY="110.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Patient" Width="1.5" PointX="3" PointY="70.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PatientClinic" Width="1.5" PointX="8.25" PointY="74.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Poli" Width="1.5" PointX="5.25" PointY="59.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PoliClinic" Width="1.5" PointX="5.25" PointY="85" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.MCUPackage" Width="1.5" PointX="3" PointY="92.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.Medicine" Width="1.5" PointX="13.25" PointY="94.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.Menu" Width="1.5" PointX="8" PointY="126" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.Organization" Width="1.5" PointX="5.25" PointY="108.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.OrganizationPrivilege" Width="1.5" PointX="12.5" PointY="108.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.OrganizationRole" Width="1.5" PointX="7.5" PointY="110.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PanggilanPoli" Width="1.5" PointX="7.5" PointY="52.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PasswordHistory" Width="1.5" PointX="7.5" PointY="106.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.Patient" Width="1.5" PointX="3" PointY="72.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PatientClinic" Width="1.5" PointX="8.25" PointY="76.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.Poli" Width="1.5" PointX="5.25" PointY="61.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PoliClinic" Width="1.5" PointX="5.25" PointY="87" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.PoliFlowTemplate" Width="1.5" PointX="4.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PoliSchedule" Width="1.5" PointX="10.25" PointY="84.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PoliScheduleMaster" Width="1.5" PointX="11.25" PointY="79.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PoliService" Width="1.5" PointX="11.25" PointY="74.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Privilege" Width="1.5" PointX="8.25" PointY="122.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Product" Width="1.5" PointX="13.25" PointY="84.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.ProductCategory" Width="1.5" PointX="11" PointY="89.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.ProductInGudang" Width="1.5" PointX="10.5" PointY="94.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.ProductMedicine" Width="1.5" PointX="15.5" PointY="86.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.ProductUnit" Width="1.5" PointX="11" PointY="57.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PurchaseOrder" Width="1.5" PointX="9.75" PointY="107.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PurchaseOrderDetail" Width="1.5" PointX="15.5" PointY="97.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PurchaseOrderPusat" Width="1.5" PointX="16.25" PointY="62.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PurchaseOrderPusatDetail" Width="1.5" PointX="18.5" PointY="84.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PurchaseRequest" Width="1.5" PointX="7.5" PointY="116.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PurchaseRequestDetail" Width="1.5" PointX="9.75" PointY="116.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PurchaseRequestPusat" Width="1.5" PointX="14" PointY="62.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.PurchaseRequestPusatDetail" Width="1.5" PointX="21.5" PointY="84.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.QueuePoli" Width="1.5" PointX="15.5" PointY="79.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.RolePrivilege" Width="1.5" PointX="12.75" PointY="106.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Service" Width="1.5" PointX="10.5" PointY="61.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.stok" Width="1.5" PointX="18.5" PointY="79.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PoliSchedule" Width="1.5" PointX="10.25" PointY="86.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PoliScheduleMaster" Width="1.5" PointX="11.25" PointY="81.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PoliService" Width="1.5" PointX="11.25" PointY="76.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.Privilege" Width="1.5" PointX="10.25" PointY="126.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.Product" Width="1.5" PointX="13.25" PointY="86.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.ProductCategory" Width="1.5" PointX="11" PointY="91.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.ProductInGudang" Width="1.5" PointX="10.5" PointY="96.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.ProductMedicine" Width="1.5" PointX="15.5" PointY="88.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.ProductUnit" Width="1.5" PointX="11" PointY="59.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PurchaseOrder" Width="1.5" PointX="9.75" PointY="108.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PurchaseOrderDetail" Width="1.5" PointX="16.5" PointY="98.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PurchaseOrderPusat" Width="1.5" PointX="16.25" PointY="64.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PurchaseOrderPusatDetail" Width="1.5" PointX="18.5" PointY="86.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PurchaseRequest" Width="1.5" PointX="7.5" PointY="117" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PurchaseRequestConfig" Width="1.5" PointX="7.5" PointY="122.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PurchaseRequestDetail" Width="1.5" PointX="9.75" PointY="116.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PurchaseRequestPusat" Width="1.5" PointX="14" PointY="64.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.PurchaseRequestPusatDetail" Width="1.5" PointX="21.5" PointY="86.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.QueuePoli" Width="1.5" PointX="15.5" PointY="81.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.RolePrivilege" Width="1.5" PointX="12.75" PointY="113.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.Service" Width="1.5" PointX="10.5" PointY="63.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.stok" Width="1.5" PointX="18.5" PointY="81.375" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.stok_bulanan" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.stok1" Width="1.5" PointX="21.5" PointY="79.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.substitute" Width="1.5" PointX="17.75" PointY="92.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.SuratRujukanLabKeluar" Width="1.5" PointX="10.5" PointY="54.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.User" Width="1.5" PointX="12.5" PointY="111.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.UserRole" Width="1.5" PointX="12.75" PointY="103" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Vendor" Width="1.5" PointX="16.25" PointY="104.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.stok1" Width="1.5" PointX="21.5" PointY="81.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.substitute" Width="1.5" PointX="18.75" PointY="94.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.SuratRujukanLabKeluar" Width="1.5" PointX="10.5" PointY="56.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.User" Width="1.5" PointX="13.5" PointY="103.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.UserRole" Width="1.5" PointX="14.75" PointY="109.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.Vendor" Width="1.5" PointX="16.25" PointY="105.5" IsExpanded="true" />
         <AssociationConnector Association="KlinikDBModel.FK_Appointment_Clinic" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_Appointment_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_Appointment_MCUPackage" ManuallyRouted="false" />
@@ -124,9 +126,12 @@
         <AssociationConnector Association="KlinikDBModel.FK_FormExamine_FormMedical" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamine_Poli" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamineAttachment_FormExamine" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicine_FormExamine" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamineService_FormExamine" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamineLab_FormMedical" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamineLab_LabItem" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicine_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicineDetail_FormExamineMedicine" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamineService_Service" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormMedical_Patient" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormPreExamine_FormMedical" ManuallyRouted="false" />
@@ -136,6 +141,7 @@
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrder_Gudang" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrder_Source" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequest_Gudang" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestConfig_Gudang" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_HistoryProductInGudang_Product" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_LabItem_LabItemCategory" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_SuratRujukanLabKeluar_LabItem" ManuallyRouted="false" />
@@ -182,10 +188,6 @@
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_PurchaseRequestPusat" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_Vendor" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_UserRole_User" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormExamineMedicine" Width="1.5" PointX="21.5" PointY="74" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicine_FormExamine" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicine_Product" />
-        <AssociationConnector Association="KlinikDBModel.FK_FormExamineMedicineDetail_FormExamineMedicine" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
