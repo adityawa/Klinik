@@ -1,7 +1,7 @@
 ﻿@model Klinik.Entities.Pharmacy.PrescriptionModel
 
 @{
-    ViewBag.Title = "Prescription";
+    Layout = "~/Views/Shared/_Layout_1.cshtml";
 }
 
 @section Styles {
@@ -10,131 +10,22 @@
             display: flex;
             align-items: center;
         }
+
+        .ui-autocomplete {
+            position: absolute;
+            z-index: 2150000000 !important;
+            cursor: default;
+            border: 2px solid #ccc;
+            padding: 5px 0;
+            border-radius: 2px;
+        }
     </style>
+
+
 }
 
 <section class="panel">
-<<<<<<< HEAD
-	@using (Html.BeginForm())
-	{
-		<header class="panel-heading">
-			<h5 class="panel-title">
-				Prescription Validation
-			</h5>
-		</header>
 
-		<div class="panel-body">
-			<div style="width:100%; margin:0 auto">
-				<table id="tbPrescription" class="table table-striped table-bordered dt-responsive" cellspacing="0">
-					<thead>
-						<tr>
-							<th colspan="5"><center>@Klinik.Resources.UIMessages.MedicineList</center></th>
-							<th colspan="4"><center>@Klinik.Resources.UIMessages.Validation</center></th>							
-						</tr>
-						<tr>
-							<th style="width:20px;">NO</th>
-							<th>@Klinik.Resources.UIMessages.MedicineName</th>
-							<th>@Klinik.Resources.UIMessages.Dose</th>
-							<th style="width:30px;">@Klinik.Resources.UIMessages.Amount</th>
-							<th>@Klinik.Resources.UIMessages.RemarkUse</th>
-							<th>@Klinik.Resources.UIMessages.MedicineName</th>
-							<th>@Klinik.Resources.UIMessages.Amount</th>
-							<th>@Klinik.Resources.UIMessages.Note</th>
-							<th>@Klinik.Resources.UIMessages.Process</th>
-						</tr>
-					</thead>
-					<tbody>
-						@{
-							@Html.HiddenFor(m => m.FormMedicalID)
-							int counter = 1;
-							foreach (var item in Model.Medicines)
-							{
-								<tr>
-									<td>
-										@(counter++)
-										@Html.HiddenFor(m => m.Medicines[counter - 2].Id)
-									</td>
-									<td>
-										@Html.HiddenFor(m => m.Medicines[counter - 2].ProductName)
-										@Html.DisplayFor(m => m.Medicines[counter - 2].ProductName)
-									</td>
-									<td>
-										@Html.HiddenFor(m => m.Medicines[counter - 2].Dose)
-										@Html.DisplayFor(m => m.Medicines[counter - 2].Dose)
-									</td>
-									<td>
-										@Html.HiddenFor(m => m.Medicines[counter - 2].Qty)
-										@Html.DisplayFor(m => m.Medicines[counter - 2].Qty, new { @id = "qtcReceipt" + (counter - 1) })
-									</td>
-									<td>
-										@Html.HiddenFor(m => m.Medicines[counter - 2].RemarkUse)
-										@Html.DisplayFor(m => m.Medicines[counter - 2].RemarkUse)
-									</td>
-									<td>
-										<div class="form-horizontal">
-											@Html.HiddenFor(m => m.Medicines[counter - 2].Detail.ProductID, new { @id = "idMedicine" + (counter - 1) })
-											@Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.ProductName, new { @class = "form-control", @id = "medicineName" + (counter - 1) })&nbsp;
-											<a class="fa fa-search fa-lg modal-with-form" data-rowno="@(counter - 1)" href="#modalForm"></a>
-										</div>
-									</td>
-									<td>
-										@Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.Qty, new { @class = "form-control", @style = "width:60px;", @id = "amount" + (counter - 1) })
-									</td>
-									<td>
-										@Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.Note, new { @class = "form-control", @id = "note" + (counter - 1) })
-									</td>
-									<td>
-										@Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.ProcessType, new { @class = "form-control", @style = "width:80px;", @id = "process" + (counter - 1) })
-									</td>
-								</tr>
-							}
-						}
-					</tbody>
-				</table>
-				<!-- Modal Form -->
-				<div id="modalForm" class="modal-block modal-block-primary mfp-hide">
-					<section class="panel">
-						<header class="panel-heading">
-							<h5 class="panel-title">
-								@Klinik.Resources.UIMessages.ProductList
-							</h5>
-						</header>
-						<div class="panel-body">
-							<div style="width:100%; margin:0 auto">
-								<input type="hidden" id="rowno" name="rowno" />
-								<table id="tableProductList" class="table table-striped table-bordered dt-responsive" cellspacing="0">
-									<thead>
-										<tr>
-											<th>@Klinik.Resources.UIMessages.ID</th>
-											<th>@Klinik.Resources.UIMessages.Code</th>
-											<th>@Klinik.Resources.UIMessages.Name</th>
-											<th>@Klinik.Resources.UIMessages.Price</th>
-											<th>@Klinik.Resources.UIMessages.Category</th>
-											<th>@Klinik.Resources.UIMessages.Unit</th>
-											<th>@Klinik.Resources.UIMessages.Action</th>
-										</tr>
-									</thead>
-								</table>
-							</div>
-						</div>
-						<footer class="panel-footer">
-							<div class="row">
-								<div class="col-md-12 text-right">
-									<button class="btn btn-primary modal-dismiss">Close</button>
-								</div>
-							</div>
-						</footer>
-					</section>
-				</div>
-			</div>
-		</div>
-
-		<div class="panel-footer">
-			<button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
-			<button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
-		</div>
-	}
-=======
     <header class="panel-heading">
         <h5 class="panel-title">
             Prescription Validation
@@ -148,12 +39,15 @@
                 <table id="tbPrescription" class="table table-striped table-bordered dt-responsive" cellspacing="0">
                     <thead>
                         <tr>
+                            <th colspan="5"><center>@Klinik.Resources.UIMessages.MedicineList</center></th>
+                            <th colspan="5"><center>@Klinik.Resources.UIMessages.Validation</center></th>
+                        </tr>
+                        <tr>
                             <th style="width:20px;">NO</th>
                             <th>@Klinik.Resources.UIMessages.MedicineName</th>
                             <th>@Klinik.Resources.UIMessages.Dose</th>
                             <th style="width:30px;">@Klinik.Resources.UIMessages.Amount</th>
                             <th>@Klinik.Resources.UIMessages.RemarkUse</th>
-
                             <th>@Klinik.Resources.UIMessages.MedicineName</th>
                             <th>@Klinik.Resources.UIMessages.Stock</th>
                             <th>@Klinik.Resources.UIMessages.Amount</th>
@@ -275,55 +169,85 @@
 
     <!-- Modal for combibe racikan-->
     <div id="modalFormRacikan" class="modal-block modal-block-primary mfp-hide">
-        <section class="panel">
-            <header class="panel-heading">
-                <h5 class="panel-title">
-                    @Klinik.Resources.UIMessages.ProductList
-                </h5>
-            </header>
-            <div class="panel-body">
-                <div style="width:100%; margin:0 auto">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Nama Obat Racikan</label>
-                        <input type="hidden" id="rowno_racikan" name="rowno_racikan" />
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" id="tbRacikanName" name="tbRacikanName" />
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <h5 class="panel-title">
+                            @Klinik.Resources.UIMessages.ProductList
+                        </h5>
+                    </header>
+                    <div class="panel-body">
+                        <div style="width:100%; margin:0 auto">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Nama Obat Racikan</label>
+                                <input type="hidden" id="rowno_racikan" name="rowno_racikan" />
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" id="tbRacikanName" name="tbRacikanName" />
+                                </div>
+                            </div>
+                            <br />
+
+                            <table class="table table-striped table-bordered dt-responsive" width="100%" id="tblConcMedicine">
+                                <thead>
+                                    <tr style="font-size:13px">
+                                        @*<th style="width:35%">@Klinik.Resources.UIMessages.ID</th>*@
+                                        <th style="width:30%">@Klinik.Resources.UIMessages.Name</th>
+                                        <th style="width:10%">@Klinik.Resources.UIMessages.Code</th>
+                                        <th style="width:20%">@Klinik.Resources.UIMessages.Price</th>
+                                        <th style="width:15%">@Klinik.Resources.UIMessages.Category</th>
+                                        <th style="width:15%">@Klinik.Resources.UIMessages.Unit</th>
+                                        <th style="width:20%">@Klinik.Resources.UIMessages.Stock</th>
+                                        <th style="width:20%">@Klinik.Resources.UIMessages.Amount</th>
+                                        <th style="width:10%">@Klinik.Resources.UIMessages.Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size:13px"></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>
+                                            <input id="Conc_medicineName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeMedicineNameHere" />
+                                        </td>
+                                        <td>
+                                            <input hidden type="text" id="Conc_idMedicine" />
+                                            <input type="text" class="form-control" id="Conc_CodeMedicine" />
+                                        </td>
+
+                                        <td>
+                                            <input id="Conc_medicinePrice" readonly="readonly" type="text" class="form-control" />
+                                        </td>
+                                        <td><input id="Conc_medicinecategory" readonly="readonly" type="text" class="form-control" /></td>
+                                        <td><input id="Conc_medicineUnit" readonly="readonly" type="text" class="form-control" /></td>
+                                        <td>
+                                            <input id="Conc_medicineStock" readonly="readonly" type="text" class="form-control" />
+                                        </td>
+                                        <td>
+                                            <input id="Conc_amount" type="text" class="form-control" />
+                                        </td>
+                                        <td><input type="button" id="btnAdd_ConcMedicine" value="@Klinik.Resources.UIMessages.Add" /></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
-
-
-                    <br />
-                    <table id="tableProductListNonMaster" class="table table-striped table-bordered dt-responsive" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th><input name="select_all" value="1" type="checkbox"></th>
-                                <th>@Klinik.Resources.UIMessages.ID</th>
-                                <th>@Klinik.Resources.UIMessages.Code</th>
-                                <th>@Klinik.Resources.UIMessages.Name</th>
-                                <th>@Klinik.Resources.UIMessages.Price</th>
-                                <th>@Klinik.Resources.UIMessages.Category</th>
-                                <th>@Klinik.Resources.UIMessages.Unit</th>
-                                <th>@Klinik.Resources.UIMessages.Stock</th>
-                                <th>@Klinik.Resources.UIMessages.Amount</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button id="btnOkRacik" class="btn btn-primary modal-dismiss">Ok</button>
+                                <button class="btn btn-primary modal-dismiss">Close</button>
+                            </div>
+                        </div>
+                    </footer>
+                </section>
             </div>
-            <footer class="panel-footer">
-                <div class="row">
-                    <div class="col-md-12 text-right">
-                        <button id="btnOkRacik" class="btn btn-primary modal-dismiss">Ok</button>
-                        <button class="btn btn-primary modal-dismiss">Close</button>
-                    </div>
-                </div>
-            </footer>
-        </section>
+        </div>
+
     </div>
->>>>>>> farmasi_adit
+
 </section>
 
 @section Scripts {
+
     <script type="text/javascript">
         var rows_selected = [];
         var arrOfObatRacik = [];
@@ -381,9 +305,127 @@
                 alert('Nama Obat yang dipilih berbeda dengan resep');
         }
 
+         function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblConcMedicine")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+    };
+
         $(document).ready(function () {
+
+             var medicine = $("#Conc_medicineName");
+             if (!medicine.length) return;
+              $("#Conc_medicineName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Poli/AutoCompleteMedicineAdvance/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#Conc_idMedicine").val(i.item.id);
+                    $("#Conc_CodeMedicine").val(i.item.code);
+                    $("#Conc_medicineStock").val(i.item.stock);
+                    $("#Conc_medicinePrice").val(i.item.price);
+                    $("#Conc_medicinecategory").val(i.item.category);
+                    $("#Conc_medicineUnit").val(i.item.unit);
+                },
+                minLength: 1
+            });
+
             $('#btnreset').click(function (e) {
                 window.location.href = "/Pharmacy/PatientList";
+            });
+
+             $("#btnAdd_ConcMedicine").click(function () {
+
+                var idMedicine = $("#Conc_idMedicine");
+                 var medicineName = $("#Conc_medicineName");
+                 var medicineCode = $("#Conc_CodeMedicine");
+                var medicineStock = $("#Conc_medicineStock");
+                var medicinePrice = $("#Conc_medicinePrice");
+				var medicineUnit = $("#Conc_medicineUnit");
+				var medicinecategory = $("#Conc_medicinecategory");
+                var medicineAmt = $("#Conc_amount");
+                //Get the reference of the Table's TBODY element.
+                var tBody = $("#tblConcMedicine > TBODY")[0];
+                
+                //Add Row.
+                var row = tBody.insertRow(-1);
+
+                //Add id cell.0
+                var cell = $(row.insertCell(-1));
+                 cell.html(idMedicine.val());
+                 cell.hide();
+
+                  //add nama obat 1
+                  cell = $(row.insertCell(-1));
+                 cell.html(medicineName.val());
+
+                  //add code obat 2
+                 cell = $(row.insertCell(-1));
+                 cell.html(medicineCode.val());
+
+              
+                //add price 3
+                 cell = $(row.insertCell(-1));
+                 cell.html(medicinePrice.val());
+
+                //add category obat 4
+                 cell = $(row.insertCell(-1));
+                 cell.html(medicinecategory.val());
+
+                //add unit obat 5
+                 cell = $(row.insertCell(-1));
+                 cell.html(medicineUnit.val());
+
+				//add stock 6
+				cell = $(row.insertCell(-1));
+                 cell.html(medicineStock.val());
+
+                 //add amount obat 7
+				cell = $(row.insertCell(-1));
+				cell.html(medicineAmt.val());
+
+                //Add Button cell.
+                cell = $(row.insertCell(-1));
+                var btnRemove = $("<input />");
+                btnRemove.attr("type", "button");
+                btnRemove.attr("onclick", "Remove(this);");
+                btnRemove.val("Remove");
+                cell.append(btnRemove);
+
+                //Clear the TextBoxes.
+                idMedicine.val("");
+                medicineName.val("");
+                medicineStock.val("");
+                medicinecategory.val("");
+				medicineUnit.val("");
+                medicinePrice.val("");
+                medicineAmt.val("");
+                medicineCode.val("");
+
             });
 
             $('#tableProductList').dataTable({
@@ -461,8 +503,6 @@
                     }
                 ]
             });
-
-
 
             var table = $('#tableProductListNonMaster').DataTable({
                 "autoWidth": false,
@@ -555,12 +595,11 @@
             $('.modal-with-form').click(function () {
                 $('#rowno').val($(this).data('rowno'));
                 $('#rowno_racikan').val($(this).data('rowno'));
+                $('#tbRacikanName').val('');
                 currSelIdx = $('#rowno').val();
                 var _parentId=$('#rowno_racikan').val()+"_"+"Racikan"
                 var filter =  $.grep(arrOfObatRacik, function(e){ return e.ParentID == _parentId; });
             });
-
-
 
             toastr.options = {
                 "closeButton": false,
@@ -586,83 +625,37 @@
                 }
             }
 
-
-
-            $('#tableProductListNonMaster tbody').on('click', 'input[type="checkbox"]', function (e) {
-
-
-                var $row = $(this).closest('tr');
-                var temp = $("TD", $row).eq(6).html();
-                var data = table.row($row).data();
-                var rowId = $row[0].rowIndex;
-                var index = $.inArray(rowId-1, rows_selected);
-
-
-                if (this.checked && index === -1) {
-                    rows_selected.push(rowId-1);
-                } else if (!this.checked && index !== -1) {
-                    rows_selected.splice(index, 1);
-                }
-
-                if (this.checked) {
-                    $row.addClass('selected');
-                } else {
-                    $row.removeClass('selected');
-                }
-                updateDataTableSelectAllCtrl(table);
-                e.stopPropagation();
-            });
-
-            $('#tableProductListNonMaster').on('click', 'tbody td, thead th:first-child', function (e) {
-                $(this).parent().find('input[type="checkbox"]').trigger('click');
-            });
-
-            $('thead input[name="select_all"]', table.table().container()).on('click', function (e) {
-                if (this.checked) {
-                    $('#tableProductListNonMaster tbody input[type="checkbox"]:not(:checked)').trigger('click');
-                } else {
-                    $('#tableProductListNonMaster tbody input[type="checkbox"]:checked').trigger('click');
-                }
-
-                // Prevent click event from propagating to parent
-                e.stopPropagation();
-            });
-
-            table.on('draw', function () {
-                // Update state of "Select all" control
-                updateDataTableSelectAllCtrl(table);
-            });
-
             $('#btnOkRacik').click(function (e) {
 
                 var rowNum_racikan = $('#rowno_racikan').val();
-                var _parentId = $('#rowno_racikan').val() + "_" + "Racikan";
+                var _parentId = rowNum_racikan + "_" + "Racikan";
 
-                //remove same ID
-                var arrTemp = [];
-                arrTemp = $.grep(arrOfObatRacik, function (e) { return e.ParentID != _parentId; });
-
-                arrOfObatRacik = arrTemp;
-
-                for (let i = 0; i < rows_selected.length; i++) {
-                obatRacik = new Object();
-                obatRacik.Amount = table.cell(rows_selected[i], 8).nodes().to$().find('input').val();
-                obatRacik.Stock=table.cell(rows_selected[i], 7).data();
-                obatRacik.Id = table.cell(rows_selected[i], 1).data();
-                obatRacik.Code = table.cell(rows_selected[i], 2).data();
-                obatRacik.Name = ObatRacikName;
-                obatRacik.Idx = rows_selected[i];
-                obatRacik.ParentID = _parentId;
-                arrOfObatRacik.push(obatRacik);
-                }
+               
+                $('#tblConcMedicine tbody tr').each(function (index) {
+                    obatRacik = new Object();
+                    obatRacik.Amount = $(this).find('td').eq(7).text().trim();
+                    obatRacik.Stock=$(this).find('td').eq(6).text().trim();
+                    obatRacik.Id = $(this).find('td').eq(0).text().trim();
+                    obatRacik.Code = $(this).find('td').eq(2).text().trim();
+                    obatRacik.Name = $(this).find('td').eq(1).text().trim();
+                  //obatRacik.Idx = rows_selected[i];
+                    obatRacik.ParentID = _parentId;
+                    arrOfObatRacik.push(obatRacik);
+                });
                 var temp = JSON.stringify(arrOfObatRacik);
                 $('#collRacikanKomponen').val(temp);
+
+                 var tBody = $("#tblConcMedicine > TBODY")[0];
+                $('#tblConcMedicine tbody tr').each(function (index) {
+                   
+                    tBody.deleteRow(index-1);
+                });
+
                 OnSelectProduct(rowNum_racikan+"_"+"Racikan", $('#tbRacikanName').val(),0);
             });
 
 
         });
     </script>
-
 
 }

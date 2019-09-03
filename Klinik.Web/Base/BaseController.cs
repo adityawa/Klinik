@@ -155,20 +155,20 @@ namespace Klinik.Web
             return _poliList;
         }
 
-        protected List<SelectListItem> BindDropDownClinic()
-        {
-            List<SelectListItem> _clinicLists = new List<SelectListItem>();
-            foreach (var item in new ClinicHandler(_unitOfWork).GetAllClinic())
-            {
-                _clinicLists.Add(new SelectListItem
-                {
-                    Text = item.Name,
-                    Value = item.Id.ToString()
-                });
-            }
+        //protected List<SelectListItem> BindDropDownClinic()
+        //{
+        //    List<SelectListItem> _clinicLists = new List<SelectListItem>();
+        //    foreach (var item in new ClinicHandler(_unitOfWork).GetAllClinic())
+        //    {
+        //        _clinicLists.Add(new SelectListItem
+        //        {
+        //            Text = item.Name,
+        //            Value = item.Id.ToString()
+        //        });
+        //    }
 
-            return _clinicLists;
-        }
+        //    return _clinicLists;
+        //}
 
         protected List<SelectListItem> BindDropDownOrganization()
         {
