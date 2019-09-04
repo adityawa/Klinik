@@ -247,7 +247,7 @@ namespace Klinik.Web.Controllers
             ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
             purchaserequestdetailrequest.Data.namabarang = purchaserequestdetailrequest.Data.namabarang != null ? purchaserequestdetailrequest.Data.namabarang : namabarang.Entity.Name;
             new PurchaseOrderDetailValidator(_unitOfWork).Validate(purchaserequestdetailrequest, out _purchaseorderdetailresponse);
-            return Json(new { data = _purchaseorderdetailresponse.Data }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = _purchaseorderdetailresponse.Entity }, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

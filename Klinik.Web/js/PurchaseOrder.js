@@ -12,6 +12,7 @@
         Klinik.savePoPerRow();
         Klinik.EditSubtitusi();
         Klinik.ChangeNamaBarangsubtitusi();
+        Klinik.ElementButton();
     },
 
     autocompleteProductOne: function () {
@@ -376,6 +377,11 @@
                     row.find('.delete-purchaseorderdetail').show();
                     row.find('.subtitusi').show();
                     row.find('input[type="checkbox"]').prop('disabled', true);
+                    row.closest('tr').find('td:eq(10) input').prop('disabled', true);
+                    row.closest('tr').find('td:eq(11) input').prop('disabled', true);
+                    row.find("TD").eq(0).html(r.data.Id);
+                    row.find("TD").eq(15).html(Klinik.ElementButton(r.data));
+                    console.log(r);
                 }
             });
         });
@@ -415,6 +421,13 @@
         $(el).change(function () {
             $("#GudangId").val($(el).val());
         });
+    },
+
+    ElementButton: function (data, url) {
+        //console.log(data);
+        if (!data) return;
+        var element = '<button class="save-purchaseorderdetail btn btn-success btn-sm" data-url="' + url + '" style="display:none;">Save</button>';
+        return element;
     }
 
 
