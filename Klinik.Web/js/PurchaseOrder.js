@@ -380,8 +380,7 @@
                     row.closest('tr').find('td:eq(10) input').prop('disabled', true);
                     row.closest('tr').find('td:eq(11) input').prop('disabled', true);
                     row.closest('tr').find('td:eq(11) input').prop('disabled', true);
-                    row.closest('tr').find('td:eq(0) select').select2().prop('disabled', true).removeClass('select2-hidden-accessible');
-                    row.closest('tr').find('td:eq(0) .select2').remove();
+                    row.closest('tr').find('td:eq(2) select').select2("enable", false);
                     row.find("TD").eq(0).html(r.data.Id);
                     row.find("TD").eq(14).html("");
                     row.find("TD").eq(14).html(Klinik.ElementButton(r.data));
