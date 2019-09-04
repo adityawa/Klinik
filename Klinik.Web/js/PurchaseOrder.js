@@ -380,7 +380,10 @@
                     row.closest('tr').find('td:eq(10) input').prop('disabled', true);
                     row.closest('tr').find('td:eq(11) input').prop('disabled', true);
                     row.find("TD").eq(0).html(r.data.Id);
-                    row.find("TD").eq(15).html(Klinik.ElementButton(r.data));
+                    row.find("TD").eq(14).html("");
+                    row.find("TD").eq(14).html(Klinik.ElementButton(r.data));
+                    Klinik.editPurchaseOrderDetail();
+                    Klinik.savePoPerRow();
                     console.log(r);
                 }
             });
@@ -426,7 +429,10 @@
     ElementButton: function (data, url) {
         //console.log(data);
         if (!data) return;
-        var element = '<button class="save-purchaseorderdetail btn btn-success btn-sm" data-url="' + url + '" style="display:none;">Save</button>';
+        var element = "<button class='save-purchaseorderdetail btn btn-success btn-sm' data-url='/PurchaseOrder/EditPurchaseOrderDetail' style='display:none;'>Save</button>" +
+            "<button class='edit-purchaseorderdetail btn btn-success btn-sm'>Edit</button>" + "<button class='btn btn-danger btn-sm delete-purchaseorderdetail' disabled>Delete</button>"
+            + "<button class='btn btn-info btn-sm subtitusi'>Subtitusi</button>" + "<img src='/Content/images/loading.gif' style='height: 30px;display:none;' class='image-loading' />";
+        console.log(element);
         return element;
     }
 
