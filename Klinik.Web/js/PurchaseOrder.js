@@ -47,7 +47,6 @@
             }
         });
         $(el).change(function () {
-            alert('asdf');
             $("#ProductId").val($(el).val());
             $(this).closest('tr').find('td:eq(9) input[type="text"]').val($(el).text);
         });
@@ -167,6 +166,7 @@
 
     editPurchaseOrderDetail: function () {
         $('.edit-purchaseorderdetail').on('click', function () {
+
             var getdata = $(this).closest('tr');
             getdata.find('td:eq(3) select').select2({
                 width: 'resolve',
@@ -379,11 +379,15 @@
                     row.find('input[type="checkbox"]').prop('disabled', true);
                     row.closest('tr').find('td:eq(10) input').prop('disabled', true);
                     row.closest('tr').find('td:eq(11) input').prop('disabled', true);
+                    row.closest('tr').find('td:eq(11) input').prop('disabled', true);
+                    row.closest('tr').find('td:eq(0) select').select2().prop('disabled', true).removeClass('select2-hidden-accessible');
+                    row.closest('tr').find('td:eq(0) .select2').remove();
                     row.find("TD").eq(0).html(r.data.Id);
                     row.find("TD").eq(14).html("");
                     row.find("TD").eq(14).html(Klinik.ElementButton(r.data));
                     Klinik.editPurchaseOrderDetail();
                     Klinik.savePoPerRow();
+                    Klinik.checkbox();
                     console.log(r);
                 }
             });
@@ -429,9 +433,9 @@
     ElementButton: function (data, url) {
         //console.log(data);
         if (!data) return;
-        var element = "<button class='save-purchaseorderdetail btn btn-success btn-sm' data-url='/PurchaseOrder/EditPurchaseOrderDetail' style='display:none;'>Save</button>" +
-            "<button class='edit-purchaseorderdetail btn btn-success btn-sm'>Edit</button>" + "<button class='btn btn-danger btn-sm delete-purchaseorderdetail' disabled>Delete</button>"
-            + "<button class='btn btn-info btn-sm subtitusi'>Subtitusi</button>" + "<img src='/Content/images/loading.gif' style='height: 30px;display:none;' class='image-loading' />";
+        var element = "<button class='save-purchaseorderdetail btn btn-success btn-sm' data-url='/PurchaseOrder/EditPurchaseOrderDetail' style='display:none;'>Save</button> " +
+            "<button class='edit-purchaseorderdetail btn btn-success btn-sm'>Edit</button> " + "<button class='btn btn-danger btn-sm delete-purchaseorderdetail' disabled>Delete</button> "
+            + "<button class='btn btn-info btn-sm subtitusi'>Subtitusi</button> " + "<img src='/Content/images/loading.gif' style='height: 30px;display:none;' class='image-loading' />";
         console.log(element);
         return element;
     }
