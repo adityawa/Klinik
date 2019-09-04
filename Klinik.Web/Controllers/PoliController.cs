@@ -2,6 +2,7 @@
 using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Entities.Account;
 using Klinik.Entities.Form;
 using Klinik.Entities.Loket;
 using Klinik.Entities.MasterData;
@@ -9,6 +10,7 @@ using Klinik.Entities.Poli;
 using Klinik.Entities.PreExamine;
 using Klinik.Features;
 using Klinik.Web.Hubs;
+using LinqKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,9 @@ namespace Klinik.Web.Controllers
             public string label { get; set; }
             public string value { get; set; }
             public string stock { get; set; }
+            public string category { get; set; }
+            public string unit { get; set; }
+            public string price { get; set; }
         }
 
         [HttpPost]
@@ -131,6 +136,57 @@ namespace Klinik.Web.Controllers
                 };
 
                 resultList.Add(temp);
+            }
+
+            return Json(resultList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AutoCompleteMedicineAdvance(string prefix)
+        {
+            List<ProductModel> lists = new List<ProductModel>();
+            dynamic qry = null;
+            var searchPredicate = PredicateBuilder.New<Product>(true);
+
+            // add default filter to show the active data only
+            searchPredicate = searchPredicate.And(x => x.RowStatus == 0 && x.Name.ToLower().Contains(prefix.ToLower()));
+           
+            qry = _unitOfWork.ProductRepository.Get(searchPredicate, null);
+
+            long clinicId = 0;
+            if (Session["UserLogon"] != null)
+            {
+                var tempData = (AccountModel)Session["UserLogon"];
+                clinicId = tempData.ClinicID;
+            }
+
+            
+            var temp = (IEnumerable<Product>)qry;
+            var productIdS = temp.Select(x => x.ID).Distinct().ToList();
+            var gudangs = _unitOfWork.GudangRepository.Get(x => x.ClinicId == clinicId).Select(x => x.id).ToList();
+            var stockCollection = _unitOfWork.ProductInGudangRepository.Get(x => productIdS.Contains(x.ProductId ?? 0) && gudangs.Contains(x.GudangId ?? 0)).Select(x => new {
+                x.ProductId,
+                x.stock
+            });
+            List<TempClass> resultList = new List<TempClass>();
+            foreach (var item in qry)
+            {
+                var prData = new ProductModel();
+                prData = Mapper.Map<Product, ProductModel>(item);
+                //prData.stock = Convert.ToDecimal(stockCollection.SingleOrDefault(x => x.ProductId == prData.Id) == null ? 0 : stockCollection.SingleOrDefault(x => x.ProductId == prData.Id).stock);
+                //lists.Add(prData);
+                TempClass tmp = new TempClass
+                {
+                    id = (Int32)prData.Id,
+                    label = prData.Name,
+                    code = prData.Code,
+                    stock = stockCollection.SingleOrDefault(x => x.ProductId == prData.Id) == null ? "0" : stockCollection.SingleOrDefault(x => x.ProductId == prData.Id).stock.ToString(),
+                    category=prData.ProductCategoryName,
+                    unit=prData.ProductUnitName,
+                    price=prData.RetailPrice.ToString()
+                };
+
+                resultList.Add(tmp);
             }
 
             return Json(resultList, JsonRequestBehavior.AllowGet);

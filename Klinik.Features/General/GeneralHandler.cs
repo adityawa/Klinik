@@ -47,14 +47,14 @@ namespace Klinik.Features
             var _context = new KlinikDBEntities();
             _privilege_names = privilege_name;
             var account = OneLoginSession.Account;
-            string IsAuthorized = "true";
+            string IsAuthorized = "false";
             List<long> PrivilegeIds = account.Privileges.PrivilegeIDs;
             var _getPrivilegeName = _context.Privileges.Where(x => PrivilegeIds.Contains(x.ID)).Select(x => x.Privilege_Name);
 
             var cek_authorizes = _getPrivilegeName.Where(p => _privilege_names.Contains(p.ToString()));
             if (cek_authorizes.Any())
             {
-                IsAuthorized = "false";
+                IsAuthorized = "true";
             }
 
             return IsAuthorized;
