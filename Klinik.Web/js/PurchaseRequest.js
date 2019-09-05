@@ -8,6 +8,7 @@
         Klinik.total();
         Klinik.saverowPurchaseorderDetail();
         Klinik.CreateNewProduct();
+        Klinik.openallbutton();
     },
 
     total: function () {
@@ -311,6 +312,18 @@
                     $('#nama_by_ho').val($('#newproductname').val());
                 }
             });
+        });
+    },
+
+    openallbutton: function () {
+        var el = $('.openallbutton');
+        if (!el.length) return;
+
+        el.click(function () {
+            $('.saveorderdetail').show();
+            $(this).hide();
+            $('.edit-purchaseorderdetail').attr('disabled', false);
+            $('#sendby').attr('disabled', false);
         });
     }
 };
