@@ -6,6 +6,8 @@
     var account = (AccountModel)Session["UserLogon"];
     var requestby = Model != null ? Model.request_by : account.UserName;
     var prnumber = Model != null ? Model.prnumber : ViewBag.prnumber;
+    bool open = Model != null ? Model.Validasi > 0 ? false : true : true;
+    DateTime? valueprdate = Model != null ? Model.prdate : null;
 }
 @section Styles{
     <link href="~/Content/Login/vendor/select2/select2.min.css" rel="stylesheet" />
@@ -30,7 +32,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.CreatedDate</label>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(x => x.prdate, new { @class = "form-control", @id = "prdate", @placeholder="Purchase Request Date" })
+                    <input type="text" class="form-control" id="prdate" name="prdate" placeholder="Purchase Request Date" @(open ? "" : "disabled") value="@valueprdate"/>
                 </div>
             </div>
             <div class="form-group">
@@ -60,10 +62,7 @@
                         <th>Nama By HO</th>
                         <th>Qty By HP</th>
                         <th>Remark By HO</th>
-                        @if (Model.Validasi < 1)
-                        {
-                            <th>Action</th>
-                        }
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -93,14 +92,13 @@
                                         <button class="edit-purchaseorderdetail btn btn-success btn-sm" data-url="/PurchaseRequest/EditPurchaseRequestDetail">Edit</button>
                                         <button class="delete-purchaseorderdetail btn btn-danger btn-sm" disabled>Delete</button>
                                         <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
-                                        }
                                     </td>
                                 }
                             </tr>
                         }
                     }
                 </tbody>
-                @if (Model.Validasi == null)
+                @if (open)
                 {
                     <tfoot>
                         <tr>
@@ -137,14 +135,14 @@
                         </tr>
                     </tfoot>
                 }
-                </table>
+            </table>
         </div>
         <br />
-    <footer class="panel-footer">
-        @if (Model.Validasi == null)
-        {
-            <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseRequest/CreateOrEditPurchaseRequest" data-redirect="/PurchaseRequest/PurchaseRequestList">@Klinik.Resources.UIMessages.Save</button>
-        }
+        <footer class="panel-footer">
+            @if (open)
+            {
+                <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseRequest/CreateOrEditPurchaseRequest" data-redirect="/PurchaseRequest/PurchaseRequestList">@Klinik.Resources.UIMessages.Save</button>
+            }
             <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
         </footer>
     </div>

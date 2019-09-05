@@ -152,7 +152,7 @@ namespace Klinik.Features
                     PurchaseRequestId = qry.PurchaseRequestId,
                     ponumber = qry.ponumber,
                     podate = qry.podate,
-                    approve_by = qry.approve_by,
+                    approveby = qry.approve_by,
                     request_by = qry.request_by,
                     approve = qry.approve,
                     ModifiedBy = qry.ModifiedBy,
@@ -162,7 +162,8 @@ namespace Klinik.Features
                     prvalidationby = qry.PurchaseRequest.ModifiedBy,
                     prdate = qry.PurchaseRequest.prdate,
                     prnumber = qry.PurchaseRequest.prnumber,
-                    sourcename = qry.SourceId != null ? qry.Gudang1.name : ""
+                    sourcename = qry.SourceId != null ? qry.Gudang1.name : "",
+                    Validasi = qry.Validasi
                 };
 
                 foreach (var item in qry.PurchaseOrderDetails.OrderBy(a => a.OrderNumber))
@@ -253,7 +254,7 @@ namespace Klinik.Features
                     PurchaseRequestId = item.PurchaseRequestId,
                     ponumber = item.ponumber,
                     podate = item.podate,
-                    approve_by = item.approve_by,
+                    approveby = item.approve_by,
                     approve = item.approve,
                     request_by = item.request_by,
                     ModifiedBy = item.ModifiedBy,
@@ -386,11 +387,11 @@ namespace Klinik.Features
                         var purchaseorderdetail = _unitOfWork.PurchaseOrderDetailRepository.Query(a => a.PurchaseOrderId == purchaseorder.id).ToList();
                         response.Message = string.Format(Messages.ObjectHasBeenRemoved, "PurchaseRequest", purchaseorder.ponumber, purchaseorder.id);
                         response.Entity = Mapper.Map<Data.DataRepository.PurchaseOrder, PurchaseOrderModel>(purchaseorder);
-                        foreach (var item in purchaseorderdetail)
-                        {
-                            var _purchaseRequestDetail = Mapper.Map<Data.DataRepository.PurchaseOrderDetail, PurchaseOrderDetailModel>(item);
-                            response.Entity.PurchaseOrderDetails.Add(_purchaseRequestDetail);
-                        }
+                        //foreach (var item in purchaseorderdetail)
+                        //{
+                        //    var _purchaseRequestDetail = Mapper.Map<Data.DataRepository.PurchaseOrderDetail, PurchaseOrderDetailModel>(re);
+                        //    response.Entity.PurchaseOrderDetails.Add(_purchaseRequestDetail);
+                        //}
                     }
                     else
                     {

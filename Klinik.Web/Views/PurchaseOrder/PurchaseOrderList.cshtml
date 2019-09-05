@@ -103,7 +103,7 @@
                 { "data": "ponumber", "ponumber": "ponumber", "autoWidth": true },
                 { "data": "createformat", "createformat": "createformat", "autoWidth": true },
                 { "data": "request_by", "request_by": "request_by", "autoWidth": false },
-                { "data": "approve_by", "approve_by": "approve_by", "autoWidth": true },
+                { "data": "approveby", "approveby": "approveby", "autoWidth": true },
                 { "data": "approve", "approve": "approve", "autoWidth": true },
                 { "data": "CreatedBy", "CreatedBy": "CreatedBy", "autoWidth": true },
                 {
@@ -111,16 +111,19 @@
                     {
                         var valisasi = full.approve != null ? " | <button class='btn btn-success btn-xs' onclick='Validasi(" + full['Id'] + ")' >Validasi</button>" : "";
                         var approve = full.approve != null ? "" : " | <button class='btn btn-success btn-xs' onclick='Approve(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Approve</button>";
-                        
+                        var type = full.recived != null ? "View" : "Edit";
+                        var buttondelete = " | <button class='btn btn-danger btn-xs' onclick='Delete(" + full['Id'] + ")' disabled='disabled'>@Klinik.Resources.UIMessages.Delete</button>";
 
                         if (!@GeneralHandler.authorized("VALIDATION_M_PURCHASEORDER")) {
                             valisasi = "";
                         }
                         if (!@GeneralHandler.authorized("APPROVE_M_PURCHASEORDER")) {
                             approve = "";
-                        }
-                        var button = valisasi + approve;
-                        return '<a class="btn btn-info btn-xs" href="/PurchaseOrder/CreateOrEditPurchaseOrder?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger btn-xs' onclick='Delete(" + full['Id'] + ")' disabled='disabled'>@Klinik.Resources.UIMessages.Delete</button>" + button
+                            type = "View";
+                            buttondelete = "";
+;                        }
+                        var button = approve;
+                        return '<a class="btn btn-info btn-xs" href="/PurchaseOrder/CreateOrEditPurchaseOrder?id=' + full.Id + '">' + type + '</a>  ' + buttondelete + button
                     }
                 }
 

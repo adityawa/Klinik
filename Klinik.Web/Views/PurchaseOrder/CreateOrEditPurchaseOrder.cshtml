@@ -123,7 +123,7 @@
                         <td>
                             @if (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true")
                             {
-                            <input type="text" class="form-control" value="@item.qty_by_ho" disabled="disabled" />
+                                <input type="text" class="form-control" value="@item.qty_by_ho" disabled="disabled" />
                             }
                             else
                             {
@@ -144,27 +144,30 @@
                         <td hidden>@item.OrderNumber</td>
                         @if (GeneralHandler.authorized("EDIT_M_PURCHASEORDER") == "true")
                         {
-                            if(Model.Validasi == null)
-                            { 
-                                <td>
-                                @if (Model.approve != null)
+                            if (Model != null)
+                            {
+                                if (Model.Validasi == null)
                                 {
-                                    <button class="save-purchaseorderdetail btn btn-success btn-sm" data-url="/PurchaseOrder/EditPurchaseOrderDetail" style="display:none;">Save</button>
-                                    <button class="edit-purchaseorderdetail btn btn-success btn-sm">Edit</button>
-                                    <button class="btn btn-danger btn-sm delete-purchaseorderdetail" disabled>Delete</button>
-                                        if (GeneralHandler.authorized("ADD_M_PURCHASEORDER") == "true")
+                                    <td>
+                                        @if (Model.approve != null)
                                         {
-                                            <button class="btn btn-info btn-sm subtitusi">Subtitusi</button>
+                                            <button class="save-purchaseorderdetail btn btn-success btn-sm" data-url="/PurchaseOrder/EditPurchaseOrderDetail" style="display:none;">Save</button>
+                                            <button class="edit-purchaseorderdetail btn btn-success btn-sm">Edit</button>
+                                            <button class="btn btn-danger btn-sm delete-purchaseorderdetail" disabled>Delete</button>
+                                            if (GeneralHandler.authorized("ADD_M_PURCHASEORDER") == "true")
+                                            {
+                                                <button class="btn btn-info btn-sm subtitusi">Subtitusi</button>
+                                            }
+                                            <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
                                         }
-                                        <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
-                                    }
-                                    else
-                                    {
-                                        <button class="btn btn-warning btn-sm" disabled>PO Not Approved</button>
-                                    }
+                                        else
+                                        {
+                                            <button class="btn btn-warning btn-sm" disabled>PO Not Approved</button>
+                                        }
 
-                                </td>
-                            }   
+                                    </td>
+                                }
+                            }
                         }
                         </tr>
                         }
@@ -174,8 +177,17 @@
         </div>
         <br />
         <footer class="panel-footer">
-            @if (GeneralHandler.authorized("EDIT_M_PURCHASEORDER") == "true") { 
-            <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrder/CreateOrEditPurchaseOrder">@Klinik.Resources.UIMessages.Edit</button>
+            @if (GeneralHandler.authorized("EDIT_M_PURCHASEORDER") == "true")
+            {
+                if (Model != null)
+                {
+
+                    if (Model.Validasi == null)
+                    {
+                        <button class="btn btn-success" onclick="Validasi(@Model.Id)">Validasi</button>
+                        <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrder/CreateOrEditPurchaseOrder">@Klinik.Resources.UIMessages.Edit</button>
+                    }
+                }
             }
             <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
         </footer>
@@ -233,5 +245,32 @@
                 table.deleteRow(row[0].rowIndex);
             }
         };
+    </script>
+    <script type="text/javascript">
+         var Validasi = function (ID) {
+            var r = confirm("@Klinik.Resources.UIMessages.ValidationConfirmation"+" DO ?");
+            if (r == true) {
+            ValidasiPO(ID);
+        }
+        return false;
+        }
+
+        function ValidasiPO(Id) {
+        $.ajax({
+            url: '/PurchaseOrder/ValidationPurchaseOrder?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+        }
     </script>
 }

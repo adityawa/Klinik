@@ -35,7 +35,7 @@ namespace Klinik.Features
             purchaseorderrequest.Data.approve = null;
             purchaseorderrequest.Data.podate = DateTime.Now;
             purchaseorderrequest.Data.Validasi = null;
-            purchaseorderrequest.Data.approve_by = null;
+            purchaseorderrequest.Data.approveby = null;
             purchaseorderrequest.Data.PurchaseRequestId = Convert.ToInt32(_response.Entity.Id);
             purchaseorderrequest.Data.Id = 0;
 

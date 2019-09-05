@@ -95,17 +95,17 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public JsonResult CreateOrEditDeliveryOrder(DeliveryOrderModel _deliveryorder, List<DeliveryOrderDetailModel> deliveryOrderDetailModels)
         {
-            //if (Session["UserLogon"] != null)
-            //    _deliveryorder.Account = (AccountModel)Session["UserLogon"];
-            //_deliveryorder.Id = Convert.ToInt32(_deliveryorder.Id) > 0 ? _deliveryorder.Id : 0;
-            //var request = new DeliveryOrderRequest
-            //{
-            //    Data = _deliveryorder
-            //};
+            if (Session["UserLogon"] != null)
+                _deliveryorder.Account = (AccountModel)Session["UserLogon"];
+            _deliveryorder.Id = Convert.ToInt32(_deliveryorder.Id) > 0 ? _deliveryorder.Id : 0;
+            var request = new DeliveryOrderRequest
+            {
+                Data = _deliveryorder
+            };
 
-            //DeliveryOrderResponse _response = new DeliveryOrderResponse();
+            DeliveryOrderResponse _response = new DeliveryOrderResponse();
 
-            //new DeliveryOrderValidator(_unitOfWork).Validate(request, out _response);
+            new DeliveryOrderValidator(_unitOfWork).Validate(request, out _response);
             DeliveryOrderDetailResponse _deliveryorderdetailresponse = new DeliveryOrderDetailResponse();
             if (deliveryOrderDetailModels != null) { 
                 foreach (var item in deliveryOrderDetailModels)

@@ -31,7 +31,7 @@ namespace Klinik.Data.DataRepository
         public Nullable<short> RowStatus { get; set; }
         public Nullable<bool> Recived { get; set; }
     
-        public virtual DeliveryOrder DeliveryOrder { get; set; }
         public virtual Product Product { get; set; }
+        public virtual DeliveryOrder DeliveryOrder { get; set; }
     }
 }
