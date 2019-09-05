@@ -13,6 +13,7 @@
         Klinik.EditSubtitusi();
         Klinik.ChangeNamaBarangsubtitusi();
         Klinik.ElementButton();
+        Klinik.openallbutton();
     },
 
     autocompleteProductOne: function () {
@@ -439,6 +440,17 @@
              + "<img src='/Content/images/loading.gif' style='height: 30px;display:none;' class='image-loading' />";
         console.log(element);
         return element;
+    },
+
+    openallbutton: function () {
+        var el = $('.openallbutton');
+        if (!el.length) return;
+
+        el.click(function () {
+            $('.savepurchasedetail').show();
+            $(this).hide();
+            $('.edit-purchaseorderdetail').attr('disabled', false);
+        });
     }
 
 

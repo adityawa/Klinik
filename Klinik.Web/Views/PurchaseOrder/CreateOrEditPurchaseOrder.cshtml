@@ -152,7 +152,7 @@
                                         @if (Model.approve != null)
                                         {
                                             <button class="save-purchaseorderdetail btn btn-success btn-sm" data-url="/PurchaseOrder/EditPurchaseOrderDetail" style="display:none;">Save</button>
-                                            <button class="edit-purchaseorderdetail btn btn-success btn-sm">Edit</button>
+                                            <button class="edit-purchaseorderdetail btn btn-success btn-sm" disabled>Edit</button>
                                             <button class="btn btn-danger btn-sm delete-purchaseorderdetail" disabled>Delete</button>
                                             if (GeneralHandler.authorized("ADD_M_PURCHASEORDER") == "true")
                                             {
@@ -185,7 +185,8 @@
                     if (Model.Validasi == null)
                     {
                         <button class="btn btn-success" onclick="Validasi(@Model.Id)">Validasi</button>
-                        <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrder/CreateOrEditPurchaseOrder">@Klinik.Resources.UIMessages.Edit</button>
+                        <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrder/CreateOrEditPurchaseOrder" style="display:none">@Klinik.Resources.UIMessages.Save</button>
+                        <button type="submit" class="btn btn-primary openallbutton" data-parameterone="_deliveryorder">@Klinik.Resources.UIMessages.Edit</button>
                     }
                 }
             }
