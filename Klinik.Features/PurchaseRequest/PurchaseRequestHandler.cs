@@ -153,6 +153,7 @@ namespace Klinik.Features
                     ModifiedBy = qry.ModifiedBy,
                     CreatedBy = qry.CreatedBy,
                     ModifiedDate = qry.ModifiedDate,
+                    Validasi = qry.Validasi,
                 };
 
                 foreach (var item in qry.PurchaseRequestDetails)

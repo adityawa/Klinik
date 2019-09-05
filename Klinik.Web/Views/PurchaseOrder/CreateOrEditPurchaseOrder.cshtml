@@ -1,4 +1,5 @@
 ﻿@model Klinik.Entities.PurchaseOrder.PurchaseOrderModel
+@using Klinik.Features;
 
 @{
     ViewBag.Title = "CreateOrEditDeliveryOrder";
@@ -94,36 +95,67 @@
                         <th>Qty By HP</th>
                         <th>Remark By HO</th>
                         <th><input type="checkbox" class="checkall" disabled></th>
-                        <th>Action</th>
-                    </tr>
+                        @if (GeneralHandler.authorized("EDIT_M_PURCHASEORDER") == "true")
+                        {
+                            if (Model.Validasi == null)
+                            {
+                            <th>Action</th>
+                            }
+                        }
+                        </tr>
                 </thead>
                 <tbody>
                     @if (Model != null)
                     {
                         foreach (var item in Model.PurchaseOrderDetails)
                         {
-                            <tr>
-                                <td hidden class="podetail">@item.Id</td>
-                                <td hidden>@item.ProductId</td>
-                                <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
-                                <td><input type="text" class="form-control" value="@item.tot_pemakaian" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.nama_by_ho" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.qty_by_ho" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.remark_by_ho" disabled="disabled" /></td>
-                                <td><input type="checkbox" value="@(item.Verified == true ? "true" : "false")" @(item.Verified == true ? "checked" : "") disabled></td>
-                                <td hidden>@item.OrderNumber</td>
+                    <tr>
+                        <td hidden class="podetail">@item.Id</td>
+                        <td hidden>@item.ProductId</td>
+                        <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
+                        <td><input type="text" class="form-control" value="@item.tot_pemakaian" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.nama_by_ho" disabled="disabled" /></td>
+                        <td>
+                            @if (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true")
+                            {
+                            <input type="text" class="form-control" value="@item.qty_by_ho" disabled="disabled" />
+                            }
+                            else
+                            {
+                                @item.qty_by_ho
+                            }
+                        </td>
+                        <td>
+                            @if (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true")
+                            {
+                                <input type="text" class="form-control" value="@item.remark_by_ho" disabled="disabled" />
+                            }
+                            else
+                            {
+                                @item.remark_by_ho
+                            }
+                        </td>
+                        <td><input type="checkbox" value="@(item.Verified == true ? "true" : "false")" @(item.Verified == true ? "checked" : "") disabled></td>
+                        <td hidden>@item.OrderNumber</td>
+                        @if (GeneralHandler.authorized("EDIT_M_PURCHASEORDER") == "true")
+                        {
+                            if(Model.Validasi == null)
+                            { 
                                 <td>
-                                    @if (Model.approve != null)
-                                    {
-                                        <button class="save-purchaseorderdetail btn btn-success btn-sm" data-url="/PurchaseOrder/EditPurchaseOrderDetail" style="display:none;">Save</button>
-                                        <button class="edit-purchaseorderdetail btn btn-success btn-sm">Edit</button>
-                                        <button class="btn btn-danger btn-sm delete-purchaseorderdetail" disabled>Delete</button>
-                                        <button class="btn btn-info btn-sm subtitusi">Subtitusi</button>
+                                @if (Model.approve != null)
+                                {
+                                    <button class="save-purchaseorderdetail btn btn-success btn-sm" data-url="/PurchaseOrder/EditPurchaseOrderDetail" style="display:none;">Save</button>
+                                    <button class="edit-purchaseorderdetail btn btn-success btn-sm">Edit</button>
+                                    <button class="btn btn-danger btn-sm delete-purchaseorderdetail" disabled>Delete</button>
+                                        if (GeneralHandler.authorized("ADD_M_PURCHASEORDER") == "true")
+                                        {
+                                            <button class="btn btn-info btn-sm subtitusi">Subtitusi</button>
+                                        }
                                         <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
                                     }
                                     else
@@ -132,64 +164,19 @@
                                     }
 
                                 </td>
-                            </tr>
+                            }   
+                        }
+                        </tr>
                         }
                     }
                 </tbody>
             </table>
         </div>
         <br />
-        @*<form id="purchaseorderdetail">
-                <div class="form-group">
-                    <input type="text" hidden id="PurchaseOrderDetailId" />
-                    <input type="text" hidden id="ProductId" />
-                    <div class="row">
-                        <div class="col-md-3">
-                            <select id="namabarang" class="form-control"></select>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="tot_pemakaian" id="tot_pemakaian" value="" />
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="sisa_stok" id="sisa_stok" value="" />
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="qty" id="qty" value="" />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="qty_add" id="qty_add" value="" />
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="reason_add" id="reason_add" value="" />
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="total" id="total" value="" />
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="nama_by_ho" id="nama_by_ho" value="" />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row marginbutton">
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="qty_by_ho" id="qty_by_ho" value="" />
-                        </div>
-                        <div class="col-md-9">
-                            <textarea type="text" class="namaobat form-control" placeholder="remark_by_ho" id="remark_by_ho"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <footer class="col-md-12 text-right">
-                    <input type="button" id="btnAdd" class="btn btn-success float-right" value="Add" />
-                </footer>
-            </form>*@
         <footer class="panel-footer">
+            @if (GeneralHandler.authorized("EDIT_M_PURCHASEORDER") == "true") { 
             <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrder/CreateOrEditPurchaseOrder">@Klinik.Resources.UIMessages.Edit</button>
+            }
             <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
         </footer>
     </div>
