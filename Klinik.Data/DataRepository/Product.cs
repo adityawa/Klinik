@@ -25,11 +25,11 @@ namespace Klinik.Data.DataRepository
             this.ProductMedicines = new HashSet<ProductMedicine>();
             this.PurchaseOrderPusatDetails = new HashSet<PurchaseOrderPusatDetail>();
             this.PurchaseRequestDetails = new HashSet<PurchaseRequestDetail>();
-            this.PurchaseRequestPusatDetails = new HashSet<PurchaseRequestPusatDetail>();
             this.stoks = new HashSet<stok>();
             this.stoks1 = new HashSet<stok1>();
             this.substitutes = new HashSet<substitute>();
             this.PurchaseOrderDetails = new HashSet<PurchaseOrderDetail>();
+            this.PurchaseRequestPusatDetails = new HashSet<PurchaseRequestPusatDetail>();
         }
     
         public int ID { get; set; }
@@ -65,8 +65,6 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseRequestPusatDetail> PurchaseRequestPusatDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<stok> stoks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<stok1> stoks1 { get; set; }
@@ -74,5 +72,7 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<substitute> substitutes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseRequestPusatDetail> PurchaseRequestPusatDetails { get; set; }
     }
 }
