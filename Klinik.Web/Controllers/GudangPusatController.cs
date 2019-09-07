@@ -4,6 +4,7 @@ using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.PurchaseRequestPusat;
 using Klinik.Features;
+using Klinik.Features.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -124,6 +125,24 @@ namespace Klinik.Web.Controllers
             }
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("VIEW_M_PURCHASEREQUESTPUSAT")]
+        [HttpGet]
+        public JsonResult GetStokdatabyProductId(int? productid)
+        {
+            int? stock = 0/*_context.HistoryProductInGudangs.Where(a => a.ProductId == productid && a.GudangId == OneLoginSession.Account.GudangID).Sum(a => a.value)*/;
+            int? datapo = Convert.ToInt32(_context.PurchaseRequestDetails.Where(a => a.ProductId == productid).Sum(a => a.total));
+            int? datado = Convert.ToInt32(_context.DeliveryOrderDetails.Where(a => a.ProductId == productid && a.Recived == true).Sum(a => a.qty_request));
+            int? sisastock = 0/*Convert.ToInt32(_context.ProductInGudangs.Where(a => a.ProductId == productid && a.GudangId == OneLoginSession.Account.GudangID).Select(a => a.stock))*/;
+            Dictionary<string, int?> data = new Dictionary<string, int?> {
+                                            { "stock", stock },
+                                            { "datapo", datapo },
+                                            { "datado", datado },
+                                            { "sisastock", sisastock },
+                                        };
+
+            return Json( new { data}, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

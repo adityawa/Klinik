@@ -1,6 +1,7 @@
 ﻿var PurchaseRequest = {
     init: function () {
         PurchaseRequest.Addpurchaserequestitem();
+        PurchaseRequest.Total();
     },
 
     Addpurchaserequestitem: function () {
@@ -102,7 +103,25 @@
             namabarang.text('');
             namavendor.text('');
         });
-    }
+    },
+
+    Total: function () {
+        var el = $('#qty_final');
+        if (!el.length) return;
+
+        var qtyadd = $('#qty_add');
+        var reason_add = $('#reason_add');
+        var qty_final = $('#qty_final');
+        var remark = $('#remark');
+        var total = $('#total');
+        qtyadd.keyup(function () {
+            qty_final.val(parseInt(qtyadd.val()));
+            total.val(parseInt(qtyadd.val()) + parseInt(qty_final.val()));
+        });
+        reason_add.keyup(function () {
+            remark.val(reason_add.val());
+        });
+    },
 }
 
 var General = {
@@ -144,6 +163,20 @@ var General = {
         });
         $(el).change(function () {
             $("#ProductId").val($(el).val());
+            $.ajax({
+                type: "GET",
+                url: "/GudangPusat/GetStokdatabyProductId?productid=" + $(el).val(),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    console.log(r.data);
+                    var data = r.data;
+                    $('#stok_prev').val(data.stock);
+                    $('#total_req').val(data.datapo);
+                    $('#total_dist').val(data.datado);
+                    $('#sisa_stok').val(data.sisastock);
+                }
+            })
         });
     },
 
