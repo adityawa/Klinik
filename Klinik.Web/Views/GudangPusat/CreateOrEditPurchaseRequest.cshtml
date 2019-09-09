@@ -1,6 +1,6 @@
 ﻿@model Klinik.Entities.PurchaseRequestPusat.PurchaseRequestPusatModel
 @using Klinik.Features.Account
-
+@using Klinik.Features;
 @{
     ViewBag.Title = "CreateOrEditDeliveryRequestPusat";
     var prnumber = Model != null ? Model.prnumber : ViewBag.prnumber;
@@ -18,26 +18,26 @@
         <h5 class="panel-title">Form @ViewBag.ActionType Purchase Request</h5>
     </header>
     <div class="panel-body">
-            @Html.HiddenFor(x => x.Id)
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.NoPr</label>
-                <div class="col-md-3">
-                    @Html.TextBoxFor(x => x.prnumber, new { @class = "form-control", @id = "prnumber", @Value = prnumber, @disabled = "disabled" })
-                </div>
+        @Html.HiddenFor(x => x.Id)
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.NoPr</label>
+            <div class="col-md-3">
+                @Html.TextBoxFor(x => x.prnumber, new { @class = "form-control", @id = "prnumber", @Value = prnumber, @disabled = "disabled" })
             </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.CreatedDate</label>
-                <div class="col-md-3">
-                    @Html.TextBoxFor(x => x.prdate, new { @class = "form-control", @id = "prdate", @Value = DateTime.Now.ToString("MM/dd/yyyy") })
-                </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.CreatedDate</label>
+            <div class="col-md-3">
+                @Html.TextBoxFor(x => x.prdate, new { @class = "form-control", @id = "prdate", @Value = DateTime.Now.ToString("MM/dd/yyyy") })
             </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.RequestBy</label>
-                <div class="col-md-3">
-                    @Html.TextBoxFor(x => x.request_by, new { @class = "form-control", @id = "request_by", @Value = OneLoginSession.Account.UserName, @disabled = "disabled" })
-                </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.RequestBy</label>
+            <div class="col-md-3">
+                @Html.TextBoxFor(x => x.request_by, new { @class = "form-control", @id = "request_by", @Value = OneLoginSession.Account.UserName, @disabled = "disabled" })
             </div>
-            <br />
+        </div>
+        <br />
     </div>
     <div class="panel-body">
         <div class="scrollTable">
@@ -78,152 +78,98 @@
                     {
                         foreach (var item in Model.purchaserequestPusatdetailModels)
                         {
-                    <tr>
-                        <td hidden>@item.Id</td>
-                        <td hidden>@item.ProductId</td>
-                        <td hidden>@item.VendorId</td>
-                        <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
-                        <td><select disabled="disabled"><option>@item.namavendor</option></select></td>
-                        <td><input type="text" class="form-control" value="@item.satuan" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.harga" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.stok_prev" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.total_req" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.total_dist" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.qty_final" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.remark" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.qty_unit" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.qty_box" disabled="disabled" /></td>
-                        <td>
-                            <button class="edit-purchaseorderpusatdetail btn btn-success btn-sm">Edit</button>
-                            <button class="btn btn-danger btn-sm">Delete</button>
-                        </td>
-                    </tr>
+                            <tr>
+                                <td hidden>@item.Id</td>
+                                <td hidden>@item.ProductId</td>
+                                <td hidden>@item.VendorId</td>
+                                <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
+                                <td><select disabled="disabled"><option>@item.namavendor</option></select></td>
+                                <td><input type="text" class="form-control" value="@item.satuan" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.harga" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.stok_prev" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.total_req" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.total_dist" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_final" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.remark" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_unit" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_box" disabled="disabled" /></td>
+                                <td>
+                                    <button class="edit-purchaseorderpusatdetail btn btn-success btn-sm" disabled>Edit</button>
+                                    <button class="btn btn-danger btn-sm" disabled>Delete</button>
+                                </td>
+                            </tr>
                         }
                     }
                 </tbody>
                 @if (open)
                 {
-            <tfoot>
-                <tr>
-                    <th hidden>Id Obat</th>
-                    <th>Nama Obat</th>
-                    <th>Nama Vendor</th>
-                    <th>Satuan per box</th>
-                    <th>Harga per satuan</th>
-                    <th>Obat sebelum distribusi</th>
-                    <th>Total Request</th>
-                    <th>Total Distribusi</th>
-                    <th>Sisa Warehouse</th>
-                    <th>Qty</th>
-                    <th>Adjusment</th>
-                    <th>Remarks</th>
-                    <th>Qty final</th>
-                    <th>Remarks</th>
-                    <th>Total</th>
-                    <th>Qty Unit</th>
-                    <th>Qty Box</th>
-                    <th>Action</th>
-                </tr>
-                <tr id="purchaseorderpusatdetail">
-                    <td hidden><input type="text" hidden id="PurchaseRequestPusatDetailId" /></td>
-                    <td hidden><input type="text" hidden id="ProductId" /></td>
-                    <td hidden><input type="text" hidden id="VendorId" /></td>
-                    <td><select id="namabarang" class="form-control"></select></td>
-                    <td><select id="namavendor" class="form-control"></select></td>
-                    <td><input type="text" class="form-control" placeholder="satuan" id="satuan" value="" /></td>
-                    <td><input type="text" class="form-control" placeholder="harga" id="harga" value="" /></td>
-                    <td><input type="text" class="form-control" placeholder="stok_prev" id="stok_prev" value="" disabled/></td>
-                    <td><input type="text" class="form-control" placeholder="total_req" id="total_req" value="" disabled/></td>
-                    <td><input type="text" class="form-control" placeholder="total_dist" id="total_dist" value="" disabled/></td>
-                    <td><input type="text" class="form-control" placeholder="sisa_stok" id="sisa_stok" value="" disabled/></td>
-                    <td><input type="text" class="form-control" placeholder="qty" id="qty" value="0" disabled/></td>
-                    <td><input type="text" class="form-control" placeholder="qty_add" id="qty_add" value="" /></td>
-                    <td><input type="text" class="form-control" placeholder="reason_add" id="reason_add" value="" /></td>
-                    <td><input type="text" class="form-control" placeholder="qty_final" id="qty_final" disabled="disabled" /></td>
-                    <td><input type="text" class="form-control" placeholder="remark" id="remark" disabled="disabled" /></td>
-                    <td><input type="text" class="form-control" placeholder="total" id="total" value="" /></td>
-                    <td><input type="text" class="form-control" placeholder="qty_unit" id="qty_unit" value="" /></td>
-                    <td><input type="text" class="form-control" placeholder="qty_box" id="qty_box" value="" /></td>
-                    <td><input type="button" id="btnAdd" class="btn btn-success float-right" value="Add" /></td>
-                </tr>
-            </tfoot>
+                    <tfoot>
+                        <tr>
+                            <th hidden>Id Obat</th>
+                            <th>Nama Obat</th>
+                            <th>Nama Vendor</th>
+                            <th>Satuan per box</th>
+                            <th>Harga per satuan</th>
+                            <th>Obat sebelum distribusi</th>
+                            <th>Total Request</th>
+                            <th>Total Distribusi</th>
+                            <th>Sisa Warehouse</th>
+                            <th>Qty</th>
+                            <th>Adjusment</th>
+                            <th>Remarks</th>
+                            <th>Qty final</th>
+                            <th>Remarks</th>
+                            <th>Total</th>
+                            <th>Qty Unit</th>
+                            <th>Qty Box</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr id="purchaseorderpusatdetail">
+                            <td hidden><input type="text" hidden id="PurchaseRequestPusatDetailId" /></td>
+                            <td hidden><input type="text" hidden id="ProductId" /></td>
+                            <td hidden><input type="text" hidden id="VendorId" /></td>
+                            <td><select id="namabarang" class="form-control"></select></td>
+                            <td><select id="namavendor" class="form-control"></select></td>
+                            <td><input type="text" class="form-control" placeholder="satuan" id="satuan" value="" /></td>
+                            <td><input type="text" class="form-control" placeholder="harga" id="harga" value="" /></td>
+                            <td><input type="text" class="form-control" placeholder="stok_prev" id="stok_prev" value="" disabled /></td>
+                            <td><input type="text" class="form-control" placeholder="total_req" id="total_req" value="" disabled /></td>
+                            <td><input type="text" class="form-control" placeholder="total_dist" id="total_dist" value="" disabled /></td>
+                            <td><input type="text" class="form-control" placeholder="sisa_stok" id="sisa_stok" value="" disabled /></td>
+                            <td><input type="text" class="form-control" placeholder="qty" id="qty" value="0" disabled /></td>
+                            <td><input type="text" class="form-control" placeholder="qty_add" id="qty_add" value="" /></td>
+                            <td><input type="text" class="form-control" placeholder="reason_add" id="reason_add" value="" /></td>
+                            <td><input type="text" class="form-control" placeholder="qty_final" id="qty_final" disabled="disabled" /></td>
+                            <td><input type="text" class="form-control" placeholder="remark" id="remark" disabled="disabled" /></td>
+                            <td><input type="text" class="form-control" placeholder="total" id="total" value="" disabled /></td>
+                            <td><input type="text" class="form-control" placeholder="qty_unit" id="qty_unit" value="" /></td>
+                            <td><input type="text" class="form-control" placeholder="qty_box" id="qty_box" value="" /></td>
+                            <td><input type="button" id="btnAdd" class="btn btn-success float-right" value="Add" /></td>
+                        </tr>
+                    </tfoot>
                 }
             </table>
-</div>
+        </div>
         <br />
-        <form id="purchaseorderpusatdetail">
-            @*<div class="form-group">
-                <input type="text" hidden id="PurchaseRequestPusatDetailId" />
-                <input type="text" hidden id="ProductId" />
-                <input type="text" hidden id="VendorId" />
-                <div class="row">
-                    <div class="col-md-3">
-                        <select id="namabarang" class="form-control"></select>
-                    </div>
-                    <div class="col-md-3">
-                        <select id="namavendor" class="form-control"></select>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" placeholder="satuan" id="satuan" value="" />
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" placeholder="harga" id="harga" value="" />
-                    </div>
-                </div>
-            </div>*@
-            @*<div class="form-group">
-                <div class="row">
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" placeholder="stok_prev" id="stok_prev" value="" />
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" placeholder="total_req" id="total_req" value="" />
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" placeholder="total_dist" id="total_dist" value="" />
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" placeholder="sisa_stok" id="sisa_stok" value="" />
-                    </div>
-                </div>
-            </div>*@
-            @*<div class="form-group">
-                <div class="row">
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" placeholder="qty" id="qty" value="" />
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" placeholder="qty_add" id="qty_add" value="" />
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" placeholder="qty_box" id="qty_box" value="" />
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" placeholder="total" id="total" value="" />
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row marginbutton">
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" placeholder="qty_unit" id="qty_unit" value="" />
-                    </div>
-                    <div class="col-md-9">
-                        <textarea type="text" class="namaobat form-control" placeholder="reason_add" id="reason_add"></textarea>
-                    </div>
-                </div>
-            </div>
-            <footer class="col-md-12 text-right">
-                <input type="button" id="btnAdd" class="btn btn-success float-right" value="Add" />
-            </footer>*@
-        </form>
         <footer class="panel-footer">
-            <button type="submit" class="btn btn-primary savepurchasepusardetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseRequestPusat/CreateOrEditPurchaseRequestPusat">@Klinik.Resources.UIMessages.Save</button>
+            @if ((GeneralHandler.authorized("ADD_M_PURCHASEREQUESTPUSAT", "EDIT_M_PURCHASEREQUESTPUSAT") == "true"))
+            {
+                <button type="submit" class="btn btn-primary savepurchasepusardetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/GudangPusat/CreateOrEditPurchaseRequestPusat" style="display:@(Model != null ? "none" : "inline-block")">@Klinik.Resources.UIMessages.Save</button>
+                <button class="btn btn-primary openallbutton" style="display:@(Model != null ? "inline-block" : "none")">@Klinik.Resources.UIMessages.Edit</button>
+            }
+            @if (Model != null && (GeneralHandler.authorized("APPROVE_M_PURCHASEREQUESTPUSAT") == "true"))
+            {
+                <button class="btn btn-success" onclick="Approve(@Model.Id)">@Klinik.Resources.UIMessages.Validate</button>
+            }
+            @if (Model != null)
+            {
+                <a class="btn btn-success" href="/GudangPusat/PrintPurchaseRequestPusat?id=@Model.Id">Print</a>
+            }
             <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
         </footer>
     </div>
@@ -237,7 +183,7 @@
                 autoclose: true
             });
             $('#btnreset').click(function (e) {
-                window.location.href = "/PurchaseRequestPusat/PurchaseRequestPusatList";
+                window.location.href = "/GudangPusat/PurchaseRequestList";
             });
 
             toastr.options = {
@@ -265,6 +211,31 @@
             }
         });
 
+        var Approve = function (ID) {
+            var r = confirm("@Klinik.Resources.UIMessages.ApproveConfirmation" + ID + " ) ?");
+            if (r == true) {
+            ApprovePR(ID);
+        }
+        return false;
+        }
+
+        function ApprovePR(Id) {
+        $.ajax({
+            url: '/GudangPusat/ApprovePurchaseRequestPusat?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+        }
     </script>
     <script type="text/javascript">
 

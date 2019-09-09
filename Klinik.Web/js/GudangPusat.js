@@ -2,6 +2,8 @@
     init: function () {
         PurchaseRequest.Addpurchaserequestitem();
         PurchaseRequest.Total();
+        PurchaseRequest.SavePurchaseRequestPusat();
+        PurchaseRequest.OpenAllButton();
     },
 
     Addpurchaserequestitem: function () {
@@ -122,6 +124,66 @@
             remark.val(reason_add.val());
         });
     },
+
+    SavePurchaseRequestPusat: function () {
+        $('.savepurchasepusardetail').on('click', function () {
+            var _purchaserequestpusat = {};
+            _purchaserequestpusat.Id = $('#Id').val();
+            _purchaserequestpusat.prnumber = $('#prnumber').val();
+            _purchaserequestpusat.prdate = $('#prdate').val();
+            _purchaserequestpusat.request_by = $('#request_by').val();
+
+            var purchaserequestpusatDetailModels = new Array();
+            $("#tblPurchaseOrderPusat TBODY TR").each(function () {
+                var row = $(this);
+                var purchaserequestPusatDetail = {};
+                purchaserequestPusatDetail.Id = row.find("TD").eq(0).html();
+                purchaserequestPusatDetail.ProductId = row.closest('tr').find('td:eq(3) select').val() > 0 ? row.closest('tr').find('td:eq(3) select').val() : row.find("TD").eq(1).html();
+                purchaserequestPusatDetail.VendorId = row.closest('tr').find('td:eq(4) select').val() > 0 ? row.closest('tr').find('td:eq(4) select').val() : row.find("TD").eq(2).html();
+                //purchaseOrderPusatDetail.namabarang = row.closest('tr').find('td:eq(5) input').length > 0 ? row.closest('tr').find('td:eq(4) input').val() : row.find("TD").eq(5).html();
+                //purchaseOrderPusatDetail.namavendor = row.closest('tr').find('td:eq(6) input').length > 0 ? row.closest('tr').find('td:eq(6) input').val() : row.find("TD").eq(6).html();
+                purchaserequestPusatDetail.satuan = row.closest('tr').find('td:eq(5) input').length > 0 ? row.closest('tr').find('td:eq(5) input').val() : row.find("TD").eq(5).html();
+                purchaserequestPusatDetail.harga = row.closest('tr').find('td:eq(6) input').length > 0 ? row.closest('tr').find('td:eq(6) input').val() : row.find("TD").eq(6).html();
+                purchaserequestPusatDetail.stok_prev = row.closest('tr').find('td:eq(7) input').length > 0 ? row.closest('tr').find('td:eq(7) input').val() : row.find("TD").eq(7).html();
+                purchaserequestPusatDetail.total_req = row.closest('tr').find('td:eq(8) input').length > 0 ? row.closest('tr').find('td:eq(8) input').val() : row.find("TD").eq(8).html();
+                purchaserequestPusatDetail.total_dist = row.closest('tr').find('td:eq(9) input').length > 0 ? row.closest('tr').find('td:eq(9) input').val() : row.find("TD").eq(9).html();
+                purchaserequestPusatDetail.sisa_stok = row.closest('tr').find('td:eq(10) input').length > 0 ? row.closest('tr').find('td:eq(10) input').val() : row.find("TD").eq(10).html();
+                purchaserequestPusatDetail.qty = row.closest('tr').find('td:eq(11) input').length > 0 ? row.closest('tr').find('td:eq(11) input').val() : row.find("TD").eq(11).html();
+                purchaserequestPusatDetail.qty_add = row.closest('tr').find('td:eq(12) input').length > 0 ? row.closest('tr').find('td:eq(12) input').val() : row.find("TD").eq(12).html();
+                purchaserequestPusatDetail.reason_add = row.closest('tr').find('td:eq(13) input').length > 0 ? row.closest('tr').find('td:eq(13) input').val() : row.find("TD").eq(13).html();
+                purchaserequestPusatDetail.qty_final = row.closest('tr').find('td:eq(14) input').length > 0 ? row.closest('tr').find('td:eq(14) input').val() : row.find("TD").eq(14).html();
+                purchaserequestPusatDetail.remark = row.closest('tr').find('td:eq(15) input').length > 0 ? row.closest('tr').find('td:eq(15) input').val() : row.find("TD").eq(15).html();
+                purchaserequestPusatDetail.total = row.closest('tr').find('td:eq(16) input').length > 0 ? row.closest('tr').find('td:eq(16) input').val() : row.find("TD").eq(16).html();
+                purchaserequestPusatDetail.qty_unit = row.closest('tr').find('td:eq(17) input').length > 0 ? row.closest('tr').find('td:eq(17) input').val() : row.find("TD").eq(17).html();
+                purchaserequestPusatDetail.qty_box = row.closest('tr').find('td:eq(18) input').length > 0 ? row.closest('tr').find('td:eq(18) input').val() : row.find("TD").eq(18).html();
+                purchaserequestpusatDetailModels.push(purchaserequestPusatDetail);
+            });
+            console.log(purchaserequestpusatDetailModels);
+            $.ajax({
+                type: "POST",
+                url: $(this).data('url'),
+                data: JSON.stringify({ _purchaserequestpusat: _purchaserequestpusat, purchaserequestpusatDetailModels: purchaserequestpusatDetailModels }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    window.location.reload();
+                }
+            });
+
+        });
+    },
+
+    OpenAllButton: function () {
+        var el = $('.openallbutton');
+        if (!el.length) return;
+
+        el.click(function () {
+            $('.savepurchasepusardetail').show();
+            $(this).hide();
+            $('.edit-purchaseorderpusatdetail').attr('disabled', false);
+            $('#sendby').attr('disabled', false);
+        });
+    }
 }
 
 var General = {

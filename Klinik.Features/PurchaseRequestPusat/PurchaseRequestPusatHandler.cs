@@ -1,5 +1,7 @@
-﻿using Klinik.Common;
+﻿using AutoMapper;
+using Klinik.Common;
 using Klinik.Data;
+using Klinik.Data.DataRepository;
 using Klinik.Entities;
 using Klinik.Entities.PurchaseRequestPusat;
 using Klinik.Entities.PurchaseRequestPusatDetail;
@@ -319,7 +321,14 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
+                        var purchaserequestpusatdetail = _unitOfWork.PurchaseRequestPusatDetailRepository.Query(a => a.PurchaseRequestPusatId == deliveryoder.id).ToList();
                         response.Message = string.Format(Messages.ObjectHasBeenRemoved, "PurchaseRequestPusat", deliveryoder.prnumber, deliveryoder.id);
+                        foreach (var item in purchaserequestpusatdetail)
+                        {
+                           var _purchaseRequestPusatDetail = Mapper.Map<PurchaseRequestPusatDetail, PurchaseRequestPusatDetailModel>(item);
+                            _purchaseRequestPusatDetail.Account = request.Data.Account;
+                           response.Entity.purchaserequestPusatdetailModels.Add(_purchaseRequestPusatDetail);
+                        }
                     }
                     else
                     {

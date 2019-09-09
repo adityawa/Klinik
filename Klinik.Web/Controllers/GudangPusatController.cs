@@ -2,7 +2,9 @@
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
+using Klinik.Entities.MasterData;
 using Klinik.Entities.PurchaseRequestPusat;
+using Klinik.Entities.PurchaseRequestPusatDetail;
 using Klinik.Features;
 using Klinik.Features.Account;
 using System;
@@ -91,6 +93,79 @@ namespace Klinik.Web.Controllers
                 return View();
             }
         }
+
+        [CustomAuthorize("ADD_M_PURCHASEREQUESTPUSAT", "EDIT_M_PURCHASEREQUESTPUSAT")]
+        [HttpPost]
+        public JsonResult CreateOrEditPurchaseRequestPusat(PurchaseRequestPusatModel _purchaserequestpusat, List<PurchaseRequestPusatDetailModel> purchaserequestpusatDetailModels)
+        {
+            if (Session["UserLogon"] != null)
+                _purchaserequestpusat.Account = (AccountModel)Session["UserLogon"];
+            _purchaserequestpusat.Id = Convert.ToInt32(_purchaserequestpusat.Id) > 0 ? _purchaserequestpusat.Id : 0;
+            var request = new PurchaseRequestPusatRequest
+            {
+                Data = _purchaserequestpusat
+            };
+
+            PurchaseRequestPusatResponse _response = new PurchaseRequestPusatResponse();
+
+            new PurchaseRequestPusatValidator(_unitOfWork).Validate(request, out _response);
+            if (purchaserequestpusatDetailModels != null)
+            {
+                foreach (var item in purchaserequestpusatDetailModels)
+                {
+                    var purchaserequestpusatdetailrequest = new PurchaseRequestPusatDetailRequest
+                    {
+                        Data = item
+                    };
+                    purchaserequestpusatdetailrequest.Data.PurchaseRequestPusatId = Convert.ToInt32(_response.Entity.Id);
+                    purchaserequestpusatdetailrequest.Data.Account = (AccountModel)Session["UserLogon"];
+                    //
+                    var requestnamabarang = new ProductRequest
+                    {
+                        Data = new ProductModel
+                        {
+                            Id = item.ProductId
+                        }
+                    };
+
+                    var requestnamavendor = new VendorRequest
+                    {
+                        Data = new VendorModel
+                        {
+                            Id = item.VendorId
+                        }
+                    };
+
+                    ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
+                    VendorResponse namavendor = new VendorHandler(_unitOfWork).GetDetail(requestnamavendor);
+                    purchaserequestpusatdetailrequest.Data.namabarang = namabarang.Entity.Name;
+                    purchaserequestpusatdetailrequest.Data.namavendor = namavendor.Entity.namavendor;
+                    PurchaseRequestPusatDetailResponse _purchaserequestpusatdetailresponse = new PurchaseRequestPusatDetailResponse();
+                    new PurchaseRequestPusatDetailValidator(_unitOfWork).Validate(purchaserequestpusatdetailrequest, out _purchaserequestpusatdetailresponse);
+                }
+            }
+            return Json(new { data = _response.Data }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("APPROVE_M_PURCHASEREQUESTPUSAT")]
+        [HttpPost]
+        public JsonResult ApprovePurchaseRequestPusat(int id)
+        {
+            PurchaseRequestPusatResponse _response = new PurchaseRequestPusatResponse();
+            var request = new PurchaseRequestPusatRequest
+            {
+                Data = new PurchaseRequestPusatModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.APPROVE.ToString()
+            };
+
+            new PurchaseRequestPusatValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
 
@@ -131,10 +206,30 @@ namespace Klinik.Web.Controllers
         [HttpGet]
         public JsonResult GetStokdatabyProductId(int? productid)
         {
-            int? stock = 0/*_context.HistoryProductInGudangs.Where(a => a.ProductId == productid && a.GudangId == OneLoginSession.Account.GudangID).Sum(a => a.value)*/;
-            int? datapo = Convert.ToInt32(_context.PurchaseRequestDetails.Where(a => a.ProductId == productid).Sum(a => a.total));
-            int? datado = Convert.ToInt32(_context.DeliveryOrderDetails.Where(a => a.ProductId == productid && a.Recived == true).Sum(a => a.qty_request));
-            int? sisastock = 0/*Convert.ToInt32(_context.ProductInGudangs.Where(a => a.ProductId == productid && a.GudangId == OneLoginSession.Account.GudangID).Select(a => a.stock))*/;
+            var historyroductnGudangs = _context.HistoryProductInGudangs.Where(a => a.ProductId == productid && a.GudangId == OneLoginSession.Account.GudangID);
+            var purchaseRequestdetails = _context.PurchaseRequestDetails.Where(a => a.ProductId == productid);
+            var deliveryorderdetails = _context.DeliveryOrderDetails.Where(a => a.ProductId == productid && a.Recived == true);
+            var productingudangs = _context.ProductInGudangs.Where(a => a.ProductId == productid && a.GudangId == OneLoginSession.Account.GudangID);
+            int? stock = 0;
+            int? datapo = 0;
+            int? datado = 0;
+            int? sisastock = 0;
+            if(historyroductnGudangs.Count() > 0)
+            {
+                stock = _context.HistoryProductInGudangs.Where(a => a.ProductId == productid && a.GudangId == OneLoginSession.Account.GudangID).Sum(a => a.value);
+            }
+            if(purchaseRequestdetails.Count() > 0)
+            {
+                datapo = Convert.ToInt32(_context.PurchaseRequestDetails.Where(a => a.ProductId == productid).Sum(a => a.total));
+            }
+            if(deliveryorderdetails.Count() > 0)
+            {
+                datado = Convert.ToInt32(_context.DeliveryOrderDetails.Where(a => a.ProductId == productid && a.Recived == true).Sum(a => a.qty_request));
+            }
+            if (productingudangs.Count() > 0)
+            {
+                sisastock = Convert.ToInt32(_context.ProductInGudangs.Where(a => a.ProductId == productid && a.GudangId == OneLoginSession.Account.GudangID).Select(a => a.stock));
+            }
             Dictionary<string, int?> data = new Dictionary<string, int?> {
                                             { "stock", stock },
                                             { "datapo", datapo },
