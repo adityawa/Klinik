@@ -10,6 +10,10 @@
         Klinik.checkbox();
         Klinik.autocompleteGudangOne();
         Klinik.savePoPerRow();
+        Klinik.EditSubtitusi();
+        Klinik.ChangeNamaBarangsubtitusi();
+        Klinik.ElementButton();
+        Klinik.openallbutton();
     },
 
     autocompleteProductOne: function () {
@@ -45,6 +49,7 @@
         });
         $(el).change(function () {
             $("#ProductId").val($(el).val());
+            $(this).closest('tr').find('td:eq(9) input[type="text"]').val($(el).text);
         });
     },
 
@@ -162,6 +167,7 @@
 
     editPurchaseOrderDetail: function () {
         $('.edit-purchaseorderdetail').on('click', function () {
+
             var getdata = $(this).closest('tr');
             getdata.find('td:eq(3) select').select2({
                 width: 'resolve',
@@ -193,6 +199,8 @@
 
             getdata.find('input[type="checkbox"]').prop('disabled', false);
             $(this).hide();
+            getdata.find('td:eq(10) input[type="text"]').prop('disabled', false);
+            getdata.find('td:eq(11) input[type="text"]').prop('disabled', false);
             getdata.find('.save-purchaseorderdetail').show();
         });
     },
@@ -242,9 +250,70 @@
             var $tr = $(this).closest('tr');
             var $clone = $tr.clone();
             $clone.find(".podetail").text('');
+            $clone.find('.subtitusi').remove();
+            $clone.find('.delete-purchaseorderdetail').attr('onclick', 'Remove(this);').prop('disabled', false);
+            $clone.find('.edit-purchaseorderdetail').removeClass('edit-purchaseorderdetail').addClass('edit-subtitusi');
+            $clone.find('td:eq(9) input').attr('value', '');
             $tr.after($clone);
             Klinik.editPurchaseOrderDetail();
             Klinik.autocompleteProductOne();
+            Klinik.savePoPerRow();
+            Klinik.checkbox();
+            Klinik.EditSubtitusi();
+        });
+    },
+
+    EditSubtitusi: function () {
+        var el = $('.edit-subtitusi');
+        if (!el.length) return;
+
+        $(el).click(function () {
+            var getdata = $(this).closest('tr');
+            getdata.find('td:eq(2) select').select2({
+                width: 'resolve',
+                placeholder: 'product..',
+                ajax: {
+                    url: '/DeliveryOrder/searchproduct/',
+                    data: function (params) {
+                        return {
+                            prefix: params.term
+                        };
+                    },
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        var results = [];
+
+                        $.each(data.data, function (index, item) {
+                            results.push({
+                                id: item.Id,
+                                text: item.Name
+                            });
+                        });
+                        return {
+                            results: results
+                        };
+                    }
+                }
+            }).prop('disabled', false).addClass('namabarangsubtitusi');
+            getdata.find('input[type="checkbox"]').prop('disabled', false);
+            $(this).hide();
+            getdata.find('td:eq(10) input[type="text"]').prop('disabled', false);
+            getdata.find('td:eq(11) input[type="text"]').prop('disabled', false);
+            getdata.find('.save-purchaseorderdetail').show();
+            Klinik.ChangeNamaBarangsubtitusi();
+        });
+    },
+
+    ChangeNamaBarangsubtitusi: function () {
+        var el = $('.namabarangsubtitusi');
+        if (!el.length) return;
+
+        $(el).change(function () {
+            $(el).children('option:first').remove();
+            $(this).select2('data', null)
+            $(this).closest('tr').find('td:eq(9) input').val('');
+            $(this).closest('tr').find('td:eq(9) input').val($(el).text());
         });
     },
 
@@ -281,8 +350,10 @@
             var row = $(this).closest('tr');
             row.find('.delete-purchaseorderdetail').hide();
             row.find('.image-loading').show();
+            row.find('.subtitusi').hide();
             var purchaseOrderDetail = {};
             purchaseOrderDetail.Id = row.find("TD").eq(0).html();
+            purchaseOrderDetail.PurchaseOrderId = $('#Id').val();
             purchaseOrderDetail.ProductId = row.closest('tr').find('td:eq(2) select').val() > 0 ? row.closest('tr').find('td:eq(2) select').val() : row.find("TD").eq(1).html();
             purchaseOrderDetail.tot_pemakaian = row.closest('tr').find('td:eq(3) input').length > 0 ? row.closest('tr').find('td:eq(3) input').val() : row.find("TD").eq(3).html();
             purchaseOrderDetail.sisa_stok = row.closest('tr').find('td:eq(4) input').length > 0 ? row.closest('tr').find('td:eq(4) input').val() : row.find("TD").eq(4).html();
@@ -305,7 +376,21 @@
                     $('.image-loading').hide();
                     row.find('.edit-purchaseorderdetail').show();
                     row.find('.delete-purchaseorderdetail').show();
+                    row.find('.subtitusi').show();
                     row.find('input[type="checkbox"]').prop('disabled', true);
+                    row.closest('tr').find('td:eq(10) input').prop('disabled', true);
+                    row.closest('tr').find('td:eq(11) input').prop('disabled', true);
+                    row.closest('tr').find('td:eq(11) input').prop('disabled', true);
+                    if (!row.closest('tr').find('td:eq(2) select').length) {
+                        row.closest('tr').find('td:eq(2) select').select2("enable", false);
+                    }
+                    row.find("TD").eq(0).html(r.data.Id);
+                    row.find("TD").eq(14).html("");
+                    row.find("TD").eq(14).html(Klinik.ElementButton(r.data));
+                    Klinik.editPurchaseOrderDetail();
+                    Klinik.savePoPerRow();
+                    Klinik.checkbox();
+                    console.log(r);
                 }
             });
         });
@@ -344,6 +429,27 @@
         });
         $(el).change(function () {
             $("#GudangId").val($(el).val());
+        });
+    },
+
+    ElementButton: function (data, url) {
+        //console.log(data);
+        if (!data) return;
+        var element = "<button class='save-purchaseorderdetail btn btn-success btn-sm' data-url='/PurchaseOrder/EditPurchaseOrderDetail' style='display:none;'>Save</button> " +
+            "<button class='edit-purchaseorderdetail btn btn-success btn-sm'>Edit</button> " + "<button class='btn btn-danger btn-sm delete-purchaseorderdetail' disabled>Delete</button> "
+             + "<img src='/Content/images/loading.gif' style='height: 30px;display:none;' class='image-loading' />";
+        console.log(element);
+        return element;
+    },
+
+    openallbutton: function () {
+        var el = $('.openallbutton');
+        if (!el.length) return;
+
+        el.click(function () {
+            $('.savepurchasedetail').show();
+            $(this).hide();
+            $('.edit-purchaseorderdetail').attr('disabled', false);
         });
     }
 

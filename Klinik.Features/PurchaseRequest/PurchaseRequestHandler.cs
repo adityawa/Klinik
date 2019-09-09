@@ -54,7 +54,7 @@ namespace Klinik.Features
                         qry.request_by = request.Data.request_by;
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.ModifiedDate = DateTime.Now;
-                        qry.GudangId = request.Data.GudangId;
+                        qry.GudangId = qry.GudangId;
                         qry.RowStatus = 0;
 
                         _unitOfWork.PurchaseRequestRepository.Update(qry);
@@ -153,6 +153,7 @@ namespace Klinik.Features
                     ModifiedBy = qry.ModifiedBy,
                     CreatedBy = qry.CreatedBy,
                     ModifiedDate = qry.ModifiedDate,
+                    Validasi = qry.Validasi,
                 };
 
                 foreach (var item in qry.PurchaseRequestDetails)

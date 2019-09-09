@@ -8,6 +8,7 @@
         Klinik.total();
         Klinik.saverowPurchaseorderDetail();
         Klinik.CreateNewProduct();
+        Klinik.openallbutton();
     },
 
     total: function () {
@@ -78,7 +79,7 @@
             var qty_by_ho = $("#qty_by_ho");
             var remark_by_ho = $("#remark_by_ho");
             var newproductname = $("#newproductname");
-            var tBody = $("#tblPurchaseOrder > TBODY")[0];
+            var tBody = $("#tblPurchaseRequest > TBODY")[0];
             //Add Row.
             var row = tBody.insertRow(-1);
             //Add id cell.
@@ -153,7 +154,7 @@
             _purchaserequest.prdate = $('#prdate').val();
             _purchaserequest.request_by = $('#request_by').val();
             var purchaserequestDetailModels = new Array();
-            $("#tblPurchaseOrder TBODY TR").each(function () {
+            $("#tblPurchaseRequest TBODY TR").each(function () {
                 var row = $(this);
                 var purchaseRequestDetail = {};
                 var newproductid = 0;
@@ -311,6 +312,18 @@
                     $('#nama_by_ho').val($('#newproductname').val());
                 }
             });
+        });
+    },
+
+    openallbutton: function () {
+        var el = $('.openallbutton');
+        if (!el.length) return;
+
+        el.click(function () {
+            $('.saveorderdetail').show();
+            $(this).hide();
+            $('.edit-purchaseorderdetail').attr('disabled', false);
+            $('#sendby').attr('disabled', false);
         });
     }
 };

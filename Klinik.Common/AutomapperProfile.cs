@@ -23,6 +23,9 @@ using Klinik.Entities.DeliveryOrderDetail;
 using Klinik.Entities.Pharmacy;
 using System;
 using Klinik.Entities.PurchaseRequestConfig;
+using Klinik.Entities.PurchaseRequestPusat;
+using Klinik.Entities.PurchaseOrderPusat;
+using Klinik.Entities.PurchaseRequestPusatDetail;
 
 namespace Klinik.Common
 {
@@ -325,8 +328,15 @@ namespace Klinik.Common
             CreateMap<PurchaseRequestConfig, PurchaseRequestConfigModel>();
             CreateMap<PurchaseRequestConfigModel, PurchaseRequestConfig> ();
 
+
             CreateMap<ICDTheme, ICDThemeModel>();
             CreateMap<ICDThemeModel, ICDTheme>();
+
+            CreateMap<PurchaseRequestPusatModel, PurchaseOrderPusatModel>();
+            CreateMap<PurchaseRequestPusatDetail, PurchaseRequestPusatDetailModel>();
+
+
+
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Klinik.Entities.PurchaseOrder
         public string ponumber { get; set; }
         public Nullable<System.DateTime> podate { get; set; }
         public string request_by { get; set; }
-        public string approve_by { get; set; }
+        public string approveby { get; set; }
         public Nullable<int> approve { get; set; }
         public Nullable<int> statusop { get; set; }
         public string createformat { get; set; }

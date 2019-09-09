@@ -60,10 +60,7 @@ namespace Klinik.Web.Controllers
 
             var response = new PurchaseOrderHandler(_unitOfWork).GetListData(request);
             var check = GeneralHandler.authorized("VALIDATION_M_PURCHASEORDER");
-            if (GeneralHandler.authorized("VALIDATION_M_PURCHASEORDER") == "false" && GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "false")
-            {
-                response.Data.Where(a => a.approve != null);
-            }
+            var check1 = GeneralHandler.authorized("APPROVE_M_PURCHASEORDER");
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
@@ -228,7 +225,7 @@ namespace Klinik.Web.Controllers
         }
 
         #region ::PURCHASEORDERDETAIL::
-        [CustomAuthorize("EDIT_M_PURCHASEREQUEST")]
+        [CustomAuthorize("EDIT_M_PURCHASEORDER")]
         [HttpPost]
         public ActionResult EditPurchaseOrderDetail(PurchaseOrderDetailModel purchaseOrderDetail)
         {
@@ -250,7 +247,7 @@ namespace Klinik.Web.Controllers
             ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
             purchaserequestdetailrequest.Data.namabarang = purchaserequestdetailrequest.Data.namabarang != null ? purchaserequestdetailrequest.Data.namabarang : namabarang.Entity.Name;
             new PurchaseOrderDetailValidator(_unitOfWork).Validate(purchaserequestdetailrequest, out _purchaseorderdetailresponse);
-            return Json(new { data = _purchaseorderdetailresponse.Data }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = _purchaseorderdetailresponse.Entity }, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

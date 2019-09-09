@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AppConfig">
           <Key>
             <PropertyRef Name="ID" />
@@ -81,10 +81,10 @@
           <Property Name="donumber" Type="varchar" MaxLength="20" />
           <Property Name="dodate" Type="date" />
           <Property Name="dodest" Type="varchar" MaxLength="30" />
-          <Property Name="approve_by" Type="int" />
+          <Property Name="approveby" Type="varchar" MaxLength="100" />
           <Property Name="approve" Type="int" />
           <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="20" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
@@ -935,10 +935,10 @@
           <Property Name="nama_by_ho" Type="varchar" MaxLength="30" />
           <Property Name="qty_by_ho" Type="float" />
           <Property Name="remark_by_ho" Type="varchar" MaxLength="30" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="20" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="100" />
           <Property Name="RowStatus" Type="int" />
           <Property Name="statusop" Type="int" />
           <Property Name="OrderNumber" Type="int" />
@@ -981,6 +981,8 @@
           <Property Name="qty" Type="float" />
           <Property Name="qty_add" Type="float" />
           <Property Name="reason_add" Type="varchar" MaxLength="50" />
+          <Property Name="qty_final" Type="float" />
+          <Property Name="remark" Type="varchar" MaxLength="100" />
           <Property Name="total" Type="float" />
           <Property Name="qty_unit" Type="float" />
           <Property Name="qty_box" Type="float" />
@@ -1085,6 +1087,8 @@
           <Property Name="qty" Type="float" />
           <Property Name="qty_add" Type="float" />
           <Property Name="reason_add" Type="varchar" MaxLength="50" />
+          <Property Name="qty_final" Type="float" />
+          <Property Name="remark" Type="varchar" MaxLength="100" />
           <Property Name="total" Type="float" />
           <Property Name="qty_unit" Type="float" />
           <Property Name="qty_box" Type="float" />
@@ -3115,7 +3119,8 @@
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KlinikDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -3217,10 +3222,10 @@
           <Property Name="donumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="dodate" Type="DateTime" Precision="0" />
           <Property Name="dodest" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="approve_by" Type="Int32" />
+          <Property Name="approveby" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="approve" Type="Int32" />
           <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
@@ -3672,7 +3677,7 @@
           <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_PurchaseOrder_Gudang" FromRole="Gudang" ToRole="PurchaseOrder" />
           <NavigationProperty Name="PurchaseOrders1" Relationship="Self.FK_PurchaseOrder_Source" FromRole="Gudang" ToRole="PurchaseOrder" />
           <NavigationProperty Name="PurchaseRequests" Relationship="Self.FK_PurchaseRequest_Gudang" FromRole="Gudang" ToRole="PurchaseRequest" />
-          <NavigationProperty Name="PurchaseRequestConfigs" Relationship="KlinikDBModel.FK_PurchaseRequestConfig_Gudang" FromRole="Gudang" ToRole="PurchaseRequestConfig" />
+          <NavigationProperty Name="PurchaseRequestConfigs" Relationship="Self.FK_PurchaseRequestConfig_Gudang" FromRole="Gudang" ToRole="PurchaseRequestConfig" />
         </EntityType>
         <EntityType Name="HistoryProductInGudang">
           <Key>
@@ -3686,6 +3691,19 @@
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Gudang" Relationship="Self.FK_HistoryProductInGudang_Gudang" FromRole="HistoryProductInGudang" ToRole="Gudang" />
           <NavigationProperty Name="Product" Relationship="Self.FK_HistoryProductInGudang_Product" FromRole="HistoryProductInGudang" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="ICDTheme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RowStatus" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="LabItem">
           <Key>
@@ -4213,10 +4231,10 @@
           <Property Name="nama_by_ho" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="qty_by_ho" Type="Double" />
           <Property Name="remark_by_ho" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="RowStatus" Type="Int32" />
           <Property Name="statusop" Type="Int32" />
           <Property Name="OrderNumber" Type="Int32" />
@@ -4265,6 +4283,8 @@
           <Property Name="qty" Type="Double" />
           <Property Name="qty_add" Type="Double" />
           <Property Name="reason_add" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="qty_final" Type="Double" />
+          <Property Name="remark" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="total" Type="Double" />
           <Property Name="qty_unit" Type="Double" />
           <Property Name="qty_box" Type="Double" />
@@ -4301,6 +4321,20 @@
           <NavigationProperty Name="Gudang" Relationship="Self.FK_PurchaseRequest_Gudang" FromRole="PurchaseRequest" ToRole="Gudang" />
           <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_PurchaseOrder_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseOrder" />
           <NavigationProperty Name="PurchaseRequestDetails" Relationship="Self.FK_PurchaseRequestDetail_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseRequestDetail" />
+        </EntityType>
+        <EntityType Name="PurchaseRequestConfig">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GudangId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int32" />
+          <NavigationProperty Name="Gudang" Relationship="Self.FK_PurchaseRequestConfig_Gudang" FromRole="PurchaseRequestConfig" ToRole="Gudang" />
         </EntityType>
         <EntityType Name="PurchaseRequestDetail">
           <Key>
@@ -4366,6 +4400,8 @@
           <Property Name="qty" Type="Double" />
           <Property Name="qty_add" Type="Double" />
           <Property Name="reason_add" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="qty_final" Type="Double" />
+          <Property Name="remark" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="total" Type="Double" />
           <Property Name="qty_unit" Type="Double" />
           <Property Name="qty_box" Type="Double" />
@@ -5341,6 +5377,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PurchaseRequestConfig_Gudang">
+          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
+          <End Role="PurchaseRequestConfig" Type="Self.PurchaseRequestConfig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestConfig">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_HistoryProductInGudang_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="HistoryProductInGudang" Type="Self.HistoryProductInGudang" Multiplicity="*" />
@@ -5920,6 +5968,7 @@
           <EntitySet Name="GeneralMasters" EntityType="Self.GeneralMaster" />
           <EntitySet Name="Gudangs" EntityType="Self.Gudang" />
           <EntitySet Name="HistoryProductInGudangs" EntityType="Self.HistoryProductInGudang" />
+          <EntitySet Name="ICDThemes" EntityType="Self.ICDTheme" />
           <EntitySet Name="LabItems" EntityType="Self.LabItem" />
           <EntitySet Name="LabItemCategories" EntityType="Self.LabItemCategory" />
           <EntitySet Name="Letters" EntityType="Self.Letter" />
@@ -5951,6 +6000,7 @@
           <EntitySet Name="PurchaseOrderPusats" EntityType="Self.PurchaseOrderPusat" />
           <EntitySet Name="PurchaseOrderPusatDetails" EntityType="Self.PurchaseOrderPusatDetail" />
           <EntitySet Name="PurchaseRequests" EntityType="Self.PurchaseRequest" />
+          <EntitySet Name="PurchaseRequestConfigs" EntityType="Self.PurchaseRequestConfig" />
           <EntitySet Name="PurchaseRequestDetails" EntityType="Self.PurchaseRequestDetail" />
           <EntitySet Name="PurchaseRequestPusats" EntityType="Self.PurchaseRequestPusat" />
           <EntitySet Name="PurchaseRequestPusatDetails" EntityType="Self.PurchaseRequestPusatDetail" />
@@ -6221,6 +6271,10 @@
             <End Role="Gudang" EntitySet="Gudangs" />
             <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
           </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestConfig_Gudang" Association="Self.FK_PurchaseRequestConfig_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="PurchaseRequestConfig" EntitySet="PurchaseRequestConfigs" />
+          </AssociationSet>
           <AssociationSet Name="FK_HistoryProductInGudang_Product" Association="Self.FK_HistoryProductInGudang_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="HistoryProductInGudang" EntitySet="HistoryProductInGudangs" />
@@ -6405,52 +6459,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-          <EntitySet Name="ICDThemes" EntityType="KlinikDBModel.ICDTheme" />
-          <EntitySet Name="PurchaseRequestConfigs" EntityType="KlinikDBModel.PurchaseRequestConfig" />
-          <AssociationSet Name="FK_PurchaseRequestConfig_Gudang" Association="KlinikDBModel.FK_PurchaseRequestConfig_Gudang">
-            <End Role="Gudang" EntitySet="Gudangs" />
-            <End Role="PurchaseRequestConfig" EntitySet="PurchaseRequestConfigs" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="ICDTheme">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RowStatus" Type="Int32" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="PurchaseRequestConfig">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GudangId" Type="Int32" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="RowStatus" Type="Int32" />
-          <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_PurchaseRequestConfig_Gudang" FromRole="PurchaseRequestConfig" ToRole="Gudang" />
-        </EntityType>
-        <Association Name="FK_PurchaseRequestConfig_Gudang">
-          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
-          <End Type="KlinikDBModel.PurchaseRequestConfig" Role="PurchaseRequestConfig" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gudang">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="PurchaseRequestConfig">
-              <PropertyRef Name="GudangId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6536,7 +6545,7 @@
                 <ScalarProperty Name="donumber" ColumnName="donumber" />
                 <ScalarProperty Name="dodate" ColumnName="dodate" />
                 <ScalarProperty Name="dodest" ColumnName="dodest" />
-                <ScalarProperty Name="approve_by" ColumnName="approve_by" />
+                <ScalarProperty Name="approveby" ColumnName="approveby" />
                 <ScalarProperty Name="approve" ColumnName="approve" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -6951,6 +6960,20 @@
                 <ScalarProperty Name="value" ColumnName="value" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ICDThemes">
+            <EntityTypeMapping TypeName="KlinikDBModel.ICDTheme">
+              <MappingFragment StoreEntitySet="ICDTheme">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -7474,6 +7497,8 @@
                 <ScalarProperty Name="qty" ColumnName="qty" />
                 <ScalarProperty Name="qty_add" ColumnName="qty_add" />
                 <ScalarProperty Name="reason_add" ColumnName="reason_add" />
+                <ScalarProperty Name="qty_final" ColumnName="qty_final" />
+                <ScalarProperty Name="remark" ColumnName="remark" />
                 <ScalarProperty Name="total" ColumnName="total" />
                 <ScalarProperty Name="qty_unit" ColumnName="qty_unit" />
                 <ScalarProperty Name="qty_box" ColumnName="qty_box" />
@@ -7505,6 +7530,20 @@
                 <ScalarProperty Name="statusop" ColumnName="statusop" />
                 <ScalarProperty Name="Validasi" ColumnName="Validasi" />
                 <ScalarProperty Name="GudangId" ColumnName="GudangId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseRequestConfigs">
+            <EntityTypeMapping TypeName="KlinikDBModel.PurchaseRequestConfig">
+              <MappingFragment StoreEntitySet="PurchaseRequestConfig">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="GudangId" ColumnName="GudangId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -7569,6 +7608,8 @@
                 <ScalarProperty Name="qty" ColumnName="qty" />
                 <ScalarProperty Name="qty_add" ColumnName="qty_add" />
                 <ScalarProperty Name="reason_add" ColumnName="reason_add" />
+                <ScalarProperty Name="qty_final" ColumnName="qty_final" />
+                <ScalarProperty Name="remark" ColumnName="remark" />
                 <ScalarProperty Name="total" ColumnName="total" />
                 <ScalarProperty Name="qty_unit" ColumnName="qty_unit" />
                 <ScalarProperty Name="qty_box" ColumnName="qty_box" />
@@ -7754,34 +7795,6 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ICDThemes">
-            <EntityTypeMapping TypeName="KlinikDBModel.ICDTheme">
-              <MappingFragment StoreEntitySet="ICDTheme">
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PurchaseRequestConfigs">
-            <EntityTypeMapping TypeName="KlinikDBModel.PurchaseRequestConfig">
-              <MappingFragment StoreEntitySet="PurchaseRequestConfig">
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="GudangId" ColumnName="GudangId" />
-                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

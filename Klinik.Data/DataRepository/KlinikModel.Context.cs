@@ -51,6 +51,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<GeneralMaster> GeneralMasters { get; set; }
         public virtual DbSet<Gudang> Gudangs { get; set; }
         public virtual DbSet<HistoryProductInGudang> HistoryProductInGudangs { get; set; }
+        public virtual DbSet<ICDTheme> ICDThemes { get; set; }
         public virtual DbSet<LabItem> LabItems { get; set; }
         public virtual DbSet<LabItemCategory> LabItemCategories { get; set; }
         public virtual DbSet<Letter> Letters { get; set; }
@@ -82,6 +83,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<PurchaseOrderPusat> PurchaseOrderPusats { get; set; }
         public virtual DbSet<PurchaseOrderPusatDetail> PurchaseOrderPusatDetails { get; set; }
         public virtual DbSet<PurchaseRequest> PurchaseRequests { get; set; }
+        public virtual DbSet<PurchaseRequestConfig> PurchaseRequestConfigs { get; set; }
         public virtual DbSet<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
         public virtual DbSet<PurchaseRequestPusat> PurchaseRequestPusats { get; set; }
         public virtual DbSet<PurchaseRequestPusatDetail> PurchaseRequestPusatDetails { get; set; }
@@ -96,7 +98,5 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
-        public virtual DbSet<ICDTheme> ICDThemes { get; set; }
-        public virtual DbSet<PurchaseRequestConfig> PurchaseRequestConfigs { get; set; }
     }
 }

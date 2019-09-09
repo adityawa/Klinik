@@ -12,6 +12,7 @@
         Klinik.saveOrderdetailPerRow();
         Klinik.checkall();
         Klinik.checkbox();
+        Klinik.openallbutton();
     },
     autocompleteProductOne: function () {
         var el = $("#namabarang");
@@ -294,8 +295,8 @@
                 }
             });
 
-            getdata.find('td:eq(7) input').prop('disabled', false);
-            getdata.find('td:eq(8) input').prop('disabled', false);
+            //getdata.find('td:eq(7) input').prop('disabled', false);
+            //getdata.find('td:eq(8) input').prop('disabled', false);
             $(this).hide();
             getdata.find('.save-deliveryorderdetail').show();
             getdata.find('input[type="checkbox"]').prop('disabled', false);
@@ -312,6 +313,7 @@
             _deliveryorder.dodate = $('#dodate').val();
             _deliveryorder.dodest = $('#dodest').val();
             _deliveryorder.approve_by = $('#approve_by').val();
+            _deliveryorder.sendby = $('#sendby').val();
             var deliveryOrderDetailModels = new Array();
             $("#tblDeliveryOrder TBODY TR").each(function () {
                 var row = $(this);
@@ -471,6 +473,18 @@
             }
         });
     },
+
+    openallbutton: function () {
+        var el = $('.openallbutton');
+        if (!el.length) return;
+
+        el.click(function () {
+            $('.saveorderdetail').show();
+            $(this).hide();
+            $('.edit-deliveryorderdetail').attr('disabled', false);
+            $('#sendby').attr('disabled', false);
+        });
+    }
 };
 
 $(document).ready(function () {

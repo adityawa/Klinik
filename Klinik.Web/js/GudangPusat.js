@@ -1,85 +1,12 @@
-﻿var Klinik = {
+﻿var PurchaseRequest = {
     init: function () {
-        Klinik.addPuschaseOrderPusatDetailItem();
-        Klinik.autocompleteProductOne();
-        Klinik.autocompleteVendor();
-        Klinik.savePurchaseOrderPusat();
-        Klinik.editPurchaseOrderPusatDetail();
+        PurchaseRequest.Addpurchaserequestitem();
+        PurchaseRequest.Total();
+        PurchaseRequest.SavePurchaseRequestPusat();
+        PurchaseRequest.OpenAllButton();
     },
 
-    autocompleteProductOne: function () {
-        var el = $("#namabarang");
-        if (!el.length) return;
-
-        $('#namabarang').select2({
-            width: 'resolve',
-            placeholder: 'product..',
-            ajax: {
-                url: '/DeliveryOrder/searchproduct/',
-                data: function (params) {
-                    return {
-                        prefix: params.term
-                    };
-                },
-                dataType: 'json',
-                delay: 250,
-                processResults: function (data) {
-                    var results = [];
-
-                    $.each(data.data, function (index, item) {
-                        results.push({
-                            id: item.Id,
-                            text: item.Name
-                        });
-                    });
-                    return {
-                        results: results
-                    };
-                }
-            }
-        });
-        $(el).change(function () {
-            $("#ProductId").val($(el).val());
-        });
-    },
-
-    autocompleteVendor: function () {
-        var el = $("#namavendor");
-        if (!el.length) return;
-
-        $('#namavendor').select2({
-            width: 'resolve',
-            placeholder: 'vendor..',
-            ajax: {
-                url: '/PurchaseOrderPusat/searchvendor/',
-                data: function (params) {
-                    return {
-                        prefix: params.term
-                    };
-                },
-                dataType: 'json',
-                delay: 250,
-                processResults: function (data) {
-                    var results = [];
-
-                    $.each(data.data, function (index, item) {
-                        results.push({
-                            id: item.Id,
-                            text: item.namavendor
-                        });
-                    });
-                    return {
-                        results: results
-                    };
-                }
-            }
-        });
-        $(el).change(function () {
-            $("#VendorId").val($(el).val());
-        });
-    },
-
-    addPuschaseOrderPusatDetailItem: function () {
+    Addpurchaserequestitem: function () {
         var el = $("#btnAdd");
         if (!el.length) return;
         $("body").on("click", "#btnAdd", function () {
@@ -97,6 +24,8 @@
             var qty = $("#qty");
             var qty_add = $("#qty_add");
             var reason_add = $("#reason_add");
+            var qty_final = $("#qty_final");
+            var remark = $("#remark");
             var total = $("#total");
             var qty_unit = $("#qty_unit");
             var qty_box = $("#qty_box");
@@ -151,6 +80,12 @@
             cell.html(reason_add.val());
 
             cell = $(row.insertCell(-1));
+            cell.html(qty_final.val());
+
+            cell = $(row.insertCell(-1));
+            cell.html(remark.val());
+
+            cell = $(row.insertCell(-1));
             cell.html(total.val());
 
             cell = $(row.insertCell(-1));
@@ -169,11 +104,28 @@
             $('#purchaseorderpusatdetail input[type="text"], textarea').val('');
             namabarang.text('');
             namavendor.text('');
-
         });
     },
 
-    savePurchaseOrderPusat: function () {
+    Total: function () {
+        var el = $('#qty_final');
+        if (!el.length) return;
+
+        var qtyadd = $('#qty_add');
+        var reason_add = $('#reason_add');
+        var qty_final = $('#qty_final');
+        var remark = $('#remark');
+        var total = $('#total');
+        qtyadd.keyup(function () {
+            qty_final.val(parseInt(qtyadd.val()));
+            total.val(parseInt(qtyadd.val()) + parseInt(qty_final.val()));
+        });
+        reason_add.keyup(function () {
+            remark.val(reason_add.val());
+        });
+    },
+
+    SavePurchaseRequestPusat: function () {
         $('.savepurchasepusardetail').on('click', function () {
             var _purchaserequestpusat = {};
             _purchaserequestpusat.Id = $('#Id').val();
@@ -221,69 +173,113 @@
         });
     },
 
-    editPurchaseOrderPusatDetail: function () {
-        $('.edit-purchaseorderpusatdetail').on('click', function () {
-            var getdata = $(this).closest('tr');
-            getdata.find('td:eq(3) select').select2({
-                width: 'resolve',
-                placeholder: 'product..',
-                ajax: {
-                    url: '/DeliveryOrder/searchproduct/',
-                    data: function (params) {
-                        return {
-                            prefix: params.term
-                        };
-                    },
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function (data) {
-                        var results = [];
+    OpenAllButton: function () {
+        var el = $('.openallbutton');
+        if (!el.length) return;
 
-                        $.each(data.data, function (index, item) {
-                            results.push({
-                                id: item.Id,
-                                text: item.Name
-                            });
-                        });
-                        return {
-                            results: results
-                        };
-                    }
-                }
-            }).prop('disabled', false);
-
-            getdata.find('td:eq(4) select').select2({
-                width: 'resolve',
-                placeholder: 'vendor..',
-                ajax: {
-                    url: '/PurchaseOrderPusat/searchvendor/',
-                    data: function (params) {
-                        return {
-                            prefix: params.term
-                        };
-                    },
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function (data) {
-                        var results = [];
-
-                        $.each(data.data, function (index, item) {
-                            results.push({
-                                id: item.Id,
-                                text: item.namavendor
-                            });
-                        });
-                        return {
-                            results: results
-                        };
-                    }
-                }
-            }).prop('disabled', false);
-
-            getdata.find('input').prop('disabled', false);
+        el.click(function () {
+            $('.savepurchasepusardetail').show();
+            $(this).hide();
+            $('.edit-purchaseorderpusatdetail').attr('disabled', false);
+            $('#sendby').attr('disabled', false);
         });
     }
-};
+}
+
+var General = {
+    init: function () {
+        General.Searchproduct();
+        General.Searchvendor();
+    },
+
+    Searchproduct: function () {
+        var el = $("#namabarang");
+        if (!el.length) return;
+
+        $('#namabarang').select2({
+            width: 'resolve',
+            placeholder: 'product..',
+            ajax: {
+                url: '/DeliveryOrder/searchproduct/',
+                data: function (params) {
+                    return {
+                        prefix: params.term
+                    };
+                },
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    var results = [];
+
+                    $.each(data.data, function (index, item) {
+                        results.push({
+                            id: item.Id,
+                            text: item.Name
+                        });
+                    });
+                    return {
+                        results: results
+                    };
+                }
+            }
+        });
+        $(el).change(function () {
+            $("#ProductId").val($(el).val());
+            $.ajax({
+                type: "GET",
+                url: "/GudangPusat/GetStokdatabyProductId?productid=" + $(el).val(),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    console.log(r.data);
+                    var data = r.data;
+                    $('#stok_prev').val(data.stock);
+                    $('#total_req').val(data.datapo);
+                    $('#total_dist').val(data.datado);
+                    $('#sisa_stok').val(data.sisastock);
+                }
+            })
+        });
+    },
+
+    Searchvendor: function () {
+        var el = $("#namavendor");
+        if (!el.length) return;
+
+        $('#namavendor').select2({
+            width: 'resolve',
+            placeholder: 'vendor..',
+            ajax: {
+                url: '/GudangPusat/searchvendor/',
+                data: function (params) {
+                    return {
+                        prefix: params.term
+                    };
+                },
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    var results = [];
+
+                    $.each(data.data, function (index, item) {
+                        results.push({
+                            id: item.Id,
+                            text: item.namavendor
+                        });
+                    });
+                    return {
+                        results: results
+                    };
+                }
+            }
+        });
+        $(el).change(function () {
+            $("#VendorId").val($(el).val());
+        });
+    }
+}
+
 $(document).ready(function () {
-    Klinik.init();
+    PurchaseRequest.init();
+    General.init();
 });

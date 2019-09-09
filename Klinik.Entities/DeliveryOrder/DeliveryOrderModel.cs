@@ -13,7 +13,7 @@ namespace Klinik.Entities.DeliveryOrder
         public string donumber { get; set; }
         public Nullable<System.DateTime> dodate { get; set; }
         public string dodest { get; set; }
-        public Nullable<int> approve_by { get; set; }
+        public string approveby { get; set; }
         public Nullable<int> approve { get; set; }
         public List<DeliveryOrderDetailModel> deliveryOrderDetailModels { get; set; }
         public string createformat { get; set; }

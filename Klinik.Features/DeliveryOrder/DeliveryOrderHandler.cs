@@ -4,6 +4,7 @@ using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.DeliveryOrder;
 using Klinik.Entities.DeliveryOrderDetail;
+using Klinik.Features.Account;
 using Klinik.Resources;
 using LinqKit;
 using System;
@@ -38,7 +39,7 @@ namespace Klinik.Features
                             donumber = qry.donumber,
                             dodate = qry.dodate,
                             dodest = qry.dodest,
-                            approve_by = qry.approve_by,
+                            approveby = qry.approveby,
                             approve = qry.approve,
                             ModifiedBy = qry.ModifiedBy,
                             CreatedBy = qry.CreatedBy,
@@ -47,19 +48,21 @@ namespace Klinik.Features
                             Recived = qry.Recived,
                             RowStatus = qry.RowStatus,
                             GudangId = qry.GudangId,
-                            SourceId = qry.SourceId
+                            SourceId = qry.SourceId,
+                            SendBy = qry.SendBy
                         };
 
                         // update data
-                        qry.poid = request.Data.poid > 0 ? Convert.ToInt32(request.Data.poid) : qry.poid;
-                        qry.donumber = request.Data.donumber;
-                        qry.dodate = request.Data.dodate;
-                        qry.dodest = request.Data.dodest;
+                        //qry.poid = request.Data.poid > 0 ? Convert.ToInt32(request.Data.poid) : qry.poid;
+                        //qry.donumber = request.Data.donumber;
+                        //qry.dodate = request.Data.dodate;
+                        //qry.dodest = request.Data.dodest;
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.Recived = request.Data.Recived;
                         qry.ModifiedDate = DateTime.Now;
-                        qry.GudangId = request.Data.GudangId;
-                        qry.SourceId = request.Data.SourceId;
+                        //qry.GudangId = request.Data.GudangId;
+                        //qry.SourceId = request.Data.SourceId;
+                        qry.SendBy = request.Data.sendby;
                         qry.RowStatus = 0;
 
                         _unitOfWork.DeliveryOrderRepository.Update(qry);
@@ -220,7 +223,7 @@ namespace Klinik.Features
                     donumber = item.donumber,
                     dodate = item.dodate,
                     dodest = item.dodest,
-                    approve_by = item.approve_by,
+                    approveby = item.approveby,
                     approve = item.approve,
                     ModifiedBy = item.ModifiedBy,
                     CreatedBy = item.CreatedBy,
@@ -298,6 +301,7 @@ namespace Klinik.Features
                 if (deliveryoder.id > 0)
                 {
                     deliveryoder.approve = 1;
+                    deliveryoder.approveby = OneLoginSession.Account.UserCode;
                     deliveryoder.ModifiedBy = request.Data.Account.UserCode;
                     deliveryoder.ModifiedDate = DateTime.Now;
 

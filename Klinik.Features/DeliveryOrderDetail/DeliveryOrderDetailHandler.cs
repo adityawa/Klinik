@@ -77,6 +77,7 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
+                        response.Entity = Mapper.Map<DeliveryOrderDetail, DeliveryOrderDetailModel>(deliveryorderdetailEntity);
                         response.Message = string.Format(Messages.ObjectHasBeenAdded, "DeliveryOrderDetail", deliveryorderdetailEntity.namabarang, deliveryorderdetailEntity.id);
 
                         CommandLog(true, ClinicEnums.Module.MASTER_DELIVERYORDERDETAIL, Constants.Command.ADD_DELIVERY_ORDER_DETAIL, request.Data.Account, request.Data);

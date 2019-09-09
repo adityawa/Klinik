@@ -26,7 +26,7 @@ namespace Klinik.Features
         {
             var searchPredicate = PredicateBuilder.New<Data.DataRepository.DeliveryOrder>(true);
             _response.Entity.approve = null;
-            _response.Entity.approve_by = null;
+            _response.Entity.approveby = null;
 
             var request = new DeliveryOrderRequest
             {

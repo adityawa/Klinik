@@ -105,8 +105,8 @@
                                 <td><input type="checkbox" value="@(item.Recived == true ? "true" : "false")" @(item.Recived == true ? "checked" : "") disabled></td>
                                 <td>
                                     <button class="save-deliveryorderdetail btn btn-success btn-sm" data-url="/DeliveryOrder/EditDeliveryOrderDetail" style="display:none;">Save</button>
-                                    <button class="edit-deliveryorderdetail btn btn-success btn-sm">Edit</button>
-                                    <button class="btn btn-danger btn-sm delete-deliveryorderdetail">Delete</button>
+                                    <button class="edit-deliveryorderdetail btn btn-success btn-sm" disabled>Edit</button>
+                                    <button class="btn btn-danger btn-sm delete-deliveryorderdetail" disabled>Delete</button>
                                     <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
                                 </td>
                             </tr>
@@ -116,52 +116,9 @@
             </table>
         </div>
         <br />
-        @*<form id="deliveryorderdetail">
-                <div class="form-group">
-                    <input type="text" hidden id="DeliveryOrderDetailId" />
-                    <input type="text" hidden id="ProductId" />
-                    <div class="row">
-                        <div class="col-md-3">
-                            <select id="namabarang" class="form-control"></select>
-                        </div>
-                        <div class="col-md-3">
-                            <select id="namagudang" class="form-control"></select>
-                        </div>
-                        <div class="col-md-3">
-                            <select id="namaklinik" class="form-control"></select>
-                        </div>
-                        <div class="col-md-3">
-                            <select id="namabarang_po" class="form-control"></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Qty PO" id="qty_po" value="" />
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="QTY PO Final" id="qty_po_final" value="" />
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Qty DO" id="qty_do" value="" />
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Qty Adj" id="qty_adj" value="" />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <textarea type="text" class="namaobat form-control" placeholder="Remark DO" id="remark_do"></textarea>
-                    <br />
-                    <textarea type="text" class="namaobat form-control" placeholder="Remark Adj" id="remark_adj"></textarea>
-                </div>
-                <footer class="col-md-12 text-right">
-                    <input type="button" id="btnAdd" class="btn btn-success float-right" value="Add" />
-                </footer>
-            </form>*@
         <footer class="panel-footer">
-            <button type="submit" class="btn btn-primary saveorderdetail" data-parameterone="_deliveryorder" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/DeliveryOrder/CreateOrEditDeliveryOrder">@Klinik.Resources.UIMessages.Save</button>
+            <button type="submit" class="btn btn-primary saveorderdetail" data-parameterone="_deliveryorder" data-parametertwo="deliveryOrderDetailpusatModels" style="display:none" data-url="/DeliveryOrder/CreateOrEditDeliveryOrder">@Klinik.Resources.UIMessages.Save</button>
+            <button type="submit" class="btn btn-primary openallbutton" data-parameterone="_deliveryorder">@Klinik.Resources.UIMessages.Edit</button>
             <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
         </footer>
     </div>

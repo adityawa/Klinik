@@ -104,7 +104,7 @@ namespace Klinik.Web.Controllers
             }
         }
 
-        [CustomAuthorize("ADD_M_PURCHASEORDER", "EDIT_M_PURCHASEORDER")]
+        [CustomAuthorize("ADD_M_PURCHASEREQUEST", "EDIT_M_PURCHASEREQUEST")]
         [HttpPost]
         public JsonResult CreateOrEditPurchaseRequest(PurchaseRequestModel _purchaserequest, List<PurchaseRequestDetailModel> purchaserequestDetailModels)
         {
