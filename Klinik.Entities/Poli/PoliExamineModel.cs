@@ -25,6 +25,10 @@ namespace Klinik.Entities.Poli
         public int PoliToID { get; set; }
         public int DoctorToID { get; set; }
 
+        public string ICDInformation1 { get; set; }
+        public string ICDInformation2 { get; set; }
+        public string ICDInformation3 { get; set; }
+
         public PoliExamineModel()
         {
             LoketData = new LoketModel();

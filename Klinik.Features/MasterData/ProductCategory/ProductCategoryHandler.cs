@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Klinik.Common;
 using Klinik.Data;
-using Klinik.Data.DataRepository;
+using repository=  Klinik.Data.DataRepository;
 using Klinik.Entities.MasterData;
 using Klinik.Resources;
 using LinqKit;
@@ -39,7 +39,7 @@ namespace Klinik.Features
                     if (qry != null)
                     {
                         // save the old data
-                        var _oldentity = Mapper.Map<ProductCategory, ProductCategoryModel>(qry);
+                        var _oldentity = Mapper.Map<repository.ProductCategory, ProductCategoryModel>(qry);
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.ModifiedDate = DateTime.Now;
 
@@ -72,7 +72,7 @@ namespace Klinik.Features
                 }
                 else
                 {
-                    var productCategoryCatEntity = Mapper.Map<ProductCategoryModel, ProductCategory>(request.Data);
+                    var productCategoryCatEntity = Mapper.Map<ProductCategoryModel, repository.ProductCategory>(request.Data);
                     productCategoryCatEntity.CreatedBy = request.Data.Account.UserCode;
                     productCategoryCatEntity.CreatedDate = DateTime.Now;
 
@@ -119,7 +119,7 @@ namespace Klinik.Features
             var qry = _unitOfWork.ProductCategoryRepository.Query(x => x.ID == request.Data.Id, null);
             if (qry.FirstOrDefault() != null)
             {
-                response.Entity = Mapper.Map<ProductCategory, ProductCategoryModel>(qry.FirstOrDefault());
+                response.Entity = Mapper.Map<repository.ProductCategory, ProductCategoryModel>(qry.FirstOrDefault());
             }
 
             return response;
@@ -134,7 +134,7 @@ namespace Klinik.Features
         {
             List<ProductCategoryModel> lists = new List<ProductCategoryModel>();
             dynamic qry = null;
-            var searchPredicate = PredicateBuilder.New<ProductCategory>(true);
+            var searchPredicate = PredicateBuilder.New<repository.ProductCategory>(true);
 
             // add default filter to show the active data only
             searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
@@ -180,7 +180,7 @@ namespace Klinik.Features
 
             foreach (var item in qry)
             {
-                var prData = Mapper.Map<ProductCategory, ProductCategoryModel>(item);
+                var prData = Mapper.Map<repository.ProductCategory, ProductCategoryModel>(item);
 
                 lists.Add(prData);
             }

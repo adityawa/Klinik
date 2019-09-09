@@ -240,6 +240,7 @@
     <Compile Include="Controllers\DeliveryOrderController.cs" />
     <Compile Include="Controllers\DeliveryOrderPusatController.cs" />
     <Compile Include="Controllers\GeneralController.cs" />
+    <Compile Include="Controllers\MedicalHistoryController.cs" />
     <Compile Include="Controllers\PharmacyController.cs" />
     <Compile Include="Controllers\LabController.cs" />
     <Compile Include="Controllers\CashierController.cs" />
@@ -1544,10 +1545,10 @@
     <Content Include="Views\Pharmacy\PengambilanObat.cshtml" />
     <Content Include="Views\Pharmacy\ListAllGivenMedicine.cshtml" />
     <Content Include="Views\Shared\_Layout_1.cshtml" />
-
     <Content Include="Views\PurchaseRequestConfig\PurchaseRequestConfigList.cshtml" />
     <Content Include="Views\PurchaseRequestConfig\CreateOrEditPurchaseRequestConfig.cshtml" />
-
+    <Content Include="Views\MedicalHistory\ViewEmployeeData.cshtml" />
+    <Content Include="Views\MedicalHistory\ViewEmployeeFamilyData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1249,6 +1249,33 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ICD Information 1.
+        /// </summary>
+        public static string ICDInformation1 {
+            get {
+                return ResourceManager.GetString("ICDInformation1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ICD Information 2.
+        /// </summary>
+        public static string ICDInformation2 {
+            get {
+                return ResourceManager.GetString("ICDInformation2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ICD Information 3.
+        /// </summary>
+        public static string ICDInformation3 {
+            get {
+                return ResourceManager.GetString("ICDInformation3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Icon.
         /// </summary>
         public static string Icon {
@@ -1650,6 +1677,24 @@ namespace Klinik.Resources {
         public static string MedicalCekDate {
             get {
                 return ResourceManager.GetString("MedicalCekDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medical History.
+        /// </summary>
+        public static string MedicalHistory {
+            get {
+                return ResourceManager.GetString("MedicalHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Medical History.
+        /// </summary>
+        public static string MedicalHistoryWithFamily {
+            get {
+                return ResourceManager.GetString("MedicalHistoryWithFamily", resourceCulture);
             }
         }
         

@@ -9,6 +9,7 @@ using Klinik.Entities.MasterData;
 using Klinik.Entities.Poli;
 using Klinik.Entities.PreExamine;
 using Klinik.Features;
+using Klinik.Features.ICDThemeFeatures;
 using Klinik.Web.Hubs;
 using LinqKit;
 using System;
@@ -218,6 +219,8 @@ namespace Klinik.Web.Controllers
             return Json(resultList, JsonRequestBehavior.AllowGet);
         }
 
+       
+
         [CustomAuthorize("VIEW_POLI_PATIENT_LIST")]
         public ActionResult PatientList()
         {
@@ -243,6 +246,7 @@ namespace Klinik.Web.Controllers
             string therapy,
             string receipt,
             string finalState,
+            string icdInformation,
             string poliToID,
             string doctorToID,
             List<string> concoctionMedicineList,
@@ -265,7 +269,7 @@ namespace Klinik.Web.Controllers
             if (serviceList == null)
                 serviceList = new List<string>();
 
-            PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, poliToID, doctorToID, concoctionMedicineList, medicineList, injectionList, labList, radiologyList, serviceList);
+            PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, icdInformation, poliToID, doctorToID, concoctionMedicineList, medicineList, injectionList, labList, radiologyList, serviceList);
             model.Account = Account;
 
             var request = new FormExamineRequest { Data = model, };
@@ -282,7 +286,7 @@ namespace Klinik.Web.Controllers
             ViewBag.PoliList = tempPoliList;
             ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
             ViewBag.FinalStateList = BindDropDownFinalStateList();
-
+            ViewBag.ICDInfo = BindDropDownICDInfo();
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
 
@@ -335,7 +339,16 @@ namespace Klinik.Web.Controllers
                 if (formExamine != null)
                 {
                     model.ExamineData = Mapper.Map<FormExamine, FormExamineModel>(formExamine);
-
+                    if (model.ExamineData.ICDInformation != null)
+                    {
+                        string[] arrIcds = model.ExamineData.ICDInformation.Split('|');
+                        if (arrIcds.Length > 0)
+                        {
+                            model.ICDInformation1 = arrIcds[0];
+                            model.ICDInformation2 = arrIcds[1];
+                            model.ICDInformation3 = arrIcds[2];
+                        }
+                    }
                     // get form examine medicine if any
                     List<FormExamineMedicine> formExamineMedicines = _unitOfWork.FormExamineMedicineRepository.Get(x => x.FormExamineID == formExamine.ID);
                     foreach (var formExamineMedicine in formExamineMedicines)
@@ -376,6 +389,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.PoliList = tempPoliList;
                 ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
                 ViewBag.FinalStateList = BindDropDownFinalStateList();
+                ViewBag.ICDInfo = BindDropDownICDInfo();
             }
             catch
             {
@@ -420,6 +434,27 @@ namespace Klinik.Web.Controllers
             result.Add(new SelectListItem { Text = "Drop Out", Value = "Drop Out" });
             result.Add(new SelectListItem { Text = "Meninggal", Value = "Meninggal" });
 
+            return result;
+        }
+
+        [NonAction]
+        private List<SelectListItem> BindDropDownICDInfo()
+        {
+            List<SelectListItem> result = new List<SelectListItem>();
+            result.Insert(0, new SelectListItem
+            {
+                Value="0",
+                Text="-choose Icd-"
+            });
+            var _qry = new ICDThemeHandler(_unitOfWork).GetAll();
+            foreach(var item in _qry)
+            {
+                result.Add(new SelectListItem
+                {
+                    Value = item.Id.ToString(),
+                    Text = $"{ item.Code}-{item.Name}"
+                }) ;
+            }
             return result;
         }
 
@@ -470,6 +505,7 @@ namespace Klinik.Web.Controllers
             string therapy,
             string receipt,
             string finalState,
+            string icdInformation,
             string poliToID,
             string doctorToID,
             List<string> concoctionMedicineList,
@@ -500,6 +536,7 @@ namespace Klinik.Web.Controllers
             model.ExamineData.PoliID = queue.PoliTo;
             model.ExamineData.DoctorID = queue.DoctorID;
             model.ExamineData.FormMedicalID = queue.FormMedicalID;
+            model.ExamineData.ICDInformation = icdInformation;
 
             // FormExamineMedicine
             foreach (var item in medicineList)

@@ -128,6 +128,9 @@
     <Compile Include="DataRepository\HistoryProductInGudang.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataRepository\ICDTheme.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataRepository\KlinikModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

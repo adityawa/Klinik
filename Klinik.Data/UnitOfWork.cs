@@ -74,6 +74,8 @@ namespace Klinik.Data
 
         private IGenericRepository<PurchaseRequestConfig> _purchaseRequestConfigRepository;
 
+        private IGenericRepository<ICDTheme> _icdThemeRepository;
+
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
@@ -737,6 +739,16 @@ namespace Klinik.Data
                 if (_purchaseRequestConfigRepository == null)
                     _purchaseRequestConfigRepository = new GenericRepository<PurchaseRequestConfig>(_context);
                 return _purchaseRequestConfigRepository;
+            }
+        }
+
+        public IGenericRepository<ICDTheme> ICDThemeRepository
+        {
+            get
+            {
+                if (_icdThemeRepository == null)
+                    _icdThemeRepository = new GenericRepository<ICDTheme>(_context);
+                return _icdThemeRepository;
             }
         }
 

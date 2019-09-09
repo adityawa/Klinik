@@ -75,6 +75,8 @@ namespace Klinik.Data
         IGenericRepository<HistoryProductInGudang> HistoryProductInGudangRepository { get; }
         IGenericRepository<PurchaseRequestConfig> PurchaseRequestConfigRepository { get; }
 
+        IGenericRepository<ICDTheme> ICDThemeRepository { get; }
+
         int Save();
     }
 }

@@ -350,5 +350,14 @@ namespace Klinik.Features
 
 			return patientData;
 		}
+
+        public long GetRegNoBasedOnFormMedical(long formMedical)
+        {
+            long _registationNo = 0;
+            var _qryData = _unitOfWork.RegistrationRepository.GetFirstOrDefault(x => x.FormMedicalID == formMedical);
+            if (_qryData != null)
+                _registationNo = _qryData.ID;
+            return _registationNo;
+        }
 	}
 }

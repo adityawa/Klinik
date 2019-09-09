@@ -77,7 +77,7 @@ namespace Klinik.Features
                         _qry.Status = request.Data.EmpStatus;
                         _qry.KTPNumber = request.Data.KTPNumber;
                         _qry.HPNumber = CommonUtils.Encryptor( request.Data.HPNumber, CommonUtils.KeyEncryptor);
-                        _qry.ReffEmpID = request.Data.ReffEmpID;
+                      
                         _qry.LastEmpID = request.Data.LastEmpId;
                         _qry.ModifiedBy = request.Data.ModifiedBy ?? "SYSTEM";
                         _qry.ModifiedDate = DateTime.Now;

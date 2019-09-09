@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Klinik.Data.DataRepository;
-using Klinik.Entities;
+
 using Klinik.Entities.Administration;
 using Klinik.Entities.Document;
 using Klinik.Entities.MappingMaster;
@@ -194,6 +194,7 @@ namespace Klinik.Common
                 .ForMember(x => x.DoctorName, map => map.MapFrom(p => p.Doctor.Name));
 
             CreateMap<FormExamineModel, FormExamine>();
+               
             CreateMap<FormExamine, FormExamineModel>();
 
             CreateMap<FormExamineAttachmentModel, FormExamineAttachment>();
@@ -204,6 +205,7 @@ namespace Klinik.Common
                 .ForMember(x => x.LabItemDesc, map => map.MapFrom(p => p.LabItem.Name));
 
             CreateMap<FormExamineServiceModel, FormExamineService>();
+              
             CreateMap<FormExamineService, FormExamineServiceModel>();
 
             CreateMap<FormExamineMedicineModel, FormExamineMedicine>()
@@ -323,7 +325,8 @@ namespace Klinik.Common
             CreateMap<PurchaseRequestConfig, PurchaseRequestConfigModel>();
             CreateMap<PurchaseRequestConfigModel, PurchaseRequestConfig> ();
 
-
+            CreateMap<ICDTheme, ICDThemeModel>();
+            CreateMap<ICDThemeModel, ICDTheme>();
         }
     }
 }

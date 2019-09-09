@@ -348,6 +348,11 @@
                                         <li>
                                             <a href="#tabRadiologi" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Radiology</a>
                                         </li>
+
+                                        <li>
+                                            <a href="#tabICD" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.ICDInformation</a>
+                                        </li>
+
                                         <li>
                                             <a href="#tabResult" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Result</a>
                                         </li>
@@ -380,29 +385,29 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody style="font-size:13px">
-                                                    @foreach (var item in Model.MedicineDataList.Where(x=>x.TypeID=="3").ToList())
+                                                    @foreach (var item in Model.MedicineDataList.Where(x => x.TypeID == "3").ToList())
                                                     {
-                                                    <tr>
-                                                        <td style="display: none;">
-                                                            @Html.DisplayFor(modelItem => item.Id)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.ConcoctionMedicine)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.MedicineJenis)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.Dose)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.Qty)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(modelItem => item.RemarkUse)
-                                                        </td>
-                                                        <td></td>
-                                                    </tr>
+                                                        <tr>
+                                                            <td style="display: none;">
+                                                                @Html.DisplayFor(modelItem => item.Id)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.ConcoctionMedicine)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.MedicineJenis)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Dose)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Qty)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.RemarkUse)
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
                                                     }
                                                 </tbody>
                                                 <tfoot>
@@ -447,7 +452,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody style="font-size:13px">
-                                                    @foreach (var item in Model.MedicineDataList.Where(x=>x.TypeID=="1"))
+                                                    @foreach (var item in Model.MedicineDataList.Where(x => x.TypeID == "1"))
                                                     {
                                                         <tr>
                                                             <td style="display: none;">
@@ -474,8 +479,10 @@
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <td><input id="medicineName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeMedicineNameHere" />
-                                                        <input hidden type="text" id="idMedicine" /></td>
+                                                        <td>
+                                                            <input id="medicineName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeMedicineNameHere" />
+                                                            <input hidden type="text" id="idMedicine" />
+                                                        </td>
                                                         <td><input id="medicineStock" type="text" class="form-control" disabled /></td>
                                                         <td><input id="medicineDose" type="text" class="form-control" /></td>
                                                         <td><input id="medicineAmount" type="text" class="form-control" /></td>
@@ -676,6 +683,40 @@
                                                 </tfoot>
                                             </table>
                                         </div>
+                                        <div id="tabICD" class="tab-pane">
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <div class="row text-right">
+                                                        <div class="form-group col-md-6">
+                                                            <label class="control-label">@Klinik.Resources.UIMessages.ICDInformation1</label>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            @Html.DropDownListFor(p => p.ICDInformation1, (IEnumerable<SelectListItem>)ViewBag.ICDInfo, new { @class = "form-control", @id = "ddlicd1" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row text-right">
+                                                        <div class="form-group col-md-6">
+                                                            <label class="control-label">@Klinik.Resources.UIMessages.ICDInformation2</label>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            @Html.DropDownListFor(p => p.ICDInformation2, (IEnumerable<SelectListItem>)ViewBag.ICDInfo, new { @class = "form-control", @id = "ddlicd2" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row text-right">
+                                                        <div class="form-group col-md-6">
+                                                            <label class="control-label">@Klinik.Resources.UIMessages.ICDInformation3</label>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            @Html.DropDownListFor(p => p.ICDInformation3, (IEnumerable<SelectListItem>)ViewBag.ICDInfo, new { @class = "form-control", @id = "ddlicd3" })
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
                                         <div id="tabResult" class="tab-pane">
                                             <div class="row">
                                                 <div class="form-group col-md-6">
@@ -847,9 +888,21 @@
                 //Delete the Table row using it's Index.
                 table.deleteRow(row[0].rowIndex);
             }
-        };
+    };
 
-        $(document).ready(function () {
+    function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+    }
+
+    $(document).ready(function () {
+            var _isViewOnly = getUrlVars()["IsViewOnly"];
             var medicine = $("#medicineName");
             if (!medicine.length) return;
 
@@ -1299,7 +1352,14 @@
                 "hideDuration": "0",
                 "timeOut": "0",
                 "showMethod": "fadeIn"
-            };
+        };
+
+        if (_isViewOnly == true || _isViewOnly == "true") {
+            $('#btnSave').css('visibility', 'hidden');
+        }
+        else {
+             $('#btnSave').css('visibility', 'visible');
+        }
 
 			$('#btnSave').click(function () {
 				$('#btnSave').attr('disabled', 'disabled');
@@ -1312,6 +1372,9 @@
                 var finalState = $('#ddlfinalstate').val();
                 var poliToID = $('#ddlpolito').val();
                 var doctorToID = $('#ddldoctor').val();
+                var icdinfo1 = $('#ddlicd1').val();
+                var icdinfo2 = $('#ddlicd2').val();
+                var icdinfo3 = $('#ddlicd3').val();
 
                 var concoctionmedicineList = [];
                 $('#tblConcMedicine tbody tr').each(function () {
@@ -1369,6 +1432,7 @@
                     therapy: therapy,
                     receipt: receipt,
                     finalState: finalState,
+                    icdInformation:icdinfo1+'|'+icdinfo2+'|'+icdinfo3,
                     poliToID: poliToID,
                     doctorToID: doctorToID,
                     concoctionMedicineList: concoctionmedicineList,
@@ -1395,6 +1459,8 @@
                     }
                 });
             });
+
+
         });
     </script>
 </body>
