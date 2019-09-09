@@ -29,6 +29,8 @@ namespace Klinik.Data.DataRepository
         public Nullable<double> qty { get; set; }
         public Nullable<double> qty_add { get; set; }
         public string reason_add { get; set; }
+        public Nullable<double> qty_final { get; set; }
+        public string remark { get; set; }
         public Nullable<double> total { get; set; }
         public Nullable<double> qty_unit { get; set; }
         public Nullable<double> qty_box { get; set; }

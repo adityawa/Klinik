@@ -79,7 +79,7 @@
             var qty_by_ho = $("#qty_by_ho");
             var remark_by_ho = $("#remark_by_ho");
             var newproductname = $("#newproductname");
-            var tBody = $("#tblPurchaseOrder > TBODY")[0];
+            var tBody = $("#tblPurchaseRequest > TBODY")[0];
             //Add Row.
             var row = tBody.insertRow(-1);
             //Add id cell.
@@ -154,7 +154,7 @@
             _purchaserequest.prdate = $('#prdate').val();
             _purchaserequest.request_by = $('#request_by').val();
             var purchaserequestDetailModels = new Array();
-            $("#tblPurchaseOrder TBODY TR").each(function () {
+            $("#tblPurchaseRequest TBODY TR").each(function () {
                 var row = $(this);
                 var purchaseRequestDetail = {};
                 var newproductid = 0;

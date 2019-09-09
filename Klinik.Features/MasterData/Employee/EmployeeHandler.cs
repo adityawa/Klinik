@@ -38,8 +38,8 @@ namespace Klinik.Features
 
           
 
-            var _empTypeDesc = _unitOfWork.FamilyRelationshipRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpType) == null ? "" : _unitOfWork.FamilyRelationshipRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpType).Code;
-            var _statusDesc = _unitOfWork.EmployeeStatusRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpStatus) == null ? "" : _unitOfWork.EmployeeStatusRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpStatus).Code;
+            var _empTypeDesc = _unitOfWork.FamilyRelationshipRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpType) == null ? "" : _unitOfWork.FamilyRelationshipRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpType).Code.TrimEnd();
+            var _statusDesc = _unitOfWork.EmployeeStatusRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpStatus) == null ? "" : _unitOfWork.EmployeeStatusRepository.GetFirstOrDefault(x => x.ID == request.Data.EmpStatus).Code.TrimEnd();
             if (request.Data.EmpTypeDesc == string.Empty || request.Data.EmpTypeDesc == null)
                 request.Data.EmpTypeDesc = _empTypeDesc;
 
@@ -77,7 +77,7 @@ namespace Klinik.Features
                         _qry.Status = request.Data.EmpStatus;
                         _qry.KTPNumber = request.Data.KTPNumber;
                         _qry.HPNumber = CommonUtils.Encryptor( request.Data.HPNumber, CommonUtils.KeyEncryptor);
-                        _qry.ReffEmpID = request.Data.ReffEmpID;
+                      
                         _qry.LastEmpID = request.Data.LastEmpId;
                         _qry.ModifiedBy = request.Data.ModifiedBy ?? "SYSTEM";
                         _qry.ModifiedDate = DateTime.Now;
@@ -215,7 +215,7 @@ namespace Klinik.Features
                                     BusinessUnit = request.Data.BussinesUnit,
                                     Department = request.Data.Department,
                                     StartDate = request.Data.StartDate,
-                                    EndDate = request.Data.EndDate,
+                                    EndDate = request.Data.EndDate.HasValue? request.Data.EndDate.Value:(DateTime)SqlDateTime.Null,
                                     Region = request.Data.Region,
                                     EmpStatus = request.Data.EmpStatus,
                                     LastEmpID = request.Data.LastEmpId,

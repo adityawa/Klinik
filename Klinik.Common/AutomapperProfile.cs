@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Klinik.Data.DataRepository;
-using Klinik.Entities;
+
 using Klinik.Entities.Administration;
 using Klinik.Entities.Document;
 using Klinik.Entities.MappingMaster;
@@ -23,6 +23,9 @@ using Klinik.Entities.DeliveryOrderDetail;
 using Klinik.Entities.Pharmacy;
 using System;
 using Klinik.Entities.PurchaseRequestConfig;
+using Klinik.Entities.PurchaseRequestPusat;
+using Klinik.Entities.PurchaseOrderPusat;
+using Klinik.Entities.PurchaseRequestPusatDetail;
 
 namespace Klinik.Common
 {
@@ -194,6 +197,7 @@ namespace Klinik.Common
                 .ForMember(x => x.DoctorName, map => map.MapFrom(p => p.Doctor.Name));
 
             CreateMap<FormExamineModel, FormExamine>();
+               
             CreateMap<FormExamine, FormExamineModel>();
 
             CreateMap<FormExamineAttachmentModel, FormExamineAttachment>();
@@ -204,6 +208,7 @@ namespace Klinik.Common
                 .ForMember(x => x.LabItemDesc, map => map.MapFrom(p => p.LabItem.Name));
 
             CreateMap<FormExamineServiceModel, FormExamineService>();
+              
             CreateMap<FormExamineService, FormExamineServiceModel>();
 
             CreateMap<FormExamineMedicineModel, FormExamineMedicine>()
@@ -323,6 +328,14 @@ namespace Klinik.Common
             CreateMap<PurchaseRequestConfig, PurchaseRequestConfigModel>();
             CreateMap<PurchaseRequestConfigModel, PurchaseRequestConfig> ();
             CreateMap<LookUpCategoryModel, LookupCategory>();
+
+            CreateMap<ICDTheme, ICDThemeModel>();
+            CreateMap<ICDThemeModel, ICDTheme>();
+
+            CreateMap<PurchaseRequestPusatModel, PurchaseOrderPusatModel>();
+            CreateMap<PurchaseRequestPusatDetail, PurchaseRequestPusatDetailModel>();
+
+
 
         }
     }

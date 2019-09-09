@@ -56,6 +56,16 @@ namespace Klinik.Features
                         errorFields.Add("Employee ID");
                 }
 
+                if (request.Data.Id == 0)
+                {
+                    var cekExistingEmpl = _unitOfWork.EmployeeRepository.GetFirstOrDefault(x => x.EmpID == request.Data.EmpID);
+                    if (cekExistingEmpl != null)
+                    {
+                        if(cekExistingEmpl.ID!=0)
+                            errorFields.Add("Employee ID");
+                    }
+                }
+
                 if (request.Data.EmpName == null || String.IsNullOrEmpty(request.Data.EmpName) || String.IsNullOrWhiteSpace(request.Data.EmpName))
                 {
                     errorFields.Add("Employee Name");

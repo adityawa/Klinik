@@ -47,6 +47,8 @@ namespace Klinik.Features
                             total = qry.total,
                             qty_unit = qry.qty_unit,
                             qty_box = qry.qty_box,
+                            qty_final = qry.qty_final,
+                            remark = qry.remark,
                             ModifiedBy = qry.ModifiedBy,
                             CreatedBy = qry.CreatedBy,
                             CreatedDate = qry.CreatedDate,
@@ -74,6 +76,8 @@ namespace Klinik.Features
                         qry.qty_box = request.Data.qty_box;
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.ModifiedDate = DateTime.Now;
+                        qry.qty_final = request.Data.qty_final;
+                        qry.remark = request.Data.remark;
 
                         _unitOfWork.PurchaseRequestPusatDetailRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
@@ -122,6 +126,8 @@ namespace Klinik.Features
                         qty_add = request.Data.qty_add,
                         reason_add = request.Data.reason_add,
                         total = request.Data.total,
+                        qty_final = request.Data.qty_final,
+                        remark = request.Data.remark,
                         qty_unit = request.Data.qty_unit,
                         qty_box = request.Data.qty_box,
                         CreatedBy = request.Data.Account.UserCode,

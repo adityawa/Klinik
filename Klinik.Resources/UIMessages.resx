@@ -1179,6 +1179,21 @@
   <data name="TanggalPeriksa" xml:space="preserve">
     <value>Tanggal Periksa</value>
   </data>
+  <data name="ICDInformation1" xml:space="preserve">
+    <value>ICD Information 1</value>
+  </data>
+  <data name="ICDInformation2" xml:space="preserve">
+    <value>ICD Information 2</value>
+  </data>
+  <data name="ICDInformation3" xml:space="preserve">
+    <value>ICD Information 3</value>
+  </data>
+  <data name="MedicalHistory" xml:space="preserve">
+    <value>Medical History</value>
+  </data>
+  <data name="MedicalHistoryWithFamily" xml:space="preserve">
+    <value>All Medical History</value>
+  </data>
   <data name="Top10DiseasesReport" xml:space="preserve">
     <value>Top 10 Diseases Report</value>
   </data>

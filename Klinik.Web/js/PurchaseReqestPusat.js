@@ -199,9 +199,11 @@
                 purchaserequestPusatDetail.qty = row.closest('tr').find('td:eq(11) input').length > 0 ? row.closest('tr').find('td:eq(11) input').val() : row.find("TD").eq(11).html();
                 purchaserequestPusatDetail.qty_add = row.closest('tr').find('td:eq(12) input').length > 0 ? row.closest('tr').find('td:eq(12) input').val() : row.find("TD").eq(12).html();
                 purchaserequestPusatDetail.reason_add = row.closest('tr').find('td:eq(13) input').length > 0 ? row.closest('tr').find('td:eq(13) input').val() : row.find("TD").eq(13).html();
-                purchaserequestPusatDetail.total = row.closest('tr').find('td:eq(14) input').length > 0 ? row.closest('tr').find('td:eq(14) input').val() : row.find("TD").eq(14).html();
-                purchaserequestPusatDetail.qty_unit = row.closest('tr').find('td:eq(15) input').length > 0 ? row.closest('tr').find('td:eq(15) input').val() : row.find("TD").eq(15).html();
-                purchaserequestPusatDetail.qty_box = row.closest('tr').find('td:eq(16) input').length > 0 ? row.closest('tr').find('td:eq(16) input').val() : row.find("TD").eq(16).html();
+                purchaserequestPusatDetail.qty_final = row.closest('tr').find('td:eq(14) input').length > 0 ? row.closest('tr').find('td:eq(14) input').val() : row.find("TD").eq(14).html();
+                purchaserequestPusatDetail.remark = row.closest('tr').find('td:eq(15) input').length > 0 ? row.closest('tr').find('td:eq(15) input').val() : row.find("TD").eq(15).html();
+                purchaserequestPusatDetail.total = row.closest('tr').find('td:eq(16) input').length > 0 ? row.closest('tr').find('td:eq(16) input').val() : row.find("TD").eq(16).html();
+                purchaserequestPusatDetail.qty_unit = row.closest('tr').find('td:eq(17) input').length > 0 ? row.closest('tr').find('td:eq(17) input').val() : row.find("TD").eq(17).html();
+                purchaserequestPusatDetail.qty_box = row.closest('tr').find('td:eq(18) input').length > 0 ? row.closest('tr').find('td:eq(18) input').val() : row.find("TD").eq(18).html();
                 purchaserequestpusatDetailModels.push(purchaserequestPusatDetail);
             });
             console.log(purchaserequestpusatDetailModels);
