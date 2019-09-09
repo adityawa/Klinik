@@ -73,6 +73,7 @@ namespace Klinik.Data
 		private IGenericRepository<FormExamineMedicineDetail> _formExamineMedicineDetailRepository;
 
         private IGenericRepository<PurchaseRequestConfig> _purchaseRequestConfigRepository;
+        private IGenericRepository<LookupCategory> _lookupCategoryRepository;
 
         private bool disposed = false;
 
@@ -739,6 +740,17 @@ namespace Klinik.Data
                 return _purchaseRequestConfigRepository;
             }
         }
+
+        public IGenericRepository<LookupCategory> LookUpCategoryRepository
+        {
+            get
+            {
+                if (_lookupCategoryRepository == null)
+                    _lookupCategoryRepository = new GenericRepository<LookupCategory>(_context);
+                return _lookupCategoryRepository;
+            }
+        }
+
 
         public virtual void Dispose(bool disposing)
         {

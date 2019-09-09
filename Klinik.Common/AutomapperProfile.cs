@@ -322,7 +322,7 @@ namespace Klinik.Common
 
             CreateMap<PurchaseRequestConfig, PurchaseRequestConfigModel>();
             CreateMap<PurchaseRequestConfigModel, PurchaseRequestConfig> ();
-
+            CreateMap<LookUpCategoryModel, LookupCategory>();
 
         }
     }

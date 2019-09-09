@@ -263,6 +263,7 @@
     <Compile Include="Controllers\PurchaseRequestController.cs" />
     <Compile Include="Controllers\PurchaseRequestPusatController.cs" />
     <Compile Include="Controllers\RadiologiController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Datalist\PatientDataList.cs" />
     <Compile Include="Datalist\PatientDataListModel.cs" />
@@ -1550,6 +1551,9 @@
     <Content Include="Views\PurchaseRequestConfig\CreateOrEditPurchaseRequestConfig.cshtml" />
     <Content Include="Views\GudangPusat\PurchaseRequestList.cshtml" />
     <Content Include="Views\GudangPusat\CreateOrEditPurchaseRequest.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Reports\Top10Dieases.cshtml" />
+    <Content Include="Views\Reports\Top10Referals.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

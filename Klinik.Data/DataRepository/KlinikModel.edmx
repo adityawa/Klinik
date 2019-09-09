@@ -202,14 +202,14 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EmpID" Type="varchar" MaxLength="50" />
+          <Property Name="EmpID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="EmpName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="BirthDate" Type="date" />
           <Property Name="ReffEmpID" Type="varchar" MaxLength="50" />
           <Property Name="Gender" Type="char" MaxLength="1" />
           <Property Name="EmpType" Type="smallint" />
-          <Property Name="KTPNumber" Type="varchar" MaxLength="20" />
-          <Property Name="HPNumber" Type="varchar" MaxLength="20" />
+          <Property Name="KTPNumber" Type="varchar(max)" />
+          <Property Name="HPNumber" Type="varchar(max)" />
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="LastEmpID" Type="varchar" MaxLength="50" />
           <Property Name="Status" Type="smallint" />
@@ -546,6 +546,18 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LookupCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="LookUpName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LookupContent" Type="varchar(max)" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="MCUPackage">
           <Key>
@@ -968,6 +980,8 @@
           <Property Name="qty" Type="float" />
           <Property Name="qty_add" Type="float" />
           <Property Name="reason_add" Type="varchar" MaxLength="50" />
+          <Property Name="qty_final" Type="float" />
+          <Property Name="remark" Type="varchar" MaxLength="100" />
           <Property Name="total" Type="float" />
           <Property Name="qty_unit" Type="float" />
           <Property Name="qty_box" Type="float" />
@@ -2616,6 +2630,7 @@
           <EntitySet Name="LabItemCategory" EntityType="Self.LabItemCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Letter" EntityType="Self.Letter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LookupCategory" EntityType="Self.LookupCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MCUPackage" EntityType="Self.MCUPackage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Medicine" EntityType="Self.Medicine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
@@ -3323,14 +3338,14 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EmpName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="BirthDate" Type="DateTime" Precision="0" />
           <Property Name="ReffEmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="EmpType" Type="Int16" />
-          <Property Name="KTPNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="HPNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="KTPNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="HPNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LastEmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="Int16" />
@@ -4213,6 +4228,8 @@
           <NavigationProperty Name="Product" Relationship="Self.FK_PurchaseOrderPusatDetail_Product" FromRole="PurchaseOrderPusatDetail" ToRole="Product" />
           <NavigationProperty Name="PurchaseOrderPusat" Relationship="Self.FK_PurchaseOrderPusatDetail_PurchaseOrderPusat" FromRole="PurchaseOrderPusatDetail" ToRole="PurchaseOrderPusat" />
           <NavigationProperty Name="Vendor" Relationship="Self.FK_PurchaseOrderPusatDetail_Vendor" FromRole="PurchaseOrderPusatDetail" ToRole="Vendor" />
+          <Property Name="qty_final" Type="Double" />
+          <Property Name="remark" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PurchaseRequest">
           <Key>
@@ -6218,6 +6235,7 @@
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="PurchaseRequestPusatDetail" EntitySet="PurchaseRequestPusatDetails" />
           </AssociationSet>
+          <EntitySet Name="LookupCategories" EntityType="KlinikDBModel.LookupCategory" />
         </EntityContainer>
         <EntityType Name="PurchaseOrderDetail">
           <Key>
@@ -6427,6 +6445,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="LookupCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="LookUpName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LookupContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7386,6 +7416,8 @@
           <EntitySetMapping Name="PurchaseOrderPusatDetails">
             <EntityTypeMapping TypeName="KlinikDBModel.PurchaseOrderPusatDetail">
               <MappingFragment StoreEntitySet="PurchaseOrderPusatDetail">
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="qty_final" ColumnName="qty_final" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="PurchaseOrderPusatId" ColumnName="PurchaseOrderPusatId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
@@ -7746,6 +7778,19 @@
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="PurchaseRequestPusatId" ColumnName="PurchaseRequestPusatId" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LookupCategories">
+            <EntityTypeMapping TypeName="KlinikDBModel.LookupCategory">
+              <MappingFragment StoreEntitySet="LookupCategory">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LookupContent" ColumnName="LookupContent" />
+                <ScalarProperty Name="LookUpName" ColumnName="LookUpName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

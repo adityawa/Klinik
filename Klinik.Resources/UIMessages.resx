@@ -1146,7 +1146,6 @@
   <data name="Queue" xml:space="preserve">
     <value>Queue</value>
   </data>
-
   <data name="DeliveryOrderDetailList" xml:space="preserve">
     <value>Delivery Order List</value>
   </data>
@@ -1170,7 +1169,7 @@
   </data>
   <data name="ValidationConfirmation" xml:space="preserve">
     <value>Apakah kanan diproses lebih lanjut untuk menjadi</value>
-</data>
+  </data>
   <data name="AntrianPengambilanObat" xml:space="preserve">
     <value>Antrian Pengambilan Obat</value>
   </data>
@@ -1179,6 +1178,11 @@
   </data>
   <data name="TanggalPeriksa" xml:space="preserve">
     <value>Tanggal Periksa</value>
-
+  </data>
+  <data name="Top10DiseasesReport" xml:space="preserve">
+    <value>Top 10 Diseases Report</value>
+  </data>
+  <data name="Top10ReferalReport" xml:space="preserve">
+    <value>Top 10 Referals Report</value>
   </data>
 </root>

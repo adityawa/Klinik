@@ -82,6 +82,7 @@
     <Compile Include="Form\FormExamineMedicineDetailModel.cs" />
     <Compile Include="HistoryProductInGudang\HistoryProductInGudangModel.cs" />
     <Compile Include="MasterData\GudangModel.cs" />
+    <Compile Include="MasterData\LookUpCategoryModel.cs" />
     <Compile Include="MasterData\VendorModel.cs" />
     <Compile Include="Pharmacy\PengambilanObatModel.cs" />
     <Compile Include="Pharmacy\PharmacyModel.cs" />
@@ -143,6 +144,8 @@
     <Compile Include="PurchaseRequestPusatDetail\PurchaseRequestPusatDetailModel.cs" />
     <Compile Include="PurchaseRequestPusat\PurchaseRequestPusatModel.cs" />
     <Compile Include="PurchaseRequest\PurchaseRequestModel.cs" />
+    <Compile Include="Reports\Top10DiseasesParamModel.cs" />
+    <Compile Include="Reports\Top10ReferalParamsModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
