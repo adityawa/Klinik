@@ -230,8 +230,9 @@ namespace Klinik.Features
             {
                 qry = _unitOfWork.PurchaseRequestPusatRepository.Get(searchPredicate, null);
             }
-
-            foreach (var item in qry)
+            List<Data.DataRepository.PurchaseRequestPusat> purchaseRequests = new List<Data.DataRepository.PurchaseRequestPusat>();
+            purchaseRequests = qry;
+            foreach (var item in purchaseRequests)
             {
                 var prData = new PurchaseRequestPusatModel
                 {
@@ -244,8 +245,11 @@ namespace Klinik.Features
                     ModifiedBy = item.ModifiedBy,
                     CreatedBy = item.CreatedBy,
                     ModifiedDate = item.ModifiedDate,
-                    createformat = GeneralHandler.FormatDate(item.CreatedDate),
-                    Validasi = item.Validasi
+                    createformat = GeneralHandler.FormatDate(Convert.ToDateTime(item.CreatedDate)),
+                    Validasi = item.Validasi,
+                    poid = item.PurchaseOrderPusats.Count > 0 ? item.PurchaseOrderPusats.FirstOrDefault().id : 0,
+                    ponumber = item.PurchaseOrderPusats.Count > 0 ? item.PurchaseOrderPusats.FirstOrDefault().ponumber : "",
+                    createpo = item.PurchaseOrderPusats.Count > 0 ? GeneralHandler.FormatDate(Convert.ToDateTime(item.PurchaseOrderPusats.FirstOrDefault().podate)) : null,
                 };
 
                 lists.Add(prData);

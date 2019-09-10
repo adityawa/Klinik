@@ -4,11 +4,14 @@ using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
+using Klinik.Entities.PurchaseOrderPusat;
 using Klinik.Entities.PurchaseOrderPusatDetail;
 using Klinik.Entities.PurchaseRequestPusat;
 using Klinik.Entities.PurchaseRequestPusatDetail;
 using Klinik.Features;
 using Klinik.Features.Account;
+using Rotativa;
+using Rotativa.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +63,10 @@ namespace Klinik.Web.Controllers
             };
 
             var response = new PurchaseRequestPusatHandler(_unitOfWork).GetListData(request);
-
+            if (!(GeneralHandler.authorized("APPROVE_M_PURCHASEREQUESTPUSAT") == "true"))
+            {
+                response.Data.Where(a => a.approve == 1);
+            }
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
@@ -169,7 +175,7 @@ namespace Klinik.Web.Controllers
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
 
-        [CustomAuthorize("APPROVE_M_PURCHASEREQUESTPUSAT")]
+        [CustomAuthorize("VALIDATION_M_PURCHASEREQUESTPUSAT")]
         [HttpPost]
         public JsonResult ValidationPurchaseRequestPusat(int id)
         {
@@ -225,6 +231,32 @@ namespace Klinik.Web.Controllers
             new PurchaseRequestPusatDetailValidator(_unitOfWork).Validate(purchaserequestpusatdetailrequest, out _purchaserequestpusatdetailresponse);
             return Json(new { data = _purchaserequestpusatdetailresponse.Data }, JsonRequestBehavior.AllowGet);
         }
+
+        [CustomAuthorize("VIEW_M_PURCHASEREQUESTPUSAT")]
+        public ActionResult PrintPurchaseRequestPusat(int id)
+        {
+            PurchaseRequestPusatResponse _response = new PurchaseRequestPusatResponse();
+
+            var request = new PurchaseRequestPusatRequest
+            {
+                Data = new PurchaseRequestPusatModel
+                {
+                    Id = id
+                }
+            };
+
+            PurchaseRequestPusatResponse resp = new PurchaseRequestPusatHandler(_unitOfWork).GetDetail(request);
+            PurchaseRequestPusatModel _model = resp.Entity;
+            ViewBag.Response = _response;
+            return new PartialViewAsPdf(_model)
+            {
+                PageOrientation = Orientation.Portrait,
+                PageSize = Size.Folio,
+
+                FileName = "PurchaseRequestPusat" + _model.prnumber + ".pdf"
+            };
+        }
+
         #endregion
 
         #region :: PURCHASEORDER ::
@@ -259,8 +291,199 @@ namespace Klinik.Web.Controllers
             };
 
             var response = new PurchaseOrderPusatHandler(_unitOfWork).GetListData(request);
+            if (!(GeneralHandler.authorized("APPROVE_M_PURCHASEORDERPUSAT") == "true"))
+            {
+                response.Data.Where(a => a.approve == 1);
+            }
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("ADD_M_PURCHASEORDERPUSAT", "EDIT_M_PURCHASEORDERPUSAT")]
+        public ActionResult CreateOrEditPurchaseOrder()
+        {
+            var lastprnumber = _context.PurchaseOrderPusats.OrderByDescending(x => x.CreatedDate).Select(a => a.ponumber).FirstOrDefault();
+            DateTime? getmonth = _context.PurchaseOrderPusats.OrderByDescending(x => x.CreatedDate).Select(a => a.CreatedDate).FirstOrDefault();
+            DateTime? month = getmonth != null ? getmonth : DateTime.Now;
+            string prnumber = lastprnumber != null ? GeneralHandler.stringincrement(lastprnumber, Convert.ToDateTime(month)) : "00001";
+            PurchaseRequestPusatResponse _response = new PurchaseRequestPusatResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new PurchaseOrderPusatRequest
+                {
+                    Data = new PurchaseOrderPusatModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                PurchaseOrderPusatResponse resp = new PurchaseOrderPusatHandler(_unitOfWork).GetDetail(request);
+                PurchaseOrderPusatModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.ActionType = ClinicEnums.Action.Add;
+                ViewBag.prnumber = "PR" + ((AccountModel)Session["UserLogon"]).Organization + DateTime.Now.Year + DateTime.Now.Month + prnumber;
+                return View();
+            }
+        }
+
+        [CustomAuthorize("ADD_M_PURCHASEORDERPUSAT", "EDIT_M_PURCHASEORDERPUSAT")]
+        [HttpPost]
+        public JsonResult CreateOrEditPurchaseOrderPusat(PurchaseOrderPusatModel _purchaseorderpusat, List<PurchaseOrderPusatDetailModel> purchaseorderpusatDetailModels)
+        {
+            if (Session["UserLogon"] != null)
+                _purchaseorderpusat.Account = (AccountModel)Session["UserLogon"];
+            _purchaseorderpusat.Id = Convert.ToInt32(_purchaseorderpusat.Id) > 0 ? _purchaseorderpusat.Id : 0;
+            var request = new PurchaseOrderPusatRequest
+            {
+                Data = _purchaseorderpusat
+            };
+
+            PurchaseOrderPusatResponse _response = new PurchaseOrderPusatResponse();
+
+            new PurchaseOrderPusatValidator(_unitOfWork).Validate(request, out _response);
+            if (purchaseorderpusatDetailModels != null)
+            {
+                foreach (var item in purchaseorderpusatDetailModels)
+                {
+                    var purchaseorderpusatdetailrequest = new PurchaseOrderPusatDetailRequest
+                    {
+                        Data = item
+                    };
+                    purchaseorderpusatdetailrequest.Data.PurchaseOrderPusatId = Convert.ToInt32(_response.Entity.Id);
+                    purchaseorderpusatdetailrequest.Data.Account = (AccountModel)Session["UserLogon"];
+                    //
+                    var requestnamabarang = new ProductRequest
+                    {
+                        Data = new ProductModel
+                        {
+                            Id = item.ProductId
+                        }
+                    };
+
+                    var requestnamavendor = new VendorRequest
+                    {
+                        Data = new VendorModel
+                        {
+                            Id = item.VendorId
+                        }
+                    };
+
+                    ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
+                    VendorResponse namavendor = new VendorHandler(_unitOfWork).GetDetail(requestnamavendor);
+                    purchaseorderpusatdetailrequest.Data.namabarang = namabarang.Entity.Name;
+                    purchaseorderpusatdetailrequest.Data.namavendor = namavendor.Entity.namavendor;
+                    PurchaseOrderPusatDetailResponse _purchaseorderpusatdetailresponse = new PurchaseOrderPusatDetailResponse();
+                    new PurchaseOrderPusatDetailValidator(_unitOfWork).Validate(purchaseorderpusatdetailrequest, out _purchaseorderpusatdetailresponse);
+                }
+            }
+            return Json(new { data = _response.Data }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("APPROVE_M_PURCHASEORDERPUSAT")]
+        [HttpPost]
+        public JsonResult ApprovePurchaseOrderPusat(int id)
+        {
+            PurchaseOrderPusatResponse _response = new PurchaseOrderPusatResponse();
+            var request = new PurchaseOrderPusatRequest
+            {
+                Data = new PurchaseOrderPusatModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.APPROVE.ToString()
+            };
+
+            new PurchaseOrderPusatValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("VALIDATION_M_PURCHASEORDERPUSAT")]
+        [HttpPost]
+        public JsonResult ValidationPurchaseOrderPusat(int id)
+        {
+            PurchaseOrderPusatResponse _response = new PurchaseOrderPusatResponse();
+            var request = new PurchaseOrderPusatRequest
+            {
+                Data = new PurchaseOrderPusatModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.VALIDASI.ToString()
+            };
+
+            new PurchaseOrderPusatValidator(_unitOfWork).Validate(request, out _response);
+            _response.Entity.Account = (AccountModel)Session["UserLogon"];
+            //new CreatePOPByPRP(_unitOfWork).Create(_response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("EDIT_M_PURCHASEORDERPUSAT")]
+        [HttpPost]
+        public ActionResult EditPurchaseOrderDetail(PurchaseOrderPusatDetailModel purchaseorderPusatDetail)
+        {
+            if (Session["UserLogon"] != null)
+                purchaseorderPusatDetail.Account = (AccountModel)Session["UserLogon"];
+            PurchaseOrderPusatDetailResponse _purchaseorderpusatdetailresponse = new PurchaseOrderPusatDetailResponse();
+            var purchaseorderpusatdetailrequest = new PurchaseOrderPusatDetailRequest
+            {
+                Data = purchaseorderPusatDetail
+            };
+            var requestnamabarang = new ProductRequest
+            {
+                Data = new ProductModel
+                {
+                    Id = Convert.ToInt32(purchaseorderPusatDetail.ProductId)
+                }
+            };
+
+            var requestnamavendor = new VendorRequest
+            {
+                Data = new VendorModel
+                {
+                    Id = purchaseorderPusatDetail.VendorId
+                }
+            };
+
+            ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
+            VendorResponse namavendor = new VendorHandler(_unitOfWork).GetDetail(requestnamavendor);
+            purchaseorderpusatdetailrequest.Data.namabarang = purchaseorderpusatdetailrequest.Data.namabarang != null ? purchaseorderpusatdetailrequest.Data.namabarang : namabarang.Entity.Name;
+            purchaseorderpusatdetailrequest.Data.namavendor = namavendor.Entity.namavendor;
+            new PurchaseOrderPusatDetailValidator(_unitOfWork).Validate(purchaseorderpusatdetailrequest, out _purchaseorderpusatdetailresponse);
+            return Json(new { data = _purchaseorderpusatdetailresponse.Data }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("VIEW_M_PURCHASEORDERPUSAT")]
+        public ActionResult PrintPurchaseOrderPusat(int id)
+        {
+            PurchaseOrderPusatResponse _response = new PurchaseOrderPusatResponse();
+
+            var request = new PurchaseOrderPusatRequest
+            {
+                Data = new PurchaseOrderPusatModel
+                {
+                    Id = id
+                }
+            };
+
+            PurchaseOrderPusatResponse resp = new PurchaseOrderPusatHandler(_unitOfWork).GetDetail(request);
+            PurchaseOrderPusatModel _model = resp.Entity;
+            ViewBag.Response = _response;
+            return new PartialViewAsPdf(_model)
+            {
+                PageOrientation = Orientation.Portrait,
+                PageSize = Size.Folio,
+
+                FileName = "PurchaseOrderPusat" + _model.ponumber + ".pdf"
+            };
         }
         #endregion
 

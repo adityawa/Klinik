@@ -43,7 +43,7 @@ namespace Klinik.Features
             DateTime? month = getmonth != null ? getmonth : DateTime.Now;
             string ponumber = lastponumber != null ? GeneralHandler.stringincrement(lastponumber, Convert.ToDateTime(month)) : "00001";
 
-            purchaseorderpusatrequest.Data.ponumber = "PR" + _response.Entity.Account.Organization + DateTime.Now.Year + DateTime.Now.Month + ponumber;
+            purchaseorderpusatrequest.Data.ponumber = "PO" + _response.Entity.Account.Organization + DateTime.Now.Year + DateTime.Now.Month + ponumber;
             purchaseorderpusatrequest.Data.Account = _response.Entity.Account;
 
             PurchaseOrderPusatResponse purchaseorderresponse = new PurchaseOrderPusatResponse();

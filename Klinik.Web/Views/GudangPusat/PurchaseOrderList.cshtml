@@ -110,7 +110,7 @@
                     {
                          var type = full['approve'] == null ? 'Approve' : 'Print';
                         var button = full['approve'] == null ? "<button class='btn btn-success btn-xs' onclick='" + type + "(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Approve</button>" : '<a class="btn btn-success btn-xs" href="/PurchaseOrderPusat/PrintPurchaseOrderPusat?id=' + full.Id + '">' + type + '</a>';
-                        return '<a class="btn btn-info btn-xs" href="/PurchaseOrderPusat/CreateOrEditPurchaseOrderPusat?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger btn-xs' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>";
+                        return '<a class="btn btn-info btn-xs" href="/GudangPusat/CreateOrEditPurchaseOrder?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger btn-xs' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>";
                     }
                 }
 

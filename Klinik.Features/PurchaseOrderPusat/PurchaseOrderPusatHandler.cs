@@ -1,4 +1,5 @@
-﻿using Klinik.Common;
+﻿using AutoMapper;
+using Klinik.Common;
 using Klinik.Data;
 using Klinik.Entities.PurchaseOrderPusat;
 using Klinik.Entities.PurchaseOrderPusatDetail;
@@ -150,6 +151,11 @@ namespace Klinik.Features
                     ModifiedBy = qry.ModifiedBy,
                     CreatedBy = qry.CreatedBy,
                     ModifiedDate = qry.ModifiedDate,
+                    prrequestby = qry.PurchaseRequestPusat.request_by,
+                    prvalidationby = qry.PurchaseRequestPusat.ModifiedBy,
+                    prdate = qry.PurchaseRequestPusat.prdate,
+                    prnumber = qry.PurchaseRequestPusat.prnumber,
+                    Validasi = qry.Validasi
                 };
 
                 foreach (var item in qry.PurchaseOrderPusatDetails)
@@ -171,6 +177,8 @@ namespace Klinik.Features
                         qty = item.qty,
                         qty_add = item.qty_add,
                         reason_add = item.reason_add,
+                        qty_final = item.qty_final,
+                        remark = item.remark,
                         total = item.total,
                         qty_unit = item.qty_unit,
                         qty_box = item.qty_box,
@@ -345,6 +353,56 @@ namespace Klinik.Features
                 response.Message = Messages.GeneralError;
 
                 ErrorLog(ClinicEnums.Module.MASTER_PURCHASEORDERPUSAT, ClinicEnums.Action.APPROVE.ToString(), request.Data.Account, ex);
+            }
+
+            return response;
+        }
+
+        public PurchaseOrderPusatResponse ValidasiData(PurchaseOrderPusatRequest request)
+        {
+            PurchaseOrderPusatResponse response = new PurchaseOrderPusatResponse();
+
+            try
+            {
+                var purchaseorderpusat = _unitOfWork.PurchaseOrderPusatRepository.GetById(request.Data.Id);
+                if (purchaseorderpusat.id > 0)
+                {
+                    purchaseorderpusat.Validasi = 1;
+                    purchaseorderpusat.approve_by = request.Data.Account.UserCode;
+                    purchaseorderpusat.ModifiedBy = request.Data.Account.UserCode;
+                    purchaseorderpusat.ModifiedDate = DateTime.Now;
+
+                    _unitOfWork.PurchaseOrderPusatRepository.Update(purchaseorderpusat);
+                    int resultAffected = _unitOfWork.Save();
+                    if (resultAffected > 0)
+                    {
+                        var purchaseorderdetail = _unitOfWork.PurchaseOrderPusatDetailRepository.Query(a => a.PurchaseOrderPusatId == purchaseorderpusat.id).ToList();
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "PurchaseRequestPusat", purchaseorderpusat.ponumber, purchaseorderpusat.id);
+                        response.Entity = Mapper.Map<Data.DataRepository.PurchaseOrderPusat, PurchaseOrderPusatModel>(purchaseorderpusat);
+                        foreach (var item in purchaseorderdetail)
+                        {
+                            var _purchaseOrderpusatDetail = Mapper.Map<Data.DataRepository.PurchaseOrderPusatDetail, PurchaseOrderPusatDetailModel>(item);
+                            response.Entity.purchaseOrderdetailpusatModels.Add(_purchaseOrderpusatDetail);
+                        }
+                    }
+                    else
+                    {
+                        response.Status = false;
+                        response.Message = string.Format(Messages.RemoveObjectFailed, "PurchaseOrder");
+                    }
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = string.Format(Messages.RemoveObjectFailed, "PurchaseOrder");
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = Messages.GeneralError;
+
+                ErrorLog(ClinicEnums.Module.MASTER_PURCHASEREQUESTPUSAT, ClinicEnums.Action.VALIDASI.ToString(), request.Data.Account, ex);
             }
 
             return response;

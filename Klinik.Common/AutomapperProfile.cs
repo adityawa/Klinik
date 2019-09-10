@@ -338,6 +338,9 @@ namespace Klinik.Common
 
             CreateMap<PurchaseRequestPusatDetailModel, PurchaseOrderPusatDetailModel>();
             CreateMap<PurchaseRequestPusatModel, PurchaseOrderPusatModel>();
+
+            CreateMap<PurchaseOrderPusat, PurchaseOrderPusatModel>();
+            CreateMap<PurchaseOrderPusatDetail, PurchaseOrderPusatDetailModel>();
         }
     }
 }
