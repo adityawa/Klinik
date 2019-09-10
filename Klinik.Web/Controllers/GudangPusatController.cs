@@ -1,8 +1,10 @@
-﻿using Klinik.Common;
+﻿using AutoMapper;
+using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
+using Klinik.Entities.PurchaseOrderPusatDetail;
 using Klinik.Entities.PurchaseRequestPusat;
 using Klinik.Entities.PurchaseRequestPusatDetail;
 using Klinik.Features;
@@ -183,6 +185,8 @@ namespace Klinik.Web.Controllers
             };
 
             new PurchaseRequestPusatValidator(_unitOfWork).Validate(request, out _response);
+            _response.Entity.Account = (AccountModel)Session["UserLogon"];
+            new CreatePOPByPRP(_unitOfWork).Create(_response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
@@ -220,6 +224,43 @@ namespace Klinik.Web.Controllers
             purchaserequestpusatdetailrequest.Data.namavendor = namavendor.Entity.namavendor;
             new PurchaseRequestPusatDetailValidator(_unitOfWork).Validate(purchaserequestpusatdetailrequest, out _purchaserequestpusatdetailresponse);
             return Json(new { data = _purchaserequestpusatdetailresponse.Data }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region :: PURCHASEORDER ::
+        [CustomAuthorize("VIEW_M_PURCHASEORDERPUSAT")]
+        public ActionResult PurchaseOrderList()
+        {
+            return View();
+        }
+
+        [CustomAuthorize("VIEW_M_PURCHASEORDERPUSAT")]
+        [HttpPost]
+        public ActionResult GetPurchaseOrderData()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new PurchaseOrderPusatRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            var response = new PurchaseOrderPusatHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

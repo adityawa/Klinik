@@ -26,6 +26,7 @@ using Klinik.Entities.PurchaseRequestConfig;
 using Klinik.Entities.PurchaseRequestPusat;
 using Klinik.Entities.PurchaseOrderPusat;
 using Klinik.Entities.PurchaseRequestPusatDetail;
+using Klinik.Entities.PurchaseOrderPusatDetail;
 
 namespace Klinik.Common
 {
@@ -335,8 +336,8 @@ namespace Klinik.Common
             CreateMap<PurchaseRequestPusat, PurchaseRequestPusatModel>();
             CreateMap<PurchaseRequestPusatDetail, PurchaseRequestPusatDetailModel>();
 
-
-
+            CreateMap<PurchaseRequestPusatDetailModel, PurchaseOrderPusatDetailModel>();
+            CreateMap<PurchaseRequestPusatModel, PurchaseOrderPusatModel>();
         }
     }
 }

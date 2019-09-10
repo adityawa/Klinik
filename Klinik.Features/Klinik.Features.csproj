@@ -254,6 +254,7 @@
     <Compile Include="PurchaseOrderPusatDetail\PurchaseOrderPusatDetailRequest.cs" />
     <Compile Include="PurchaseOrderPusatDetail\PurchaseOrderPusatDetailResponse.cs" />
     <Compile Include="PurchaseOrderPusatDetail\PurchaseOrderPusatDetailValidator.cs" />
+    <Compile Include="PurchaseOrderPusat\CreatePOPByPRP.cs" />
     <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatHandler.cs" />
     <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatRequest.cs" />
     <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatResponse.cs" />
