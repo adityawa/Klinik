@@ -63,10 +63,7 @@ namespace Klinik.Web.Controllers
             };
 
             var response = new PurchaseRequestPusatHandler(_unitOfWork).GetListData(request);
-            if (!(GeneralHandler.authorized("APPROVE_M_PURCHASEREQUESTPUSAT") == "true"))
-            {
-                response.Data.Where(a => a.approve == 1);
-            }
+            
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
@@ -291,10 +288,6 @@ namespace Klinik.Web.Controllers
             };
 
             var response = new PurchaseOrderPusatHandler(_unitOfWork).GetListData(request);
-            if (!(GeneralHandler.authorized("APPROVE_M_PURCHASEORDERPUSAT") == "true"))
-            {
-                response.Data.Where(a => a.approve == 1);
-            }
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }

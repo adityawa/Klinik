@@ -191,7 +191,10 @@ namespace Klinik.Features
 
             // add default filter to show the active data only
             searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
-
+            if (GeneralHandler.authorized("APPROVE_M_PURCHASEREQUESTPUSAT") == "false")
+            {
+                searchPredicate.And(x => x.approve >= 1);
+            }
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.prnumber.Contains(request.SearchValue));
