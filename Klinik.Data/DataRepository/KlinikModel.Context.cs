@@ -98,7 +98,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
-
         public virtual DbSet<LookupCategory> LookupCategories { get; set; }
     }
 }
