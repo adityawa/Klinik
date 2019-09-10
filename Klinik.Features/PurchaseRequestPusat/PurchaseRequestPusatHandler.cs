@@ -147,6 +147,7 @@ namespace Klinik.Features
                     ModifiedBy = qry.ModifiedBy,
                     CreatedBy = qry.CreatedBy,
                     ModifiedDate = qry.ModifiedDate,
+                    Validasi = qry.Validasi
                 };
 
                 foreach (var item in qry.PurchaseRequestPusatDetails)
@@ -168,6 +169,8 @@ namespace Klinik.Features
                         qty = item.qty,
                         qty_add = item.qty_add,
                         reason_add = item.reason_add,
+                        qty_final = item.qty_final,
+                        remark = item.remark,
                         total = item.total,
                         qty_unit = item.qty_unit,
                         qty_box = item.qty_box,
@@ -321,14 +324,7 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        var purchaserequestpusatdetail = _unitOfWork.PurchaseRequestPusatDetailRepository.Query(a => a.PurchaseRequestPusatId == deliveryoder.id).ToList();
                         response.Message = string.Format(Messages.ObjectHasBeenRemoved, "PurchaseRequestPusat", deliveryoder.prnumber, deliveryoder.id);
-                        foreach (var item in purchaserequestpusatdetail)
-                        {
-                           var _purchaseRequestPusatDetail = Mapper.Map<PurchaseRequestPusatDetail, PurchaseRequestPusatDetailModel>(item);
-                            _purchaseRequestPusatDetail.Account = request.Data.Account;
-                           response.Entity.purchaserequestPusatdetailModels.Add(_purchaseRequestPusatDetail);
-                        }
                     }
                     else
                     {
@@ -348,6 +344,56 @@ namespace Klinik.Features
                 response.Message = Messages.GeneralError;
 
                 ErrorLog(ClinicEnums.Module.MASTER_PURCHASEREQUESTPUSAT, ClinicEnums.Action.APPROVE.ToString(), request.Data.Account, ex);
+            }
+
+            return response;
+        }
+
+        public PurchaseRequestPusatResponse ValidasiData(PurchaseRequestPusatRequest request)
+        {
+            PurchaseRequestPusatResponse response = new PurchaseRequestPusatResponse();
+
+            try
+            {
+                var purchaserequestpusat = _unitOfWork.PurchaseRequestPusatRepository.GetById(request.Data.Id);
+                if (purchaserequestpusat.id > 0)
+                {
+                    purchaserequestpusat.Validasi = 1;
+                    purchaserequestpusat.approve_by = request.Data.Account.UserCode;
+                    purchaserequestpusat.ModifiedBy = request.Data.Account.UserCode;
+                    purchaserequestpusat.ModifiedDate = DateTime.Now;
+
+                    _unitOfWork.PurchaseRequestPusatRepository.Update(purchaserequestpusat);
+                    int resultAffected = _unitOfWork.Save();
+                    if (resultAffected > 0)
+                    {
+                        var purchaseorderdetail = _unitOfWork.PurchaseRequestPusatDetailRepository.Query(a => a.PurchaseRequestPusatId == purchaserequestpusat.id).ToList();
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "PurchaseRequestPusat", purchaserequestpusat.prnumber, purchaserequestpusat.id);
+                        response.Entity = Mapper.Map<Data.DataRepository.PurchaseRequestPusat, PurchaseRequestPusatModel>(purchaserequestpusat);
+                        foreach (var item in purchaseorderdetail)
+                        {
+                            var _purchaseRequestpusatDetail = Mapper.Map<Data.DataRepository.PurchaseRequestPusatDetail, PurchaseRequestPusatDetailModel>(item);
+                            response.Entity.purchaserequestPusatdetailModels.Add(_purchaseRequestpusatDetail);
+                        }
+                    }
+                    else
+                    {
+                        response.Status = false;
+                        response.Message = string.Format(Messages.RemoveObjectFailed, "PurchaseRequest");
+                    }
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = string.Format(Messages.RemoveObjectFailed, "PurchaseRequest");
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = Messages.GeneralError;
+
+                ErrorLog(ClinicEnums.Module.MASTER_PURCHASEREQUESTPUSAT, ClinicEnums.Action.VALIDASI.ToString(), request.Data.Account, ex);
             }
 
             return response;

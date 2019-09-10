@@ -332,7 +332,7 @@ namespace Klinik.Common
             CreateMap<ICDTheme, ICDThemeModel>();
             CreateMap<ICDThemeModel, ICDTheme>();
 
-            CreateMap<PurchaseRequestPusatModel, PurchaseOrderPusatModel>();
+            CreateMap<PurchaseRequestPusat, PurchaseRequestPusatModel>();
             CreateMap<PurchaseRequestPusatDetail, PurchaseRequestPusatDetailModel>();
 
 

@@ -166,6 +166,61 @@ namespace Klinik.Web.Controllers
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
+
+        [CustomAuthorize("APPROVE_M_PURCHASEREQUESTPUSAT")]
+        [HttpPost]
+        public JsonResult ValidationPurchaseRequestPusat(int id)
+        {
+            PurchaseRequestPusatResponse _response = new PurchaseRequestPusatResponse();
+            var request = new PurchaseRequestPusatRequest
+            {
+                Data = new PurchaseRequestPusatModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.VALIDASI.ToString()
+            };
+
+            new PurchaseRequestPusatValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("EDIT_M_PURCHASEREQUESTPUSAT")]
+        [HttpPost]
+        public ActionResult EditPurchaseRequestDetail(PurchaseRequestPusatDetailModel purchaseRequestPusatDetail)
+        {
+            if (Session["UserLogon"] != null)
+                purchaseRequestPusatDetail.Account = (AccountModel)Session["UserLogon"];
+            PurchaseRequestPusatDetailResponse _purchaserequestpusatdetailresponse = new PurchaseRequestPusatDetailResponse();
+            var purchaserequestpusatdetailrequest = new PurchaseRequestPusatDetailRequest
+            {
+                Data = purchaseRequestPusatDetail
+            };
+            var requestnamabarang = new ProductRequest
+            {
+                Data = new ProductModel
+                {
+                    Id = Convert.ToInt32(purchaseRequestPusatDetail.ProductId)
+                }
+            };
+
+            var requestnamavendor = new VendorRequest
+            {
+                Data = new VendorModel
+                {
+                    Id = purchaseRequestPusatDetail.VendorId
+                }
+            };
+
+            ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
+            VendorResponse namavendor = new VendorHandler(_unitOfWork).GetDetail(requestnamavendor);
+            purchaserequestpusatdetailrequest.Data.namabarang = purchaserequestpusatdetailrequest.Data.namabarang != null ? purchaserequestpusatdetailrequest.Data.namabarang : namabarang.Entity.Name;
+            purchaserequestpusatdetailrequest.Data.namavendor = namavendor.Entity.namavendor;
+            new PurchaseRequestPusatDetailValidator(_unitOfWork).Validate(purchaserequestpusatdetailrequest, out _purchaserequestpusatdetailresponse);
+            return Json(new { data = _purchaserequestpusatdetailresponse.Data }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
 

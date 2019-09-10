@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2455f24489c54e438fb91b019da83f9e" Name="Diagram1">
+      <Diagram DiagramId="2455f24489c54e438fb91b019da83f9e" Name="Diagram1" ZoomLevel="55">
         <EntityTypeShape EntityType="KlinikDBModel.AppConfig" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Appointment" Width="1.5" PointX="5.25" PointY="81.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.City" Width="1.5" PointX="0.75" PointY="82.375" IsExpanded="true" />
@@ -189,6 +189,8 @@
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_PurchaseRequestPusat" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_Vendor" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_UserRole_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="KlinikDBModel.LookupCategory" Width="1.5" PointX="5.375" PointY="6.75" />
+        <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusat_Gudang" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

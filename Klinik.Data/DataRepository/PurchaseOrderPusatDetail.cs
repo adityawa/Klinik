@@ -42,8 +42,6 @@ namespace Klinik.Data.DataRepository
         public Nullable<int> statusop { get; set; }
         public Nullable<int> OrderNumber { get; set; }
         public Nullable<bool> Verified { get; set; }
-        public Nullable<double> qty_final { get; set; }
-        public string remark { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual PurchaseOrderPusat PurchaseOrderPusat { get; set; }
