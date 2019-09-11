@@ -567,10 +567,11 @@
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="LookUpName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LookupContent" Type="varchar(max)" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="RowStatus" Type="smallint" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="MCUPackage">
           <Key>
@@ -973,6 +974,8 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="statusop" Type="int" />
+          <Property Name="Validasi" Type="int" />
+          <Property Name="GudangId" Type="int" />
         </EntityType>
         <EntityType Name="PurchaseOrderPusatDetail">
           <Key>
@@ -1079,6 +1082,8 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="statusop" Type="int" />
+          <Property Name="Validasi" Type="int" />
+          <Property Name="GudangId" Type="int" />
         </EntityType>
         <EntityType Name="PurchaseRequestPusatDetail">
           <Key>
@@ -2240,6 +2245,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PurchaseOrderPusat_Gudang">
+          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
+          <End Role="PurchaseOrderPusat" Type="Self.PurchaseOrderPusat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseOrderPusat">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PurchaseOrderPusat_PurchaseRequestPusat">
           <End Role="PurchaseRequestPusat" Type="Self.PurchaseRequestPusat" Multiplicity="0..1" />
           <End Role="PurchaseOrderPusat" Type="Self.PurchaseOrderPusat" Multiplicity="*" />
@@ -2333,6 +2350,18 @@
             </Principal>
             <Dependent Role="PurchaseRequestDetail">
               <PropertyRef Name="PurchaseRequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestPusat_Gudang">
+          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
+          <End Role="PurchaseRequestPusat" Type="Self.PurchaseRequestPusat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestPusat">
+              <PropertyRef Name="GudangId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3007,6 +3036,10 @@
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
             <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetail" />
           </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderPusat_Gudang" Association="Self.FK_PurchaseOrderPusat_Gudang">
+            <End Role="Gudang" EntitySet="Gudang" />
+            <End Role="PurchaseOrderPusat" EntitySet="PurchaseOrderPusat" />
+          </AssociationSet>
           <AssociationSet Name="FK_PurchaseOrderPusat_PurchaseRequestPusat" Association="Self.FK_PurchaseOrderPusat_PurchaseRequestPusat">
             <End Role="PurchaseRequestPusat" EntitySet="PurchaseRequestPusat" />
             <End Role="PurchaseOrderPusat" EntitySet="PurchaseOrderPusat" />
@@ -3038,6 +3071,10 @@
           <AssociationSet Name="FK_PurchaseRequestDetail_PurchaseRequest" Association="Self.FK_PurchaseRequestDetail_PurchaseRequest">
             <End Role="PurchaseRequest" EntitySet="PurchaseRequest" />
             <End Role="PurchaseRequestDetail" EntitySet="PurchaseRequestDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestPusat_Gudang" Association="Self.FK_PurchaseRequestPusat_Gudang">
+            <End Role="Gudang" EntitySet="Gudang" />
+            <End Role="PurchaseRequestPusat" EntitySet="PurchaseRequestPusat" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseRequestPusatDetail_Product" Association="Self.FK_PurchaseRequestPusatDetail_Product">
             <End Role="Product" EntitySet="Product" />
@@ -3690,6 +3727,8 @@
           <NavigationProperty Name="PurchaseOrders1" Relationship="Self.FK_PurchaseOrder_Source" FromRole="Gudang" ToRole="PurchaseOrder" />
           <NavigationProperty Name="PurchaseRequests" Relationship="Self.FK_PurchaseRequest_Gudang" FromRole="Gudang" ToRole="PurchaseRequest" />
           <NavigationProperty Name="PurchaseRequestConfigs" Relationship="Self.FK_PurchaseRequestConfig_Gudang" FromRole="Gudang" ToRole="PurchaseRequestConfig" />
+          <NavigationProperty Name="PurchaseOrderPusats" Relationship="KlinikDBModel.FK_PurchaseOrderPusat_Gudang" FromRole="Gudang" ToRole="PurchaseOrderPusat" />
+          <NavigationProperty Name="PurchaseRequestPusats" Relationship="KlinikDBModel.FK_PurchaseRequestPusat_Gudang" FromRole="Gudang" ToRole="PurchaseRequestPusat" />
         </EntityType>
         <EntityType Name="HistoryProductInGudang">
           <Key>
@@ -4275,6 +4314,9 @@
           <NavigationProperty Name="DeliveryOrderPusats" Relationship="Self.FK_DeliveryOrderPusat_PurchaseOrderPusat" FromRole="PurchaseOrderPusat" ToRole="DeliveryOrderPusat" />
           <NavigationProperty Name="PurchaseRequestPusat" Relationship="Self.FK_PurchaseOrderPusat_PurchaseRequestPusat" FromRole="PurchaseOrderPusat" ToRole="PurchaseRequestPusat" />
           <NavigationProperty Name="PurchaseOrderPusatDetails" Relationship="Self.FK_PurchaseOrderPusatDetail_PurchaseOrderPusat" FromRole="PurchaseOrderPusat" ToRole="PurchaseOrderPusatDetail" />
+          <Property Name="Validasi" Type="Int32" />
+          <Property Name="GudangId" Type="Int32" />
+          <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_PurchaseOrderPusat_Gudang" FromRole="PurchaseOrderPusat" ToRole="Gudang" />
         </EntityType>
         <EntityType Name="PurchaseOrderPusatDetail">
           <Key>
@@ -4392,6 +4434,9 @@
           <Property Name="statusop" Type="Int32" />
           <NavigationProperty Name="PurchaseOrderPusats" Relationship="Self.FK_PurchaseOrderPusat_PurchaseRequestPusat" FromRole="PurchaseRequestPusat" ToRole="PurchaseOrderPusat" />
           <NavigationProperty Name="PurchaseRequestPusatDetails" Relationship="Self.FK_PurchaseRequestPusatDetail_PurchaseRequestPusat" FromRole="PurchaseRequestPusat" ToRole="PurchaseRequestPusatDetail" />
+          <Property Name="Validasi" Type="Int32" />
+          <Property Name="GudangId" Type="Int32" />
+          <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_PurchaseRequestPusat_Gudang" FromRole="PurchaseRequestPusat" ToRole="Gudang" />
         </EntityType>
         <EntityType Name="PurchaseRequestPusatDetail">
           <Key>
@@ -6471,8 +6516,40 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderPusat_Gudang" Association="KlinikDBModel.FK_PurchaseOrderPusat_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="PurchaseOrderPusat" EntitySet="PurchaseOrderPusats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestPusat_Gudang" Association="KlinikDBModel.FK_PurchaseRequestPusat_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="PurchaseRequestPusat" EntitySet="PurchaseRequestPusats" />
+          </AssociationSet>
           <EntitySet Name="LookupCategories" EntityType="KlinikDBModel.LookupCategory" />
         </EntityContainer>
+        <Association Name="FK_PurchaseOrderPusat_Gudang">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.PurchaseOrderPusat" Role="PurchaseOrderPusat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseOrderPusat">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestPusat_Gudang">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.PurchaseRequestPusat" Role="PurchaseRequestPusat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestPusat">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="LookupCategory">
           <Key>
             <PropertyRef Name="ID" />
@@ -6480,10 +6557,11 @@
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="LookUpName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LookupContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RowStatus" Type="Int16" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -7488,6 +7566,8 @@
           <EntitySetMapping Name="PurchaseOrderPusats">
             <EntityTypeMapping TypeName="KlinikDBModel.PurchaseOrderPusat">
               <MappingFragment StoreEntitySet="PurchaseOrderPusat">
+                <ScalarProperty Name="GudangId" ColumnName="GudangId" />
+                <ScalarProperty Name="Validasi" ColumnName="Validasi" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="PurchaseRequestId" ColumnName="PurchaseRequestId" />
                 <ScalarProperty Name="ponumber" ColumnName="ponumber" />
@@ -7600,6 +7680,8 @@
           <EntitySetMapping Name="PurchaseRequestPusats">
             <EntityTypeMapping TypeName="KlinikDBModel.PurchaseRequestPusat">
               <MappingFragment StoreEntitySet="PurchaseRequestPusat">
+                <ScalarProperty Name="GudangId" ColumnName="GudangId" />
+                <ScalarProperty Name="Validasi" ColumnName="Validasi" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="prnumber" ColumnName="prnumber" />
                 <ScalarProperty Name="prdate" ColumnName="prdate" />
@@ -7830,6 +7912,7 @@
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="LookupContent" ColumnName="LookupContent" />
                 <ScalarProperty Name="LookUpName" ColumnName="LookUpName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />

@@ -74,6 +74,7 @@ namespace Klinik.Data
         IGenericRepository<ProductInGudang> ProductInGudangRepository { get; }
         IGenericRepository<HistoryProductInGudang> HistoryProductInGudangRepository { get; }
         IGenericRepository<PurchaseRequestConfig> PurchaseRequestConfigRepository { get; }
+        IGenericRepository<LookupCategory> LookUpCategoryRepository { get; }
 
         IGenericRepository<ICDTheme> ICDThemeRepository { get; }
 

@@ -110,6 +110,10 @@
     <Compile Include="MasterData\Gudang\GudangRequest.cs" />
     <Compile Include="MasterData\Gudang\GudangResponse.cs" />
     <Compile Include="MasterData\Gudang\GudangValidator.cs" />
+    <Compile Include="MasterData\LookupCategory\LookUpCategoryHandler.cs" />
+    <Compile Include="MasterData\LookupCategory\LookupCategoryRequest.cs" />
+    <Compile Include="MasterData\LookupCategory\LookUpCategoryResponse.cs" />
+    <Compile Include="MasterData\LookupCategory\LookUpCategoryValidator.cs" />
     <Compile Include="MasterData\Vendor\VendorHandler.cs" />
     <Compile Include="MasterData\Vendor\VendorRequest.cs" />
     <Compile Include="MasterData\Vendor\VendorResponse.cs" />
@@ -329,8 +333,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MasterData\LookupCategory\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

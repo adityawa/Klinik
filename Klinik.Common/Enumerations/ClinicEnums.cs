@@ -80,6 +80,7 @@
             MASTER_PURCHASEREQUESTPUSATDETAIL,
 			PHARMACY,
             MASTER_PRODUCTINGUDANG,
+            MASTER_LOOKUPCATEGORY
         }
 
         public enum Action
