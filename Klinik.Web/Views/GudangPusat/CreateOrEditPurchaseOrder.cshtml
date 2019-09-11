@@ -2,7 +2,7 @@
 @using Klinik.Features.Account
 @using Klinik.Features;
 @{
-    ViewBag.Title = "CreateOrEditDeliveryOrderPusat";
+    ViewBag.Title = "CreateOrEditPurchaseOrderPusat";
     var prnumber = Model != null ? Model.prnumber : ViewBag.prnumber;
     bool open = Model != null ? Model.Validasi > 0 ? false : true : true;
 }
@@ -105,9 +105,9 @@
                                 <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
                                 <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
                                 <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.qty_final" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.remark" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control qty_final" value="@item.qty_final" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control remark" value="@item.remark" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control total" value="@item.total" disabled="disabled" /></td>
                                 <td><input type="text" class="form-control" value="@item.qty_unit" disabled="disabled" /></td>
                                 <td><input type="text" class="form-control" value="@item.qty_box" disabled="disabled" /></td>
                                 @if (Model.Validasi == null)

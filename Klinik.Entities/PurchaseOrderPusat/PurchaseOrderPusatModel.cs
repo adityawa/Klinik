@@ -18,6 +18,7 @@ namespace Klinik.Entities.PurchaseOrderPusat
         public Nullable<int> statusop { get; set; }
         public string createformat { get; set; }
         public Nullable<int> Validasi { get; set; }
+        public Nullable<int> GudangId { get; set; }
         public string prnumber { get; set; }
         public Nullable<System.DateTime> prdate { get; set; }
         public string prrequestby { get; set; }

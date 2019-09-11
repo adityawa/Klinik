@@ -89,6 +89,7 @@
     <Compile Include="DeliveryOrderPusatDetail\DeliveryOrderPusatDetailRequest.cs" />
     <Compile Include="DeliveryOrderPusatDetail\DeliveryOrderPusatDetailResponse.cs" />
     <Compile Include="DeliveryOrderPusatDetail\DeliveryOrderPusatDetailValidator.cs" />
+    <Compile Include="DeliveryOrderPusat\CreateDoPByPoP.cs" />
     <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatHandler.cs" />
     <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatRequest.cs" />
     <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatResponse.cs" />

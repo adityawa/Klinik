@@ -3,6 +3,7 @@ using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
+using Klinik.Entities.DeliveryOrderPusat;
 using Klinik.Entities.MasterData;
 using Klinik.Entities.PurchaseOrderPusat;
 using Klinik.Entities.PurchaseOrderPusatDetail;
@@ -106,6 +107,7 @@ namespace Klinik.Web.Controllers
             if (Session["UserLogon"] != null)
                 _purchaserequestpusat.Account = (AccountModel)Session["UserLogon"];
             _purchaserequestpusat.Id = Convert.ToInt32(_purchaserequestpusat.Id) > 0 ? _purchaserequestpusat.Id : 0;
+            _purchaserequestpusat.GudangId = OneLoginSession.Account.GudangID > 0 ? OneLoginSession.Account.GudangID : 0;
             var request = new PurchaseRequestPusatRequest
             {
                 Data = _purchaserequestpusat
@@ -414,7 +416,7 @@ namespace Klinik.Web.Controllers
 
             new PurchaseOrderPusatValidator(_unitOfWork).Validate(request, out _response);
             _response.Entity.Account = (AccountModel)Session["UserLogon"];
-            //new CreatePOPByPRP(_unitOfWork).Create(_response);
+            new CreateDoPByPoP(_unitOfWork).Create(_response);
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
@@ -477,6 +479,75 @@ namespace Klinik.Web.Controllers
 
                 FileName = "PurchaseOrderPusat" + _model.ponumber + ".pdf"
             };
+        }
+        #endregion
+
+        #region :: DELIVERYORDER ::
+        [CustomAuthorize("VIEW_M_DELIVERYORDERPUSAT")]
+        public ActionResult DeliveryOrderList()
+        {
+            return View();
+        }
+
+        [CustomAuthorize("VIEW_M_DELIVERYORDERPUSAT")]
+        [HttpPost]
+        public ActionResult GetDeliveryOrderData()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new DeliveryOrderPusatRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            var response = new DeliveryOrderPusatHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("ADD_M_DELIVERYORDERPUSAT", "EDIT_M_DELIVERYORDERPUSAT")]
+        public ActionResult CreateOrEditDeliveryOrder()
+        {
+            var lastprnumber = _context.DeliveryOrderPusats.OrderByDescending(x => x.CreatedDate).Select(a => a.donumber).FirstOrDefault();
+            DateTime? getmonth = _context.DeliveryOrderPusats.OrderByDescending(x => x.CreatedDate).Select(a => a.CreatedDate).FirstOrDefault();
+            DateTime? month = getmonth != null ? getmonth : DateTime.Now;
+            string prnumber = lastprnumber != null ? GeneralHandler.stringincrement(lastprnumber, Convert.ToDateTime(month)) : "00001";
+            DeliveryOrderPusatResponse _response = new DeliveryOrderPusatResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new DeliveryOrderPusatRequest
+                {
+                    Data = new DeliveryOrderPusatModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                DeliveryOrderPusatResponse resp = new DeliveryOrderPusatHandler(_unitOfWork).GetDetail(request);
+                DeliveryOrderPusatModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.ActionType = ClinicEnums.Action.Add;
+                ViewBag.prnumber = "DO" + ((AccountModel)Session["UserLogon"]).Organization + DateTime.Now.Year + DateTime.Now.Month + prnumber;
+                return View();
+            }
         }
         #endregion
 

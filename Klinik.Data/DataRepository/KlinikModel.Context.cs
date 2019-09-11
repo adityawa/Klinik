@@ -31,8 +31,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<Clinic> Clinics { get; set; }
         public virtual DbSet<DeliveryOrder> DeliveryOrders { get; set; }
         public virtual DbSet<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
-        public virtual DbSet<DeliveryOrderPusat> DeliveryOrderPusats { get; set; }
-        public virtual DbSet<DeliveryOrderPusatDetail> DeliveryOrderPusatDetails { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<DoctorClinic> DoctorClinics { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
@@ -99,5 +97,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<LookupCategory> LookupCategories { get; set; }
+        public virtual DbSet<DeliveryOrderPusat> DeliveryOrderPusats { get; set; }
+        public virtual DbSet<DeliveryOrderPusatDetail> DeliveryOrderPusatDetails { get; set; }
     }
 }

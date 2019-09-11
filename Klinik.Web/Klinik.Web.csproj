@@ -1562,6 +1562,8 @@
     <Content Include="Views\GudangPusat\CreateOrEditPurchaseOrder.cshtml" />
     <Content Include="Views\GudangPusat\PrintPurchaseRequestPusat.cshtml" />
     <Content Include="Views\GudangPusat\PrintPurchaseOrderPusat.cshtml" />
+    <Content Include="Views\GudangPusat\DeliveryOrderList.cshtml" />
+    <Content Include="Views\GudangPusat\CreateOrEditDeliveryOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

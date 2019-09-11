@@ -31,7 +31,7 @@ namespace Klinik.Features
                     var qry = _unitOfWork.PurchaseOrderPusatRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
-                        var _oldentity = new Data.DataRepository.PurchaseOrderPusat 
+                        var _oldentity = new Data.DataRepository.PurchaseOrderPusat
                         {
                             PurchaseRequestId = qry.PurchaseRequestId,
                             ponumber = qry.ponumber,
@@ -42,7 +42,8 @@ namespace Klinik.Features
                             CreatedBy = qry.CreatedBy,
                             CreatedDate = qry.CreatedDate,
                             ModifiedDate = qry.ModifiedDate,
-                            RowStatus = qry.RowStatus
+                            RowStatus = qry.RowStatus,
+                            GudangId = qry.GudangId,
                         };
 
                         // update data
@@ -53,6 +54,7 @@ namespace Klinik.Features
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.ModifiedDate = DateTime.Now;
                         qry.RowStatus = 0;
+                        qry.GudangId = request.Data.GudangId;
 
                         _unitOfWork.PurchaseOrderPusatRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
@@ -93,7 +95,8 @@ namespace Klinik.Features
                         CreatedBy = request.Data.Account.UserCode,
                         CreatedDate = DateTime.Now,
                         ModifiedDate = DateTime.Now,
-                        RowStatus = 0
+                        RowStatus = 0,
+                        GudangId = request.Data.GudangId,
                     };
 
                     _unitOfWork.PurchaseOrderPusatRepository.Insert(purhcaseorderpusatEntity);
@@ -199,7 +202,7 @@ namespace Klinik.Features
 
             // add default filter to show the active data only
             searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
-            if (GeneralHandler.authorized("APPROVE_M_PURCHASEORDERPUSAT") == "false")
+            if ((GeneralHandler.authorized("APPROVE_M_PURCHASEORDERPUSAT") == "false"))
             {
                 searchPredicate.And(x => x.approve >= 1);
             }

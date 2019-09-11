@@ -121,7 +121,7 @@
                 {
                     "data": "prnumber",
                     "render": function (data, type, full, meta) {
-                        return '<a href="/PurchaseRequest/CreateOrEditPurchaseRequest?id=' + full.Id + '">' + full.prnumber + '</a>';
+                        return '<a href="/GudangPusat/CreateOrEditPurchaseRequest?id=' + full.Id + '">' + full.prnumber + '</a>';
                     }
                 },
                 { "data": "createformat", "createformat": "createformat", "autoWidth": true },
@@ -138,7 +138,7 @@
                         return '<a href="/DeliveryOrder/CreateOrEditDeliveryOrder?id=' + full.doid + '">' + full.donumber + '</a>';
                     }
                 },
-                { "data": "createpo", "createpo": "createpo", "autoWidth": true },
+                { "data": "createdo", "createdo": "createdo", "autoWidth": true },
                 { "data": "request_by", "request_by": "request_by", "autoWidth": false },
                 { "data": "approve_by", "approve_by": "approve_by", "autoWidth": true },
                 { "data": "approve", "approve": "approve", "autoWidth": true },

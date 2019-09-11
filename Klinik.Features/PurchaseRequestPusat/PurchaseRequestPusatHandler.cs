@@ -41,7 +41,8 @@ namespace Klinik.Features
                             CreatedBy = qry.CreatedBy,
                             CreatedDate = qry.CreatedDate,
                             ModifiedDate = qry.ModifiedDate,
-                            RowStatus = qry.RowStatus
+                            RowStatus = qry.RowStatus,
+                            GudangId = qry.GudangId,
                         };
 
                         // update data
@@ -51,6 +52,7 @@ namespace Klinik.Features
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.ModifiedDate = DateTime.Now;
                         qry.RowStatus = 0;
+                        qry.GudangId = request.Data.GudangId;
 
                         _unitOfWork.PurchaseRequestPusatRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
@@ -90,6 +92,7 @@ namespace Klinik.Features
                         CreatedBy = request.Data.Account.UserCode,
                         CreatedDate = DateTime.Now,
                         ModifiedDate = DateTime.Now,
+                        GudangId = request.Data.GudangId,
                         RowStatus = 0
                     };
 
@@ -191,7 +194,7 @@ namespace Klinik.Features
 
             // add default filter to show the active data only
             searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
-            if (GeneralHandler.authorized("APPROVE_M_PURCHASEREQUESTPUSAT") == "false")
+            if ((GeneralHandler.authorized("APPROVE_M_PURCHASEREQUESTPUSAT") == "false"))
             {
                 searchPredicate.And(x => x.approve >= 1);
             }
@@ -253,6 +256,9 @@ namespace Klinik.Features
                     poid = item.PurchaseOrderPusats.Count > 0 ? item.PurchaseOrderPusats.FirstOrDefault().id : 0,
                     ponumber = item.PurchaseOrderPusats.Count > 0 ? item.PurchaseOrderPusats.FirstOrDefault().ponumber : "",
                     createpo = item.PurchaseOrderPusats.Count > 0 ? GeneralHandler.FormatDate(Convert.ToDateTime(item.PurchaseOrderPusats.FirstOrDefault().podate)) : null,
+                    doid = item.PurchaseOrderPusats.Count > 0 ? item.PurchaseOrderPusats.FirstOrDefault().DeliveryOrderPusats.Count > 0 ? item.PurchaseOrderPusats.FirstOrDefault().DeliveryOrderPusats.FirstOrDefault().id : 0 : 0,
+                    donumber = item.PurchaseOrderPusats.Count > 0 ? item.PurchaseOrderPusats.FirstOrDefault().DeliveryOrderPusats.Count > 0 ? item.PurchaseOrderPusats.FirstOrDefault().DeliveryOrderPusats.FirstOrDefault().donumber : "" : "",
+                    createdo = item.PurchaseOrderPusats.Count > 0 ? item.PurchaseOrderPusats.FirstOrDefault().DeliveryOrderPusats.Count > 0 ? GeneralHandler.FormatDate(Convert.ToDateTime(item.PurchaseOrderPusats.FirstOrDefault().DeliveryOrderPusats.FirstOrDefault().dodate)) : null : null,
                 };
 
                 lists.Add(prData);

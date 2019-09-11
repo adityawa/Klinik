@@ -15,30 +15,38 @@ namespace Klinik.Data.DataRepository
     public partial class DeliveryOrderPusatDetail
     {
         public int id { get; set; }
-        public int DeliveryOderPusatId { get; set; }
+        public int DeliveryOrderPusatId { get; set; }
         public int ProductId { get; set; }
         public string namabarang { get; set; }
-        public Nullable<int> GudangId { get; set; }
-        public string namagudang { get; set; }
-        public Nullable<long> ClinicId { get; set; }
-        public string namaklinik { get; set; }
-        public Nullable<int> ProductId_Po { get; set; }
-        public string namabarang_po { get; set; }
-        public Nullable<double> qty_po { get; set; }
-        public Nullable<double> qty_po_final { get; set; }
-        public Nullable<double> qty_do { get; set; }
-        public string remark_do { get; set; }
-        public Nullable<double> qty_adj { get; set; }
-        public string remark_adj { get; set; }
+        public int VendorId { get; set; }
+        public string namavendor { get; set; }
+        public Nullable<double> satuan { get; set; }
+        public Nullable<double> harga { get; set; }
+        public Nullable<double> stok_prev { get; set; }
+        public Nullable<double> total_req { get; set; }
+        public Nullable<double> total_dist { get; set; }
+        public Nullable<double> sisa_stok { get; set; }
+        public Nullable<double> qty { get; set; }
+        public Nullable<double> qty_add { get; set; }
+        public string reason_add { get; set; }
+        public Nullable<double> qty_final { get; set; }
+        public string remark { get; set; }
+        public Nullable<double> total { get; set; }
+        public Nullable<double> qty_unit { get; set; }
+        public Nullable<double> qty_box { get; set; }
+        public Nullable<bool> Recived { get; set; }
+        public string No_Do_Vendor { get; set; }
+        public Nullable<System.DateTime> Tgl_Do_Vendor { get; set; }
+        public string SendBy { get; set; }
+        public Nullable<int> RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
-        public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<short> RowStatus { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<int> statusop { get; set; }
     
-        public virtual Clinic Clinic { get; set; }
         public virtual DeliveryOrderPusat DeliveryOrderPusat { get; set; }
-        public virtual Gudang Gudang { get; set; }
         public virtual Product Product { get; set; }
+        public virtual Vendor Vendor { get; set; }
     }
 }

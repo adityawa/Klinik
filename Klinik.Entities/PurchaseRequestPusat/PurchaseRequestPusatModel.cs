@@ -18,7 +18,11 @@ namespace Klinik.Entities.PurchaseRequestPusat
         public string ponumber { get; set; }
         public Nullable<int> poid { get; set; }
         public string createpo { get; set; }
+        public string donumber { get; set; }
+        public Nullable<int> doid { get; set; }
+        public string createdo { get; set; }
         public Nullable<int> Validasi { get; set; }
+        public Nullable<int> GudangId { get; set; }
         public List<PurchaseRequestPusatDetailModel> purchaserequestPusatdetailModels { get; set; }
 
         public string createformat { get; set; }

@@ -7,6 +7,7 @@
         PurchaseRequest.SavePurchaseOrderDetail();
         PurchaseRequest.EditPurchaseOrderDetail();
         PurchaseRequest.EditNamaBarang();
+        PurchaseRequest.FungsiChangeQtyAddRemark();
     },
 
     Addpurchaserequestitem: function () {
@@ -262,7 +263,7 @@
                         };
                     }
                 }
-            }).prop('disabled', false);
+            });
 
             getdata.find('td:eq(4) select').select2({
                 width: 'resolve',
@@ -290,14 +291,10 @@
                         };
                     }
                 }
-            }).prop('disabled', false);
+            });
 
-            getdata.find('td:eq(5) input').prop('disabled', false);
-            getdata.find('td:eq(6) input').prop('disabled', false);
-            getdata.find('td:eq(12) input').prop('disabled', false);
-            getdata.find('td:eq(13) input').prop('disabled', false);
-            getdata.find('td:eq(17) input').prop('disabled', false);
-            getdata.find('td:eq(18) input').prop('disabled', false);
+            getdata.find('td:eq(14) input').prop('disabled', false);
+            getdata.find('td:eq(15) input').prop('disabled', false);
             $(this).hide();
             getdata.find('.save-purchaseorderpusatdetail').show();
             PurchaseRequest.EditNamaBarang();
@@ -326,6 +323,17 @@
                 }
             })
 
+        });
+    },
+
+    FungsiChangeQtyAddRemark: function () {
+        var el = $('.qty_final');
+        if (!el.length) return;
+
+        $(el).keyup(function () {
+            var row = $(this).closest('tr');
+
+            row.find('.total').val(parseInt($(this).val()));
         });
     }
 }
