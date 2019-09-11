@@ -185,13 +185,13 @@
         <EntityTypeShape EntityType="KlinikDBModel.LookupCategory" Width="1.5" PointX="5.375" PointY="6.75" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusat_Gudang" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrderPusat_Gudang" />
+        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderPusatDetail" Width="1.5" PointX="26.75" PointY="92.125" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Product" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Vendor" />
         <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderPusat" Width="1.5" PointX="24.5" PointY="82.875" />
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusat_Gudang" />
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusat_PurchaseOrderPusat" />
-        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderPusatDetail" Width="1.5" PointX="26.75" PointY="92.125" />
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_DeliveryOrderPusat" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Product" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Vendor" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

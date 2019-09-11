@@ -94,7 +94,8 @@ namespace Klinik.Features
                         dodest = request.Data.dodest,
                         CreatedBy = request.Data.Account.UserCode,
                         CreatedDate = DateTime.Now,
-                        ModifiedDate = DateTime.Now,
+                        GudangId = request.Data.GudangId,
+                        
                         RowStatus = 0
                     };
 
@@ -122,12 +123,12 @@ namespace Klinik.Features
             catch (Exception ex)
             {
                 response.Status = false;
-                response.Message = Messages.GeneralError;
+            response.Message = Messages.GeneralError;
 
-                if (request.Data != null && request.Data.Id > 0)
-                    ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERPUSAT, Constants.Command.EDIT_DELIVERY_ORDER_PUSAT, request.Data.Account, ex);
-                else
-                    ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERPUSAT, Constants.Command.EDIT_DELIVERY_ORDER_PUSAT, request.Data.Account, ex);
+            if (request.Data != null && request.Data.Id > 0)
+                ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERPUSAT, Constants.Command.EDIT_DELIVERY_ORDER_PUSAT, request.Data.Account, ex);
+            else
+                ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERPUSAT, Constants.Command.EDIT_DELIVERY_ORDER_PUSAT, request.Data.Account, ex);
             }
 
             return response;

@@ -6,6 +6,7 @@ using Klinik.Entities.PurchaseOrderPusat;
 using Klinik.Entities.PurchaseOrderPusatDetail;
 using Klinik.Entities.PurchaseRequestPusat;
 using Klinik.Entities.PurchaseRequestPusatDetail;
+using Klinik.Features.Account;
 using LinqKit;
 using System;
 using System.Collections.Generic;
@@ -31,10 +32,10 @@ namespace Klinik.Features
                 Data = Mapper.Map<PurchaseRequestPusatModel, PurchaseOrderPusatModel>(_response.Entity)
             };
 
-            purchaseorderpusatrequest.Data.approve = null;
+            purchaseorderpusatrequest.Data.approve = 1;
             purchaseorderpusatrequest.Data.podate = DateTime.Now;
             purchaseorderpusatrequest.Data.Validasi = null;
-            purchaseorderpusatrequest.Data.approve_by = null;
+            purchaseorderpusatrequest.Data.approve_by = OneLoginSession.Account.UserCode;
             purchaseorderpusatrequest.Data.PurchaseRequestId = Convert.ToInt32(_response.Entity.Id);
             purchaseorderpusatrequest.Data.Id = 0;
 

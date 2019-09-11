@@ -68,7 +68,7 @@ namespace Klinik.Web.Controllers
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
-        [CustomAuthorize("ADD_M_PURCHASEREQUESTPUSAT", "EDIT_M_PURCHASEREQUESTPUSAT")]
+        [CustomAuthorize("ADD_M_PURCHASEREQUESTPUSAT", "EDIT_M_PURCHASEREQUESTPUSAT", "VIEW_M_PURCHASEREQUESTPUSAT")]
         public ActionResult CreateOrEditPurchaseRequest()
         {
             var lastprnumber = _context.PurchaseRequestPusats.OrderByDescending(x => x.CreatedDate).Select(a => a.prnumber).FirstOrDefault();
@@ -294,7 +294,7 @@ namespace Klinik.Web.Controllers
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
-        [CustomAuthorize("ADD_M_PURCHASEORDERPUSAT", "EDIT_M_PURCHASEORDERPUSAT")]
+        [CustomAuthorize("ADD_M_PURCHASEORDERPUSAT", "EDIT_M_PURCHASEORDERPUSAT", "VIEW_M_PURCHASEORDERPUSAT")]
         public ActionResult CreateOrEditPurchaseOrder()
         {
             var lastprnumber = _context.PurchaseOrderPusats.OrderByDescending(x => x.CreatedDate).Select(a => a.ponumber).FirstOrDefault();
