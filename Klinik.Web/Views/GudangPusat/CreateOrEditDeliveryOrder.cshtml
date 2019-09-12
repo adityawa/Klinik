@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "CreateOrEditDeliveryOrderPusat";
     var prnumber = Model != null ? Model.donumber : ViewBag.prnumber;
-    bool open = Model != null ? Model.Validasi > 0 ? false : true : true;
+    bool open = false;//Model != null ? Model.Validasi > 0 ? false : true : true;
 }
 
 @section Styles{
@@ -24,43 +24,43 @@
         @Html.HiddenFor(x => x.Id)
         <div class="form-group">
             <label class="col-md-2 control-label" for="inputDefault">No DO</label>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 @Html.TextBoxFor(x => x.donumber, new { @class = "form-control", @id = "donumber", @disabled = "disabled" })
             </div>
             <label class="col-md-2 control-label" for="inputDefault">No Po</label>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 @Html.TextBoxFor(x => x.ponumber, new { @class = "form-control", @id = "ponumber", @Value = Model.ponumber, @disabled = "disabled" })
             </div>
             <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.NoPr</label>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 @Html.TextBoxFor(x => x.prnumber, new { @class = "form-control", @id = "prnumber", @Value = Model.prnumber, @disabled = "disabled" })
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-2 control-label" for="inputDefault">Do Date</label>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 @Html.TextBoxFor(x => x.dodate, new { @class = "form-control", @id = "dodate", @disabled = "disabled" })
             </div>
             <label class="col-md-2 control-label" for="inputDefault">Po Date</label>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 @Html.TextBoxFor(x => x.podate, new { @class = "form-control", @id = "podate", @disabled = "disabled" })
             </div>
             <label class="col-md-2 control-label" for="inputDefault">Pr Date</label>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 @Html.TextBoxFor(x => x.prdate, new { @class = "form-control", @id = "prdate", @disabled = "disabled" })
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-2 control-label" for="inputDefault">Tujuan Do</label>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 @Html.TextBoxFor(x => x.namagundang, new { @class = "form-control", @id = "namagundang", @disabled = "disabled" })
             </div>
             <label class="col-md-2 control-label" for="inputDefault">Process By</label>
-            <div class="col-md-3">
-                @Html.TextBoxFor(x => x.approve_by, new { @class = "form-control", @id = "approve_by", @disabled = "disabled" })
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.poprocessby, new { @class = "form-control", @id = "approve_by", @disabled = "disabled" })
             </div>
             <label class="col-md-2 control-label" for="inputDefault">Request By</label>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 @Html.TextBoxFor(x => x.prrequestby, new { @class = "form-control", @id = "prrequestby", @disabled = "disabled" })
             </div>
         </div>
@@ -68,7 +68,7 @@
     </div>
     <div class="panel-body">
         <div class="scrollTable">
-            <table id="tblPurchaseOrderPusat" class="table color-table success-table">
+            <table id="tblDeliveryOrderPusat" class="table color-table success-table" style="width:200% !important">
                 <caption class="headertable">@Klinik.Resources.UIMessages.PurchaseOrderPusatList</caption>
                 <thead>
                     <tr>
@@ -76,8 +76,13 @@
                         <th class="caption-table" colspan="4" style="text-align:center">Warehouse</th>
                         <th class="caption-table" colspan="1" style="text-align:center"></th>
                         <th class="caption-table" colspan="2" style="text-align:center">PO</th>
-                        <th class="caption-table" colspan="4" style="text-align:center"></th>
+                        <th class="caption-table" colspan="2" style="text-align:center"></th>
+                        <th class="caption-table" style="text-align:center"></th>
                         <th class="caption-table" colspan="2" style="text-align:center">PO Pembulatan</th>
+                        <th>No DO Vendor</th>
+                        <th>Tgl DO Vendor</th>
+                        <th>Sent By</th>
+                        <th>Recived</th>
                     </tr>
                     <tr>
                         <th hidden>Id Obat</th>
@@ -97,6 +102,10 @@
                         <th>Total</th>
                         <th>Qty Unit</th>
                         <th>Qty Box</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -126,9 +135,9 @@
                                 <td><input type="text" class="form-control" value="@item.qty_unit" disabled="disabled" /></td>
                                 <td><input type="text" class="form-control" value="@item.qty_box" disabled="disabled" /></td>
                                 <td><input type="text" class="form-control total" value="@item.No_Do_Vendor" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.Tgl_Do_Vendor" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control tgldovendor" value="@item.Tgl_Do_Vendor" disabled="disabled" /></td>
                                 <td><input type="text" class="form-control" value="@item.SendBy" disabled="disabled" /></td>
-                                <td><input type="checkbox" value="@(item.Recived == true ? "true" : "false")" @(item.Recived == true ? "checked" : "") disabled></td>
+                                <td><input type="checkbox" class="recived" value="@(item.Recived == true ? "true" : "false")" @(item.Recived == true ? "checked" : "") disabled></td>
                                 @if (Model.Validasi == null)
                                 {
                                     <td>
@@ -207,20 +216,17 @@
                 <button type="submit" class="btn btn-primary savedeliveryorderpusatdetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/GudangPusat/CreateOrEditDeliveryOrderPusat" style="display:@(Model != null ? "none" : "inline-block")">@Klinik.Resources.UIMessages.Save</button>
                 <button class="btn btn-primary openallbutton" style="display:@(Model != null ? Model.Validasi == null ? "inline-block" : "none":"inline-block")">@Klinik.Resources.UIMessages.Edit</button>
             }
-            @if (Model != null && (GeneralHandler.authorized("APPROVE_M_DELIVERYORDERPUSAT") == "true"))
+            @if (Model != null && (GeneralHandler.authorized("RECIVED_M_DELIVERYORDERPUSAT") == "true"))
             {
-                if (Model.approve == null)
+                if (Model.Recived == null)
                 {
-                    <button class="btn btn-success" onclick="Approve(@Model.Id)">@Klinik.Resources.UIMessages.Approve</button>
+                    var data = Model.deliveryOrderDetailpusatModels.Where(a => a.Recived.Equals(false)).Any();
+                    if (!data)
+                    {
+                        <button class="btn btn-success recived-deliveryorderpusat" data-id="@Model.Id">Recived</button>
+                    }
                 }
 
-            }
-            @if (Model != null && (GeneralHandler.authorized("VALIDATION_M_DELIVERYORDERPUSAT") == "true"))
-            {
-                if (Model.approve != null && Model.Validasi == null)
-                {
-                    <button class="btn btn-success" onclick="Validation(@Model.Id)">@Klinik.Resources.UIMessages.Validation</button>
-                }
             }
             @if (Model != null)
             {
@@ -231,10 +237,10 @@
     </div>
 </section>
 @section Scripts {
-    <script src="~/js/GudangPusatPurchaseOrder.js"></script>
+    <script src="~/js/GudangPusatDeliveryOrder.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#prdate').datepicker({
+            $('.tgldovendor').datepicker({
                 autoclose: true
             });
             $('#btnreset').click(function (e) {
@@ -254,69 +260,17 @@
             var _temp="@ViewBag.Response";
             var _arrMsg = _temp.split(";");
 
-            if (_arrMsg.length > 1) {
-                if (_arrMsg[0] == "True") {
-                    toastr.success(_arrMsg[1]);
-                }
-                else {
-                    toastr.options.closeButton = true;
-                    toastr.options.timeOut = 0;
-                    toastr.error(_arrMsg[1]);
-                }
-            }
+            //if (_arrMsg.length > 1) {
+            //    if (_arrMsg[0] == "True") {
+            //        toastr.success(_arrMsg[1]);
+            //    }
+            //    else {
+            //        toastr.options.closeButton = true;
+            //        toastr.options.timeOut = 0;
+            //        toastr.error(_arrMsg[1]);
+            //    }
+            //}
         });
-
-        var Approve = function (ID) {
-            var r = confirm("@Klinik.Resources.UIMessages.ApproveConfirmation" + ID + " ) ?");
-            if (r == true) {
-            ApprovePR(ID);
-        }
-        return false;
-        }
-
-        function ApprovePR(Id) {
-        $.ajax({
-            url: '/GudangPusat/ApproveDeliveryOrderPusat?id=' + Id,
-            type: 'POST',
-            success: function (result) {
-                if (result.Status) {
-                    toastr.options.closeButton = false;
-                    toastr.options.timeOut = 2000;
-                    location.reload();
-                    toastr.success(result.Message);
-                }
-                else {
-                    toastr.error(result.Message);
-                }
-            }
-        });
-        }
-
-        var Validation = function (ID) {
-            var r = confirm("@Klinik.Resources.UIMessages.ValidationConfirmation" + ID + " ) ?");
-            if (r == true) {
-           ValisasiPR(ID);
-        }
-        return false;
-        }
-
-        function ValisasiPR(Id) {
-        $.ajax({
-            url: '/GudangPusat/ValidationDeliveryOrderPusat?id=' + Id,
-            type: 'POST',
-            success: function (result) {
-                if (result.Status) {
-                    toastr.options.closeButton = false;
-                    toastr.options.timeOut = 2000;
-                    location.reload();
-                    toastr.success(result.Message);
-                }
-                else {
-                    toastr.error(result.Message);
-                }
-            }
-        });
-        }
     </script>
     <script type="text/javascript">
 

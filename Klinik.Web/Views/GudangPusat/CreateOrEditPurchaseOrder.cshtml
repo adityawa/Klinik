@@ -53,7 +53,7 @@
     </div>
     <div class="panel-body">
         <div class="scrollTable">
-            <table id="tblPurchaseOrderPusat" class="table color-table success-table">
+            <table id="tblPurchaseOrderPusat" class="table color-table success-table" style="width:200% !important">
                 <caption class="headertable">@Klinik.Resources.UIMessages.PurchaseOrderPusatList</caption>
                 <thead>
                     <tr>
@@ -61,7 +61,8 @@
                         <th class="caption-table" colspan="4" style="text-align:center">Warehouse</th>
                         <th class="caption-table" colspan="1" style="text-align:center"></th>
                         <th class="caption-table" colspan="2" style="text-align:center">PO</th>
-                        <th class="caption-table" colspan="4" style="text-align:center"></th>
+                        <th class="caption-table" colspan="2" style="text-align:center"></th>
+                        <th class="caption-table" style="text-align:center"></th>
                         <th class="caption-table" colspan="2" style="text-align:center">PO Pembulatan</th>
                     </tr>
                     <tr>
@@ -132,6 +133,9 @@
                     {
                         <tfoot>
                             <tr>
+                            <th class="caption-table headertable" colspan="17" style="text-align:center">Add Row Detail</th>
+                        </tr>
+                            <tr>
                                 <th hidden>Id Obat</th>
                                 <th>Nama Obat</th>
                                 <th>Nama Vendor</th>
@@ -155,8 +159,8 @@
                                 <td hidden><input type="text" hidden id="PurchaseRequestPusatDetailId" /></td>
                                 <td hidden><input type="text" hidden id="ProductId" /></td>
                                 <td hidden><input type="text" hidden id="VendorId" /></td>
-                                <td><select id="namabarang" class="form-control"></select></td>
-                                <td><select id="namavendor" class="form-control"></select></td>
+                                <td><select id="namabarang" class="form-control" style="width:160px;"></select></td>
+                                <td><select id="namavendor" class="form-control" style="width:160px;"></select></td>
                                 <td><input type="text" class="form-control" placeholder="satuan" id="satuan" value="" /></td>
                                 <td><input type="text" class="form-control" placeholder="harga" id="harga" value="" /></td>
                                 <td><input type="text" class="form-control" placeholder="stok_prev" id="stok_prev" value="" disabled /></td>

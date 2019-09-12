@@ -1,4 +1,5 @@
-﻿@model Klinik.Entities.PurchaseRequestPusat.PurchaseRequestPusatModel
+﻿
+@model Klinik.Entities.DeliveryOrderPusat.DeliveryOrderPusatModel
 
 <html>
 <head>
@@ -23,7 +24,7 @@
         </div>
         <div class="col-xs-6 text-right">
             <h1>Report</h1>
-            <h1><small>Order @Model.prnumber</small></h1>
+            <h1><small>Order @Model.donumber</small></h1>
         </div>
         <hr>
         <div class="row">
@@ -75,7 +76,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.purchaserequestPusatdetailModels)
+                    @foreach (var item in Model.deliveryOrderDetailpusatModels)
                     {
                         <tr>
                             <td>@item.namabarang</td>

@@ -4,7 +4,10 @@ using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
 using Klinik.Entities.DeliveryOrderPusat;
+using Klinik.Entities.DeliveryOrderPusatDetail;
+using Klinik.Entities.HistoryProductInGudang;
 using Klinik.Entities.MasterData;
+using Klinik.Entities.ProductInGudang;
 using Klinik.Entities.PurchaseOrderPusat;
 using Klinik.Entities.PurchaseOrderPusatDetail;
 using Klinik.Entities.PurchaseRequestPusat;
@@ -518,7 +521,7 @@ namespace Klinik.Web.Controllers
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
-        [CustomAuthorize("ADD_M_DELIVERYORDERPUSAT", "EDIT_M_DELIVERYORDERPUSAT")]
+        [CustomAuthorize("ADD_M_DELIVERYORDERPUSAT", "EDIT_M_DELIVERYORDERPUSAT", "VIEW_M_DELIVERYORDERPUSAT")]
         public ActionResult CreateOrEditDeliveryOrder()
         {
             var lastprnumber = _context.DeliveryOrderPusats.OrderByDescending(x => x.CreatedDate).Select(a => a.donumber).FirstOrDefault();
@@ -548,6 +551,173 @@ namespace Klinik.Web.Controllers
                 ViewBag.prnumber = "DO" + ((AccountModel)Session["UserLogon"]).Organization + DateTime.Now.Year + DateTime.Now.Month + prnumber;
                 return View();
             }
+        }
+
+        [CustomAuthorize("ADD_M_PURCHASEORDERPUSAT", "EDIT_M_PURCHASEORDERPUSAT")]
+        [HttpPost]
+        public JsonResult CreateOrEditDeliveryOrderPusat(DeliveryOrderPusatModel _deliveryorderpusat, List<DeliveryOrderPusatDetailModel> deliveryderpusatDetailModels)
+        {
+            if (Session["UserLogon"] != null)
+                _deliveryorderpusat.Account = (AccountModel)Session["UserLogon"];
+            _deliveryorderpusat.Id = Convert.ToInt32(_deliveryorderpusat.Id) > 0 ? _deliveryorderpusat.Id : 0;
+            var request = new DeliveryOrderPusatRequest
+            {
+                Data = _deliveryorderpusat
+            };
+
+            DeliveryOrderPusatResponse _response = new DeliveryOrderPusatResponse();
+
+            new DeliveryOrderPusatValidator(_unitOfWork).Validate(request, out _response);
+            if (deliveryderpusatDetailModels != null)
+            {
+                foreach (var item in deliveryderpusatDetailModels)
+                {
+                    var deliveryorderpusatdetailrequest = new DeliveryOrderPusatDetailRequest
+                    {
+                        Data = item
+                    };
+                    deliveryorderpusatdetailrequest.Data.DeliveryOrderPusatId = Convert.ToInt32(_response.Entity.Id);
+                    deliveryorderpusatdetailrequest.Data.Account = (AccountModel)Session["UserLogon"];
+                    //
+                    var requestnamabarang = new ProductRequest
+                    {
+                        Data = new ProductModel
+                        {
+                            Id = item.ProductId
+                        }
+                    };
+
+                    var requestnamavendor = new VendorRequest
+                    {
+                        Data = new VendorModel
+                        {
+                            Id = item.VendorId
+                        }
+                    };
+
+                    ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
+                    VendorResponse namavendor = new VendorHandler(_unitOfWork).GetDetail(requestnamavendor);
+                    deliveryorderpusatdetailrequest.Data.namabarang = namabarang.Entity.Name;
+                    deliveryorderpusatdetailrequest.Data.namavendor = namavendor.Entity.namavendor;
+                    DeliveryOrderPusatDetailResponse _deliveryorderpusatdetailresponse = new DeliveryOrderPusatDetailResponse();
+                    new DeliveryOrderPusatDetailValidator(_unitOfWork).Validate(deliveryorderpusatdetailrequest, out _deliveryorderpusatdetailresponse);
+                }
+            }
+            return Json(new { data = _response.Data }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("EDIT_M_DELIVERYORDERPUSAT")]
+        [HttpPost]
+        public ActionResult EditDeliveryOrderDetail(DeliveryOrderPusatDetailModel deliveryorderPusatDetail)
+        {
+            if (Session["UserLogon"] != null)
+                deliveryorderPusatDetail.Account = (AccountModel)Session["UserLogon"];
+            DeliveryOrderPusatDetailResponse _deliveryorderpusatdetailresponse = new DeliveryOrderPusatDetailResponse();
+            var deliveryorderpusatdetailrequest = new DeliveryOrderPusatDetailRequest
+            {
+                Data = deliveryorderPusatDetail
+            };
+            var requestnamabarang = new ProductRequest
+            {
+                Data = new ProductModel
+                {
+                    Id = Convert.ToInt32(deliveryorderPusatDetail.ProductId)
+                }
+            };
+
+            var requestnamavendor = new VendorRequest
+            {
+                Data = new VendorModel
+                {
+                    Id = deliveryorderPusatDetail.VendorId
+                }
+            };
+
+            ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
+            VendorResponse namavendor = new VendorHandler(_unitOfWork).GetDetail(requestnamavendor);
+            deliveryorderpusatdetailrequest.Data.namabarang = deliveryorderpusatdetailrequest.Data.namabarang != null ? deliveryorderpusatdetailrequest.Data.namabarang : namabarang.Entity.Name;
+            deliveryorderpusatdetailrequest.Data.namavendor = namavendor.Entity.namavendor;
+            new DeliveryOrderPusatDetailValidator(_unitOfWork).Validate(deliveryorderpusatdetailrequest, out _deliveryorderpusatdetailresponse);
+            return Json(new { data = _deliveryorderpusatdetailresponse.Data }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("RECIVED_M_DELIVERYORDERPUSAT")]
+        public JsonResult ReceivedDeliveryOrder(int id)
+        {
+            DeliveryOrderPusatResponse _response = new DeliveryOrderPusatResponse();
+
+            var request = new DeliveryOrderPusatRequest
+            {
+                Data = new DeliveryOrderPusatModel
+                {
+                    Id = id
+                }
+            };
+
+            DeliveryOrderPusatResponse resp = new DeliveryOrderPusatHandler(_unitOfWork).GetDetail(request);
+            resp.Entity.Account = (AccountModel)Session["UserLogon"];
+            resp.Entity.Recived = 1;
+            resp.Entity.Validasi = 1;
+            var receiveddeliveryorder = new DeliveryOrderPusatRequest
+            {
+                Data = resp.Entity
+            };
+            new DeliveryOrderPusatHandler(_unitOfWork).ApproveData(receiveddeliveryorder);
+            new DeliveryOrderPusatValidator(_unitOfWork).Validate(receiveddeliveryorder, out _response);
+            DeliveryOrderPusatModel _model = resp.Entity;
+            foreach (var item in resp.Entity.deliveryOrderDetailpusatModels)
+            {
+                var requestproductingudang = new ProductInGudangRequest
+                {
+                    Data = new ProductInGudangModel
+                    {
+                        Account = (AccountModel)Session["UserLogon"],
+                        stock = Convert.ToInt32(item.qty_final) > 0 ? Convert.ToInt32(item.qty_final) : Convert.ToInt32(item.qty_final),
+                        GudangId = _model.GudangId,
+                        ProductId = item.ProductId
+                    }
+                };
+
+                var requesthistoryproductingudang = new HistoryProductInGudangRequest
+                {
+                    Data = new HistoryProductInGudangModel
+                    {
+                        Account = (AccountModel)Session["UserLogon"],
+                        value = Convert.ToInt32(item.qty_final) > 0 ? Convert.ToInt32(item.qty_final) : Convert.ToInt32(item.qty_final),
+                        GudangId = Convert.ToInt32(_model.GudangId),
+                        ProductId = item.ProductId
+                    }
+                };
+
+                var saveproductingudang = new ProductInGudangHandler(_unitOfWork).CreateOrEdit(requestproductingudang);
+                var savehistoryproductingudang = new HistoryProductInGudangHandler(_unitOfWork).CreateOrEdit(requesthistoryproductingudang);
+            }
+            return Json(new { Status = _response.Status}, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("VIEW_M_DELIVERYORDERPUSAT")]
+        public ActionResult PrintDeliveryOrderPusat(int id)
+        {
+            DeliveryOrderPusatResponse _response = new DeliveryOrderPusatResponse();
+
+            var request = new DeliveryOrderPusatRequest
+            {
+                Data = new DeliveryOrderPusatModel
+                {
+                    Id = id
+                }
+            };
+
+            DeliveryOrderPusatResponse resp = new DeliveryOrderPusatHandler(_unitOfWork).GetDetail(request);
+            DeliveryOrderPusatModel _model = resp.Entity;
+            ViewBag.Response = _response;
+            return new PartialViewAsPdf(_model)
+            {
+                PageOrientation = Orientation.Portrait,
+                PageSize = Size.Folio,
+
+                FileName = "DeliveryOrderPusat" + _model.donumber + ".pdf"
+            };
         }
         #endregion
 

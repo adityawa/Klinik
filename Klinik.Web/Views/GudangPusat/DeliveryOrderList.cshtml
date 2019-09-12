@@ -34,6 +34,7 @@
 </section>
 
 @section Scripts {
+    <script src="~/Content/Login/vendor/daterangepicker/moment.min.js"></script>
     <script type="text/javascript">
     $(document).ready(function () {
 
@@ -95,16 +96,21 @@
 
             "columns": [
                 { "data": "Id", "Id": "Id", "autoWidth": false },
-                { "data": "dodate", "dodate": "dodate", "autoWidth": true },
+                {
+                    "data": "dodate",
+                    "render": function (data, type, full, meta) {
+                        return moment(full.dodate).format("MM-DD-YYYY HH:mm");
+                    }
+                },
                 { "data": "createformat", "createformat": "createformat", "autoWidth": true },
-                { "data": "request_by", "request_by": "request_by", "autoWidth": false },
+                { "data": "CreatedBy", "CreatedBy": "CreatedBy", "autoWidth": false },
                 { "data": "approve_by", "approve_by": "approve_by", "autoWidth": true },
                 { "data": "approve", "approve": "approve", "autoWidth": true },
                 { "data": "CreatedBy", "CreatedBy": "CreatedBy", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta)
                     {
-                        return '<a class="btn btn-info btn-xs" href="/GudangPusat/CreateOrEditPurchaseOrder?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger btn-xs' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>";
+                        return '<a class="btn btn-info btn-xs" href="/GudangPusat/CreateOrEditDeliveryOrder?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger btn-xs' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>";
                     }
                 }
 
