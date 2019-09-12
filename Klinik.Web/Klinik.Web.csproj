@@ -237,6 +237,7 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Base\BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AppointmentController.cs" />
     <Compile Include="Controllers\DeliveryOrderController.cs" />
     <Compile Include="Controllers\DeliveryOrderPusatController.cs" />
     <Compile Include="Controllers\GeneralController.cs" />
@@ -1158,6 +1159,8 @@
     <Content Include="Content\typeahead.css" />
     <Content Include="js\Custom.js" />
     <Content Include="js\General.js" />
+    <Content Include="js\GudangPusatDeliveryOrder.js" />
+    <Content Include="js\GudangPusatPurchaseOrder.js" />
     <Content Include="js\GudangPusat.js" />
     <Content Include="js\PurchaseReqestPusat.js" />
     <Content Include="js\PurchaseRequest.js" />
@@ -1554,11 +1557,20 @@
     <Content Include="Views\MedicalHistory\ViewEmployeeFamilyData.cshtml" />
     <Content Include="Views\GudangPusat\PurchaseRequestList.cshtml" />
     <Content Include="Views\GudangPusat\CreateOrEditPurchaseRequest.cshtml" />
+    <Content Include="Views\Appointment\MakeAppointment.cshtml" />
+    <Content Include="Views\Partials\_DetailAppointment.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\Reports\Top10Dieases.cshtml" />
     <Content Include="Views\Reports\Top10Referals.cshtml" />
     <Content Include="Views\MasterData\LookUpCategoryList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditLookUpCategory.cshtml" />
+    <Content Include="Views\GudangPusat\PurchaseOrderList.cshtml" />
+    <Content Include="Views\GudangPusat\CreateOrEditPurchaseOrder.cshtml" />
+    <Content Include="Views\GudangPusat\PrintPurchaseRequestPusat.cshtml" />
+    <Content Include="Views\GudangPusat\PrintPurchaseOrderPusat.cshtml" />
+    <Content Include="Views\GudangPusat\DeliveryOrderList.cshtml" />
+    <Content Include="Views\GudangPusat\CreateOrEditDeliveryOrder.cshtml" />
+    <Content Include="Views\GudangPusat\PrintDeliveryOrderPusat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1582,10 +1594,6 @@
     <ProjectReference Include="..\Klinik.Common\Klinik.Common.csproj">
       <Project>{e5c9d610-f530-4d0e-8d9e-2a729ccbff23}</Project>
       <Name>Klinik.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
-      <Project>{53291442-9a4c-4416-8871-8c94d7636404}</Project>
-      <Name>Klinik.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Klinik.Entities\Klinik.Entities.csproj">
       <Project>{0a81b9b4-7d64-412d-8e86-8ae9d22cf53f}</Project>

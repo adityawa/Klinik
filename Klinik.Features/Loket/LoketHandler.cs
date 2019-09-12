@@ -547,7 +547,7 @@ namespace Klinik.Features
                     response.Message = Messages.ReadyForCall;
                 }
             }
-            catch(Exception ex)
+            catch(Exception )
             {
                 response.Status = false;
                 response.Message = Messages.CallFailed;

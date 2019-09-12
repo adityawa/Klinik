@@ -1,4 +1,5 @@
-﻿using Klinik.Common;
+﻿using AutoMapper;
+using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.DeliveryOrderPusat;
@@ -45,14 +46,10 @@ namespace Klinik.Features
                             ModifiedDate = qry.ModifiedDate,
                             RowStatus = qry.RowStatus
                         };
-
-                        // update data
-                        qry.poid = request.Data.poid > 0 ? request.Data.poid : qry.poid;
-                        qry.donumber = request.Data.donumber;
-                        qry.dodate = request.Data.dodate;
-                        qry.dodest = request.Data.dodest;
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.ModifiedDate = DateTime.Now;
+                        qry.Recived = request.Data.Recived;
+                        qry.Validasi = request.Data.Validasi;
                         qry.RowStatus = 0;
 
                         _unitOfWork.DeliveryOrderPusatRepository.Update(qry);
@@ -89,11 +86,12 @@ namespace Klinik.Features
                     {
                         poid = request.Data.poid,
                         donumber = request.Data.donumber,
-                        dodate = request.Data.dodate,
+                        dodate = DateTime.Now,
                         dodest = request.Data.dodest,
                         CreatedBy = request.Data.Account.UserCode,
                         CreatedDate = DateTime.Now,
-                        ModifiedDate = DateTime.Now,
+                        GudangId = request.Data.GudangId,
+                        
                         RowStatus = 0
                     };
 
@@ -121,12 +119,12 @@ namespace Klinik.Features
             catch (Exception ex)
             {
                 response.Status = false;
-                response.Message = Messages.GeneralError;
+            response.Message = Messages.GeneralError;
 
-                if (request.Data != null && request.Data.Id > 0)
-                    ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERPUSAT, Constants.Command.EDIT_DELIVERY_ORDER_PUSAT, request.Data.Account, ex);
-                else
-                    ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERPUSAT, Constants.Command.EDIT_DELIVERY_ORDER_PUSAT, request.Data.Account, ex);
+            if (request.Data != null && request.Data.Id > 0)
+                ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERPUSAT, Constants.Command.EDIT_DELIVERY_ORDER_PUSAT, request.Data.Account, ex);
+            else
+                ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERPUSAT, Constants.Command.EDIT_DELIVERY_ORDER_PUSAT, request.Data.Account, ex);
             }
 
             return response;
@@ -151,30 +149,22 @@ namespace Klinik.Features
                     approve = qry.approve,
                     ModifiedBy = qry.ModifiedBy,
                     CreatedBy = qry.CreatedBy,
+                    prnumber = qry.PurchaseOrderPusat != null ? qry.PurchaseOrderPusat.PurchaseRequestPusat != null ? qry.PurchaseOrderPusat.PurchaseRequestPusat.prnumber : "" : "",
+                    prdate = qry.PurchaseOrderPusat != null ? qry.PurchaseOrderPusat.PurchaseRequestPusat != null ? qry.PurchaseOrderPusat.PurchaseRequestPusat.prdate : null : null,
+                    prrequestby = qry.PurchaseOrderPusat != null ? qry.PurchaseOrderPusat.PurchaseRequestPusat != null ? qry.PurchaseOrderPusat.PurchaseRequestPusat.ModifiedBy : null : null,
+                    ponumber = qry.PurchaseOrderPusat != null ? qry.PurchaseOrderPusat.ponumber : "",
+                    podate = qry.PurchaseOrderPusat != null ? qry.PurchaseOrderPusat.podate : null,
+                    poprocessby = qry.PurchaseOrderPusat != null ? qry.PurchaseOrderPusat.ModifiedBy : null,
+                    namagundang = qry.Gudang != null ? qry.Gudang.name : null,
                     ModifiedDate = qry.ModifiedDate,
+                    GudangId = qry.GudangId,
+                    Recived = qry.Recived,
+                    Validasi = qry.Validasi,
                 };
 
                 foreach (var item in qry.DeliveryOrderPusatDetails)
                 {
-                    var newdeliveryOrderdetailpusatModel = new DeliveryOrderPusatDetailModel
-                    {
-                        Id = item.id,
-                        DeliveryOderPusatId = qry.id,
-                        ProductId_Po = item.ProductId_Po,
-                        namabarang_po = item.namabarang_po,
-                        qty_po = item.qty_po,
-                        qty_po_final = item.qty_po_final,
-                        ProductId = item.ProductId,
-                        namabarang = item.namabarang,
-                        GudangId = item.GudangId,
-                        ClinicId = item.ClinicId,
-                        qty_do = item.qty_do,
-                        remark_do = item.remark_do,
-                        qty_adj = item.qty_adj,
-                        remark_adj = item.remark_adj,
-                        namagudang = item.Gudang.name,
-                        namaklinik = item.Clinic.Name,
-                    };
+                    var newdeliveryOrderdetailpusatModel = Mapper.Map<DeliveryOrderPusatDetail, DeliveryOrderPusatDetailModel>(item);
 
                     response.Entity.deliveryOrderDetailpusatModels.Add(newdeliveryOrderdetailpusatModel);
                 }

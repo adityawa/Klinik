@@ -95,12 +95,9 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="OrganizationData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseOrderPusatDetailMode.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
-      <Project>{53291442-9a4c-4416-8871-8c94d7636404}</Project>
-      <Name>Klinik.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Klinik.Entities\Klinik.Entities.csproj">
       <Project>{0a81b9b4-7d64-412d-8e86-8ae9d22cf53f}</Project>
       <Name>Klinik.Entities</Name>
@@ -108,6 +105,10 @@
     <ProjectReference Include="..\Klinik.Resources\Klinik.Resources.csproj">
       <Project>{3D1A8222-CC25-4BB0-8820-F26C53AA9E8D}</Project>
       <Name>Klinik.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\Aditya\Downloads\Klinik-development_1\Klinik.Data\Klinik.Data.csproj">
+      <Project>{53291442-9A4C-4416-8871-8C94D7636404}</Project>
+      <Name>Klinik.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

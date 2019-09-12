@@ -113,7 +113,7 @@ namespace Klinik.Web.Controllers
                     {
                         Data = item
                     };
-                    deliveryorderpusatdetailrequest.Data.DeliveryOderPusatId = Convert.ToInt32(_response.Entity.Id);
+                    deliveryorderpusatdetailrequest.Data.DeliveryOrderPusatId = Convert.ToInt32(_response.Entity.Id);
                     deliveryorderpusatdetailrequest.Data.Account = (AccountModel)Session["UserLogon"];
                     //
                     var requestnamabarang = new ProductRequest
@@ -127,33 +127,13 @@ namespace Klinik.Web.Controllers
                     {
                         Data = new ProductModel
                         {
-                            Id = Convert.ToInt32(item.ProductId_Po)
-                        }
-                    };
-
-                    var requestnamaklink = new ClinicRequest
-                    {
-                        Data = new ClinicModel
-                        {
-                            Id = Convert.ToInt32(item.ClinicId)
-                        }
-                    };
-                    var requestnamagudang = new GudangRequest
-                    {
-                        Data = new GudangModel
-                        {
-                            Id = Convert.ToInt32(item.GudangId)
+                            Id = Convert.ToInt32(item.ProductId)
                         }
                     };
 
                     ProductResponse namabarang = new ProductHandler(_unitOfWork).GetDetail(requestnamabarang);
                     ProductResponse namabarangpo = new ProductHandler(_unitOfWork).GetDetail(requestnamabarangpo);
-                    ClinicResponse namaklinik = new ClinicHandler(_unitOfWork).GetDetail(requestnamaklink);
-                    GudangResponse namagudang = new GudangHandler(_unitOfWork).GetDetail(requestnamagudang);
                     deliveryorderpusatdetailrequest.Data.namabarang = namabarang.Entity.Name;
-                    deliveryorderpusatdetailrequest.Data.namabarang_po = namabarangpo.Entity.Name;
-                    deliveryorderpusatdetailrequest.Data.namaklinik = namaklinik.Entity.Name;
-                    deliveryorderpusatdetailrequest.Data.namagudang = namagudang.Entity.name;
                     DeliveryOrderPusatDetailResponse _deliveryorderpusatdetailresponse = new DeliveryOrderPusatDetailResponse();
                     new DeliveryOrderPusatDetailValidator(_unitOfWork).Validate(deliveryorderpusatdetailrequest, out _deliveryorderpusatdetailresponse);
                 }

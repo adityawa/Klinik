@@ -44,6 +44,8 @@ namespace Klinik.Features
                             qty = qry.qty,
                             qty_add = qry.qty_add,
                             reason_add = qry.reason_add,
+                            qty_final = qry.qty_final,
+                            remark = qry.remark,
                             total = qry.total,
                             qty_unit = qry.qty_unit,
                             qty_box = qry.qty_box,
@@ -69,6 +71,8 @@ namespace Klinik.Features
                         qry.qty = request.Data.qty;
                         qry.qty_add = request.Data.qty_add;
                         qry.reason_add = request.Data.reason_add;
+                        qry.qty_final = request.Data.qty_final;
+                        qry.remark = request.Data.remark;
                         qry.total = request.Data.total;
                         qry.qty_unit = request.Data.qty_unit;
                         qry.qty_box = request.Data.qty_box;
@@ -121,6 +125,8 @@ namespace Klinik.Features
                         sisa_stok = request.Data.sisa_stok,
                         qty_add = request.Data.qty_add,
                         reason_add = request.Data.reason_add,
+                        qty_final = request.Data.qty_final,
+                        remark = request.Data.remark,
                         total = request.Data.total,
                         qty_unit = request.Data.qty_unit,
                         qty_box = request.Data.qty_box,
