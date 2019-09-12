@@ -93,6 +93,7 @@
     <Compile Include="DeliveryOrderPusatDetail\DeliveryOrderPusatDetailRequest.cs" />
     <Compile Include="DeliveryOrderPusatDetail\DeliveryOrderPusatDetailResponse.cs" />
     <Compile Include="DeliveryOrderPusatDetail\DeliveryOrderPusatDetailValidator.cs" />
+    <Compile Include="DeliveryOrderPusat\CreateDoPByPoP.cs" />
     <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatHandler.cs" />
     <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatRequest.cs" />
     <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatResponse.cs" />
@@ -258,6 +259,7 @@
     <Compile Include="PurchaseOrderPusatDetail\PurchaseOrderPusatDetailRequest.cs" />
     <Compile Include="PurchaseOrderPusatDetail\PurchaseOrderPusatDetailResponse.cs" />
     <Compile Include="PurchaseOrderPusatDetail\PurchaseOrderPusatDetailValidator.cs" />
+    <Compile Include="PurchaseOrderPusat\CreatePOPByPRP.cs" />
     <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatHandler.cs" />
     <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatRequest.cs" />
     <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatResponse.cs" />
@@ -313,10 +315,6 @@
       <Project>{e5c9d610-f530-4d0e-8d9e-2a729ccbff23}</Project>
       <Name>Klinik.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
-      <Project>{53291442-9a4c-4416-8871-8c94d7636404}</Project>
-      <Name>Klinik.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Klinik.Entities\Klinik.Entities.csproj">
       <Project>{0a81b9b4-7d64-412d-8e86-8ae9d22cf53f}</Project>
       <Name>Klinik.Entities</Name>
@@ -329,10 +327,16 @@
       <Project>{3d1a8222-cc25-4bb0-8820-f26c53aa9e8d}</Project>
       <Name>Klinik.Resources</Name>
     </ProjectReference>
+    <ProjectReference Include="C:\Users\Aditya\Downloads\Klinik-development_1\Klinik.Data\Klinik.Data.csproj">
+      <Project>{53291442-9a4c-4416-8871-8c94d7636404}</Project>
+      <Name>Klinik.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="MasterData\LookupCategory\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

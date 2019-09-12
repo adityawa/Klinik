@@ -1,4 +1,4 @@
-﻿using Klinik.Data.DataRepository;
+﻿
 using Klinik.Entities.MasterData;
 using System;
 using System.Collections.Generic;
@@ -14,11 +14,7 @@ namespace Klinik.Entities.AppointmentEntities
         public int RequirementID { get; set; }
         public long DoctorID { get; set; }
         public long MCUPakageID { get; set; }
-        //public string DoctorName { get; set; }
-        //public string Keperluan { get; set; }
-        //public string MCUPackageName { get; set; }
-        //public string PoliName { get; set; }
-        //public string StatusDesc { get; set; }
+     
 
         public List<PoliModel> ListPoli { get; set; }
 

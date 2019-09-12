@@ -50,239 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataRepository\AppConfig.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Appointment.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\City.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Clinic.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\DeliveryOrder.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\DeliveryOrderDetail.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\DeliveryOrderPusat.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\DeliveryOrderPusatDetail.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Doctor.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\DoctorClinic.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Employee.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\EmployeeAssignment.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\EmployeeStatu.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\FamilyRelationship.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\FileArchieve.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\FormExamine.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\FormExamineAttachment.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\FormExamineLab.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\FormExamineMedicine.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\FormExamineMedicineDetail.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\FormExamineService.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\FormMedical.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\FormPreExamine.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\GeneralMaster.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Gudang.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\HistoryProductInGudang.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\ICDTheme.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\KlinikModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KlinikModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\KlinikModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataRepository\KlinikModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>KlinikModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\LabItem.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\LabItemCategory.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Letter.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Log.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\MCUPackage.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Medicine.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Menu.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Organization.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\OrganizationPrivilege.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\OrganizationRole.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PanggilanPoli.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PasswordHistory.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Patient.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PatientClinic.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Poli.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PoliClinic.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PoliFlowTemplate.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PoliSchedule.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PoliScheduleMaster.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PoliService.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Privilege.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Product.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\ProductCategory.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\ProductInGudang.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\ProductMedicine.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\ProductUnit.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PurchaseOrder.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PurchaseOrderDetail.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PurchaseOrderPusat.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PurchaseOrderPusatDetail.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PurchaseRequest.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PurchaseRequestConfig.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PurchaseRequestDetail.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PurchaseRequestPusat.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\PurchaseRequestPusatDetail.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\QueuePoli.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\RolePrivilege.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Service.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\stok.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\stok1.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\stok_bulanan.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\substitute.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\SuratRujukanLabKeluar.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\User.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\UserRole.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataRepository\Vendor.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GenericRepository.cs" />
     <Compile Include="Interfaces\IGenericRepository.cs" />
@@ -291,21 +62,12 @@
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataRepository\KlinikModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KlinikModel.edmx</DependentUpon>
-      <LastGenOutput>KlinikModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DataRepository\KlinikModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KlinikModel.edmx</DependentUpon>
-      <LastGenOutput>KlinikModel.cs</LastGenOutput>
-    </Content>
     <Content Include="DB\19 agustus 2019.sql" />
     <Content Include="DB\20 agustus 2019.sql" />
     <Content Include="DB\28 agustus 2019.sql" />
     <Content Include="DB\DBKlinikDev_20190817.sql" />
     <Content Include="DB\DBKlinik_GenScripts_20190909.sql" />
+    <Content Include="DB\AddLookupTable_10-9-2019.sql" />
     <Content Include="DB\MandeKlinik16-08-2019.sql" />
   </ItemGroup>
   <ItemGroup>
@@ -313,11 +75,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="App.Config" />
     <EntityDeploy Include="DataRepository\KlinikModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>KlinikModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="App.config" />
     <None Include="DataRepository\KlinikModel.edmx.diagram">
       <DependentUpon>KlinikModel.edmx</DependentUpon>
     </None>

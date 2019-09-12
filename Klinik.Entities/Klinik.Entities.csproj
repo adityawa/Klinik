@@ -84,6 +84,7 @@
     <Compile Include="HistoryProductInGudang\HistoryProductInGudangModel.cs" />
     <Compile Include="MasterData\GudangModel.cs" />
     <Compile Include="MasterData\ICDThemeModel.cs" />
+    <Compile Include="MasterData\LookUpCategoryModel.cs" />
     <Compile Include="MasterData\VendorModel.cs" />
     <Compile Include="MCUPackageEntities\MCUPackageModel.cs" />
     <Compile Include="MedicalHistoryEntity\MedicalHistoryModel.cs" />
@@ -149,16 +150,17 @@
     <Compile Include="PurchaseRequestPusatDetail\PurchaseRequestPusatDetailModel.cs" />
     <Compile Include="PurchaseRequestPusat\PurchaseRequestPusatModel.cs" />
     <Compile Include="PurchaseRequest\PurchaseRequestModel.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
-      <Project>{53291442-9a4c-4416-8871-8c94d7636404}</Project>
-      <Name>Klinik.Data</Name>
-    </ProjectReference>
+    <Compile Include="Reports\Top10DiseasesParamModel.cs" />
+    <Compile Include="Reports\Top10ReferalParamsModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\Aditya\Downloads\Klinik-development_1\Klinik.Data\Klinik.Data.csproj">
+      <Project>{53291442-9A4C-4416-8871-8C94D7636404}</Project>
+      <Name>Klinik.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

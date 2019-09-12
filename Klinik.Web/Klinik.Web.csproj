@@ -265,6 +265,7 @@
     <Compile Include="Controllers\PurchaseRequestController.cs" />
     <Compile Include="Controllers\PurchaseRequestPusatController.cs" />
     <Compile Include="Controllers\RadiologiController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Datalist\PatientDataList.cs" />
     <Compile Include="Datalist\PatientDataListModel.cs" />
@@ -1158,6 +1159,7 @@
     <Content Include="Content\typeahead.css" />
     <Content Include="js\Custom.js" />
     <Content Include="js\General.js" />
+    <Content Include="js\GudangPusatPurchaseOrder.js" />
     <Content Include="js\GudangPusat.js" />
     <Content Include="js\PurchaseReqestPusat.js" />
     <Content Include="js\PurchaseRequest.js" />
@@ -1556,6 +1558,15 @@
     <Content Include="Views\GudangPusat\CreateOrEditPurchaseRequest.cshtml" />
     <Content Include="Views\Appointment\MakeAppointment.cshtml" />
     <Content Include="Views\Partials\_DetailAppointment.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Reports\Top10Dieases.cshtml" />
+    <Content Include="Views\Reports\Top10Referals.cshtml" />
+    <Content Include="Views\GudangPusat\PurchaseOrderList.cshtml" />
+    <Content Include="Views\GudangPusat\CreateOrEditPurchaseOrder.cshtml" />
+    <Content Include="Views\GudangPusat\PrintPurchaseRequestPusat.cshtml" />
+    <Content Include="Views\GudangPusat\PrintPurchaseOrderPusat.cshtml" />
+    <Content Include="Views\GudangPusat\DeliveryOrderList.cshtml" />
+    <Content Include="Views\GudangPusat\CreateOrEditDeliveryOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1580,10 +1591,6 @@
       <Project>{e5c9d610-f530-4d0e-8d9e-2a729ccbff23}</Project>
       <Name>Klinik.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
-      <Project>{53291442-9a4c-4416-8871-8c94d7636404}</Project>
-      <Name>Klinik.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Klinik.Entities\Klinik.Entities.csproj">
       <Project>{0a81b9b4-7d64-412d-8e86-8ae9d22cf53f}</Project>
       <Name>Klinik.Entities</Name>
@@ -1595,6 +1602,10 @@
     <ProjectReference Include="..\Klinik.Resources\Klinik.Resources.csproj">
       <Project>{3d1a8222-cc25-4bb0-8820-f26c53aa9e8d}</Project>
       <Name>Klinik.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\Aditya\Downloads\Klinik-development_1\Klinik.Data\Klinik.Data.csproj">
+      <Project>{53291442-9A4C-4416-8871-8C94D7636404}</Project>
+      <Name>Klinik.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

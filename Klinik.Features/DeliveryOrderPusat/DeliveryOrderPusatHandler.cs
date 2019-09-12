@@ -1,4 +1,5 @@
-﻿using Klinik.Common;
+﻿using AutoMapper;
+using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.DeliveryOrderPusat;
@@ -93,7 +94,8 @@ namespace Klinik.Features
                         dodest = request.Data.dodest,
                         CreatedBy = request.Data.Account.UserCode,
                         CreatedDate = DateTime.Now,
-                        ModifiedDate = DateTime.Now,
+                        GudangId = request.Data.GudangId,
+                        
                         RowStatus = 0
                     };
 
@@ -121,12 +123,12 @@ namespace Klinik.Features
             catch (Exception ex)
             {
                 response.Status = false;
-                response.Message = Messages.GeneralError;
+            response.Message = Messages.GeneralError;
 
-                if (request.Data != null && request.Data.Id > 0)
-                    ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERPUSAT, Constants.Command.EDIT_DELIVERY_ORDER_PUSAT, request.Data.Account, ex);
-                else
-                    ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERPUSAT, Constants.Command.EDIT_DELIVERY_ORDER_PUSAT, request.Data.Account, ex);
+            if (request.Data != null && request.Data.Id > 0)
+                ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERPUSAT, Constants.Command.EDIT_DELIVERY_ORDER_PUSAT, request.Data.Account, ex);
+            else
+                ErrorLog(ClinicEnums.Module.MASTER_DELIVERYORDERPUSAT, Constants.Command.EDIT_DELIVERY_ORDER_PUSAT, request.Data.Account, ex);
             }
 
             return response;
@@ -156,25 +158,7 @@ namespace Klinik.Features
 
                 foreach (var item in qry.DeliveryOrderPusatDetails)
                 {
-                    var newdeliveryOrderdetailpusatModel = new DeliveryOrderPusatDetailModel
-                    {
-                        Id = item.id,
-                        DeliveryOderPusatId = qry.id,
-                        ProductId_Po = item.ProductId_Po,
-                        namabarang_po = item.namabarang_po,
-                        qty_po = item.qty_po,
-                        qty_po_final = item.qty_po_final,
-                        ProductId = item.ProductId,
-                        namabarang = item.namabarang,
-                        GudangId = item.GudangId,
-                        ClinicId = item.ClinicId,
-                        qty_do = item.qty_do,
-                        remark_do = item.remark_do,
-                        qty_adj = item.qty_adj,
-                        remark_adj = item.remark_adj,
-                        namagudang = item.Gudang.name,
-                        namaklinik = item.Clinic.Name,
-                    };
+                    var newdeliveryOrderdetailpusatModel = Mapper.Map<DeliveryOrderPusatDetail, DeliveryOrderPusatDetailModel>(item);
 
                     response.Entity.deliveryOrderDetailpusatModels.Add(newdeliveryOrderdetailpusatModel);
                 }

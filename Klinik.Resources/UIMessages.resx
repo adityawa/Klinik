@@ -1194,6 +1194,7 @@
   <data name="MedicalHistoryWithFamily" xml:space="preserve">
     <value>All Medical History</value>
   </data>
+
   <data name="MakeAppointment" xml:space="preserve">
     <value>Make Appointment</value>
   </data>
@@ -1202,5 +1203,11 @@
   </data>
   <data name="MCUPackage" xml:space="preserve">
     <value>MCU Package</value>
+</data>
+  <data name="Top10DiseasesReport" xml:space="preserve">
+    <value>Top 10 Diseases Report</value>
+  </data>
+  <data name="Top10ReferalReport" xml:space="preserve">
+    <value>Top 10 Referals Report</value>
   </data>
 </root>

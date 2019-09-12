@@ -91,7 +91,7 @@ namespace Klinik.Features.AppointmentFeatures
                 response.Status = true;
                 response.Message =Messages.DataSaved;
             }
-            catch(Exception ex)
+            catch(Exception )
             {
                 response.Status = false;
                 response.Message= Messages.GeneralError;

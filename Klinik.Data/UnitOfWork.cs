@@ -70,6 +70,9 @@ namespace Klinik.Data
         private IGenericRepository<PanggilanPoli> _panggilanPoliRepository;
 		private IGenericRepository<FormExamineMedicineDetail> _formExamineMedicineDetailRepository;
         private IGenericRepository<PurchaseRequestConfig> _purchaseRequestConfigRepository;
+
+        private IGenericRepository<LookupCategory> _lookupCategoryRepository;
+
         private IGenericRepository<ICDTheme> _icdThemeRepository;
         private IGenericRepository<Appointment> _appointmentRepository;
         private IGenericRepository<MCUPackage> _mcuPackageRepository;
@@ -733,6 +736,16 @@ namespace Klinik.Data
                 if (_purchaseRequestConfigRepository == null)
                     _purchaseRequestConfigRepository = new GenericRepository<PurchaseRequestConfig>(_context);
                 return _purchaseRequestConfigRepository;
+            }
+        }
+
+        public IGenericRepository<LookupCategory> LookUpCategoryRepository
+        {
+            get
+            {
+                if (_lookupCategoryRepository == null)
+                    _lookupCategoryRepository = new GenericRepository<LookupCategory>(_context);
+                return _lookupCategoryRepository;
             }
         }
 

@@ -3085,6 +3085,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Top 10 Diseases Report.
+        /// </summary>
+        public static string Top10DiseasesReport {
+            get {
+                return ResourceManager.GetString("Top10DiseasesReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top 10 Referals Report.
+        /// </summary>
+        public static string Top10ReferalReport {
+            get {
+                return ResourceManager.GetString("Top10ReferalReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total.
         /// </summary>
         public static string Total {

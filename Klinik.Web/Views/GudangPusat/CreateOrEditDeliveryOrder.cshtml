@@ -1,0 +1,337 @@
+﻿@model Klinik.Entities.DeliveryOrderPusat.DeliveryOrderPusatModel
+@using Klinik.Features.Account
+@using Klinik.Features;
+@{
+    ViewBag.Title = "CreateOrEditDeliveryOrderPusat";
+    var prnumber = Model != null ? Model.donumber : ViewBag.prnumber;
+    bool open = Model != null ? Model.Validasi > 0 ? false : true : true;
+}
+
+@section Styles{
+    <link href="~/Content/Login/vendor/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/Custom/Custom.css" rel="stylesheet" />
+}
+
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+        </div>
+        <h5 class="panel-title">Form @ViewBag.ActionType Delivery Order</h5>
+    </header>
+
+    <div class="panel-body">
+        @Html.HiddenFor(x => x.Id)
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="inputDefault">No DO</label>
+            <div class="col-md-3">
+                @Html.TextBoxFor(x => x.donumber, new { @class = "form-control", @id = "donumber", @disabled = "disabled" })
+            </div>
+            <label class="col-md-2 control-label" for="inputDefault">No Po</label>
+            <div class="col-md-3">
+                @Html.TextBoxFor(x => x.ponumber, new { @class = "form-control", @id = "ponumber", @Value = Model.ponumber, @disabled = "disabled" })
+            </div>
+            <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.NoPr</label>
+            <div class="col-md-3">
+                @Html.TextBoxFor(x => x.prnumber, new { @class = "form-control", @id = "prnumber", @Value = Model.prnumber, @disabled = "disabled" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="inputDefault">Do Date</label>
+            <div class="col-md-3">
+                @Html.TextBoxFor(x => x.dodate, new { @class = "form-control", @id = "dodate", @disabled = "disabled" })
+            </div>
+            <label class="col-md-2 control-label" for="inputDefault">Po Date</label>
+            <div class="col-md-3">
+                @Html.TextBoxFor(x => x.podate, new { @class = "form-control", @id = "podate", @disabled = "disabled" })
+            </div>
+            <label class="col-md-2 control-label" for="inputDefault">Pr Date</label>
+            <div class="col-md-3">
+                @Html.TextBoxFor(x => x.prdate, new { @class = "form-control", @id = "prdate", @disabled = "disabled" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="inputDefault">Tujuan Do</label>
+            <div class="col-md-3">
+                @Html.TextBoxFor(x => x.namagundang, new { @class = "form-control", @id = "namagundang", @disabled = "disabled" })
+            </div>
+            <label class="col-md-2 control-label" for="inputDefault">Process By</label>
+            <div class="col-md-3">
+                @Html.TextBoxFor(x => x.approve_by, new { @class = "form-control", @id = "approve_by", @disabled = "disabled" })
+            </div>
+            <label class="col-md-2 control-label" for="inputDefault">Request By</label>
+            <div class="col-md-3">
+                @Html.TextBoxFor(x => x.prrequestby, new { @class = "form-control", @id = "prrequestby", @disabled = "disabled" })
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="panel-body">
+        <div class="scrollTable">
+            <table id="tblPurchaseOrderPusat" class="table color-table success-table">
+                <caption class="headertable">@Klinik.Resources.UIMessages.PurchaseOrderPusatList</caption>
+                <thead>
+                    <tr>
+                        <th class="caption-table" colspan="4" style="text-align:center">General</th>
+                        <th class="caption-table" colspan="4" style="text-align:center">Warehouse</th>
+                        <th class="caption-table" colspan="1" style="text-align:center"></th>
+                        <th class="caption-table" colspan="2" style="text-align:center">PO</th>
+                        <th class="caption-table" colspan="4" style="text-align:center"></th>
+                        <th class="caption-table" colspan="2" style="text-align:center">PO Pembulatan</th>
+                    </tr>
+                    <tr>
+                        <th hidden>Id Obat</th>
+                        <th>Nama Obat</th>
+                        <th>Nama Vendor</th>
+                        <th>Satuan per box</th>
+                        <th>Harga per satuan</th>
+                        <th>Obat sebelum distribusi</th>
+                        <th>Total Request</th>
+                        <th>Total Distribusi</th>
+                        <th>Sisa Warehouse</th>
+                        <th>Qty</th>
+                        <th>Adjusment</th>
+                        <th>Remarks</th>
+                        <th>Qty final</th>
+                        <th>Remarks</th>
+                        <th>Total</th>
+                        <th>Qty Unit</th>
+                        <th>Qty Box</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model.deliveryOrderDetailpusatModels)
+                        {
+                            <tr>
+                                <td hidden>@item.Id</td>
+                                <td hidden>@item.ProductId</td>
+                                <td hidden>@item.VendorId</td>
+                                <td><select disabled="disabled" class="editnamabarang"><option>@item.namabarang</option></select></td>
+                                <td><select disabled="disabled"><option>@item.namavendor</option></select></td>
+                                <td><input type="text" class="form-control" value="@item.satuan" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.harga" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.stok_prev" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.total_req" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.total_dist" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control qty_final" value="@item.qty_final" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control remark" value="@item.remark" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control total" value="@item.total" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_unit" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_box" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control total" value="@item.No_Do_Vendor" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.Tgl_Do_Vendor" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.SendBy" disabled="disabled" /></td>
+                                <td><input type="checkbox" value="@(item.Recived == true ? "true" : "false")" @(item.Recived == true ? "checked" : "") disabled></td>
+                                @if (Model.Validasi == null)
+                                {
+                                    <td>
+                                        @if ((GeneralHandler.authorized("EDIT_M_DELIVERYORDERPUSAT") == "true"))
+                                        {
+                                            <button class="save-deliveryorderpusatdetail btn btn-success btn-sm" data-url="/GudangPusat/EditDeliveryOrderDetail" style="display:none;">Save</button>
+                                            <button class="edit-deliveryorderpusatdetail btn btn-success btn-sm" disabled>Edit</button>
+                                            <button class="delete-deliveryorderpusatdetail btn btn-danger btn-sm" disabled>Delete</button>
+                                            <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+                @if (open)
+                {
+                    <tfoot>
+                        <tr>
+                            <th hidden>Id Obat</th>
+                            <th>Nama Obat</th>
+                            <th>Nama Vendor</th>
+                            <th>Satuan per box</th>
+                            <th>Harga per satuan</th>
+                            <th>Obat sebelum distribusi</th>
+                            <th>Total Request</th>
+                            <th>Total Distribusi</th>
+                            <th>Sisa Warehouse</th>
+                            <th>Qty</th>
+                            <th>Adjusment</th>
+                            <th>Remarks</th>
+                            <th>Qty final</th>
+                            <th>Remarks</th>
+                            <th>Total</th>
+                            <th>Qty Unit</th>
+                            <th>Qty Box</th>
+                            <th>No Do Vendor</th>
+                            <th>Tgl Do Vendor</th>
+                            <th>Send By</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr id="deliveryorderpusatdetail">
+                            <td hidden><input type="text" hidden id="DeliveryOrderPusatDetailId" /></td>
+                            <td hidden><input type="text" hidden id="ProductId" /></td>
+                            <td hidden><input type="text" hidden id="VendorId" /></td>
+                            <td><select id="namabarang" class="form-control"></select></td>
+                            <td><select id="namavendor" class="form-control"></select></td>
+                            <td><input type="text" class="form-control" placeholder="satuan" id="satuan" value="" /></td>
+                            <td><input type="text" class="form-control" placeholder="harga" id="harga" value="" /></td>
+                            <td><input type="text" class="form-control" placeholder="stok_prev" id="stok_prev" value="" disabled /></td>
+                            <td><input type="text" class="form-control" placeholder="total_req" id="total_req" value="" disabled /></td>
+                            <td><input type="text" class="form-control" placeholder="total_dist" id="total_dist" value="" disabled /></td>
+                            <td><input type="text" class="form-control" placeholder="sisa_stok" id="sisa_stok" value="" disabled /></td>
+                            <td><input type="text" class="form-control" placeholder="qty" id="qty" value="0" disabled /></td>
+                            <td><input type="text" class="form-control" placeholder="qty_add" id="qty_add" value="" /></td>
+                            <td><input type="text" class="form-control" placeholder="reason_add" id="reason_add" value="" /></td>
+                            <td><input type="text" class="form-control" placeholder="qty_final" id="qty_final" disabled="disabled" /></td>
+                            <td><input type="text" class="form-control" placeholder="remark" id="remark" disabled="disabled" /></td>
+                            <td><input type="text" class="form-control" placeholder="total" id="total" value="" disabled /></td>
+                            <td><input type="text" class="form-control" placeholder="qty_unit" id="qty_unit" value="" /></td>
+                            <td><input type="text" class="form-control" placeholder="qty_box" id="qty_box" value="" /></td>
+                            <td><input type="text" class="form-control" placeholder="No_Do_Vendor" id="No_Do_Vendor" value="" disabled /></td>
+                            <td><input type="text" class="form-control" placeholder="Tgl_Do_Vendor" id="Tgl_Do_Vendor" value="" /></td>
+                            <td><input type="text" class="form-control" placeholder="SendBy" id="SendBy" value="" /></td>
+                            <td><input type="button" id="btnAdd" class="btn btn-success float-right" value="Add" /></td>
+                        </tr>
+                    </tfoot>
+                }
+            </table>
+        </div>
+        <br />
+        <footer class="panel-footer">
+            @if ((GeneralHandler.authorized("ADD_M_DELIVERYORDERPUSAT", "EDIT_M_DELIVERYORDERPUSAT") == "true"))
+            {
+                <button type="submit" class="btn btn-primary savedeliveryorderpusatdetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/GudangPusat/CreateOrEditDeliveryOrderPusat" style="display:@(Model != null ? "none" : "inline-block")">@Klinik.Resources.UIMessages.Save</button>
+                <button class="btn btn-primary openallbutton" style="display:@(Model != null ? Model.Validasi == null ? "inline-block" : "none":"inline-block")">@Klinik.Resources.UIMessages.Edit</button>
+            }
+            @if (Model != null && (GeneralHandler.authorized("APPROVE_M_DELIVERYORDERPUSAT") == "true"))
+            {
+                if (Model.approve == null)
+                {
+                    <button class="btn btn-success" onclick="Approve(@Model.Id)">@Klinik.Resources.UIMessages.Approve</button>
+                }
+
+            }
+            @if (Model != null && (GeneralHandler.authorized("VALIDATION_M_DELIVERYORDERPUSAT") == "true"))
+            {
+                if (Model.approve != null && Model.Validasi == null)
+                {
+                    <button class="btn btn-success" onclick="Validation(@Model.Id)">@Klinik.Resources.UIMessages.Validation</button>
+                }
+            }
+            @if (Model != null)
+            {
+                <a class="btn btn-success" href="/GudangPusat/PrintDeliveryOrderPusat?id=@Model.Id">Print</a>
+            }
+            <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+        </footer>
+    </div>
+</section>
+@section Scripts {
+    <script src="~/js/GudangPusatPurchaseOrder.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#prdate').datepicker({
+                autoclose: true
+            });
+            $('#btnreset').click(function (e) {
+                window.location.href = "/GudangPusat/DeliveryOrderList";
+            });
+
+            toastr.options = {
+                "closeButton": false,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "0",
+                "hideDuration": "0",
+                "timeOut": "2000",
+                "showMethod": "fadeIn"
+            };
+
+            var _temp="@ViewBag.Response";
+            var _arrMsg = _temp.split(";");
+
+            if (_arrMsg.length > 1) {
+                if (_arrMsg[0] == "True") {
+                    toastr.success(_arrMsg[1]);
+                }
+                else {
+                    toastr.options.closeButton = true;
+                    toastr.options.timeOut = 0;
+                    toastr.error(_arrMsg[1]);
+                }
+            }
+        });
+
+        var Approve = function (ID) {
+            var r = confirm("@Klinik.Resources.UIMessages.ApproveConfirmation" + ID + " ) ?");
+            if (r == true) {
+            ApprovePR(ID);
+        }
+        return false;
+        }
+
+        function ApprovePR(Id) {
+        $.ajax({
+            url: '/GudangPusat/ApproveDeliveryOrderPusat?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+        }
+
+        var Validation = function (ID) {
+            var r = confirm("@Klinik.Resources.UIMessages.ValidationConfirmation" + ID + " ) ?");
+            if (r == true) {
+           ValisasiPR(ID);
+        }
+        return false;
+        }
+
+        function ValisasiPR(Id) {
+        $.ajax({
+            url: '/GudangPusat/ValidationDeliveryOrderPusat?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+        }
+    </script>
+    <script type="text/javascript">
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblPurchaseOrderPusat")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+    </script>
+}
+

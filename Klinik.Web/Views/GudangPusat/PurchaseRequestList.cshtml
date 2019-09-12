@@ -21,7 +21,11 @@
                     <tr>
                         <th>@Klinik.Resources.UIMessages.IDPR</th>
                         <th>@Klinik.Resources.UIMessages.PrNumber</th>
+                        <th>Tanggal Pr</th>
+                        <th>@Klinik.Resources.UIMessages.PoNumber</th>
                         <th>Tanggal Po</th>
+                        <th>Do Number</th>
+                        <th>Tanggal Do</th>
                         <th>@Klinik.Resources.UIMessages.RequestBy</th>
                         <th>@Klinik.Resources.UIMessages.ApprovedBY</th>
                         <th>@Klinik.Resources.UIMessages.Approve</th>
@@ -94,13 +98,47 @@
                     "targets": [7],
                     "searchable": true,
                     "orderable": false
+                },
+                {
+                    "targets": [8],
+                    "searchable": true,
+                    "orderable": false
+                },
+                {
+                    "targets": [9],
+                    "searchable": true,
+                    "orderable": false
+                },
+                {
+                    "targets": [10],
+                    "searchable": true,
+                    "orderable": false
                 }
                 ],
 
             "columns": [
                 { "data": "Id", "Id": "Id", "autoWidth": false },
-                { "data": "prnumber", "prnumber": "prnumber", "autoWidth": true },
+                {
+                    "data": "prnumber",
+                    "render": function (data, type, full, meta) {
+                        return '<a href="/GudangPusat/CreateOrEditPurchaseRequest?id=' + full.Id + '">' + full.prnumber + '</a>';
+                    }
+                },
                 { "data": "createformat", "createformat": "createformat", "autoWidth": true },
+                {
+                    "data": "ponumber",
+                    "render": function (data, type, full, meta) {
+                        return '<a href="/GudangPusat/CreateOrEditPurchaseOrder?id=' + full.poid + '">' + full.ponumber + '</a>';
+                    }
+                },
+                { "data": "createpo", "createpo": "createpo", "autoWidth": true },
+                {
+                    "data": "donumber", 
+                    "render": function (data, type, full, meta) {
+                        return '<a href="/DeliveryOrder/CreateOrEditDeliveryOrder?id=' + full.doid + '">' + full.donumber + '</a>';
+                    }
+                },
+                { "data": "createdo", "createdo": "createdo", "autoWidth": true },
                 { "data": "request_by", "request_by": "request_by", "autoWidth": false },
                 { "data": "approve_by", "approve_by": "approve_by", "autoWidth": true },
                 { "data": "approve", "approve": "approve", "autoWidth": true },
@@ -108,8 +146,8 @@
                 {
                     "render": function (data, type, full, meta)
                     {
-                         var type = full['approve'] == null ? 'Approve' : 'Print';
-                        return '<a class="btn btn-info btn-xs" href="/GudangPusat/CreateOrEditPurchaseRequest?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger btn-xs' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>";
+                        var type = full['Validasi'] != null ? 'View' : 'Edit';
+                        return '<a class="btn btn-info btn-xs" href="/GudangPusat/CreateOrEditPurchaseRequest?id=' + full.Id + '">' + type  + '</a>  ' + " | <button class='btn btn-danger btn-xs' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>";
                     }
                 }
 

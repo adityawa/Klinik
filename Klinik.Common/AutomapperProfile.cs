@@ -23,8 +23,14 @@ using Klinik.Entities.PurchaseRequestConfig;
 using Klinik.Entities.PurchaseRequestPusat;
 using Klinik.Entities.PurchaseOrderPusat;
 using Klinik.Entities.PurchaseRequestPusatDetail;
+
 using Klinik.Entities.MCUPackageEntities;
 using Klinik.Entities.AppointmentEntities;
+
+using Klinik.Entities.PurchaseOrderPusatDetail;
+using Klinik.Entities.DeliveryOrderPusatDetail;
+using Klinik.Entities.DeliveryOrderPusat;
+
 
 namespace Klinik.Common
 {
@@ -330,20 +336,42 @@ namespace Klinik.Common
                 ((DateTime)p.FormExamineMedicine.FormExamine.TransDate).ToString("dd-MM-yyyy")));
 
             CreateMap<PurchaseRequestConfig, PurchaseRequestConfigModel>();
+
             CreateMap<PurchaseRequestConfigModel, PurchaseRequestConfig>();
+
+
+            CreateMap<PurchaseRequestConfigModel, PurchaseRequestConfig> ();
+            CreateMap<LookUpCategoryModel, LookupCategory>();
 
 
             CreateMap<ICDTheme, ICDThemeModel>();
             CreateMap<ICDThemeModel, ICDTheme>();
 
-            CreateMap<PurchaseRequestPusatModel, PurchaseOrderPusatModel>();
+            CreateMap<PurchaseRequestPusat, PurchaseRequestPusatModel>();
             CreateMap<PurchaseRequestPusatDetail, PurchaseRequestPusatDetailModel>();
+
 
             CreateMap<MCUPackage, MCUPackageModel>();
             CreateMap<MCUPackageModel, MCUPackage>();
 
             CreateMap<Appointment, AppointmentModel>();
             CreateMap<AppointmentModel, Appointment>();
+
+            CreateMap<PurchaseRequestPusatDetailModel, PurchaseOrderPusatDetailModel>();
+            CreateMap<PurchaseRequestPusatModel, PurchaseOrderPusatModel>();
+
+            CreateMap<PurchaseOrderPusat, PurchaseOrderPusatModel>();
+            CreateMap<PurchaseOrderPusatDetail, PurchaseOrderPusatDetailModel>();
+
+            CreateMap<DeliveryOrderPusatDetail, DeliveryOrderPusatDetailModel>();
+            CreateMap<DeliveryOrderPusatDetailModel, DeliveryOrderPusatDetail>();
+
+            CreateMap<DeliveryOrderPusat, DeliveryOrderPusatModel>();
+            CreateMap<DeliveryOrderPusatModel, DeliveryOrderPusat>();
+
+            CreateMap<PurchaseOrderPusatModel, DeliveryOrderPusatModel>();
+            CreateMap<PurchaseOrderPusatDetailModel, DeliveryOrderPusatDetailModel>();
+
         }
     }
 }

@@ -4,14 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2455f24489c54e438fb91b019da83f9e" Name="Diagram1">
+      <Diagram DiagramId="2455f24489c54e438fb91b019da83f9e" Name="Diagram1" ZoomLevel="55">
         <EntityTypeShape EntityType="KlinikDBModel.AppConfig" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlinikDBModel.Appointment" Width="1.5" PointX="5.25" PointY="81.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.City" Width="1.5" PointX="0.75" PointY="82.375" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Clinic" Width="1.5" PointX="3" PointY="80.125" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrder" Width="1.5" PointX="7.5" PointY="100.25" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderDetail" Width="1.5" PointX="15.5" PointY="93.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderPusat" Width="1.5" PointX="5.25" PointY="91.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderPusatDetail" Width="1.5" PointX="7.5" PointY="89.625" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Doctor" Width="1.5" PointX="5.25" PointY="67.25" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.DoctorClinic" Width="1.5" PointX="8.25" PointY="82.125" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Employee" Width="1.5" PointX="0.75" PointY="73" IsExpanded="true" />
@@ -77,10 +76,12 @@
         <EntityTypeShape EntityType="KlinikDBModel.User" Width="1.5" PointX="13.5" PointY="103.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.UserRole" Width="1.5" PointX="14.75" PointY="110.125" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Vendor" Width="1.5" PointX="16.25" PointY="105.875" IsExpanded="true" />
+        <AssociationConnector Association="KlinikDBModel.FK_Appointment_Clinic" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikDBModel.FK_Appointment_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="KlinikDBModel.FK_Appointment_MCUPackage" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_Clinic_City" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_Patient_City" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PatientClinic_City" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Clinic" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_DoctorClinic_Clinic" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormMedical_Clinic" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_Gudang_Clinic" ManuallyRouted="false" />
@@ -99,10 +100,6 @@
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrder_Source" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_DeliveryOrder" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderDetail_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusat_PurchaseOrderPusat" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_DeliveryOrderPusat" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Gudang" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Product" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_Doctor_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_DoctorClinic_Doctor" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamine_Doctor" ManuallyRouted="false" />
@@ -185,10 +182,16 @@
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_PurchaseRequestPusat" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_Vendor" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_UserRole_User" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="KlinikDBModel.Appointment" Width="1.5" PointX="5.25" PointY="81.625" />
-        <AssociationConnector Association="KlinikDBModel.FK_Appointment_Clinic" />
-        <AssociationConnector Association="KlinikDBModel.FK_Appointment_Employee" />
-        <AssociationConnector Association="KlinikDBModel.FK_Appointment_MCUPackage" />
+        <EntityTypeShape EntityType="KlinikDBModel.LookupCategory" Width="1.5" PointX="5.375" PointY="6.75" />
+        <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusat_Gudang" />
+        <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrderPusat_Gudang" />
+        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderPusatDetail" Width="1.5" PointX="26.75" PointY="92.125" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Product" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Vendor" />
+        <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrderPusat" Width="1.5" PointX="24.5" PointY="82.875" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusat_Gudang" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusat_PurchaseOrderPusat" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_DeliveryOrderPusat" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
