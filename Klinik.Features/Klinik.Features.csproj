@@ -111,7 +111,7 @@
     <Compile Include="MasterData\Gudang\GudangResponse.cs" />
     <Compile Include="MasterData\Gudang\GudangValidator.cs" />
     <Compile Include="MasterData\LookupCategory\LookUpCategoryHandler.cs" />
-    <Compile Include="MasterData\LookupCategory\LookupCategoryRequest.cs" />
+    <Compile Include="MasterData\LookupCategory\LookUpCategoryRequest.cs" />
     <Compile Include="MasterData\LookupCategory\LookUpCategoryResponse.cs" />
     <Compile Include="MasterData\LookupCategory\LookUpCategoryValidator.cs" />
     <Compile Include="MasterData\Vendor\VendorHandler.cs" />

@@ -1200,4 +1200,13 @@
   <data name="Top10ReferalReport" xml:space="preserve">
     <value>Top 10 Referals Report</value>
   </data>
+  <data name="LookUpCategoryList" xml:space="preserve">
+    <value>Look Up Category List</value>
+  </data>
+  <data name="LookUpContent" xml:space="preserve">
+    <value>Look Up Content</value>
+  </data>
+  <data name="LookUpName" xml:space="preserve">
+    <value>Look Up Name </value>
+  </data>
 </root>

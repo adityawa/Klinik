@@ -10,9 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Klinik.Features.MasterData.LookupCategory
+namespace Klinik.Features
 {
-    public class LookUpCategoryHandler : BaseFeatures, IBaseFeatures<LookUpCategoryResponse, LookupCategoryRequest>
+    public class LookUpCategoryHandler : BaseFeatures, IBaseFeatures<LookUpCategoryResponse, LookUpCategoryRequest>
     {
         /// <summary>
         /// Constructor
@@ -28,7 +28,7 @@ namespace Klinik.Features.MasterData.LookupCategory
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public LookUpCategoryResponse CreateOrEdit(LookupCategoryRequest request)
+        public LookUpCategoryResponse CreateOrEdit(LookUpCategoryRequest request)
         {
             LookUpCategoryResponse response = new LookUpCategoryResponse();
 
@@ -115,7 +115,7 @@ namespace Klinik.Features.MasterData.LookupCategory
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public LookUpCategoryResponse GetDetail(LookupCategoryRequest request)
+        public LookUpCategoryResponse GetDetail(LookUpCategoryRequest request)
         {
              LookUpCategoryResponse response = new LookUpCategoryResponse();
 
@@ -133,7 +133,7 @@ namespace Klinik.Features.MasterData.LookupCategory
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public LookUpCategoryResponse GetListData(LookupCategoryRequest request)
+        public LookUpCategoryResponse GetListData(LookUpCategoryRequest request)
         {
             List<LookUpCategoryModel> lists = new List<LookUpCategoryModel>();
             dynamic qry = null;
@@ -207,7 +207,7 @@ namespace Klinik.Features.MasterData.LookupCategory
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public LookUpCategoryResponse RemoveData(LookupCategoryRequest request)
+        public LookUpCategoryResponse RemoveData(LookUpCategoryRequest request)
         {
             LookUpCategoryResponse response = new LookUpCategoryResponse();
 

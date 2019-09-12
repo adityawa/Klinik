@@ -1645,6 +1645,33 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Look Up Category List.
+        /// </summary>
+        public static string LookUpCategoryList {
+            get {
+                return ResourceManager.GetString("LookUpCategoryList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Look Up Content.
+        /// </summary>
+        public static string LookUpContent {
+            get {
+                return ResourceManager.GetString("LookUpContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Look Up Name .
+        /// </summary>
+        public static string LookUpName {
+            get {
+                return ResourceManager.GetString("LookUpName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Male.
         /// </summary>
         public static string Male {

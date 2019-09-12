@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Klinik.Features.MasterData.LookupCategory
+namespace Klinik.Features
 {
     public class LookUpCategoryValidator:BaseFeatures
     {
-        private const string ADD_PRIVILEGE_NAME = "ADD_LOOKUP_CATEGORY";
-        private const string EDIT_PRIVILEGE_NAME = "EDIT_LOOKUP_CATEGORY";
-        private const string DELETE_PRIVILEGE_NAME = "DELETE_LOOKUP_CATEGORY";
+        private const string ADD_PRIVILEGE_NAME = "ADD_M_LOOKUP_CATEGORY";
+        private const string EDIT_PRIVILEGE_NAME = "EDIT_M_LOOKUP_CATEGORY";
+        private const string DELETE_PRIVILEGE_NAME = "DELETE_M_LOOKUP_CATEGORY";
 
         /// <summary>
         /// Constructor of LookUp Category
@@ -29,7 +29,7 @@ namespace Klinik.Features.MasterData.LookupCategory
         /// </summary>
         /// <param name="request"></param>
         /// <param name="response"></param>
-        public void Validate(LookupCategoryRequest request, out LookUpCategoryResponse response)
+        public void Validate(LookUpCategoryRequest request, out LookUpCategoryResponse response)
         {
             response = new LookUpCategoryResponse();
 
@@ -80,7 +80,7 @@ namespace Klinik.Features.MasterData.LookupCategory
         /// </summary>
         /// <param name="request"></param>
         /// <param name="response"></param>
-        private void ValidateForDelete(LookupCategoryRequest request, out LookUpCategoryResponse response)
+        private void ValidateForDelete(LookUpCategoryRequest request, out LookUpCategoryResponse response)
         {
             response = new LookUpCategoryResponse();
 

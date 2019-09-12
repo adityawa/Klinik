@@ -2293,6 +2293,7 @@ namespace Klinik.Web.Controllers
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
+
         [CustomAuthorize("ADD_M_GUDANG", "EDIT_M_GUDANG")]
         public ActionResult CreateOrEditGudang()
         {
@@ -2553,6 +2554,106 @@ namespace Klinik.Web.Controllers
         #endregion
 
         #region :: LOOKUP CATEGORY ::
-        #endregion 
+        [CustomAuthorize("VIEW_M_LOOKUP_CATETORY")]
+        public ActionResult LookUpCategoryList()
+        {
+            return View();
+        }
+
+        [CustomAuthorize("VIEW_M_LOOKUP_CATEGORY")]
+        [HttpPost]
+        public ActionResult GetLookUpCategoryData()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][lookupname]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new GudangRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            var response = new GudangHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("ADD_M_LOOKUP_CATEGORY", "EDIT_M_LOOKUP_CATEGORY")]
+        public ActionResult CreateOrEditLookUpCategory()
+        {
+            LookUpCategoryResponse _response = new LookUpCategoryResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new LookUpCategoryRequest
+                {
+                    Data = new LookUpCategoryModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                LookUpCategoryResponse resp = new LookUpCategoryHandler(_unitOfWork).GetDetail(request);
+                LookUpCategoryModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.ActionType = ClinicEnums.Action.Add;
+                return View();
+            }
+        }
+
+        [CustomAuthorize("ADD_M_LOOKUP_CATEGORY", "EDIT_M_LOOKUP_CATEGORY")]
+        [HttpPost]
+        public ActionResult CreateOrEditLookUpCategory(LookUpCategoryModel _model)
+        {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new LookUpCategoryRequest
+            {
+                Data = _model
+            };
+
+            LookUpCategoryResponse _response = new LookUpCategoryResponse();
+
+            new LookUpCategoryValidator(_unitOfWork).Validate(request, out _response);
+
+            return RedirectToAction("LookUpCategoryList");
+        }
+
+        [HttpPost]
+        public JsonResult DeleteLookUpCategory(int id)
+        {
+            LookUpCategoryResponse  _response = new LookUpCategoryResponse();
+            var request = new LookUpCategoryRequest
+            {
+                Data = new LookUpCategoryModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            new LookUpCategoryValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }
