@@ -18,5 +18,8 @@ namespace Klinik.Entities.PoliSchedules
         public int Status { get; set; }
         public string StatusStr { get; set; }
         public string Remark { get; set; }
+
+        public string TimeStart { get; set; }
+        public string TimeEnd { get; set; }
     }
 }

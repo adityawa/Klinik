@@ -1645,6 +1645,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Make Appointment.
+        /// </summary>
+        public static string MakeAppointment {
+            get {
+                return ResourceManager.GetString("MakeAppointment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Male.
         /// </summary>
         public static string Male {
@@ -1659,6 +1668,15 @@ namespace Klinik.Resources {
         public static string MaritalStatus {
             get {
                 return ResourceManager.GetString("MaritalStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MCU Package.
+        /// </summary>
+        public static string MCUPackage {
+            get {
+                return ResourceManager.GetString("MCUPackage", resourceCulture);
             }
         }
         
@@ -3009,6 +3027,15 @@ namespace Klinik.Resources {
         public static string TakeMedicineReferenceLetter {
             get {
                 return ResourceManager.GetString("TakeMedicineReferenceLetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tanggal.
+        /// </summary>
+        public static string Tanggal {
+            get {
+                return ResourceManager.GetString("Tanggal", resourceCulture);
             }
         }
         

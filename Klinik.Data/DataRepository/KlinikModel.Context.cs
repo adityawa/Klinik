@@ -26,7 +26,6 @@ namespace Klinik.Data.DataRepository
         }
     
         public virtual DbSet<AppConfig> AppConfigs { get; set; }
-        public virtual DbSet<Appointment> Appointments { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Clinic> Clinics { get; set; }
         public virtual DbSet<DeliveryOrder> DeliveryOrders { get; set; }
@@ -98,5 +97,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
+        public virtual DbSet<Appointment> Appointments { get; set; }
     }
 }

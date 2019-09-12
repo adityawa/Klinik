@@ -1194,4 +1194,13 @@
   <data name="MedicalHistoryWithFamily" xml:space="preserve">
     <value>All Medical History</value>
   </data>
+  <data name="MakeAppointment" xml:space="preserve">
+    <value>Make Appointment</value>
+  </data>
+  <data name="Tanggal" xml:space="preserve">
+    <value>Tanggal</value>
+  </data>
+  <data name="MCUPackage" xml:space="preserve">
+    <value>MCU Package</value>
+  </data>
 </root>

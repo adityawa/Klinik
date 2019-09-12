@@ -69,6 +69,7 @@
     <Compile Include="Account\PasswordHistoryModel.cs" />
     <Compile Include="Account\ResetPasswordModel.cs" />
     <Compile Include="Administration\LogModel.cs" />
+    <Compile Include="AppointmentEntities\AppointmentModel.cs" />
     <Compile Include="BaseRequest.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="BaseResponse.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="MasterData\GudangModel.cs" />
     <Compile Include="MasterData\ICDThemeModel.cs" />
     <Compile Include="MasterData\VendorModel.cs" />
+    <Compile Include="MCUPackageEntities\MCUPackageModel.cs" />
     <Compile Include="MedicalHistoryEntity\MedicalHistoryModel.cs" />
     <Compile Include="Pharmacy\PengambilanObatModel.cs" />
     <Compile Include="Pharmacy\PharmacyModel.cs" />

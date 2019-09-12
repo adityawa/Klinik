@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Klinik.Data.DataRepository;
-
 using Klinik.Entities.Administration;
 using Klinik.Entities.Document;
 using Klinik.Entities.MappingMaster;
@@ -12,20 +11,20 @@ using Klinik.Entities.Form;
 using Klinik.Entities.PreExamine;
 using Klinik.Entities.Poli;
 using Klinik.Entities.Letter;
-
 using Klinik.Entities.PurchaseOrder;
 using Klinik.Entities.PurchaseOrderDetail;
 using Klinik.Entities.PurchaseRequestDetail;
 using Klinik.Entities.PurchaseRequest;
 using Klinik.Entities.DeliveryOrder;
 using Klinik.Entities.DeliveryOrderDetail;
-
 using Klinik.Entities.Pharmacy;
 using System;
 using Klinik.Entities.PurchaseRequestConfig;
 using Klinik.Entities.PurchaseRequestPusat;
 using Klinik.Entities.PurchaseOrderPusat;
 using Klinik.Entities.PurchaseRequestPusatDetail;
+using Klinik.Entities.MCUPackageEntities;
+using Klinik.Entities.AppointmentEntities;
 
 namespace Klinik.Common
 {
@@ -163,7 +162,12 @@ namespace Klinik.Common
             CreateMap<PoliScheduleModel, PoliSchedule>();
             CreateMap<PoliSchedule, PoliScheduleModel>()
                 .ForMember(m => m.StartDateStr, map => map.MapFrom(p => p.StartDate.ToString("dd/MM/yyyy hh:mm:ss")))
-                .ForMember(m => m.EndDateStr, map => map.MapFrom(p => p.EndDate.ToString("dd/MM/yyyy hh:mm:ss")));
+                .ForMember(m => m.EndDateStr, map => map.MapFrom(p => p.EndDate.ToString("dd/MM/yyyy hh:mm:ss")))
+                .ForMember(m => m.ClinicName, map => map.MapFrom(p => p.Clinic.Name))
+                .ForMember(m => m.DoctorName, map => map.MapFrom(p => p.Doctor.Name))
+                .ForMember(m => m.PoliName, map => map.MapFrom(p => p.Poli.Name))
+                .ForMember(m=>m.TimeStart, map=>map.MapFrom(p=>p.StartDate.ToString("hh:mm:ss")))
+                .ForMember(m => m.TimeEnd, map => map.MapFrom(p => p.EndDate.ToString("hh:mm:ss")));
 
             CreateMap<PoliScheduleMasterModel, PoliScheduleMaster>();
             CreateMap<PoliScheduleMaster, PoliScheduleMasterModel>()
@@ -197,7 +201,7 @@ namespace Klinik.Common
                 .ForMember(x => x.DoctorName, map => map.MapFrom(p => p.Doctor.Name));
 
             CreateMap<FormExamineModel, FormExamine>();
-               
+
             CreateMap<FormExamine, FormExamineModel>();
 
             CreateMap<FormExamineAttachmentModel, FormExamineAttachment>();
@@ -208,7 +212,7 @@ namespace Klinik.Common
                 .ForMember(x => x.LabItemDesc, map => map.MapFrom(p => p.LabItem.Name));
 
             CreateMap<FormExamineServiceModel, FormExamineService>();
-              
+
             CreateMap<FormExamineService, FormExamineServiceModel>();
 
             CreateMap<FormExamineMedicineModel, FormExamineMedicine>()
@@ -228,7 +232,7 @@ namespace Klinik.Common
             CreateMap<ProductModel, Product>();
 
             CreateMap<Product, ProductModel>();
-               
+
 
             CreateMap<ProductUnitModel, ProductUnit>();
             CreateMap<ProductUnit, ProductUnitModel>();
@@ -280,8 +284,8 @@ namespace Klinik.Common
             CreateMap<PanggilanPoli, PanggilanPoliModel>();
 
 
-			CreateMap<FormExamineMedicineDetail, FormExamineMedicineDetailModel>();				
-			CreateMap<FormExamineMedicineDetailModel, FormExamineMedicineDetail>();
+            CreateMap<FormExamineMedicineDetail, FormExamineMedicineDetailModel>();
+            CreateMap<FormExamineMedicineDetailModel, FormExamineMedicineDetail>();
 
             CreateMap<PurchaseOrderModel, PurchaseOrder>();
             CreateMap<PurchaseOrderDetailModel, PurchaseOrderDetail>();
@@ -290,7 +294,7 @@ namespace Klinik.Common
             CreateMap<PurchaseRequestDetailModel, PurchaseRequestDetail>();
 
             CreateMap<PurchaseRequest, PurchaseRequestModel>();
-            CreateMap<PurchaseRequestDetail, PurchaseRequestDetailModel> ();
+            CreateMap<PurchaseRequestDetail, PurchaseRequestDetailModel>();
 
             CreateMap<PurchaseRequestModel, PurchaseOrderModel>();
             CreateMap<PurchaseRequestDetailModel, PurchaseOrderDetailModel>();
@@ -322,11 +326,11 @@ namespace Klinik.Common
             CreateMap<FormExamineMedicineDetail, PrescriptionModel>()
                 .ForMember(x => x.FormMedicalID, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.FormMedicalID))
                 .ForMember(x => x.PatientName, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.FormMedical.Patient.Name))
-                .ForMember(x => x.TglPeriksa, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.TransDate == null ? "" : 
+                .ForMember(x => x.TglPeriksa, map => map.MapFrom(p => p.FormExamineMedicine.FormExamine.TransDate == null ? "" :
                 ((DateTime)p.FormExamineMedicine.FormExamine.TransDate).ToString("dd-MM-yyyy")));
 
             CreateMap<PurchaseRequestConfig, PurchaseRequestConfigModel>();
-            CreateMap<PurchaseRequestConfigModel, PurchaseRequestConfig> ();
+            CreateMap<PurchaseRequestConfigModel, PurchaseRequestConfig>();
 
 
             CreateMap<ICDTheme, ICDThemeModel>();
@@ -335,8 +339,11 @@ namespace Klinik.Common
             CreateMap<PurchaseRequestPusatModel, PurchaseOrderPusatModel>();
             CreateMap<PurchaseRequestPusatDetail, PurchaseRequestPusatDetailModel>();
 
+            CreateMap<MCUPackage, MCUPackageModel>();
+            CreateMap<MCUPackageModel, MCUPackage>();
 
-
+            CreateMap<Appointment, AppointmentModel>();
+            CreateMap<AppointmentModel, Appointment>();
         }
     }
 }

@@ -76,6 +76,10 @@
     <Compile Include="Administration\Log\LogRequest.cs" />
     <Compile Include="Administration\Log\LogResponse.cs" />
     <Compile Include="Administration\Log\LogValidator.cs" />
+    <Compile Include="AppointmentFeatures\AppointmentHandler.cs" />
+    <Compile Include="AppointmentFeatures\AppointmentRequest.cs" />
+    <Compile Include="AppointmentFeatures\AppointmentResponse.cs" />
+    <Compile Include="AppointmentFeatures\AppointmentValidator.cs" />
     <Compile Include="BaseFeatures.cs" />
     <Compile Include="Cashier\CashierHandler.cs" />
     <Compile Include="Cashier\CashierResponse.cs" />

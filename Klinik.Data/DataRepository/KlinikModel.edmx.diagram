@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="2455f24489c54e438fb91b019da83f9e" Name="Diagram1">
         <EntityTypeShape EntityType="KlinikDBModel.AppConfig" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Appointment" Width="1.5" PointX="5.25" PointY="81.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.City" Width="1.5" PointX="0.75" PointY="82.375" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Clinic" Width="1.5" PointX="3" PointY="80.125" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.DeliveryOrder" Width="1.5" PointX="7.5" PointY="100.25" IsExpanded="true" />
@@ -78,9 +77,6 @@
         <EntityTypeShape EntityType="KlinikDBModel.User" Width="1.5" PointX="13.5" PointY="103.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.UserRole" Width="1.5" PointX="14.75" PointY="110.125" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Vendor" Width="1.5" PointX="16.25" PointY="105.875" IsExpanded="true" />
-        <AssociationConnector Association="KlinikDBModel.FK_Appointment_Clinic" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Appointment_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="KlinikDBModel.FK_Appointment_MCUPackage" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_Clinic_City" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_Patient_City" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PatientClinic_City" ManuallyRouted="false" />
@@ -189,6 +185,10 @@
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_PurchaseRequestPusat" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_Vendor" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_UserRole_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="KlinikDBModel.Appointment" Width="1.5" PointX="5.25" PointY="81.625" />
+        <AssociationConnector Association="KlinikDBModel.FK_Appointment_Clinic" />
+        <AssociationConnector Association="KlinikDBModel.FK_Appointment_Employee" />
+        <AssociationConnector Association="KlinikDBModel.FK_Appointment_MCUPackage" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
