@@ -404,7 +404,7 @@ namespace Klinik.Features.Pharmacy
                     response.Status = true;
                     response.Message = Messages.DataHasBeenUpdated;
                 }
-                catch (Exception ex)
+                catch (Exception )
                 {
                     transaction.Rollback();
                     response.Status = false;

@@ -147,7 +147,7 @@ namespace Klinik.Features.SuratReferensi.SuratLabReferensi
                     response.Entity.FormMedicalID = request.Data.SuratRujukanLabKeluar.FormMedicalID;
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 response.Status = false;
                 response.Message = Messages.GeneralError;
