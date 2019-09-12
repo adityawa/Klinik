@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Klinik.Interfaces", "Klinik
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Klinik.WinFormVoice", "Klinik.WinFormVoice\Klinik.WinFormVoice.csproj", "{31112DD5-B7B2-4EB9-B884-F8CF89A46AA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Klinik.Data", "C:\Users\Aditya\Downloads\Klinik-development_1\Klinik.Data\Klinik.Data.csproj", "{53291442-9A4C-4416-8871-8C94D7636404}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Klinik.Data", "Klinik.Data\Klinik.Data.csproj", "{53291442-9A4C-4416-8871-8C94D7636404}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
