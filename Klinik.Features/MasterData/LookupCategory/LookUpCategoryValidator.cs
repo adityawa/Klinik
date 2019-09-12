@@ -41,7 +41,7 @@ namespace Klinik.Features
             {
                 bool isHavePrivilege = true;
 
-                if (request.Data.LookupName == null || String.IsNullOrWhiteSpace(request.Data.LookupName ))
+                if (request.Data.LookUpName == null || String.IsNullOrWhiteSpace(request.Data.LookUpName ))
                 {
                     errorFields.Add("LookupCategory Name");
                 }

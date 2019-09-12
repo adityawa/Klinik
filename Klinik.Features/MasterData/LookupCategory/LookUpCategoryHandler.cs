@@ -45,8 +45,8 @@ namespace Klinik.Features
                         qry.ModifiedDate = DateTime.Now;
 
                         // update data
-                        qry.LookUpName = request.Data.LookupName;
-                        qry.LookupContent = request.Data.LookupContent;
+                        qry.LookUpName = request.Data.LookUpName;
+                        qry.LookupContent = request.Data.LookUpContent;
 
                         _unitOfWork.LookUpCategoryRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();

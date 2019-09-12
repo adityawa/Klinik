@@ -191,6 +191,10 @@
         <AssociationConnector Association="KlinikDBModel.FK_UserRole_User" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseOrderPusat_Gudang" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusat_Gudang" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusat_Gudang" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_DeliveryOrderPusat1" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Product1" />
+        <AssociationConnector Association="KlinikDBModel.FK_DeliveryOrderPusatDetail_Vendor" />
         <EntityTypeShape EntityType="KlinikDBModel.LookupCategory" Width="1.5" PointX="5.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>

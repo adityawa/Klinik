@@ -2554,7 +2554,7 @@ namespace Klinik.Web.Controllers
         #endregion
 
         #region :: LOOKUP CATEGORY ::
-        [CustomAuthorize("VIEW_M_LOOKUP_CATETORY")]
+        [CustomAuthorize("VIEW_M_LOOKUP_CATEGORY")]
         public ActionResult LookUpCategoryList()
         {
             return View();
@@ -2567,14 +2567,14 @@ namespace Klinik.Web.Controllers
             var _draw = Request.Form.GetValues("draw").FirstOrDefault();
             var _start = Request.Form.GetValues("start").FirstOrDefault();
             var _length = Request.Form.GetValues("length").FirstOrDefault();
-            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][lookupname]").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
             var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
             var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
 
             int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
             int _skip = _start != null ? Convert.ToInt32(_start) : 0;
 
-            var request = new GudangRequest
+            var request = new LookUpCategoryRequest
             {
                 Draw = _draw,
                 SearchValue = _searchValue,
@@ -2584,7 +2584,7 @@ namespace Klinik.Web.Controllers
                 Skip = _skip
             };
 
-            var response = new GudangHandler(_unitOfWork).GetListData(request);
+            var response = new LookUpCategoryHandler(_unitOfWork).GetListData(request);
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
@@ -2636,6 +2636,7 @@ namespace Klinik.Web.Controllers
             return RedirectToAction("LookUpCategoryList");
         }
 
+        [CustomAuthorize("DELETE_M_LOOKUP_CATEGORY")]
         [HttpPost]
         public JsonResult DeleteLookUpCategory(int id)
         {

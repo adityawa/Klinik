@@ -1,29 +1,30 @@
-﻿@model Klinik.Entities.MasterData.GudangModel
+﻿@model Klinik.Entities.MasterData.LookUpCategoryModel 
 
 @{
-    ViewBag.Title = "CreateOrEditGudang";
+    ViewBag.Title = "CreateOrEditLookUpCategory";
 }
 
 <section class="panel">
-    <form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditGudang">
+    <form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditLookUpCategory">
         <header class="panel-heading">
             <div class="panel-actions">
                 <a href="#" class="fa fa-caret-down"></a>
             </div>
-            <h5 class="panel-title">Form @ViewBag.ActionType Gudang</h5>
+            <h5 class="panel-title">Form @ViewBag.ActionType Lookup Category</h5>
         </header>
         <div class="panel-body">
             <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Name</label>
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.LookUpName</label>
                 <div class="col-md-4">
                     @Html.HiddenFor(x => x.Id)
-                    @Html.TextBoxFor(x => x.name, new { @class = "form-control", @id = "tbCode" })
+                    @Html.TextBoxFor(x => x.LookUpName, new { @class = "form-control", @id = "tbCode" })
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Clinic</label>
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.LookUpContent</label>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(p => p.ClinicId, (IEnumerable<SelectListItem>)ViewBag.clinics, new { @class = "form-control", @id = "ddlclinics" })
+                    @Html.HiddenFor(x => x.Id)
+                    @Html.TextBoxFor(x => x.LookUpContent, new { @class = "form-control", @id = "tbCode" })
                 </div>
             </div>
         </div>

@@ -35,10 +35,35 @@ namespace Klinik.Data.DataRepository
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<short> RowStatus { get; set; }
+        public int DeliveryOrderPusatId { get; set; }
+        public int VendorId { get; set; }
+        public string namavendor { get; set; }
+        public Nullable<double> satuan { get; set; }
+        public Nullable<double> harga { get; set; }
+        public Nullable<double> stok_prev { get; set; }
+        public Nullable<double> total_req { get; set; }
+        public Nullable<double> total_dist { get; set; }
+        public Nullable<double> sisa_stok { get; set; }
+        public Nullable<double> qty { get; set; }
+        public Nullable<double> qty_add { get; set; }
+        public string reason_add { get; set; }
+        public Nullable<double> qty_final { get; set; }
+        public string remark { get; set; }
+        public Nullable<double> total { get; set; }
+        public Nullable<double> qty_unit { get; set; }
+        public Nullable<double> qty_box { get; set; }
+        public Nullable<bool> Recived { get; set; }
+        public string No_Do_Vendor { get; set; }
+        public Nullable<System.DateTime> Tgl_Do_Vendor { get; set; }
+        public string SendBy { get; set; }
+        public Nullable<int> statusop { get; set; }
     
         public virtual Clinic Clinic { get; set; }
         public virtual DeliveryOrderPusat DeliveryOrderPusat { get; set; }
         public virtual Gudang Gudang { get; set; }
         public virtual Product Product { get; set; }
+        public virtual DeliveryOrderPusat DeliveryOrderPusat1 { get; set; }
+        public virtual Product Product1 { get; set; }
+        public virtual Vendor Vendor { get; set; }
     }
 }
