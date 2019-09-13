@@ -157,8 +157,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\Aditya\Downloads\Klinik-development_1\Klinik.Data\Klinik.Data.csproj">
-      <Project>{53291442-9A4C-4416-8871-8C94D7636404}</Project>
+    <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
+      <Project>{65643f8a-3935-4a27-aaf3-307dcbf8db60}</Project>
       <Name>Klinik.Data</Name>
     </ProjectReference>
   </ItemGroup>

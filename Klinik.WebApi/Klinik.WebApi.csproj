@@ -286,6 +286,10 @@
       <Project>{e5c9d610-f530-4d0e-8d9e-2a729ccbff23}</Project>
       <Name>Klinik.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
+      <Project>{65643F8A-3935-4A27-AAF3-307DCBF8DB60}</Project>
+      <Name>Klinik.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Klinik.Entities\Klinik.Entities.csproj">
       <Project>{0a81b9b4-7d64-412d-8e86-8ae9d22cf53f}</Project>
       <Name>Klinik.Entities</Name>
@@ -293,10 +297,6 @@
     <ProjectReference Include="..\Klinik.Features\Klinik.Features.csproj">
       <Project>{7db62f9c-5428-484f-ae2d-8831d92ea816}</Project>
       <Name>Klinik.Features</Name>
-    </ProjectReference>
-    <ProjectReference Include="C:\Users\Aditya\Downloads\Klinik-development_1\Klinik.Data\Klinik.Data.csproj">
-      <Project>{53291442-9A4C-4416-8871-8C94D7636404}</Project>
-      <Name>Klinik.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
