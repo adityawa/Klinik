@@ -1159,6 +1159,7 @@
     <Content Include="Content\typeahead.css" />
     <Content Include="js\Custom.js" />
     <Content Include="js\General.js" />
+    <Content Include="js\GudangPusatDeliveryOrder.js" />
     <Content Include="js\GudangPusatPurchaseOrder.js" />
     <Content Include="js\GudangPusat.js" />
     <Content Include="js\PurchaseReqestPusat.js" />
@@ -1567,6 +1568,7 @@
     <Content Include="Views\GudangPusat\PrintPurchaseOrderPusat.cshtml" />
     <Content Include="Views\GudangPusat\DeliveryOrderList.cshtml" />
     <Content Include="Views\GudangPusat\CreateOrEditDeliveryOrder.cshtml" />
+    <Content Include="Views\GudangPusat\PrintDeliveryOrderPusat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

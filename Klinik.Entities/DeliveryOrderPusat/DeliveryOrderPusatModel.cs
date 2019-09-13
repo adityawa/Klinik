@@ -20,9 +20,12 @@ namespace Klinik.Entities.DeliveryOrderPusat
         public Nullable<int> Validasi { get; set; }
         public string ponumber { get; set; }
         public Nullable<System.DateTime> podate { get; set; }
+        public string poprocessby { get; set; }
         public string prnumber { get; set; }
         public string namagundang { get; set; }
         public Nullable<System.DateTime> prdate { get; set; }
+        public string prrequestby { get; set; }
+        public Nullable<int> Recived { get; set; }
         public List<DeliveryOrderPusatDetailModel> deliveryOrderDetailpusatModels { get; set; }
         public DeliveryOrderPusatModel()
         {

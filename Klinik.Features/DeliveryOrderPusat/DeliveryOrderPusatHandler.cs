@@ -46,14 +46,10 @@ namespace Klinik.Features
                             ModifiedDate = qry.ModifiedDate,
                             RowStatus = qry.RowStatus
                         };
-
-                        // update data
-                        qry.poid = request.Data.poid > 0 ? request.Data.poid : qry.poid;
-                        qry.donumber = request.Data.donumber;
-                        qry.dodate = request.Data.dodate;
-                        qry.dodest = request.Data.dodest;
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.ModifiedDate = DateTime.Now;
+                        qry.Recived = request.Data.Recived;
+                        qry.Validasi = request.Data.Validasi;
                         qry.RowStatus = 0;
 
                         _unitOfWork.DeliveryOrderPusatRepository.Update(qry);
@@ -90,7 +86,7 @@ namespace Klinik.Features
                     {
                         poid = request.Data.poid,
                         donumber = request.Data.donumber,
-                        dodate = request.Data.dodate,
+                        dodate = DateTime.Now,
                         dodest = request.Data.dodest,
                         CreatedBy = request.Data.Account.UserCode,
                         CreatedDate = DateTime.Now,
@@ -153,7 +149,17 @@ namespace Klinik.Features
                     approve = qry.approve,
                     ModifiedBy = qry.ModifiedBy,
                     CreatedBy = qry.CreatedBy,
+                    prnumber = qry.PurchaseOrderPusat != null ? qry.PurchaseOrderPusat.PurchaseRequestPusat != null ? qry.PurchaseOrderPusat.PurchaseRequestPusat.prnumber : "" : "",
+                    prdate = qry.PurchaseOrderPusat != null ? qry.PurchaseOrderPusat.PurchaseRequestPusat != null ? qry.PurchaseOrderPusat.PurchaseRequestPusat.prdate : null : null,
+                    prrequestby = qry.PurchaseOrderPusat != null ? qry.PurchaseOrderPusat.PurchaseRequestPusat != null ? qry.PurchaseOrderPusat.PurchaseRequestPusat.ModifiedBy : null : null,
+                    ponumber = qry.PurchaseOrderPusat != null ? qry.PurchaseOrderPusat.ponumber : "",
+                    podate = qry.PurchaseOrderPusat != null ? qry.PurchaseOrderPusat.podate : null,
+                    poprocessby = qry.PurchaseOrderPusat != null ? qry.PurchaseOrderPusat.ModifiedBy : null,
+                    namagundang = qry.Gudang != null ? qry.Gudang.name : null,
                     ModifiedDate = qry.ModifiedDate,
+                    GudangId = qry.GudangId,
+                    Recived = qry.Recived,
+                    Validasi = qry.Validasi,
                 };
 
                 foreach (var item in qry.DeliveryOrderPusatDetails)

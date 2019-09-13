@@ -58,6 +58,9 @@ namespace Klinik.Features
                         qry.SendBy = request.Data.SendBy;
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.ModifiedDate = DateTime.Now;
+                        qry.No_Do_Vendor = request.Data.No_Do_Vendor;
+                        qry.Tgl_Do_Vendor = request.Data.Tgl_Do_Vendor;
+                        qry.SendBy = request.Data.SendBy;
 
                         _unitOfWork.DeliveryOrderPusatDetailRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
