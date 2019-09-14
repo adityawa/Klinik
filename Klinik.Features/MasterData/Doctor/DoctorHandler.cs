@@ -134,8 +134,10 @@ namespace Klinik.Features
                     // create employee
                     Employee employeeEntity = Mapper.Map<DoctorModel, Employee>(requestData);
                     employeeEntity.CreatedBy = requestData.Account.UserCode;
+                    employeeEntity.Status = 0;
+                    employeeEntity.EmpID = requestData.Code;
                     employeeEntity.CreatedDate = DateTime.Now;
-
+                    
                     // create user
                     User userEntity = Mapper.Map<DoctorModel, User>(requestData);
                     userEntity.Password = CommonUtils.Encryptor(requestData.Password, CommonUtils.KeyEncryptor);
@@ -144,14 +146,21 @@ namespace Klinik.Features
                     userEntity.CreatedBy = requestData.Account.UserCode;
                     userEntity.CreatedDate = DateTime.Now;
                     userEntity.ExpiredDate = DateTime.Now.AddDays(100);
-
+                    
                     Doctor doctorEntity = Mapper.Map<DoctorModel, Doctor>(requestData);
                     doctorEntity.Employee = employeeEntity;
                     doctorEntity.CreatedBy = requestData.Account.UserCode;
                     doctorEntity.CreatedDate = DateTime.Now;
 
+                    DoctorClinic doctorclinicEntity = Mapper.Map<DoctorModel, DoctorClinic>(requestData);
+                    doctorclinicEntity.ClinicID = requestData.OrganizationID;
+                    doctorclinicEntity.Doctor = doctorEntity;
+                    doctorclinicEntity.CreatedBy = requestData.Account.UserCode;
+                    doctorclinicEntity.CreatedDate = DateTime.Now;
+                    
                     _context.Users.Add(userEntity);
                     _context.Doctors.Add(doctorEntity);
+                    //_context.DoctorClinics.Add(doctorclinicEntity);
 
                     _resultAffected = _context.SaveChanges();
 
@@ -160,7 +169,7 @@ namespace Klinik.Features
                         CommandLog(true, ClinicEnums.Module.MASTER_DOCTOR, Constants.Command.ADD_NEW_DOCTOR, requestData.Account, doctorEntity);
 
                         response.Message = string.Format(Messages.ObjectHasBeenAdded, type, requestData.Name, requestData.Id);
-
+                        //transaction.Rollback();
                         transaction.Commit();
                     }
                 }

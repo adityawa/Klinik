@@ -48,6 +48,7 @@ namespace Klinik.Features
 
                         // update data
                         qry.Name = request.Data.Name;
+                        qry.Vendor = request.Data.Vendor;
                         qry.ProductCategoryID = request.Data.ProductCategoryID;
                         qry.ProductUnitID = request.Data.ProductUnitID;
                         qry.RetailPrice = request.Data.RetailPrice;
@@ -142,7 +143,7 @@ namespace Klinik.Features
         /// <returns></returns>
         public ProductResponse GetListData(ProductRequest request)
         {
-            request.Data.Account = OneLoginSession.Account;
+            //request.Data.Account = OneLoginSession.Account;
             List<ProductModel> lists = new List<ProductModel>();
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<Product>(true);

@@ -1823,7 +1823,18 @@ namespace Klinik.Resources {
                 return ResourceManager.GetString("Name", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Vendor
+        {
+            get
+            {
+                return ResourceManager.GetString("Vendor Name", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Navigation.
         /// </summary>

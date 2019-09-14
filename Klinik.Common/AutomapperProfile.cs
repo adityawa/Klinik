@@ -187,6 +187,7 @@ namespace Klinik.Common
             CreateMap<FileArchieve, DocumentModel>();
 
             CreateMap<DoctorModel, User>();
+            CreateMap<DoctorModel, DoctorClinic>();
             CreateMap<DoctorModel, Employee>()
                 .ForMember(m => m.EmpName, map => map.MapFrom(p => p.Name));
 
