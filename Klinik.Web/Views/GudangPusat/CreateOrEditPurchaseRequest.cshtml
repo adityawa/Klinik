@@ -2,7 +2,7 @@
 @using Klinik.Features.Account
 @using Klinik.Features;
 @{
-    ViewBag.Title = "CreateOrEditDeliveryRequestPusat";
+    ViewBag.Title = "CreateOrEditPurchaseRequest";
     var prnumber = Model != null ? Model.prnumber : ViewBag.prnumber;
     bool open = Model != null ? Model.Validasi > 0 ? false : true : true;
 }
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.CreatedDate</label>
+            <label class="col-md-2 control-label" for="inputDefault">Tanggal PR</label>
             <div class="col-md-3">
                 @Html.TextBoxFor(x => x.prdate, new { @class = "form-control", @id = "prdate", @Value = DateTime.Now.ToString("MM/dd/yyyy") })
             </div>
@@ -41,7 +41,7 @@
     </div>
     <div class="panel-body">
         <div class="scrollTable">
-            <table id="tblPurchaseOrderPusat" class="table color-table success-table">
+            <table id="tblPurchaseOrderPusat" class="table color-table success-table" style="width:200% !important">
                 <caption class="headertable">@Klinik.Resources.UIMessages.PurchaseRequestPusatList</caption>
                 <thead>
                     <tr>
@@ -49,7 +49,8 @@
                         <th class="caption-table" colspan="4" style="text-align:center">Warehouse</th>
                         <th class="caption-table" colspan="1" style="text-align:center"></th>
                         <th class="caption-table" colspan="2" style="text-align:center">PO</th>
-                        <th class="caption-table" colspan="4" style="text-align:center"></th>
+                        <th class="caption-table" colspan="2" style="text-align:center"></th>
+                        <th class="caption-table" style="text-align:center"></th>
                         <th class="caption-table" colspan="2" style="text-align:center">PO Pembulatan</th>
                     </tr>
                     <tr>
@@ -62,7 +63,7 @@
                         <th>Total Request</th>
                         <th>Total Distribusi</th>
                         <th>Sisa Warehouse</th>
-                        <th>Qty</th>
+                        <th>Qty (By Formula)</th>
                         <th>Adjusment</th>
                         <th>Remarks</th>
                         <th>Qty final</th>
@@ -78,37 +79,48 @@
                     {
                         foreach (var item in Model.purchaserequestPusatdetailModels)
                         {
-                            <tr>
-                                <td hidden>@item.Id</td>
-                                <td hidden>@item.ProductId</td>
-                                <td hidden>@item.VendorId</td>
-                                <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
-                                <td><select disabled="disabled"><option>@item.namavendor</option></select></td>
-                                <td><input type="text" class="form-control" value="@item.satuan" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.harga" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.stok_prev" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.total_req" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.total_dist" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.qty_final" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.remark" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.qty_unit" disabled="disabled" /></td>
-                                <td><input type="text" class="form-control" value="@item.qty_box" disabled="disabled" /></td>
-                                <td>
-                                    <button class="edit-purchaseorderpusatdetail btn btn-success btn-sm" disabled>Edit</button>
-                                    <button class="btn btn-danger btn-sm" disabled>Delete</button>
-                                </td>
-                            </tr>
+                    <tr>
+                        <td hidden>@item.Id</td>
+                        <td hidden>@item.ProductId</td>
+                        <td hidden>@item.VendorId</td>
+                        <td><select disabled="disabled" class="editnamabarang"><option>@item.namabarang</option></select></td>
+                        <td><select disabled="disabled"><option>@item.namavendor</option></select></td>
+                        <td><input type="text" class="form-control" value="@item.satuan" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.harga" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.stok_prev" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.total_req" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.total_dist" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.qty_final" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.remark" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.qty_unit" disabled="disabled" /></td>
+                        <td><input type="text" class="form-control" value="@item.qty_box" disabled="disabled" /></td>
+                        @if (Model.Validasi == null)
+                        {
+                            <td>
+                                    @if ((GeneralHandler.authorized("EDIT_M_PURCHASEREQUESTPUSAT") == "true"))
+                                    {
+                                        <button class="save-purchaserequestpusatdetail btn btn-success btn-sm" data-url="/GudangPusat/EditPurchaseRequestDetail" style="display:none;">Save</button>
+                                        <button class="edit-purchaserequestpusatdetail btn btn-success btn-sm" disabled>Edit</button>
+                                        <button class="delete-purchaserequestpusatdetail btn btn-danger btn-sm" disabled>Delete</button>
+                                        <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
+                                    }
+                            </td>
+                        }
+                    </tr>
                         }
                     }
                 </tbody>
                 @if (open)
                 {
                     <tfoot>
+                        <tr>
+                            <th class="caption-table headertable" colspan="17" style="text-align:center">Add Row Detail</th>
+                        </tr>
                         <tr>
                             <th hidden>Id Obat</th>
                             <th>Nama Obat</th>
@@ -119,7 +131,7 @@
                             <th>Total Request</th>
                             <th>Total Distribusi</th>
                             <th>Sisa Warehouse</th>
-                            <th>Qty</th>
+                            <th>Qty (By Formula)</th>
                             <th>Adjusment</th>
                             <th>Remarks</th>
                             <th>Qty final</th>
@@ -133,8 +145,8 @@
                             <td hidden><input type="text" hidden id="PurchaseRequestPusatDetailId" /></td>
                             <td hidden><input type="text" hidden id="ProductId" /></td>
                             <td hidden><input type="text" hidden id="VendorId" /></td>
-                            <td><select id="namabarang" class="form-control"></select></td>
-                            <td><select id="namavendor" class="form-control"></select></td>
+                            <td><select id="namabarang" class="form-control" style="width:160px;"></select></td>
+                            <td><select id="namavendor" class="form-control" style="width:160px;"></select></td>
                             <td><input type="text" class="form-control" placeholder="satuan" id="satuan" value="" /></td>
                             <td><input type="text" class="form-control" placeholder="harga" id="harga" value="" /></td>
                             <td><input type="text" class="form-control" placeholder="stok_prev" id="stok_prev" value="" disabled /></td>
@@ -160,11 +172,22 @@
             @if ((GeneralHandler.authorized("ADD_M_PURCHASEREQUESTPUSAT", "EDIT_M_PURCHASEREQUESTPUSAT") == "true"))
             {
                 <button type="submit" class="btn btn-primary savepurchasepusardetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/GudangPusat/CreateOrEditPurchaseRequestPusat" style="display:@(Model != null ? "none" : "inline-block")">@Klinik.Resources.UIMessages.Save</button>
-                <button class="btn btn-primary openallbutton" style="display:@(Model != null ? "inline-block" : "none")">@Klinik.Resources.UIMessages.Edit</button>
+                <button class="btn btn-primary openallbutton" style="display:@(Model != null ? Model.Validasi == null ? "inline-block" : "none":"none")">@Klinik.Resources.UIMessages.Edit</button>
             }
             @if (Model != null && (GeneralHandler.authorized("APPROVE_M_PURCHASEREQUESTPUSAT") == "true"))
             {
-                <button class="btn btn-success" onclick="Approve(@Model.Id)">@Klinik.Resources.UIMessages.Validate</button>
+                if (Model.approve == null)
+                {
+                    <button class="btn btn-success" onclick="Approve(@Model.Id)">@Klinik.Resources.UIMessages.Approve</button>
+                }
+
+            }
+            @if (Model != null && (GeneralHandler.authorized("VALIDATION_M_PURCHASEREQUESTPUSAT") == "true"))
+            {
+                if (Model.approve != null && Model.Validasi == null)
+                {
+                    <button class="btn btn-success" onclick="Validation(@Model.Id)">@Klinik.Resources.UIMessages.Validation</button>
+                }
             }
             @if (Model != null)
             {
@@ -222,6 +245,32 @@
         function ApprovePR(Id) {
         $.ajax({
             url: '/GudangPusat/ApprovePurchaseRequestPusat?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+        }
+
+        var Validation = function (ID) {
+            var r = confirm("@Klinik.Resources.UIMessages.ValidationConfirmation" + ID + " ) ?");
+            if (r == true) {
+           ValisasiPR(ID);
+        }
+        return false;
+        }
+
+        function ValisasiPR(Id) {
+        $.ajax({
+            url: '/GudangPusat/ValidationPurchaseRequestPusat?id=' + Id,
             type: 'POST',
             success: function (result) {
                 if (result.Status) {

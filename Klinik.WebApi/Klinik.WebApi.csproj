@@ -287,7 +287,7 @@
       <Name>Klinik.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
-      <Project>{53291442-9a4c-4416-8871-8c94d7636404}</Project>
+      <Project>{65643F8A-3935-4A27-AAF3-307DCBF8DB60}</Project>
       <Name>Klinik.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Klinik.Entities\Klinik.Entities.csproj">

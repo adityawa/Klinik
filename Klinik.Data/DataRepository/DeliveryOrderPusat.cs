@@ -25,7 +25,7 @@ namespace Klinik.Data.DataRepository
         public string donumber { get; set; }
         public Nullable<System.DateTime> dodate { get; set; }
         public string dodest { get; set; }
-        public Nullable<int> approve_by { get; set; }
+        public string approve_by { get; set; }
         public Nullable<int> approve { get; set; }
         public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }

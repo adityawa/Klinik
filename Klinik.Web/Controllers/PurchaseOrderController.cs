@@ -65,7 +65,7 @@ namespace Klinik.Web.Controllers
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
-        [CustomAuthorize("ADD_M_PURCHASEORDER", "EDIT_M_PURCHASEORDER")]
+        [CustomAuthorize("ADD_M_PURCHASEORDER", "EDIT_M_PURCHASEORDER", "VIEW_M_PURCHASEORDER")]
         public ActionResult CreateOrEditPurchaseOrder()
         {
             PurchaseOrderResponse _response = new PurchaseOrderResponse();

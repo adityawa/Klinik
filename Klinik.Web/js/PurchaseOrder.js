@@ -450,6 +450,7 @@
             $('.savepurchasedetail').show();
             $(this).hide();
             $('.edit-purchaseorderdetail').attr('disabled', false);
+            $('.subtitusi').attr('disabled', false);
         });
     }
 

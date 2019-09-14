@@ -17,6 +17,7 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Vendor()
         {
+            this.DeliveryOrderPusatDetails = new HashSet<DeliveryOrderPusatDetail>();
             this.PurchaseOrderPusatDetails = new HashSet<PurchaseOrderPusatDetail>();
             this.PurchaseRequestPusatDetails = new HashSet<PurchaseRequestPusatDetail>();
             this.DeliveryOrderPusatDetails = new HashSet<DeliveryOrderPusatDetail>();
@@ -30,6 +31,8 @@ namespace Klinik.Data.DataRepository
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeliveryOrderPusatDetail> DeliveryOrderPusatDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderPusatDetail> PurchaseOrderPusatDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

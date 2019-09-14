@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{53291442-9A4C-4416-8871-8C94D7636404}</ProjectGuid>
+    <ProjectGuid>{65643F8A-3935-4A27-AAF3-307DCBF8DB60}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Klinik.Data</RootNamespace>
@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -227,6 +228,10 @@
     <Compile Include="DataRepository\ProductUnit.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GenericRepository.cs" />
+    <Compile Include="Interfaces\IGenericRepository.cs" />
+    <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataRepository\PurchaseOrder.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
@@ -287,45 +292,45 @@
     <Compile Include="DataRepository\Vendor.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="GenericRepository.cs" />
-    <Compile Include="Interfaces\IGenericRepository.cs" />
-    <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="DataRepository\KlinikModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>KlinikModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="DataRepository\KlinikModel.edmx.diagram">
+      <DependentUpon>KlinikModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DataRepository\KlinikModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KlinikModel.edmx</DependentUpon>
       <LastGenOutput>KlinikModel.Context.cs</LastGenOutput>
+      <DependentUpon>KlinikModel.edmx</DependentUpon>
     </Content>
     <Content Include="DataRepository\KlinikModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>KlinikModel.edmx</DependentUpon>
       <LastGenOutput>KlinikModel.cs</LastGenOutput>
     </Content>
+    <Content Include="DB\16 agustus 2019 last.sql" />
     <Content Include="DB\19 agustus 2019.sql" />
     <Content Include="DB\20 agustus 2019.sql" />
     <Content Include="DB\28 agustus 2019.sql" />
+    <Content Include="DB\AddLookupTable_10-9-2019.sql" />
     <Content Include="DB\DBKlinikDev_20190817.sql" />
     <Content Include="DB\DBKlinik_GenScripts_20190909.sql" />
-    <Content Include="DB\AddLookupTable_10-9-2019.sql" />
+    <Content Include="DB\DB_Klinik_PRD_2019-09-12.sql" />
     <Content Include="DB\MandeKlinik16-08-2019.sql" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <None Include="App.Config" />
-    <EntityDeploy Include="DataRepository\KlinikModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>KlinikModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="DataRepository\KlinikModel.edmx.diagram">
-      <DependentUpon>KlinikModel.edmx</DependentUpon>
-    </None>
-    <None Include="packages.config" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

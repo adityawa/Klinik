@@ -1,4 +1,5 @@
 ﻿@model Klinik.Entities.DeliveryOrder.DeliveryOrderModel
+@using Klinik.Features;
 @{
     ViewBag.Title = "CreateOrEditDeliveryOrder";
 }
@@ -22,7 +23,7 @@
             </div>
             <label class="col-md-2 control-label" for="inputDefault">No PO</label>
             <div class="col-md-2">
-                <input type="text" disabled value="@Model.ponumber" class="form-control"/>
+                <input type="text" disabled value="@Model.ponumber" class="form-control" />
             </div>
             <label class="col-md-2 control-label" for="inputDefault">No PR</label>
             <div class="col-md-2">
@@ -104,10 +105,13 @@
                                 <td><input type="text" class="form-control" value="@item.remark_adj" disabled="disabled" /></td>
                                 <td><input type="checkbox" value="@(item.Recived == true ? "true" : "false")" @(item.Recived == true ? "checked" : "") disabled></td>
                                 <td>
-                                    <button class="save-deliveryorderdetail btn btn-success btn-sm" data-url="/DeliveryOrder/EditDeliveryOrderDetail" style="display:none;">Save</button>
-                                    <button class="edit-deliveryorderdetail btn btn-success btn-sm" disabled>Edit</button>
-                                    <button class="btn btn-danger btn-sm delete-deliveryorderdetail" disabled>Delete</button>
-                                    <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
+                                    @if ((GeneralHandler.authorized("EDIT_M_DELIVERYORDER") == "true"))
+                                    {
+                                        <button class="save-deliveryorderdetail btn btn-success btn-sm" data-url="/DeliveryOrder/EditDeliveryOrderDetail" style="display:none;">Save</button>
+                                        <button class="edit-deliveryorderdetail btn btn-success btn-sm" disabled>Edit</button>
+                                        <button class="btn btn-danger btn-sm delete-deliveryorderdetail" disabled>Delete</button>
+                                        <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
+                                    }
                                 </td>
                             </tr>
                         }
@@ -117,8 +121,26 @@
         </div>
         <br />
         <footer class="panel-footer">
-            <button type="submit" class="btn btn-primary saveorderdetail" data-parameterone="_deliveryorder" data-parametertwo="deliveryOrderDetailpusatModels" style="display:none" data-url="/DeliveryOrder/CreateOrEditDeliveryOrder">@Klinik.Resources.UIMessages.Save</button>
-            <button type="submit" class="btn btn-primary openallbutton" data-parameterone="_deliveryorder">@Klinik.Resources.UIMessages.Edit</button>
+            @if (Model != null && (GeneralHandler.authorized("EDIT_M_DELIVERYORDER") == "true"))
+            {
+                if (Model.Recived == null)
+                {
+                    <button type="submit" class="btn btn-primary saveorderdetail" data-parameterone="_deliveryorder" data-parametertwo="deliveryOrderDetailpusatModels" style="display:none" data-url="/DeliveryOrder/CreateOrEditDeliveryOrder">@Klinik.Resources.UIMessages.Save</button>
+                    <button type="submit" class="btn btn-primary openallbutton" data-parameterone="_deliveryorder">@Klinik.Resources.UIMessages.Edit</button>
+                }
+            }
+
+            @if (Model != null && (GeneralHandler.authorized("RECIVED_M_DELIVERYORDER") == "true"))
+            {
+                if (Model.Recived == null)
+                {
+                    <a class="btn btn-success" href="/DeliveryOrder/ReceivedOrder?id=@(Model.Id)">Recived</a>
+                }
+            }
+            @if (Model != null && (GeneralHandler.authorized("VIEW_M_DELIVERYORDER") == "true"))
+            {
+                <a class="btn btn-success btn-sm" href="/DeliveryOrder/PrintDeliveryOrder?id=@(Model.Id)">Print</a>
+            }
             <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
         </footer>
     </div>
@@ -133,7 +155,7 @@
                 autoclose: true
             });
             $('#btnreset').click(function (e) {
-                window.location.href = "/DeliveryOrder/DeliveryOrderList";
+                window.location.href = "/PurchaseRequest/PurchaseRequestList";
             });
 
             toastr.options = {

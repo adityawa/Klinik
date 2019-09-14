@@ -17,8 +17,8 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PurchaseOrderPusat()
         {
-            this.PurchaseOrderPusatDetails = new HashSet<PurchaseOrderPusatDetail>();
             this.DeliveryOrderPusats = new HashSet<DeliveryOrderPusat>();
+            this.PurchaseOrderPusatDetails = new HashSet<PurchaseOrderPusatDetail>();
         }
     
         public int id { get; set; }
@@ -37,11 +37,11 @@ namespace Klinik.Data.DataRepository
         public Nullable<int> Validasi { get; set; }
         public Nullable<int> GudangId { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeliveryOrderPusat> DeliveryOrderPusats { get; set; }
+        public virtual Gudang Gudang { get; set; }
         public virtual PurchaseRequestPusat PurchaseRequestPusat { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderPusatDetail> PurchaseOrderPusatDetails { get; set; }
-        public virtual Gudang Gudang { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DeliveryOrderPusat> DeliveryOrderPusats { get; set; }
     }
 }

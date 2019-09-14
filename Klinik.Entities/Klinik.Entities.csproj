@@ -69,6 +69,7 @@
     <Compile Include="Account\PasswordHistoryModel.cs" />
     <Compile Include="Account\ResetPasswordModel.cs" />
     <Compile Include="Administration\LogModel.cs" />
+    <Compile Include="AppointmentEntities\AppointmentModel.cs" />
     <Compile Include="BaseRequest.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="BaseResponse.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="MasterData\ICDThemeModel.cs" />
     <Compile Include="MasterData\LookUpCategoryModel.cs" />
     <Compile Include="MasterData\VendorModel.cs" />
+    <Compile Include="MCUPackageEntities\MCUPackageModel.cs" />
     <Compile Include="MedicalHistoryEntity\MedicalHistoryModel.cs" />
     <Compile Include="Pharmacy\PengambilanObatModel.cs" />
     <Compile Include="Pharmacy\PharmacyModel.cs" />
@@ -152,14 +154,13 @@
     <Compile Include="Reports\Top10ReferalParamsModels.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
-      <Project>{53291442-9a4c-4416-8871-8c94d7636404}</Project>
+      <Project>{65643f8a-3935-4a27-aaf3-307dcbf8db60}</Project>
       <Name>Klinik.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

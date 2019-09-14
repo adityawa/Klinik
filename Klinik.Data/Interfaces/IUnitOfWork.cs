@@ -77,6 +77,8 @@ namespace Klinik.Data
         IGenericRepository<LookupCategory> LookUpCategoryRepository { get; }
 
         IGenericRepository<ICDTheme> ICDThemeRepository { get; }
+        IGenericRepository<Appointment> AppointmentRepository { get; }
+        IGenericRepository<MCUPackage> MCUpackageRepository { get; }
 
         int Save();
     }

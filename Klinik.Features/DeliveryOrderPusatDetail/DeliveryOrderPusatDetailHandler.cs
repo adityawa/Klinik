@@ -1,6 +1,9 @@
-﻿using Klinik.Common;
+﻿using AutoMapper;
+using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Entities.DeliveryOrderPusatDetail;
+using Klinik.Features.Account;
 using Klinik.Resources;
 using System;
 using System.Collections.Generic;
@@ -27,44 +30,37 @@ namespace Klinik.Features
                     var qry = _unitOfWork.DeliveryOrderPusatDetailRepository.GetById(request.Data.Id);
                     if (qry != null)
                     {
-                        var _oldentity = new DeliveryOrderPusatDetail
-                        {
-                            ProductId = qry.ProductId,
-                            namabarang = qry.namabarang,
-                            //ClinicId = qry.ClinicId,
-                            //DeliveryOderPusatId = qry.DeliveryOderPusatId,
-                            //ProductId_Po = qry.ProductId_Po,
-                            //GudangId = qry.GudangId,
-                            //qty_po = qry.qty_po,
-                            //qty_po_final = qry.qty_po_final,
-                            //qty_do = qry.qty_do,
-                            //qty_adj = qry.qty_adj,
-                            //remark_adj = qry.remark_adj,
-                            //remark_do = qry.remark_do,
-                            CreatedBy = qry.CreatedBy,
-                            CreatedDate = qry.CreatedDate,
-                            //namabarang_po = qry.namabarang_po,
-                            ModifiedBy = qry.ModifiedBy,
-                            ModifiedDate = qry.ModifiedDate,
-                            RowStatus = qry.RowStatus
-                        };
+                        var _oldentity = Mapper.Map<DeliveryOrderPusatDetail, DeliveryOrderPusatDetailModel>(qry);
 
                         // update data
                         qry.ProductId = request.Data.ProductId;
                         qry.namabarang = request.Data.namabarang;
-                        //qry.namabarang_po = request.Data.namabarang_po;
-                        //qry.DeliveryOderPusatId = request.Data.DeliveryOderPusatId;
-                        //qry.ClinicId = request.Data.ClinicId;
-                        //qry.GudangId = request.Data.GudangId;
-                        //qry.ProductId_Po = request.Data.ProductId_Po;
-                        //qry.qty_po = request.Data.qty_po;
-                        //qry.qty_po_final = request.Data.qty_po_final;
-                        //qry.qty_do = request.Data.qty_do;
-                        //qry.qty_adj = request.Data.qty_adj;
-                        //qry.remark_adj = request.Data.remark_adj;
-                        //qry.remark_do = request.Data.remark_do;
+                        qry.namabarang = request.Data.namabarang;
+                        qry.VendorId = request.Data.VendorId;
+                        qry.namavendor = request.Data.namavendor;
+                        qry.satuan = request.Data.satuan;
+                        qry.harga = request.Data.harga;
+                        qry.stok_prev = request.Data.stok_prev;
+                        qry.total_req = request.Data.total_req;
+                        qry.total_dist = request.Data.total_dist;
+                        qry.sisa_stok = request.Data.sisa_stok;
+                        qry.qty = request.Data.qty;
+                        qry.qty_add = request.Data.qty_add;
+                        qry.reason_add = request.Data.reason_add;
+                        qry.qty_final = request.Data.qty_final;
+                        qry.remark = request.Data.remark;
+                        qry.total = request.Data.total;
+                        qry.qty_unit = request.Data.qty_unit;
+                        qry.qty_box = request.Data.qty_box;
+                        qry.Recived = request.Data.Recived;
+                        qry.No_Do_Vendor = request.Data.No_Do_Vendor;
+                        qry.Tgl_Do_Vendor = request.Data.Tgl_Do_Vendor;
+                        qry.SendBy = request.Data.SendBy;
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.ModifiedDate = DateTime.Now;
+                        qry.No_Do_Vendor = request.Data.No_Do_Vendor;
+                        qry.Tgl_Do_Vendor = request.Data.Tgl_Do_Vendor;
+                        qry.SendBy = request.Data.SendBy;
 
                         _unitOfWork.DeliveryOrderPusatDetailRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
@@ -92,25 +88,9 @@ namespace Klinik.Features
                 }
                 else
                 {
-                    var deliveryorderdetailEntity = new DeliveryOrderPusatDetail
-                    {
-                        ProductId = request.Data.ProductId,
-                        //DeliveryOderPusatId = request.Data.DeliveryOderPusatId,
-                        namabarang = request.Data.namabarang,
-                        //namabarang_po = request.Data.namabarang_po,
-                        //GudangId = request.Data.GudangId,
-                        //ClinicId = request.Data.ClinicId,
-                        //ProductId_Po = request.Data.ProductId_Po,
-                        //qty_po = request.Data.qty_po,
-                        //qty_po_final = request.Data.qty_po_final,
-                        //qty_do = request.Data.qty_do,
-                        //qty_adj = request.Data.qty_adj,
-                        //remark_adj = request.Data.remark_adj,
-                        //remark_do = request.Data.remark_do,
-                        CreatedBy = request.Data.Account.UserCode,
-                        CreatedDate = DateTime.Now,
-                    };
-
+                    var deliveryorderdetailEntity = Mapper.Map<DeliveryOrderPusatDetailModel, DeliveryOrderPusatDetail>(request.Data);
+                    deliveryorderdetailEntity.CreatedBy = OneLoginSession.Account.UserCode;
+                    deliveryorderdetailEntity.CreatedDate = DateTime.Now;
                     _unitOfWork.DeliveryOrderPusatDetailRepository.Insert(deliveryorderdetailEntity);
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)

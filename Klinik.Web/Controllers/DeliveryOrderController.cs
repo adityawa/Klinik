@@ -64,7 +64,7 @@ namespace Klinik.Web.Controllers
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
-        [CustomAuthorize("ADD_M_DELIVERYORDER", "EDIT_M_DELIVERYORDER")]
+        [CustomAuthorize("ADD_M_DELIVERYORDER", "EDIT_M_DELIVERYORDER", "VIEW_M_DELIVERYORDER")]
         public ActionResult CreateOrEditDeliveryOrder()
         {
             DeliveryOrderResponse _response = new DeliveryOrderResponse();
@@ -153,7 +153,7 @@ namespace Klinik.Web.Controllers
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
 
-        [CustomAuthorize("EDIT_M_DELIVERYORDER")]
+        [CustomAuthorize("APPROVE_M_DELIVERYORDER")]
         [HttpPost]
         public JsonResult ApproveDeliveryOrder(int id)
         {
@@ -198,6 +198,7 @@ namespace Klinik.Web.Controllers
             };
         }
 
+        [CustomAuthorize("RECIVED_M_DELIVERYORDER")]
         public ActionResult ReceivedOrder(int id)
         {
             DeliveryOrderResponse _response = new DeliveryOrderResponse();
@@ -213,9 +214,11 @@ namespace Klinik.Web.Controllers
             DeliveryOrderResponse resp = new DeliveryOrderHandler(_unitOfWork).GetDetail(request);
             resp.Entity.Account = (AccountModel)Session["UserLogon"];
             resp.Entity.Recived = 1;
+            resp.Entity.approve = 1;
             var receiveddeliveryorder = new DeliveryOrderRequest
             {
-                Data = resp.Entity
+                Data = resp.Entity,
+                Action = ClinicEnums.Action.APPROVE.ToString()
             };
             new DeliveryOrderValidator(_unitOfWork).Validate(receiveddeliveryorder, out _response);
             DeliveryOrderModel _model = resp.Entity;
@@ -227,6 +230,8 @@ namespace Klinik.Web.Controllers
                     {
                         Account = (AccountModel)Session["UserLogon"],
                         stock = Convert.ToInt32(item.qty_request) > 0 ? Convert.ToInt32(item.qty_request) : Convert.ToInt32(item.qty_request),
+                        GudangId = _model.GudangId,
+                        ProductId = item.ProductId
                     }
                 };
 
@@ -236,6 +241,8 @@ namespace Klinik.Web.Controllers
                     {
                         Account = (AccountModel)Session["UserLogon"],
                         value = Convert.ToInt32(item.qty_request) > 0 ? Convert.ToInt32(item.qty_request) : Convert.ToInt32(item.qty_request),
+                        GudangId = Convert.ToInt32(_model.GudangId),
+                        ProductId = item.ProductId
                     }
                 };
 
@@ -344,7 +351,7 @@ namespace Klinik.Web.Controllers
         }
 
         #region ::DELIVERYORDERDETAIL::
-        [CustomAuthorize("EDIT_M_PURCHASEREQUEST")]
+        [CustomAuthorize("EDIT_M_DELIVERYORDER")]
         [HttpPost]
         public ActionResult EditDeliveryOrderDetail(DeliveryOrderDetailModel deliveryorderdetail)
         {

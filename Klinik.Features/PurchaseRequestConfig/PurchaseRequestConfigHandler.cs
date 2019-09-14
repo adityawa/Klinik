@@ -61,7 +61,7 @@ namespace Klinik.Features
                     int resultAffected = _unitOfWork.Save();
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
 
             }

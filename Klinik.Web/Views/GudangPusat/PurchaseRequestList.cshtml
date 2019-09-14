@@ -1,4 +1,5 @@
 ﻿@model Klinik.Entities.PurchaseRequestPusat.PurchaseRequestPusatModel
+@using Klinik.Features;
 
 @{
     ViewBag.Title = "PurchaseRequestListPusat";
@@ -11,20 +12,28 @@
         </div>
         <h5 class="panel-title">
             @Klinik.Resources.UIMessages.PurchaseRequestPusatList
-            <button id="btnAdd" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;@Klinik.Resources.UIMessages.AddNew</button>
+            @if ((GeneralHandler.authorized("ADD_M_PURCHASEREQUESTPUSAT") == "false"))
+            {
+                <button id="btnAdd" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;@Klinik.Resources.UIMessages.AddNew</button>
+            }
         </h5>
     </header>
     <div class="panel-body">
         <div style="width:100%; margin:0 auto">
-            <table id="lisdatatable" class="table table-striped table-bordered dt-responsive" cellspacing="0">
+            <table id="lisdatatable" class="table table-striped table-bordered dt-responsive" style="width:150%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>@Klinik.Resources.UIMessages.IDPR</th>
                         <th>@Klinik.Resources.UIMessages.PrNumber</th>
+                        <th>Tanggal Pr</th>
+                        <th>@Klinik.Resources.UIMessages.PoNumber</th>
                         <th>Tanggal Po</th>
+                        <th>Do Number</th>
+                        <th>Tanggal Do</th>
                         <th>@Klinik.Resources.UIMessages.RequestBy</th>
                         <th>@Klinik.Resources.UIMessages.ApprovedBY</th>
                         <th>@Klinik.Resources.UIMessages.Approve</th>
+                        <th>Status</th>
                         <th>@Klinik.Resources.UIMessages.CreatedBy</th>
                         <th>@Klinik.Resources.UIMessages.Action</th>
                     </tr>
@@ -94,22 +103,63 @@
                     "targets": [7],
                     "searchable": true,
                     "orderable": false
+                },
+                {
+                    "targets": [8],
+                    "searchable": true,
+                    "orderable": false
+                },
+                {
+                    "targets": [9],
+                    "searchable": true,
+                    "orderable": false
+                },
+                {
+                    "targets": [10],
+                    "searchable": true,
+                    "orderable": false
+                    }
+                ,
+                {
+                    "targets": [11],
+                    "searchable": true,
+                    "orderable": false
                 }
                 ],
 
             "columns": [
                 { "data": "Id", "Id": "Id", "autoWidth": false },
-                { "data": "prnumber", "prnumber": "prnumber", "autoWidth": true },
+                {
+                    "data": "prnumber",
+                    "render": function (data, type, full, meta) {
+                        return '<a href="/GudangPusat/CreateOrEditPurchaseRequest?id=' + full.Id + '">' + full.prnumber + '</a>';
+                    }
+                },
                 { "data": "createformat", "createformat": "createformat", "autoWidth": true },
+                {
+                    "data": "ponumber",
+                    "render": function (data, type, full, meta) {
+                        return '<a href="/GudangPusat/CreateOrEditPurchaseOrder?id=' + full.poid + '">' + full.ponumber + '</a>';
+                    }
+                },
+                { "data": "createpo", "createpo": "createpo", "autoWidth": true },
+                {
+                    "data": "donumber",
+                    "render": function (data, type, full, meta) {
+                        return '<a href="/GudangPusat/CreateOrEditDeliveryOrder?id=' + full.doid + '">' + full.donumber + '</a>';
+                    }
+                },
+                { "data": "createdo", "createdo": "createdo", "autoWidth": true },
                 { "data": "request_by", "request_by": "request_by", "autoWidth": false },
                 { "data": "approve_by", "approve_by": "approve_by", "autoWidth": true },
                 { "data": "approve", "approve": "approve", "autoWidth": true },
+                { "data": "status", "status": "status", "autoWidth": true },
                 { "data": "CreatedBy", "CreatedBy": "CreatedBy", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta)
                     {
-                         var type = full['approve'] == null ? 'Approve' : 'Print';
-                        return '<a class="btn btn-info btn-xs" href="/GudangPusat/CreateOrEditPurchaseRequest?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger btn-xs' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>";
+                        var type = full['Validasi'] != null ? 'View' : 'Edit';
+                        return '<a class="btn btn-info btn-xs" href="/GudangPusat/CreateOrEditPurchaseRequest?id=' + full.Id + '">' + type  + '</a>  ' + " | <button class='btn btn-danger btn-xs' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>";
                     }
                 }
 

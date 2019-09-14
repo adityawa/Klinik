@@ -14,6 +14,8 @@ namespace Klinik.Features.PurchaseRequest
         private const string ADD_M_PURCHASEREQUEST = "ADD_M_PURCHASEREQUEST";
         private const string EDIT_M_PURCHASEREQUEST = "EDIT_M_PURCHASEREQUEST";
         private const string DELETE_M_PURCHASEREQUEST = "DELETE_M_PURCHASEREQUEST";
+        private const string VALIDATION_M_PURCHASEREQUEST = "VALIDATION_M_PURCHASEREQUEST";
+        private const string APPROVE_M_PURCHASEREQUEST = "APPROVE_M_PURCHASEREQUEST";
 
         public PurchaseRequestValidator(IUnitOfWork unitOfWork)
         {
@@ -103,7 +105,7 @@ namespace Klinik.Features.PurchaseRequest
 
             if (request.Action == ClinicEnums.Action.APPROVE.ToString())
             {
-                bool isHavePrivilege = IsHaveAuthorization(EDIT_M_PURCHASEREQUEST, request.Data.Account.Privileges.PrivilegeIDs);
+                bool isHavePrivilege = IsHaveAuthorization(APPROVE_M_PURCHASEREQUEST, request.Data.Account.Privileges.PrivilegeIDs);
                 if (!isHavePrivilege)
                 {
                     response.Status = false;
@@ -123,7 +125,7 @@ namespace Klinik.Features.PurchaseRequest
 
             if (request.Action == ClinicEnums.Action.VALIDASI.ToString())
             {
-                bool isHavePrivilege = IsHaveAuthorization(EDIT_M_PURCHASEREQUEST, request.Data.Account.Privileges.PrivilegeIDs);
+                bool isHavePrivilege = IsHaveAuthorization(VALIDATION_M_PURCHASEREQUEST, request.Data.Account.Privileges.PrivilegeIDs);
                 if (!isHavePrivilege)
                 {
                     response.Status = false;

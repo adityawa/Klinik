@@ -51,7 +51,6 @@ namespace Klinik.Data
         private IGenericRepository<PoliService> _poliServiceRepository;
         private IGenericRepository<Letter> _letterRepository;
         private IGenericRepository<SuratRujukanLabKeluar> _suratRujukanLabKeluarRepository;
-
         private IGenericRepository<Gudang> _gudangRepository;
         private IGenericRepository<DeliveryOrder> _deliveryorderRepository;
         private IGenericRepository<DeliveryOrderDetail> _deliveryorderdetailRepository;
@@ -68,15 +67,15 @@ namespace Klinik.Data
         private IGenericRepository<PurchaseRequestPusatDetail> _purchaserequestpusatdetailRepository;
         private IGenericRepository<ProductInGudang> _productingudangRepository;
         private IGenericRepository<HistoryProductInGudang> _historyprodcutingudangRepository;
-
         private IGenericRepository<PanggilanPoli> _panggilanPoliRepository;
 		private IGenericRepository<FormExamineMedicineDetail> _formExamineMedicineDetailRepository;
-
         private IGenericRepository<PurchaseRequestConfig> _purchaseRequestConfigRepository;
+
         private IGenericRepository<LookupCategory> _lookupCategoryRepository;
 
         private IGenericRepository<ICDTheme> _icdThemeRepository;
-
+        private IGenericRepository<Appointment> _appointmentRepository;
+        private IGenericRepository<MCUPackage> _mcuPackageRepository;
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
@@ -163,8 +162,6 @@ namespace Klinik.Data
                 return _labItemRepository;
             }
         }
-
-
 
         public IGenericRepository<FormMedical> FormMedicalRepository
         {
@@ -552,7 +549,6 @@ namespace Klinik.Data
             }
         }
 
-
         public IGenericRepository<Gudang> GudangRepository
         {
             get
@@ -760,6 +756,26 @@ namespace Klinik.Data
                 if (_icdThemeRepository == null)
                     _icdThemeRepository = new GenericRepository<ICDTheme>(_context);
                 return _icdThemeRepository;
+            }
+        }
+
+        public IGenericRepository<Appointment> AppointmentRepository
+        {
+            get
+            {
+                if (_appointmentRepository == null)
+                    _appointmentRepository = new GenericRepository<Appointment>(_context);
+                return _appointmentRepository;
+            }
+        }
+
+        public IGenericRepository<MCUPackage> MCUpackageRepository
+        {
+            get
+            {
+                if (_mcuPackageRepository == null)
+                    _mcuPackageRepository = new GenericRepository<MCUPackage>(_context);
+                return _mcuPackageRepository;
             }
         }
 
