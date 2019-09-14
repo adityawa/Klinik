@@ -36,7 +36,6 @@
         <EntityTypeShape EntityType="KlinikDBModel.LabItemCategory" Width="1.5" PointX="6" PointY="58.125" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Letter" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Log" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.LookupCategory" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.MCUPackage" Width="1.5" PointX="3" PointY="94" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Medicine" Width="1.5" PointX="13.25" PointY="95.5" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Menu" Width="1.5" PointX="6" PointY="135.25" IsExpanded="true" />
@@ -192,6 +191,7 @@
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_PurchaseRequestPusat" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_Vendor" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_UserRole_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="KlinikDBModel.LookupCategory" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

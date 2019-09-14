@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Klinik.Features
 {
-    public class LookupCategoryRequest:BaseRequest<LookUpCategoryModel>
+    public class LookUpCategoryRequest:BaseRequest<LookUpCategoryModel>
     {
     }
 }

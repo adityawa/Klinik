@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Klinik.Features.MasterData.LookupCategory
 {
-    public class LookUpCategoryHandler : BaseFeatures, IBaseFeatures<LookUpCategoryResponse, LookupCategoryRequest>
+    public class LookUpCategoryHandler : BaseFeatures, IBaseFeatures<LookUpCategoryResponse, LookUpCategoryRequest>
     {
         /// <summary>
         /// Constructor
@@ -28,7 +28,7 @@ namespace Klinik.Features.MasterData.LookupCategory
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public LookUpCategoryResponse CreateOrEdit(LookupCategoryRequest request)
+        public LookUpCategoryResponse CreateOrEdit(LookUpCategoryRequest request)
         {
             LookUpCategoryResponse response = new LookUpCategoryResponse();
 
@@ -45,21 +45,21 @@ namespace Klinik.Features.MasterData.LookupCategory
                         qry.ModifiedDate = DateTime.Now;
 
                         // update data
-                        qry.LookUpName = request.Data.LookupName;
-                        qry.LookupContent = request.Data.LookupContent;
+                        qry.LookUpName = request.Data.LookUpName;
+                        qry.LookUpContent = request.Data.LookUpContent;
 
                         _unitOfWork.LookUpCategoryRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, "LookupCategory", qry.LookUpName, qry.ID);
+                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, "LookUpCategory", qry.LookUpName, qry.ID);
 
                             CommandLog(true, ClinicEnums.Module.MASTER_LOOKUPCATEGORY, Constants.Command.EDIT_LOOKUP_CATEGORY, request.Data.Account, request.Data, _oldentity);
                         }
                         else
                         {
                             response.Status = false;
-                            response.Message = string.Format(Messages.UpdateObjectFailed, "LookupCategory");
+                            response.Message = string.Format(Messages.UpdateObjectFailed, "LookUpCategory");
 
                             CommandLog(false, ClinicEnums.Module.MASTER_LOOKUPCATEGORY, Constants.Command.EDIT_LOOKUP_CATEGORY, request.Data.Account, request.Data, _oldentity);
                         }
@@ -67,7 +67,7 @@ namespace Klinik.Features.MasterData.LookupCategory
                     else
                     {
                         response.Status = false;
-                        response.Message = string.Format(Messages.UpdateObjectFailed, "LookupCategory");
+                        response.Message = string.Format(Messages.UpdateObjectFailed, "LookUpCategory");
 
                         CommandLog(false, ClinicEnums.Module.MASTER_LOOKUPCATEGORY, Constants.Command.EDIT_LOOKUP_CATEGORY, request.Data.Account, request.Data);
                     }
@@ -82,14 +82,14 @@ namespace Klinik.Features.MasterData.LookupCategory
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "LookupCategory", lookupEntity.LookUpName, lookupEntity.ID);
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "LookUpCategory", lookupEntity.LookUpName, lookupEntity.ID);
 
                         CommandLog(true, ClinicEnums.Module.MASTER_LOOKUPCATEGORY, Constants.Command.ADD_LOOKUP_CATEGORY, request.Data.Account, request.Data);
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = string.Format(Messages.AddObjectFailed, "LookupCategory");
+                        response.Message = string.Format(Messages.AddObjectFailed, "LookUpCategory");
 
                         CommandLog(false, ClinicEnums.Module.MASTER_LOOKUPCATEGORY, Constants.Command.ADD_LOOKUP_CATEGORY, request.Data.Account, request.Data);
                     }
@@ -115,7 +115,7 @@ namespace Klinik.Features.MasterData.LookupCategory
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public LookUpCategoryResponse GetDetail(LookupCategoryRequest request)
+        public LookUpCategoryResponse GetDetail(LookUpCategoryRequest request)
         {
              LookUpCategoryResponse response = new LookUpCategoryResponse();
 
@@ -133,7 +133,7 @@ namespace Klinik.Features.MasterData.LookupCategory
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public LookUpCategoryResponse GetListData(LookupCategoryRequest request)
+        public LookUpCategoryResponse GetListData(LookUpCategoryRequest request)
         {
             List<LookUpCategoryModel> lists = new List<LookUpCategoryModel>();
             dynamic qry = null;
@@ -207,7 +207,7 @@ namespace Klinik.Features.MasterData.LookupCategory
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public LookUpCategoryResponse RemoveData(LookupCategoryRequest request)
+        public LookUpCategoryResponse RemoveData(LookUpCategoryRequest request)
         {
             LookUpCategoryResponse response = new LookUpCategoryResponse();
 

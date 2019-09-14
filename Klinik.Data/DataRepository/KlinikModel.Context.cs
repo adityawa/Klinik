@@ -56,7 +56,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<LabItemCategory> LabItemCategories { get; set; }
         public virtual DbSet<Letter> Letters { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
-        public virtual DbSet<LookupCategory> LookupCategories { get; set; }
         public virtual DbSet<MCUPackage> MCUPackages { get; set; }
         public virtual DbSet<Medicine> Medicines { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
@@ -99,5 +98,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
+        public virtual DbSet<LookupCategory> LookupCategories { get; set; }
     }
 }
