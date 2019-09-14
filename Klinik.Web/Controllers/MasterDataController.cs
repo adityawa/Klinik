@@ -1137,14 +1137,14 @@ namespace Klinik.Web.Controllers
                 PoliResponse resp = new PoliHandler(_unitOfWork).GetDetail(request);
                 PoliModel _model = resp.Entity;
                 ViewBag.Response = _response;
-                ViewBag.Type = new SelectList(PoliType(), "Value", "Text").ToList();
+                ViewBag.Type = BindDropDownPoliType();
                 ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }
             else
             {
                 ViewBag.Response = _response;
-                ViewBag.Type = new SelectList(PoliType(), "Value", "Text").ToList();
+                ViewBag.Type = BindDropDownPoliType();
                 ViewBag.ActionType = ClinicEnums.Action.Add;
                 return View();
             }
@@ -1166,7 +1166,7 @@ namespace Klinik.Web.Controllers
 
             new PoliValidator(_unitOfWork).Validate(request, out _response);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
-            ViewBag.Type = new SelectList(PoliType(), "Value", "Text", _model.Type).ToList();
+            ViewBag.Type = BindDropDownPoliType();
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
 
             return View();
