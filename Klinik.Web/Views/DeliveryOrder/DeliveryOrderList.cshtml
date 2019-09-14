@@ -103,7 +103,7 @@
                             buttonrecived = full['approve'] != null ? ' <a class="btn btn-success btn-sm" href="/DeliveryOrder/ReceivedOrder?id=' + full.Id + '">Recived</a>' : "";
                             buttondelete = " | <button class='btn btn-danger btn-sm' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>";
                         }
-                        return '<a class="btn btn-info btn-sm" href="/DeliveryOrder/CreateOrEditDeliveryOrder?id=' + full.Id + '">' + editorview + '</a>  ' + button + buttonrecived
+                        return '<a class="btn btn-info btn-sm" href="/DeliveryOrder/CreateOrEditDeliveryOrder?id=' + full.Id + '">' + editorview + '</a>  ' + button;
                     }
                 }
 

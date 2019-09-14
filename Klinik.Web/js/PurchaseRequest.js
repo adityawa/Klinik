@@ -320,7 +320,7 @@
         if (!el.length) return;
 
         el.click(function () {
-            $('.saveorderdetail').show();
+            $('.savepurchasedetail').show();
             $(this).hide();
             $('.edit-purchaseorderdetail').attr('disabled', false);
             $('#sendby').attr('disabled', false);

@@ -72,7 +72,7 @@ namespace Klinik.Web.Controllers
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
         }
 
-        [CustomAuthorize("ADD_M_PURCHASEREQUEST", "EDIT_M_PURCHASEREQUEST")]
+        [CustomAuthorize("ADD_M_PURCHASEREQUEST", "EDIT_M_PURCHASEREQUEST", "VIEW_M_PURCHASEREQUEST")]
         public ActionResult CreateOrEditPurchaseRequest()
         {
             var lastprnumber = _context.PurchaseRequests.OrderByDescending(x => x.CreatedDate).Select(a => a.prnumber).FirstOrDefault();

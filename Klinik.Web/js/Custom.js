@@ -295,8 +295,8 @@
                 }
             });
 
-            //getdata.find('td:eq(7) input').prop('disabled', false);
-            //getdata.find('td:eq(8) input').prop('disabled', false);
+            getdata.find('td:eq(7) input').prop('disabled', false);
+            getdata.find('td:eq(8) input').prop('disabled', false);
             $(this).hide();
             getdata.find('.save-deliveryorderdetail').show();
             getdata.find('input[type="checkbox"]').prop('disabled', false);

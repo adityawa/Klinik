@@ -14,6 +14,8 @@ namespace Klinik.Features
         private const string ADD_M_DELIVERYORDER = "ADD_M_DELIVERYORDER";
         private const string EDIT_M_DELIVERYORDER = "EDIT_M_DELIVERYORDER";
         private const string DELETE_M_DELIVERYORDER = "DELETE_M_DELIVERYORDER";
+        private const string APPROVE_M_DELIVERYORDER = "APPROVE_M_DELIVERYORDER";
+        private const string RECIVED_M_DELIVERYORDER = "RECIVED_M_DELIVERYORDER";
 
         public DeliveryOrderValidator(IUnitOfWork unitOfWork)
         {
@@ -99,7 +101,7 @@ namespace Klinik.Features
 
             if (request.Action == ClinicEnums.Action.APPROVE.ToString())
             {
-                bool isHavePrivilege = IsHaveAuthorization(EDIT_M_DELIVERYORDER, request.Data.Account.Privileges.PrivilegeIDs);
+                bool isHavePrivilege = IsHaveAuthorization(RECIVED_M_DELIVERYORDER, request.Data.Account.Privileges.PrivilegeIDs);
                 if (!isHavePrivilege)
                 {
                     response.Status = false;

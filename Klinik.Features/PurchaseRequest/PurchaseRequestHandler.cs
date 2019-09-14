@@ -189,7 +189,10 @@ namespace Klinik.Features
             var searchPredicate = PredicateBuilder.New<Data.DataRepository.PurchaseRequest>(true);
             // add default filter to show the active data only
             searchPredicate = searchPredicate.And(x => x.RowStatus == 0 && x.GudangId == OneLoginSession.Account.GudangID);
-
+            if ((GeneralHandler.authorized("APPROVE_M_PURCHASEREQUEST") == "false"))
+            {
+                searchPredicate.And(x => x.approve >= 1);
+            }
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.prnumber.Contains(request.SearchValue));

@@ -154,9 +154,9 @@
                                             <button class="save-purchaseorderdetail btn btn-success btn-sm" data-url="/PurchaseOrder/EditPurchaseOrderDetail" style="display:none;">Save</button>
                                             <button class="edit-purchaseorderdetail btn btn-success btn-sm" disabled>Edit</button>
                                             <button class="btn btn-danger btn-sm delete-purchaseorderdetail" disabled>Delete</button>
-                                            if (GeneralHandler.authorized("ADD_M_PURCHASEORDER") == "true")
+                                            if (GeneralHandler.authorized("ADD_M_PURCHASEORDER", "EDIT_M_PURCHASEORDER") == "true")
                                             {
-                                                <button class="btn btn-info btn-sm subtitusi">Subtitusi</button>
+                                                <button class="btn btn-info btn-sm subtitusi" disabled>Subtitusi</button>
                                             }
                                             <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
                                         }
@@ -177,18 +177,46 @@
         </div>
         <br />
         <footer class="panel-footer">
-            @if (GeneralHandler.authorized("EDIT_M_PURCHASEORDER") == "true")
+            @*@if (GeneralHandler.authorized("EDIT_M_PURCHASEORDER") == "true")
+        {
+            if (Model != null)
             {
-                if (Model != null)
-                {
 
-                    if (Model.Validasi == null)
-                    {
-                        <button class="btn btn-success" onclick="Validasi(@Model.Id)">Validasi</button>
-                        <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrder/CreateOrEditPurchaseOrder" style="display:none">@Klinik.Resources.UIMessages.Save</button>
-                        <button type="submit" class="btn btn-primary openallbutton" data-parameterone="_deliveryorder">@Klinik.Resources.UIMessages.Edit</button>
-                    }
+                if (Model.Validasi == null)
+                {
+                    <button class="btn btn-success" onclick="Validasi(@Model.Id)">Validasi</button>
+                    <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrder/CreateOrEditPurchaseOrder" style="display:none">@Klinik.Resources.UIMessages.Save</button>
+                    <button type="submit" class="btn btn-primary openallbutton" data-parameterone="_deliveryorder">@Klinik.Resources.UIMessages.Edit</button>
                 }
+            }
+        }*@
+
+            @if (((GeneralHandler.authorized("EDIT_M_PURCHASEORDER", "ADD_M_PURCHASEORDER") == "true")))
+            {
+                if (Model.approve != null)
+                {
+                    <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrder/CreateOrEditPurchaseOrder" style="display:@(Model != null ? "none" : "inline-block")">@Klinik.Resources.UIMessages.Save</button>
+                    <button class="btn btn-primary openallbutton" style="display:@(Model != null ? Model.Validasi == null ? "inline-block" : "none":"inline-block")">@Klinik.Resources.UIMessages.Edit</button>
+                }
+            }
+            @if (Model != null && (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true"))
+            {
+                if (Model.approve == null)
+                {
+                    <button class="btn btn-success" onclick="Approve(@Model.Id)">@Klinik.Resources.UIMessages.Approve</button>
+                }
+
+            }
+            @if (Model != null && (GeneralHandler.authorized("VALIDATION_M_PURCHASEORDER") == "true"))
+            {
+                if (Model.approve != null && Model.Validasi == null)
+                {
+                    <button class="btn btn-success" onclick="Validation(@Model.Id)">@Klinik.Resources.UIMessages.Validation</button>
+                }
+            }
+            @if (Model != null)
+            {
+                <a class="btn btn-success" href="/PurchaseOrder/PrintPurchaseOrder?id=@Model.Id" @(Model.approve != null ? "" : "disabled")>Print</a>
             }
             <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
         </footer>
@@ -248,15 +276,42 @@
         };
     </script>
     <script type="text/javascript">
-         var Validasi = function (ID) {
-            var r = confirm("@Klinik.Resources.UIMessages.ValidationConfirmation"+" DO ?");
+
+        var Approve = function (ID) {
+            var r = confirm("@Klinik.Resources.UIMessages.ApproveConfirmation" + ID + " ) ?");
             if (r == true) {
-            ValidasiPO(ID);
+            ApproveDO(ID);
         }
         return false;
         }
 
-        function ValidasiPO(Id) {
+        function ApproveDO(Id) {
+        $.ajax({
+            url: '/PurchaseOrder/ApprovePurchaseOrder?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+        }
+
+        var Validation = function (ID) {
+            var r = confirm("@Klinik.Resources.UIMessages.ValidationConfirmation" + ID + " ) ?");
+            if (r == true) {
+           ValisasiPR(ID);
+        }
+        return false;
+        }
+
+        function ValisasiPR(Id) {
         $.ajax({
             url: '/PurchaseOrder/ValidationPurchaseOrder?id=' + Id,
             type: 'POST',
