@@ -259,6 +259,7 @@ namespace Klinik.Features
                     doid = item.PurchaseOrderPusats.Count > 0 ? item.PurchaseOrderPusats.FirstOrDefault().DeliveryOrderPusats.Count > 0 ? item.PurchaseOrderPusats.FirstOrDefault().DeliveryOrderPusats.FirstOrDefault().id : 0 : 0,
                     donumber = item.PurchaseOrderPusats.Count > 0 ? item.PurchaseOrderPusats.FirstOrDefault().DeliveryOrderPusats.Count > 0 ? item.PurchaseOrderPusats.FirstOrDefault().DeliveryOrderPusats.FirstOrDefault().donumber : "" : "",
                     createdo = item.PurchaseOrderPusats.Count > 0 ? item.PurchaseOrderPusats.FirstOrDefault().DeliveryOrderPusats.Count > 0 ? GeneralHandler.FormatDate(Convert.ToDateTime(item.PurchaseOrderPusats.FirstOrDefault().DeliveryOrderPusats.FirstOrDefault().dodate)) : null : null,
+                    status = GeneralHandler.PurchaseRequestPusatStatus(item.id),
                 };
 
                 lists.Add(prData);

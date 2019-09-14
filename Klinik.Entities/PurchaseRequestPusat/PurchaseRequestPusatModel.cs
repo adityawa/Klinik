@@ -23,6 +23,7 @@ namespace Klinik.Entities.PurchaseRequestPusat
         public string createdo { get; set; }
         public Nullable<int> Validasi { get; set; }
         public Nullable<int> GudangId { get; set; }
+        public string status { get; set; }
         public List<PurchaseRequestPusatDetailModel> purchaserequestPusatdetailModels { get; set; }
 
         public string createformat { get; set; }

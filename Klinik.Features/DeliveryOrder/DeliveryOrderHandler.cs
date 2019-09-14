@@ -301,6 +301,7 @@ namespace Klinik.Features
                 if (deliveryoder.id > 0)
                 {
                     deliveryoder.approve = 1;
+                    deliveryoder.Recived = 1;
                     deliveryoder.approveby = OneLoginSession.Account.UserCode;
                     deliveryoder.ModifiedBy = request.Data.Account.UserCode;
                     deliveryoder.ModifiedDate = DateTime.Now;
