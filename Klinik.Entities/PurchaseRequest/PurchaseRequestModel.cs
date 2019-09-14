@@ -36,19 +36,6 @@ namespace Klinik.Entities.PurchaseRequest
             purchaserequestdetailModels = new List<PurchaseRequestDetailModel>();
         }
 
-        public string status
-        {
-            get
-            {
-                if (approve == 1)
-                {
-                    return "Approved";
-                }
-                else
-                {
-                    return "Created";
-                }
-            }
-        }
+        public string status { get; set; }
     }
 }

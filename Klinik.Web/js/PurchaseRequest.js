@@ -231,16 +231,19 @@
         if (!el.length) return;
 
         el.click(function () {
+            var row = $(this).closest('tr');
             if ($(this).prop("checked") == true) {
                 $("#namabarang").hide();
                 $(".select2").remove();
                 $("#newproductname").show();
                 $(".addnewproduct").show();
+                row.find('p').hide();
             } else {
                 $("#namabarang").show();
                 Klinik.autocompleteProductOne();
                 $("#newproductname").hide();
                 $(".addnewproduct").hide();
+                row.find('p').show();
             }
         });
     },

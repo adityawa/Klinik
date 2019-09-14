@@ -251,13 +251,14 @@ namespace Klinik.Features
                     doid = item.PurchaseOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.FirstOrDefault().id : 0 : 0,
                     ponumber = item.PurchaseOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().ponumber : "",
                     createpo = item.PurchaseOrders.Count > 0 ? GeneralHandler.FormatDate(Convert.ToDateTime(item.PurchaseOrders.FirstOrDefault().podate)) : null,
-                    donumber = item.PurchaseOrders.Count > 0  ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.FirstOrDefault().donumber : "" : "",
+                    donumber = item.PurchaseOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.FirstOrDefault().donumber : "" : "",
                     createdo = item.PurchaseOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.Count > 0 ? GeneralHandler.FormatDate(Convert.ToDateTime(item.PurchaseOrders.FirstOrDefault().DeliveryOrders.FirstOrDefault().dodate)) : null : null,
                     Validasi = item.Validasi,
                     Recived = item.PurchaseOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.Count > 0 ? item.PurchaseOrders.FirstOrDefault().DeliveryOrders.FirstOrDefault().Recived : 0 : 0,
                     namaklinik = _context.Users.Where(x => x.UserName == item.request_by).FirstOrDefault().Organization.Clinic != null ? _context.Users.Where(x => x.UserName == item.request_by).FirstOrDefault().Organization.Clinic.Name : "",
                     createformat = GeneralHandler.FormatDate(Convert.ToDateTime(item.CreatedDate)),
-                    Account = OneLoginSession.Account
+                    Account = OneLoginSession.Account,
+                    status = GeneralHandler.PurchaseRequestStatus(item.id),
                 };
 
                 lists.Add(prData);

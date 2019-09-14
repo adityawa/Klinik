@@ -96,6 +96,10 @@ namespace Klinik.Web.Controllers
             }
             else
             {
+                if ((GeneralHandler.authorized("ADD_M_PURCHASEREQUESTPUSAT") == "false"))
+                {
+                    return RedirectToAction("PurchaseRequestList");
+                }
                 ViewBag.Response = _response;
                 ViewBag.ActionType = ClinicEnums.Action.Add;
                 ViewBag.prnumber = "PR" + ((AccountModel)Session["UserLogon"]).Organization + DateTime.Now.Year + DateTime.Now.Month + prnumber;
@@ -781,7 +785,7 @@ namespace Klinik.Web.Controllers
             }
             if (productingudangs.Count() > 0)
             {
-                sisastock = Convert.ToInt32(_context.ProductInGudangs.Where(a => a.ProductId == productid && a.GudangId == OneLoginSession.Account.GudangID).Select(a => a.stock));
+                sisastock = Convert.ToInt32(_context.ProductInGudangs.Where(a => a.ProductId == productid && a.GudangId == OneLoginSession.Account.GudangID).Sum(a => a.stock));
             }
             Dictionary<string, int?> data = new Dictionary<string, int?> {
                                             { "stock", stock },

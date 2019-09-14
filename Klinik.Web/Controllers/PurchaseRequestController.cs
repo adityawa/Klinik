@@ -97,6 +97,10 @@ namespace Klinik.Web.Controllers
             }
             else
             {
+                if((GeneralHandler.authorized("ADD_M_PURCHASEREQUEST") == "false"))
+                {
+                    return RedirectToAction("PurchaseRequestList");
+                }
                 ViewBag.Response = _response;
                 ViewBag.ActionType = ClinicEnums.Action.Add;
                 ViewBag.prnumber = "PR" + ((AccountModel)Session["UserLogon"]).Organization + DateTime.Now.Year + DateTime.Now.Month + prnumber;
@@ -234,6 +238,13 @@ namespace Klinik.Web.Controllers
 
                 FileName = "PurchaseRequest" + _model.prnumber + ".pdf"
             };
+        }
+
+        [CustomAuthorize("VIEW_M_PURCHASEREQUEST")]
+        public JsonResult GetStatus(int? id)
+        {
+            var status = GeneralHandler.PurchaseRequestStatus(id);
+            return Json(new { data = status }, JsonRequestBehavior.AllowGet);
         }
 
         #region ::PURCHASEREQUESTDETAIL::

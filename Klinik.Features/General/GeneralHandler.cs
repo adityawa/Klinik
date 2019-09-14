@@ -59,5 +59,75 @@ namespace Klinik.Features
 
             return IsAuthorized;
         }
+
+        public static string PurchaseRequestStatus(int? id)
+        {
+            var db = new KlinikDBEntities();
+            var PR = db.PurchaseRequests.Where(a => a.id == id).FirstOrDefault();
+            var status = "PR Created";
+
+            if(PR.PurchaseOrders.Count > 0)
+            {
+                if (PR.PurchaseOrders.FirstOrDefault().DeliveryOrders.Count > 0)
+                {
+                    if (PR.PurchaseOrders.FirstOrDefault().DeliveryOrders.FirstOrDefault().Recived != null)
+                    {
+                        status = "Recived";
+                    }
+                    else if (PR.PurchaseOrders.First().Validasi != null)
+                    {
+                        status = "DO created and send";
+                    }
+                    else if (PR.PurchaseOrders.First().approve != null && PR.PurchaseOrders.First().Validasi == null)
+                    {
+                        status = "PO approved";
+                    }
+                    else if (PR.Validasi != null)
+                    {
+                        status = "PO created";
+                    }
+                    else if (PR.approve != null && PR.Validasi == null)
+                    {
+                        status = "PR approved";
+                    }
+                }
+            }
+            return status;
+        }
+
+        public static string PurchaseRequestPusatStatus(int id)
+        {
+            var db = new KlinikDBEntities();
+            var PR = db.PurchaseRequestPusats.Where(a => a.id == id).FirstOrDefault();
+            var status = "PRP Created";
+
+            if (PR.PurchaseOrderPusats.Count > 0)
+            {
+                if (PR.PurchaseOrderPusats.FirstOrDefault().DeliveryOrderPusats.Count > 0)
+                {
+                    if (PR.PurchaseOrderPusats.FirstOrDefault().DeliveryOrderPusats.FirstOrDefault().Recived != null)
+                    {
+                        status = "Recived";
+                    }
+                    else if (PR.PurchaseOrderPusats.First().Validasi != null)
+                    {
+                        status = "DOP created and send";
+                    }
+                    else if (PR.PurchaseOrderPusats.First().approve != null && PR.PurchaseOrderPusats.First().Validasi == null)
+                    {
+                        status = "POP approved";
+                    }
+                    else if (PR.Validasi != null)
+                    {
+                        status = "POP created";
+                    }
+                    else if (PR.approve != null && PR.Validasi == null)
+                    {
+                        status = "PRP approved";
+                    }
+                }
+            }
+            return status;
+        }
     }
 }

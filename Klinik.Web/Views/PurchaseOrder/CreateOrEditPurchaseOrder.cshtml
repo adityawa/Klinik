@@ -39,18 +39,9 @@
                 </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="inputDefault">Source</label>
-                    @if (Model.approve != null)
-                    {
-                        <div class="col-md-6">
-                            <select id="namagudang" class="form-control"><option>@Model.sourcename</option></select>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="col-md-6">
-                            <p><a href="#" class="text-warning">Po Belum Di Approve</a></p>
-                        </div>
-                    }
+                    <div class="col-md-6">
+                        <select id="namagudang" class="form-control"><option>@Model.sourcename</option></select>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">
@@ -94,82 +85,75 @@
                         <th>Nama By HO</th>
                         <th>Qty By HP</th>
                         <th>Remark By HO</th>
-                        <th><input type="checkbox" class="checkall" disabled></th>
+                        <th>Validate By Wh</th>
                         @if (GeneralHandler.authorized("EDIT_M_PURCHASEORDER") == "true")
                         {
                             if (Model.Validasi == null)
                             {
-                            <th>Action</th>
+                                <th>Action</th>
                             }
                         }
-                        </tr>
+                    </tr>
                 </thead>
                 <tbody>
                     @if (Model != null)
                     {
                         foreach (var item in Model.PurchaseOrderDetails)
                         {
-                    <tr>
-                        <td hidden class="podetail">@item.Id</td>
-                        <td hidden>@item.ProductId</td>
-                        <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
-                        <td><input type="text" class="form-control" value="@item.tot_pemakaian" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
-                        <td><input type="text" class="form-control" value="@item.nama_by_ho" disabled="disabled" /></td>
-                        <td>
-                            @if (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true")
-                            {
-                                <input type="text" class="form-control" value="@item.qty_by_ho" disabled="disabled" />
-                            }
-                            else
-                            {
-                                @item.qty_by_ho
-                            }
-                        </td>
-                        <td>
-                            @if (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true")
-                            {
-                                <input type="text" class="form-control" value="@item.remark_by_ho" disabled="disabled" />
-                            }
-                            else
-                            {
-                                @item.remark_by_ho
-                            }
-                        </td>
-                        <td><input type="checkbox" value="@(item.Verified == true ? "true" : "false")" @(item.Verified == true ? "checked" : "") disabled></td>
-                        <td hidden>@item.OrderNumber</td>
-                        @if (GeneralHandler.authorized("EDIT_M_PURCHASEORDER") == "true")
-                        {
-                            if (Model != null)
-                            {
-                                if (Model.Validasi == null)
+                            <tr>
+                                <td hidden class="podetail">@item.Id</td>
+                                <td hidden>@item.ProductId</td>
+                                <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
+                                <td><input type="text" class="form-control" value="@item.tot_pemakaian" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.nama_by_ho" disabled="disabled" /></td>
+                                <td>
+                                    @if (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true")
+                                    {
+                                        <input type="text" class="form-control" value="@item.qty_by_ho" disabled="disabled" />
+                                    }
+                                    else
+                                    {
+                                        @item.qty_by_ho
+                                    }
+                                </td>
+                                <td>
+                                    @if (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true")
+                                    {
+                                        <input type="text" class="form-control" value="@item.remark_by_ho" disabled="disabled" />
+                                    }
+                                    else
+                                    {
+                                        @item.remark_by_ho
+                                    }
+                                </td>
+                                <td><input type="checkbox" value="@(item.Verified == true ? "true" : "false")" @(item.Verified == true ? "checked" : "") disabled></td>
+                                <td hidden>@item.OrderNumber</td>
+                                @if (GeneralHandler.authorized("EDIT_M_PURCHASEORDER") == "true")
                                 {
-                                    <td>
-                                        @if (Model.approve != null)
+                                    if (Model != null)
+                                    {
+                                        if (Model.Validasi == null)
                                         {
-                                            <button class="save-purchaseorderdetail btn btn-success btn-sm" data-url="/PurchaseOrder/EditPurchaseOrderDetail" style="display:none;">Save</button>
-                                            <button class="edit-purchaseorderdetail btn btn-success btn-sm" disabled>Edit</button>
-                                            <button class="btn btn-danger btn-sm delete-purchaseorderdetail" disabled>Delete</button>
-                                            if (GeneralHandler.authorized("ADD_M_PURCHASEORDER", "EDIT_M_PURCHASEORDER") == "true")
-                                            {
-                                                <button class="btn btn-info btn-sm subtitusi" disabled>Subtitusi</button>
-                                            }
-                                            <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
-                                        }
-                                        else
-                                        {
-                                            <button class="btn btn-warning btn-sm" disabled>PO Not Approved</button>
-                                        }
+                                            <td>
+                                                <button class="save-purchaseorderdetail btn btn-success btn-sm" data-url="/PurchaseOrder/EditPurchaseOrderDetail" style="display:none;">Save</button>
+                                                <button class="edit-purchaseorderdetail btn btn-success btn-sm" disabled>Edit</button>
+                                                <button class="btn btn-danger btn-sm delete-purchaseorderdetail" disabled>Delete</button>
+                                                @if (GeneralHandler.authorized("ADD_M_PURCHASEORDER", "EDIT_M_PURCHASEORDER") == "true")
+                                                {
+                                                    <button class="btn btn-info btn-sm subtitusi" disabled>Subtitusi</button>
+                                                }
+                                                <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
 
-                                    </td>
+                                            </td>
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                        </tr>
+                            </tr>
                         }
                     }
                 </tbody>
@@ -177,27 +161,11 @@
         </div>
         <br />
         <footer class="panel-footer">
-            @*@if (GeneralHandler.authorized("EDIT_M_PURCHASEORDER") == "true")
-        {
-            if (Model != null)
-            {
-
-                if (Model.Validasi == null)
-                {
-                    <button class="btn btn-success" onclick="Validasi(@Model.Id)">Validasi</button>
-                    <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrder/CreateOrEditPurchaseOrder" style="display:none">@Klinik.Resources.UIMessages.Save</button>
-                    <button type="submit" class="btn btn-primary openallbutton" data-parameterone="_deliveryorder">@Klinik.Resources.UIMessages.Edit</button>
-                }
-            }
-        }*@
 
             @if (((GeneralHandler.authorized("EDIT_M_PURCHASEORDER", "ADD_M_PURCHASEORDER") == "true")))
             {
-                if (Model.approve != null)
-                {
-                    <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrder/CreateOrEditPurchaseOrder" style="display:@(Model != null ? "none" : "inline-block")">@Klinik.Resources.UIMessages.Save</button>
-                    <button class="btn btn-primary openallbutton" style="display:@(Model != null ? Model.Validasi == null ? "inline-block" : "none":"inline-block")">@Klinik.Resources.UIMessages.Edit</button>
-                }
+                <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrder/CreateOrEditPurchaseOrder" style="display:@(Model != null ? "none" : "inline-block")">@Klinik.Resources.UIMessages.Save</button>
+                <button class="btn btn-primary openallbutton" style="display:@(Model != null ? Model.Validasi == null ? "inline-block" : "none":"inline-block")">@Klinik.Resources.UIMessages.Edit</button>
             }
             @if (Model != null && (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true"))
             {
@@ -231,7 +199,7 @@
                 autoclose: true
             });
             $('#btnreset').click(function (e) {
-                window.location.href = "/PurchaseOrder/PurchaseOrderList";
+                window.location.href = "/PurchaseRequest/PurchaseRequestList";
             });
 
             toastr.options = {
