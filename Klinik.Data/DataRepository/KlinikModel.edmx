@@ -578,8 +578,9 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LookUpCode" Type="varchar" MaxLength="50" />
           <Property Name="LookUpName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LookupContent" Type="varchar(max)" Nullable="false" />
+          <Property Name="LookUpContent" Type="varchar(max)" Nullable="false" />
           <Property Name="RowStatus" Type="smallint" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -6581,6 +6582,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LookUpCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LookUpName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LookUpContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="RowStatus" Type="Int16" />
@@ -7952,8 +7954,9 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="LookUpContent" ColumnName="LookupContent" />
+                <ScalarProperty Name="LookUpContent" ColumnName="LookUpContent" />
                 <ScalarProperty Name="LookUpName" ColumnName="LookUpName" />
+                <ScalarProperty Name="LookUpCode" ColumnName="LookUpCode" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

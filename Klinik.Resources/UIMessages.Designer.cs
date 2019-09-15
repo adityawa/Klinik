@@ -1654,6 +1654,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Look Up Code.
+        /// </summary>
+        public static string LookUpCode {
+            get {
+                return ResourceManager.GetString("LookUpCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Look Up Content.
         /// </summary>
         public static string LookUpContent {

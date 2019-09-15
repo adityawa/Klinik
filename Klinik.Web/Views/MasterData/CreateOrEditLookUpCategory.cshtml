@@ -12,6 +12,13 @@
         </header>
         <div class="panel-body">
             <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.LookUpCode</label>
+                <div class="col-md-4">
+                    @Html.HiddenFor(x => x.Id)
+                    @Html.TextBoxFor(x => x.LookUpCode, new { @class = "form-control", @id = "tbCode" })
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.LookUpName</label>
                 <div class="col-md-4">
                     @Html.HiddenFor(x => x.Id)

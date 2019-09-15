@@ -15,6 +15,7 @@ namespace Klinik.Data.DataRepository
     public partial class LookupCategory
     {
         public int ID { get; set; }
+        public string LookUpCode { get; set; }
         public string LookUpName { get; set; }
         public string LookUpContent { get; set; }
         public Nullable<short> RowStatus { get; set; }

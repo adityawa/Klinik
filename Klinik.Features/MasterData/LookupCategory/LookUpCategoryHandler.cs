@@ -46,6 +46,7 @@ namespace Klinik.Features.MasterData.LookupCategory
 
                         // update data
                         qry.LookUpName = request.Data.LookUpName;
+                        qry.LookUpCode = request.Data.LookUpCode;
                         qry.LookUpContent = request.Data.LookUpContent;
 
                         _unitOfWork.LookUpCategoryRepository.Update(qry);

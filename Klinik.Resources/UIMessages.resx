@@ -1218,4 +1218,7 @@
   <data name="LookUpName" xml:space="preserve">
     <value>Look Up Name</value>
   </data>
+  <data name="LookUpCode" xml:space="preserve">
+    <value>Look Up Code</value>
+  </data>
 </root>
