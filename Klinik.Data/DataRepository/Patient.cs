@@ -20,6 +20,7 @@ namespace Klinik.Data.DataRepository
             this.FormMedicals = new HashSet<FormMedical>();
             this.PatientClinics = new HashSet<PatientClinic>();
             this.QueuePolis = new HashSet<QueuePoli>();
+            this.PatientAges = new HashSet<PatientAge>();
         }
     
         public long ID { get; set; }
@@ -52,5 +53,7 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<PatientClinic> PatientClinics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QueuePoli> QueuePolis { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PatientAge> PatientAges { get; set; }
     }
 }

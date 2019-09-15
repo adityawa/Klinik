@@ -192,6 +192,8 @@
         <AssociationConnector Association="KlinikDBModel.FK_PurchaseRequestPusatDetail_Vendor" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_UserRole_User" ManuallyRouted="false" />
         <EntityTypeShape EntityType="KlinikDBModel.LookupCategory" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="KlinikDBModel.PatientAge" Width="1.5" PointX="5.25" PointY="54.5" />
+        <AssociationConnector Association="KlinikDBModel.FK_PatientAge_PatientAge" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
