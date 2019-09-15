@@ -1,6 +1,8 @@
 ﻿using Klinik.Common;
 using Klinik.Data;
+using Klinik.Data.DataRepository;
 using Klinik.Entities.ProductInGudang;
+using Klinik.Features.Account;
 using Klinik.Resources;
 using LinqKit;
 using System;
@@ -125,7 +127,7 @@ namespace Klinik.Features
             var searchPredicate = PredicateBuilder.New<Data.DataRepository.ProductInGudang>(true);
 
             // add default filter to show the active data only
-            searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
+            searchPredicate = searchPredicate.And(x => x.RowStatus == 0 && x.GudangId == OneLoginSession.Account.GudangID);
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
@@ -165,8 +167,9 @@ namespace Klinik.Features
             {
                 qry = _unitOfWork.ProductInGudangRepository.Get(searchPredicate, null);
             }
-
-            foreach (var item in qry)
+            List<ProductInGudang> newdata = new List<ProductInGudang>();
+            newdata = qry;
+            foreach (var item in newdata)
             {
                 var prData = new ProductInGudangModel
                 {

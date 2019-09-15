@@ -1069,6 +1069,8 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+          <Property Name="request_by" Type="varchar" MaxLength="30" />
+          <Property Name="Status" Type="bit" />
           <Property Name="RowStatus" Type="int" />
         </EntityType>
         <EntityType Name="PurchaseRequestDetail">
@@ -4450,6 +4452,8 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="RowStatus" Type="Int32" />
           <NavigationProperty Name="Gudang" Relationship="Self.FK_PurchaseRequestConfig_Gudang" FromRole="PurchaseRequestConfig" ToRole="Gudang" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="request_by" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PurchaseRequestDetail">
           <Key>
@@ -7750,6 +7754,8 @@
           <EntitySetMapping Name="PurchaseRequestConfigs">
             <EntityTypeMapping TypeName="KlinikDBModel.PurchaseRequestConfig">
               <MappingFragment StoreEntitySet="PurchaseRequestConfig">
+                <ScalarProperty Name="request_by" ColumnName="request_by" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="GudangId" ColumnName="GudangId" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
