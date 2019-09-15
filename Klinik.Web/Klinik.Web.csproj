@@ -1569,6 +1569,8 @@
     <Content Include="Views\GudangPusat\DeliveryOrderList.cshtml" />
     <Content Include="Views\GudangPusat\CreateOrEditDeliveryOrder.cshtml" />
     <Content Include="Views\GudangPusat\PrintDeliveryOrderPusat.cshtml" />
+    <Content Include="Views\MasterData\LookUpCategoryList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditLookUpCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

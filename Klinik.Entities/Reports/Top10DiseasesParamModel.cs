@@ -13,5 +13,15 @@ namespace Klinik.Entities.Reports
         public int Year { get; set; }
 
         public int ClinicId { get; set; }
+
+        public string DeptName { get; set; }
+
+        public string BUName { get; set; }
+
+        public string GenderType { get; set; }
+
+        public string AgeCode { get; set; }
+
+
     }
 }

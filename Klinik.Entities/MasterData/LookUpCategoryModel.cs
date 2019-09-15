@@ -8,8 +8,10 @@ namespace Klinik.Entities.MasterData
 {
     public class LookUpCategoryModel:BaseModel
     {
-        public string LookupName { get; set; }
+        public string LookUpCode { get; set; }
 
-        public string LookupContent { get; set; }
+        public string LookUpName { get; set; }
+
+        public string LookUpContent { get; set; }
     }
 }

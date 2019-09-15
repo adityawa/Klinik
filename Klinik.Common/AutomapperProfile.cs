@@ -342,6 +342,7 @@ namespace Klinik.Common
 
             CreateMap<PurchaseRequestConfigModel, PurchaseRequestConfig> ();
             CreateMap<LookUpCategoryModel, LookupCategory>();
+            CreateMap<LookupCategory, LookUpCategoryModel>();
 
 
             CreateMap<ICDTheme, ICDThemeModel>();
