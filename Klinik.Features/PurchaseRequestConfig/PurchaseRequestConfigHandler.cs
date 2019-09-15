@@ -55,6 +55,8 @@ namespace Klinik.Features
                     insertdata.CreatedBy = request.Data.Account.UserCode;
                     insertdata.CreatedDate = DateTime.Now;
                     insertdata.GudangId = OneLoginSession.Account.GudangID;
+                    insertdata.Status = true;
+                    insertdata.request_by = OneLoginSession.Account.UserName;
 
                     _unitOfWork.PurchaseRequestConfigRepository.Insert(insertdata);
 
