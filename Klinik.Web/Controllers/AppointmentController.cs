@@ -31,7 +31,7 @@ namespace Klinik.Web.Controllers
             base(unitOfWork, context)
         {
         }
-        [CustomAuthorize("VIEW_APPOINTMENT")]
+        [CustomAuthorize("ADD_APPOINTMENT")]
         public ActionResult MakeAppointment()
         {
             var _model = new AppointmentModel();
@@ -58,6 +58,39 @@ namespace Klinik.Web.Controllers
             return View();
         }
 
+        [CustomAuthorize("VIEW_APPOINTMENT")]
+        public ActionResult ListAppointment()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetAppointmentData()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new AppointmentRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            var response = new AppointmentHandler(_unitOfWork).GetListAppointment(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         public JsonResult GetPoliScheduleData(string poliId, string tanggal)
@@ -128,7 +161,7 @@ namespace Klinik.Web.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult CreateAppointment(string employeeID, string clinicId, string poliId, string doctorId, string necesity, string AppointmentDate, string MCUPackage)
+        public JsonResult CreateAppointment(string employeeID, string clinicId, string poliId, string doctorId, string necesity, string AppointmentDate, string MCUPackage, string timeAppointment)
         {
             var response = new AppointmentResponse();
             var _model = new AppointmentModel
@@ -140,6 +173,7 @@ namespace Klinik.Web.Controllers
                 PoliID = Convert.ToInt64(poliId),
                 RequirementID = Convert.ToInt16(necesity),
                 MCUPakageID = Convert.ToInt64(MCUPackage),
+                Jam= Convert.ToDateTime(string.Format("{0} {1}", CommonUtils.ConvertStringDate2Datetime(AppointmentDate).ToString("yyyy-MM-dd"), timeAppointment))
 
             };
 

@@ -325,6 +325,7 @@
     <Content Include="DB\AddLookupTable_10-9-2019.sql" />
     <Content Include="DB\DBKlinikDev_20190817.sql" />
     <Content Include="DB\DBKlinik_GenScripts_20190909.sql" />
+    <Content Include="DB\DB_GENScripts_2019-09-15.sql" />
     <Content Include="DB\DB_Klinik_PRD_2019-09-12.sql" />
     <Content Include="DB\MandeKlinik16-08-2019.sql" />
   </ItemGroup>

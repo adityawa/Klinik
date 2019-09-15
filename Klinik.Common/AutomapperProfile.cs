@@ -172,7 +172,7 @@ namespace Klinik.Common
                 .ForMember(m => m.ClinicName, map => map.MapFrom(p => p.Clinic.Name))
                 .ForMember(m => m.DoctorName, map => map.MapFrom(p => p.Doctor.Name))
                 .ForMember(m => m.PoliName, map => map.MapFrom(p => p.Poli.Name))
-                .ForMember(m=>m.TimeStart, map=>map.MapFrom(p=>p.StartDate.ToString("hh:mm:ss")))
+                .ForMember(m => m.TimeStart, map => map.MapFrom(p => p.StartDate.ToString("hh:mm:ss")))
                 .ForMember(m => m.TimeEnd, map => map.MapFrom(p => p.EndDate.ToString("hh:mm:ss")));
 
             CreateMap<PoliScheduleMasterModel, PoliScheduleMaster>();
@@ -340,7 +340,7 @@ namespace Klinik.Common
             CreateMap<PurchaseRequestConfigModel, PurchaseRequestConfig>();
 
 
-            CreateMap<PurchaseRequestConfigModel, PurchaseRequestConfig> ();
+            CreateMap<PurchaseRequestConfigModel, PurchaseRequestConfig>();
             CreateMap<LookUpCategoryModel, LookupCategory>();
 
 
@@ -354,7 +354,15 @@ namespace Klinik.Common
             CreateMap<MCUPackage, MCUPackageModel>();
             CreateMap<MCUPackageModel, MCUPackage>();
 
-            CreateMap<Appointment, AppointmentModel>();
+            CreateMap<Appointment, AppointmentModel>()
+                .ForMember(x => x.ClinicName, map => map.MapFrom(p => p.Clinic.Name))
+                .ForMember(x => x.PoliName, map => map.MapFrom(p => p.Poli.Name))
+                .ForMember(x => x.DoctorName, map => map.MapFrom(p => p.Doctor.Name))
+                .ForMember(x => x.EmpName, map => map.MapFrom(p => p.Employee.EmpName))
+                .ForMember(x => x.StrAppointmentDate, map => map.MapFrom(p => p.AppointmentDate.ToString("dd/MM/yyyy")))
+                .ForMember(x => x.StrAppointmentTime, map => map.MapFrom(p => p.Jam == null ? "" : p.Jam.Value.ToString("hh:mm")));
+                
+
             CreateMap<AppointmentModel, Appointment>();
 
             CreateMap<PurchaseRequestPusatDetailModel, PurchaseOrderPusatDetailModel>();

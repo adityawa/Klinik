@@ -1366,6 +1366,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Jam.
+        /// </summary>
+        public static string Jam {
+            get {
+                return ResourceManager.GetString("Jam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kasir.
         /// </summary>
         public static string Kasir {
@@ -1578,6 +1587,15 @@ namespace Klinik.Resources {
         public static string ListObatPasien {
             get {
                 return ResourceManager.GetString("ListObatPasien", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List Of Appointment.
+        /// </summary>
+        public static string ListOfAppointment {
+            get {
+                return ResourceManager.GetString("ListOfAppointment", resourceCulture);
             }
         }
         
