@@ -1,0 +1,179 @@
+﻿@model Klinik.Entities.Letter.HealthBodyLetterModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>::Surat Berbadan Sehat::</title>
+</head>
+<body>
+    <div>
+        <div>
+            <div style="text-align:center">
+                <label>Town Site :......... /Port - Estate : ............</label>
+            </div>
+            <div style="text-align:center">
+                <h3>Surat Berbadan Sehat</h3>
+                No : @Html.DisplayFor(x => x.NoSurat)
+            </div>
+            <div style="margin-top:10px">
+                <table>
+                    <tr>
+                        <td>
+                            <p>Yang tersebut dibawah ini :</p>
+                        </td>
+                    </tr>
+                </table>
+                <table width="30%">
+                    <tr>
+                        <td>
+                            <label for="inputDefault">@Klinik.Resources.UIMessages.Name</label>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            @Html.DisplayFor(x => x.PatientData.Name, new { @Id = "tbPatientName" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="inputDefault">@Klinik.Resources.UIMessages.Birthdate</label>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            @Html.DisplayFor(x => x.PatientData.BirthDateStr, new { @Id = "tbBirthdate" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="inputDefault">@Klinik.Resources.UIMessages.Pekerjaan</label>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            @Html.DisplayFor(x => x.Pekerjaan, new { Id = "tbPekerjaan" })
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label for="inputDefault">@Klinik.Resources.UIMessages.Address</label>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            @Html.DisplayFor(x => x.PatientData.Address, new { Id = "tbAddress" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.BPJSNo</label>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            @Html.DisplayFor(x => x.PatientData.BPJSNumber, new { id = "tbBPJS" })
+                        </td>
+                    </tr>
+
+                </table>
+
+                <div style="width:80%">
+                    <p>
+                        Telah diperiksa dan dinyatakan @Html.DisplayFor(x => x.Decision) . Surat keterangan berbadan sehat ini digunakan untuk keperluan @Html.DisplayFor(x => x.Keperluan)
+                    </p>
+                </div>
+
+                <div>
+                    <table width="30%">
+                        <tr>
+                            <td>
+                                <label for="inputDefault">@Klinik.Resources.UIMessages.Height</label>
+                            </td>
+                            <td>:</td>
+                            <td>
+                                @Html.DisplayFor(x => x.PreExamineData.Height, new { @Id = "tbHeight" })
+                                &nbsp;
+                                <label for="inputDefault">Cm</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="inputDefault">@Klinik.Resources.UIMessages.Weight</label>
+                            </td>
+                            <td>:</td>
+                            <td>
+                                @Html.DisplayFor(x => x.PreExamineData.Weight, new { @Id = "tbWeight" })
+                                &nbsp;
+                                <label for="inputDefault">Kg</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="inputDefault">@Klinik.Resources.UIMessages.BloodType</label>
+                            </td>
+                            <td>:</td>
+                            <td>
+                                @Html.DisplayFor(x => x.PatientData.BloodType, new { Id = "tbBloodType" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="inputDefault">@Klinik.Resources.UIMessages.BloodPress</label>
+                            </td>
+                            <td>:</td>
+                            <td>
+                                @Html.DisplayFor(x => x.PreExamineData.Systolic) / @Html.DisplayFor(x => x.PreExamineData.Diastolic)
+                                &nbsp;
+                                <label for="inputDefault">MmHg</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="inputDefault">@Klinik.Resources.UIMessages.HR</label>
+                            </td>
+                            <td>:</td>
+                            <td>
+                                @Html.DisplayFor(x => x.PreExamineData.Pulse, new { @Id = "tbPulse" })
+                                &nbsp;
+                                <label for="inputDefault">x menit</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="inputDefault">@Klinik.Resources.UIMessages.RR</label>
+                            </td>
+                            <td>:</td>
+                            <td>
+                                @Html.DisplayFor(x => x.PreExamineData.Respitory, new { @Id = "tbRR" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="inputDefault">@Klinik.Resources.UIMessages.Visus</label>
+                            </td>
+                            <td>:</td>
+                            <td>
+                                @Html.DisplayFor(x => x.PreExamineData.RightEye) / @Html.DisplayFor(x => x.PreExamineData.LeftEye)
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <br /><br />
+                <div>
+                    <p>Tanda tangan Dokter Pemeriksa</p>
+                    <br /><br />
+
+                </div>
+                <hr style="width:20%; float:left" />
+                <br />
+
+                <div style="text-align:left; float:left">
+                    <p>Nama Dokter : </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

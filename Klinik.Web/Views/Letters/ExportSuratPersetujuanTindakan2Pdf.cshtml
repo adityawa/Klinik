@@ -1,0 +1,168 @@
+﻿@model Klinik.Entities.Letter.PersetujuanTindakanModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Surat Persetujuan / Penolakan Tindakan / Rujukan Medis</title>
+</head>
+<body>
+    <div>
+
+
+        <div style="padding:15px; text-align:center; background-color:gainsboro;border-style:inset">
+            <h3>KLINIK PT RIAU ANDALAN PULP & PAPER</h3>
+            <div style="text-align:center">
+                <label>Town Site :......... /Port - Estate : ............</label>
+            </div>
+            <div style="text-align:center">
+                <label>No : @Model.NoSurat</label>
+            </div>
+        </div>
+        <br />
+        <div>
+            <div style="text-align:center"><h3>Surat @Model.Decision @Model.Action Medis</h3></div>
+            <table style="width:55%">
+                <tr>
+                    <td colspan="2">
+                        <p>Saya yang bertanda tangan di bawah ini : </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>@Klinik.Resources.UIMessages.Name</label>
+                    </td>
+                    <td>
+                        <label>:</label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x.PenjaminData.Nama, new { @Id = "tbNmPenjamin" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Umur / Tgl Lahir</label>
+                    </td>
+                    <td>
+                        <label>:</label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x.PenjaminData.Umur, new { @Id = "tbUmurPenjamin" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>@Klinik.Resources.UIMessages.Address</label>
+                    </td>
+                    <td>
+                        <label>:</label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x.PenjaminData.Alamat, new { @Id = "tbNmPenjamin" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>@Klinik.Resources.UIMessages.SAP</label>
+                    </td>
+                    <td>
+                        <label>:</label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x.PenjaminData.SapId, new { @Id = "tbSapPenjamin" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Telp</label>
+                    </td>
+                    <td>
+                        <label>:</label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x.PenjaminData.Telepon, new { @Id = "tbTelephone" })
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <p>Menyatakan dengan sesungguhnya dari saya sendiri sebagai @Model.PenjaminData.Sebagai dari : </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>@Klinik.Resources.UIMessages.Name</label>
+                    </td>
+                    <td>
+                        <label>:</label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x.PatientData.Name, new { @Id = "tbNmPasien" })
+                        &nbsp;
+                        @Model.PatientData.Gender
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Umur / Tgl Lahir</label>
+                    </td>
+                    <td>
+                        <label>:</label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x.UmurPatient, new { @Id = "tbUmurPatient" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>SAP ID</label>
+                    </td>
+                    <td>
+                        :
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => x.SAPPatient, new { @Id = "tbSapPatient" })
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <div style="width:80%">
+                <p>Dengan ini menyatakan @Model.Decision untuk dilakukan @Model.Action medis berupa :</p>
+                <p>(jika dirujuk mohon dituliskan RS tujuan jika ada permintaan dari pasien)</p>
+                <p>@Model.Treatment</p>
+            </div>
+            <br />
+            <div>
+                <p>Dari penjelasan yang diberikan, telah saya mengerti segala hal yang berhubungan dengan : </p>
+                <ol>
+                    <li>Peyakit tersebut, serta tindakan medis yang akan dilakukan dan kemungkinan pasca tindakan yang dapat terjadi</li>
+                    <li>
+                        Jaminan Biaya dan kemungkinan biaya tambahan serta kondisi lain yang mungkin terjadi di RS rujukan
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+  
+    <div style="float:right; width:60%">
+        .............................,20....
+    </div>
+    <br />
+    <div style="width:50%">
+        <div style="float:left;margin-left:0">
+            Dokter / Paramedis
+            <br /><br />
+            (....................)
+        </div>
+        <div style="float:right;margin-right:0">
+            yang membuat pernyataan
+            <br /><br />
+            <p style="text-align:center">(....................)</p>
+        </div>
+    </div>
+</body>
+</html>
