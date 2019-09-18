@@ -194,6 +194,7 @@
         <AssociationConnector Association="KlinikDBModel.FK_Appointment_MCUPackage" />
         <AssociationConnector Association="KlinikDBModel.FK_Appointment_Doctor" />
         <AssociationConnector Association="KlinikDBModel.FK_Appointment_Poli" />
+        <EntityTypeShape EntityType="KlinikDBModel.MCURegistrationInterface" Width="2.5" PointX="5.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

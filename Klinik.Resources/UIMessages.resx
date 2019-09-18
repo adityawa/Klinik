@@ -1215,4 +1215,25 @@
   <data name="ListOfAppointment" xml:space="preserve">
     <value>List Of Appointment</value>
   </data>
+  <data name="IS_TRANSFERED" xml:space="preserve">
+    <value>IS Transfered</value>
+  </data>
+  <data name="REG_ID" xml:space="preserve">
+    <value>REG_ID</value>
+  </data>
+  <data name="REG_NUMBER" xml:space="preserve">
+    <value>REG_NUMBER</value>
+  </data>
+  <data name="RESERVE_DATE" xml:space="preserve">
+    <value>RESERVE DATE</value>
+  </data>
+  <data name="SCHEDULE_CODE" xml:space="preserve">
+    <value>Schedule Code</value>
+  </data>
+  <data name="SCHEDULE_ID" xml:space="preserve">
+    <value>Schedule ID</value>
+  </data>
+  <data name="MCURegistration" xml:space="preserve">
+    <value>MCU Registration</value>
+  </data>
 </root>

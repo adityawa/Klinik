@@ -165,6 +165,9 @@
     <Compile Include="DataRepository\MCUPackage.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataRepository\MCURegistrationInterface.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataRepository\Medicine.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>

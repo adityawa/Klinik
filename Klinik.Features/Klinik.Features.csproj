@@ -119,6 +119,9 @@
     <Compile Include="MasterData\Vendor\VendorRequest.cs" />
     <Compile Include="MasterData\Vendor\VendorResponse.cs" />
     <Compile Include="MasterData\Vendor\VendorValidator.cs" />
+    <Compile Include="MCUFeatures\MCURegistrationHandler.cs" />
+    <Compile Include="MCUFeatures\MCURegistrationRequest.cs" />
+    <Compile Include="MCUFeatures\MCURegistrationResponse.cs" />
     <Compile Include="Pharmacy\PharmacyHandler.cs" />
     <Compile Include="Pharmacy\PharmacyHandlerRequest.cs" />
     <Compile Include="Pharmacy\PharmacyHandlerResponse.cs" />

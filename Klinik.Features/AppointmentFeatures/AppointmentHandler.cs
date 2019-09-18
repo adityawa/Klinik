@@ -191,5 +191,85 @@ namespace Klinik.Features.AppointmentFeatures
 
             return response;
         }
+
+        public AppointmentResponse EditAppointment(AppointmentRequest request)
+        {
+            var response = new AppointmentResponse();
+            int resultAffected = 0;
+            try
+            {
+                var toBeUpdate = _unitOfWork.AppointmentRepository.GetById(request.Data.Id);
+
+                if (toBeUpdate != null)
+                {
+                    toBeUpdate.PoliID = (Int32)request.Data.PoliID;
+                    toBeUpdate.ClinicID = request.Data.ClinicID;
+                    toBeUpdate.RequirementID = request.Data.RequirementID;
+                    toBeUpdate.DoctorID = (Int32)request.Data.DoctorID;
+                    toBeUpdate.ModifiedBy = request.Data.Account.UserName;
+                    toBeUpdate.ModifiedDate = DateTime.Now;
+
+                    resultAffected = _unitOfWork.Save();
+                    response.Status = true;
+                    response.Message = Messages.DataSaved;
+                }
+                else
+                {
+                    response.Status = false;
+                    response.Message = Messages.NoDataUpdated;
+                }
+               
+            }
+            catch (Exception)
+            {
+                response.Status = false;
+                response.Message = Messages.GeneralError;
+            }
+            return response;
+        }
+
+        public AppointmentResponse RemoveAppointment(long AppointmentID)
+        {
+            int resultAffected = 0;
+            var response = new AppointmentResponse();
+            try
+            {
+              
+                    _unitOfWork.AppointmentRepository.Delete(AppointmentID);
+                    resultAffected = _unitOfWork.Save();
+                    if (resultAffected > 0)
+                    {
+                        response.Status = true;
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved2, "Appointment", AppointmentID.ToString());
+                    }
+                    else
+                    {
+                        response.Status = false;
+                        response.Message = $"Appointment with Id {AppointmentID} failed to remove";
+                    }
+               
+            }
+            catch(Exception)
+            {
+                response.Status = false;
+                response.Message = Messages.GeneralError;
+            }
+            return response;
+        }
+
+        public AppointmentResponse GetDetailAppointment(long idAppointment)
+        {
+            var response = new AppointmentResponse();
+            if (idAppointment > 0)
+            {
+                var _qryDetail = _unitOfWork.AppointmentRepository.GetById(idAppointment);
+                if (_qryDetail != null)
+                {
+                    var _appointmentModel = Mapper.Map<Appointment, AppointmentModel>(_qryDetail);
+                    response.Entity = _appointmentModel;
+                }
+            }
+            return response;
+        }
     }
 }

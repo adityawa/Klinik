@@ -603,6 +603,24 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="NodifiedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="MCURegistrationInterface">
+          <Key>
+            <PropertyRef Name="REG_ID" />
+          </Key>
+          <Property Name="REG_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="REG_NUMBER" Type="varchar" MaxLength="20" />
+          <Property Name="RESERVE_DATE" Type="date" />
+          <Property Name="EMPL_ID" Type="int" />
+          <Property Name="EMPL_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="SCHEDULE_ID" Type="int" />
+          <Property Name="SCHEDULE_CODE" Type="varchar" MaxLength="10" />
+          <Property Name="DOCUMENT_STATUS" Type="varchar" MaxLength="50" />
+          <Property Name="IS_TRANSFERRED" Type="char" MaxLength="1" />
+          <Property Name="CREATED_DATE" Type="datetime" />
+          <Property Name="CREATED_BY_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="MODIFIED_DATE" Type="datetime" />
+          <Property Name="MODIFIED_BY_NAME" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Medicine">
           <Key>
             <PropertyRef Name="ID" />
@@ -2713,6 +2731,7 @@
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LookupCategory" EntityType="Self.LookupCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MCUPackage" EntityType="Self.MCUPackage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MCURegistrationInterface" EntityType="Self.MCURegistrationInterface" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Medicine" EntityType="Self.Medicine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
@@ -3754,6 +3773,7 @@
             <End Role="Poli" EntitySet="Polis" />
             <End Role="Appointment" EntitySet="Appointments" />
           </AssociationSet>
+          <EntitySet Name="MCURegistrationInterfaces" EntityType="KlinikDBModel.MCURegistrationInterface" />
         </EntityContainer>
         <EntityType Name="AppConfig">
           <Key>
@@ -6659,6 +6679,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="MCURegistrationInterface">
+          <Key>
+            <PropertyRef Name="REG_ID" />
+          </Key>
+          <Property Name="REG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="REG_NUMBER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RESERVE_DATE" Type="DateTime" Precision="0" />
+          <Property Name="EMPL_ID" Type="Int32" />
+          <Property Name="EMPL_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SCHEDULE_ID" Type="Int32" />
+          <Property Name="SCHEDULE_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DOCUMENT_STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IS_TRANSFERRED" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="3" />
+          <Property Name="CREATED_BY_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="3" />
+          <Property Name="MODIFIED_BY_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8026,6 +8064,25 @@
                 <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MCURegistrationInterfaces">
+            <EntityTypeMapping TypeName="KlinikDBModel.MCURegistrationInterface">
+              <MappingFragment StoreEntitySet="MCURegistrationInterface">
+                <ScalarProperty Name="MODIFIED_BY_NAME" ColumnName="MODIFIED_BY_NAME" />
+                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
+                <ScalarProperty Name="CREATED_BY_NAME" ColumnName="CREATED_BY_NAME" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="IS_TRANSFERRED" ColumnName="IS_TRANSFERRED" />
+                <ScalarProperty Name="DOCUMENT_STATUS" ColumnName="DOCUMENT_STATUS" />
+                <ScalarProperty Name="SCHEDULE_CODE" ColumnName="SCHEDULE_CODE" />
+                <ScalarProperty Name="SCHEDULE_ID" ColumnName="SCHEDULE_ID" />
+                <ScalarProperty Name="EMPL_NAME" ColumnName="EMPL_NAME" />
+                <ScalarProperty Name="EMPL_ID" ColumnName="EMPL_ID" />
+                <ScalarProperty Name="RESERVE_DATE" ColumnName="RESERVE_DATE" />
+                <ScalarProperty Name="REG_NUMBER" ColumnName="REG_NUMBER" />
+                <ScalarProperty Name="REG_ID" ColumnName="REG_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

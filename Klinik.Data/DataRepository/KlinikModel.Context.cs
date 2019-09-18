@@ -99,5 +99,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<Appointment> Appointments { get; set; }
+        public virtual DbSet<MCURegistrationInterface> MCURegistrationInterfaces { get; set; }
     }
 }

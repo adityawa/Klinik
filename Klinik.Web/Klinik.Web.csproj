@@ -241,6 +241,7 @@
     <Compile Include="Controllers\DeliveryOrderController.cs" />
     <Compile Include="Controllers\DeliveryOrderPusatController.cs" />
     <Compile Include="Controllers\GeneralController.cs" />
+    <Compile Include="Controllers\MCUController.cs" />
     <Compile Include="Controllers\MedicalHistoryController.cs" />
     <Compile Include="Controllers\GudangPusatController.cs" />
     <Compile Include="Controllers\PharmacyController.cs" />
@@ -1657,6 +1658,8 @@
     <Content Include="Views\GudangPusat\PrintDeliveryOrderPusat.cshtml" />
     <Content Include="Views\Partials\_TimeAppointment.cshtml" />
     <Content Include="Views\Appointment\ListAppointment.cshtml" />
+    <Content Include="Views\Appointment\EditAppointment.cshtml" />
+    <Content Include="Views\MCU\ViewMcuSchedulle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

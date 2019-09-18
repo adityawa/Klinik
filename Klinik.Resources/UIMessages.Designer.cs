@@ -1348,6 +1348,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IS Transfered.
+        /// </summary>
+        public static string IS_TRANSFERED {
+            get {
+                return ResourceManager.GetString("IS_TRANSFERED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Menu.
         /// </summary>
         public static string IsMenu {
@@ -1695,6 +1704,15 @@ namespace Klinik.Resources {
         public static string MCUPackage {
             get {
                 return ResourceManager.GetString("MCUPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MCU Registration.
+        /// </summary>
+        public static string MCURegistration {
+            get {
+                return ResourceManager.GetString("MCURegistration", resourceCulture);
             }
         }
         
@@ -2626,6 +2644,24 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to REG_ID.
+        /// </summary>
+        public static string REG_ID {
+            get {
+                return ResourceManager.GetString("REG_ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to REG_NUMBER.
+        /// </summary>
+        public static string REG_NUMBER {
+            get {
+                return ResourceManager.GetString("REG_NUMBER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Region.
         /// </summary>
         public static string Region {
@@ -2757,6 +2793,15 @@ namespace Klinik.Resources {
         public static string RescheduleConfirmation {
             get {
                 return ResourceManager.GetString("RescheduleConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RESERVE DATE.
+        /// </summary>
+        public static string RESERVE_DATE {
+            get {
+                return ResourceManager.GetString("RESERVE_DATE", resourceCulture);
             }
         }
         
@@ -2901,6 +2946,24 @@ namespace Klinik.Resources {
         public static string SaveExamine {
             get {
                 return ResourceManager.GetString("SaveExamine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schedule Code.
+        /// </summary>
+        public static string SCHEDULE_CODE {
+            get {
+                return ResourceManager.GetString("SCHEDULE_CODE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schedule ID.
+        /// </summary>
+        public static string SCHEDULE_ID {
+            get {
+                return ResourceManager.GetString("SCHEDULE_ID", resourceCulture);
             }
         }
         

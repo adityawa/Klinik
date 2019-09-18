@@ -173,7 +173,7 @@ namespace Klinik.Web.Controllers
                 PoliID = Convert.ToInt64(poliId),
                 RequirementID = Convert.ToInt16(necesity),
                 MCUPakageID = Convert.ToInt64(MCUPackage),
-                Jam= Convert.ToDateTime(string.Format("{0} {1}", CommonUtils.ConvertStringDate2Datetime(AppointmentDate).ToString("yyyy-MM-dd"), timeAppointment))
+                Jam = Convert.ToDateTime(string.Format("{0} {1}", CommonUtils.ConvertStringDate2Datetime(AppointmentDate).ToString("yyyy-MM-dd"), timeAppointment))
 
             };
 
@@ -191,6 +191,31 @@ namespace Klinik.Web.Controllers
             return Json(new { Status = response.Status, Message = response.Message }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult DeleteAppointment(int id)
+        {
+            AppointmentResponse _response = new AppointmentResponse();
+            var request = new AppointmentRequest
+            {
+                Data = new AppointmentModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            _response = new AppointmentValidator(_unitOfWork).ValidateBeforeDelete(request);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult EditAppointment(string appoId)
+        {
+            var response = new AppointmentResponse();
+            response = new AppointmentHandler(_unitOfWork).GetDetailAppointment(Convert.ToInt64(appoId));
+            return View(response.Entity);
+        }
 
         #region ::MISCELANOUS::
         public List<SelectListItem> BindNecesity()
@@ -217,33 +242,43 @@ namespace Klinik.Web.Controllers
         public JsonResult AutoCompleteEmployee(string prefix)
         {
             long _employeeId = 0;
-            List<Employee> employeeList = new List<Employee>();
+            List<Patient> patientList = new List<Patient>();
+            List<string> exceptionStatus = new List<string>();
+            exceptionStatus.Add("Na");
+            exceptionStatus.Add("R");
+
             if (Session["UserLogon"] != null)
             {
-              var _account   = (AccountModel)Session["UserLogon"];
-                if(_account!=null)
+                var _account = (AccountModel)Session["UserLogon"];
+                if (_account != null)
                 {
                     if (_account.EmployeeID > 0)
                         _employeeId = _account.EmployeeID;
                 }
             }
-            List<string> exceptionStatus = new List<string>();
-            exceptionStatus.Add("Na");
-            exceptionStatus.Add("R");
 
-            var except = _unitOfWork.EmployeeStatusRepository.Get(x => exceptionStatus.Contains(x.Code)).Select(x => x.ID).ToList();
-            if (_employeeId == 0)
+         
+            bool isHaveViewAll = IsHaveAuthorization(Constants.ROLE_NAME.VIEW_APPOINTMENT_ALL.ToString());
+            // var except = _unitOfWork.EmployeeStatusRepository.Get(x => exceptionStatus.Contains(x.Code)).Select(x => x.ID).ToList();
+            if (isHaveViewAll)
             {
-                employeeList = _unitOfWork.EmployeeRepository.Get(x => x.RowStatus == 0 && !except.Contains(x.Status ?? 0)).ToList();
-
+                patientList = _unitOfWork.PatientRepository.Get(x => x.RowStatus == 0).ToList();
             }
             else
             {
-                employeeList = _unitOfWork.EmployeeRepository.Get(x => x.RowStatus == 0 && x.ID==_employeeId && !except.Contains(x.Status ?? 0)).ToList();
 
+                var employeeDetail = _unitOfWork.EmployeeRepository.GetById(_employeeId);
+                if (employeeDetail != null)
+                {
+                    string _nik = employeeDetail.EmpID;
+                    var employeeList = _unitOfWork.EmployeeRepository.Get(x => (x.EmpID == _nik || x.ReffEmpID == _nik) && x.RowStatus == 0)
+                          .Select(x => x.ID)
+                          .ToList();
+                    patientList = _unitOfWork.PatientRepository.Get(x => employeeList.Contains(x.EmployeeID ?? 0));
+                }
             }
 
-            var filteredList = employeeList.Where(t => t.EmpName.ToLower().Contains(prefix.ToLower()));
+            var filteredList = patientList.Where(t => t.Name.ToLower().Contains(prefix.ToLower()));
 
             List<TempClass> resultList = new List<TempClass>();
             foreach (var item in filteredList)
@@ -251,8 +286,8 @@ namespace Klinik.Web.Controllers
                 TempClass temp = new TempClass
                 {
                     id = item.ID,
-                    nik = item.EmpID,
-                    label = item.EmpName,
+                    nik = (item.EmployeeID ?? 0).ToString(),
+                    label = item.Name,
 
                 };
 

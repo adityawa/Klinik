@@ -380,6 +380,9 @@ namespace Klinik.Common
             CreateMap<PurchaseOrderPusatModel, DeliveryOrderPusatModel>();
             CreateMap<PurchaseOrderPusatDetailModel, DeliveryOrderPusatDetailModel>();
 
+            CreateMap<MCURegistrationInterface, MCURegistrationModel>()
+                .ForMember(x=>x.strReserveDate, map=>map.MapFrom(p=>Convert.ToDateTime( p.RESERVE_DATE).ToString("dd/MM/yyyy")));
+
         }
     }
 }

@@ -37,6 +37,15 @@
 @section Scripts {
     <script type="text/javascript">
         $(document).ready(function () {
+             toastr.options = {
+        "closeButton": true,
+        "positionClass": "toast-top-full-width",
+        "onclick": null,
+        "showDuration": "0",
+        "hideDuration": "0",
+        "timeOut": "0",
+        "showMethod": "fadeIn"
+    };
             $('#tbAppointment').dataTable({
                 "autoWidth": false,
                 "processing": true,
@@ -105,15 +114,41 @@
                         "searchable": false,
                         "orderable": false,
                         'render': function (data, type, full, meta) {
-                            return '<a href="#" class="btn btn-info" id="btnEdit" value="Edit"><span class="glyphicon glyphicon-pencil"></span> Edit </a>'+'|'+'<a href="#" class="btn btn-info" id="btnDelete" value="Remove"><span class="glyphicon glyphicon-remove"></span> Remove </a>';
+                            return'<a href="#" class="btn btn-info" id="btnDelete" value="Remove" onclick=Delete(' + full.Id + ')><span class="glyphicon glyphicon-remove"></span> Remove </a>';
+                            @*'<a href="@Url.Action("EditAppointment","Appointment")?appoId='+full.Id+'", class="btn btn-info" id="btnEdit" value="Edit"><span class="glyphicon glyphicon-pencil"></span> Edit </a>'
+                                + '|' +*@
+                                
                         }
                     }
                     ]
 
-
             });
         });
 
+        var Delete = function (ID) {
+        var r = confirm("@Klinik.Resources.UIMessages.DeleteConfirmation" + ID + " ) ?");
+        if (r == true) {
+            DeleteAppointment(ID);
+        }
+        return false;
+    }
 
+    function DeleteAppointment(Id) {
+        $.ajax({
+            url: '/Appointment/DeleteAppointment?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status=='True' || result.Status=='true' || result.Status==true) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                   
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+    }
     </script>
 }

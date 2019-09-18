@@ -87,6 +87,7 @@
     <Compile Include="MasterData\LookUpCategoryModel.cs" />
     <Compile Include="MasterData\VendorModel.cs" />
     <Compile Include="MCUPackageEntities\MCUPackageModel.cs" />
+    <Compile Include="MCUPackageEntities\MCURegistrationModel.cs" />
     <Compile Include="MedicalHistoryEntity\MedicalHistoryModel.cs" />
     <Compile Include="Pharmacy\PengambilanObatModel.cs" />
     <Compile Include="Pharmacy\PharmacyModel.cs" />

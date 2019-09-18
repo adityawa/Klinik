@@ -114,5 +114,11 @@
             public const string Radiologi = "Radiologi";
             public const string Kasir = "Kasir";
         }
+
+        public static class ROLE_NAME
+        {
+            public const string VIEW_APPOINTMENT_ALL = "VIEW_APPOINTMENT_ALL";
+            public const string VIEW_MEDICAL_HISTORY_ALL = "VIEW_MEDICAL_HISTORY_ALL";
+        }
     }
 }
