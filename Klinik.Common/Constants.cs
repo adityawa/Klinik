@@ -116,5 +116,18 @@
             public const string Radiologi = "Radiologi";
             public const string Kasir = "Kasir";
         }
+
+        public static class LookUpCategoryConstant
+        {
+            public const string DEPARTMENT = "Department";
+            public const string BUSINESSUNIT = "BusinessUnit";
+            public const string GENDER = "Gender";
+            public const string AGE = "Age";
+            public const string PATIENTCATEGORY = "Patient Category";
+            public const string FAMILYSTATUS = "Family Status";
+            public const string NECESSITYTYPE = "Necessity Type";
+            public const string PAYMENTTYPE = "Payment Type";
+            public const string NEEDREST = "Need Rest";
+        }
     }
 }

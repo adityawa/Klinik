@@ -14,5 +14,8 @@ namespace Klinik.Entities.Form
         public string Remark { get; set; }
         public string ICDInformation { get; set; }
         public string Result { get; set; }
+        public string IsAccident { get; set; }
+        public string NeedRest { get; set; }
+
     }
 }

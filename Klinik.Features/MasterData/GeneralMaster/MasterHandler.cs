@@ -16,5 +16,10 @@ namespace Klinik.Features
         {
             return _unitOfWork.MasterRepository.Query(x => x.Type.Equals(type, StringComparison.OrdinalIgnoreCase));
         }
+
+        public IQueryable<LookupCategory> GetLookupCategoryByName(string name)
+        {
+            return _unitOfWork.LookUpCategoryRepository.Query(x => x.LookUpName.Equals(name, StringComparison.OrdinalIgnoreCase));
+        }
     }
 }

@@ -1571,6 +1571,8 @@
     <Content Include="Views\GudangPusat\PrintDeliveryOrderPusat.cshtml" />
     <Content Include="Views\MasterData\LookUpCategoryList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditLookUpCategory.cshtml" />
+    <Content Include="Views\Reports\Top10Cost.cshtml" />
+    <Content Include="Views\Reports\Top10Request.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
