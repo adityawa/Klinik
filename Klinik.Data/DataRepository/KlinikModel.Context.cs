@@ -12,8 +12,10 @@ namespace Klinik.Data.DataRepository
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
-    public partial class KlinikDBEntities : DbContext
+    public partial class KlinikDBEntities: DbContext
     {
         public KlinikDBEntities()
             : base("name=KlinikDBEntities")
@@ -26,7 +28,6 @@ namespace Klinik.Data.DataRepository
         }
     
         public virtual DbSet<AppConfig> AppConfigs { get; set; }
-        public virtual DbSet<Appointment> Appointments { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Clinic> Clinics { get; set; }
         public virtual DbSet<DeliveryOrder> DeliveryOrders { get; set; }
@@ -65,6 +66,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<PanggilanPoli> PanggilanPolis { get; set; }
         public virtual DbSet<PasswordHistory> PasswordHistories { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
+        public virtual DbSet<PatientAge> PatientAges { get; set; }
         public virtual DbSet<PatientClinic> PatientClinics { get; set; }
         public virtual DbSet<Poli> Polis { get; set; }
         public virtual DbSet<PoliClinic> PoliClinics { get; set; }
@@ -83,7 +85,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<PurchaseOrderPusat> PurchaseOrderPusats { get; set; }
         public virtual DbSet<PurchaseOrderPusatDetail> PurchaseOrderPusatDetails { get; set; }
         public virtual DbSet<PurchaseRequest> PurchaseRequests { get; set; }
-        public virtual DbSet<PurchaseRequestConfig> PurchaseRequestConfigs { get; set; }
         public virtual DbSet<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
         public virtual DbSet<PurchaseRequestPusat> PurchaseRequestPusats { get; set; }
         public virtual DbSet<PurchaseRequestPusatDetail> PurchaseRequestPusatDetails { get; set; }
@@ -98,7 +99,67 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
+        public virtual DbSet<Appointment> Appointments { get; set; }
+        public virtual DbSet<PurchaseRequestConfig> PurchaseRequestConfigs { get; set; }
         public virtual DbSet<LookupCategory> LookupCategories { get; set; }
-        public virtual DbSet<PatientAge> PatientAges { get; set; }
+        public virtual DbSet<MCURegistrationInterface> MCURegistrationInterfaces { get; set; }
+    
+        [DbFunction("KlinikDBEntities1", "fusp_registrations_get_by_status")]
+        public virtual IQueryable<fusp_registrations_get_by_status_Result> fusp_registrations_get_by_status(string documentStatus, string isTransferred)
+        {
+            var documentStatusParameter = documentStatus != null ?
+                new ObjectParameter("DocumentStatus", documentStatus) :
+                new ObjectParameter("DocumentStatus", typeof(string));
+    
+            var isTransferredParameter = isTransferred != null ?
+                new ObjectParameter("IsTransferred", isTransferred) :
+                new ObjectParameter("IsTransferred", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fusp_registrations_get_by_status_Result>("[KlinikDBEntities1].[fusp_registrations_get_by_status](@DocumentStatus, @IsTransferred)", documentStatusParameter, isTransferredParameter);
+        }
+    
+        public virtual int SP_EmployeeSync(Nullable<System.DateTime> lastUpdateTime, Nullable<int> rangeMinute, string lastupdateby)
+        {
+            var lastUpdateTimeParameter = lastUpdateTime.HasValue ?
+                new ObjectParameter("LastUpdateTime", lastUpdateTime) :
+                new ObjectParameter("LastUpdateTime", typeof(System.DateTime));
+    
+            var rangeMinuteParameter = rangeMinute.HasValue ?
+                new ObjectParameter("RangeMinute", rangeMinute) :
+                new ObjectParameter("RangeMinute", typeof(int));
+    
+            var lastupdatebyParameter = lastupdateby != null ?
+                new ObjectParameter("lastupdateby", lastupdateby) :
+                new ObjectParameter("lastupdateby", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_EmployeeSync", lastUpdateTimeParameter, rangeMinuteParameter, lastupdatebyParameter);
+        }
+    
+        public virtual ObjectResult<string> usp_MCU_registration()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("usp_MCU_registration");
+        }
+    
+        public virtual ObjectResult<usp_registrations_get_by_status_Result> usp_registrations_get_by_status(string documentStatus, string isTransferred)
+        {
+            var documentStatusParameter = documentStatus != null ?
+                new ObjectParameter("DocumentStatus", documentStatus) :
+                new ObjectParameter("DocumentStatus", typeof(string));
+    
+            var isTransferredParameter = isTransferred != null ?
+                new ObjectParameter("IsTransferred", isTransferred) :
+                new ObjectParameter("IsTransferred", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_registrations_get_by_status_Result>("usp_registrations_get_by_status", documentStatusParameter, isTransferredParameter);
+        }
+    
+        public virtual int usp_registrations_update_by_regnumber(string regNumber)
+        {
+            var regNumberParameter = regNumber != null ?
+                new ObjectParameter("RegNumber", regNumber) :
+                new ObjectParameter("RegNumber", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_registrations_update_by_regnumber", regNumberParameter);
+        }
     }
 }

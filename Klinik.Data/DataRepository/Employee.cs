@@ -17,11 +17,11 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
-            this.Appointments = new HashSet<Appointment>();
             this.Doctors = new HashSet<Doctor>();
             this.EmployeeAssignments = new HashSet<EmployeeAssignment>();
             this.Patients = new HashSet<Patient>();
             this.Users = new HashSet<User>();
+            this.Appointments = new HashSet<Appointment>();
         }
     
         public long ID { get; set; }
@@ -43,8 +43,6 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Appointment> Appointments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Doctor> Doctors { get; set; }
         public virtual EmployeeStatu EmployeeStatu { get; set; }
         public virtual FamilyRelationship FamilyRelationship { get; set; }
@@ -55,5 +53,7 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<Patient> Patients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Appointment> Appointments { get; set; }
     }
 }

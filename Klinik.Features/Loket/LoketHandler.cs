@@ -108,6 +108,26 @@ namespace Klinik.Features
                     // reference to queue
                     queueEntity.FormMedical = formMedical;
 
+
+                    //cek is have appointment
+                    if (queueEntity.Type == 1)
+                    {
+                        var today = DateTime.Now.Date;
+                        var isHaveAppointment = _unitOfWork.AppointmentRepository.Get(x => x.EmployeeID == queueEntity.PatientID
+                && x.AppointmentDate == today
+                && x.PoliID == queueEntity.PoliTo
+                && x.ClinicID == queueEntity.ClinicID);
+
+                        if (isHaveAppointment.FirstOrDefault() != null)
+                        {
+                            var appointment = isHaveAppointment.FirstOrDefault();
+                            queueEntity.AppointmentID = appointment.ID;
+                            if (appointment.Jam != null)
+                                queueEntity.TransactionDate = (DateTime)appointment.Jam;
+                        }
+                    }
+
+
                     _unitOfWork.RegistrationRepository.Insert(queueEntity);
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
@@ -529,7 +549,7 @@ namespace Klinik.Features
             return response;
         }
 
-        
+
         public LoketResponse SendForCall(LoketRequest request)
         {
             var response = new LoketResponse();
@@ -547,12 +567,12 @@ namespace Klinik.Features
                     response.Message = Messages.ReadyForCall;
                 }
             }
-            catch(Exception )
+            catch (Exception)
             {
                 response.Status = false;
                 response.Message = Messages.CallFailed;
             }
-           
+
 
             return response;
         }

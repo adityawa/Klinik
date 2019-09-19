@@ -36,6 +36,7 @@ namespace Klinik.Data.DataRepository
         public string Code { get; set; }
         public string Name { get; set; }
         public Nullable<long> ClinicID { get; set; }
+        public string Vendor { get; set; }
         public int ProductCategoryID { get; set; }
         public int ProductUnitID { get; set; }
         public decimal RetailPrice { get; set; }

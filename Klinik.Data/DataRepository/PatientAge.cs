@@ -15,14 +15,12 @@ namespace Klinik.Data.DataRepository
     public partial class PatientAge
     {
         public int Id { get; set; }
-        public Nullable<long> PatientId { get; set; }
-        public decimal Age { get; set; }
+        public Nullable<int> PatientId { get; set; }
+        public int Age { get; set; }
         public string AgeCode { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-    
-        public virtual Patient Patient { get; set; }
     }
 }

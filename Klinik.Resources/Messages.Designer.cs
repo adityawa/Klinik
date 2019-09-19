@@ -311,6 +311,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Data were updated.
+        /// </summary>
+        public static string NoDataUpdated {
+            get {
+                return ResourceManager.GetString("NoDataUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} {1} with ID {2} has been successfully added.
         /// </summary>
         public static string ObjectHasBeenAdded {

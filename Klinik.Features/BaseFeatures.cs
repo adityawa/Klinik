@@ -359,5 +359,7 @@ namespace Klinik.Features
                 _registationNo = _qryData.ID;
             return _registationNo;
         }
-	}
+
+       
+    }
 }

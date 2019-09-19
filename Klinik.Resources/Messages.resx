@@ -307,4 +307,7 @@ Administrator</value>
   <data name="DataHasBeenUpdated" xml:space="preserve">
     <value>Data has been Updated</value>
   </data>
+  <data name="NoDataUpdated" xml:space="preserve">
+    <value>No Data were updated</value>
+  </data>
 </root>

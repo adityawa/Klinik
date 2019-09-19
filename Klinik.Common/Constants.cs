@@ -69,7 +69,7 @@
             public const string EDIT_PURCHASE_ORDER = "Edit Form Purchase order";
             public const string ADD_PURCHASE_ORDER = "Add New Purchase order";
             public const string EDIT_PURCHASE_ORDER_DETAIL = "Edit Form Purchase order detail";
-            public const string ADD_PURCHASE_ORDER_DETAIL= "Add New Purchase order detail";
+            public const string ADD_PURCHASE_ORDER_DETAIL = "Add New Purchase order detail";
             public const string EDIT_VENDOR = "Edit Form Vendor";
             public const string ADD_VENDOR = "Add New Vendor";
             public const string EDIT_PURCHASE_ORDER_PUSAT_DETAIL = "Edit Form Purchase order pusat detail";
@@ -84,7 +84,7 @@
             public const string ADD_PURCHASE_REQUEST_PUSAT_DETAIL = "Add New Purchase request pusat detail";
             public const string EDIT_PURCHASE_REQUEST_PUSAT = "Edit Form Purchase request pusat";
             public const string ADD_PURCHASE_REQUEST_PUSAT = "Add New Purchase request pusat";
-			public const string EDIT_FORM_EXAMINE_MEDICINE = "Edit Form Examine Medicine";
+            public const string EDIT_FORM_EXAMINE_MEDICINE = "Edit Form Examine Medicine";
             public const string EDIT_PRODCUTINGUDANG = "Edit Form Product In Gudang";
             public const string ADD_PRODCUTINGUDANG = "Add New Product In Gudang";
             public const string ADD_LOOKUP_CATEGORY = "Add New LookUp Category";
@@ -117,6 +117,7 @@
             public const string Kasir = "Kasir";
         }
 
+
         public static class LookUpCategoryConstant
         {
             public const string DEPARTMENT = "Department";
@@ -128,10 +129,19 @@
             public const string NECESSITYTYPE = "Necessity Type";
             public const string PAYMENTTYPE = "Payment Type";
             public const string NEEDREST = "Need Rest";
+
+
             public const string EXAMINETYPE = "Examine Type";
             public const string HOSPITAL = "HOSPITAL";
             public const string MONTH = "Month";
             public const string REQUESTTYPE = "Request Type";
+        }
+
+        public static class ROLE_NAME
+        {
+            public const string VIEW_APPOINTMENT_ALL = "VIEW_APPOINTMENT_ALL";
+            public const string VIEW_MEDICAL_HISTORY_ALL = "VIEW_MEDICAL_HISTORY_ALL";
+
         }
     }
 }
