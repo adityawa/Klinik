@@ -1,0 +1,136 @@
+﻿@model Klinik.Entities.MCUPackageEntities.MCURegistrationModel
+
+@{
+    ViewBag.Title = "ViewMcuSchedulle";
+}
+
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+        </div>
+        <h5 class="panel-title">
+            @Klinik.Resources.UIMessages.MCURegistration
+        </h5>
+    </header>
+
+    <div class="panel-body">
+
+
+
+        <div style="width:100%; margin:18px; padding-top:30px">
+            <table id="tblMCUReg" class="table table-striped table-bordered dt-responsive" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>@Klinik.Resources.UIMessages.REG_ID</th>
+                        <th>@Klinik.Resources.UIMessages.REG_NUMBER</th>
+                        <th>@Klinik.Resources.UIMessages.RESERVE_DATE</th>
+                        <th>@Klinik.Resources.UIMessages.EmpID</th>
+                        <th>@Klinik.Resources.UIMessages.Name</th>
+                        <th>@Klinik.Resources.UIMessages.SCHEDULE_ID</th>
+                        <th>@Klinik.Resources.UIMessages.SCHEDULE_CODE</th>
+                        <th>@Klinik.Resources.UIMessages.Status</th>
+                        <th>@Klinik.Resources.UIMessages.IS_TRANSFERED</th>
+                        <th>@Klinik.Resources.UIMessages.Action</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblMCUReg').dataTable({
+                "autoWidth": false,
+                "processing": true,
+                "serverSide": true,
+                "searching": false,
+
+                "orderMulti": false,
+                "pageLength": 10,
+                "ajax": {
+                    "url": "/MCU/GetMCURegistrationList",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs":
+                    [{
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false,
+                    },
+                    {
+                        "targets": [1],
+                        "searchable": true,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [2],
+                        "searchable": true,
+                        "orderable": true
+                    },
+                    {
+                        "targets": [3],
+                        "searchable": false,
+                        "visible": false
+                    },
+                    {
+                        "targets": [4],
+                        "searchable": true,
+                        "orderable": true
+                    },
+                    {
+                        "targets": [5],
+                        "searchable": false,
+                        "visible": false
+                    },
+                    {
+                        "targets": [6],
+                        "searchable": true,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [7],
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [8],
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [9],
+                        "searchable": false,
+                        "orderable": false
+                    }
+
+                    ],
+                "columns": [
+                    { "data": "REG_ID", "name": "REG_ID", "autoWidth": false },
+                    { "data": "REG_NUMBER", "name": "REG_NUMBER", "autoWidth": true },
+                    { "data": "strReserveDate", "name": "strReserveDate", "autoWidth": true },
+                    { "data": "EMPL_ID", "name": "EMPL_ID", "autoWidth": true },
+                    { "data": "EMPL_NAME", "name": "EMPL_NAME", "autoWidth": true },
+                    { "data": "SCHEDULE_ID", "name": "SCHEDULE_ID", "autoWidth": true },
+                    { "data": "SCHEDULE_CODE", "name": "SCHEDULE_CODE", "autoWidth": true },
+                    { "data": "DOCUMENT_STATUS", "name": "DOCUMENT_STATUS", "autoWidth": true },
+                    { "data": "IS_TRANSFERRED", "name": "IS_TRANSFERRED", "autoWidth": true },
+                    {
+                        "render": function (data, type, full, meta) {
+
+                            return '<a class="btn btn-success" href="/MedicalHistory/ViewEmployeeFamilyData?nik=' + full.Id + '">Proses</a>';
+
+                        }
+                    }
+                ]
+
+            });
+
+
+        });
+    </script>
+
+}

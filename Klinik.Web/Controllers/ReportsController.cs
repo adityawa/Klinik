@@ -82,7 +82,7 @@ namespace Klinik.Web.Controllers
             foreach (var item in items)
             {
                 _types.Add(new SelectListItem {
-                    Text = item.LookUpContent,
+                    Text = item.LookupContent,
                     Value = item.LookUpCode
                 });
             }

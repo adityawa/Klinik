@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace Klinik.Features.AppointmentFeatures
 {
-    public class AppointmentResponse :BaseResponse<AppointmentModel>
+    public class AppointmentResponse : BaseResponse<AppointmentModel>
     {
-      public List<PoliScheduleModel> schedules { get; set; }
+        public List<PoliScheduleModel> schedules { get; set; }
     }
 }

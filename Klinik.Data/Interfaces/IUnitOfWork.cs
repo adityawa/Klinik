@@ -80,6 +80,7 @@ namespace Klinik.Data
         IGenericRepository<Appointment> AppointmentRepository { get; }
         IGenericRepository<MCUPackage> MCUpackageRepository { get; }
 
+        IGenericRepository<MCURegistrationInterface> MCURegistrationRepository { get; }
         int Save();
     }
 }

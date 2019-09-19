@@ -26,8 +26,8 @@ namespace Klinik.Data.DataRepository
             this.PurchaseOrders1 = new HashSet<PurchaseOrder>();
             this.PurchaseOrderPusats = new HashSet<PurchaseOrderPusat>();
             this.PurchaseRequests = new HashSet<PurchaseRequest>();
-            this.PurchaseRequestConfigs = new HashSet<PurchaseRequestConfig>();
             this.PurchaseRequestPusats = new HashSet<PurchaseRequestPusat>();
+            this.PurchaseRequestConfigs = new HashSet<PurchaseRequestConfig>();
         }
     
         public int id { get; set; }
@@ -59,8 +59,8 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseRequest> PurchaseRequests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseRequestConfig> PurchaseRequestConfigs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseRequestPusat> PurchaseRequestPusats { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseRequestConfig> PurchaseRequestConfigs { get; set; }
     }
 }

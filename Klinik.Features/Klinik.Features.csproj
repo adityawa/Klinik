@@ -123,6 +123,9 @@
     <Compile Include="MasterData\Vendor\VendorRequest.cs" />
     <Compile Include="MasterData\Vendor\VendorResponse.cs" />
     <Compile Include="MasterData\Vendor\VendorValidator.cs" />
+    <Compile Include="MCUFeatures\MCURegistrationHandler.cs" />
+    <Compile Include="MCUFeatures\MCURegistrationRequest.cs" />
+    <Compile Include="MCUFeatures\MCURegistrationResponse.cs" />
     <Compile Include="Pharmacy\PharmacyHandler.cs" />
     <Compile Include="Pharmacy\PharmacyHandlerRequest.cs" />
     <Compile Include="Pharmacy\PharmacyHandlerResponse.cs" />
@@ -320,7 +323,7 @@
       <Name>Klinik.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
-      <Project>{65643F8A-3935-4A27-AAF3-307DCBF8DB60}</Project>
+      <Project>{65643f8a-3935-4a27-aaf3-307dcbf8db60}</Project>
       <Name>Klinik.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Klinik.Entities\Klinik.Entities.csproj">

@@ -13,14 +13,11 @@ using System.Web.Mvc;
 
 namespace Klinik.Web.Controllers
 {
-    public class MedicalHistoryController : Controller
+    public class MedicalHistoryController : BaseController
     {
-        private IUnitOfWork _unitOfWork;
-        private KlinikDBEntities _context;
-        public MedicalHistoryController(IUnitOfWork unitOfWork, KlinikDBEntities context)
+        public MedicalHistoryController(IUnitOfWork unitOfWork, KlinikDBEntities context):base(unitOfWork, context)
         {
-            _unitOfWork = unitOfWork;
-            _context = context;
+
         }
         // GET: MedicalHistory
         public ActionResult Index()
@@ -54,11 +51,9 @@ namespace Klinik.Web.Controllers
         public ActionResult ViewEmployeeData()
         {
             var account = new AccountModel();
-            if (Session["UserLogon"] != null)
-            {
-                 account = (AccountModel)Session["UserLogon"];
-            }
-            if (account.EmployeeID <= 0)
+            bool isCanViewAll = IsHaveAuthorization(Constants.ROLE_NAME.VIEW_MEDICAL_HISTORY_ALL.ToString());
+          
+            if (isCanViewAll)
             {
                 ViewBag.CanViewAll = true;
                 

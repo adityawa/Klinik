@@ -10,6 +10,6 @@ namespace Klinik.Features.AppointmentFeatures
 {
     public class AppointmentRequest :BaseRequest<AppointmentModel>
     {
-
+        
     }
 }

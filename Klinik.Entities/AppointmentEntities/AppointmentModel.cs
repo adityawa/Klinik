@@ -14,8 +14,16 @@ namespace Klinik.Entities.AppointmentEntities
         public int RequirementID { get; set; }
         public long DoctorID { get; set; }
         public long MCUPakageID { get; set; }
-     
 
+        public string EmpName { get; set; }
+
+        public string DoctorName { get; set; }
+        public string RequirementName { get; set; }
+        public string ClinicName { get; set; }
+        public string PoliName { get; set; }
+        public string StrAppointmentDate { get; set; }
+        public string StrAppointmentTime { get; set; }
+        public DateTime? Jam { get; set; }
         public List<PoliModel> ListPoli { get; set; }
 
         public AppointmentModel()

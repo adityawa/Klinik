@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="KlinikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AppConfig">
           <Key>
             <PropertyRef Name="ID" />
@@ -34,8 +34,9 @@
           <Property Name="RowStatus" Type="smallint" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="Jam" Type="datetime" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -310,8 +311,6 @@
           <Property Name="Remark" Type="text" />
           <Property Name="ICDInformation" Type="varchar" MaxLength="250" />
           <Property Name="Result" Type="nvarchar" MaxLength="250" />
-          <Property Name="NeedRest" Type="nvarchar" MaxLength="2" />
-          <Property Name="IsAccident" Type="nvarchar" MaxLength="2" />
           <Property Name="RowStatus" Type="smallint" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -580,12 +579,12 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LookUpCode" Type="varchar" MaxLength="50" />
+          <Property Name="LookUpCode" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="LookUpName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LookUpContent" Type="varchar(max)" Nullable="false" />
-          <Property Name="RowStatus" Type="smallint" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="LookupContent" Type="varchar(max)" Nullable="false" />
+          <Property Name="RowStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
@@ -604,6 +603,24 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="NodifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MCURegistrationInterface">
+          <Key>
+            <PropertyRef Name="REG_ID" />
+          </Key>
+          <Property Name="REG_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="REG_NUMBER" Type="varchar" MaxLength="20" />
+          <Property Name="RESERVE_DATE" Type="date" />
+          <Property Name="EMPL_ID" Type="int" />
+          <Property Name="EMPL_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="SCHEDULE_ID" Type="int" />
+          <Property Name="SCHEDULE_CODE" Type="varchar" MaxLength="10" />
+          <Property Name="DOCUMENT_STATUS" Type="varchar" MaxLength="50" />
+          <Property Name="IS_TRANSFERRED" Type="char" MaxLength="1" />
+          <Property Name="CREATED_DATE" Type="datetime" />
+          <Property Name="CREATED_BY_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="MODIFIED_DATE" Type="datetime" />
+          <Property Name="MODIFIED_BY_NAME" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Medicine">
           <Key>
@@ -735,12 +752,12 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PatientId" Type="bigint" />
-          <Property Name="Age" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="PatientId" Type="int" />
+          <Property Name="Age" Type="int" Nullable="false" />
           <Property Name="AgeCode" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
-          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="100" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
@@ -877,6 +894,7 @@
           <Property Name="Code" Type="varchar" MaxLength="10" />
           <Property Name="Name" Type="varchar" MaxLength="200" />
           <Property Name="ClinicID" Type="bigint" />
+          <Property Name="Vendor" Type="varchar" MaxLength="100" />
           <Property Name="ProductCategoryID" Type="int" Nullable="false" />
           <Property Name="ProductUnitID" Type="int" Nullable="false" />
           <Property Name="RetailPrice" Type="decimal" Precision="19" Scale="4" Nullable="false" />
@@ -1069,9 +1087,9 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="30" />
+          <Property Name="RowStatus" Type="int" />
           <Property Name="request_by" Type="varchar" MaxLength="30" />
           <Property Name="Status" Type="bit" />
-          <Property Name="RowStatus" Type="int" />
         </EntityType>
         <EntityType Name="PurchaseRequestDetail">
           <Key>
@@ -1316,6 +1334,8 @@
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'KlinikDB.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <Association Name="FK_Appointment_Clinic">
           <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
@@ -1325,6 +1345,18 @@
             </Principal>
             <Dependent Role="Appointment">
               <PropertyRef Name="ClinicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Doctor">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="DoctorID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1349,6 +1381,18 @@
             </Principal>
             <Dependent Role="Appointment">
               <PropertyRef Name="MCUPackageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Poli">
+          <End Role="Poli" Type="Self.Poli" Multiplicity="0..1" />
+          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poli">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="PoliID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1937,18 +1981,6 @@
             </Principal>
             <Dependent Role="Patient">
               <PropertyRef Name="EmployeeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PatientAge_PatientAge">
-          <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
-          <End Role="PatientAge" Type="Self.PatientAge" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Patient">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PatientAge">
-              <PropertyRef Name="PatientId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2684,6 +2716,52 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_GenerateMRNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="CreatedTime" Type="datetime" Mode="In" />
+          <Parameter Name="seq" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fusp_registrations_get_by_status" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DocumentStatus" Type="nvarchar" Mode="In" />
+          <Parameter Name="IsTransferred" Type="char" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="REG_ID" Type="int" />
+                <Property Name="REG_NUMBER" Type="varchar" MaxLength="10" />
+                <Property Name="RESERVE_DATE" Type="date" />
+                <Property Name="EMPL_ID" Type="int" />
+                <Property Name="EMPL_NAME" Type="varchar" MaxLength="40" />
+                <Property Name="SCHECULE_ID" Type="int" />
+                <Property Name="SCHEDULE_CODE" Type="varchar" MaxLength="10" />
+                <Property Name="DOCUMENT_STATUS" Type="varchar" MaxLength="50" />
+                <Property Name="IS_TRANSFERRED" Type="char" MaxLength="1" />
+                <Property Name="CREATED_DATE" Type="datetime" />
+                <Property Name="CREATED_BY_NAME" Type="varchar" MaxLength="50" />
+                <Property Name="MODIFIED_DATE" Type="datetime" />
+                <Property Name="MODIFIED_BY_NAME" Type="varchar" MaxLength="50" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetAge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="decimal">
+          <Parameter Name="dob" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="GetAgeCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+          <Parameter Name="age" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="SP_EmployeeSync" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LastUpdateTime" Type="datetime" Mode="In" />
+          <Parameter Name="RangeMinute" Type="int" Mode="In" />
+          <Parameter Name="lastupdateby" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_MCU_registration" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_registrations_get_by_status" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DocumentStatus" Type="nvarchar" Mode="In" />
+          <Parameter Name="IsTransferred" Type="char" Mode="In" />
+        </Function>
+        <Function Name="usp_registrations_update_by_regnumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RegNumber" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="KlinikDBModelStoreContainer">
           <EntitySet Name="AppConfig" EntityType="Self.AppConfig" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Appointment" EntityType="Self.Appointment" Schema="dbo" store:Type="Tables" />
@@ -2718,6 +2796,7 @@
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LookupCategory" EntityType="Self.LookupCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MCUPackage" EntityType="Self.MCUPackage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MCURegistrationInterface" EntityType="Self.MCURegistrationInterface" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Medicine" EntityType="Self.Medicine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dbo" store:Type="Tables" />
@@ -2764,12 +2843,20 @@
             <End Role="Clinic" EntitySet="Clinic" />
             <End Role="Appointment" EntitySet="Appointment" />
           </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Doctor" Association="Self.FK_Appointment_Doctor">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
           <AssociationSet Name="FK_Appointment_Employee" Association="Self.FK_Appointment_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Appointment" EntitySet="Appointment" />
           </AssociationSet>
           <AssociationSet Name="FK_Appointment_MCUPackage" Association="Self.FK_Appointment_MCUPackage">
             <End Role="MCUPackage" EntitySet="MCUPackage" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Poli" Association="Self.FK_Appointment_Poli">
+            <End Role="Poli" EntitySet="Poli" />
             <End Role="Appointment" EntitySet="Appointment" />
           </AssociationSet>
           <AssociationSet Name="FK_Clinic_City" Association="Self.FK_Clinic_City">
@@ -2967,10 +3054,6 @@
           <AssociationSet Name="FK_Patient_Employee" Association="Self.FK_Patient_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Patient" EntitySet="Patient" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PatientAge_PatientAge" Association="Self.FK_PatientAge_PatientAge">
-            <End Role="Patient" EntitySet="Patient" />
-            <End Role="PatientAge" EntitySet="PatientAge" />
           </AssociationSet>
           <AssociationSet Name="FK_PatientClinic_City" Association="Self.FK_PatientClinic_City">
             <End Role="City" EntitySet="City" />
@@ -3221,6 +3304,21 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KlinikDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="fusp_registrations_get_by_status_Result">
+          <Property Name="REG_ID" Type="Int32" />
+          <Property Name="REG_NUMBER" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="RESERVE_DATE" Type="DateTime" />
+          <Property Name="EMPL_ID" Type="Int32" />
+          <Property Name="EMPL_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="SCHECULE_ID" Type="Int32" />
+          <Property Name="SCHEDULE_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DOCUMENT_STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IS_TRANSFERRED" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CREATED_DATE" Type="DateTime" />
+          <Property Name="CREATED_BY_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MODIFIED_DATE" Type="DateTime" />
+          <Property Name="MODIFIED_BY_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </ComplexType>
         <EntityType Name="AppConfig">
           <Key>
             <PropertyRef Name="ID" />
@@ -3233,28 +3331,6 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="Appointment">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmployeeID" Type="Int64" />
-          <Property Name="ClinicID" Type="Int64" Nullable="false" />
-          <Property Name="DoctorID" Type="Int32" />
-          <Property Name="RequirementID" Type="Int32" />
-          <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="MCUPackageID" Type="Int32" />
-          <Property Name="PoliID" Type="Int32" />
-          <Property Name="Status" Type="Int16" />
-          <Property Name="RowStatus" Type="Int16" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Clinic" Relationship="Self.FK_Appointment_Clinic" FromRole="Appointment" ToRole="Clinic" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Appointment_Employee" FromRole="Appointment" ToRole="Employee" />
-          <NavigationProperty Name="MCUPackage" Relationship="Self.FK_Appointment_MCUPackage" FromRole="Appointment" ToRole="MCUPackage" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -3293,7 +3369,6 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Appointments" Relationship="Self.FK_Appointment_Clinic" FromRole="Clinic" ToRole="Appointment" />
           <NavigationProperty Name="City" Relationship="Self.FK_Clinic_City" FromRole="Clinic" ToRole="City" />
           <NavigationProperty Name="DoctorClinics" Relationship="Self.FK_DoctorClinic_Clinic" FromRole="Clinic" ToRole="DoctorClinic" />
           <NavigationProperty Name="FormMedicals" Relationship="Self.FK_FormMedical_Clinic" FromRole="Clinic" ToRole="FormMedical" />
@@ -3308,6 +3383,7 @@
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_Clinic" FromRole="Clinic" ToRole="QueuePoli" />
           <NavigationProperty Name="stoks" Relationship="Self.FK_stok_m_Clinic" FromRole="Clinic" ToRole="stok" />
           <NavigationProperty Name="stoks1" Relationship="Self.FK_stoks_m_Clinic" FromRole="Clinic" ToRole="stoks" />
+          <NavigationProperty Name="Appointments" Relationship="KlinikDBModel.FK_Appointment_Clinic" FromRole="Clinic" ToRole="Appointment" />
         </EntityType>
         <EntityType Name="DeliveryOrder">
           <Key>
@@ -3450,6 +3526,7 @@
           <NavigationProperty Name="PoliSchedules" Relationship="Self.FK_PoliSchedule_Doctor" FromRole="Doctor" ToRole="PoliSchedule" />
           <NavigationProperty Name="PoliScheduleMasters" Relationship="Self.FK_PoliScheduleMaster_Doctor" FromRole="Doctor" ToRole="PoliScheduleMaster" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_Doctor" FromRole="Doctor" ToRole="QueuePoli" />
+          <NavigationProperty Name="Appointments" Relationship="KlinikDBModel.FK_Appointment_Doctor" FromRole="Doctor" ToRole="Appointment" />
         </EntityType>
         <EntityType Name="DoctorClinic">
           <Key>
@@ -3490,7 +3567,6 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Appointments" Relationship="Self.FK_Appointment_Employee" FromRole="Employee" ToRole="Appointment" />
           <NavigationProperty Name="Doctors" Relationship="Self.FK_Doctor_Employee" FromRole="Employee" ToRole="Doctor" />
           <NavigationProperty Name="EmployeeStatu" Relationship="Self.FK_Employee_EmployeeStatus" FromRole="Employee" ToRole="EmployeeStatus" />
           <NavigationProperty Name="FamilyRelationship" Relationship="Self.FK_Employee_FamilyRelationship" FromRole="Employee" ToRole="FamilyRelationship" />
@@ -3498,6 +3574,7 @@
           <NavigationProperty Name="EmployeeAssignments" Relationship="Self.FK_EmployeeAssignment_Employee" FromRole="Employee" ToRole="EmployeeAssignment" />
           <NavigationProperty Name="Patients" Relationship="Self.FK_Patient_Employee" FromRole="Employee" ToRole="Patient" />
           <NavigationProperty Name="Users" Relationship="Self.FK_User_Employee" FromRole="Employee" ToRole="User" />
+          <NavigationProperty Name="Appointments" Relationship="KlinikDBModel.FK_Appointment_Employee" FromRole="Employee" ToRole="Appointment" />
         </EntityType>
         <EntityType Name="EmployeeAssignment">
           <Key>
@@ -3596,8 +3673,6 @@
           <NavigationProperty Name="FormExamineAttachments" Relationship="Self.FK_FormExamineAttachment_FormExamine" FromRole="FormExamine" ToRole="FormExamineAttachment" />
           <NavigationProperty Name="FormExamineMedicines" Relationship="Self.FK_FormExamineMedicine_FormExamine" FromRole="FormExamine" ToRole="FormExamineMedicine" />
           <NavigationProperty Name="FormExamineServices" Relationship="Self.FK_FormExamineService_FormExamine" FromRole="FormExamine" ToRole="FormExamineService" />
-          <Property Name="NeedRest" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="IsAccident" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="FormExamineAttachment">
           <Key>
@@ -3789,8 +3864,8 @@
           <NavigationProperty Name="PurchaseOrders1" Relationship="Self.FK_PurchaseOrder_Source" FromRole="Gudang" ToRole="PurchaseOrder" />
           <NavigationProperty Name="PurchaseOrderPusats" Relationship="Self.FK_PurchaseOrderPusat_Gudang" FromRole="Gudang" ToRole="PurchaseOrderPusat" />
           <NavigationProperty Name="PurchaseRequests" Relationship="Self.FK_PurchaseRequest_Gudang" FromRole="Gudang" ToRole="PurchaseRequest" />
-          <NavigationProperty Name="PurchaseRequestConfigs" Relationship="Self.FK_PurchaseRequestConfig_Gudang" FromRole="Gudang" ToRole="PurchaseRequestConfig" />
           <NavigationProperty Name="PurchaseRequestPusats" Relationship="Self.FK_PurchaseRequestPusat_Gudang" FromRole="Gudang" ToRole="PurchaseRequestPusat" />
+          <NavigationProperty Name="PurchaseRequestConfigs" Relationship="KlinikDBModel.FK_PurchaseRequestConfig_Gudang" FromRole="Gudang" ToRole="PurchaseRequestConfig" />
         </EntityType>
         <EntityType Name="HistoryProductInGudang">
           <Key>
@@ -3909,7 +3984,7 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NodifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Appointments" Relationship="Self.FK_Appointment_MCUPackage" FromRole="MCUPackage" ToRole="Appointment" />
+          <NavigationProperty Name="Appointments" Relationship="KlinikDBModel.FK_Appointment_MCUPackage" FromRole="MCUPackage" ToRole="Appointment" />
         </EntityType>
         <EntityType Name="Medicine">
           <Key>
@@ -4056,7 +4131,19 @@
           <NavigationProperty Name="FormMedicals" Relationship="Self.FK_FormMedical_Patient" FromRole="Patient" ToRole="FormMedical" />
           <NavigationProperty Name="PatientClinics" Relationship="Self.FK_PatientClinic_Patient" FromRole="Patient" ToRole="PatientClinic" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_Patient" FromRole="Patient" ToRole="QueuePoli" />
-          <NavigationProperty Name="PatientAges" Relationship="KlinikDBModel.FK_PatientAge_PatientAge" FromRole="Patient" ToRole="PatientAge" />
+        </EntityType>
+        <EntityType Name="PatientAge">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PatientId" Type="Int32" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="AgeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="PatientClinic">
           <Key>
@@ -4104,6 +4191,7 @@
           <NavigationProperty Name="PoliServices" Relationship="Self.FK_PoliServices_Poli" FromRole="Poli" ToRole="PoliServices" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_PoliFrom" FromRole="Poli" ToRole="QueuePoli" />
           <NavigationProperty Name="QueuePolis1" Relationship="Self.FK_QueuePoli_PoliTo" FromRole="Poli" ToRole="QueuePoli" />
+          <NavigationProperty Name="Appointments" Relationship="KlinikDBModel.FK_Appointment_Poli" FromRole="Poli" ToRole="Appointment" />
         </EntityType>
         <EntityType Name="PoliClinic">
           <Key>
@@ -4218,6 +4306,7 @@
           <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="ClinicID" Type="Int64" />
+          <Property Name="Vendor" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ProductCategoryID" Type="Int32" Nullable="false" />
           <Property Name="ProductUnitID" Type="Int32" Nullable="false" />
           <Property Name="RetailPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
@@ -4438,22 +4527,6 @@
           <NavigationProperty Name="Gudang" Relationship="Self.FK_PurchaseRequest_Gudang" FromRole="PurchaseRequest" ToRole="Gudang" />
           <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_PurchaseOrder_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseOrder" />
           <NavigationProperty Name="PurchaseRequestDetails" Relationship="Self.FK_PurchaseRequestDetail_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseRequestDetail" />
-        </EntityType>
-        <EntityType Name="PurchaseRequestConfig">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GudangId" Type="Int32" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="RowStatus" Type="Int32" />
-          <NavigationProperty Name="Gudang" Relationship="Self.FK_PurchaseRequestConfig_Gudang" FromRole="PurchaseRequestConfig" ToRole="Gudang" />
-          <Property Name="Status" Type="Boolean" />
-          <Property Name="request_by" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PurchaseRequestDetail">
           <Key>
@@ -4732,42 +4805,6 @@
           <NavigationProperty Name="PurchaseOrderPusatDetails" Relationship="Self.FK_PurchaseOrderPusatDetail_Vendor" FromRole="Vendor" ToRole="PurchaseOrderPusatDetail" />
           <NavigationProperty Name="PurchaseRequestPusatDetails" Relationship="Self.FK_PurchaseRequestPusatDetail_Vendor" FromRole="Vendor" ToRole="PurchaseRequestPusatDetail" />
         </EntityType>
-        <Association Name="FK_Appointment_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
-          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Appointment">
-              <PropertyRef Name="ClinicID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Appointment_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Appointment">
-              <PropertyRef Name="EmployeeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Appointment_MCUPackage">
-          <End Role="MCUPackage" Type="Self.MCUPackage" Multiplicity="0..1" />
-          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MCUPackage">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Appointment">
-              <PropertyRef Name="MCUPackageID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Clinic_City">
           <End Role="City" Type="Self.City" Multiplicity="0..1" />
           <End Role="Clinic" Type="Self.Clinic" Multiplicity="*" />
@@ -5512,18 +5549,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PurchaseRequestConfig_Gudang">
-          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
-          <End Role="PurchaseRequestConfig" Type="Self.PurchaseRequestConfig" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gudang">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="PurchaseRequestConfig">
-              <PropertyRef Name="GudangId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PurchaseRequestPusat_Gudang">
           <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
           <End Role="PurchaseRequestPusat" Type="Self.PurchaseRequestPusat" Multiplicity="*" />
@@ -6088,9 +6113,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="KlinikDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="KlinikDBEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AppConfigs" EntityType="Self.AppConfig" />
-          <EntitySet Name="Appointments" EntityType="Self.Appointment" />
           <EntitySet Name="Cities" EntityType="Self.City" />
           <EntitySet Name="Clinics" EntityType="Self.Clinic" />
           <EntitySet Name="DeliveryOrders" EntityType="Self.DeliveryOrder" />
@@ -6129,6 +6153,7 @@
           <EntitySet Name="PanggilanPolis" EntityType="Self.PanggilanPoli" />
           <EntitySet Name="PasswordHistories" EntityType="Self.PasswordHistory" />
           <EntitySet Name="Patients" EntityType="Self.Patient" />
+          <EntitySet Name="PatientAges" EntityType="Self.PatientAge" />
           <EntitySet Name="PatientClinics" EntityType="Self.PatientClinic" />
           <EntitySet Name="Polis" EntityType="Self.Poli" />
           <EntitySet Name="PoliClinics" EntityType="Self.PoliClinic" />
@@ -6147,7 +6172,6 @@
           <EntitySet Name="PurchaseOrderPusats" EntityType="Self.PurchaseOrderPusat" />
           <EntitySet Name="PurchaseOrderPusatDetails" EntityType="Self.PurchaseOrderPusatDetail" />
           <EntitySet Name="PurchaseRequests" EntityType="Self.PurchaseRequest" />
-          <EntitySet Name="PurchaseRequestConfigs" EntityType="Self.PurchaseRequestConfig" />
           <EntitySet Name="PurchaseRequestDetails" EntityType="Self.PurchaseRequestDetail" />
           <EntitySet Name="PurchaseRequestPusats" EntityType="Self.PurchaseRequestPusat" />
           <EntitySet Name="PurchaseRequestPusatDetails" EntityType="Self.PurchaseRequestPusatDetail" />
@@ -6162,18 +6186,6 @@
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
           <EntitySet Name="Vendors" EntityType="Self.Vendor" />
-          <AssociationSet Name="FK_Appointment_Clinic" Association="Self.FK_Appointment_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="Appointment" EntitySet="Appointments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Appointment_Employee" Association="Self.FK_Appointment_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Appointment" EntitySet="Appointments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Appointment_MCUPackage" Association="Self.FK_Appointment_MCUPackage">
-            <End Role="MCUPackage" EntitySet="MCUPackages" />
-            <End Role="Appointment" EntitySet="Appointments" />
-          </AssociationSet>
           <AssociationSet Name="FK_Clinic_City" Association="Self.FK_Clinic_City">
             <End Role="City" EntitySet="Cities" />
             <End Role="Clinic" EntitySet="Clinics" />
@@ -6422,10 +6434,6 @@
             <End Role="Gudang" EntitySet="Gudangs" />
             <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
           </AssociationSet>
-          <AssociationSet Name="FK_PurchaseRequestConfig_Gudang" Association="Self.FK_PurchaseRequestConfig_Gudang">
-            <End Role="Gudang" EntitySet="Gudangs" />
-            <End Role="PurchaseRequestConfig" EntitySet="PurchaseRequestConfigs" />
-          </AssociationSet>
           <AssociationSet Name="FK_PurchaseRequestPusat_Gudang" Association="Self.FK_PurchaseRequestPusat_Gudang">
             <End Role="Gudang" EntitySet="Gudangs" />
             <End Role="PurchaseRequestPusat" EntitySet="PurchaseRequestPusats" />
@@ -6614,85 +6622,224 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-          <EntitySet Name="LookupCategories" EntityType="KlinikDBModel.LookupCategory" />
-          <EntitySet Name="PatientAges" EntityType="KlinikDBModel.PatientAge" />
-          <AssociationSet Name="FK_PatientAge_PatientAge" Association="KlinikDBModel.FK_PatientAge_PatientAge">
-            <End Role="Patient" EntitySet="Patients" />
-            <End Role="PatientAge" EntitySet="PatientAges" />
+          <FunctionImport Name="fusp_registrations_get_by_status" IsComposable="true" ReturnType="Collection(KlinikDBModel.fusp_registrations_get_by_status_Result)">
+            <Parameter Name="DocumentStatus" Mode="In" Type="String" />
+            <Parameter Name="IsTransferred" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_EmployeeSync">
+            <Parameter Name="LastUpdateTime" Mode="In" Type="DateTime" />
+            <Parameter Name="RangeMinute" Mode="In" Type="Int32" />
+            <Parameter Name="lastupdateby" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_MCU_registration" ReturnType="Collection(String)" />
+          <FunctionImport Name="usp_registrations_get_by_status" ReturnType="Collection(KlinikDBModel.usp_registrations_get_by_status_Result)">
+            <Parameter Name="DocumentStatus" Mode="In" Type="String" />
+            <Parameter Name="IsTransferred" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_registrations_update_by_regnumber">
+          <Parameter Name="RegNumber" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Appointments" EntityType="KlinikDBModel.Appointment" />
+          <AssociationSet Name="FK_Appointment_Clinic" Association="KlinikDBModel.FK_Appointment_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="Appointment" EntitySet="Appointments" />
           </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Employee" Association="KlinikDBModel.FK_Appointment_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_MCUPackage" Association="KlinikDBModel.FK_Appointment_MCUPackage">
+            <End Role="MCUPackage" EntitySet="MCUPackages" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Doctor" Association="KlinikDBModel.FK_Appointment_Doctor">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Poli" Association="KlinikDBModel.FK_Appointment_Poli">
+            <End Role="Poli" EntitySet="Polis" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <EntitySet Name="PurchaseRequestConfigs" EntityType="KlinikDBModel.PurchaseRequestConfig" />
+          <AssociationSet Name="FK_PurchaseRequestConfig_Gudang" Association="KlinikDBModel.FK_PurchaseRequestConfig_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="PurchaseRequestConfig" EntitySet="PurchaseRequestConfigs" />
+          </AssociationSet>
+          <EntitySet Name="LookupCategories" EntityType="KlinikDBModel.LookupCategory" />
+          <EntitySet Name="MCURegistrationInterfaces" EntityType="KlinikDBModel.MCURegistrationInterface" />
         </EntityContainer>
+        <ComplexType Name="usp_registrations_get_by_status_Result">
+          <Property Type="Int32" Name="REG_ID" Nullable="false" />
+          <Property Type="String" Name="REG_NUMBER" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="RESERVE_DATE" Nullable="true" />
+          <Property Type="Int32" Name="EMPL_ID" Nullable="true" />
+          <Property Type="String" Name="EMPL_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="SCHEDULE_ID" Nullable="true" />
+          <Property Type="String" Name="SCHEDULE_CODE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="DOCUMENT_STATUS" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="IS_TRANSFERRED" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="CREATED_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="CREATED_BY_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="MODIFIED_DATE" Nullable="true" Precision="23" />
+          <Property Type="String" Name="MODIFIED_BY_NAME" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="Int64" />
+          <Property Name="ClinicID" Type="Int64" Nullable="false" />
+          <Property Name="DoctorID" Type="Int32" />
+          <Property Name="RequirementID" Type="Int32" />
+          <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MCUPackageID" Type="Int32" />
+          <Property Name="PoliID" Type="Int32" />
+          <Property Name="Status" Type="Int16" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="Jam" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_Appointment_Clinic" FromRole="Appointment" ToRole="Clinic" />
+          <NavigationProperty Name="Employee" Relationship="KlinikDBModel.FK_Appointment_Employee" FromRole="Appointment" ToRole="Employee" />
+          <NavigationProperty Name="MCUPackage" Relationship="KlinikDBModel.FK_Appointment_MCUPackage" FromRole="Appointment" ToRole="MCUPackage" />
+          <NavigationProperty Name="Doctor" Relationship="KlinikDBModel.FK_Appointment_Doctor" FromRole="Appointment" ToRole="Doctor" />
+          <NavigationProperty Name="Poli" Relationship="KlinikDBModel.FK_Appointment_Poli" FromRole="Appointment" ToRole="Poli" />
+        </EntityType>
+        <Association Name="FK_Appointment_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="1" />
+          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="ClinicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Employee">
+          <End Type="KlinikDBModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_MCUPackage">
+          <End Type="KlinikDBModel.MCUPackage" Role="MCUPackage" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MCUPackage">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="MCUPackageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Doctor">
+          <End Type="KlinikDBModel.Doctor" Role="Doctor" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Poli">
+          <End Type="KlinikDBModel.Poli" Role="Poli" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poli">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="PoliID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PurchaseRequestConfig">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GudangId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int32" />
+          <Property Name="request_by" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_PurchaseRequestConfig_Gudang" FromRole="PurchaseRequestConfig" ToRole="Gudang" />
+        </EntityType>
+        <Association Name="FK_PurchaseRequestConfig_Gudang">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.PurchaseRequestConfig" Role="PurchaseRequestConfig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestConfig">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="LookupCategory">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LookUpCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LookUpCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="LookUpName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LookUpContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="RowStatus" Type="Int16" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LookupContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="PatientAge">
+        <EntityType Name="MCURegistrationInterface">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="REG_ID" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PatientId" Type="Int64" />
-          <Property Name="Age" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="AgeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Patient" Relationship="KlinikDBModel.FK_PatientAge_PatientAge" FromRole="PatientAge" ToRole="Patient" />
+          <Property Name="REG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="REG_NUMBER" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RESERVE_DATE" Type="DateTime" Precision="0" />
+          <Property Name="EMPL_ID" Type="Int32" />
+          <Property Name="EMPL_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SCHEDULE_ID" Type="Int32" />
+          <Property Name="SCHEDULE_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DOCUMENT_STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IS_TRANSFERRED" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CREATED_DATE" Type="DateTime" Precision="3" />
+          <Property Name="CREATED_BY_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MODIFIED_DATE" Type="DateTime" Precision="3" />
+          <Property Name="MODIFIED_BY_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <Association Name="FK_PatientAge_PatientAge">
-          <End Type="KlinikDBModel.Patient" Role="Patient" Multiplicity="0..1" />
-          <End Type="KlinikDBModel.PatientAge" Role="PatientAge" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Patient">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PatientAge">
-              <PropertyRef Name="PatientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="KlinikDBModelStoreContainer" CdmEntityContainer="KlinikDBEntities">
+        <EntityContainerMapping StorageEntityContainer="KlinikDBModelStoreContainer" CdmEntityContainer="KlinikDBEntities1">
           <EntitySetMapping Name="AppConfigs">
             <EntityTypeMapping TypeName="KlinikDBModel.AppConfig">
               <MappingFragment StoreEntitySet="AppConfig">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Appointments">
-            <EntityTypeMapping TypeName="KlinikDBModel.Appointment">
-              <MappingFragment StoreEntitySet="Appointment">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
-                <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
-                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
-                <ScalarProperty Name="RequirementID" ColumnName="RequirementID" />
-                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
-                <ScalarProperty Name="MCUPackageID" ColumnName="MCUPackageID" />
-                <ScalarProperty Name="PoliID" ColumnName="PoliID" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -6975,8 +7122,6 @@
           <EntitySetMapping Name="FormExamines">
             <EntityTypeMapping TypeName="KlinikDBModel.FormExamine">
               <MappingFragment StoreEntitySet="FormExamine">
-                <ScalarProperty Name="IsAccident" ColumnName="IsAccident" />
-                <ScalarProperty Name="NeedRest" ColumnName="NeedRest" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="FormMedicalID" ColumnName="FormMedicalID" />
                 <ScalarProperty Name="PoliID" ColumnName="PoliID" />
@@ -7419,6 +7564,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PatientAges">
+            <EntityTypeMapping TypeName="KlinikDBModel.PatientAge">
+              <MappingFragment StoreEntitySet="PatientAge">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="AgeCode" ColumnName="AgeCode" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PatientClinics">
             <EntityTypeMapping TypeName="KlinikDBModel.PatientClinic">
               <MappingFragment StoreEntitySet="PatientClinic">
@@ -7559,6 +7718,7 @@
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
+                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
                 <ScalarProperty Name="ProductCategoryID" ColumnName="ProductCategoryID" />
                 <ScalarProperty Name="ProductUnitID" ColumnName="ProductUnitID" />
                 <ScalarProperty Name="RetailPrice" ColumnName="RetailPrice" />
@@ -7748,22 +7908,6 @@
                 <ScalarProperty Name="statusop" ColumnName="statusop" />
                 <ScalarProperty Name="Validasi" ColumnName="Validasi" />
                 <ScalarProperty Name="GudangId" ColumnName="GudangId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PurchaseRequestConfigs">
-            <EntityTypeMapping TypeName="KlinikDBModel.PurchaseRequestConfig">
-              <MappingFragment StoreEntitySet="PurchaseRequestConfig">
-                <ScalarProperty Name="request_by" ColumnName="request_by" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="GudangId" ColumnName="GudangId" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -8020,6 +8164,84 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionName="KlinikDBModel.Store.fusp_registrations_get_by_status" FunctionImportName="fusp_registrations_get_by_status">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="KlinikDBModel.fusp_registrations_get_by_status_Result">
+                <ScalarProperty Name="REG_ID" ColumnName="REG_ID" />
+                <ScalarProperty Name="REG_NUMBER" ColumnName="REG_NUMBER" />
+                <ScalarProperty Name="RESERVE_DATE" ColumnName="RESERVE_DATE" />
+                <ScalarProperty Name="EMPL_ID" ColumnName="EMPL_ID" />
+                <ScalarProperty Name="EMPL_NAME" ColumnName="EMPL_NAME" />
+                <ScalarProperty Name="SCHECULE_ID" ColumnName="SCHECULE_ID" />
+                <ScalarProperty Name="SCHEDULE_CODE" ColumnName="SCHEDULE_CODE" />
+                <ScalarProperty Name="DOCUMENT_STATUS" ColumnName="DOCUMENT_STATUS" />
+                <ScalarProperty Name="IS_TRANSFERRED" ColumnName="IS_TRANSFERRED" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY_NAME" ColumnName="CREATED_BY_NAME" />
+                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
+                <ScalarProperty Name="MODIFIED_BY_NAME" ColumnName="MODIFIED_BY_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_EmployeeSync" FunctionName="KlinikDBModel.Store.SP_EmployeeSync" />
+          <FunctionImportMapping FunctionImportName="usp_MCU_registration" FunctionName="KlinikDBModel.Store.usp_MCU_registration" />
+          <FunctionImportMapping FunctionImportName="usp_registrations_get_by_status" FunctionName="KlinikDBModel.Store.usp_registrations_get_by_status">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="KlinikDBModel.usp_registrations_get_by_status_Result">
+                <ScalarProperty Name="REG_ID" ColumnName="REG_ID" />
+                <ScalarProperty Name="REG_NUMBER" ColumnName="REG_NUMBER" />
+                <ScalarProperty Name="RESERVE_DATE" ColumnName="RESERVE_DATE" />
+                <ScalarProperty Name="EMPL_ID" ColumnName="EMPL_ID" />
+                <ScalarProperty Name="EMPL_NAME" ColumnName="EMPL_NAME" />
+                <ScalarProperty Name="SCHEDULE_ID" ColumnName="SCHEDULE_ID" />
+                <ScalarProperty Name="SCHEDULE_CODE" ColumnName="SCHEDULE_CODE" />
+                <ScalarProperty Name="DOCUMENT_STATUS" ColumnName="DOCUMENT_STATUS" />
+                <ScalarProperty Name="IS_TRANSFERRED" ColumnName="IS_TRANSFERRED" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="CREATED_BY_NAME" ColumnName="CREATED_BY_NAME" />
+                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
+                <ScalarProperty Name="MODIFIED_BY_NAME" ColumnName="MODIFIED_BY_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_registrations_update_by_regnumber" FunctionName="KlinikDBModel.Store.usp_registrations_update_by_regnumber" />
+          <EntitySetMapping Name="Appointments">
+            <EntityTypeMapping TypeName="KlinikDBModel.Appointment">
+              <MappingFragment StoreEntitySet="Appointment">
+                <ScalarProperty Name="Jam" ColumnName="Jam" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PoliID" ColumnName="PoliID" />
+                <ScalarProperty Name="MCUPackageID" ColumnName="MCUPackageID" />
+                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+                <ScalarProperty Name="RequirementID" ColumnName="RequirementID" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseRequestConfigs">
+            <EntityTypeMapping TypeName="KlinikDBModel.PurchaseRequestConfig">
+              <MappingFragment StoreEntitySet="PurchaseRequestConfig">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="request_by" ColumnName="request_by" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="GudangId" ColumnName="GudangId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="LookupCategories">
             <EntityTypeMapping TypeName="KlinikDBModel.LookupCategory">
               <MappingFragment StoreEntitySet="LookupCategory">
@@ -8028,24 +8250,29 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="LookUpContent" ColumnName="LookUpContent" />
+                <ScalarProperty Name="LookupContent" ColumnName="LookupContent" />
                 <ScalarProperty Name="LookUpName" ColumnName="LookUpName" />
                 <ScalarProperty Name="LookUpCode" ColumnName="LookUpCode" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PatientAges">
-            <EntityTypeMapping TypeName="KlinikDBModel.PatientAge">
-              <MappingFragment StoreEntitySet="PatientAge">
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="AgeCode" ColumnName="AgeCode" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
-                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+          <EntitySetMapping Name="MCURegistrationInterfaces">
+            <EntityTypeMapping TypeName="KlinikDBModel.MCURegistrationInterface">
+              <MappingFragment StoreEntitySet="MCURegistrationInterface">
+                <ScalarProperty Name="MODIFIED_BY_NAME" ColumnName="MODIFIED_BY_NAME" />
+                <ScalarProperty Name="MODIFIED_DATE" ColumnName="MODIFIED_DATE" />
+                <ScalarProperty Name="CREATED_BY_NAME" ColumnName="CREATED_BY_NAME" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="IS_TRANSFERRED" ColumnName="IS_TRANSFERRED" />
+                <ScalarProperty Name="DOCUMENT_STATUS" ColumnName="DOCUMENT_STATUS" />
+                <ScalarProperty Name="SCHEDULE_CODE" ColumnName="SCHEDULE_CODE" />
+                <ScalarProperty Name="SCHEDULE_ID" ColumnName="SCHEDULE_ID" />
+                <ScalarProperty Name="EMPL_NAME" ColumnName="EMPL_NAME" />
+                <ScalarProperty Name="EMPL_ID" ColumnName="EMPL_ID" />
+                <ScalarProperty Name="RESERVE_DATE" ColumnName="RESERVE_DATE" />
+                <ScalarProperty Name="REG_NUMBER" ColumnName="REG_NUMBER" />
+                <ScalarProperty Name="REG_ID" ColumnName="REG_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

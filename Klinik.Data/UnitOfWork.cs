@@ -70,12 +70,12 @@ namespace Klinik.Data
         private IGenericRepository<PanggilanPoli> _panggilanPoliRepository;
 		private IGenericRepository<FormExamineMedicineDetail> _formExamineMedicineDetailRepository;
         private IGenericRepository<PurchaseRequestConfig> _purchaseRequestConfigRepository;
-
         private IGenericRepository<LookupCategory> _lookupCategoryRepository;
-
         private IGenericRepository<ICDTheme> _icdThemeRepository;
         private IGenericRepository<Appointment> _appointmentRepository;
         private IGenericRepository<MCUPackage> _mcuPackageRepository;
+        private IGenericRepository<MCURegistrationInterface> _mcuRegistrationRepository;
+
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
@@ -776,6 +776,16 @@ namespace Klinik.Data
                 if (_mcuPackageRepository == null)
                     _mcuPackageRepository = new GenericRepository<MCUPackage>(_context);
                 return _mcuPackageRepository;
+            }
+        }
+
+        public IGenericRepository<MCURegistrationInterface> MCURegistrationRepository
+        {
+            get
+            {
+                if (_mcuRegistrationRepository == null)
+                    _mcuRegistrationRepository = new GenericRepository<MCURegistrationInterface>(_context);
+                return _mcuRegistrationRepository;
             }
         }
 
