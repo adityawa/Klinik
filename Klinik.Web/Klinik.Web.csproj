@@ -55,6 +55,9 @@
     <Reference Include="Datalist.Core, Version=6.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Datalist.Core.6.2.1\lib\net45\Datalist.Core.dll</HintPath>
     </Reference>
+    <Reference Include="DotNet.Highcharts">
+      <HintPath>..\packages\DotNet.Highcharts.4.0\lib\DotNet.Highcharts.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -1573,6 +1576,10 @@
     <Content Include="Views\MasterData\CreateOrEditLookUpCategory.cshtml" />
     <Content Include="Views\Reports\Top10Cost.cshtml" />
     <Content Include="Views\Reports\Top10Request.cshtml" />
+    <Content Include="Views\Reports\Top10ReferalsReport.cshtml" />
+    <Content Include="Views\Reports\Top10CostReport.cshtml" />
+    <Content Include="Views\Reports\Top10DiseasesReport.cshtml" />
+    <Content Include="Views\Reports\Top10RequestReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

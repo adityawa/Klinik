@@ -128,6 +128,10 @@
             public const string NECESSITYTYPE = "Necessity Type";
             public const string PAYMENTTYPE = "Payment Type";
             public const string NEEDREST = "Need Rest";
+            public const string EXAMINETYPE = "Examine Type";
+            public const string HOSPITAL = "HOSPITAL";
+            public const string MONTH = "Month";
+            public const string REQUESTTYPE = "Request Type";
         }
     }
 }

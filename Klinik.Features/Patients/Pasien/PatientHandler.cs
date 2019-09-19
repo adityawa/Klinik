@@ -23,6 +23,20 @@ namespace Klinik.Features
             _context = context;
         }
 
+
+        public List<PatientModel> GetAll()
+        {
+            var patients = new List<PatientModel>();
+
+            var _qry = _unitOfWork.PatientRepository.Get(x => x.RowStatus == 0);
+            foreach (var item in _qry)
+            {
+                patients.Add(new PatientModel { Id = item.ID, Name = item.Name });
+            }
+
+            return patients;
+        }
+
         public PatientResponse CreateOrEdit(PatientRequest request)
         {
             var response = new PatientResponse();
