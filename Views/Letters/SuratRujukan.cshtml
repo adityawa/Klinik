@@ -1,0 +1,1107 @@
+﻿@model Klinik.Entities.Letter.LabReferenceLetterModel
+
+@{
+    ViewBag.Title = "SuratRujukan";
+}
+@section Styles {
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <style>
+        .form-horizontal .control-label {
+            text-align: left;
+        }
+    </style>
+}
+
+<div class="col-md-12">
+
+    <section class="panel">
+        <header class="panel-heading">
+            <div class="panel-actions">
+                <a href="#" class="fa fa-caret-down"></a>
+            </div>
+            <div>
+                <h5 class="panel-title">
+                    @Klinik.Resources.UIMessages.LetterCreation
+                </h5>
+            </div>
+        </header>
+        <div class="panel-body">
+            <form class="form-horizontal">
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Patient</label>
+                    <div class="col-md-3">
+                        @Html.DatalistFor(x => x.ForPatient, new PatientDataList { Url = "/Loket/AllPatient" }, new { @id = "ddlPatient" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.MedicalCekDate</label>
+                    <div class="col-md-3">
+                        @Html.DropDownListFor(x => x.FormMedicalID, (IEnumerable<SelectListItem>)ViewBag.FormMedicalIds, new { @class = "form-control", @id = "ddlFrmMedIds" })
+                    </div>
+
+                </div>
+                <div class="form-group col-md-9">
+                    <label control-label" for="inputDefault">Surat : </label>
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <td>
+                                @Klinik.Resources.UIMessages.LabReferenceLetter
+                            </td>
+                            <td>
+                                <button id="btnLabRefLtr" class="btn btn-info">Create</button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Klinik.Resources.UIMessages.HealthBodyLetter
+                            </td>
+                            <td>
+                                <button id="btnHealthBdLtr" class="btn btn-info">Create</button>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                @Klinik.Resources.UIMessages.TakeMedicineReferenceLetter
+                            </td>
+                            <td>
+                                <button id="btntakeMedRefLtr" class="btn btn-info">Create</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Klinik.Resources.UIMessages.MedicalActionAcceptanceLetter
+                            </td>
+                            <td>
+                                <button id="btnAcceptMedRefLtr" class="btn btn-info">Create</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+
+        </div>
+    </section>
+</div>
+
+<div id="pnlMedicalRef" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel">Surat Rujukan Lab Keluar</h3>
+            </div>
+
+            <div class="modal-body col-md-12" style="margin-top:10px">
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Name</label>
+                    <div class="col-md-6">
+                        <input type="text" disabled class="form-control" id="tbNamePatient" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Gender</label>
+                    <div class="col-md-6">
+                        <input type="text" disabled class="form-control" id="tbGender" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.SAP</label>
+                    <div class="col-md-6">
+                        <input type="text" disabled class="form-control" id="tbSAP" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.HPNumber</label>
+                    <div class="col-md-6">
+                        <input type="text" disabled class="form-control" id="tbHP" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Birthdate</label>
+                    <div class="col-md-6">
+                        <input type="text" disabled class="form-control" id="tbTglLahir" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.DokterPengirim</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="tbDokterPengirim" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Age</label>
+                    <div class="col-md-6">
+                        <input type="text" disabled class="form-control" id="tbUsia" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.MedicalCekDate</label>
+                    <div class="col-md-6">
+                        <input type="text" disabled class="form-control" id="tbTglPeriksa" />
+                    </div>
+                </div>
+            </div>
+
+            <div style="width:70%; padding:10px">
+                <table id="tbLabItem" class="table table-striped table-bordered dt-responsive" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th><input name="select_all" value="1" type="checkbox"></th>
+                            <th>@Klinik.Resources.UIMessages.ID</th>
+                            <th>@Klinik.Resources.UIMessages.LabItemCategory</th>
+                            <th>@Klinik.Resources.UIMessages.Name</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btnSaveAndPreview" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pnlBerbadanSehat" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="text-align:center" class="modal-title" id="myModalLabel">Surat Berbadan Sehat</h3>
+                <label style="text-align:center" class="control-label" for="lblHealthBdLetNo"></label>
+            </div>
+            <div class="modal-body col-md-12" style="margin-top:10px">
+
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Name</label>
+                    <div class="col-md-6">
+                        <input type="text" disabled class="form-control" id="tbNm_HBL" />
+
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Height</label>
+                    <div class="col-md-4">
+                        <input type="text" disabled class="form-control" id="tbTb_HBL" />
+                    </div>
+                    <label class="col-md-1 control-label" for="inputDefault">Cm</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Birthdate</label>
+                    <div class="col-md-6">
+                        <input type="text" disabled class="form-control" id="tbBirthDt_HBL" />
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Weight</label>
+                    <div class="col-md-4">
+                        <input type="text" disabled class="form-control" id="tbBb_HBL" />
+                    </div>
+                    <label class="col-md-1 control-label" for="inputDefault">Kg</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Pekerjaan</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="tbPekerjaan_HBL" />
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.BloodType</label>
+                    <div class="col-md-4">
+                        <input type="text" disabled class="form-control" id="tbBloodType_HBL" />
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Address</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" disabled id="tbAddr_HBL" style=" height:80px;width:100px; min-width: 100%"></textarea>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.BloodPress</label>
+                    <div class="col-md-4">
+                        <input type="text" disabled class="form-control" id="tbBloodPres_HBL" />
+                    </div>
+                    <label class="col-md-1 control-label" for="inputDefault">MmHg</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.BPJSNo</label>
+                    <div class="col-md-6">
+                        <input type="text" disabled class="form-control" id="tbBpjs_HBL" />
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.HR</label>
+                    <div class="col-md-4">
+                        <input type="text" disabled class="form-control" id="tbHR_HBL" />
+                    </div>
+                    <label class="col-md-3 control-label" for="inputDefault">x menit</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Dinyatakan</label>
+                    <div class="col-md-6">
+                        <select id="selperyataan" class="form-control">
+                            <option value="Sehat">Sehat</option>
+                            <option value="Tidak Sehat">Tidak Sehat</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.RR</label>
+                    <div class="col-md-4">
+                        <input type="text" disabled class="form-control" id="tbRR_HBL" />
+                    </div>
+                    <label class="col-md-3 control-label" for="inputDefault">x menit</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Visus</label>
+                    <div class="col-md-4">
+                        <input type="text" disabled class="form-control" id="tbVisus_HBL" />
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Keperluan</label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="tbKeperluan_HBL" />
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btnSavePreview_HB" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pnlSuratPersTindakan" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel">Surat Persetujuan Tindakan / Rujukan</h3>
+            </div>
+
+            <div class="modal-body col-md-12" style="margin-top:10px; padding-top:15px">
+                @*<div class="form-group">
+                        <label class="control-label" for="inputDefault">Saya yang bertanda tangan dibawah ini :</label>
+                    </div>*@
+                <fieldset>
+                    <legend style="font-size:medium">Penjamin</legend>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Name</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="tbName_PT" />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Role</label>
+                        <div class="col-md-6">
+                            <select id="selRole_PT" class="form-control">
+                                <option value="Orang Tua">Orang Tua</option>
+                                <option value="Keluarga">Keluarga</option>
+                                <option value="Wali">Wali</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Gender</label>
+                        <div class="col-md-6">
+                            <select id="selGender_PT" class="form-control">
+                                <option value="M">Pria</option>
+                                <option value="F">Wanita</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Menyatakan</label>
+                        <div class="col-md-6">
+                            <select id="selDecision_PT" class="form-control">
+                                <option value="Menyetujui">Menyetujui</option>
+                                <option value="Menolak">Menolak</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Age / @Klinik.Resources.UIMessages.Birthdate</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control col-md-2" id="tbAge_PT" />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Action</label>
+                        <div class="col-md-6">
+                            <select id="selAction_PT" class="form-control">
+                                <option value="Tindakan">Tindakan</option>
+                                <option value="Rujukan">Rujukan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Description</label>
+                        <div class="col-md-6">
+                            <textarea class="form-control" id="tbDescAction" style=" height:80px;width:100px; min-width: 100%"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.HPNumber</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="tbHP_PT" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.SAP</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="tbSap_PT" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Address</label>
+                        <div class="col-md-6">
+                            <textarea class="form-control" id="tbAddr_PT" style=" height:80px;width:100px; min-width: 100%"></textarea>
+
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend style="font-size:medium">Patient</legend>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Name</label>
+                        <div class="col-md-4">
+                            <input type="text" disabled class="form-control" id="tbPatientName_PT" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Age / @Klinik.Resources.UIMessages.Birthdate</label>
+                        <div class="col-md-4">
+                            <input type="text" disabled class="form-control" id="tbPatientAge_PT" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.SAP</label>
+                        <div class="col-md-4">
+                            <input type="text" disabled class="form-control" id="tbPatientSAP_PT" />
+                        </div>
+                    </div>
+                </fieldset>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btnSavePersTindakan" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pnlRujukanBerobat" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="text-align:center" id="myModalLabel">Medical Clinic</h4>
+            </div>
+
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" style="font-size:medium" href="#collPateient">
+                                Patient
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collPateient" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="form-group col-md-6">
+                                <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Name</label>
+                                <div class="col-md-5">
+                                    <input type="text" disabled class="form-control" id="tbNmPatient_RB" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.BPJSNo</label>
+                                <div class="col-md-5">
+                                    <input type="text" disabled class="form-control" id="tbBpjsPatient_RB" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.KTPNumber</label>
+                                <div class="col-md-5">
+                                    <input type="text" disabled class="form-control" id="tbKtpPatient_RB" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.SAP</label>
+                                <div class="col-md-5">
+                                    <input type="text" disabled class="form-control" id="tbSapPatient_RB" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Age / @Klinik.Resources.UIMessages.Birthdate</label>
+                                <div class="col-md-5">
+                                    <input type="text" disabled class="form-control" id="tbUmurPatient_RB" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Gender</label>
+                                <div class="col-md-5">
+                                    <input type="text" disabled class="form-control" id="tbGenderPatient_RB" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Perusahaan</label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" id="tbCompanyPatient_RB" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.FamilyRelationship</label>
+                                <div class="col-md-5">
+                                    <input type="text" disabled class="form-control" id="tbFamRelationshipPatient_RB" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" style="font-size:medium" href="#collapse2">
+                                Data Pemeriksaan
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Diagnose</label>
+                                <div class="col-md-5">
+                                    <input type="text" disabled class="form-control" id="tbDiagnosa_RB" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="inputDefault">Keluhan</label>
+                                <div class="col-md-5">
+                                    <input type="text" disabled class="form-control" id="tbAnamnesa_RB" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Theraphy</label>
+                                <div class="col-md-5">
+                                    <input type="text" disabled class="form-control" id="tbTherapy_RB" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="inputDefault">Pemeriksaan Penunjang</label>
+                                <div class="col-md-5">
+                                    <input type="text" disabled class="form-control" id="tbPemPenunjang_RB" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="inputDefault">Pemeriksaan Fisik</label>
+                                <div class="col-md-5">
+                                    
+                                    <textarea class="form-control" disabled id="tbPreExamine_RB" style=" height:80px;width:100px; min-width: 100%"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" style="font-size:medium" href="#collapse3">
+                                Info Rujukan
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="inputDefault">RS Rujukan</label>
+                                <div class="col-md-5">
+                                    <input type="text"  class="form-control" id="tbRsRujukan_RB" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="inputDefault">No Telepon</label>
+                                <div class="col-md-5">
+                                    <input type="text"  class="form-control" id="tbRsPhone_RB" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="inputDefault">Nama Dokter</label>
+                                <div class="col-md-5">
+                                    <input type="text"  class="form-control" id="tbNmDokterRujukan_RB" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="inputDefault">Hari Praktek</label>
+                                <div class="col-md-5">
+                                    <input type="text"  class="form-control" id="tbTimePraktekRujukan_RB" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btnSaveAndPreview_RB" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/MvcDatalist/mvc-datalist.js"></script>
+    <script>
+        var _PatientId;
+        var dataLab = [];
+        var rows_selected = [];
+        var FormMedId;
+        [].forEach.call(document.getElementsByClassName('datalist'), function (element) {
+            new MvcDatalist(element);
+        });
+
+        new MvcDatalist(document.querySelector('.datalist'), {
+            events: {
+                select: function (data, triggerChanges) {
+                    for (var i = 0; i < data.length; i++) {
+                        _PatientId = data[i].Id;
+                    }
+                    GetDateCheckUp(_PatientId);
+                }
+            }
+        });
+
+        $(function () {
+            toastr.options = {
+                "closeButton": true,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "0",
+                "hideDuration": "0",
+                "timeOut": "0",
+                "showMethod": "fadeIn"
+            };
+            $('#tbCekDate').datepicker({
+                format: "dd/mm/yyyy",
+                changeMonth: true,
+                changeYear: true
+            });
+
+            $('#btnSavePersTindakan').click(function (e) {
+                if (window.FormData != undefined) {
+                    var form_data = new FormData();
+                    form_data.append("NamaPenjamin", $('#tbName_PT').val());
+                    form_data.append("RolePenjamin", $('#selRole_PT').val());
+                    form_data.append("GenderPenjamin", $('#selGender_PT').val());
+                    form_data.append("DecisionPenjamin", $('#selDecision_PT').val());
+                    form_data.append("UmurPenjamin", $('#tbAge_PT').val());
+                    form_data.append("DescTindakan", $('#tbDescAction').val());
+                    form_data.append("PhonePenjamin", $('#tbHP_PT').val());
+                    form_data.append("SAPPenjamin", $('#tbSap_PT').val());
+                    form_data.append("AddrPenjamin", $('#tbAddr_PT').val());
+                    form_data.append("Action", $('#selAction_PT').val());
+                    form_data.append("forPatient", _PatientId);
+                    form_data.append("AddrPenjamin", $('#tbAddr_PT').val());
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Letters/SaveAndPreviewPersetujuanTindakan',
+                        contentType: false,
+                        processData: false,
+                        data: form_data,
+                        async: "true",
+                        success: function (result) {
+                            if (result.Status == true) {
+
+                                var full_uri = "http://" + location.host + "/Letters/ExportSuratPersetujuanTindakan2Pdf?letterId=" + result.LetterId;
+                                window.open(full_uri, "_blank");
+                                $('#pnlSuratPersTindakan').hide();
+                            }
+                            else {
+                                alert('something went wrong');
+                            }
+
+                        },
+                        error: function (xhr, status, p3, p4) {
+                            var err = "Error " + " " + status + " " + p3 + " " + p4;
+                            if (xhr.responseText && xhr.responseText[0] == "{")
+                                err = JSON.parse(xhr.responseText).Message;
+                            console.log(err);
+                        }
+                    });
+                }
+                else {
+                    toastr.error("Your Browser is not support Form Data");
+                }
+            });
+
+            $('#btnSaveAndPreview_RB').click(function (e) {
+                 e.preventDefault();
+                if (window.FormData != undefined) {
+                    var form_data = new FormData();
+                    form_data.append("forPatient", _PatientId);
+                    form_data.append("FormMedicalID", $('#ddlFrmMedIds').val());
+                    FormMedId = $('#ddlFrmMedIds').val();
+                    form_data.append("RSRujukan", $('#tbRsRujukan_RB').val());
+                    form_data.append("Phone", $('#tbRsPhone_RB').val());
+                    form_data.append("NmDokter", $('#tbNmDokterRujukan_RB').val());
+                    form_data.append("HariPraktek", $('#tbTimePraktekRujukan_RB').val());
+                    form_data.append("Perusahaan", $('#tbCompanyPatient_RB').val());
+                    $.ajax({
+                        url: '/Letters/SaveAndPreviewRujukanBerobat',
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        dataType: 'JSON',
+                        data: form_data,
+                        async: "true",
+                        success: function (result) {
+                            if (result.Status) {
+                                 var full_uri = "http://" + location.host + "/Letters/ExportSuratRujukanBerobat?letterId=" + result.LetterId;
+                                window.open(full_uri, "_blank");
+                                $('#pnlRujukanBerobat').hide();
+                            }
+                            else {
+                                toastr.error(result.Message);
+                            }
+                        }
+                    });
+                }
+                else {
+                    toastr.error("Your Browser is not support Form Data");
+                }
+            });
+
+            $('#btnHealthBdLtr').click(function (e) {
+                e.preventDefault();
+                if (window.FormData != undefined) {
+                    var form_data = new FormData();
+                    form_data.append("forPatient", _PatientId);
+                    form_data.append("FormMedicalID", $('#ddlFrmMedIds').val());
+                    FormMedId = $('#ddlFrmMedIds').val();
+                    form_data.append("TglPeriksa", $('#ddlFrmMedIds option:selected').text());
+                    $.ajax({
+                        url: '/Letters/CreateSuratBerbadanSehat',
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        dataType: 'JSON',
+                        data: form_data,
+                        async: "true",
+                        success: function (result) {
+                            if (result.Status) {
+                                $('#tbNm_HBL').val(result.Nama);
+                                $('#tbBirthDt_HBL').val(result.TTL);
+                                $('#tbTb_HBL').val(result.TB);
+                                $('#tbBb_HBL').val(result.BB);
+                                $('#tbBloodType_HBL').val(result.GolDarah);
+                                $('#tbAddr_HBL').val(result.Alamat);
+                                $('#tbBloodPres_HBL').val(result.TD);
+                                $('#tbBpjs_HBL').val(result.NoBPJS);
+                                $('#tbHR_HBL').val(result.HR);
+                                $('#tbRR_HBL').val(result.RR);
+                                $('#tbVisus_HBL').val(result.Visus);
+
+                                $('#pnlBerbadanSehat').modal({
+                                    backdrop: 'static'
+                                });
+                            }
+                            else {
+                                toastr.error(result.Message);
+                            }
+                        }
+                    });
+                }
+                else {
+                    toastr.error("Your Browser is not support Form Data");
+                }
+
+            });
+
+            $('#btnSaveAndPreview').click(function (e) {
+                if (window.FormData != undefined) {
+                    if (rows_selected.length <= 0) {
+                        alert('please specify at least one Lab Item');
+                    }
+                    else {
+                        var form_data = new FormData();
+                        form_data.append("FormMedicalId", FormMedId);
+                        form_data.append("LabItems", JSON.stringify(rows_selected));
+                        form_data.append("DokterPengirim", $('#tbDokterPengirim').val());
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Letters/SaveAndPreviewRujukanLab',
+                            contentType: false,
+                            processData: false,
+                            data: form_data,
+                            async: "true",
+                            success: function (result) {
+                                if (result.Status == true) {
+                                    //var full_uri = "http://" + location.host + "/Letters/PrintSuratRujukanLabKeluar?FormMedId="+result.FormMedicalId;
+                                    var full_uri = "http://" + location.host + "/Letters/ExportSuratRujukanLabKeluar2Pdf?FormMedId=" + result.FormMedicalId;
+                                    window.open(full_uri, "_blank");
+                                    $('#pnlMedicalRef').hide();
+                                }
+                                else {
+                                    alert('something went wrong');
+                                }
+
+                            },
+                            error: function (xhr, status, p3, p4) {
+                                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                                if (xhr.responseText && xhr.responseText[0] == "{")
+                                    err = JSON.parse(xhr.responseText).Message;
+                                console.log(err);
+                            }
+                        });
+                    }
+
+                }
+                else {
+                    toastr.error("Your Browser is not support Form Data");
+                }
+            });
+
+            $('#btnLabRefLtr').click(function (e) {
+                e.preventDefault();
+                if (window.FormData != undefined) {
+                    var form_data = new FormData();
+                    form_data.append("forPatient", _PatientId);
+                    form_data.append("FormMedicalID", $('#ddlFrmMedIds').val());
+                    form_data.append("TglPeriksa", $('#ddlFrmMedIds option:selected').text());
+                    $.ajax({
+                        url: '/Letters/CreateSuratRujukanLab',
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        dataType: 'JSON',
+                        data: form_data,
+                        async: "true",
+                        success: function (result) {
+                            if (result.Status) {
+                                $('#tbNamePatient').val(result.PatientName);
+                                $('#tbGender').val(result.Gender);
+                                $('#tbSAP').val(result.SAP);
+                                $('#tbHP').val(result.NoHP);
+                                $('#tbTglLahir').val(result.BirthDate);
+                                $('#tbUsia').val(result.Usia);
+                                $('#tbTglPeriksa').val(result.TglPeriksa);
+                                FormMedId = result.FormMedicalId;
+                                dataLab = result.Data;
+                                $("#tbDokterPengirim").prop('disabled', false);
+                                bindTable();
+
+                                $('#pnlMedicalRef').modal({
+                                    backdrop: 'static'
+                                });
+                            }
+                            else {
+                                toastr.error(result.Message);
+                            }
+                        }
+                    });
+                }
+                else {
+                    toastr.error("Your Browser is not support Form Data");
+                }
+                return false;
+            });
+
+            $('#btnSavePreview_HB').click(function (e) {
+                if (window.FormData != undefined) {
+                    var form_data = new FormData();
+                    form_data.append("FormMedicalId", FormMedId);
+                    form_data.append("ForPatient", _PatientId);
+                    form_data.append("Pekerjaan", $('#tbPekerjaan_HBL').val());
+                    form_data.append("Keperluan", $('#tbKeperluan_HBL').val());
+                    form_data.append("Decision", $('#selperyataan').val());
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Letters/SaveAndPreviewHealthBody',
+                        contentType: false,
+                        processData: false,
+                        data: form_data,
+                        async: "true",
+                        success: function (result) {
+                            if (result.Status == true) {
+
+                                var full_uri = "http://" + location.host + "/Letters/ExportSuratBerbadanSehat?formMedId=" + result.FormMedicalId;
+                                window.open(full_uri, "_blank");
+                                $('#pnlBerbadanSehat').hide();
+                            }
+                            else {
+                                alert('something went wrong');
+                            }
+
+                        },
+                        error: function (xhr, status, p3, p4) {
+                            var err = "Error " + " " + status + " " + p3 + " " + p4;
+                            if (xhr.responseText && xhr.responseText[0] == "{")
+                                err = JSON.parse(xhr.responseText).Message;
+                            console.log(err);
+                        }
+                    });
+                }
+                else {
+                    toastr.error("Your Browser is not support Form Data");
+                }
+
+            });
+
+            $('#btntakeMedRefLtr').click(function (e) {
+                e.preventDefault();
+                if (window.FormData != undefined) {
+                    var form_data = new FormData();
+                    form_data.append("forPatient", _PatientId);
+                    form_data.append("FormMedicalID", $('#ddlFrmMedIds').val());
+
+                    $.ajax({
+                        url: '/Letters/CreateSuratRujukanBerobat',
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        dataType: 'JSON',
+                        data: form_data,
+                        async: "true",
+                        success: function (result) {
+                            if (result.Status) {
+                                $('#tbNmPatient_RB').val(result.PatientNm);
+                                $('#tbBpjsPatient_RB').val(result.BPJS);
+                                $('#tbKtpPatient_RB').val(result.KTP);
+                                $('#tbSapPatient_RB').val(result.SAP);
+                                $('#tbUmurPatient_RB').val(result.Age);
+                                $('#tbGenderPatient_RB').val(result.Gender);
+                                $('#tbFamRelationshipPatient_RB').val(result.HubKeluarga);
+                                $('#tbDiagnosa_RB').val(result.Diagnosa);
+                                $('#tbAnamnesa_RB').val(result.Keluhan);
+                                $('#tbTherapy_RB').val(result.Terapi);
+                                $('#tbPemPenunjang_RB').val(result.Penunjang);
+                                $('#tbPreExamine_RB').val(result.PreExamine);
+                                $('#pnlRujukanBerobat').modal({
+                                    backdrop: 'static'
+                                });
+                            }
+                            else {
+                                toastr.error(result.Message);
+                            }
+                        }
+                    });
+                }
+                else {
+                    toastr.error("Your Browser is not support Form Data");
+                }
+                return false;
+            });
+
+            $('#btnAcceptMedRefLtr').click(function (e) {
+                e.preventDefault();
+                if (_PatientId != null && _PatientId != "") {
+                    if (window.FormData != undefined) {
+                        var form_data = new FormData();
+                        form_data.append("forPatient", _PatientId);
+                        $.ajax({
+                            url: '/Letters/CreateSuratPersetujuanTindakan',
+                            type: 'POST',
+                            contentType: false,
+                            processData: false,
+                            dataType: 'JSON',
+                            data: form_data,
+                            async: "true",
+                            success: function (result) {
+                                if (result.Status) {
+                                    $('#tbPatientName_PT').val(result.PatientName);
+                                    $('#tbPatientAge_PT').val(result.UmurPatient);
+                                    $('#tbPatientSAP_PT').val(result.SAPPatient);
+                                    $('#tbName_PT').val(result.NamaPenjamin);
+                                    $('#selGender_PT').val(result.Gender);
+                                    $('#tbAge_PT').val(result.UmurPenjamin);
+                                    $('#tbHP_PT').val(result.PhonePenjamin);
+                                    $('#tbSap_PT').val(result.SAPPenjamin);
+                                    $('#pnlSuratPersTindakan').modal({
+                                        backdrop: 'static'
+                                    });
+                                }
+                                else {
+                                    toastr.error(result.Message);
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        toastr.error("Your Browser is not support Form Data");
+                    }
+                }
+                else {
+                    alert("Please select Patient first");
+                }
+
+            });
+        });
+
+        function bindTable() {
+            var table = $('#tbLabItem').DataTable({
+                "autoWidth": false,
+                "processing": true,
+                "filter": true,
+                "orderMulti": false,
+                "pageLength": 10,
+                "data": dataLab,
+                "destroy": true,
+                "columnDefs":
+                    [
+
+                        {
+                            'targets': 0,
+                            'searchable': false,
+                            'orderable': false,
+                            'width': '1%',
+                            'className': 'dt-body-center',
+                            'render': function (data, type, full, meta) {
+                                return '<input type="checkbox">';
+                            }
+                        },
+                        {
+                            "targets": [1],
+                            "visible": false,
+                            "searchable": false,
+                            "data": "Id"
+                        },
+
+                        {
+                            "targets": [2],
+                            "searchable": true,
+                            "orderable": true,
+                            "data": "LabItemCategoryName"
+                        },
+
+
+                        {
+                            "targets": [3],
+                            "searchable": true,
+                            "orderable": true,
+                            "data": "Name"
+                        }
+
+                    ],
+
+
+                'rowCallback': function (row, data, dataIndex) {
+                    // Get row ID
+                    var rowId = data.Id;
+
+                    //var cek = $.inArray(rowId, rows_selected);
+                    //var cek1 = data.Id;
+
+                    if ($.inArray(rowId, rows_selected) != -1) {
+                        $(row).find('input[type="checkbox"]').prop('checked', true);
+                        $(row).addClass('selected');
+                    }
+                }
+            });
+
+            $('#tbLabItem tbody').on('click', 'input[type="checkbox"]', function (e) {
+                var $row = $(this).closest('tr');
+                var data = table.row($row).data();
+                var rowId = data.Id;
+                var index = $.inArray(rowId, rows_selected);
+                if (this.checked && index === -1) {
+                    rows_selected.push(rowId);
+                } else if (!this.checked && index !== -1) {
+                    rows_selected.splice(index, 1);
+                }
+
+                if (this.checked) {
+                    $row.addClass('selected');
+                } else {
+                    $row.removeClass('selected');
+                }
+                updateDataTableSelectAllCtrl(table);
+                e.stopPropagation();
+            });
+
+
+            $('#tbLabItem').on('click', 'tbody td, thead th:first-child', function (e) {
+                $(this).parent().find('input[type="checkbox"]').trigger('click');
+            });
+
+
+            $('thead input[name="select_all"]', table.table().container()).on('click', function (e) {
+                if (this.checked) {
+                    $('#tbLabItem tbody input[type="checkbox"]:not(:checked)').trigger('click');
+                } else {
+                    $('#tbLabItem tbody input[type="checkbox"]:checked').trigger('click');
+                }
+
+                // Prevent click event from propagating to parent
+                e.stopPropagation();
+            });
+
+
+            table.on('draw', function () {
+                // Update state of "Select all" control
+                updateDataTableSelectAllCtrl(table);
+            });
+        }
+
+        function updateDataTableSelectAllCtrl(table) {
+            var $table = table.table().node();
+            var $chkbox_all = $('tbody input[type="checkbox"]', $table);
+            var $chkbox_checked = $('tbody input[type="checkbox"]:checked', $table);
+            var chkbox_select_all = $('thead input[name="select_all"]', $table).get(0);
+
+            // If none of the checkboxes are checked
+            if ($chkbox_checked.length === 0) {
+                chkbox_select_all.checked = false;
+                if ('indeterminate' in chkbox_select_all) {
+                    chkbox_select_all.indeterminate = false;
+                }
+
+                // If all of the checkboxes are checked
+            } else if ($chkbox_checked.length === $chkbox_all.length) {
+                chkbox_select_all.checked = true;
+                if ('indeterminate' in chkbox_select_all) {
+                    chkbox_select_all.indeterminate = false;
+                }
+
+                // If some of the checkboxes are checked
+            } else {
+                chkbox_select_all.checked = true;
+                if ('indeterminate' in chkbox_select_all) {
+                    chkbox_select_all.indeterminate = true;
+                }
+            }
+        }
+
+        function GetDateCheckUp(PatientId) {
+            $.get("/Letters/GetTanggalPemeriksaan", { PatientId: PatientId }, function (data) {
+                $("#ddlFrmMedIds").empty();
+                $.each(data, function (index, row) {
+                    $("#ddlFrmMedIds").append('<option value="' + row.FormMedicalID + '">' + row.TransactionDateStr + '</option>');
+
+                });
+            });
+        }
+    </script>
+}
