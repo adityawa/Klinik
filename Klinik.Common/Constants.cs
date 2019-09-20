@@ -130,7 +130,11 @@
             public const string PAYMENTTYPE = "Payment Type";
             public const string NEEDREST = "Need Rest";
 
-          
+
+            public const string EXAMINETYPE = "Examine Type";
+            public const string HOSPITAL = "HOSPITAL";
+            public const string MONTH = "Month";
+            public const string REQUESTTYPE = "Request Type";
         }
 
         public static class ROLE_NAME

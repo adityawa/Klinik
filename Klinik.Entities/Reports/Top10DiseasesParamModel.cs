@@ -12,7 +12,7 @@ namespace Klinik.Entities.Reports
 
         public int Year { get; set; }
 
-        public int ClinicId { get; set; }
+        public int? ClinicId { get; set; }
 
         public string DeptName { get; set; }
 
@@ -22,6 +22,17 @@ namespace Klinik.Entities.Reports
 
         public string AgeCode { get; set; }
 
+        public string PatientCategory { get; set; }
 
-    }
+        public string FamilyStatus { get; set; }
+
+        public string CategoryClinicStatus { get; set; }
+
+        public string PaymentType { get; set; }
+
+        public string NeedRest { get; set; }
+
+        public string ExamineType { get; set; }
+
+    } 
 }

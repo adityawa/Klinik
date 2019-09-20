@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Klinik.Entities.Reports
 {
-    public class Top10ReferalParamsModels
+    public class Top10ReferalParamModels
     {
         
     }
