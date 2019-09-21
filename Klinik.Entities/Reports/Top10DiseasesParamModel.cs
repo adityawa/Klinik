@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Klinik.Entities.Reports
 {
-    public class Top10DiseasesParamModel
+    public class Top10DiseasesParamModel:BaseModel
     {
         public int Month { get; set; }
 

@@ -36,6 +36,9 @@
     <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.0.4\lib\netstandard2.0\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -300,6 +303,12 @@
     <Compile Include="Radiologi\RadiologiRequest.cs" />
     <Compile Include="Radiologi\RadiologiResponse.cs" />
     <Compile Include="Radiologi\RadiologiValidator.cs" />
+    <Compile Include="Reports\ReportsHandler.cs" />
+    <Compile Include="Reports\ReportsValidator.cs" />
+    <Compile Include="Reports\Top10DiseaseReportRequest.cs" />
+    <Compile Include="Reports\Top10DiseaseReportResponse.cs" />
+    <Compile Include="Reports\Top10ReferalReportResponse.cs" />
+    <Compile Include="Reports\Top10ReferalReportRequest.cs" />
     <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyHandler.cs" />
     <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyRequest.cs" />
     <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyResponse.cs" />

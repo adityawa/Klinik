@@ -152,10 +152,13 @@
     <Compile Include="PurchaseRequestPusat\PurchaseRequestPusatModel.cs" />
     <Compile Include="PurchaseRequest\PurchaseRequestModel.cs" />
     <Compile Include="Reports\Top10CostParamModel.cs" />
+    <Compile Include="Reports\Top10CostReportModel.cs" />
     <Compile Include="Reports\Top10DiseaseReportModel.cs" />
     <Compile Include="Reports\Top10DiseasesParamModel.cs" />
     <Compile Include="Reports\Top10ReferalParamModels.cs" />
     <Compile Include="Reports\Top10ReferalReportModel.cs" />
+    <Compile Include="Reports\Top10RequestParamModel.cs" />
+    <Compile Include="Reports\Top10RequestReportModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
