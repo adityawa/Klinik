@@ -99,10 +99,10 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
-        public virtual DbSet<Appointment> Appointments { get; set; }
         public virtual DbSet<PurchaseRequestConfig> PurchaseRequestConfigs { get; set; }
         public virtual DbSet<LookupCategory> LookupCategories { get; set; }
         public virtual DbSet<MCURegistrationInterface> MCURegistrationInterfaces { get; set; }
+        public virtual DbSet<Appointment> Appointments { get; set; }
     
         [DbFunction("KlinikDBEntities1", "fusp_registrations_get_by_status")]
         public virtual IQueryable<fusp_registrations_get_by_status_Result> fusp_registrations_get_by_status(string documentStatus, string isTransferred)

@@ -43,7 +43,7 @@ namespace Klinik.Features.AppointmentFeatures
             if (request.Data.DoctorID == 0)
                 errorFields.Add("Doctor");
 
-            if (request.Data.EmployeeID == 0)
+            if (request.Data.PatientID == 0)
                 errorFields.Add("Employee");
 
             if (request.Data.RequirementID == 0)

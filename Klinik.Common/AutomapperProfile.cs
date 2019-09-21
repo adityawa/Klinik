@@ -359,7 +359,7 @@ namespace Klinik.Common
                 .ForMember(x => x.ClinicName, map => map.MapFrom(p => p.Clinic.Name))
                 .ForMember(x => x.PoliName, map => map.MapFrom(p => p.Poli.Name))
                 .ForMember(x => x.DoctorName, map => map.MapFrom(p => p.Doctor.Name))
-                .ForMember(x => x.EmpName, map => map.MapFrom(p => p.Employee.EmpName))
+                .ForMember(x => x.Patient, map => map.MapFrom(p => p.Patient.Name))
                 .ForMember(x => x.StrAppointmentDate, map => map.MapFrom(p => p.AppointmentDate.ToString("dd/MM/yyyy")))
                 .ForMember(x => x.StrAppointmentTime, map => map.MapFrom(p => p.Jam == null ? "" : p.Jam.Value.ToString("hh:mm")));
                 

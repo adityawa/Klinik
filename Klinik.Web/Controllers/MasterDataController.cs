@@ -1694,6 +1694,11 @@ namespace Klinik.Web.Controllers
             int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
             int _skip = _start != null ? Convert.ToInt32(_start) : 0;
 
+            var productModel = new ProductModel
+            {
+                Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+            };
+
             var request = new ProductRequest
             {
                 Draw = _draw,
@@ -1701,7 +1706,8 @@ namespace Klinik.Web.Controllers
                 SortColumn = _sortColumn,
                 SortColumnDir = _sortColumnDir,
                 PageSize = _pageSize,
-                Skip = _skip
+                Skip = _skip,
+                Data=productModel
             };
 
             var response = new ProductHandler(_unitOfWork).GetListData(request);

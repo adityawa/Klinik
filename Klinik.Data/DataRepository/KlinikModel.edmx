@@ -23,7 +23,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EmployeeID" Type="bigint" />
+          <Property Name="PatientID" Type="bigint" />
           <Property Name="ClinicID" Type="bigint" Nullable="false" />
           <Property Name="DoctorID" Type="int" />
           <Property Name="RequirementID" Type="int" />
@@ -1334,8 +1334,6 @@
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'KlinikDB.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <Association Name="FK_Appointment_Clinic">
           <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
@@ -1360,18 +1358,6 @@ warning 6002: The table/view 'KlinikDB.sys.database_firewall_rules' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Appointment_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Appointment">
-              <PropertyRef Name="EmployeeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Appointment_MCUPackage">
           <End Role="MCUPackage" Type="Self.MCUPackage" Multiplicity="0..1" />
           <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
@@ -1381,6 +1367,18 @@ warning 6002: The table/view 'KlinikDB.sys.database_firewall_rules' does not hav
             </Principal>
             <Dependent Role="Appointment">
               <PropertyRef Name="MCUPackageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Patient">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+          <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="PatientID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2847,12 +2845,12 @@ warning 6002: The table/view 'KlinikDB.sys.database_firewall_rules' does not hav
             <End Role="Doctor" EntitySet="Doctor" />
             <End Role="Appointment" EntitySet="Appointment" />
           </AssociationSet>
-          <AssociationSet Name="FK_Appointment_Employee" Association="Self.FK_Appointment_Employee">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="Appointment" EntitySet="Appointment" />
-          </AssociationSet>
           <AssociationSet Name="FK_Appointment_MCUPackage" Association="Self.FK_Appointment_MCUPackage">
             <End Role="MCUPackage" EntitySet="MCUPackage" />
+            <End Role="Appointment" EntitySet="Appointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Patient" Association="Self.FK_Appointment_Patient">
+            <End Role="Patient" EntitySet="Patient" />
             <End Role="Appointment" EntitySet="Appointment" />
           </AssociationSet>
           <AssociationSet Name="FK_Appointment_Poli" Association="Self.FK_Appointment_Poli">
@@ -3574,7 +3572,6 @@ warning 6002: The table/view 'KlinikDB.sys.database_firewall_rules' does not hav
           <NavigationProperty Name="EmployeeAssignments" Relationship="Self.FK_EmployeeAssignment_Employee" FromRole="Employee" ToRole="EmployeeAssignment" />
           <NavigationProperty Name="Patients" Relationship="Self.FK_Patient_Employee" FromRole="Employee" ToRole="Patient" />
           <NavigationProperty Name="Users" Relationship="Self.FK_User_Employee" FromRole="Employee" ToRole="User" />
-          <NavigationProperty Name="Appointments" Relationship="KlinikDBModel.FK_Appointment_Employee" FromRole="Employee" ToRole="Appointment" />
         </EntityType>
         <EntityType Name="EmployeeAssignment">
           <Key>
@@ -4131,6 +4128,7 @@ warning 6002: The table/view 'KlinikDB.sys.database_firewall_rules' does not hav
           <NavigationProperty Name="FormMedicals" Relationship="Self.FK_FormMedical_Patient" FromRole="Patient" ToRole="FormMedical" />
           <NavigationProperty Name="PatientClinics" Relationship="Self.FK_PatientClinic_Patient" FromRole="Patient" ToRole="PatientClinic" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_Patient" FromRole="Patient" ToRole="QueuePoli" />
+          <NavigationProperty Name="Appointments" Relationship="KlinikDBModel.FK_Appointment_Patient" FromRole="Patient" ToRole="Appointment" />
         </EntityType>
         <EntityType Name="PatientAge">
           <Key>
@@ -6639,27 +6637,6 @@ warning 6002: The table/view 'KlinikDB.sys.database_firewall_rules' does not hav
           <FunctionImport Name="usp_registrations_update_by_regnumber">
           <Parameter Name="RegNumber" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="Appointments" EntityType="KlinikDBModel.Appointment" />
-          <AssociationSet Name="FK_Appointment_Clinic" Association="KlinikDBModel.FK_Appointment_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="Appointment" EntitySet="Appointments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Appointment_Employee" Association="KlinikDBModel.FK_Appointment_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Appointment" EntitySet="Appointments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Appointment_MCUPackage" Association="KlinikDBModel.FK_Appointment_MCUPackage">
-            <End Role="MCUPackage" EntitySet="MCUPackages" />
-            <End Role="Appointment" EntitySet="Appointments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Appointment_Doctor" Association="KlinikDBModel.FK_Appointment_Doctor">
-            <End Role="Doctor" EntitySet="Doctors" />
-            <End Role="Appointment" EntitySet="Appointments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Appointment_Poli" Association="KlinikDBModel.FK_Appointment_Poli">
-            <End Role="Poli" EntitySet="Polis" />
-            <End Role="Appointment" EntitySet="Appointments" />
-          </AssociationSet>
           <EntitySet Name="PurchaseRequestConfigs" EntityType="KlinikDBModel.PurchaseRequestConfig" />
           <AssociationSet Name="FK_PurchaseRequestConfig_Gudang" Association="KlinikDBModel.FK_PurchaseRequestConfig_Gudang">
             <End Role="Gudang" EntitySet="Gudangs" />
@@ -6667,6 +6644,27 @@ warning 6002: The table/view 'KlinikDB.sys.database_firewall_rules' does not hav
           </AssociationSet>
           <EntitySet Name="LookupCategories" EntityType="KlinikDBModel.LookupCategory" />
           <EntitySet Name="MCURegistrationInterfaces" EntityType="KlinikDBModel.MCURegistrationInterface" />
+          <EntitySet Name="Appointments" EntityType="KlinikDBModel.Appointment" />
+          <AssociationSet Name="FK_Appointment_Clinic" Association="KlinikDBModel.FK_Appointment_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Doctor" Association="KlinikDBModel.FK_Appointment_Doctor">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_MCUPackage" Association="KlinikDBModel.FK_Appointment_MCUPackage">
+            <End Role="MCUPackage" EntitySet="MCUPackages" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Patient" Association="KlinikDBModel.FK_Appointment_Patient">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Appointment_Poli" Association="KlinikDBModel.FK_Appointment_Poli">
+            <End Role="Poli" EntitySet="Polis" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="usp_registrations_get_by_status_Result">
           <Property Type="Int32" Name="REG_ID" Nullable="false" />
@@ -6683,91 +6681,6 @@ warning 6002: The table/view 'KlinikDB.sys.database_firewall_rules' does not hav
           <Property Type="DateTime" Name="MODIFIED_DATE" Nullable="true" Precision="23" />
           <Property Type="String" Name="MODIFIED_BY_NAME" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <EntityType Name="Appointment">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmployeeID" Type="Int64" />
-          <Property Name="ClinicID" Type="Int64" Nullable="false" />
-          <Property Name="DoctorID" Type="Int32" />
-          <Property Name="RequirementID" Type="Int32" />
-          <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="MCUPackageID" Type="Int32" />
-          <Property Name="PoliID" Type="Int32" />
-          <Property Name="Status" Type="Int16" />
-          <Property Name="RowStatus" Type="Int16" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="Jam" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_Appointment_Clinic" FromRole="Appointment" ToRole="Clinic" />
-          <NavigationProperty Name="Employee" Relationship="KlinikDBModel.FK_Appointment_Employee" FromRole="Appointment" ToRole="Employee" />
-          <NavigationProperty Name="MCUPackage" Relationship="KlinikDBModel.FK_Appointment_MCUPackage" FromRole="Appointment" ToRole="MCUPackage" />
-          <NavigationProperty Name="Doctor" Relationship="KlinikDBModel.FK_Appointment_Doctor" FromRole="Appointment" ToRole="Doctor" />
-          <NavigationProperty Name="Poli" Relationship="KlinikDBModel.FK_Appointment_Poli" FromRole="Appointment" ToRole="Poli" />
-        </EntityType>
-        <Association Name="FK_Appointment_Clinic">
-          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="1" />
-          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Appointment">
-              <PropertyRef Name="ClinicID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Appointment_Employee">
-          <End Type="KlinikDBModel.Employee" Role="Employee" Multiplicity="0..1" />
-          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Appointment">
-              <PropertyRef Name="EmployeeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Appointment_MCUPackage">
-          <End Type="KlinikDBModel.MCUPackage" Role="MCUPackage" Multiplicity="0..1" />
-          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MCUPackage">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Appointment">
-              <PropertyRef Name="MCUPackageID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Appointment_Doctor">
-          <End Type="KlinikDBModel.Doctor" Role="Doctor" Multiplicity="0..1" />
-          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Doctor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Appointment">
-              <PropertyRef Name="DoctorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Appointment_Poli">
-          <End Type="KlinikDBModel.Poli" Role="Poli" Multiplicity="0..1" />
-          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Poli">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Appointment">
-              <PropertyRef Name="PoliID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="PurchaseRequestConfig">
           <Key>
             <PropertyRef Name="id" />
@@ -6828,6 +6741,91 @@ warning 6002: The table/view 'KlinikDB.sys.database_firewall_rules' does not hav
           <Property Name="MODIFIED_DATE" Type="DateTime" Precision="3" />
           <Property Name="MODIFIED_BY_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientID" Type="Int64" />
+          <Property Name="ClinicID" Type="Int64" Nullable="false" />
+          <Property Name="DoctorID" Type="Int32" />
+          <Property Name="RequirementID" Type="Int32" />
+          <Property Name="AppointmentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MCUPackageID" Type="Int32" />
+          <Property Name="PoliID" Type="Int32" />
+          <Property Name="Status" Type="Int16" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="Jam" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_Appointment_Clinic" FromRole="Appointment" ToRole="Clinic" />
+          <NavigationProperty Name="Doctor" Relationship="KlinikDBModel.FK_Appointment_Doctor" FromRole="Appointment" ToRole="Doctor" />
+          <NavigationProperty Name="MCUPackage" Relationship="KlinikDBModel.FK_Appointment_MCUPackage" FromRole="Appointment" ToRole="MCUPackage" />
+          <NavigationProperty Name="Patient" Relationship="KlinikDBModel.FK_Appointment_Patient" FromRole="Appointment" ToRole="Patient" />
+          <NavigationProperty Name="Poli" Relationship="KlinikDBModel.FK_Appointment_Poli" FromRole="Appointment" ToRole="Poli" />
+        </EntityType>
+        <Association Name="FK_Appointment_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="1" />
+          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="ClinicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Doctor">
+          <End Type="KlinikDBModel.Doctor" Role="Doctor" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_MCUPackage">
+          <End Type="KlinikDBModel.MCUPackage" Role="MCUPackage" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MCUPackage">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="MCUPackageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Patient">
+          <End Type="KlinikDBModel.Patient" Role="Patient" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="PatientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Appointment_Poli">
+          <End Type="KlinikDBModel.Poli" Role="Poli" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poli">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="PoliID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8205,27 +8203,6 @@ warning 6002: The table/view 'KlinikDB.sys.database_firewall_rules' does not hav
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="usp_registrations_update_by_regnumber" FunctionName="KlinikDBModel.Store.usp_registrations_update_by_regnumber" />
-          <EntitySetMapping Name="Appointments">
-            <EntityTypeMapping TypeName="KlinikDBModel.Appointment">
-              <MappingFragment StoreEntitySet="Appointment">
-                <ScalarProperty Name="Jam" ColumnName="Jam" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="PoliID" ColumnName="PoliID" />
-                <ScalarProperty Name="MCUPackageID" ColumnName="MCUPackageID" />
-                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
-                <ScalarProperty Name="RequirementID" ColumnName="RequirementID" />
-                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
-                <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
-                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PurchaseRequestConfigs">
             <EntityTypeMapping TypeName="KlinikDBModel.PurchaseRequestConfig">
               <MappingFragment StoreEntitySet="PurchaseRequestConfig">
@@ -8273,6 +8250,27 @@ warning 6002: The table/view 'KlinikDB.sys.database_firewall_rules' does not hav
                 <ScalarProperty Name="RESERVE_DATE" ColumnName="RESERVE_DATE" />
                 <ScalarProperty Name="REG_NUMBER" ColumnName="REG_NUMBER" />
                 <ScalarProperty Name="REG_ID" ColumnName="REG_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Appointments">
+            <EntityTypeMapping TypeName="KlinikDBModel.Appointment">
+              <MappingFragment StoreEntitySet="Appointment">
+                <ScalarProperty Name="Jam" ColumnName="Jam" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PoliID" ColumnName="PoliID" />
+                <ScalarProperty Name="MCUPackageID" ColumnName="MCUPackageID" />
+                <ScalarProperty Name="AppointmentDate" ColumnName="AppointmentDate" />
+                <ScalarProperty Name="RequirementID" ColumnName="RequirementID" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -9,13 +9,13 @@ namespace Klinik.Entities.AppointmentEntities
     {
         public DateTime AppointmentDate { get; set; }
         public long PoliID { get; set; }
-        public long EmployeeID { get; set; }
+        public long PatientID { get; set; }
         public long ClinicID { get; set; }
         public int RequirementID { get; set; }
         public long DoctorID { get; set; }
         public long MCUPakageID { get; set; }
 
-        public string EmpName { get; set; }
+        public string Patient { get; set; }
 
         public string DoctorName { get; set; }
         public string RequirementName { get; set; }

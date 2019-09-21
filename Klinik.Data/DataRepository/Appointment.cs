@@ -15,7 +15,7 @@ namespace Klinik.Data.DataRepository
     public partial class Appointment
     {
         public long ID { get; set; }
-        public Nullable<long> EmployeeID { get; set; }
+        public Nullable<long> PatientID { get; set; }
         public long ClinicID { get; set; }
         public Nullable<int> DoctorID { get; set; }
         public Nullable<int> RequirementID { get; set; }
@@ -31,9 +31,9 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> Jam { get; set; }
     
         public virtual Clinic Clinic { get; set; }
-        public virtual Employee Employee { get; set; }
-        public virtual MCUPackage MCUPackage { get; set; }
         public virtual Doctor Doctor { get; set; }
+        public virtual MCUPackage MCUPackage { get; set; }
+        public virtual Patient Patient { get; set; }
         public virtual Poli Poli { get; set; }
     }
 }

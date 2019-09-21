@@ -161,14 +161,14 @@ namespace Klinik.Web.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult CreateAppointment(string employeeID, string clinicId, string poliId, string doctorId, string necesity, string AppointmentDate, string MCUPackage, string timeAppointment)
+        public JsonResult CreateAppointment(string patientID, string clinicId, string poliId, string doctorId, string necesity, string AppointmentDate, string MCUPackage, string timeAppointment)
         {
             var response = new AppointmentResponse();
             var _model = new AppointmentModel
             {
                 AppointmentDate = CommonUtils.ConvertStringDate2Datetime(AppointmentDate),
                 ClinicID = Convert.ToInt64(clinicId),
-                EmployeeID = Convert.ToInt64(employeeID),
+                PatientID = Convert.ToInt64(patientID),
                 DoctorID = Convert.ToInt64(doctorId),
                 PoliID = Convert.ToInt64(poliId),
                 RequirementID = Convert.ToInt16(necesity),
