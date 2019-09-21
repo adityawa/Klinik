@@ -167,13 +167,13 @@ namespace Klinik.Common
 
             CreateMap<PoliScheduleModel, PoliSchedule>();
             CreateMap<PoliSchedule, PoliScheduleModel>()
-                .ForMember(m => m.StartDateStr, map => map.MapFrom(p => p.StartDate.ToString("dd/MM/yyyy hh:mm:ss")))
-                .ForMember(m => m.EndDateStr, map => map.MapFrom(p => p.EndDate.ToString("dd/MM/yyyy hh:mm:ss")))
+                .ForMember(m => m.StartDateStr, map => map.MapFrom(p => p.StartDate.ToString("dd/MM/yyyy HH:mm:ss")))
+                .ForMember(m => m.EndDateStr, map => map.MapFrom(p => p.EndDate.ToString("dd/MM/yyyy HH:mm:ss")))
                 .ForMember(m => m.ClinicName, map => map.MapFrom(p => p.Clinic.Name))
                 .ForMember(m => m.DoctorName, map => map.MapFrom(p => p.Doctor.Name))
                 .ForMember(m => m.PoliName, map => map.MapFrom(p => p.Poli.Name))
-                .ForMember(m => m.TimeStart, map => map.MapFrom(p => p.StartDate.ToString("hh:mm:ss")))
-                .ForMember(m => m.TimeEnd, map => map.MapFrom(p => p.EndDate.ToString("hh:mm:ss")));
+                .ForMember(m => m.TimeStart, map => map.MapFrom(p => p.StartDate.ToString("HH:mm:ss")))
+                .ForMember(m => m.TimeEnd, map => map.MapFrom(p => p.EndDate.ToString("HH:mm:ss")));
 
             CreateMap<PoliScheduleMasterModel, PoliScheduleMaster>();
             CreateMap<PoliScheduleMaster, PoliScheduleMasterModel>()
@@ -361,7 +361,7 @@ namespace Klinik.Common
                 .ForMember(x => x.DoctorName, map => map.MapFrom(p => p.Doctor.Name))
                 .ForMember(x => x.Patient, map => map.MapFrom(p => p.Patient.Name))
                 .ForMember(x => x.StrAppointmentDate, map => map.MapFrom(p => p.AppointmentDate.ToString("dd/MM/yyyy")))
-                .ForMember(x => x.StrAppointmentTime, map => map.MapFrom(p => p.Jam == null ? "" : p.Jam.Value.ToString("hh:mm")));
+                .ForMember(x => x.StrAppointmentTime, map => map.MapFrom(p => p.Jam == null ? "" : p.Jam.Value.ToString("HH:mm")));
                 
 
             CreateMap<AppointmentModel, Appointment>();

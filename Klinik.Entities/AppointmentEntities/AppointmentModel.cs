@@ -2,6 +2,7 @@
 using Klinik.Entities.MasterData;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Klinik.Entities.AppointmentEntities
 {
@@ -23,6 +24,7 @@ namespace Klinik.Entities.AppointmentEntities
         public string PoliName { get; set; }
         public string StrAppointmentDate { get; set; }
         public string StrAppointmentTime { get; set; }
+        [Required(ErrorMessage = "Please enter time booking")]
         public DateTime? Jam { get; set; }
         public List<PoliModel> ListPoli { get; set; }
 
