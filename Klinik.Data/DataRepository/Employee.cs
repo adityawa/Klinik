@@ -21,7 +21,6 @@ namespace Klinik.Data.DataRepository
             this.EmployeeAssignments = new HashSet<EmployeeAssignment>();
             this.Patients = new HashSet<Patient>();
             this.Users = new HashSet<User>();
-            this.Appointments = new HashSet<Appointment>();
         }
     
         public long ID { get; set; }
@@ -53,7 +52,5 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<Patient> Patients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Appointment> Appointments { get; set; }
     }
 }

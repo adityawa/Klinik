@@ -113,7 +113,7 @@ namespace Klinik.Features
                     if (queueEntity.Type == 1)
                     {
                         var today = DateTime.Now.Date;
-                        var isHaveAppointment = _unitOfWork.AppointmentRepository.Get(x => x.EmployeeID == queueEntity.PatientID
+                        var isHaveAppointment = _unitOfWork.AppointmentRepository.Get(x => x.PatientID == queueEntity.PatientID
                 && x.AppointmentDate == today
                 && x.PoliID == queueEntity.PoliTo
                 && x.ClinicID == queueEntity.ClinicID);

@@ -93,7 +93,7 @@ namespace Klinik.Features.AppointmentFeatures
                 response.Status = true;
                 response.Message =Messages.DataSaved;
             }
-            catch(Exception )
+            catch(Exception ex)
             {
                 response.Status = false;
                 response.Message= Messages.GeneralError;
@@ -111,7 +111,7 @@ namespace Klinik.Features.AppointmentFeatures
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
-                searchPredicate = searchPredicate.And(p => p.Employee.EmpName.Contains(request.SearchValue) || p.Poli.Name.Contains(request.SearchValue) || p.Doctor.Name.Contains(request.SearchValue) || p.Clinic.Name.Contains(request.SearchValue));
+                searchPredicate = searchPredicate.And(p => p.Patient.Name.Contains(request.SearchValue) || p.Poli.Name.Contains(request.SearchValue) || p.Doctor.Name.Contains(request.SearchValue) || p.Clinic.Name.Contains(request.SearchValue));
             }
 
             if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
@@ -121,7 +121,7 @@ namespace Klinik.Features.AppointmentFeatures
                     switch (request.SortColumn.ToLower())
                     {
                         case "EmpName":
-                            qry = _unitOfWork.AppointmentRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Employee.EmpName));
+                            qry = _unitOfWork.AppointmentRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Patient.Name));
                             break;
                         case "DoctorName":
                             qry = _unitOfWork.AppointmentRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Doctor.Name));
@@ -145,7 +145,7 @@ namespace Klinik.Features.AppointmentFeatures
                     switch (request.SortColumn.ToLower())
                     {
                         case "EmpName":
-                            qry = _unitOfWork.AppointmentRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Employee.EmpName));
+                            qry = _unitOfWork.AppointmentRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Patient.Name));
                             break;
                         case "DoctorName":
                             qry = _unitOfWork.AppointmentRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Doctor.Name));
