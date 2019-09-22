@@ -750,7 +750,7 @@ namespace Klinik.Web.Controllers
             };
 
             UserResponse _response = new UserResponse();
-
+           
             new UserValidator(_unitOfWork).Validate(request, out _response);
             ViewBag.Response = $"{_response.Status};{_response.Message}";
             var tempOrgList = BindDropDownOrganization();
@@ -759,7 +759,7 @@ namespace Klinik.Web.Controllers
             ViewBag.ActionType = request.Data.Id > 0 ? ClinicEnums.Action.Edit : ClinicEnums.Action.Add;
             ViewBag.RoleList = BindDropDownRoleList(int.Parse(tempOrgList[0].Value));
 
-            return View();
+            return View(_model);
         }
 
         [CustomAuthorize("ADD_M_USER", "EDIT_M_USER")]
@@ -779,6 +779,7 @@ namespace Klinik.Web.Controllers
 
                 UserResponse resp = new UserHandler(_unitOfWork).GetDetail(request);
                 UserModel _model = resp.Entity;
+               
                 ViewBag.Response = _response;
                 var tempOrgList = BindDropDownOrganization();
                 ViewBag.Organisasi = tempOrgList;

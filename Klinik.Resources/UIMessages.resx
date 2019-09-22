@@ -1248,4 +1248,7 @@
   <data name="MCURegistration" xml:space="preserve">
     <value>MCU Registration</value>
   </data>
+  <data name="AppointmentID" xml:space="preserve">
+    <value>Appointment ID</value>
+  </data>
 </root>

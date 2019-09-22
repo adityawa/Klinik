@@ -103,6 +103,12 @@ namespace Klinik.Web.Controllers
 
             return Json(doctorList, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetAppointmentData( Int32 poliID, Int32 patientID, Int32 doctorID, Int32 necessityID)
+        {
+            long resultAppointment = new LoketHandler(_unitOfWork).GetAppointmentID(patientID, poliID, GetClinicID(), doctorID, necessityID);
+            return Json(resultAppointment, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region ::HTTP METHODS::

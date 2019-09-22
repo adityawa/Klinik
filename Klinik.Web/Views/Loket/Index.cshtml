@@ -105,7 +105,13 @@
                         <div class="col-md-2">
                             @Html.DropDownListFor(p => p.Type, (IEnumerable<SelectListItem>)ViewBag.RegistrationTypeList, new { @class = "form-control", @id = "ddlRegisterType" })
                         </div>
-                        <div class="col-md-3"></div>
+                        @*<div class="col-md-3"></div>*@
+                        <label class="col-md-1 control-label" for="inputDefault" id="lblAppointmentID" style="display: none;">
+                            @Klinik.Resources.UIMessages.AppointmentID
+                        </label>
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(x => x.AppointmentID, new { @class = "form-control", @id = "tbAppoinmentID", @style = "display: none;" })
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-1 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Address</label>
@@ -152,7 +158,7 @@
                             <th>@Klinik.Resources.UIMessages.Paramedic</th>
                             <th>@Klinik.Resources.UIMessages.Queue</th>
                             <th>@Klinik.Resources.UIMessages.RegistrationType</th>
-                            @*<th>@Klinik.Resources.UIMessages.Remark</th>*@
+                            <th>@Klinik.Resources.UIMessages.AppointmentID</th>
                             <th>@Klinik.Resources.UIMessages.Date</th>
                             <th>@Klinik.Resources.UIMessages.RegistrationStatus</th>
                             <th>@Klinik.Resources.UIMessages.Action</th>
@@ -173,6 +179,7 @@
     <script src="~/Scripts/jquery-ui.js"></script>
     <script src="~/Scripts/MvcDatalist/mvc-datalist.js"></script>
     <script>
+         var _PatientId;
         [].forEach.call(document.getElementsByClassName('datalist'), function (element) {
             new MvcDatalist(element);
         });
@@ -197,6 +204,8 @@
                         if (bloodType != null) { bloodType.value = data[i].BloodType; }
                         var address = document.getElementById("tbAddress");
                         if (address != null) { address.value = data[i].Address; }
+
+                         _PatientId = data[i].Id;
                     }
                 }
             }
@@ -247,6 +256,27 @@
             });
         });
 
+        $("#ddlRegisterType").change(function () {
+            var regtype = $('#ddlRegisterType').val();
+             var lbl = document.getElementById("lblAppointmentID");
+                var tb = document.getElementById("tbAppoinmentID");
+            if (regtype == '1') {
+               
+                lbl.style.display = "block";
+                tb.style.display = "block";
+                $.get("/Loket/GetAppointmentData", { poliID: $("#ddlpolito").val(), patientID: _PatientId, doctorID: $("#ddldoctor").val(), necessityID:$('#ddlnecessity').val() }, function (data) {
+
+                    $('#tbAppoinmentID').val(data);
+                });
+            }
+            else {
+                $('#tbAppoinmentID').val('0');
+                   lbl.style.display = "none";
+                tb.style.display = "none";
+            }
+          
+        });
+
         $('#tbRegistration').dataTable({
             "autoWidth": false,
             "processing": true,
@@ -295,8 +325,8 @@
                     "targets": [6],
                     "searchable": false,
                     "orderable": false
-                },
-                {
+                    },
+                  {
                     "targets": [7],
                     "searchable": false,
                     "orderable": false
@@ -308,17 +338,16 @@
                 },
                 {
                     "targets": [9],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [10],
                     "searchable": true,
                     "orderable": true,
                     "width": "37%"
                 },
-                //},
-                //{
-                //    "targets": [10],
-                //    "searchable": true,
-                //    "orderable": true,
-                //    "width": "100%"
-                //}
+               
                 ],
 
             "columns": [
@@ -331,7 +360,7 @@
                 { "data": "DoctorStr", "name": "DoctorStr", "autoWidth": true },
                 { "data": "SortNumberCode", "name": "SortNumberCode", "autoWidth": true },
                 { "data": "TypeStr", "name": "TypeStr", "autoWidth": true },
-                //{ "data": "Remark", "name": "Remark", "autoWidth": true },
+                { "data": "AppointmentID", "name": "AppointmentID", "autoWidth": true },
                 { "data": "TransactionDateStr", "name": "TransactionDateStr", "autoWidth": true },
                 { "data": "StatusStr", "name": "StatusStr", "autoWidth": true },
                 {

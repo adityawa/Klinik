@@ -37,6 +37,7 @@
                             <th>@Klinik.Resources.UIMessages.QueueCode</th>
                             <th>@Klinik.Resources.UIMessages.RegistrationType</th>
                             <th>@Klinik.Resources.UIMessages.IsPreExamined</th>
+                            <th>@Klinik.Resources.UIMessages.AppointmentID</th>
                             <th>@Klinik.Resources.UIMessages.TransactionDate</th>
                             <th>@Klinik.Resources.UIMessages.RegistrationStatus</th>
                             <th>@Klinik.Resources.UIMessages.Action</th>
@@ -167,6 +168,11 @@
                     "targets": [10],
                     "searchable": true,
                     "orderable": true
+                    }
+                {
+                    "targets": [11],
+                    "searchable": false,
+                    "orderable": false
                 }
                 ],
 
@@ -179,6 +185,7 @@
                 { "data": "SortNumberCode", "name": "SortNumberCode", "autoWidth": true },
                 { "data": "TypeStr", "name": "TypeStr", "autoWidth": true },
                 { "data": "IsPreExamine", "name": "IsPreExamine", "autoWidth": true },
+                 { "data": "AppointmentID", "name": "AppointmentID", "autoWidth": true },
                 { "data": "TransactionDateStr", "name": "TransactionDateStr", "autoWidth": true },
                 { "data": "StatusStr", "name": "StatusStr", "autoWidth": true },
                 {

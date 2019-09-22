@@ -21,6 +21,8 @@ namespace Klinik.Features
             _unitOfWork = unitOfWork;
         }
 
+        
+
         /// <summary>
         /// Validate request
         /// </summary>
@@ -58,6 +60,24 @@ namespace Klinik.Features
                 {
                     response.Status = false;
                     response.Message = Messages.UnauthorizedAccess;
+                }
+
+                //Validate only for appointment type
+                if (request.Data.Type == 1)
+                {
+                    var today = DateTime.Now.Date;
+                    var isHaveAppointment = _unitOfWork.AppointmentRepository.Get(x => x.PatientID == request.Data.PatientID
+                     && x.AppointmentDate == today
+                     && x.PoliID == request.Data.PoliToID
+                     && x.ClinicID == request.Data.Account.ClinicID
+                     && x.DoctorID==request.Data.DoctorID
+                     && x.RequirementID==request.Data.NecessityType);
+
+                    if (isHaveAppointment.FirstOrDefault() == null)
+                    {
+                        response.Status = false;
+                        response.Message = $"You do not have an appointment yet before";
+                    }
                 }
 
                 if (response.Status)
@@ -171,11 +191,11 @@ namespace Klinik.Features
             {
                 errorFields.Add("Poli ID");
             }
-            if(string.IsNullOrEmpty(request.CallRequest.QueueCode))
+            if (string.IsNullOrEmpty(request.CallRequest.QueueCode))
             {
                 errorFields.Add("Queue Code");
             }
-            if (request.CallRequest.SortNumber<=0)
+            if (request.CallRequest.SortNumber <= 0)
             {
                 errorFields.Add("Sort Number");
             }

@@ -11,9 +11,9 @@ namespace Klinik.Features.AppointmentFeatures
 {
     public class AppointmentValidator : BaseFeatures
     {
-     
+
         private const string ADD_PRIVILEGE_NAME = "ADD_APPOINTMENT";
-        public AppointmentValidator(IUnitOfWork unitOfWork, KlinikDBEntities context=null)
+        public AppointmentValidator(IUnitOfWork unitOfWork, KlinikDBEntities context = null)
         {
             _unitOfWork = unitOfWork;
             _context = context;
@@ -48,6 +48,8 @@ namespace Klinik.Features.AppointmentFeatures
 
             if (request.Data.RequirementID == 0)
                 errorFields.Add("Necesity");
+            if (request.Data.Jam == null)
+                errorFields.Add("Time Booking");
 
             if (errorFields.Any())
             {
@@ -60,6 +62,30 @@ namespace Klinik.Features.AppointmentFeatures
             {
                 response.Status = false;
                 response.Message = Messages.UnauthorizedAccess;
+            }
+
+            //validasi jam praktek
+            if (request.Data.Jam != null)
+            {
+                var isExist = _unitOfWork.PoliScheduleRepository.GetFirstOrDefault(x => x.StartDate <= request.Data.Jam && x.EndDate >= request.Data.Jam);
+                if (isExist == null)
+                {
+                    response.Status = false;
+                    response.Message = "Time is not Available";
+                }
+            }
+
+            //validasi is exist with appointmentDate Poli ID Patient ID DoctorID Clinic ID
+            var isAppointmentExist = _unitOfWork.AppointmentRepository.GetFirstOrDefault(x => x.ClinicID == request.Data.ClinicID
+              && x.PoliID == request.Data.PoliID
+              && x.DoctorID == request.Data.DoctorID
+              && x.PatientID == request.Data.PatientID
+              && x.AppointmentDate == request.Data.AppointmentDate);
+
+            if (isAppointmentExist != null)
+            {
+                response.Status = false;
+                response.Message = $"Appointment is already exist with ID {isAppointmentExist.ID} And Patient Name {isAppointmentExist.Patient.Name}";
             }
 
             if (response.Status)

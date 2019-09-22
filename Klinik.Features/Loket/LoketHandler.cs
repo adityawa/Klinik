@@ -110,21 +110,24 @@ namespace Klinik.Features
 
 
                     //cek is have appointment
-                    if (queueEntity.Type == 1)
+                    if (queueEntity.Type == 1 && queueEntity.AppointmentID>0)
                     {
-                        var today = DateTime.Now.Date;
-                        var isHaveAppointment = _unitOfWork.AppointmentRepository.Get(x => x.PatientID == queueEntity.PatientID
-                && x.AppointmentDate == today
-                && x.PoliID == queueEntity.PoliTo
-                && x.ClinicID == queueEntity.ClinicID);
+                        var isHaveAppointment = _unitOfWork.AppointmentRepository.GetById(queueEntity.AppointmentID);
+                        if(isHaveAppointment!=null)
+                            queueEntity.TransactionDate = (DateTime)isHaveAppointment.Jam;
+                        //        var today = DateTime.Now.Date;
+                        //        var isHaveAppointment = _unitOfWork.AppointmentRepository.Get(x => x.PatientID == queueEntity.PatientID
+                        //&& x.AppointmentDate == today
+                        //&& x.PoliID == queueEntity.PoliTo
+                        //&& x.ClinicID == queueEntity.ClinicID);
 
-                        if (isHaveAppointment.FirstOrDefault() != null)
-                        {
-                            var appointment = isHaveAppointment.FirstOrDefault();
-                            queueEntity.AppointmentID = appointment.ID;
-                            if (appointment.Jam != null)
-                                queueEntity.TransactionDate = (DateTime)appointment.Jam;
-                        }
+                        //        if (isHaveAppointment.FirstOrDefault() != null)
+                        //        {
+                        //            var appointment = isHaveAppointment.FirstOrDefault();
+                        //            queueEntity.AppointmentID = appointment.ID;
+                        //            if (appointment.Jam != null)
+                        //                queueEntity.TransactionDate = (DateTime)appointment.Jam;
+                        //        }
                     }
 
 
@@ -168,6 +171,22 @@ namespace Klinik.Features
         {
             Organization organization = _unitOfWork.OrganizationRepository.GetFirstOrDefault(x => x.OrgCode == organizationCode);
             return organization.KlinikID.Value;
+        }
+
+        public long GetAppointmentID(long patientID, long poliID, long clinicID, long doctorID, long necessityID)
+        {
+            long _appointmentID = 0;
+            var today = DateTime.Now.Date;
+            var qry = _unitOfWork.AppointmentRepository.GetFirstOrDefault(x => x.ClinicID == clinicID
+              && x.PoliID == poliID
+              && x.PatientID == patientID
+              && x.DoctorID == doctorID
+              && x.RequirementID==necessityID
+              && x.AppointmentDate==today );
+
+            if (qry != null)
+                _appointmentID = qry.ID;
+            return _appointmentID;
         }
 
         /// <summary>

@@ -178,6 +178,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Appointment ID.
+        /// </summary>
+        public static string AppointmentID {
+            get {
+                return ResourceManager.GetString("AppointmentID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Approve.
         /// </summary>
         public static string Approve {
