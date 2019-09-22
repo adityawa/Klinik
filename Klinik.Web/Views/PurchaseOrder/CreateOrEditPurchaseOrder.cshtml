@@ -111,27 +111,29 @@
                                 <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
                                 <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
                                 <td><input type="text" class="form-control" value="@item.nama_by_ho" disabled="disabled" /></td>
-                                <td>
-                                    @if (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true")
+                                <td>@if (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true")
                                     {
                                         <input type="text" class="form-control" value="@item.qty_by_ho" disabled="disabled" />
                                     }
                                     else
                                     {
                                         @item.qty_by_ho
-                                    }
-                                </td>
-                                <td>
-                                    @if (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true")
+                                    }</td>
+                                <td>@if (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true")
                                     {
                                         <input type="text" class="form-control" value="@item.remark_by_ho" disabled="disabled" />
                                     }
                                     else
                                     {
                                         @item.remark_by_ho
+                                    }</td>
+                                <td>
+                                    @if (Model != null && (GeneralHandler.authorized("VALIDATION_M_PURCHASEORDER") == "true"))
+                                    {
+                                        <input type="checkbox" class="validatepo" data-url="/PurchaseOrder/EditPurchaseOrderDetail" value="@(item.Verified == true ? "true" : "false")" @(item.Verified == true ? "checked" : "") disabled>
+                                        <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
                                     }
                                 </td>
-                                <td><input type="checkbox" value="@(item.Verified == true ? "true" : "false")" @(item.Verified == true ? "checked" : "") disabled></td>
                                 <td hidden>@item.OrderNumber</td>
                                 @if (GeneralHandler.authorized("EDIT_M_PURCHASEORDER") == "true")
                                 {
@@ -180,6 +182,7 @@
                 if (Model.approve != null && Model.Validasi == null)
                 {
                     <button class="btn btn-success" onclick="Validation(@Model.Id)">@Klinik.Resources.UIMessages.Validation</button>
+                    <button class="btn btn-primary editvalidation" style="display:@(Model != null ? Model.Validasi == null ? "inline-block" : "none":"inline-block")">@Klinik.Resources.UIMessages.Edit</button>
                 }
             }
             @if (Model != null)

@@ -225,7 +225,7 @@ namespace Klinik.Web.Controllers
         }
 
         #region ::PURCHASEORDERDETAIL::
-        [CustomAuthorize("EDIT_M_PURCHASEORDER")]
+        [CustomAuthorize("EDIT_M_PURCHASEORDER", "VALIDATION_M_PURCHASEORDER")]
         [HttpPost]
         public ActionResult EditPurchaseOrderDetail(PurchaseOrderDetailModel purchaseOrderDetail)
         {

@@ -14,6 +14,7 @@
         Klinik.ChangeNamaBarangsubtitusi();
         Klinik.ElementButton();
         Klinik.openallbutton();
+        Klinik.EditValidation();
     },
 
     autocompleteProductOne: function () {
@@ -333,8 +334,36 @@
     checkbox: function () {
         var el = $('input[type="checkbox"]');
         $(el).click(function () {
+            var row = $(this).closest('tr');
             if ($(this).prop("checked") == true) {
                 $(this).prop('checked', this.checked).val('true');
+                row.find('.image-loading').show();
+                var purchaseOrderDetail = {};
+                purchaseOrderDetail.Id = row.find("TD").eq(0).html();
+                purchaseOrderDetail.PurchaseOrderId = $('#Id').val();
+                purchaseOrderDetail.ProductId = row.closest('tr').find('td:eq(2) select').val() > 0 ? row.closest('tr').find('td:eq(2) select').val() : row.find("TD").eq(1).html();
+                purchaseOrderDetail.tot_pemakaian = row.closest('tr').find('td:eq(3) input').length > 0 ? row.closest('tr').find('td:eq(3) input').val() : row.find("TD").eq(3).html();
+                purchaseOrderDetail.sisa_stok = row.closest('tr').find('td:eq(4) input').length > 0 ? row.closest('tr').find('td:eq(4) input').val() : row.find("TD").eq(4).html();
+                purchaseOrderDetail.qty = row.closest('tr').find('td:eq(5) input').length > 0 ? row.closest('tr').find('td:eq(5) input').val() : row.find("TD").eq(5).html();
+                purchaseOrderDetail.qty_add = row.closest('tr').find('td:eq(6) input').length > 0 ? row.closest('tr').find('td:eq(6) input').val() : row.find("TD").eq(6).html();
+                purchaseOrderDetail.reason_add = row.closest('tr').find('td:eq(7) input').length > 0 ? row.closest('tr').find('td:eq(7) input').val() : row.find("TD").eq(7).html();
+                purchaseOrderDetail.total = row.closest('tr').find('td:eq(8) input').length > 0 ? row.closest('tr').find('td:eq(8) input').val() : row.find("TD").eq(8).html();
+                purchaseOrderDetail.nama_by_ho = row.closest('tr').find('td:eq(9) input').length > 0 ? row.closest('tr').find('td:eq(9) input').val() : row.find("TD").eq(9).html();
+                purchaseOrderDetail.qty_by_ho = row.closest('tr').find('td:eq(10) input').length > 0 ? row.closest('tr').find('td:eq(10) input').val() : row.find("TD").eq(10).html();
+                purchaseOrderDetail.remark_by_ho = row.closest('tr').find('td:eq(11) input').length > 0 ? row.closest('tr').find('td:eq(11) input').val() : row.find("TD").eq(11).html();
+                purchaseOrderDetail.Verified = row.closest('tr').find('td:eq(12) input[type="checkbox"]').val();
+                purchaseOrderDetail.OrderNumber = row.find("TD").eq(13).html();
+                $.ajax({
+                    type: "POST",
+                    url: $(this).data('url'),
+                    data: JSON.stringify({ purchaseOrderDetail: purchaseOrderDetail }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        $('.image-loading').hide();
+                        console.log(r);
+                    }
+                });
             } else {
                 $(this).prop('checked', this.checked).val('false');
             }
@@ -482,7 +511,22 @@
                 $("#GudangId").val($(el).val());
             });
         });
+    },
+
+    EditValidation: function () {
+        var el = $('.editvalidation');
+        if (!el.length) return;
+
+        el.click(function () {
+            $('.savepurchasedetail').show();
+            $(this).hide();
+
+            $('#tblPurchaseOrder').closest('table').find('td input:checkbox').prop('disabled', false);
+        });
+
     }
+
+
 
 
 };
