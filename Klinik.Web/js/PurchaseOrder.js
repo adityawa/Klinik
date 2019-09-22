@@ -451,6 +451,36 @@
             $(this).hide();
             $('.edit-purchaseorderdetail').attr('disabled', false);
             $('.subtitusi').attr('disabled', false);
+            $('#namagudang').select2({
+                width: 'resolve',
+                placeholder: 'gudang..',
+                ajax: {
+                    url: '/DeliveryOrder/searchgudang/',
+                    data: function (params) {
+                        return {
+                            prefix: params.term
+                        };
+                    },
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        var results = [];
+
+                        $.each(data.data, function (index, item) {
+                            results.push({
+                                id: item.Id,
+                                text: item.name
+                            });
+                        });
+                        return {
+                            results: results
+                        };
+                    }
+                }
+            }).prop('disabled', false);
+            $(el).change(function () {
+                $("#GudangId").val($(el).val());
+            });
         });
     }
 
