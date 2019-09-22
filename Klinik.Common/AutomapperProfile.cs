@@ -67,6 +67,7 @@ namespace Klinik.Common
                 .ForMember(x => x.EmployeeName, map => map.MapFrom(p => p.Employee.EmpName))
                 .ForMember(x => x.OrganizationName, map => map.MapFrom(p => p.Organization.OrgName))
                 .ForMember(x => x.StatusDesc, map => map.MapFrom(p => p.Status == true ? "Active" : "Inactive"))
+                .ForMember(x=>x.OrgID, map=>map.MapFrom(p=>p.OrganizationID))
                 .ForMember(x => x.ExpiredDateStr, map => map.MapFrom(p => p.ExpiredDate == null ? "" : p.ExpiredDate.Value.ToString("dd/MM/yyyy")));
             CreateMap<UserModel, User>()
                 .ForMember(x => x.OrganizationID, map => map.MapFrom(p => p.OrgID));
