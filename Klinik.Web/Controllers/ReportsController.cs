@@ -1,4 +1,8 @@
-﻿using Klinik.Common;
+﻿using DotNet.Highcharts;
+using DotNet.Highcharts.Enums;
+using DotNet.Highcharts.Helpers;
+using DotNet.Highcharts.Options;
+using Klinik.Common;
 using Klinik.Common.Paging;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
@@ -217,16 +221,16 @@ namespace Klinik.Web.Controllers
             return _types;
         }
 
-        #endregion 
-
-
+        #endregion
+               
         // GET: Reports
         [CustomAuthorize("VIEW_REPORTS")]
         public ActionResult Index()
-        { 
+        {
             return View();
         }
 
+        #region Top 10 Dieaseas Report
         [CustomAuthorize("VIEW_TOP_10_DISEASES")]
         public ActionResult Top10Dieases()
         {
@@ -262,15 +266,71 @@ namespace Klinik.Web.Controllers
 
             new ReportsValidator(_unitOfWork, _context).ValidateTop10DiseaseReport(request, out response);
 
+            var charts = new List<Highcharts>();
+            var chartByAge = ConstructSummaryByICDVsAge(response.Entity.DiseaseDataReports);
+            charts.Add(chartByAge);
+            response.Entity.Charts = charts;
+
             return View(response.Entity);
         }
-
 
         public ActionResult Top10DiseasesReport(Top10DiseaseReportModel model, int? page)
         {
             int currentPageIndex = page.HasValue ? page.Value - 1 : 0;
             return View(model.DiseaseDataReports.ToPagedList(currentPageIndex, DefaultPageSize));
         }
+
+        private Highcharts ConstructSummaryByICDVsAge(List<DiseaseReportDataModel> diseaseReportDataModels)
+        {
+            var icds = diseaseReportDataModels.Distinct().Select(x => x.ICDCode);
+            var ages = diseaseReportDataModels.Distinct().Select(x => x.Age);
+            var xnames = icds.ToList();
+
+            var series = new List<Series>();
+
+            foreach (var icd in icds)
+            {
+                var objects = new List<object>();
+
+                foreach (var age in ages)
+                {
+                    var result = diseaseReportDataModels.FindAll(x => x.ICDCode == icd && x.Age == age);
+                    if (result.Count > 0)
+                    {
+                        objects.Add(result.Count);
+                    }
+                    else
+                    {
+                        objects.Add(0);
+                    }
+                }
+                
+                series.Add(new Series
+                {
+                    Name = icd,
+                    Data = new DotNet.Highcharts.Helpers.Data(objects.ToArray())
+                });
+            }
+
+            Highcharts chart = new Highcharts("chart_by_age")
+                 .InitChart(new Chart { DefaultSeriesType = ChartTypes.Spline })
+                 .SetTitle(new Title { Text = "Total Pasien Berdasarkan tipe ICD" })
+                 .SetXAxis(new XAxis { Categories = icds.ToArray() })
+                 .SetYAxis(new YAxis
+                 {
+                     Title = new YAxisTitle { Text = "Total Perawatan" },
+                     Min = 0
+                 })
+                 .SetTooltip(new Tooltip { Formatter = "function() { return '<b>'+ this.series.name +' : '+ this.y +' </b>'; }" })
+                 .SetSeries(series.ToArray());
+
+            return chart;
+
+        }
+
+        #endregion
+
+
 
         [CustomAuthorize("VIEW_TOP_10_REFERALS")]
         public ActionResult Top10Referals()
@@ -340,5 +400,9 @@ namespace Klinik.Web.Controllers
 
             return View();
         }
+
+        #region Charts 
+
+        #endregion 
     }
 }

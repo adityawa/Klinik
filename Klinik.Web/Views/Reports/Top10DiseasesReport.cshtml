@@ -2,6 +2,7 @@
 @model Klinik.Entities.Reports.Top10DiseaseReportModel
 @{
     ViewBag.Title = "Top10DiseasesReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div>
@@ -37,32 +38,39 @@
                     <tbody>
                         @foreach (var item in Model.DiseaseDataReports)
                         {
-                        <tr>
-                            <td width="5%">@item.ICDCode</td>
-                            <td width="15%">@item.ClinicName</td>
-                            <td width="15%">@item.PatientName</td>
-                            <td width="10%">@item.FamName</td>
-                            <td width="5%" align="right">@item.Age.ToString()</td>
-                            <td width="5%" align="center">@item.Gender</td>
-                            <td width="10%" align="center">@item.Department</td>
-                            <td width="15%" align="right">@item.TransDate</td>
-                            <td width="20%" align="center">@item.Diagnose</td>
-                        </tr>
+                            <tr>
+                                <td width="5%">@item.ICDCode</td>
+                                <td width="15%">@item.ClinicName</td>
+                                <td width="15%">@item.PatientName</td>
+                                <td width="10%">@item.FamName</td>
+                                <td width="5%" align="right">@item.Age.ToString()</td>
+                                <td width="5%" align="center">@item.Gender</td>
+                                <td width="10%" align="center">@item.Department</td>
+                                <td width="15%" align="right">@item.TransDate</td>
+                                <td width="20%" align="center">@item.Diagnose</td>
+                            </tr>
                         }
                     </tbody>
                 </table>
                 @*<div class="pager">
-                    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalRecord)
-                </div>*@
+                        @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalRecord)
+                    </div>*@
             </div>
             <div class="panel-footer">
                 <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.ExportToExcel</button>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="second">
-
+            <div class="row">
+                <div class="col-md-12"></div>
+                @foreach (DotNet.Highcharts.Highcharts chart in Model.Charts)
+                {
+                    <div class="col-md-12 col-md-6">
+                        @(chart)
+                    </div>
+                }
+            </div>
         </div>
     </div>
 
 </div>
-
