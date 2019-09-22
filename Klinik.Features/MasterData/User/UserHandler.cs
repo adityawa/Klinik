@@ -47,7 +47,7 @@ namespace Klinik.Features
                         qry.Status = request.Data.Status;
                         qry.ModifiedBy = request.Data.ModifiedBy;
                         qry.ModifiedDate = DateTime.Now;
-
+                        qry.EmployeeID = request.Data.EmployeeID;
                         _unitOfWork.UserRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
@@ -87,7 +87,7 @@ namespace Klinik.Features
                     userRoleEntity.CreatedBy = request.Data.Account.UserCode;
                     userRoleEntity.CreatedDate = DateTime.Now;
 
-                    _unitOfWork.UserRoleRepository.Insert(userRoleEntity);
+                    _unitOfWork.UserRepository.Insert(UserEntity);
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
