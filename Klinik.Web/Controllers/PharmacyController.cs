@@ -198,7 +198,7 @@ namespace Klinik.Web.Controllers
                 SortColumnDir = _sortColumnDir,
                 PageSize = _pageSize,
                 Skip = _skip,
-                Data = new LoketModel { ClinicID = Convert.ToInt32(clinics), PoliToID = (int)PoliEnum.Farmasi }
+                Data = new LoketModel { ClinicID = Convert.ToInt32(clinics), PoliToID = PoliHandler.GetPoliIDBasedOnName(PoliEnum.Farmasi.ToString()) }
             };
 
             if (Session["UserLogon"] != null)

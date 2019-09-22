@@ -478,6 +478,7 @@
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="RowStatus" Type="smallint" />
+          <Property Name="IsGudangPusat" Type="bit" />
         </EntityType>
         <EntityType Name="HistoryProductInGudang">
           <Key>
@@ -3863,6 +3864,7 @@
           <NavigationProperty Name="PurchaseRequests" Relationship="Self.FK_PurchaseRequest_Gudang" FromRole="Gudang" ToRole="PurchaseRequest" />
           <NavigationProperty Name="PurchaseRequestPusats" Relationship="Self.FK_PurchaseRequestPusat_Gudang" FromRole="Gudang" ToRole="PurchaseRequestPusat" />
           <NavigationProperty Name="PurchaseRequestConfigs" Relationship="KlinikDBModel.FK_PurchaseRequestConfig_Gudang" FromRole="Gudang" ToRole="PurchaseRequestConfig" />
+          <Property Name="IsGudangPusat" Type="Boolean" />
         </EntityType>
         <EntityType Name="HistoryProductInGudang">
           <Key>
@@ -7299,6 +7301,7 @@
           <EntitySetMapping Name="Gudangs">
             <EntityTypeMapping TypeName="KlinikDBModel.Gudang">
               <MappingFragment StoreEntitySet="Gudang">
+                <ScalarProperty Name="IsGudangPusat" ColumnName="IsGudangPusat" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="ClinicId" ColumnName="ClinicId" />

@@ -249,7 +249,7 @@ namespace Klinik.Web.Controllers
                 var saveproductingudang = new ProductInGudangHandler(_unitOfWork).CreateOrEdit(requestproductingudang);
                 var savehistoryproductingudang = new HistoryProductInGudangHandler(_unitOfWork).CreateOrEdit(requesthistoryproductingudang);
             }
-            return RedirectToAction("DeliveryOrderList");
+            return RedirectToAction("PurchaseRequestList", "PurchaseRequest");
         }
 
         [HttpGet]

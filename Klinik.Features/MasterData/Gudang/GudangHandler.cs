@@ -123,7 +123,8 @@ namespace Klinik.Features
                     ClinicId = qry.FirstOrDefault().ClinicId,
                     Id = qry.FirstOrDefault().id,
                     name = qry.FirstOrDefault().name,
-                    ClinicName = qry.FirstOrDefault().Clinic.Name
+                    ClinicName = qry.FirstOrDefault().Clinic.Name,
+                    IsGudangPusat = qry.FirstOrDefault().IsGudangPusat
                 };
             }
 

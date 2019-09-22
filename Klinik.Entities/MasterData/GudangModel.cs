@@ -11,5 +11,6 @@ namespace Klinik.Entities.MasterData
         public string name { get; set; }
         public long ClinicId { get; set; }
         public string ClinicName { get; set; }
+        public Nullable<bool> IsGudangPusat { get; set; }
     }
 }
