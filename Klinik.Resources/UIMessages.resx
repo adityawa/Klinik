@@ -1209,7 +1209,6 @@
   <data name="Top10ReferalReport" xml:space="preserve">
     <value>Top 10 Referals Report</value>
   </data>
-
   <data name="LookUpCategoryList" xml:space="preserve">
     <value>Look Up Category List</value>
   </data>
@@ -1221,7 +1220,7 @@
   </data>
   <data name="LookUpCode" xml:space="preserve">
     <value>Look Up Code</value>
-</data>
+  </data>
   <data name="Jam" xml:space="preserve">
     <value>Jam</value>
   </data>

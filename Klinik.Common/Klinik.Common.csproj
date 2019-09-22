@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="AutomapperProfile.cs" />
     <Compile Include="CommonUtils.cs" />
+    <Compile Include="ConnectionStrings.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CustomAuthorizeAttribute.cs" />
     <Compile Include="Enumerations\CallStatusEnum.cs" />

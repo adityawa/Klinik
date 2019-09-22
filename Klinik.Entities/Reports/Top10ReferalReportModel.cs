@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Klinik.Entities.Reports
 {
-    public class Top10ReferalReportModel
+    public class Top10ReferalReportModel:BaseReportModel
     {
+        public List<ReferalReportDataModel> ReferalReportsData { get; set; }
     }
 }
