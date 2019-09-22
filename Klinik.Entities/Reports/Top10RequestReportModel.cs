@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace Klinik.Entities.Reports
 {
-    public class Top10DiseaseReportModel:BaseReportModel
+    public class Top10RequestReportModel:BaseReportModel
     {
-        public List<DiseaseReportDataModel> DiseaseDataReports { get; set; }
-               
     }
 }

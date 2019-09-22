@@ -204,7 +204,7 @@ namespace Klinik.Web.Controllers
 
         [CustomAuthorize("VIEW_TOP_10_REFERALS1")]
         [HttpPost]
-        public ActionResult Top10ReferalsReport(Top10ReferalParamModels model)
+        public ActionResult Top10ReferalsReport(Top10ReferalParamModel model)
         {
             var report = new Top10ReferalReportModel();
 
