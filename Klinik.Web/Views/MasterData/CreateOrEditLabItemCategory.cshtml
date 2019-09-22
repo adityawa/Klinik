@@ -1,0 +1,81 @@
+﻿@model Klinik.Entities.MasterData.LabItemCategoryModel
+
+@{
+    ViewBag.Title = "CreateOrEditLabItemCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="panel">
+	<header class="panel-heading">
+		<div class="panel-actions">
+			<a href="#" class="fa fa-caret-down"></a>
+		</div>
+		<h5 class="panel-title">Form @ViewBag.ActionType Lab Item Category</h5>
+	</header>
+    <div class="panel-body">
+        <form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditLabItemCategory">
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Poli</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(p => p.PoliID, (IEnumerable<SelectListItem>)ViewBag.PoliList, new { @class = "form-control", @id = "ddlPoli" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Name</label>
+                <div class="col-md-4">
+                    @Html.HiddenFor(x => x.Id)
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @id = "tbName" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Type</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.LabType, new { @class = "form-control", @id = "tbLabType" })
+                </div>
+            </div>
+
+
+            <div class="panel-footer">
+                <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
+                <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+            </div>
+        </form>
+    </div> 
+</section>
+
+@section Scripts {
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnreset').click(function (e) {
+            window.location.href = "/MasterData/LabItemCategoryList";
+        });
+
+        $('#ddlPoli').select2();
+
+        toastr.options = {
+            "closeButton": false,
+            "positionClass": "toast-top-full-width",
+            "onclick": null,
+            "showDuration": "0",
+            "hideDuration": "0",
+            "timeOut": "2000",
+            "showMethod": "fadeIn"
+        };
+
+        var _temp="@ViewBag.Response";
+        var _arrMsg = _temp.split(";");
+
+        if (_arrMsg.length > 1) {
+            if (_arrMsg[0] == "True") {
+                toastr.success(_arrMsg[1]);
+            }
+            else {
+                toastr.options.closeButton = true;
+                toastr.options.timeOut = 0;
+                toastr.error(_arrMsg[1]);
+            }
+        }
+    });
+
+    </script>
+}

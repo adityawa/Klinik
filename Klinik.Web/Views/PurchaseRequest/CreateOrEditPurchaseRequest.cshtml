@@ -1,0 +1,286 @@
+﻿@model Klinik.Entities.PurchaseRequest.PurchaseRequestModel
+@using Klinik.Entities.Account
+@using Klinik.Features;
+@{
+    ViewBag.Title = "CreateOrEditDeliveryRequest";
+    var account = (AccountModel)Session["UserLogon"];
+    var requestby = Model != null ? Model.request_by : account.UserName;
+    var prnumber = Model != null ? Model.prnumber : ViewBag.prnumber;
+    bool open = Model != null ? Model.Validasi > 0 ? false : true : true;
+    DateTime? valueprdate = Model != null ? Model.prdate : null;
+}
+@section Styles{
+    <link href="~/Content/Login/vendor/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/Custom/Custom.css" rel="stylesheet" />
+}
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+        </div>
+        <h5 class="panel-title">Form @ViewBag.ActionType Purchase Request</h5>
+    </header>
+    <div class="panel-body">
+        <form class="form-horizontal">
+            @Html.HiddenFor(x => x.Id)
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.NoPr</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.prnumber, new { @class = "form-control", @id = "prnumber", @Value = prnumber, @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">Tanggal PR</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="prdate" name="prdate" placeholder="Purchase Request Date" @(open ? "" : "disabled") value="@valueprdate" autocomplete="off"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.RequestBy</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" readonly value="@requestby" />
+                    @Html.HiddenFor(x => x.request_by, new { @class = "form-control", @id = "request_by", @Value = "" + requestby + "" })
+                </div>
+            </div>
+            <br />
+        </form>
+    </div>
+    <div class="panel-body">
+        <div class="scrollTable">
+            <table id="tblPurchaseRequest" class="table color-table success-table" style="width:150%">
+                <caption class="headertable">@Klinik.Resources.UIMessages.PurchaseRequestList</caption>
+                <thead>
+                    <tr>
+                        <th hidden>Id Obat</th>
+                        <th>Nama Obat</th>
+                        <th>Total Pemakaian</th>
+                        <th>Sisa Stock</th>
+                        <th>Qty Request</th>
+                        <th>Qty add</th>
+                        <th>Reason add</th>
+                        <th>Total</th>
+                        <th>Nama By HO</th>
+                        <th>Qty By HP</th>
+                        <th>Remark By HO</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model.purchaserequestdetailModels)
+                        {
+                            <tr>
+                                <td hidden>@item.Id</td>
+                                <td hidden>@item.ProductId</td>
+                                <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
+                                <td>@item.tot_pemakaian</td>
+                                <td>@item.sisa_stok</td>
+                                <td>@item.qty</td>
+                                <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
+                                <td>@item.total</td>
+                                <td>@item.nama_by_ho</td>
+                                <td>@item.qty_by_ho</td>
+                                <td>@item.remark_by_ho</td>
+                                <td hidden></td>
+                                @if (Model.Validasi == null)
+                                {
+                                    <td>
+                                        @if ((GeneralHandler.authorized("EDIT_M_PURCHASEREQUEST") == "true"))
+                                        {
+                                            <button class="save-purchaseorderdetail btn btn-success btn-sm" data-url="/PurchaseRequest/EditPurchaseRequestDetail" style="display:none;">Save</button>
+                                            <button class="edit-purchaseorderdetail btn btn-success btn-sm" data-url="/PurchaseRequest/EditPurchaseRequestDetail" disabled>Edit</button>
+                                            <button class="delete-purchaseorderdetail btn btn-danger btn-sm" disabled>Delete</button>
+                                            <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+                @if (open)
+                {
+                    if((GeneralHandler.authorized("ADD_M_PURCHASEREQUEST", "EDIT_M_PURCHASEREQUEST") == "true"))
+                    { 
+                    <tfoot>
+                        <tr>
+                            <th class="caption-table headertable" colspan="17" style="text-align:center">Add Row Detail</th>
+                        </tr>
+                        <tr>
+                            <th hidden>Id Obat</th>
+                            <th>Nama Obat</th>
+                            <th>Total Pemakaian</th>
+                            <th>Sisa Stock</th>
+                            <th>Qty Request</th>
+                            <th>Qty add</th>
+                            <th>Reason add</th>
+                            <th>Total</th>
+                            <th>Nama By HO</th>
+                            <th>Qty By HP</th>
+                            <th>Remark By HO</th>
+                            <th hidden>Type</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr id="purchaseorderdetail">
+                            <td hidden><input type="text" hidden id="PurchaseRequestDetailId" /></td>
+                            <td hidden><input type="text" hidden id="ProductId" /></td>
+                            <td><select id="namabarang" class="form-control" style="display:block;width:160px"></select><input type="text" id="newproductname" class="form-control" style="display:none" placeholder="New Product" /><button style="display:none" class="btn btn-xs btn-success addnewproduct">add</button><br /><p>New Product</p><input type="checkbox" id="newproduct" /></td>
+                            <td><input type="text" class="form-control" placeholder="tot_pemakaian" id="tot_pemakaian" value="0" readonly /></td>
+                            <td><input type="text" class="form-control" placeholder="sisa_stok" id="sisa_stok" value="0" readonly /></td>
+                            <td><input type="text" class="form-control" placeholder="Qty Request" id="qty" value="0" readonly /></td>
+                            <td><input type="text" class="form-control" placeholder="qty_add" id="qty_add" value="" /></td>
+                            <td><input type="text" class="form-control" placeholder="reason_add" id="reason_add" value="" /></td>
+                            <td><input type="text" class="form-control" placeholder="total" id="total" value="" readonly /></td>
+                            <td><input type="text" class="form-control" placeholder="nama_by_ho" id="nama_by_ho" value="" readonly /></td>
+                            <td><input type="text" class="form-control" placeholder="qty_by_ho" id="qty_by_ho" value="" readonly /></td>
+                            <td><input type="text" class="form-control" placeholder="remark_by_ho" id="remark_by_ho" value="" readonly /></td>
+                            <td><input type="button" id="btnAdd" class="btn btn-success float-right" value="Add" /></td>
+                        </tr>
+                    </tfoot>
+                    }
+                }
+            </table>
+        </div>
+        <br />
+        <footer class="panel-footer">
+            @*@if (open)
+            {
+                <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseRequest/CreateOrEditPurchaseRequest" data-redirect="/PurchaseRequest/PurchaseRequestList">@Klinik.Resources.UIMessages.Save</button>
+            }*@
+            @if ((GeneralHandler.authorized("ADD_M_PURCHASEREQUEST", "EDIT_M_PURCHASEREQUEST") == "true"))
+            {
+                <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseRequest/CreateOrEditPurchaseRequest" style="display:@(Model != null ? "none" : "inline-block")">@Klinik.Resources.UIMessages.Save</button>
+                <button class="btn btn-primary openallbutton" style="display:@(Model != null ? Model.Validasi == null ? "inline-block" : "none":"none")">@Klinik.Resources.UIMessages.Edit</button>
+            }
+            @if (Model != null && (GeneralHandler.authorized("APPROVE_M_PURCHASEREQUEST") == "true"))
+            {
+                if (Model.approve == null)
+                {
+                    <button class="btn btn-success" onclick="Approve(@Model.Id)">@Klinik.Resources.UIMessages.Approve</button>
+                }
+
+            }
+            @if (Model != null && (GeneralHandler.authorized("VALIDATION_M_PURCHASEREQUEST") == "true"))
+            {
+                if (Model.approve != null && Model.Validasi == null)
+                {
+                    <button class="btn btn-success" onclick="Validation(@Model.Id)">@Klinik.Resources.UIMessages.Validation</button>
+                }
+            }
+            @if (Model != null)
+            {
+                <a class="btn btn-success" href="/GudangPusat/PrintPurchaseRequestPusat?id=@Model.Id" @(Model.approve != null ? "" : "disabled")>Print</a>
+            }
+            <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+        </footer>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/PurchaseRequest.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#prdate').datepicker({
+                autoclose: true,
+                startDate: new Date()
+            });
+            $('#btnreset').click(function (e) {
+                window.location.href = "/PurchaseRequest/PurchaseRequestList";
+            });
+
+            toastr.options = {
+                "closeButton": false,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "0",
+                "hideDuration": "0",
+                "timeOut": "2000",
+                "showMethod": "fadeIn"
+            };
+
+            var _temp="@ViewBag.Response";
+            var _arrMsg = _temp.split(";");
+
+            if (_arrMsg.length > 1) {
+                if (_arrMsg[0] == "True") {
+                    toastr.success(_arrMsg[1]);
+                }
+                else {
+                    toastr.options.closeButton = true;
+                    toastr.options.timeOut = 0;
+                    toastr.error(_arrMsg[1]);
+                }
+            }
+        });
+
+        var Approve = function (ID) {
+            var r = confirm("@Klinik.Resources.UIMessages.ApproveConfirmation" + ID + " ) ?");
+            if (r == true) {
+            ApprovePR(ID);
+        }
+        return false;
+        }
+
+        function ApprovePR(Id) {
+        $.ajax({
+            url: '/PurchaseRequest/ApprovePurchaseRequest?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+        }
+
+        var Validation = function (ID) {
+            var r = confirm("@Klinik.Resources.UIMessages.ValidationConfirmation" + ID + " ) ?");
+            if (r == true) {
+           ValisasiPR(ID);
+        }
+        return false;
+        }
+
+        function ValisasiPR(Id) {
+        $.ajax({
+            url: '/PurchaseRequest/ValidationPurchaseRequest?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+        }
+
+    </script>
+    <script type="text/javascript">
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblPurchaseOrder")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+    </script>
+}
