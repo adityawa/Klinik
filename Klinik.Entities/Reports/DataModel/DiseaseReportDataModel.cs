@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,7 @@ namespace Klinik.Entities.Reports
              
         public string BPJSNumber { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0}")]
         public decimal Age { get; set; }
 
         public string AgeCode { get; set; }
@@ -42,6 +44,7 @@ namespace Klinik.Entities.Reports
 
         public string FamName { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}")]
         public DateTime TransDate { get; set; }
 
         public string NeedRest { get; set; }

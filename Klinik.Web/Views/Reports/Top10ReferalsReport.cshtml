@@ -1,7 +1,62 @@
-﻿
+﻿@using Klinik.Common.Paging;
+@model Klinik.Entities.Reports.Top10ReferalReportModel
 @{
     ViewBag.Title = "Top10ReferalsReport";
 }
 
-<h2>Top10ReferalsReport</h2>
+<div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#first" aria-controls="first" role="tab" data-toggle="tab">Tabular Report</a></li>
+        <li role="presentation"><a href="#second" aria-controls="second" role="tab" data-toggle="tab">Chart</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="first">
+            <header class="panel-heading">
+                <h5 class="panel-title">
+                    @Klinik.Resources.UIMessages.Top10ReferalReport
+                </h5>
+            </header>
+            <div class="panel-body">
+                <table class="table-striped">
+                    <thead>
+                        <tr>
+                            <th align="center">@Klinik.Resources.UIMessages.ClinicName</th>
+                            <th align="center">@Klinik.Resources.UIMessages.PatientName</th>
+                            <th align="center">@Klinik.Resources.UIMessages.LetterType</th>
+                            <th align="center">@Klinik.Resources.UIMessages.Keperluan</th>
+                            <th align="center">@Klinik.Resources.UIMessages.AddressRujukan</th>
+                            <th align="center">@Klinik.Resources.UIMessages.Diagnose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ReferalReportsData)
+                        {
+                         <tr>
+                            <td width="10%">@item.ClinicName</td>
+                            <td width="15%">@item.PatientName</td>
+                            <td width="10%">@item.LetterType</td>
+                            <td width="15%">@item.Keperluan</td>
+                            <td width="30%">@item.OtherInfo</td>
+                            <td width="20%">@item.Diagnose</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="pager">
+                    @*@Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalRecord)*@
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.ExportToExcel</button>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="second">
+
+        </div>
+    </div>
+
+</div>
 

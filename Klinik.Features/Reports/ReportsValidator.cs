@@ -15,7 +15,6 @@ namespace Klinik.Features.Reports
         private const string DISPLAY_TOP_10_DISEASES_REPORT = "VIEW_TOP_10_DISEASES";
         private const string DISPLAY_TOP_10_REFERAL_REPORT = "VIEW_TOP_10_REFERALS";
 
-
         public ReportsValidator(IUnitOfWork unitOfWork, KlinikDBEntities context)
         {
             _unitOfWork = unitOfWork;

@@ -34,9 +34,10 @@ namespace Klinik.Features
                     connection.Open();
                     diseasesData = connection.Query<DiseaseReportDataModel>(Constants.ReportQueries.SQL_TOP_10_DISEASE_REPORT).ToList();
                 }
-                catch 
+                catch(Exception ex) 
                 {
                     connection.Close();
+                    throw new Exception(ex.Message);
                 }
             }
 
@@ -54,9 +55,10 @@ namespace Klinik.Features
                     connection.Open();
                     referalsData = connection.Query<ReferalReportDataModel>(Constants.ReportQueries.SQL_TOP_10_REFERAL_REPORT).ToList();
                 }
-                catch
+                catch(Exception ex)
                 {
                     connection.Close();
+                    throw new Exception(ex.Message);
                 }
             }
 
@@ -76,13 +78,20 @@ namespace Klinik.Features
                     if (request.Data.Year != 0) diseasesData.Where(x => x.TransDate.Year == request.Data.Year);
                     if (request.Data.Month != 0) diseasesData.Where(x => x.TransDate.Month == request.Data.Month);
                     if (request.Data.ClinicId != 0) diseasesData.Where(x => x.ClinicId == request.Data.ClinicId);
-                    if (!string.IsNullOrEmpty(request.Data.DeptName)) diseasesData.Where(x => x.Department == request.Data.DeptName);
-                    if (!string.IsNullOrEmpty(request.Data.BUName)) diseasesData.Where(x => x.BusinessUnit == request.Data.BUName);
-                    if (!string.IsNullOrEmpty(request.Data.GenderType)) diseasesData.Where(x => x.Gender == request.Data.GenderType);
-                    if (!string.IsNullOrEmpty(request.Data.AgeCode)) diseasesData.Where(x => x.AgeCode == request.Data.AgeCode);
-                    if (!string.IsNullOrEmpty(request.Data.PatientCategory)) diseasesData.Where(x => x.StatusName == request.Data.PatientCategory);
-                    if (!string.IsNullOrEmpty(request.Data.CategoryClinicStatus)) diseasesData.Where(x => x.Necessity == request.Data.CategoryClinicStatus);
-                    if (!string.IsNullOrEmpty(request.Data.PaymentType)) diseasesData.Where(x => x.PaymentType == request.Data.PaymentType);
+                    if (!string.IsNullOrEmpty(request.Data.DeptName) && request.Data.DeptName !="0")
+                        diseasesData.Where(x => x.Department == request.Data.DeptName);
+                    if (!string.IsNullOrEmpty(request.Data.BUName) && request.Data.BUName !="0")
+                        diseasesData.Where(x => x.BusinessUnit == request.Data.BUName);
+                    if (!string.IsNullOrEmpty(request.Data.GenderType) && request.Data.GenderType != "0")
+                        diseasesData.Where(x => x.Gender == request.Data.GenderType);
+                    if (!string.IsNullOrEmpty(request.Data.AgeCode) && request.Data.AgeCode !="0")
+                        diseasesData.Where(x => x.AgeCode == request.Data.AgeCode);
+                    if (!string.IsNullOrEmpty(request.Data.PatientCategory) && request.Data.PatientCategory != "0")
+                        diseasesData.Where(x => x.StatusName == request.Data.PatientCategory);
+                    if (!string.IsNullOrEmpty(request.Data.CategoryClinicStatus) && request.Data.CategoryClinicStatus !="0")
+                        diseasesData.Where(x => x.Necessity == request.Data.CategoryClinicStatus);
+                    if (!string.IsNullOrEmpty(request.Data.PaymentType) && request.Data.PaymentType != "0")
+                        diseasesData.Where(x => x.PaymentType == request.Data.PaymentType);
                     if (!string.IsNullOrEmpty(request.Data.NeedRest)) diseasesData.Where(x => x.NeedRest == request.Data.NeedRest);
                     if (!string.IsNullOrEmpty(request.Data.ExamineType)) diseasesData.Where(x => x.IsAccident == request.Data.ExamineType);
 

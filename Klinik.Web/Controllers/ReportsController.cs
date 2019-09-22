@@ -1,9 +1,12 @@
 ﻿using Klinik.Common;
+using Klinik.Common.Paging;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Entities.Account;
 using Klinik.Entities.Reports;
 using Klinik.Features;
 using Klinik.Features.ICDThemeFeatures;
+using Klinik.Features.Reports;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +20,7 @@ namespace Klinik.Web.Controllers
         // GET: Patient
         private IUnitOfWork _unitOfWork;
         private KlinikDBEntities _context;
+        private const int DefaultPageSize = 10;
 
         public ReportsController(IUnitOfWork unitOfWork, KlinikDBEntities context)
         {
@@ -38,6 +42,9 @@ namespace Klinik.Web.Controllers
                 items.Add(currDate.Year + i);
             }
 
+
+            _years.Insert(0, new SelectListItem { Text = "All", Value = "0" });
+
             foreach (var item in items)
             {
                 _years.Add(new SelectListItem
@@ -54,6 +61,8 @@ namespace Klinik.Web.Controllers
         {
             List<SelectListItem> _patients= new List<SelectListItem>();
 
+            _patients.Insert(0, new SelectListItem { Text = "All", Value = "0" });
+
             foreach (var item in new PatientHandler(_unitOfWork, _context).GetAll().ToList())
             {
                 _patients.Add(new SelectListItem {
@@ -65,9 +74,48 @@ namespace Klinik.Web.Controllers
             return _patients;
         }
 
+
+        private List<SelectListItem> BindDropDownEmployeeStatus()
+        {
+            List<SelectListItem> _empStatus = new List<SelectListItem>();
+
+            _empStatus.Insert(0, new SelectListItem { Text = "All", Value = "0" });
+
+            foreach (var item in new EmployeeStatusHandler(_unitOfWork).GetAllEmployeeStatus())
+            {
+                _empStatus.Add(new SelectListItem
+                {
+                    Text = item.Description,
+                    Value = item.Code
+                });
+            }
+
+            return _empStatus;
+        }
+
+        private List<SelectListItem> BindDropDownFamilyStatus()
+        {
+            List<SelectListItem> _famStatus = new List<SelectListItem>();
+
+            _famStatus.Insert(0, new SelectListItem { Text = "All", Value = "0" });
+
+            foreach (var item in new FamilyStatusHandler(_unitOfWork).GetAllFamilyStatus())
+            {
+                _famStatus.Add(new SelectListItem
+                {
+                    Text = item.Description,
+                    Value = item.Code
+                });
+            }
+
+            return _famStatus;
+        }
+
         private List<SelectListItem> BindDropDownClinic()
         {
             List<SelectListItem> _clinics = new List<SelectListItem>();
+
+            _clinics.Insert(0, new SelectListItem { Text = "All", Value = "0" });
 
             foreach (var item in new ClinicHandler(_unitOfWork).GetAllClinic().ToList())
             {
@@ -85,6 +133,8 @@ namespace Klinik.Web.Controllers
         {
             List<SelectListItem> icds = new List<SelectListItem>();
 
+            icds.Insert(0, new SelectListItem { Text = "All", Value = "0" });
+
             foreach (var item in new ICDThemeHandler(_unitOfWork).GetAll().ToList())
             {
                 icds.Add(new SelectListItem
@@ -95,6 +145,23 @@ namespace Klinik.Web.Controllers
             }
 
             return icds;
+        }
+
+        private List<SelectListItem> BindRujukan()
+        {
+            List<SelectListItem> rujukans = new List<SelectListItem>();
+
+            rujukans.Insert(0, new SelectListItem { Text = "All", Value = "0" });
+
+            foreach (var item in new MasterHandler(_unitOfWork).GetRujukans())
+            {
+                rujukans.Add(new SelectListItem
+                {
+                    Text = item,
+                    Value = item
+                });
+            }
+            return rujukans;
         }
 
         private List<SelectListItem> BindDropDownByName(string name)
@@ -114,17 +181,11 @@ namespace Klinik.Web.Controllers
                 case Constants.LookUpCategoryConstant.BUSINESSUNIT:
                     items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.BUSINESSUNIT).ToList();
                     break;
-                case Constants.LookUpCategoryConstant.FAMILYSTATUS:
-                    items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.FAMILYSTATUS).ToList();
-                    break;
                 case Constants.LookUpCategoryConstant.NECESSITYTYPE:
                     items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.NECESSITYTYPE).ToList();
                     break;
                 case Constants.LookUpCategoryConstant.GENDER:
                     items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.AGE).ToList();
-                    break;
-                case Constants.LookUpCategoryConstant.PATIENTCATEGORY:
-                    items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.PATIENTCATEGORY).ToList();
                     break;
                 case Constants.LookUpCategoryConstant.PAYMENTTYPE:
                     items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.PAYMENTTYPE).ToList();
@@ -138,7 +199,12 @@ namespace Klinik.Web.Controllers
                 case Constants.LookUpCategoryConstant.MONTH:
                     items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.MONTH).ToList();
                     break;
+                case Constants.LookUpCategoryConstant.EXAMINETYPE:
+                    items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.EXAMINETYPE).ToList();
+                    break;
             }
+
+            _types.Insert(0, new SelectListItem { Text="All", Value = "0" });
 
             foreach (var item in items)
             {
@@ -164,6 +230,8 @@ namespace Klinik.Web.Controllers
         [CustomAuthorize("VIEW_TOP_10_DISEASES")]
         public ActionResult Top10Dieases()
         {
+            var model = new Top10DiseasesParamModel();
+
             ViewBag.Months = BindDropDownByName(Constants.LookUpCategoryConstant.MONTH);
             ViewBag.Years = BindYears();
             ViewBag.Clinics = BindDropDownClinic();
@@ -171,24 +239,38 @@ namespace Klinik.Web.Controllers
             ViewBag.BusinessUnits = BindDropDownByName(Constants.LookUpCategoryConstant.BUSINESSUNIT);
             ViewBag.Genders = BindDropDownByName(Constants.LookUpCategoryConstant.GENDER);
             ViewBag.Ages = BindDropDownByName(Constants.LookUpCategoryConstant.AGE);
-            ViewBag.PatientCategories = BindDropDownByName(Constants.LookUpCategoryConstant.PATIENTCATEGORY);
-            ViewBag.FamilyStatuses = BindDropDownByName(Constants.LookUpCategoryConstant.FAMILYSTATUS);
+            ViewBag.EmpStatus = BindDropDownEmployeeStatus();
+            ViewBag.FamilyStatuses = BindDropDownFamilyStatus();
             ViewBag.NecessityTypes = BindDropDownByName(Constants.LookUpCategoryConstant.NECESSITYTYPE);
             ViewBag.NeedRests = BindDropDownByName(Constants.LookUpCategoryConstant.NEEDREST);
             ViewBag.ExamineTypes = BindDropDownByName(Constants.LookUpCategoryConstant.EXAMINETYPE);
-            return View();
-        }
+            ViewBag.PaymentTypes = BindDropDownByName(Constants.LookUpCategoryConstant.PAYMENTTYPE);
 
+            return View(model);
+        }
 
         [CustomAuthorize("VIEW_TOP_10_DISEASES")]
         [HttpPost]
         public ActionResult Top10DiseasesReport(Top10DiseasesParamModel model)
         {
-            var report = new Top10DiseaseReportModel();
+            var response = new Top10DiseaseReportResponse();
 
-            return View(report);
+            if (Session["UserLogon"] != null)
+                model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new Top10DiseaseReportRequest { Data = model };
+
+            new ReportsValidator(_unitOfWork, _context).ValidateTop10DiseaseReport(request, out response);
+
+            return View(response.Entity);
         }
 
+
+        public ActionResult Top10DiseasesReport(Top10DiseaseReportModel model, int? page)
+        {
+            int currentPageIndex = page.HasValue ? page.Value - 1 : 0;
+            return View(model.DiseaseDataReports.ToPagedList(currentPageIndex, DefaultPageSize));
+        }
 
         [CustomAuthorize("VIEW_TOP_10_REFERALS")]
         public ActionResult Top10Referals()
@@ -196,19 +278,26 @@ namespace Klinik.Web.Controllers
             ViewBag.Years = BindYears();
             ViewBag.Months = BindDropDownByName(Constants.LookUpCategoryConstant.MONTH);
             ViewBag.ICDThemes = BindICDThemes();
-            ViewBag.Hospitals = BindDropDownByName(Constants.LookUpCategoryConstant.HOSPITAL);
+            ViewBag.Hospitals = BindRujukan();
             ViewBag.Patients = BindDropDownPatient();
 
             return View();
         }
 
-        [CustomAuthorize("VIEW_TOP_10_REFERALS1")]
+        [CustomAuthorize("VIEW_TOP_10_REFERALS")]
         [HttpPost]
         public ActionResult Top10ReferalsReport(Top10ReferalParamModel model)
         {
-            var report = new Top10ReferalReportModel();
+            var response = new Top10ReferalReportResponse();
 
-            return View(report);
+            if (Session["UserLogon"] != null)
+                model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new Top10ReferalReportRequest { Data = model };
+
+            new ReportsValidator(_unitOfWork, _context).ValidateTop10ReferalReport(request, out response);
+
+            return View(response.Entity);
         }
 
         

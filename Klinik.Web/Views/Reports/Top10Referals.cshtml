@@ -1,21 +1,76 @@
-﻿
+﻿@model Klinik.Entities.Reports.Top10ReferalParamModel
 @{
     ViewBag.Title = "Top10Referals";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <section class="panel">
-    <header class="panel-heading">
-        <div class="panel-actions">
-            <a href="#" class="fa fa-caret-down"></a>
+    <form class="form-horizontal form-bordered" method="post" action="/Reports/Top10ReferalsReport">
+        <header class="panel-heading">
+            <div class="panel-actions">
+                <a href="#" class="fa fa-caret-down"></a>
+            </div>
+            <h5 class="panel-title">
+                @Klinik.Resources.UIMessages.Top10ReferalReport
+            </h5>
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.ReportMonth</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.Month, (IEnumerable<SelectListItem>)ViewBag.Months, new { @class = "form-control", @id = "ddlMonth" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Year</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.Year, (IEnumerable<SelectListItem>)ViewBag.Years, new { @class = "form-control", @id = "ddlYear" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.HospitalDestination</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.HospitalDest, (IEnumerable<SelectListItem>)ViewBag.Hospitals, new { @class = "form-control", @id = "ddlHospitalDest" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Diagnose</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.Diagnose, (IEnumerable<SelectListItem>)ViewBag.ICDThemes, new { @class = "form-control", @id = "ddlDiagnose" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PatientName</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.PatientName, (IEnumerable<SelectListItem>)ViewBag.Patients, new { @class = "form-control", @id = "ddlPatient" })
+                </div>
+            </div>
         </div>
-        <h5 class="panel-title">
-            @Klinik.Resources.UIMessages.Top10ReferalReport
-        </h5>
-    </header>
-    <div class="panel-body">
-
-    </div>
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Generate</button>
+        </div>
+    </form>
 </section>
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
 
+            $('#ddlMonth').select2();
+            $('#ddlYear').select2();
+            $('#ddlHospitalDest').select2();
+            $('#ddlDiagnose').select2();
+            $('#ddlPatient').select2();
+
+            toastr.options = {
+                "closeButton": false,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "0",
+                "hideDuration": "0",
+                "timeOut": "2000",
+                "showMethod": "fadeIn"
+            };
+        })
+    </script>
+    }
 

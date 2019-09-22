@@ -1251,4 +1251,43 @@
   <data name="AppointmentID" xml:space="preserve">
     <value>Appointment ID</value>
   </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="CategoryClinicStatus" xml:space="preserve">
+    <value>Category Clinic Status</value>
+  </data>
+  <data name="EmployeeStatus" xml:space="preserve">
+    <value>Employee Status</value>
+  </data>
+  <data name="FamilyStatus" xml:space="preserve">
+    <value>Family Status</value>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>Generate</value>
+  </data>
+  <data name="HospitalDestination" xml:space="preserve">
+    <value>Hospital Destination</value>
+  </data>
+  <data name="IsAccident" xml:space="preserve">
+    <value>Is Accident</value>
+  </data>
+  <data name="NeedRest" xml:space="preserve">
+    <value>Need Rest</value>
+  </data>
+  <data name="ReportMonth" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="AddressRujukan" xml:space="preserve">
+    <value>Refer to Doctor</value>
+  </data>
+  <data name="ExportToExcel" xml:space="preserve">
+    <value>Export to Excel</value>
+  </data>
+  <data name="ICDCode" xml:space="preserve">
+    <value>ICD Code </value>
+  </data>
+  <data name="LetterType" xml:space="preserve">
+    <value>Type of Letter</value>
+  </data>
 </root>

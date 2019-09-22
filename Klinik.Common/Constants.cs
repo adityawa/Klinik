@@ -163,11 +163,12 @@
                                                             + " inner join Clinic on Clinic.Id = FormMedical.ClinicID"
                                                             + " inner join Employee on Patient.EmployeeID = Employee.Id"
                                                             + " left join EmployeeAssignment on Employee.Id = EmployeeAssignment.EmployeeID"
-                                                            + " left join EmployeeStatus on Employee.EmpType = EmployeeStatus.ID";
+                                                            + " left join EmployeeStatus on Employee.EmpType = EmployeeStatus.ID"
+                                                            + " order by FormExamine.Id, ICDTheme.Id";
 
             public const string SQL_TOP_10_REFERAL_REPORT = "select Letter.Id as LetterId, Clinic.Id as ClinicId, Clinic.Name as ClinicName, Letter.LetterType as LetterType,"
 	                                                        + " Letter.Keperluan, Letter.AutoNumber,Letter.[Action],FormExamine.Diagnose,"
-                                                            + " Patient.Name as PatientName, Letter.OtherInfo,	Letter.PatientAge,FormExamine.Diagnose"
+                                                            + " Patient.Name as PatientName, Letter.OtherInfo,	Letter.PatientAge,"
 	                                                        + " ICDTheme.Code as ICDCode, Month(Letter.CreatedDate) as [Month], Year(Letter.CreatedDate) as [Year]"
                                                             + " from  Letter"
                                                             + " inner join FormMedical on Letter.FormMedicalID = FormMedical.ID"
@@ -175,7 +176,8 @@
                                                             + " inner join Clinic on Clinic.ID = FormMedical.ClinicID"
                                                             + " inner join FormExamine on FormMedical.Id = FormExamine.FormMedicalID"
                                                             + " inner join FormExamineICDInfo on FormExamineICDInfo.FormExamineId = FormExamine.Id"
-                                                            + " inner join ICDTheme on ICDTheme.Id = FormExamineICDInfo.ICDId";
+                                                            + " inner join ICDTheme on ICDTheme.Id = FormExamineICDInfo.ICDId"
+                                                            + " order by Letter.Id, ICDTheme.Id";
         }
 
 

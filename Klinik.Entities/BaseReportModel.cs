@@ -12,6 +12,10 @@ namespace Klinik.Entities
 
         public int TotalRecord { get; set; }
 
-        public string ReportGenereated { get { return DateTime.Now.ToShortDateString();  } }
+        public int PageNumber { get; set; }
+
+        public int PageSize { get; set; }
+
+        public string ReportGenerated { get { return DateTime.Now.ToShortDateString();  } }
     }
 }

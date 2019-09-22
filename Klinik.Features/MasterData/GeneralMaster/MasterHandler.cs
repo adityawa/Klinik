@@ -1,6 +1,7 @@
 ﻿using Klinik.Data;
 using Klinik.Data.DataRepository;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Klinik.Features
@@ -20,6 +21,11 @@ namespace Klinik.Features
         public IQueryable<LookupCategory> GetLookupCategoryByName(string name)
         {
             return _unitOfWork.LookUpCategoryRepository.Query(x => x.LookUpName.Equals(name, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public List<string> GetRujukans()
+        {
+            return _unitOfWork.LetterRepository.Get().Select(x => x.OtherInfo).Distinct().ToList();
         }
     }
 }
