@@ -42,12 +42,12 @@ namespace Klinik.Features
                         var _oldentity = Mapper.Map<User, UserModel>(qry);
 
                         // update data
-                        qry.OrganizationID = request.Data.OrgID;
+                      //  qry.OrganizationID = request.Data.OrgID;
                         qry.ExpiredDate = request.Data.ExpiredDate ?? DateTime.Now.AddDays(100);
                         qry.Status = request.Data.Status;
                         qry.ModifiedBy = request.Data.ModifiedBy;
                         qry.ModifiedDate = DateTime.Now;
-                        qry.EmployeeID = request.Data.EmployeeID;
+                       
                         _unitOfWork.UserRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
@@ -84,6 +84,7 @@ namespace Klinik.Features
                     UserRole userRoleEntity = new UserRole();
                     userRoleEntity.RoleID = request.Data.RoleID;
                     userRoleEntity.User = UserEntity;
+                    userRoleEntity.RowStatus = 0;
                     userRoleEntity.CreatedBy = request.Data.Account.UserCode;
                     userRoleEntity.CreatedDate = DateTime.Now;
 
