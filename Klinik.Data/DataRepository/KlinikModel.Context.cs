@@ -15,7 +15,7 @@ namespace Klinik.Data.DataRepository
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class KlinikDBEntities: DbContext
+    public partial class KlinikDBEntities : DbContext
     {
         public KlinikDBEntities()
             : base("name=KlinikDBEntities")

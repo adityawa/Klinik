@@ -2,6 +2,7 @@
 using Klinik.Common;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
+using Klinik.Entities.MasterData;
 using Klinik.Entities.PurchaseRequest;
 using Klinik.Entities.PurchaseRequestDetail;
 using Klinik.Features.Account;
@@ -188,7 +189,22 @@ namespace Klinik.Features
             dynamic qry = null;
             var searchPredicate = PredicateBuilder.New<Data.DataRepository.PurchaseRequest>(true);
             // add default filter to show the active data only
-            searchPredicate = searchPredicate.And(x => x.RowStatus == 0 && x.GudangId == OneLoginSession.Account.GudangID);
+            var requestgudang = new GudangRequest
+            {
+                Data = new GudangModel
+                {
+                    Id = OneLoginSession.Account.GudangID
+                }
+            };
+
+            GudangResponse resp = new GudangHandler(_unitOfWork).GetDetail(requestgudang);
+            GudangModel _gudang = resp.Entity;
+            searchPredicate = searchPredicate.And(x => x.RowStatus == 0);
+            
+            if (_gudang.IsGudangPusat == false || _gudang.IsGudangPusat == null)
+            {
+                searchPredicate.And(x => x.GudangId == OneLoginSession.Account.GudangID);
+            }
             if ((GeneralHandler.authorized("APPROVE_M_PURCHASEREQUEST") == "false"))
             {
                 searchPredicate.And(x => x.approve >= 1);
