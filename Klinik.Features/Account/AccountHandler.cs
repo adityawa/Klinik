@@ -44,7 +44,7 @@ namespace Klinik.Features
             var gudangid = _unitOfWork.GudangRepository.GetFirstOrDefault(a => a.ClinicId == _getOrganization.KlinikID);
             if (_getOrganization != null)
             {
-                var _getByUname = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName == request.Data.UserName && x.Status == true && x.ExpiredDate > DateTime.Now && x.OrganizationID == _getOrganization.ID);
+                var _getByUname = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName == request.Data.UserName && x.Status == true && x.ExpiredDate > DateTime.Now && x.OrganizationID == _getOrganization.ID && x.RowStatus==0);
                 if (_getByUname != null)
                 {
                     var _decryptedPassword = CommonUtils.Decryptor(_getByUname.Password, CommonUtils.KeyEncryptor);

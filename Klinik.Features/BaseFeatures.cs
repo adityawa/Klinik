@@ -60,7 +60,22 @@ namespace Klinik.Features
 			return IsAuthorized;
 		}
 
-		public DateTime reformatDate(string dtStr)
+        protected int GenerateSortNumber(int poliID, int doctorID)
+        {
+            List<QueuePoli> currentQueueList = _unitOfWork.RegistrationRepository.Get(x => x.PoliTo == poliID &&
+            x.TransactionDate.Year == DateTime.Today.Year &&
+            x.TransactionDate.Month == DateTime.Today.Month &&
+            x.TransactionDate.Day == DateTime.Today.Day);
+
+            if (doctorID > 0 && currentQueueList.Count > 0)
+                currentQueueList = currentQueueList.Where(x => x.DoctorID == doctorID).ToList();
+
+            int sortNumber = currentQueueList.Count + 1;
+
+            return sortNumber;
+        }
+
+        public DateTime reformatDate(string dtStr)
 		{
 			string[] arrDates = dtStr.Split('/');
 			return new DateTime(Convert.ToInt16(arrDates[2]), Convert.ToInt16(arrDates[1]), Convert.ToInt16(arrDates[0]));
@@ -359,6 +374,8 @@ namespace Klinik.Features
                 _registationNo = _qryData.ID;
             return _registationNo;
         }
+
+
 
        
     }

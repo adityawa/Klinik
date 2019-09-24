@@ -30,6 +30,15 @@ namespace Klinik.Features.Pharmacy
 
         public PharmacyResponse CreateOrEdit(PharmacyRequest request)
         {
+            long _cashierID = 0;
+            long _farmasiID = 0;
+            var _qry = _unitOfWork.PoliRepository.GetFirstOrDefault(x => x.Name == Constants.NameConstant.Kasir);
+            if (_qry != null)
+                _cashierID = _qry.ID;
+
+            var _qry2 = _unitOfWork.PoliRepository.GetFirstOrDefault(x => x.Name == Constants.NameConstant.Farmasi);
+            if (_qry2 != null)
+                _farmasiID = _qry2.ID;
             PharmacyResponse response = new PharmacyResponse();
 
             using (var transaction = _context.Database.BeginTransaction())
@@ -37,7 +46,7 @@ namespace Klinik.Features.Pharmacy
                 try
                 {
                     var queue = _context.QueuePolis.FirstOrDefault(x => x.FormMedicalID == request.Data.FormMedicalID
-                                && x.PoliTo == (int)PoliEnum.Farmasi
+                                && x.PoliTo == _farmasiID
                                 && x.RowStatus == 0);
 
                     // set as waiting
@@ -163,22 +172,26 @@ namespace Klinik.Features.Pharmacy
 
                     #region ::INSERT INTO PRODUCT IN GUDANG FOR KOMPONEN::
                     List<KomponenObatRacikan> CollOfRacikanKomponen = new List<KomponenObatRacikan>();
-                    CollOfRacikanKomponen = JsonConvert.DeserializeObject<List<KomponenObatRacikan>>(request.Data.ObatRacikanKomponens);
-                    foreach (var itemDet in CollOfRacikanKomponen)
+                    if (request.Data.ObatRacikanKomponens != null)
                     {
-                        var _convAmt = Convert.ToDecimal(itemDet.Amount.Replace('.', ','));
-                        var entDetil = new Klinik.Data.DataRepository.ProductInGudang
+                        CollOfRacikanKomponen = JsonConvert.DeserializeObject<List<KomponenObatRacikan>>(request.Data.ObatRacikanKomponens);
+                        foreach (var itemDet in CollOfRacikanKomponen)
                         {
-                            stock = -Convert.ToInt32(Math.Round(_convAmt)),
-                            ProductId = itemDet.Id == null ? 0 : Convert.ToInt32(itemDet.Id),
-                            CreatedBy = request.Account.UserName,
-                            CreatedDate = DateTime.Now,
-                            RowStatus = 0
-                        };
+                            var _convAmt = Convert.ToDecimal(itemDet.Amount.Replace('.', ','));
+                            var entDetil = new Klinik.Data.DataRepository.ProductInGudang
+                            {
+                                stock = -Convert.ToInt32(Math.Round(_convAmt)),
+                                ProductId = itemDet.Id == null ? 0 : Convert.ToInt32(itemDet.Id),
+                                CreatedBy = request.Account.UserName,
+                                CreatedDate = DateTime.Now,
+                                RowStatus = 0
+                            };
 
-                        _context.ProductInGudangs.Add(entDetil);
-                        _context.SaveChanges();
+                            _context.ProductInGudangs.Add(entDetil);
+                            _context.SaveChanges();
+                        }
                     }
+                   
                     #endregion
 
                     #region ::INSERT TO PR for new Medicine::
@@ -218,6 +231,35 @@ namespace Klinik.Features.Pharmacy
                     }
 
                     #endregion
+
+                    #region ::CEK IN QUEUE POLI WHETHER PATIENT already go to cashier
+                
+
+                    if (_cashierID > 0)
+                    {
+                        var _qryHistoryPoli = _unitOfWork.RegistrationRepository.Get(x => x.PoliTo == _cashierID && x.FormMedicalID==request.Data.FormMedicalID);
+                        if (_qryHistoryPoli.Count <= 0)
+                        {
+
+                            // create a new registration
+                            QueuePoli queuePoli = new QueuePoli();
+                            queuePoli.FormMedicalID = request.Data.FormMedicalID;
+                            queuePoli.PoliFrom =(Int32) _farmasiID;
+                            queuePoli.PoliTo = (Int32)_cashierID;
+                            queuePoli.CreatedBy = request.Account.UserCode;
+                            queuePoli.CreatedDate = DateTime.Now;
+                            queuePoli.TransactionDate = DateTime.Now;
+                            queuePoli.Status = (int)RegistrationStatusEnum.New;
+                            queuePoli.SortNumber = GenerateSortNumber((int)_cashierID, 0);
+                            queuePoli.ClinicID = request.Account.ClinicID;
+                            var _patientID = _unitOfWork.RegistrationRepository.GetFirstOrDefault(x => x.FormMedicalID == request.Data.FormMedicalID);
+                            queuePoli.PatientID = _patientID == null ? 0 : _patientID.PatientID;
+                            _context.QueuePolis.Add(queuePoli);
+                            _context.SaveChanges();
+                        }
+                    }
+                    #endregion
+
                     transaction.Commit();
                     response.Status = true;
                     response.Message = Messages.PrescriptionProcessSuccess;
