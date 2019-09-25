@@ -1,0 +1,303 @@
+﻿@model Klinik.Entities.PurchaseOrder.PurchaseOrderModel
+@using Klinik.Features;
+
+@{
+    ViewBag.Title = "CreateOrEditDeliveryOrder";
+}
+@section Styles{
+    <link href="~/Content/Login/vendor/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/Custom/Custom.css" rel="stylesheet" />
+}
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+        </div>
+        <h5 class="panel-title">Form @ViewBag.ActionType Purchase Order</h5>
+    </header>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.HiddenFor(x => x.Id)
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="inputDefault">@Klinik.Resources.UIMessages.NO_DO</label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.ponumber, new { @class = "form-control", @id = "ponumber", @disabled = "disabled" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="inputDefault">@Klinik.Resources.UIMessages.CreatedDate</label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.podate, new { @class = "form-control", @id = "podate", @disabled = "disabled" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="inputDefault">Proceed By</label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.request_by, new { @class = "form-control", @id = "request_by", @disabled = "disabled" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="inputDefault">Source</label>
+                    <div class="col-md-6">
+                        <select id="namagudang" class="form-control" disabled><option>@Model.sourcename</option></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                @Html.HiddenFor(x => x.Id)
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="inputDefault">No Pr</label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.prnumber, new { @class = "form-control", @id = "ponumber", @disabled = "disabled" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="inputDefault">Tanggal PR</label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.prdate, new { @class = "form-control", @id = "podate", @disabled = "disabled" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="inputDefault">@Klinik.Resources.UIMessages.RequestBy</label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.prrequestby, new { @class = "form-control", @id = "request_by", @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="panel-body">
+        <div class="scrollTable">
+            <table id="tblPurchaseOrder" class="table color-table success-table">
+                <caption class="headertable">@Klinik.Resources.UIMessages.PurchaseOrderDetailList</caption>
+                <thead>
+                    <tr>
+                        <th hidden>Id Obat</th>
+                        <th>Nama Obat</th>
+                        <th>Total Pemakaian</th>
+                        <th>Sisa Stock</th>
+                        <th>Qty</th>
+                        <th>Qty add</th>
+                        <th>Reason add</th>
+                        <th>Total</th>
+                        <th>Nama By HO</th>
+                        <th>Qty By HP</th>
+                        <th>Remark By HO</th>
+                        <th>Validate By Wh</th>
+                        @if (GeneralHandler.authorized("EDIT_M_PURCHASEORDER") == "true")
+                        {
+                            if (Model.Validasi == null)
+                            {
+                                <th>Action</th>
+                            }
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model.PurchaseOrderDetails)
+                        {
+                            <tr>
+                                <td hidden class="podetail">@item.Id</td>
+                                <td hidden>@item.ProductId</td>
+                                <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
+                                <td><input type="text" class="form-control" value="@item.tot_pemakaian" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.sisa_stok" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_add" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.reason_add" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.total" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.nama_by_ho" disabled="disabled" /></td>
+                                <td>@if (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true")
+                                    {
+                                        <input type="text" class="form-control" value="@item.qty_by_ho" disabled="disabled" />
+                                    }
+                                    else
+                                    {
+                                        @item.qty_by_ho
+                                    }</td>
+                                <td>@if (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true")
+                                    {
+                                        <input type="text" class="form-control" value="@item.remark_by_ho" disabled="disabled" />
+                                    }
+                                    else
+                                    {
+                                        @item.remark_by_ho
+                                    }</td>
+                                <td>
+                                    @if (Model != null && (GeneralHandler.authorized("VALIDATION_M_PURCHASEORDER") == "true"))
+                                    {
+                                        <input type="checkbox" class="validatepo" data-url="/PurchaseOrder/EditPurchaseOrderDetail" value="@(item.Verified == true ? "true" : "false")" @(item.Verified == true ? "checked" : "") disabled>
+                                        <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
+                                    }
+                                </td>
+                                <td hidden>@item.OrderNumber</td>
+                                @if (GeneralHandler.authorized("EDIT_M_PURCHASEORDER") == "true")
+                                {
+                                    if (Model != null)
+                                    {
+                                        if (Model.Validasi == null)
+                                        {
+                                            <td>
+                                                <button class="save-purchaseorderdetail btn btn-success btn-sm" data-url="/PurchaseOrder/EditPurchaseOrderDetail" style="display:none;">Save</button>
+                                                <button class="edit-purchaseorderdetail btn btn-success btn-sm" disabled>Edit</button>
+                                                <button class="btn btn-danger btn-sm delete-purchaseorderdetail" disabled>Delete</button>
+                                                @if (GeneralHandler.authorized("ADD_M_PURCHASEORDER", "EDIT_M_PURCHASEORDER") == "true")
+                                                {
+                                                    <button class="btn btn-info btn-sm subtitusi" disabled>Subtitusi</button>
+                                                }
+                                                <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
+
+                                            </td>
+                                        }
+                                    }
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <footer class="panel-footer">
+
+            @if (((GeneralHandler.authorized("EDIT_M_PURCHASEORDER", "ADD_M_PURCHASEORDER") == "true")))
+            {
+                <button type="submit" class="btn btn-primary savepurchasedetail" data-parameterone="_deliveryorderpusat" data-parametertwo="deliveryOrderDetailpusatModels" data-url="/PurchaseOrder/CreateOrEditPurchaseOrder" style="display:@(Model != null ? "none" : "inline-block")">@Klinik.Resources.UIMessages.Save</button>
+                <button class="btn btn-primary openallbutton" style="display:@(Model != null ? Model.Validasi == null ? "inline-block" : "none":"inline-block")">@Klinik.Resources.UIMessages.Edit</button>
+            }
+            @if (Model != null && (GeneralHandler.authorized("APPROVE_M_PURCHASEORDER") == "true"))
+            {
+                if (Model.approve == null)
+                {
+                    <button class="btn btn-success" onclick="Approve(@Model.Id)">@Klinik.Resources.UIMessages.Approve</button>
+                }
+
+            }
+            @if (Model != null && (GeneralHandler.authorized("VALIDATION_M_PURCHASEORDER") == "true"))
+            {
+                if (Model.approve != null && Model.Validasi == null)
+                {
+                    <button class="btn btn-success" onclick="Validation(@Model.Id)">@Klinik.Resources.UIMessages.Validation</button>
+                    <button class="btn btn-primary editvalidation" style="display:@(Model != null ? Model.Validasi == null ? "inline-block" : "none":"inline-block")">@Klinik.Resources.UIMessages.Edit</button>
+                }
+            }
+            @if (Model != null)
+            {
+                <a class="btn btn-success" href="/PurchaseOrder/PrintPurchaseOrder?id=@Model.Id" @(Model.approve != null ? "" : "disabled")>Print</a>
+            }
+            <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+        </footer>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/PurchaseOrder.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#podate').datepicker({
+                autoclose: true
+            });
+            $('#btnreset').click(function (e) {
+                window.location.href = "/PurchaseRequest/PurchaseRequestList";
+            });
+
+            toastr.options = {
+                "closeButton": false,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "0",
+                "hideDuration": "0",
+                "timeOut": "2000",
+                "showMethod": "fadeIn"
+            };
+
+            var _temp="@ViewBag.Response";
+            var _arrMsg = _temp.split(";");
+
+            if (_arrMsg.length > 1) {
+                if (_arrMsg[0] == "True") {
+                    toastr.success(_arrMsg[1]);
+                }
+                else {
+                    toastr.options.closeButton = true;
+                    toastr.options.timeOut = 0;
+                    toastr.error(_arrMsg[1]);
+                }
+            }
+        });
+
+    </script>
+    <script type="text/javascript">
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblPurchaseOrder")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+    </script>
+    <script type="text/javascript">
+
+        var Approve = function (ID) {
+            var r = confirm("@Klinik.Resources.UIMessages.ApproveConfirmation" + ID + " ) ?");
+            if (r == true) {
+            ApproveDO(ID);
+        }
+        return false;
+        }
+
+        function ApproveDO(Id) {
+        $.ajax({
+            url: '/PurchaseOrder/ApprovePurchaseOrder?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+        }
+
+        var Validation = function (ID) {
+            var r = confirm("@Klinik.Resources.UIMessages.ValidationConfirmation" + ID + " ) ?");
+            if (r == true) {
+           ValisasiPR(ID);
+        }
+        return false;
+        }
+
+        function ValisasiPR(Id) {
+        $.ajax({
+            url: '/PurchaseOrder/ValidationPurchaseOrder?id=' + Id,
+            type: 'POST',
+            success: function (result) {
+                if (result.Status) {
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 2000;
+                    location.reload();
+                    toastr.success(result.Message);
+                }
+                else {
+                    toastr.error(result.Message);
+                }
+            }
+        });
+        }
+    </script>
+}

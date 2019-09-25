@@ -1,0 +1,122 @@
+﻿@model Klinik.Entities.Letter.LabReferenceLetterModel
+
+@{
+    Layout = null;
+}
+
+<link href="~/Content/Octopus/assets/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+<script src="~/Scripts/jquery-3.0.0.js"></script>
+<script src="~/Content/Octopus/assets/vendor/bootstrap/js/bootstrap.js"></script>
+
+<body>
+    <div class="container">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="text-align:center">KLINIK PT RIAU ANDALAN PULP & PAPER</div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group" style="text-align:center">
+                            <label>Town Site :......... /Port - Estate : ............</label>
+                        </div>
+                        <div class="form-group" style="text-align:center">
+                            <label class="control-label">No : @ViewBag.NoSurat</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-md-10">
+                        <div class="form-group col-md-6" style="text-align:center">
+                            <label class="control-label col-md-3">@Klinik.Resources.UIMessages.Name </label>
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(x => x.PatientData.Name, new { @class = "form-control", @id = "tbPatientName" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6" style="text-align:center">
+                            <label class="control-label col-md-5">@Klinik.Resources.UIMessages.Gender </label>
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(x => x.PatientData.Gender, new { @class = "form-control", @id = "tbGender" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6" style="text-align:center">
+                            <label class="control-label col-md-3">@Klinik.Resources.UIMessages.SAP </label>
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(x => x.PatientData.EmployeeID, new { @class = "form-control", @id = "tbSAP" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6" style="text-align:center">
+                            <label class="control-label col-md-5">@Klinik.Resources.UIMessages.HPNumber </label>
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(x => x.PatientData.HPNumber, new { @class = "form-control", @id = "tbHP" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6" style="text-align:center">
+                            <label class="control-label col-md-3">@Klinik.Resources.UIMessages.Birthdate </label>
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(x => x.PatientData.BirthDateStr, new { @class = "form-control", @id = "tbBirthdate" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6" style="text-align:center">
+                            <label class="control-label col-md-5">@Klinik.Resources.UIMessages.DokterPengirim </label>
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(x => x.SuratRujukanLabKeluar.DokterPengirim, new { @class = "form-control", @id = "tbDrPengirim" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6" style="text-align:center">
+                            <label class="control-label col-md-3">@Klinik.Resources.UIMessages.Age </label>
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(x => x.PatientAge, new { @class = "form-control", @id = "tbUsia" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6" style="text-align:center">
+                            <label class="control-label col-md-5">@Klinik.Resources.UIMessages.MedicalCekDate </label>
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(x => x.strCekdate, new { @class = "form-control", @id = "tbMedCekDate" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin:15px" class="col-md-9">
+            @foreach (var item in Model.LabItems)
+            {
+                <table style="width:30%" class="table table-bordered table-responsive col-md-7">
+                    <tr>
+                        <th></th>
+                        <th>@item.LabItemCategoryName</th>
+                    </tr>
+
+                    @foreach (var child in Model.LabItems.Where(x => x.LabItemCategoryID == item.LabItemCategoryID))
+                    {
+                        <tr>
+                            <td style="text-align:center">v</td>
+                            <td>@child.Name</td>
+                        </tr>
+
+                    }
+
+                </table>
+            }
+        </div>
+      
+    </div>
+</body>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+
+
+</script>
+
