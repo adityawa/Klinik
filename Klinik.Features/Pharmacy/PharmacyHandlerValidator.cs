@@ -38,18 +38,22 @@ namespace Klinik.Features.Pharmacy
 
                 #region VALIDATE for Komponen Racikan
                 List<KomponenObatRacikan> CollOfRacikanKomponen = new List<KomponenObatRacikan>();
-                CollOfRacikanKomponen = JsonConvert.DeserializeObject<List<KomponenObatRacikan>>(request.Data.ObatRacikanKomponens);
-                foreach (var item1 in CollOfRacikanKomponen)
+                if (request.Data.ObatRacikanKomponens != null)
                 {
-                    var _convStock = Convert.ToDecimal(item1.Stock.Replace('.', ','));
-                    var _convAmt = Convert.ToDecimal(item1.Amount.Replace('.', ','));
-                    if (_convStock < _convAmt)
+                    CollOfRacikanKomponen = JsonConvert.DeserializeObject<List<KomponenObatRacikan>>(request.Data.ObatRacikanKomponens);
+                    foreach (var item1 in CollOfRacikanKomponen)
                     {
-                        response.Status = false;
-                        response.Message = $"Qty order of item {item1.Name} is out of stock";
-                        break;
+                        var _convStock = Convert.ToDecimal(item1.Stock.Replace('.', ','));
+                        var _convAmt = Convert.ToDecimal(item1.Amount.Replace('.', ','));
+                        if (_convStock < _convAmt)
+                        {
+                            response.Status = false;
+                            response.Message = $"Qty order of item {item1.Name} is out of stock";
+                            break;
+                        }
                     }
                 }
+               
                 #endregion
 
                 #region ::VALIDATE IF Product Name different with resep::

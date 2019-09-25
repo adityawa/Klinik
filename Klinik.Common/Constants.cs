@@ -115,6 +115,7 @@
             public const string Radiology = "Radiology";
             public const string Radiologi = "Radiologi";
             public const string Kasir = "Kasir";
+            public const string Farmasi = "Farmasi";
         }
 
 
