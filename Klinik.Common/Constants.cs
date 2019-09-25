@@ -149,7 +149,7 @@
             public const string SQL_TOP_10_DISEASE_REPORT = "select FormExamine.Id as FormExamineId,  ICDTheme.Id as ICDId, Clinic.Id as ClinicId,"
                                                             + " Clinic.Name as ClinicName, Patient.Name as PatientName, Employee.EmpName as EmpName, EmployeeAssignment.Department ,"
 	                                                        + " EmployeeAssignment.BusinessUnit, EmployeeAssignment.Region, EmployeeStatus.Name as StatusName,"
-	                                                        + " Patient.BirthDate, Patient.BPJSNumber, Patient.Gender as Gender, PatientAge.Age, FamilyRelationship.Code as FamCode, "
+	                                                        + " Patient.BirthDate, Patient.BPJSNumber, Patient.Gender as Gender, PatientAge.Age, PatientAge.AgeCode, FamilyRelationship.Code as FamCode, "
                                                             + " FamilyRelationship.Name as FamName,  FormExamine.TransDate, FormExamine.NeedRest,"
 	                                                        + " FormExamine.IsAccident,  FormExamine.Diagnose, FormMedical.Necessity,"
 	                                                        + " FormMedical.PaymentType, ICDTheme.Code as ICDCode"
