@@ -1,0 +1,661 @@
+﻿@model Klinik.Entities.Pharmacy.PrescriptionModel
+
+@{
+    Layout = "~/Views/Shared/_Layout_1.cshtml";
+}
+
+@section Styles {
+    <style>
+        /*.form-horizontal {
+            display: flex;
+            align-items: center;
+        }*/
+
+        .ui-autocomplete {
+            position: absolute;
+            z-index: 2150000000 !important;
+            cursor: default;
+            border: 2px solid #ccc;
+            padding: 5px 0;
+            border-radius: 2px;
+        }
+    </style>
+
+
+}
+
+<section class="panel">
+
+    <header class="panel-heading">
+        <h5 class="panel-title">
+            Prescription Validation
+        </h5>
+    </header>
+    @using (Html.BeginForm("Prescription", "Pharmacy", FormMethod.Post))
+    {
+        <div class="panel-body">
+            <div style="width:100%; margin:0 auto">
+                @Html.HiddenFor(x => x.ObatRacikanKomponens, new { @Id = "collRacikanKomponen" })
+                <table id="tbPrescription" class="table table-striped table-bordered dt-responsive" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th colspan="5"><center>@Klinik.Resources.UIMessages.MedicineList</center></th>
+                            <th colspan="5"><center>@Klinik.Resources.UIMessages.Validation</center></th>
+                        </tr>
+                        <tr>
+                            <th style="width:20px;">NO</th>
+                            <th>@Klinik.Resources.UIMessages.MedicineName</th>
+                            <th>@Klinik.Resources.UIMessages.Dose</th>
+                            <th style="width:30px;">@Klinik.Resources.UIMessages.Amount</th>
+                            <th>@Klinik.Resources.UIMessages.RemarkUse</th>
+                            <th>@Klinik.Resources.UIMessages.MedicineName</th>
+                            <th>@Klinik.Resources.UIMessages.Stock</th>
+                            <th>@Klinik.Resources.UIMessages.Amount</th>
+                            <th>@Klinik.Resources.UIMessages.Note</th>
+                            <th>@Klinik.Resources.UIMessages.Process</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            @Html.HiddenFor(m => m.FormMedicalID)
+                            int counter = 1;
+                            foreach (var item in Model.Medicines)
+                            {
+                                <tr>
+                                    <td>
+                                        @(counter++)
+                                        @Html.HiddenFor(m => m.Medicines[counter - 2].Id)
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(m => m.Medicines[counter - 2].ProductName)
+                                        @Html.DisplayFor(m => m.Medicines[counter - 2].ProductName, new { @id = "resepobatNm" + (counter - 1) })
+                                        <span id="resepobatNm@(counter-1)" style="visibility:hidden">@Model.Medicines[counter - 2].ProductName</span>
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(m => m.Medicines[counter - 2].Dose)
+                                        @Html.DisplayFor(m => m.Medicines[counter - 2].Dose)
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(m => m.Medicines[counter - 2].Qty)
+                                        @Html.DisplayFor(m => m.Medicines[counter - 2].Qty, new { @id = "qtcReceipt" + (counter - 1) })
+                                    </td>
+                                    <td>
+                                        @Html.HiddenFor(m => m.Medicines[counter - 2].RemarkUse)
+                                        @Html.DisplayFor(m => m.Medicines[counter - 2].RemarkUse)
+                                    </td>
+
+                                    <td>
+                                        <div class="form-horizontal">
+                                            @Html.HiddenFor(m => m.Medicines[counter - 2].Detail.ProductID, new { @id = "idMedicine" + (counter - 1) })
+
+                                            @Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.ProductName, new { @class = "form-control", @id = "medicineName" + (counter - 1) })&nbsp;
+
+                                            @{
+                                                if (item.Detail.ProcessType == null)
+                                                {
+                                                    <a class="fa fa-search fa-lg modal-with-form" data-rowno="@(counter - 1)" href="#modalForm"></a>
+                                                }
+                                                else if (item.Detail.ProcessType.ToLower() == "racik")
+                                                {
+                                                    <a class="fa fa-adjust fa-lg modal-with-form" data-rowno="@(counter - 1)" href="#modalFormRacikan"></a>
+                                                }
+                                            }
+
+                                        </div>
+                                    </td>
+                                    <td>
+
+                                        @Html.TextBoxFor(m => m.Medicines[counter - 2].Stock, new { @class = "form-control", @readonly = true, @id = "stock" + (counter - 1) })&nbsp;
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.Qty, new { @class = "form-control", @style = "width:60px;", @id = "amount" + (counter - 1) })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.Note, new { @class = "form-control", @id = "note" + (counter - 1) })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.ProcessType, new { @class = "form-control", @style = "width:80px", @readonly = true, @id = "process" + (counter - 1) })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <button type="submit" id="btnSaveMedicine" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
+            <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+        </div>
+    }
+
+    <!-- Modal Form -->
+    <div id="modalForm" class="modal-block modal-block-primary mfp-hide">
+        <section class="panel">
+            <header class="panel-heading">
+                <h5 class="panel-title">
+                    @Klinik.Resources.UIMessages.ProductList
+                </h5>
+            </header>
+            <div class="panel-body">
+                <div style="width:100%; margin:0 auto">
+                    <input type="hidden" id="rowno" name="rowno" />
+                    <table id="tableProductList" class="table table-striped table-bordered dt-responsive" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>@Klinik.Resources.UIMessages.ID</th>
+                                <th>@Klinik.Resources.UIMessages.Code</th>
+                                <th>@Klinik.Resources.UIMessages.Name</th>
+                                <th>@Klinik.Resources.UIMessages.Price</th>
+                                <th>@Klinik.Resources.UIMessages.Category</th>
+                                <th>@Klinik.Resources.UIMessages.Unit</th>
+                                <th>@Klinik.Resources.UIMessages.Stock</th>
+                                <th>@Klinik.Resources.UIMessages.Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button class="btn btn-primary modal-dismiss">Close</button>
+                    </div>
+                </div>
+            </footer>
+        </section>
+    </div>
+
+    <!-- Modal for combibe racikan-->
+    <div id="modalFormRacikan" class="modal-block modal-block-primary mfp-hide">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <h5 class="panel-title">
+                            @Klinik.Resources.UIMessages.ProductList
+                        </h5>
+                    </header>
+                    <div class="panel-body">
+                        <div style="width:100%; margin:0 auto">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Nama Obat Racikan</label>
+                                <input type="hidden" id="rowno_racikan" name="rowno_racikan" />
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" id="tbRacikanName" name="tbRacikanName" />
+                                </div>
+                            </div>
+                            <br />
+
+                            <table class="table table-striped table-bordered dt-responsive" width="100%" id="tblConcMedicine">
+                                <thead>
+                                    <tr style="font-size:13px">
+                                        @*<th style="width:35%">@Klinik.Resources.UIMessages.ID</th>*@
+                                        <th style="width:30%">@Klinik.Resources.UIMessages.Name</th>
+                                        <th style="width:10%">@Klinik.Resources.UIMessages.Code</th>
+                                        <th style="width:20%">@Klinik.Resources.UIMessages.Price</th>
+                                        <th style="width:15%">@Klinik.Resources.UIMessages.Category</th>
+                                        <th style="width:15%">@Klinik.Resources.UIMessages.Unit</th>
+                                        <th style="width:20%">@Klinik.Resources.UIMessages.Stock</th>
+                                        <th style="width:20%">@Klinik.Resources.UIMessages.Amount</th>
+                                        <th style="width:10%">@Klinik.Resources.UIMessages.Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size:13px"></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>
+                                            <input id="Conc_medicineName" type="text" class="form-control" placeholder="@Klinik.Resources.UIMessages.TypeMedicineNameHere" />
+                                        </td>
+                                        <td>
+                                            <input hidden type="text" id="Conc_idMedicine" />
+                                            <input type="text" class="form-control" id="Conc_CodeMedicine" />
+                                        </td>
+
+                                        <td>
+                                            <input id="Conc_medicinePrice" readonly="readonly" type="text" class="form-control" />
+                                        </td>
+                                        <td><input id="Conc_medicinecategory" readonly="readonly" type="text" class="form-control" /></td>
+                                        <td><input id="Conc_medicineUnit" readonly="readonly" type="text" class="form-control" /></td>
+                                        <td>
+                                            <input id="Conc_medicineStock" readonly="readonly" type="text" class="form-control" />
+                                        </td>
+                                        <td>
+                                            <input id="Conc_amount" type="text" class="form-control" />
+                                        </td>
+                                        <td><input type="button" id="btnAdd_ConcMedicine" value="@Klinik.Resources.UIMessages.Add" /></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button id="btnOkRacik" class="btn btn-primary modal-dismiss">Ok</button>
+                                <button class="btn btn-primary modal-dismiss">Close</button>
+                            </div>
+                        </div>
+                    </footer>
+                </section>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+@section Scripts {
+
+    <script type="text/javascript">
+        var rows_selected = [];
+        var arrOfObatRacik = [];
+        var obatRacik = new Object();
+        var ObatRacikName = "";
+        var currSelIdx = '';
+        function updateDataTableSelectAllCtrl(table) {
+        var $table = table.table().node();
+        var $chkbox_all = $('tbody input[type="checkbox"]', $table);
+        var $chkbox_checked = $('tbody input[type="checkbox"]:checked', $table);
+        var chkbox_select_all = $('thead input[name="select_all"]', $table).get(0);
+
+        // If none of the checkboxes are checked
+        if ($chkbox_checked.length === 0) {
+            chkbox_select_all.checked = false;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = false;
+            }
+
+            // If all of the checkboxes are checked
+        } else if ($chkbox_checked.length === $chkbox_all.length) {
+            chkbox_select_all.checked = true;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = false;
+            }
+
+            // If some of the checkboxes are checked
+        } else {
+            chkbox_select_all.checked = true;
+            if ('indeterminate' in chkbox_select_all) {
+                chkbox_select_all.indeterminate = true;
+            }
+        }
+    }
+
+        function OnSelectProduct(Id, Name, stock) {
+            var rowNum = $('#rowno').val();
+			$('#idMedicine' + rowNum).val(Id);
+            $('#medicineName' + rowNum).val(Name);
+            $('#stock' + rowNum).val(stock);
+            var arrIds = Id.split('_');
+            if(arrIds.length<=1)
+                onMedChange();
+        }
+
+        function OnSelectProductRacikan(Name) {
+            var rowNum = $('#rowno_racikan').val();
+			$('#medicineName' + rowNum).val(Name);
+        }
+
+        function onMedChange(myVal) {
+            var asis=$('#resepobatNm'+currSelIdx).text();
+            var temp = $('#medicineName'+currSelIdx).val();
+            if (asis.trim() != temp.trim())
+                alert('Nama Obat yang dipilih berbeda dengan resep');
+        }
+
+         function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblConcMedicine")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+    };
+
+        $(document).ready(function () {
+
+             var medicine = $("#Conc_medicineName");
+             if (!medicine.length) return;
+              $("#Conc_medicineName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Poli/AutoCompleteMedicineAdvance/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#Conc_idMedicine").val(i.item.id);
+                    $("#Conc_CodeMedicine").val(i.item.code);
+                    $("#Conc_medicineStock").val(i.item.stock);
+                    $("#Conc_medicinePrice").val(i.item.price);
+                    $("#Conc_medicinecategory").val(i.item.category);
+                    $("#Conc_medicineUnit").val(i.item.unit);
+                },
+                minLength: 1
+            });
+
+            $('#btnreset').click(function (e) {
+                window.location.href = "/Pharmacy/PatientList";
+            });
+
+             $("#btnAdd_ConcMedicine").click(function () {
+
+                var idMedicine = $("#Conc_idMedicine");
+                 var medicineName = $("#Conc_medicineName");
+                 var medicineCode = $("#Conc_CodeMedicine");
+                var medicineStock = $("#Conc_medicineStock");
+                var medicinePrice = $("#Conc_medicinePrice");
+				var medicineUnit = $("#Conc_medicineUnit");
+				var medicinecategory = $("#Conc_medicinecategory");
+                var medicineAmt = $("#Conc_amount");
+                //Get the reference of the Table's TBODY element.
+                var tBody = $("#tblConcMedicine > TBODY")[0];
+                
+                //Add Row.
+                var row = tBody.insertRow(-1);
+
+                //Add id cell.0
+                var cell = $(row.insertCell(-1));
+                 cell.html(idMedicine.val());
+                 cell.hide();
+
+                  //add nama obat 1
+                  cell = $(row.insertCell(-1));
+                 cell.html(medicineName.val());
+
+                  //add code obat 2
+                 cell = $(row.insertCell(-1));
+                 cell.html(medicineCode.val());
+
+              
+                //add price 3
+                 cell = $(row.insertCell(-1));
+                 cell.html(medicinePrice.val());
+
+                //add category obat 4
+                 cell = $(row.insertCell(-1));
+                 cell.html(medicinecategory.val());
+
+                //add unit obat 5
+                 cell = $(row.insertCell(-1));
+                 cell.html(medicineUnit.val());
+
+				//add stock 6
+				cell = $(row.insertCell(-1));
+                 cell.html(medicineStock.val());
+
+                 //add amount obat 7
+				cell = $(row.insertCell(-1));
+				cell.html(medicineAmt.val());
+
+                //Add Button cell.
+                cell = $(row.insertCell(-1));
+                var btnRemove = $("<input />");
+                btnRemove.attr("type", "button");
+                btnRemove.attr("onclick", "Remove(this);");
+                btnRemove.val("Remove");
+                cell.append(btnRemove);
+
+                //Clear the TextBoxes.
+                idMedicine.val("");
+                medicineName.val("");
+                medicineStock.val("");
+                medicinecategory.val("");
+				medicineUnit.val("");
+                medicinePrice.val("");
+                medicineAmt.val("");
+                medicineCode.val("");
+
+            });
+
+            $('#tableProductList').dataTable({
+                "autoWidth": false,
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "orderMulti": false,
+                "pageLength": 10,
+                "ajax": {
+                    "url": "/Pharmacy/GetProductList",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+
+                "columnDefs":
+                    [{
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false,
+                    },
+                    {
+                        "targets": [1],
+                        "searchable": true,
+                        "orderable": true
+                    },
+                    {
+                        "targets": [2],
+                        "searchable": true,
+                        "orderable": true
+                    },
+                    {
+                        "targets": [3],
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [4],
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [5],
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    {
+                        "targets": [6],
+                        "searchable": false,
+                        "orderable": false
+                    },
+                      {
+                        "targets": [7],
+                        "searchable": false,
+                        "orderable": false
+                    },
+                    ],
+
+                "columns": [
+                    { "data": "Id", "name": "Id", "autoWidth": false },
+                    { "data": "Code", "name": "Code", "autoWidth": true },
+                    { "data": "Name", "name": "Name", "autoWidth": true },
+                    { "data": "RetailPrice", "name": "RetailPrice", "autoWidth": true },
+                    { "data": "ProductCategoryName", "name": "ProductCategoryName", "autoWidth": true },
+                    { "data": "ProductUnitName", "name": "ProductUnitName", "autoWidth": true },
+                    { "data": "stock", "name": "stock", "autoWidth": true },
+                    {
+                        "render": function (data, type, full, meta) {
+                            var name = full['Name'];
+                            var id = full['Id'];
+
+                            var stock = full['stock'];
+                            return '<button class="btn btn-info modal-dismiss" onclick="OnSelectProduct(\'' + id + '\',\'' + name + '\', \''+stock+'\')" >@Klinik.Resources.UIMessages.Select</button>';
+                        }
+                    }
+                ]
+            });
+
+            var table = $('#tableProductListNonMaster').DataTable({
+                "autoWidth": false,
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "orderMulti": false,
+                "pageLength": 10,
+                "ajax": {
+                    "url": "/Pharmacy/GetProductList",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+
+                "columnDefs":
+                    [
+                        {
+                            'targets': 0,
+                            'searchable': false,
+                            'orderable': false,
+                            'width': '1%',
+                            'className': 'dt-body-center',
+                            'render': function (data, type, full, meta) {
+                                return '<input type="checkbox">';
+                            }
+                        },
+                        {
+                            "targets": [1],
+                            "visible": false,
+                            "searchable": false,
+                            "data": "Id"
+                        },
+                        {
+                            "targets": [2],
+                            "searchable": true,
+                            "orderable": true,
+                            "data": "Code"
+                        },
+                        {
+                            "targets": [3],
+                            "searchable": true,
+                            "orderable": true,
+                            "data": "Name"
+                        },
+                        {
+                            "targets": [4],
+                            "searchable": false,
+                            "orderable": false,
+                            "data": "RetailPrice"
+                        },
+                        {
+                            "targets": [5],
+                            "searchable": false,
+                            "orderable": false,
+                            "data": "ProductCategoryName"
+                        },
+                        {
+                            "targets": [6],
+                            "searchable": false,
+                            "orderable": false,
+                            "data": "ProductUnitName"
+                        },
+                        {
+                        "targets": [7],
+                        "searchable": false,
+                            "orderable": false,
+                        "data":"stock"
+                    },
+                        {
+                            'targets': 8,
+                            'searchable': false,
+                            'orderable': false,
+                            'width': '10%',
+                            'className': 'dt-body-center',
+                            'render': function (data, type, full, meta) {
+                                return '<input id="tbAmt" type="number"></input>';
+                            }
+                        }
+                    ],
+                'rowCallback': function (row, data, dataIndex) {
+                    // Get row ID
+                    var rowId = data.Id;
+                    if ($.inArray(rowId, rows_selected) != -1) {
+                        $(row).find('input[type="checkbox"]').prop('checked', true);
+                        $(row).addClass('selected');
+                    }
+                }
+            });
+
+            $('.modal-with-form').click(function () {
+                $('#rowno').val($(this).data('rowno'));
+                $('#rowno_racikan').val($(this).data('rowno'));
+                $('#tbRacikanName').val('');
+                currSelIdx = $('#rowno').val();
+                var _parentId=$('#rowno_racikan').val()+"_"+"Racikan"
+                var filter =  $.grep(arrOfObatRacik, function(e){ return e.ParentID == _parentId; });
+            });
+
+            toastr.options = {
+                "closeButton": false,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "0",
+                "hideDuration": "0",
+                "timeOut": "2000",
+                "showMethod": "fadeIn"
+            };
+
+            var _temp = "@ViewBag.Response";
+            var _arrMsg = _temp.split(";");
+
+            if (_arrMsg.length > 1) {
+                if (_arrMsg[0].toString().trimLeft() == "True" || _arrMsg[0] == "true" ) {
+                    toastr.success(_arrMsg[1]);
+                }
+                else {
+                    toastr.options.closeButton = true;
+                    toastr.options.timeOut = 0;
+                    toastr.error(_arrMsg[1]);
+                }
+            }
+
+            $('#btnOkRacik').click(function (e) {
+
+                var rowNum_racikan = $('#rowno_racikan').val();
+                var _parentId = rowNum_racikan + "_" + "Racikan";
+
+               
+                $('#tblConcMedicine tbody tr').each(function (index) {
+                    obatRacik = new Object();
+                    obatRacik.Amount = $(this).find('td').eq(7).text().trim();
+                    obatRacik.Stock=$(this).find('td').eq(6).text().trim();
+                    obatRacik.Id = $(this).find('td').eq(0).text().trim();
+                    obatRacik.Code = $(this).find('td').eq(2).text().trim();
+                    obatRacik.Name = $(this).find('td').eq(1).text().trim();
+                  //obatRacik.Idx = rows_selected[i];
+                    obatRacik.ParentID = _parentId;
+                    arrOfObatRacik.push(obatRacik);
+                });
+                var temp = JSON.stringify(arrOfObatRacik);
+                $('#collRacikanKomponen').val(temp);
+
+                 var tBody = $("#tblConcMedicine > TBODY")[0];
+                $('#tblConcMedicine tbody tr').each(function (index) {
+                   
+                    tBody.deleteRow(index-1);
+                });
+
+                OnSelectProduct(rowNum_racikan+"_"+"Racikan", $('#tbRacikanName').val(),0);
+            });
+
+
+        });
+    </script>
+
+}

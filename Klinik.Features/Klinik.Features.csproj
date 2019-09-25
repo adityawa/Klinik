@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7DB62F9C-5428-484F-AE2D-8831D92EA816}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Klinik.Features</RootNamespace>
+    <AssemblyName>Klinik.Features</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="LinqKit, Version=1.1.15.0, Culture=neutral, PublicKeyToken=bc217f8844052a91, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqKit.1.1.15\lib\net45\LinqKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account\AccountHandler.cs" />
+    <Compile Include="Account\AccountRequest.cs" />
+    <Compile Include="Account\AccountResponse.cs" />
+    <Compile Include="Account\AccountValidator.cs" />
+    <Compile Include="Account\OneLoginSession.cs" />
+    <Compile Include="Account\PasswordHistory\PasswordHistoryHandler.cs" />
+    <Compile Include="Account\PasswordHistory\PasswordHistoryRequest.cs" />
+    <Compile Include="Account\PasswordHistory\PasswordHistoryResponse.cs" />
+    <Compile Include="Account\PasswordHistory\PasswordHistoryValidator.cs" />
+    <Compile Include="Administration\Log\LogHandler.cs" />
+    <Compile Include="Administration\Log\LogRequest.cs" />
+    <Compile Include="Administration\Log\LogResponse.cs" />
+    <Compile Include="Administration\Log\LogValidator.cs" />
+    <Compile Include="AppointmentFeatures\AppointmentHandler.cs" />
+    <Compile Include="AppointmentFeatures\AppointmentRequest.cs" />
+    <Compile Include="AppointmentFeatures\AppointmentResponse.cs" />
+    <Compile Include="AppointmentFeatures\AppointmentValidator.cs" />
+    <Compile Include="BaseFeatures.cs" />
+    <Compile Include="Cashier\CashierHandler.cs" />
+    <Compile Include="Cashier\CashierResponse.cs" />
+    <Compile Include="Cashier\CashierValidator.cs" />
+    <Compile Include="Cashier\CashierRequest.cs" />
+    <Compile Include="DeliveryOrderDetail\DeliveryOrderDetailHandler.cs" />
+    <Compile Include="DeliveryOrderDetail\DeliveryOrderDetailRequest.cs" />
+    <Compile Include="DeliveryOrderDetail\DeliveryOrderDetailResponse.cs" />
+    <Compile Include="DeliveryOrderDetail\DeliveryOrderDetailValidator.cs" />
+    <Compile Include="DeliveryOrderPusatDetail\DeliveryOrderPusatDetailHandler.cs" />
+    <Compile Include="DeliveryOrderPusatDetail\DeliveryOrderPusatDetailRequest.cs" />
+    <Compile Include="DeliveryOrderPusatDetail\DeliveryOrderPusatDetailResponse.cs" />
+    <Compile Include="DeliveryOrderPusatDetail\DeliveryOrderPusatDetailValidator.cs" />
+    <Compile Include="DeliveryOrderPusat\CreateDoPByPoP.cs" />
+    <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatHandler.cs" />
+    <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatRequest.cs" />
+    <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatResponse.cs" />
+    <Compile Include="DeliveryOrderPusat\DeliveryOrderPusatValidator.cs" />
+    <Compile Include="DeliveryOrder\CreateDoByPo.cs" />
+    <Compile Include="DeliveryOrder\DeliveryOrderHandler.cs" />
+    <Compile Include="DeliveryOrder\DeliveryOrderRequest.cs" />
+    <Compile Include="DeliveryOrder\DeliveryOrderResponse.cs" />
+    <Compile Include="DeliveryOrder\DeliveryOrderValidator.cs" />
+    <Compile Include="General\GeneralHandler.cs" />
+    <Compile Include="HistoryMedical\MedicalHistoryHandler.cs" />
+    <Compile Include="HistoryMedical\MedicalHistoryRequest.cs" />
+    <Compile Include="HistoryMedical\MedicalHistoryResponse.cs" />
+    <Compile Include="HistoryProductInGudang\HistoryProductInGudangHandler.cs" />
+    <Compile Include="HistoryProductInGudang\HistoryProductInGudangRequest.cs" />
+    <Compile Include="HistoryProductInGudang\HistoryProductInGudangResponse.cs" />
+    <Compile Include="ICDThemeFeatures\ICDThemeHandler.cs" />
+    <Compile Include="MasterData\Gudang\GudangHandler.cs" />
+    <Compile Include="MasterData\Gudang\GudangRequest.cs" />
+    <Compile Include="MasterData\Gudang\GudangResponse.cs" />
+    <Compile Include="MasterData\Gudang\GudangValidator.cs" />
+    <Compile Include="MasterData\LookupCategory\LookUpCategoryHandler.cs" />
+    <Compile Include="MasterData\LookupCategory\LookupCategoryRequest.cs" />
+    <Compile Include="MasterData\LookupCategory\LookUpCategoryResponse.cs" />
+    <Compile Include="MasterData\LookupCategory\LookUpCategoryValidator.cs" />
+    <Compile Include="MasterData\Vendor\VendorHandler.cs" />
+    <Compile Include="MasterData\Vendor\VendorRequest.cs" />
+    <Compile Include="MasterData\Vendor\VendorResponse.cs" />
+    <Compile Include="MasterData\Vendor\VendorValidator.cs" />
+    <Compile Include="MCUFeatures\MCURegistrationHandler.cs" />
+    <Compile Include="MCUFeatures\MCURegistrationRequest.cs" />
+    <Compile Include="MCUFeatures\MCURegistrationResponse.cs" />
+    <Compile Include="Pharmacy\PharmacyHandler.cs" />
+    <Compile Include="Pharmacy\PharmacyHandlerRequest.cs" />
+    <Compile Include="Pharmacy\PharmacyHandlerResponse.cs" />
+    <Compile Include="Pharmacy\PharmacyHandlerValidator.cs" />
+    <Compile Include="IBaseFeatures.cs" />
+    <Compile Include="Laboratorium\LabHandler.cs" />
+    <Compile Include="Laboratorium\LabRequest.cs" />
+    <Compile Include="Laboratorium\LabResponse.cs" />
+    <Compile Include="Laboratorium\LabValidator.cs" />
+    <Compile Include="Loket\LoketHandler.cs" />
+    <Compile Include="Loket\LoketRequest.cs" />
+    <Compile Include="Loket\LoketResponse.cs" />
+    <Compile Include="Loket\LoketValidator.cs" />
+    <Compile Include="MapMasterData\ClinicPoli\ClinicPoliHandler.cs" />
+    <Compile Include="MapMasterData\ClinicPoli\ClinicPoliRequest.cs" />
+    <Compile Include="MapMasterData\ClinicPoli\ClinicPoliResponse.cs" />
+    <Compile Include="MapMasterData\ClinicPoli\ClinicPoliValidator.cs" />
+    <Compile Include="MapMasterData\OrganizationPrivilege\OrganizationPrivilegeHandler.cs" />
+    <Compile Include="MapMasterData\OrganizationPrivilege\OrganizationPrivilegeRequest.cs" />
+    <Compile Include="MapMasterData\OrganizationPrivilege\OrganizationPrivilegeResponse.cs" />
+    <Compile Include="MapMasterData\OrganizationPrivilege\OrganizationPrivilegeValidator.cs" />
+    <Compile Include="MapMasterData\RolePrivilege\RolePrivilegeHandler.cs" />
+    <Compile Include="MapMasterData\RolePrivilege\RolePrivilegeRequest.cs" />
+    <Compile Include="MapMasterData\RolePrivilege\RolePrivilegeResponse.cs" />
+    <Compile Include="MapMasterData\RolePrivilege\RolePrivilegeValidator.cs" />
+    <Compile Include="MapMasterData\UserRole\UserRoleHandler.cs" />
+    <Compile Include="MapMasterData\UserRole\UserRoleRequest.cs" />
+    <Compile Include="MapMasterData\UserRole\UserRoleResponse.cs" />
+    <Compile Include="MapMasterData\UserRole\UserRoleValidator.cs" />
+    <Compile Include="MasterData\City\CityHandler.cs" />
+    <Compile Include="MasterData\Clinic\ClinicHandler.cs" />
+    <Compile Include="MasterData\Clinic\ClinicRequest.cs" />
+    <Compile Include="MasterData\Clinic\ClinicResponse.cs" />
+    <Compile Include="MasterData\Clinic\ClinicValidator.cs" />
+    <Compile Include="MasterData\Doctor\DoctorHandler.cs" />
+    <Compile Include="MasterData\Doctor\DoctorRequest.cs" />
+    <Compile Include="MasterData\Doctor\DoctorResponse.cs" />
+    <Compile Include="MasterData\Doctor\DoctorValidator.cs" />
+    <Compile Include="MasterData\EmployeeStatus\EmployeeStatusHandler.cs" />
+    <Compile Include="MasterData\Employee\EmployeeHandler.cs" />
+    <Compile Include="MasterData\Employee\EmployeeRequest.cs" />
+    <Compile Include="MasterData\Employee\EmployeeResponse.cs" />
+    <Compile Include="MasterData\Employee\EmployeeValidator.cs" />
+    <Compile Include="MasterData\FamilyRelationship\FamilyStatusHandler.cs" />
+    <Compile Include="MasterData\GeneralMaster\MasterHandler.cs" />
+    <Compile Include="MasterData\PoliService\PoliServiceHandler.cs" />
+    <Compile Include="MasterData\PoliService\PoliServiceRequest.cs" />
+    <Compile Include="MasterData\PoliService\PoliServiceResponse.cs" />
+    <Compile Include="MasterData\PoliService\PoliServiceValidator.cs" />
+    <Compile Include="MasterData\Service\ServiceHandler.cs" />
+    <Compile Include="MasterData\Service\ServiceRequest.cs" />
+    <Compile Include="MasterData\Service\ServiceResponse.cs" />
+    <Compile Include="MasterData\Service\ServiceValidator.cs" />
+    <Compile Include="MasterData\LabItemCategory\LabItemCategoryHandler.cs" />
+    <Compile Include="MasterData\LabItemCategory\LabItemCategoryRequest.cs" />
+    <Compile Include="MasterData\LabItemCategory\LabItemCategoryResponse.cs" />
+    <Compile Include="MasterData\LabItemCategory\LabItemCategoryValidator.cs" />
+    <Compile Include="MasterData\Menu\MenuHandler.cs" />
+    <Compile Include="MasterData\Menu\MenuRequest.cs" />
+    <Compile Include="MasterData\Menu\MenuResponse.cs" />
+    <Compile Include="MasterData\Menu\MenuValidator.cs" />
+    <Compile Include="MasterData\Organization\OrganizationHandler.cs" />
+    <Compile Include="MasterData\Organization\OrganizationRequest.cs" />
+    <Compile Include="MasterData\Organization\OrganizationResponse.cs" />
+    <Compile Include="MasterData\Organization\OrganizationValidator.cs" />
+    <Compile Include="MasterData\Poli\PoliHandler.cs" />
+    <Compile Include="MasterData\Poli\PoliRequest.cs" />
+    <Compile Include="MasterData\Poli\PoliResponse.cs" />
+    <Compile Include="MasterData\Poli\PoliValidator.cs" />
+    <Compile Include="MasterData\Privileges\PrivilegeHandler.cs" />
+    <Compile Include="MasterData\Privileges\PrivilegeRequest.cs" />
+    <Compile Include="MasterData\Privileges\PrivilegeResponse.cs" />
+    <Compile Include="MasterData\Privileges\PrivilegeValidator.cs" />
+    <Compile Include="MasterData\Medicine\MedicineHandler.cs" />
+    <Compile Include="MasterData\Medicine\MedicineRequest.cs" />
+    <Compile Include="MasterData\Medicine\MedicineResponse.cs" />
+    <Compile Include="MasterData\Medicine\MedicineValidator.cs" />
+    <Compile Include="MasterData\LabItem\LabItemHandler.cs" />
+    <Compile Include="MasterData\LabItem\LabItemRequest.cs" />
+    <Compile Include="MasterData\LabItem\LabItemResponse.cs" />
+    <Compile Include="MasterData\LabItem\LabItemValidator.cs" />
+    <Compile Include="MasterData\ProductMedicine\ProductMedicineHandler.cs" />
+    <Compile Include="MasterData\ProductMedicine\ProductMedicineRequest.cs" />
+    <Compile Include="MasterData\ProductMedicine\ProductMedicineResponse.cs" />
+    <Compile Include="MasterData\ProductMedicine\ProductMedicineValidator.cs" />
+    <Compile Include="MasterData\ProductUnit\ProductUnitHandler.cs" />
+    <Compile Include="MasterData\ProductUnit\ProductUnitRequest.cs" />
+    <Compile Include="MasterData\ProductUnit\ProductUnitResponse.cs" />
+    <Compile Include="MasterData\ProductUnit\ProductUnitValidator.cs" />
+    <Compile Include="MasterData\ProductCategory\ProductCategoryHandler.cs" />
+    <Compile Include="MasterData\ProductCategory\ProductCategoryRequest.cs" />
+    <Compile Include="MasterData\ProductCategory\ProductCategoryResponse.cs" />
+    <Compile Include="MasterData\ProductCategory\ProductCategoryValidator.cs" />
+    <Compile Include="MasterData\Product\ProductHandler.cs" />
+    <Compile Include="MasterData\Product\ProductRequest.cs" />
+    <Compile Include="MasterData\Product\ProductResponse.cs" />
+    <Compile Include="MasterData\Product\ProductValidator.cs" />
+    <Compile Include="MasterData\Roles\RoleHandler.cs" />
+    <Compile Include="MasterData\Roles\RoleRequest.cs" />
+    <Compile Include="MasterData\Roles\RoleResponse.cs" />
+    <Compile Include="MasterData\Roles\RoleValidator.cs" />
+    <Compile Include="MasterData\User\UserHandler.cs" />
+    <Compile Include="MasterData\User\UserRequest.cs" />
+    <Compile Include="MasterData\User\UserResponse.cs" />
+    <Compile Include="MasterData\User\UserValidator.cs" />
+    <Compile Include="Patients\Pasien\PatientHandler.cs" />
+    <Compile Include="Patients\Pasien\PatientRequest.cs" />
+    <Compile Include="Patients\Pasien\PatientResponse.cs" />
+    <Compile Include="Patients\Pasien\PatientValidator.cs" />
+    <Compile Include="PoliScheduleMaster\PoliScheduleMasterHandler.cs" />
+    <Compile Include="PoliScheduleMaster\PoliScheduleMasterRequest.cs" />
+    <Compile Include="PoliScheduleMaster\PoliScheduleMasterResponse.cs" />
+    <Compile Include="PoliScheduleMaster\PoliScheduleMasterValidator.cs" />
+    <Compile Include="PoliSchedules\PoliScheduleHandler.cs" />
+    <Compile Include="PoliSchedules\PoliScheduleRequest.cs" />
+    <Compile Include="PoliSchedules\PoliScheduleResponse.cs" />
+    <Compile Include="PoliSchedules\PoliScheduleValidator.cs" />
+    <Compile Include="FormExamine\FormExamineHandler.cs" />
+    <Compile Include="FormExamine\FormExamineRequest.cs" />
+    <Compile Include="FormExamine\FormExamineResponse.cs" />
+    <Compile Include="FormExamine\FormExamineValidator.cs" />
+    <Compile Include="PreExamine\PreExamineHandler.cs" />
+    <Compile Include="PreExamine\PreExamineRequest.cs" />
+    <Compile Include="PreExamine\PreExamineResponse.cs" />
+    <Compile Include="PreExamine\PreExamineValidator.cs" />
+    <Compile Include="ProductCategory\ProductCategoryHandler.cs" />
+    <Compile Include="ProductInGudang\ProductInGudangHandler.cs" />
+    <Compile Include="ProductInGudang\ProductInGudangRequest.cs" />
+    <Compile Include="ProductInGudang\ProductInGudangResponse.cs" />
+    <Compile Include="ProductInGudang\ProductInGudangValidator.cs" />
+    <Compile Include="ProductUnitFeatures\ProductUnitHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseOrderDetail\PurchaseOrderDetailHandler.cs" />
+    <Compile Include="PurchaseOrderDetail\PurchaseOrderDetailRequest.cs" />
+    <Compile Include="PurchaseOrderDetail\PurchaseOrderDetailResponse.cs" />
+    <Compile Include="PurchaseOrderDetail\PurchaseOrderDetailValidator.cs" />
+    <Compile Include="PurchaseOrderPusatDetail\PurchaseOrderPusatDetailHandler.cs" />
+    <Compile Include="PurchaseOrderPusatDetail\PurchaseOrderPusatDetailRequest.cs" />
+    <Compile Include="PurchaseOrderPusatDetail\PurchaseOrderPusatDetailResponse.cs" />
+    <Compile Include="PurchaseOrderPusatDetail\PurchaseOrderPusatDetailValidator.cs" />
+    <Compile Include="PurchaseOrderPusat\CreatePOPByPRP.cs" />
+    <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatHandler.cs" />
+    <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatRequest.cs" />
+    <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatResponse.cs" />
+    <Compile Include="PurchaseOrderPusat\PurchaseOrderPusatValidator.cs" />
+    <Compile Include="PurchaseOrder\CreatePoByPr.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderHandler.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderRequest.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderResponse.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderValidator.cs" />
+    <Compile Include="PurchaseRequestConfig\PurchaseRequestConfigHandler.cs" />
+    <Compile Include="PurchaseRequestConfig\PurchaseRequestConfigRequest.cs" />
+    <Compile Include="PurchaseRequestConfig\PurchaseRequestConfigResponse.cs" />
+    <Compile Include="PurchaseRequestConfig\PurchaseRequestConfigValidator.cs" />
+    <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailHandler.cs" />
+    <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailRequest.cs" />
+    <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailResponse.cs" />
+    <Compile Include="PurchaseRequestDetail\PurchaseRequestDetailValidator.cs" />
+    <Compile Include="PurchaseRequestPusatDetail\PurchaseRequestPusatDetailHandler.cs" />
+    <Compile Include="PurchaseRequestPusatDetail\PurchaseRequestPusatDetailRequest.cs" />
+    <Compile Include="PurchaseRequestPusatDetail\PurchaseRequestPusatDetailResponse.cs" />
+    <Compile Include="PurchaseRequestPusatDetail\PurchaseRequestPusatDetailValidator.cs" />
+    <Compile Include="PurchaseRequestPusat\PurchaseRequestPusatHandler.cs" />
+    <Compile Include="PurchaseRequestPusat\PurchaseRequestPusatRequest.cs" />
+    <Compile Include="PurchaseRequestPusat\PurchaseRequestPusatResponse.cs" />
+    <Compile Include="PurchaseRequestPusat\PurchaseRequestPusatValidator.cs" />
+    <Compile Include="PurchaseRequest\PurchaseRequestHandler.cs" />
+    <Compile Include="PurchaseRequest\PurchaseRequestRequest.cs" />
+    <Compile Include="PurchaseRequest\PurchaseRequestResponse.cs" />
+    <Compile Include="PurchaseRequest\PurchaseRequestValidator.cs" />
+    <Compile Include="Radiologi\RadiologiHandler.cs" />
+    <Compile Include="Radiologi\RadiologiRequest.cs" />
+    <Compile Include="Radiologi\RadiologiResponse.cs" />
+    <Compile Include="Radiologi\RadiologiValidator.cs" />
+    <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyHandler.cs" />
+    <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyRequest.cs" />
+    <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyResponse.cs" />
+    <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyValidator.cs" />
+    <Compile Include="SuratReferensi\SuratLabReferensi\RujukanLabHandler.cs" />
+    <Compile Include="SuratReferensi\SuratLabReferensi\RujukanLabRequest.cs" />
+    <Compile Include="SuratReferensi\SuratLabReferensi\RujukanLabResponse.cs" />
+    <Compile Include="SuratReferensi\SuratLabReferensi\RujukanLabValidator.cs" />
+    <Compile Include="SuratReferensi\SuratPersetujuanTindakan\PersetujuanTimdakanValidator.cs" />
+    <Compile Include="SuratReferensi\SuratPersetujuanTindakan\PersetujuanTindakanHandler.cs" />
+    <Compile Include="SuratReferensi\SuratPersetujuanTindakan\PersetujuanTindakanRequest.cs" />
+    <Compile Include="SuratReferensi\SuratPersetujuanTindakan\PersetujuanTindakanResponse.cs" />
+    <Compile Include="SuratReferensi\SuratRujukanBerobat\RujukanBerobatHandler.cs" />
+    <Compile Include="SuratReferensi\SuratRujukanBerobat\RujukanBerobatRequest.cs" />
+    <Compile Include="SuratReferensi\SuratRujukanBerobat\RujukanBerobatResponse.cs" />
+    <Compile Include="SuratReferensi\SuratRujukanBerobat\RujukanBerobatValidator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Klinik.Common\Klinik.Common.csproj">
+      <Project>{e5c9d610-f530-4d0e-8d9e-2a729ccbff23}</Project>
+      <Name>Klinik.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Klinik.Data\Klinik.Data.csproj">
+      <Project>{65643f8a-3935-4a27-aaf3-307dcbf8db60}</Project>
+      <Name>Klinik.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Klinik.Entities\Klinik.Entities.csproj">
+      <Project>{0a81b9b4-7d64-412d-8e86-8ae9d22cf53f}</Project>
+      <Name>Klinik.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Klinik.Interfaces\Klinik.Interfaces.csproj">
+      <Project>{6604e37f-d994-4395-ada9-6c5a0a561857}</Project>
+      <Name>Klinik.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Klinik.Resources\Klinik.Resources.csproj">
+      <Project>{3d1a8222-cc25-4bb0-8820-f26c53aa9e8d}</Project>
+      <Name>Klinik.Resources</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
