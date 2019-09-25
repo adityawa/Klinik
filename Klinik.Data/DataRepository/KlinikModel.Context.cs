@@ -49,7 +49,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<FormExamineService> FormExamineServices { get; set; }
         public virtual DbSet<FormMedical> FormMedicals { get; set; }
         public virtual DbSet<FormPreExamine> FormPreExamines { get; set; }
-        public virtual DbSet<GeneralMaster> GeneralMasters { get; set; }
         public virtual DbSet<Gudang> Gudangs { get; set; }
         public virtual DbSet<HistoryProductInGudang> HistoryProductInGudangs { get; set; }
         public virtual DbSet<ICDTheme> ICDThemes { get; set; }
@@ -100,9 +99,11 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<PurchaseRequestConfig> PurchaseRequestConfigs { get; set; }
-        public virtual DbSet<LookupCategory> LookupCategories { get; set; }
         public virtual DbSet<MCURegistrationInterface> MCURegistrationInterfaces { get; set; }
         public virtual DbSet<Appointment> Appointments { get; set; }
+        public virtual DbSet<FormExamineICDInfo> FormExamineICDInfoes { get; set; }
+        public virtual DbSet<GeneralMaster> GeneralMasters { get; set; }
+        public virtual DbSet<LookupCategory> LookupCategories { get; set; }
     
         [DbFunction("KlinikDBEntities1", "fusp_registrations_get_by_status")]
         public virtual IQueryable<fusp_registrations_get_by_status_Result> fusp_registrations_get_by_status(string documentStatus, string isTransferred)
@@ -160,6 +161,100 @@ namespace Klinik.Data.DataRepository
                 new ObjectParameter("RegNumber", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_registrations_update_by_regnumber", regNumberParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> SP_EmployeeInsert(string empID, string empName, Nullable<System.DateTime> birthDate, string gender, string empType, string kTPNumber, string hPNumber, string email, string lastEmpID, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, string department, string businessUnit, string region, string grade, string empStatus, Nullable<System.DateTime> lastUpdateTime, string lastupdateby)
+        {
+            var empIDParameter = empID != null ?
+                new ObjectParameter("EmpID", empID) :
+                new ObjectParameter("EmpID", typeof(string));
+    
+            var empNameParameter = empName != null ?
+                new ObjectParameter("EmpName", empName) :
+                new ObjectParameter("EmpName", typeof(string));
+    
+            var birthDateParameter = birthDate.HasValue ?
+                new ObjectParameter("BirthDate", birthDate) :
+                new ObjectParameter("BirthDate", typeof(System.DateTime));
+    
+            var genderParameter = gender != null ?
+                new ObjectParameter("Gender", gender) :
+                new ObjectParameter("Gender", typeof(string));
+    
+            var empTypeParameter = empType != null ?
+                new ObjectParameter("EmpType", empType) :
+                new ObjectParameter("EmpType", typeof(string));
+    
+            var kTPNumberParameter = kTPNumber != null ?
+                new ObjectParameter("KTPNumber", kTPNumber) :
+                new ObjectParameter("KTPNumber", typeof(string));
+    
+            var hPNumberParameter = hPNumber != null ?
+                new ObjectParameter("HPNumber", hPNumber) :
+                new ObjectParameter("HPNumber", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var lastEmpIDParameter = lastEmpID != null ?
+                new ObjectParameter("LastEmpID", lastEmpID) :
+                new ObjectParameter("LastEmpID", typeof(string));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            var departmentParameter = department != null ?
+                new ObjectParameter("Department", department) :
+                new ObjectParameter("Department", typeof(string));
+    
+            var businessUnitParameter = businessUnit != null ?
+                new ObjectParameter("BusinessUnit", businessUnit) :
+                new ObjectParameter("BusinessUnit", typeof(string));
+    
+            var regionParameter = region != null ?
+                new ObjectParameter("Region", region) :
+                new ObjectParameter("Region", typeof(string));
+    
+            var gradeParameter = grade != null ?
+                new ObjectParameter("Grade", grade) :
+                new ObjectParameter("Grade", typeof(string));
+    
+            var empStatusParameter = empStatus != null ?
+                new ObjectParameter("EmpStatus", empStatus) :
+                new ObjectParameter("EmpStatus", typeof(string));
+    
+            var lastUpdateTimeParameter = lastUpdateTime.HasValue ?
+                new ObjectParameter("LastUpdateTime", lastUpdateTime) :
+                new ObjectParameter("LastUpdateTime", typeof(System.DateTime));
+    
+            var lastupdatebyParameter = lastupdateby != null ?
+                new ObjectParameter("lastupdateby", lastupdateby) :
+                new ObjectParameter("lastupdateby", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_EmployeeInsert", empIDParameter, empNameParameter, birthDateParameter, genderParameter, empTypeParameter, kTPNumberParameter, hPNumberParameter, emailParameter, lastEmpIDParameter, startDateParameter, endDateParameter, departmentParameter, businessUnitParameter, regionParameter, gradeParameter, empStatusParameter, lastUpdateTimeParameter, lastupdatebyParameter);
+        }
+    
+        public virtual int SP_GeneratePoliSchedule(Nullable<System.DateTime> startDate, Nullable<int> range, string lastupdateby)
+        {
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var rangeParameter = range.HasValue ?
+                new ObjectParameter("Range", range) :
+                new ObjectParameter("Range", typeof(int));
+    
+            var lastupdatebyParameter = lastupdateby != null ?
+                new ObjectParameter("lastupdateby", lastupdateby) :
+                new ObjectParameter("lastupdateby", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_GeneratePoliSchedule", startDateParameter, rangeParameter, lastupdatebyParameter);
         }
     }
 }

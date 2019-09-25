@@ -45,12 +45,12 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<Doctor> Doctors { get; set; }
         public virtual EmployeeStatu EmployeeStatu { get; set; }
         public virtual FamilyRelationship FamilyRelationship { get; set; }
-        public virtual GeneralMaster GeneralMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmployeeAssignment> EmployeeAssignments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Patient> Patients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
+        public virtual GeneralMaster GeneralMaster { get; set; }
     }
 }

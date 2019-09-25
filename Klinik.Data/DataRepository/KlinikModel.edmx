@@ -330,6 +330,19 @@
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="FormExamineICDInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FormExamineId" Type="bigint" />
+          <Property Name="ICDId" Type="bigint" />
+          <Property Name="RowStatus" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="FormExamineLab">
           <Key>
             <PropertyRef Name="ID" />
@@ -457,6 +470,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryId" Type="int" />
           <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="Value" Type="nvarchar" MaxLength="250" Nullable="false" />
@@ -580,9 +594,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LookUpCode" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="LookUpName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LookupContent" Type="varchar(max)" Nullable="false" />
+          <Property Name="TypeName" Type="varchar" MaxLength="50" />
           <Property Name="RowStatus" Type="smallint" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
@@ -754,7 +766,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="PatientId" Type="int" />
+          <Property Name="PatientId" Type="bigint" />
           <Property Name="Age" Type="int" Nullable="false" />
           <Property Name="AgeCode" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
@@ -1827,6 +1839,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GeneralMaster_LookupCategory">
+          <End Role="LookupCategory" Type="Self.LookupCategory" Multiplicity="0..1" />
+          <End Role="GeneralMaster" Type="Self.GeneralMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LookupCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GeneralMaster">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Gudang_Clinic">
           <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="Gudang" Type="Self.Gudang" Multiplicity="*" />
@@ -2748,9 +2772,34 @@
         <Function Name="GetAgeCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
           <Parameter Name="age" Type="decimal" Mode="In" />
         </Function>
+        <Function Name="SP_EmployeeInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmpID" Type="varchar" Mode="In" />
+          <Parameter Name="EmpName" Type="varchar" Mode="In" />
+          <Parameter Name="BirthDate" Type="date" Mode="In" />
+          <Parameter Name="Gender" Type="varchar" Mode="In" />
+          <Parameter Name="EmpType" Type="varchar" Mode="In" />
+          <Parameter Name="KTPNumber" Type="varchar" Mode="In" />
+          <Parameter Name="HPNumber" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="LastEmpID" Type="varchar" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="Department" Type="varchar" Mode="In" />
+          <Parameter Name="BusinessUnit" Type="varchar" Mode="In" />
+          <Parameter Name="Region" Type="varchar" Mode="In" />
+          <Parameter Name="Grade" Type="varchar" Mode="In" />
+          <Parameter Name="EmpStatus" Type="varchar" Mode="In" />
+          <Parameter Name="LastUpdateTime" Type="datetime" Mode="In" />
+          <Parameter Name="lastupdateby" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SP_EmployeeSync" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LastUpdateTime" Type="datetime" Mode="In" />
           <Parameter Name="RangeMinute" Type="int" Mode="In" />
+          <Parameter Name="lastupdateby" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_GeneratePoliSchedule" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="Range" Type="int" Mode="In" />
           <Parameter Name="lastupdateby" Type="varchar" Mode="In" />
         </Function>
         <Function Name="usp_MCU_registration" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -2779,6 +2828,7 @@
           <EntitySet Name="FileArchieve" EntityType="Self.FileArchieve" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormExamine" EntityType="Self.FormExamine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormExamineAttachment" EntityType="Self.FormExamineAttachment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FormExamineICDInfo" EntityType="Self.FormExamineICDInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormExamineLab" EntityType="Self.FormExamineLab" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormExamineMedicine" EntityType="Self.FormExamineMedicine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FormExamineMedicineDetail" EntityType="Self.FormExamineMedicineDetail" Schema="dbo" store:Type="Tables" />
@@ -3001,6 +3051,10 @@
           <AssociationSet Name="FK_FormPreExamine_FormMedical" Association="Self.FK_FormPreExamine_FormMedical">
             <End Role="FormMedical" EntitySet="FormMedical" />
             <End Role="FormPreExamine" EntitySet="FormPreExamine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GeneralMaster_LookupCategory" Association="Self.FK_GeneralMaster_LookupCategory">
+            <End Role="LookupCategory" EntitySet="LookupCategory" />
+            <End Role="GeneralMaster" EntitySet="GeneralMaster" />
           </AssociationSet>
           <AssociationSet Name="FK_Gudang_Clinic" Association="Self.FK_Gudang_Clinic">
             <End Role="Clinic" EntitySet="Clinic" />
@@ -3569,10 +3623,10 @@
           <NavigationProperty Name="Doctors" Relationship="Self.FK_Doctor_Employee" FromRole="Employee" ToRole="Doctor" />
           <NavigationProperty Name="EmployeeStatu" Relationship="Self.FK_Employee_EmployeeStatus" FromRole="Employee" ToRole="EmployeeStatus" />
           <NavigationProperty Name="FamilyRelationship" Relationship="Self.FK_Employee_FamilyRelationship" FromRole="Employee" ToRole="FamilyRelationship" />
-          <NavigationProperty Name="GeneralMaster" Relationship="Self.FK_Employee_GeneralMaster" FromRole="Employee" ToRole="GeneralMaster" />
           <NavigationProperty Name="EmployeeAssignments" Relationship="Self.FK_EmployeeAssignment_Employee" FromRole="Employee" ToRole="EmployeeAssignment" />
           <NavigationProperty Name="Patients" Relationship="Self.FK_Patient_Employee" FromRole="Employee" ToRole="Patient" />
           <NavigationProperty Name="Users" Relationship="Self.FK_User_Employee" FromRole="Employee" ToRole="User" />
+          <NavigationProperty Name="GeneralMaster" Relationship="KlinikDBModel.FK_Employee_GeneralMaster" FromRole="Employee" ToRole="GeneralMaster" />
         </EntityType>
         <EntityType Name="EmployeeAssignment">
           <Key>
@@ -3824,21 +3878,6 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK_FormPreExamine_Doctor" FromRole="FormPreExamine" ToRole="Doctor" />
           <NavigationProperty Name="FormMedical" Relationship="Self.FK_FormPreExamine_FormMedical" FromRole="FormPreExamine" ToRole="FormMedical" />
-        </EntityType>
-        <EntityType Name="GeneralMaster">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Value" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RowStatus" Type="Int16" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_GeneralMaster" FromRole="GeneralMaster" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Gudang">
           <Key>
@@ -5237,18 +5276,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_GeneralMaster">
-          <End Role="GeneralMaster" Type="Self.GeneralMaster" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="GeneralMaster">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="EmpType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EmployeeAssignment_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="EmployeeAssignment" Type="Self.EmployeeAssignment" Multiplicity="*" />
@@ -6136,7 +6163,6 @@
           <EntitySet Name="FormExamineServices" EntityType="Self.FormExamineService" />
           <EntitySet Name="FormMedicals" EntityType="Self.FormMedical" />
           <EntitySet Name="FormPreExamines" EntityType="Self.FormPreExamine" />
-          <EntitySet Name="GeneralMasters" EntityType="Self.GeneralMaster" />
           <EntitySet Name="Gudangs" EntityType="Self.Gudang" />
           <EntitySet Name="HistoryProductInGudangs" EntityType="Self.HistoryProductInGudang" />
           <EntitySet Name="ICDThemes" EntityType="Self.ICDTheme" />
@@ -6328,10 +6354,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_Employee_FamilyRelationship" Association="Self.FK_Employee_FamilyRelationship">
             <End Role="FamilyRelationship" EntitySet="FamilyRelationships" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Employee_GeneralMaster" Association="Self.FK_Employee_GeneralMaster">
-            <End Role="GeneralMaster" EntitySet="GeneralMasters" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
           <AssociationSet Name="FK_EmployeeAssignment_Employee" Association="Self.FK_EmployeeAssignment_Employee">
@@ -6644,7 +6666,6 @@
             <End Role="Gudang" EntitySet="Gudangs" />
             <End Role="PurchaseRequestConfig" EntitySet="PurchaseRequestConfigs" />
           </AssociationSet>
-          <EntitySet Name="LookupCategories" EntityType="KlinikDBModel.LookupCategory" />
           <EntitySet Name="MCURegistrationInterfaces" EntityType="KlinikDBModel.MCURegistrationInterface" />
           <EntitySet Name="Appointments" EntityType="KlinikDBModel.Appointment" />
           <AssociationSet Name="FK_Appointment_Clinic" Association="KlinikDBModel.FK_Appointment_Clinic">
@@ -6666,6 +6687,42 @@
           <AssociationSet Name="FK_Appointment_Poli" Association="KlinikDBModel.FK_Appointment_Poli">
             <End Role="Poli" EntitySet="Polis" />
             <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <EntitySet Name="FormExamineICDInfoes" EntityType="KlinikDBModel.FormExamineICDInfo" />
+          <FunctionImport Name="SP_EmployeeInsert" ReturnType="Collection(Int32)">
+            <Parameter Name="EmpID" Mode="In" Type="String" />
+            <Parameter Name="EmpName" Mode="In" Type="String" />
+            <Parameter Name="BirthDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Gender" Mode="In" Type="String" />
+            <Parameter Name="EmpType" Mode="In" Type="String" />
+            <Parameter Name="KTPNumber" Mode="In" Type="String" />
+            <Parameter Name="HPNumber" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="LastEmpID" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Department" Mode="In" Type="String" />
+            <Parameter Name="BusinessUnit" Mode="In" Type="String" />
+            <Parameter Name="Region" Mode="In" Type="String" />
+            <Parameter Name="Grade" Mode="In" Type="String" />
+            <Parameter Name="EmpStatus" Mode="In" Type="String" />
+            <Parameter Name="LastUpdateTime" Mode="In" Type="DateTime" />
+            <Parameter Name="lastupdateby" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GeneratePoliSchedule">
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Range" Mode="In" Type="Int32" />
+            <Parameter Name="lastupdateby" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="GeneralMasters" EntityType="KlinikDBModel.GeneralMaster" />
+          <EntitySet Name="LookupCategories" EntityType="KlinikDBModel.LookupCategory" />
+          <AssociationSet Name="FK_Employee_GeneralMaster" Association="KlinikDBModel.FK_Employee_GeneralMaster">
+            <End Role="GeneralMaster" EntitySet="GeneralMasters" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GeneralMaster_LookupCategory" Association="KlinikDBModel.FK_GeneralMaster_LookupCategory">
+            <End Role="LookupCategory" EntitySet="LookupCategories" />
+            <End Role="GeneralMaster" EntitySet="GeneralMasters" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="usp_registrations_get_by_status_Result">
@@ -6711,20 +6768,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="LookupCategory">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LookUpCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="LookUpName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LookupContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="RowStatus" Type="Int16" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="MCURegistrationInterface">
           <Key>
             <PropertyRef Name="REG_ID" />
@@ -6825,6 +6868,73 @@
             </Principal>
             <Dependent Role="Appointment">
               <PropertyRef Name="PoliID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FormExamineICDInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormExamineId" Type="Int64" />
+          <Property Name="ICDId" Type="Int64" />
+          <Property Name="RowStatus" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="GeneralMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Employees" Relationship="KlinikDBModel.FK_Employee_GeneralMaster" FromRole="GeneralMaster" ToRole="Employee" />
+          <NavigationProperty Name="LookupCategory" Relationship="KlinikDBModel.FK_GeneralMaster_LookupCategory" FromRole="GeneralMaster" ToRole="LookupCategory" />
+        </EntityType>
+        <EntityType Name="LookupCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="GeneralMasters" Relationship="KlinikDBModel.FK_GeneralMaster_LookupCategory" FromRole="LookupCategory" ToRole="GeneralMaster" />
+        </EntityType>
+        <Association Name="FK_Employee_GeneralMaster">
+          <End Type="KlinikDBModel.GeneralMaster" Role="GeneralMaster" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GeneralMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="EmpType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GeneralMaster_LookupCategory">
+          <End Type="KlinikDBModel.LookupCategory" Role="LookupCategory" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.GeneralMaster" Role="GeneralMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LookupCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GeneralMaster">
+              <PropertyRef Name="CategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7275,21 +7385,6 @@
                 <ScalarProperty Name="KBDate" ColumnName="KBDate" />
                 <ScalarProperty Name="DailyGlasses" ColumnName="DailyGlasses" />
                 <ScalarProperty Name="ExamineGlasses" ColumnName="ExamineGlasses" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="GeneralMasters">
-            <EntityTypeMapping TypeName="KlinikDBModel.GeneralMaster">
-              <MappingFragment StoreEntitySet="GeneralMaster">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -8222,21 +8317,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LookupCategories">
-            <EntityTypeMapping TypeName="KlinikDBModel.LookupCategory">
-              <MappingFragment StoreEntitySet="LookupCategory">
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="LookupContent" ColumnName="LookupContent" />
-                <ScalarProperty Name="LookUpName" ColumnName="LookUpName" />
-                <ScalarProperty Name="LookUpCode" ColumnName="LookUpCode" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="MCURegistrationInterfaces">
             <EntityTypeMapping TypeName="KlinikDBModel.MCURegistrationInterface">
               <MappingFragment StoreEntitySet="MCURegistrationInterface">
@@ -8273,6 +8353,51 @@
                 <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
                 <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
                 <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FormExamineICDInfoes">
+            <EntityTypeMapping TypeName="KlinikDBModel.FormExamineICDInfo">
+              <MappingFragment StoreEntitySet="FormExamineICDInfo">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="ICDId" ColumnName="ICDId" />
+                <ScalarProperty Name="FormExamineId" ColumnName="FormExamineId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_EmployeeInsert" FunctionName="KlinikDBModel.Store.SP_EmployeeInsert" />
+          <FunctionImportMapping FunctionImportName="SP_GeneratePoliSchedule" FunctionName="KlinikDBModel.Store.SP_GeneratePoliSchedule" />
+          <EntitySetMapping Name="GeneralMasters">
+            <EntityTypeMapping TypeName="KlinikDBModel.GeneralMaster">
+              <MappingFragment StoreEntitySet="GeneralMaster">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LookupCategories">
+            <EntityTypeMapping TypeName="KlinikDBModel.LookupCategory">
+              <MappingFragment StoreEntitySet="LookupCategory">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
