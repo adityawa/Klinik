@@ -1,0 +1,74 @@
+﻿@model Klinik.Entities.AppointmentEntities.AppointmentModel
+
+
+<html>
+<head>
+    <link href="~/Content/Octopus/assets/stylesheets/theme.css" rel="stylesheet" />
+    <link href="~/Content/Octopus/assets/stylesheets/skins/default.css" rel="stylesheet" />
+    <link href="~/Content/Octopus/assets/stylesheets/theme-custom.css" rel="stylesheet" />
+    <link href="~/Scripts/medica/jquery-ui.css" rel="stylesheet" />
+  
+    <style>
+        /*.form-horizontal {
+            display: flex;
+            align-items: center;
+        }*/
+
+        .ui-autocomplete {
+            position: absolute;
+            z-index: 2150000000 !important;
+            cursor: default;
+            border: 2px solid #ccc;
+            padding: 5px 0;
+            border-radius: 2px;
+        }
+    </style>
+    <script src="~/Scripts/medica/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/medica/jquery-ui.js"></script>
+</head>
+<body>
+    <div class="form-group">
+        <label class="control-label col-md-2">@Klinik.Resources.UIMessages.Patient</label>
+        <div class="col-md-5">
+            @Html.HiddenFor(x => x.PatientID, new { @id = "employeeId" })
+            <input type="text" class="form-control" id="employee" />
+        </div>
+    </div>
+
+</body>
+</html>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#employee").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Appointment/AutoCompleteEmployee/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#employeeId").val(i.item.id);
+                    // $("#medicineStock").val(i.item.stock);
+                },
+                minLength: 1
+            });
+
+        });
+    </script>
+
+

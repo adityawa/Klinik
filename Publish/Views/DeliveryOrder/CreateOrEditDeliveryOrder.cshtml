@@ -1,0 +1,202 @@
+﻿@model Klinik.Entities.DeliveryOrder.DeliveryOrderModel
+@using Klinik.Features;
+@{
+    ViewBag.Title = "CreateOrEditDeliveryOrder";
+}
+@section Styles{
+    <link href="~/Content/Login/vendor/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/Custom/Custom.css" rel="stylesheet" />
+}
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="fa fa-caret-down"></a>
+        </div>
+        <h5 class="panel-title">Form @ViewBag.ActionType Delivery Order</h5>
+    </header>
+    <div class="panel-body">
+        @Html.HiddenFor(x => x.Id)
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.NO_DO</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.donumber, new { @class = "form-control", @id = "donumber", @disabled = "disabled" })
+            </div>
+            <label class="col-md-2 control-label" for="inputDefault">No PO</label>
+            <div class="col-md-2">
+                <input type="text" disabled value="@Model.ponumber" class="form-control" />
+            </div>
+            <label class="col-md-2 control-label" for="inputDefault">No PR</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.prnumber, new { @class = "form-control", @id = "prnumber", @disabled = "disabled" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="inputDefault">Tanggal DO</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.dodate, new { @class = "form-control", @id = "dodate", @disabled = "disabled" })
+            </div>
+            <label class="col-md-2 control-label" for="inputDefault">Tanggal PO</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.podate, new { @class = "form-control", @id = "podate", @disabled = "disabled" })
+            </div>
+            <label class="col-md-2 control-label" for="inputDefault">Tanggal PR</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.prdate, new { @class = "form-control", @id = "prdate", @disabled = "disabled" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="inputDefault">Source</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.gudangasal, new { @class = "form-control", @id = "gudangasal", @disabled = "disabled" })
+            </div>
+            <label class="col-md-2 control-label" for="inputDefault">Process BY</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.processby, new { @class = "form-control", @id = "processby", @disabled = "disabled" })
+            </div>
+            <label class="col-md-2 control-label" for="inputDefault">Request By</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.prrequestby, new { @class = "form-control", @id = "prrequestby", @disabled = "disabled" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="inputDefault">Tujuan DO</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.gudangtujuan, new { @class = "form-control", @id = "gudangtujuan", @disabled = "disabled" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="inputDefault">Send By</label>
+            <div class="col-md-2">
+                @Html.TextBoxFor(x => x.sendby, new { @class = "form-control", @id = "sendby", @disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="scrollTable">
+            <table id="tblDeliveryOrder" class="table color-table success-table">
+                <caption class="headertable">@Klinik.Resources.UIMessages.DeliveryOrderDetailList</caption>
+                <thead>
+                    <tr>
+                        <th>Nama Obat</th>
+                        <th>Total Qty Request</th>
+                        <th>Nama By HO</th>
+                        <th> Qty By HP</th>
+                        <th>Remark By HO</th>
+                        <th>Qty Adjustment</th>
+                        <th>Remark Adjustment</th>
+                        <th>Recived@*<input type="checkbox" class="checkall">*@</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model.deliveryOrderDetailModels)
+                        {
+                            <tr>
+                                <td hidden>@item.Id</td>
+                                <td hidden>@item.ProductId</td>
+                                <td><select disabled="disabled"><option>@item.namabarang</option></select></td>
+                                <td><input type="text" class="form-control" value="@item.qty_request" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.nama_by_ho" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_by_HP" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.remark_by_ho" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.qty_adj" disabled="disabled" /></td>
+                                <td><input type="text" class="form-control" value="@item.remark_adj" disabled="disabled" /></td>
+                                <td><input type="checkbox" value="@(item.Recived == true ? "true" : "false")" @(item.Recived == true ? "checked" : "") disabled></td>
+                                <td>
+                                    @if ((GeneralHandler.authorized("EDIT_M_DELIVERYORDER") == "true"))
+                                    {
+                                        <button class="save-deliveryorderdetail btn btn-success btn-sm" data-url="/DeliveryOrder/EditDeliveryOrderDetail" style="display:none;">Save</button>
+                                        <button class="edit-deliveryorderdetail btn btn-success btn-sm" disabled>Edit</button>
+                                        <button class="btn btn-danger btn-sm delete-deliveryorderdetail" disabled>Delete</button>
+                                        <img src="~/Content/images/loading.gif" style="height: 30px;display:none;" class="image-loading" />
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <footer class="panel-footer">
+            @if (Model != null && (GeneralHandler.authorized("EDIT_M_DELIVERYORDER") == "true"))
+            {
+                if (Model.Recived == null)
+                {
+                    <button type="submit" class="btn btn-primary saveorderdetail" data-parameterone="_deliveryorder" data-parametertwo="deliveryOrderDetailpusatModels" style="display:none" data-url="/DeliveryOrder/CreateOrEditDeliveryOrder">@Klinik.Resources.UIMessages.Save</button>
+                    <button type="submit" class="btn btn-primary openallbutton" data-parameterone="_deliveryorder">@Klinik.Resources.UIMessages.Edit</button>
+                }
+            }
+
+            @if (Model != null && (GeneralHandler.authorized("RECIVED_M_DELIVERYORDER") == "true"))
+            {
+                if (Model.Recived == null)
+                {
+                    <a class="btn btn-success" href="/DeliveryOrder/ReceivedOrder?id=@(Model.Id)">Recived</a>
+                }
+            }
+            @if (Model != null && (GeneralHandler.authorized("VIEW_M_DELIVERYORDER") == "true"))
+            {
+                <a class="btn btn-success btn-sm" href="/DeliveryOrder/PrintDeliveryOrder?id=@(Model.Id)">Print</a>
+            }
+            <button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+        </footer>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/Custom.js"></script>
+    <script src="~/js/General.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dodate').datepicker({
+                autoclose: true
+            });
+            $('#btnreset').click(function (e) {
+                window.location.href = "/PurchaseRequest/PurchaseRequestList";
+            });
+
+            toastr.options = {
+                "closeButton": false,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "0",
+                "hideDuration": "0",
+                "timeOut": "2000",
+                "showMethod": "fadeIn"
+            };
+
+            var _temp="@ViewBag.Response";
+            var _arrMsg = _temp.split(";");
+
+            if (_arrMsg.length > 1) {
+                if (_arrMsg[0] == "True") {
+                    toastr.success(_arrMsg[1]);
+                }
+                else {
+                    toastr.options.closeButton = true;
+                    toastr.options.timeOut = 0;
+                    toastr.error(_arrMsg[1]);
+                }
+            }
+        });
+
+    </script>
+    <script type="text/javascript">
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblDeliveryOrder")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+    </script>
+}

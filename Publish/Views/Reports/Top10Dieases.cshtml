@@ -1,0 +1,132 @@
+﻿@model Klinik.Entities.Reports.Top10DiseasesParamModel
+@{
+    ViewBag.Title = "Top10Diseases";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="panel">
+    <form class="form-horizontal form-bordered" method="post" action="/Reports/Top10DiseasesReport">
+        <header class="panel-heading">
+            <div class="panel-actions">
+                <a href="#" class="fa fa-caret-down"></a>
+            </div>
+            <h5 class="panel-title">
+                @Klinik.Resources.UIMessages.Top10DiseasesReport
+            </h5>
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.ReportMonth</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.Month, (IEnumerable<SelectListItem>)ViewBag.Months, new { @class = "form-control", @id = "ddlMonth" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Year</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.Year, (IEnumerable<SelectListItem>)ViewBag.Years, new { @class = "form-control", @id = "ddlYear" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Clinic</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.ClinicId, (IEnumerable<SelectListItem>)ViewBag.Clinics, new { @class = "form-control", @id = "ddlClinic" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Department</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.DeptName, (IEnumerable<SelectListItem>)ViewBag.Departments, new { @class = "form-control", @id = "ddlDept" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.BusinessUnit</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.BUName, (IEnumerable<SelectListItem>)ViewBag.BusinessUnits, new { @class = "form-control", @id = "ddlBusinessUnit" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Gender </label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.GenderType, (IEnumerable<SelectListItem>)ViewBag.Genders, new { @class = "form-control", @id = "ddlGender" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Age</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.AgeCode, (IEnumerable<SelectListItem>)ViewBag.Ages, new { @class = "form-control", @id = "ddlBusinessUnit" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.EmployeeStatus </label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.PatientCategory, (IEnumerable<SelectListItem>)ViewBag.EmpStatus, new { @class = "form-control", @id = "ddlEmpStatus" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.FamilyStatus </label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.FamilyStatus, (IEnumerable<SelectListItem>)ViewBag.FamilyStatuses, new { @class = "form-control", @id = "ddlFamilyStatus" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.CategoryClinicStatus</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.CategoryClinicStatus, (IEnumerable<SelectListItem>)ViewBag.NecessityTypes, new { @class = "form-control", @id = "ddlNecessityType" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PaymentType </label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.PaymentType, (IEnumerable<SelectListItem>)ViewBag.PaymentTypes, new { @class = "form-control", @id = "ddlPaymentType" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.NeedRest </label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.NeedRest, (IEnumerable<SelectListItem>)ViewBag.NeedRests, new { @class = "form-control", @id = "ddlNeedRest" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.IsAccident </label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.ExamineType, (IEnumerable<SelectListItem>)ViewBag.ExamineTypes, new { @class = "form-control", @id = "ddlExamineType" })
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Generate</button>
+        </div>
+    </form>
+
+</section>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#ddlMonth').select2();
+            $('#ddlYear').select2();
+            $('#ddlClinic').select2();
+            $('#ddlDept').select2();
+            $('#ddlBusinessUnit').select2();
+            $('#ddlEmpStatus').select2();
+            $('#ddlFamilyStatus').select2();
+            $('#ddlNecessityType').select2();
+            $('#ddlPaymentType').select2();
+            $('#ddlNeedRest').select2();
+            $('#ddlExamineType').select2();
+
+
+            toastr.options = {
+                "closeButton": false,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "0",
+                "hideDuration": "0",
+                "timeOut": "2000",
+                "showMethod": "fadeIn"
+            };
+        })
+    </script>
+}

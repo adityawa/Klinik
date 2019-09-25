@@ -1,0 +1,128 @@
+﻿@model Klinik.Entities.MasterData.MenuModel
+
+@{
+    ViewBag.Title = "CreateOrEditMenu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="panel">
+	<form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditMenu">
+		<header class="panel-heading">
+			<div class="panel-actions">
+				<a href="#" class="fa fa-caret-down"></a>
+			</div>
+			<h5 class="panel-title">Form @ViewBag.ActionType Menu</h5>
+		</header>
+		<div class="panel-body">
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Description</label>
+				<div class="col-md-4">
+					@Html.HiddenFor(x => x.Id)
+					@Html.TextBoxFor(x => x.Description, new { @class = "form-control", @id = "tbDescription" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.ParentMenu</label>
+				<div class="col-md-4">
+					@Html.DropDownListFor(p => p.ParentMenuId, (IEnumerable<SelectListItem>)ViewBag.ParentMenuList, new { @class = "form-control", @id = "ddlParentMenu" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Name</label>
+				<div class="col-md-4">
+					@Html.TextBoxFor(x => x.Name, new { @class = "form-control", @id = "tbName" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Controller</label>
+				<div class="col-md-4">
+					@Html.TextBoxFor(x => x.Controller, new { @class = "form-control", @id = "tbController" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Action</label>
+				<div class="col-md-4">
+					@Html.TextBoxFor(x => x.Action, new { @class = "form-control", @id = "tbAction" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Level</label>
+				<div class="col-md-4">
+					@Html.TextBoxFor(x => x.Level, new { @class = "form-control", @id = "tbLevel" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Icon</label>
+				<div class="col-md-4">
+					@Html.TextBoxFor(x => x.Icon, new { @class = "form-control", @id = "tbIcon" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.HasChild</label>
+				<div class="col-md-4">
+					@Html.CheckBoxFor(x => x.HasChild, new { @class = "form-check-input", @id = "cbHasChild" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.IsMenu</label>
+				<div class="col-md-4">
+					@Html.CheckBoxFor(x => x.IsMenu, new { @class = "form-check-input", @id = "cbIsMenu" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PageLink</label>
+				<div class="col-md-4">
+					@Html.TextBoxFor(x => x.PageLink, new { @class = "form-control", @id = "tbIcon" })
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.SortIndex</label>
+				<div class="col-md-4">
+					@Html.TextBoxFor(x => x.SortIndex, new { @class = "form-control", @id = "tbIcon" })
+				</div>
+			</div>
+			<br />
+		</div>
+		<div class="panel-footer">
+			<button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
+			<button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>
+		</div>
+	</form>
+</section>
+
+@section Scripts {
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnreset').click(function (e) {
+            window.location.href = "/MasterData/MenuList";
+        });
+
+        $('#ddlParentMenu').select2();
+
+        toastr.options = {
+            "closeButton": false,
+            "positionClass": "toast-top-full-width",
+            "onclick": null,
+            "showDuration": "0",
+            "hideDuration": "0",
+            "timeOut": "2000",
+            "showMethod": "fadeIn"
+        };
+
+        var _temp="@ViewBag.Response";
+        var _arrMsg = _temp.split(";");
+
+        if (_arrMsg.length > 1) {
+            if (_arrMsg[0] == "True") {
+                toastr.success(_arrMsg[1]);
+            }
+            else {
+                toastr.options.closeButton = true;
+                toastr.options.timeOut = 0;
+                toastr.error(_arrMsg[1]);
+            }
+        }
+    });
+
+    </script>
+}

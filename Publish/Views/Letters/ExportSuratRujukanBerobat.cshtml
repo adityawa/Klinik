@@ -1,0 +1,352 @@
+﻿@model Klinik.Entities.Letter.RujukanBerobatModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>::Surat Rujukan Berobat::</title>
+</head>
+<body>
+    <div>
+        <div style="        padding: 15px;
+        text-align: center;
+        background-color: gainsboro;
+        border-style: inset">
+            <h3>KLINIK PT RIAU ANDALAN PULP & PAPER</h3>
+            <div style="        text-align: center">
+                <label>Town Site :......... /Port - Estate : ............</label>
+            </div>
+        </div>
+        <br />
+        <div>
+            <div style="        margin-right: 0;
+        width: 35%;
+        float: right">
+                <div style="        padding: 15px;
+        text-align: center;
+        float: right;
+        background-color: gainsboro;
+        border-style: inset">
+                    Surat Rujukan
+                </div>
+                <br /><br /><br /><br /><br />
+                <table style="        border: solid;
+        width: 60%;
+        float: right">
+                    <tr>
+                        <td>Info Penting :</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            RS Rujukan
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.InfoRujukanData.RSRujukan)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            No Telepon
+                        </td>
+                        <td>:</td>
+                        <td>
+                            @Html.DisplayFor(x => x.InfoRujukanData.Phone)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Nama Dokter
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.InfoRujukanData.NamaDokter)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Hari Praktek
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.InfoRujukanData.HariPraktek)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="        margin-left: 0;
+        width: 65%;
+        float: left">
+                <table style="  width: 100%">
+                    <tr>
+                        <td>
+                            <label>No</label>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.NoSurat)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Hal</label>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            <p>Pengobatan Pasien</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Kepada Yth,</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            .........................
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Di Tempat
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3">
+                            <p>Dengan Hormat,</p>
+                            <p>Mohon penanganan lebih lanjut pada pasien :</p>
+                        </td>
+                    </tr>
+                  
+                    <tr>
+                        <td style="width:30%">
+                            <label>Nama / SAP</label>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.PatientData.Name) / @Html.DisplayFor(x => x.PatientData.SAP)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Nik / BPJS</label>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.PatientData.KTPNumber) / @Html.DisplayFor(x => x.PatientData.BPJSNumber)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Tanggal Lahir / Usia</label>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.PatientData.BirthDateStr) / @Html.DisplayFor(x => x.PatientData.Umur)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Jenis Kelamin</label>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.PatientData.Gender)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Perusahaan</label>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.Perusahaan)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Hub Keluarga</label>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.PatientData.familyRelationshipDesc)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Diagnosa</label>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.FormExamineData.Diagnose)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Keluhan</label>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.FormExamineData.Anamnesa)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Pemeriksaan Fisik</label>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.strPemFisik)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Pemeriksaan Penunjang</label>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.FormExamineData.Result)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Terapi</label>
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td>
+                            @Html.DisplayFor(x => x.FormExamineData.Therapy)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            Tanda tangan dokter pengirim
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">.......................................................</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Nama Dokter
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Tanggal
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+                <br />
+                <table style="        border-style: inset;
+        width: 100%">
+                    <tr>
+                        <td>
+                            Jawaban Rujukan
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Diagnosa
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td style="        width: 80%"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Terapi
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Kontrol Ulang
+                        </td>
+                        <td>
+                            :
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+﻿@model Klinik.Entities.AppointmentEntities.AppointmentModel
+
+<html>
+<head>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">@Klinik.Resources.UIMessages.Jam</label>
+        <div class="col-md-5">
+            <div class='input-group date' id='jam'>
+                <input type='text' class="form-control" id="valJam" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+
+</html>
+
+<script type="text/javascript">
+    $(function () {
+        $('#jam').datetimepicker({
+            format: 'LT'
+        });
+    });
+</script>
