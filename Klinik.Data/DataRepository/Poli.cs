@@ -17,7 +17,6 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Poli()
         {
-            this.FormExamines = new HashSet<FormExamine>();
             this.LabItemCategories = new HashSet<LabItemCategory>();
             this.PanggilanPolis = new HashSet<PanggilanPoli>();
             this.PoliClinics = new HashSet<PoliClinic>();
@@ -27,6 +26,7 @@ namespace Klinik.Data.DataRepository
             this.QueuePolis = new HashSet<QueuePoli>();
             this.QueuePolis1 = new HashSet<QueuePoli>();
             this.Appointments = new HashSet<Appointment>();
+            this.FormExamines = new HashSet<FormExamine>();
         }
     
         public int ID { get; set; }
@@ -39,8 +39,6 @@ namespace Klinik.Data.DataRepository
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FormExamine> FormExamines { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LabItemCategory> LabItemCategories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -59,5 +57,7 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<QueuePoli> QueuePolis1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FormExamine> FormExamines { get; set; }
     }
 }

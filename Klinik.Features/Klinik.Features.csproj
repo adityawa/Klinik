@@ -314,6 +314,9 @@
     <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyRequest.cs" />
     <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyResponse.cs" />
     <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyValidator.cs" />
+    <Compile Include="SuratReferensi\SuratIzinSakit\SuratSakitHandler.cs" />
+    <Compile Include="SuratReferensi\SuratIzinSakit\SuratSakitRequest.cs" />
+    <Compile Include="SuratReferensi\SuratIzinSakit\SuratSakitResponse.cs" />
     <Compile Include="SuratReferensi\SuratLabReferensi\RujukanLabHandler.cs" />
     <Compile Include="SuratReferensi\SuratLabReferensi\RujukanLabRequest.cs" />
     <Compile Include="SuratReferensi\SuratLabReferensi\RujukanLabResponse.cs" />

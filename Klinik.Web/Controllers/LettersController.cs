@@ -20,6 +20,7 @@ using Klinik.Features.SuratReferensi.SuratPersetujuanTindakan;
 using Klinik.Features.SuratReferensi.SuratRujukanBerobat;
 using Klinik.Entities.PreExamine;
 using System.Text;
+using Klinik.Features.SuratReferensi.SuratIzinSakit;
 
 namespace Klinik.Web.Controllers
 {
@@ -556,6 +557,19 @@ namespace Klinik.Web.Controllers
                 PageSize = Size.Folio,
 
                 FileName = "SuratRujukanBerobat.pdf"
+            };
+        }
+
+        public ActionResult ExportSuratIzinSakit2Pdf(string FormMedId)
+        {
+            var response = new SuratSakitHandler(_unitOfWork).GetSuratIzinSakitData(FormMedId==null?0:Convert.ToInt64(FormMedId));
+            //return View(response.Entity);
+            return new PartialViewAsPdf(response.Entity)
+            {
+                PageOrientation = Orientation.Portrait,
+                PageSize = Size.Folio,
+
+                FileName = "SuratIzinSakit.pdf"
             };
         }
     }

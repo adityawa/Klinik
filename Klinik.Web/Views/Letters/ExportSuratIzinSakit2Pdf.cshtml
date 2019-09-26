@@ -1,0 +1,108 @@
+﻿@model Klinik.Entities.Letter.SuratIzinSakitModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>::Surat Berbadan Sehat::</title>
+</head>
+<body>
+    <div>
+        <div>
+            <div style="text-align:center">
+                <label>Town Site :......... /Port - Estate : ............</label>
+            </div>
+            <div style="text-align:center">
+                <h3>Surat Izin Sakit</h3>
+                No : @Html.DisplayFor(x => x.NoSurat)
+            </div>
+            <div style="margin-top:10px">
+                <table>
+                    <tr>
+                        <td>
+                            <p>Yang tersebut dibawah ini :</p>
+                        </td>
+                    </tr>
+                </table>
+                <table width="30%">
+                    <tr>
+                        <td>
+                            <label for="inputDefault">@Klinik.Resources.UIMessages.Name</label>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            @Html.DisplayFor(x => x.patientData.Name, new { @Id = "tbPatientName" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="inputDefault">@Klinik.Resources.UIMessages.Age</label>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            @Html.DisplayFor(x => x.patientData.Umur, new { @Id = "tbUmur" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="inputDefault">@Klinik.Resources.UIMessages.Pekerjaan</label>
+                        </td>
+                        <td>:</td>
+                        <td>
+                           Karyawan Swasta
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label for="inputDefault">@Klinik.Resources.UIMessages.Address</label>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            @Html.DisplayFor(x => x.patientData.Address, new { Id = "tbAddress" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.BPJSNo</label>
+                        </td>
+                        <td>:</td>
+                        <td>
+                            @Html.DisplayFor(x => x.patientData.BPJSNumber, new { id = "tbBPJS" })
+                        </td>
+                    </tr>
+
+                </table>
+
+                <div style="width:80%">
+                    <p>
+                       Pada saat ini benar dalam keadaan sakit dan perlu istirahat selama @Html.DisplayFor(x=>x.ExamineData.JumHari) hari. Terhitung mulai @Html.DisplayFor(x=>x.strStartIstirahat) s/d @Html.DisplayFor(x=>x.strSelesaiIstirahat).
+                        
+                    </p>
+                    <p>Demikian agar dapat dimaklumi</p>
+                </div>
+
+            
+                <br /><br />
+                <div>
+                    <p>Tanda tangan Dokter Pemeriksa</p>
+                    <br /><br />
+
+                </div>
+                <hr style="width:20%; float:left" />
+                <br />
+
+                <div style="text-align:left; float:left">
+                    <p>Nama Dokter : @Html.DisplayFor(x => x.NamaDokter) </p>
+                    <p>Tanggal : @Html.DisplayFor(x => x.strStartIstirahat) </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

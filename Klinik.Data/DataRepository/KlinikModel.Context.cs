@@ -15,7 +15,7 @@ namespace Klinik.Data.DataRepository
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class KlinikDBEntities : DbContext
+    public partial class KlinikDBEntities: DbContext
     {
         public KlinikDBEntities()
             : base("name=KlinikDBEntities")
@@ -41,7 +41,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<EmployeeStatu> EmployeeStatus { get; set; }
         public virtual DbSet<FamilyRelationship> FamilyRelationships { get; set; }
         public virtual DbSet<FileArchieve> FileArchieves { get; set; }
-        public virtual DbSet<FormExamine> FormExamines { get; set; }
         public virtual DbSet<FormExamineAttachment> FormExamineAttachments { get; set; }
         public virtual DbSet<FormExamineLab> FormExamineLabs { get; set; }
         public virtual DbSet<FormExamineMedicine> FormExamineMedicines { get; set; }
@@ -103,6 +102,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<LookupCategory> LookupCategories { get; set; }
         public virtual DbSet<MCURegistrationInterface> MCURegistrationInterfaces { get; set; }
         public virtual DbSet<Appointment> Appointments { get; set; }
+        public virtual DbSet<FormExamine> FormExamines { get; set; }
     
         [DbFunction("KlinikDBEntities1", "fusp_registrations_get_by_status")]
         public virtual IQueryable<fusp_registrations_get_by_status_Result> fusp_registrations_get_by_status(string documentStatus, string isTransferred)

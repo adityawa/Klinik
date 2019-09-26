@@ -79,6 +79,15 @@
                                 <button id="btnAcceptMedRefLtr" class="btn btn-info">Create</button>
                             </td>
                         </tr>
+
+                        <tr>
+                            <td>
+                                @Klinik.Resources.UIMessages.SuratIstirahat
+                            </td>
+                            <td>
+                                <button id="btnCreateSuratSakit" class="btn btn-info">Create</button>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </form>
@@ -608,6 +617,12 @@
                 format: "dd/mm/yyyy",
                 changeMonth: true,
                 changeYear: true
+            });
+
+            $('#btnCreateSuratSakit').click(function (e) {
+                var FormMedicalID = $('#ddlFrmMedIds').val();
+                var full_uri = "http://" + location.host +'@Url.Action("ExportSuratIzinSakit2Pdf", "Letters")?FormMedId='+FormMedicalID;
+                window.open(full_uri, "_blank");
             });
 
             $('#btnSavePersTindakan').click(function (e) {

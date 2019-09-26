@@ -35,9 +35,9 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string JenisObat { get; set; }
     
-        public virtual FormExamine FormExamine { get; set; }
         public virtual Product Product { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormExamineMedicineDetail> FormExamineMedicineDetails { get; set; }
+        public virtual FormExamine FormExamine { get; set; }
     }
 }
