@@ -840,7 +840,7 @@ namespace Klinik.Web.Controllers
                 item.ClinicID = Convert.ToInt64(column3);
                 item.ProductCategoryID = Convert.ToInt32(column4);
                 item.ProductUnitID = Convert.ToInt32(column5);
-                item.RetailPrice = Convert.ToInt16(column6);
+                item.RetailPrice = Convert.ToDecimal(column6);
                 item.RowStatus = 0;
                 item.CreatedBy = Convert.ToString(Session["Code"]);
                 item.CreatedDate = DateTime.Now;
@@ -1075,7 +1075,7 @@ namespace Klinik.Web.Controllers
                 object column3 = worksheet.Cells[startRow + 1, startColumn + 2].Value;
 
                 //object createddate = worksheet.Cells[startRow + 1, startColumn + 5].Value;
-                if (data != null && column2 != null)
+                if (data != null )
                 {
                     var isSuccess = saveClassPM(column1.ToString(), column2.ToString(), column3.ToString(), /*Convert.ToDateTime(createddate),*/ db);
                     if (isSuccess)
@@ -1094,8 +1094,7 @@ namespace Klinik.Web.Controllers
             var result = false;
             //createddate = DateTime.Now;
 
-            if (db.ProductMedicines.Where(t => t.MedicineID.Equals(column2)).Count() == 0)
-            {
+            
                 var item = new ProductMedicine();
                 item.ProductID = Convert.ToInt32(column1);
                 item.MedicineID = Convert.ToInt32(column2);
@@ -1106,7 +1105,7 @@ namespace Klinik.Web.Controllers
                 db.ProductMedicines.Add(item);
                 db.SaveChanges();
 
-            }
+            
 
 
             return result;
@@ -1172,7 +1171,7 @@ namespace Klinik.Web.Controllers
             }
             while (data != null);
 
-            return RedirectToAction("MedicineeList", "MasterData");
+            return RedirectToAction("MedicineList", "MasterData");
         }
         public bool saveClassM(String column1, /*DateTime createddate, */KlinikDBEntities db)
         {
@@ -1758,7 +1757,7 @@ namespace Klinik.Web.Controllers
 
             foreach (var k in users)
             {
-                dt.Rows.Add(k.OrganizationID, k.UserName, k.Password, k.EmployeeID, k.ResetPasswordCode, k.Status, k.ExpiredDate);
+                dt.Rows.Add(k.OrganizationID, k.UserName, k.Password, k.EmployeeID, k.ExpiredDate, k.ResetPasswordCode, k.Status);
             }
 
             using (XLWorkbook wb = new XLWorkbook())
@@ -1807,7 +1806,7 @@ namespace Klinik.Web.Controllers
             }
             while (data != null);
 
-            return RedirectToAction("User", "MasterData");
+            return RedirectToAction("UserList", "MasterData");
         }
         public bool saveClassU(String column1, String column2, String column3, String column4, String column5, String column6, String column7, KlinikDBEntities db)
         {
@@ -1898,7 +1897,7 @@ namespace Klinik.Web.Controllers
             }
             while (data != null);
 
-            return RedirectToAction("Organization", "MasterData");
+            return RedirectToAction("OrganizationList", "MasterData");
         }
         public bool saveClassO(String column1, String column2, String column3,/*DateTime createddate, */KlinikDBEntities db)
         {

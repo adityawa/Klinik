@@ -20,8 +20,17 @@ namespace Klinik.Entities
         //    CreatedDateStr = new  PoliModel();
         //    ModifiedDateStr = new PoliModel();
         //}
-
+        
+        //public DoctorModel Extends BaseModel;
     }
+    //class Date
+    //{
+    //    public string CreatedDateStr { get; set; }
+    //    public string ModifiedDateStr { get; set; }
+    //}
+    //class Doctor : Date {
+        
+    //}
 
-    
+
 }

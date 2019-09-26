@@ -26,7 +26,7 @@
                     </h4>
                 </th>
                 <th>
-                    @using (Html.BeginForm("ImportData", "ExportImport", FormMethod.Post))
+                    @using (Html.BeginForm("ExportMedicine", "ExportImport", FormMethod.Post))
                     {
                         <input type="submit" value="Export" class="btn btn-primary" />
                     }
@@ -38,11 +38,10 @@
                     </form>*@
                 </th>
                 <th>
-                    <form action="" method="post">
-
-                        <a href="" type="submit"><i class="fa fa-upload"></i></a>
-
-                    </form>
+                    @using (Html.BeginForm("ImportMedicine", "ExportImport", FormMethod.Post))
+                    {
+                        <input type="submit" value="Import" class="btn btn-primary" />
+                    }
                 </th>
             </tr>
         </table>
