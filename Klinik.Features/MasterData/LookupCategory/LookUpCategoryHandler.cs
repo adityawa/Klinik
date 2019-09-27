@@ -45,15 +45,13 @@ namespace Klinik.Features.MasterData.LookupCategory
                         qry.ModifiedDate = DateTime.Now;
 
                         // update data
-                        qry.LookUpName = request.Data.LookUpName;
-                        qry.LookUpCode = request.Data.LookUpCode;
-                        qry.LookupContent = request.Data.LookUpContent;
+                        qry.TypeName = request.Data.TypeName;
 
                         _unitOfWork.LookUpCategoryRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
                         if (resultAffected > 0)
                         {
-                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, "LookUpCategory", qry.LookUpName, qry.ID);
+                            response.Message = string.Format(Messages.ObjectHasBeenUpdated, "LookUpCategory", qry.TypeName, qry.ID);
 
                             CommandLog(true, ClinicEnums.Module.MASTER_LOOKUPCATEGORY, Constants.Command.EDIT_LOOKUP_CATEGORY, request.Data.Account, request.Data, _oldentity);
                         }
@@ -83,7 +81,7 @@ namespace Klinik.Features.MasterData.LookupCategory
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "LookUpCategory", lookupEntity.LookUpName, lookupEntity.ID);
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "LookUpCategory", lookupEntity.TypeName, lookupEntity.ID);
 
                         CommandLog(true, ClinicEnums.Module.MASTER_LOOKUPCATEGORY, Constants.Command.ADD_LOOKUP_CATEGORY, request.Data.Account, request.Data);
                     }
@@ -145,7 +143,7 @@ namespace Klinik.Features.MasterData.LookupCategory
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
-                searchPredicate = searchPredicate.And(p => p.LookUpName .Contains(request.SearchValue));
+                searchPredicate = searchPredicate.And(p => p.TypeName.Contains(request.SearchValue));
             }
 
             if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
@@ -154,8 +152,8 @@ namespace Klinik.Features.MasterData.LookupCategory
                 {
                     switch (request.SortColumn.ToLower())
                     {
-                        case "lookupname":
-                            qry = _unitOfWork.LookUpCategoryRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.LookUpName));
+                        case "typename":
+                            qry = _unitOfWork.LookUpCategoryRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.TypeName));
                             break;
 
                         default:
@@ -167,8 +165,8 @@ namespace Klinik.Features.MasterData.LookupCategory
                 {
                     switch (request.SortColumn.ToLower())
                     {
-                        case "lookupname":
-                            qry = _unitOfWork.LookUpCategoryRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.LookUpName));
+                        case "typename":
+                            qry = _unitOfWork.LookUpCategoryRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.TypeName));
                             break;
 
                         default:
@@ -225,7 +223,7 @@ namespace Klinik.Features.MasterData.LookupCategory
                     int resultAffected = _unitOfWork.Save();
                     if (resultAffected > 0)
                     {
-                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "LookUpCategory", lookupCategory.LookUpName, lookupCategory.ID);
+                        response.Message = string.Format(Messages.ObjectHasBeenRemoved, "LookUpCategory", lookupCategory.TypeName, lookupCategory.ID);
                     }
                     else
                     {

@@ -20,7 +20,7 @@ namespace Klinik.Features
 
         public IQueryable<LookupCategory> GetLookupCategoryByName(string name)
         {
-            return _unitOfWork.LookUpCategoryRepository.Query(x => x.LookUpName.Equals(name, StringComparison.OrdinalIgnoreCase));
+            return _unitOfWork.LookUpCategoryRepository.Query(x => x.TypeName.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
 
         public List<string> GetRujukans()

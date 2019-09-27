@@ -18,8 +18,7 @@
                 <thead>
                     <tr>
                         <th>@Klinik.Resources.UIMessages.ID</th>
-                        <th>@Klinik.Resources.UIMessages.LookUpName</th>
-                        <th>@Klinik.Resources.UIMessages.LookUpContent</th>
+                        <th>@Klinik.Resources.UIMessages.TypeName</th>
                         <th>@Klinik.Resources.UIMessages.Action</th>
                     </tr>
                 </thead>
@@ -58,18 +57,12 @@
                     "targets": [1],
                     "searchable": true,
                     "orderable": true
-                },
-                {
-                    "targets": [2],
-                    "searchable": true,
-                    "orderable": false
                 }
                 ],
 
             "columns": [
                 { "data": "Id", "name": "Id", "autoWidth": false },
-                { "data": "LookUpName", "name": "LookUpName", "autoWidth": true },
-                { "data": "LookUpContent", "name": "LookUpContent", "autoWidth": true },
+                { "data": "TypeName", "name": "TypeName", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditLookUpCategory?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" }
                 }

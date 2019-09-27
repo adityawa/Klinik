@@ -42,9 +42,9 @@ namespace Klinik.Features
             {
                 bool isHavePrivilege = true;
 
-                if (request.Data.LookUpName == null || String.IsNullOrWhiteSpace(request.Data.LookUpName))
+                if (request.Data.TypeName == null || String.IsNullOrWhiteSpace(request.Data.TypeName))
                 {
-                    errorFields.Add("LookupCategory Name");
+                    errorFields.Add("LookupCategory Type Name");
                 }
 
                 if (errorFields.Any())

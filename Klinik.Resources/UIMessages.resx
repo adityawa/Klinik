@@ -1290,4 +1290,7 @@
   <data name="LetterType" xml:space="preserve">
     <value>Type of Letter</value>
   </data>
+  <data name="TypeName" xml:space="preserve">
+    <value>Type Name</value>
+  </data>
 </root>

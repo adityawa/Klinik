@@ -3400,6 +3400,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Type Name.
+        /// </summary>
+        public static string TypeName {
+            get {
+                return ResourceManager.GetString("TypeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type radiology name here.
         /// </summary>
         public static string TypeRadiologyNameHere {

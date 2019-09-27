@@ -213,8 +213,8 @@ namespace Klinik.Web.Controllers
             foreach (var item in items)
             {
                 _types.Add(new SelectListItem {
-                    Text = item.LookupContent,
-                    Value = item.LookUpCode
+                    Text = item.TypeName,
+                    Value = item.ID.ToString()
                 });
             }
 
