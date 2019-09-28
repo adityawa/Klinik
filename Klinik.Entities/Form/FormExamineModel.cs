@@ -22,5 +22,8 @@ namespace Klinik.Entities.Form
         public int JumHari { get; set; }
         public DateTime? Sampai { get; set; }
 
+        public int Caused { get; set; }
+        public int Condition { get; set; }
+
     }
 }

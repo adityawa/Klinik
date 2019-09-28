@@ -734,7 +734,7 @@
                                                             <label class="control-label">@Klinik.Resources.UIMessages.NeedSuratSakit</label>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            @Html.CheckBoxFor(p =>p.ExamineData.NeedSuratSakit, new { @class = "form-control", @id = "cbNeedSurat" })
+                                                            @Html.CheckBoxFor(p => p.ExamineData.NeedSuratSakit, new { @class = "form-control", @id = "cbNeedSurat" })
                                                         </div>
                                                     </div>
                                                     <div class="row text-right">
@@ -745,8 +745,28 @@
                                                             @Html.TextBoxFor(p => p.ExamineData.JumHari, new { @class = "form-control", @id = "tbJumHari" })
                                                         </div>
                                                     </div>
+
+                                                    <div class="row text-right">
+                                                        <div class="form-group col-md-6">
+                                                            <label class="control-label">@Klinik.Resources.UIMessages.Caused</label>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            @Html.DropDownListFor(p => p.ExamineData.Caused, (IEnumerable<SelectListItem>)ViewBag.CausedList, new { @class = "form-control", @id = "ddlcaused" })
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                                 <div class="form-group col-md-6">
+
+                                                    <div class="row text-right">
+                                                        <div class="form-group col-md-6">
+                                                            <label class="control-label">@Klinik.Resources.UIMessages.Condition</label>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            @Html.DropDownListFor(p => p.ExamineData.Condition, (IEnumerable<SelectListItem>)ViewBag.ConditionList, new { @class = "form-control", @id = "ddlcondition" })
+                                                        </div>
+                                                    </div>
+
                                                     <div class="row text-right">
                                                         <div class="form-group col-md-6">
                                                             <label class="control-label">@Klinik.Resources.UIMessages.ForwardTo</label>
@@ -925,7 +945,9 @@
             if (!medicine.length) return;
         $('#ddlicd1').select2();
         $('#ddlicd2').select2();
-         $('#ddlicd3').select2();
+        $('#ddlicd3').select2();
+        $('#ddlcaused').select2();
+        $('#ddlcondition').select2();
             $("#medicineName").autocomplete({
                 source: function (request, response) {
                     $.ajax({

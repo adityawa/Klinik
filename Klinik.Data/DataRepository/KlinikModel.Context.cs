@@ -15,7 +15,7 @@ namespace Klinik.Data.DataRepository
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class KlinikDBEntities: DbContext
+    public partial class KlinikDBEntities : DbContext
     {
         public KlinikDBEntities()
             : base("name=KlinikDBEntities")
@@ -54,7 +54,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<ICDTheme> ICDThemes { get; set; }
         public virtual DbSet<LabItem> LabItems { get; set; }
         public virtual DbSet<LabItemCategory> LabItemCategories { get; set; }
-        public virtual DbSet<Letter> Letters { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<MCUPackage> MCUPackages { get; set; }
         public virtual DbSet<Medicine> Medicines { get; set; }
@@ -102,6 +101,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<LookupCategory> LookupCategories { get; set; }
         public virtual DbSet<MCURegistrationInterface> MCURegistrationInterfaces { get; set; }
         public virtual DbSet<Appointment> Appointments { get; set; }
+        public virtual DbSet<Letter> Letters { get; set; }
         public virtual DbSet<FormExamine> FormExamines { get; set; }
     
         [DbFunction("KlinikDBEntities1", "fusp_registrations_get_by_status")]

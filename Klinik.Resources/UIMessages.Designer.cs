@@ -367,6 +367,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Caused.
+        /// </summary>
+        public static string Caused {
+            get {
+                return ResourceManager.GetString("Caused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string Change {
@@ -498,6 +507,15 @@ namespace Klinik.Resources {
         public static string ConcoctionMedicine {
             get {
                 return ResourceManager.GetString("ConcoctionMedicine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Condition.
+        /// </summary>
+        public static string Condition {
+            get {
+                return ResourceManager.GetString("Condition", resourceCulture);
             }
         }
         

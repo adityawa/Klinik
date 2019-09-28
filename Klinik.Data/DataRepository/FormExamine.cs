@@ -41,6 +41,8 @@ namespace Klinik.Data.DataRepository
         public Nullable<bool> NeedSuratSakit { get; set; }
         public Nullable<int> JumHari { get; set; }
         public Nullable<System.DateTime> Sampai { get; set; }
+        public Nullable<int> Caused { get; set; }
+        public Nullable<int> Condition { get; set; }
     
         public virtual Doctor Doctor { get; set; }
         public virtual FormMedical FormMedical { get; set; }

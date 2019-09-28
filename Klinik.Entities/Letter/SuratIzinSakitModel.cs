@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Klinik.Entities.Letter
 { 
-    public class SuratIzinSakitModel
+    public class SuratIzinSakitModel:LetterModel
     {
         public string NoSurat { get; set; }
         public PatientModel patientData { get; set; }
@@ -16,8 +16,11 @@ namespace Klinik.Entities.Letter
 
         public string strStartIstirahat { get; set; }
         public string strSelesaiIstirahat { get; set; }
-
+        
+        public string Pekerjaan { get; set; }
         public string NamaDokter { get; set; }
+    
+
 
         public SuratIzinSakitModel()
         {

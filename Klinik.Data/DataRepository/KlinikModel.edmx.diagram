@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2f3aee09341d4cf3ad90ff978903a286" Name="Diagram1" ZoomLevel="64">
+      <Diagram DiagramId="2f3aee09341d4cf3ad90ff978903a286" Name="Diagram1" ZoomLevel="100">
         <EntityTypeShape EntityType="KlinikDBModel.AppConfig" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.City" Width="1.5" PointX="0.75" PointY="83.25" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Clinic" Width="1.5" PointX="3" PointY="81" IsExpanded="true" />
@@ -32,7 +32,6 @@
         <EntityTypeShape EntityType="KlinikDBModel.ICDTheme" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.LabItem" Width="1.5" PointX="8.25" PointY="57.875" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.LabItemCategory" Width="1.5" PointX="6" PointY="58.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.Letter" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Log" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.MCUPackage" Width="1.5" PointX="3" PointY="94" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Medicine" Width="1.5" PointX="13.25" PointY="95.5" IsExpanded="true" />
@@ -189,7 +188,8 @@
         <AssociationConnector Association="KlinikDBModel.FK_Appointment_MCUPackage" />
         <AssociationConnector Association="KlinikDBModel.FK_Appointment_Patient" />
         <AssociationConnector Association="KlinikDBModel.FK_Appointment_Poli" />
-        <EntityTypeShape EntityType="KlinikDBModel.FormExamine" Width="1.5" PointX="7.5" PointY="70.375" />
+        <EntityTypeShape EntityType="KlinikDBModel.Letter" Width="1.5" PointX="9.375" PointY="9.75" />
+        <EntityTypeShape EntityType="KlinikDBModel.FormExamine" Width="1.5" PointX="15.5" PointY="62.25" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamine_Doctor" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamine_FormMedical" />
         <AssociationConnector Association="KlinikDBModel.FK_FormExamine_Poli" />

@@ -393,6 +393,8 @@ namespace Klinik.Web.Controllers
                 ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
                 ViewBag.FinalStateList = BindDropDownFinalStateList();
                 ViewBag.ICDInfo = BindDropDownICDInfo();
+                ViewBag.CausedList = BindDropDownCaused();
+                ViewBag.ConditionList = BindDropDownCondition();
             }
             catch
             {
@@ -497,6 +499,36 @@ namespace Klinik.Web.Controllers
             var response = new LoketHandler(_unitOfWork).GetListData(request, poliID);
 
             return response;
+        }
+
+        private List<SelectListItem> BindDropDownCaused()
+        {
+            var causedSelectList = GetGeneralMasterByType(Constants.MasterType.Caused);
+            var lists = new List<SelectListItem>();
+            foreach(var item in causedSelectList)
+            {
+                lists.Add(new SelectListItem
+                {
+                    Value=item.Value,
+                    Text=item.Text
+                });
+            }
+            return lists;
+        }
+
+        private List<SelectListItem> BindDropDownCondition()
+        {
+            var causedSelectList = GetGeneralMasterByType(Constants.MasterType.Condition);
+            var lists = new List<SelectListItem>();
+            foreach (var item in causedSelectList)
+            {
+                lists.Add(new SelectListItem
+                {
+                    Value = item.Value,
+                    Text = item.Text
+                });
+            }
+            return lists;
         }
 
         [NonAction]

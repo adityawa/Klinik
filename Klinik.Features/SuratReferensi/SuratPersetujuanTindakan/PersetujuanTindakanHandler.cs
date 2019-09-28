@@ -59,7 +59,7 @@ namespace Klinik.Features.SuratReferensi.SuratPersetujuanTindakan
         {
             int _resultAffected = 0;
             request.Data.LetterType = LetterEnum.MedicalAcceptanceLetter.ToString();
-            request.Data.AutoNumber = GetLatestAutoNoSurat(LetterEnum.MedicalAcceptanceLetter.ToString()) + 1;
+            request.Data.AutoNumber = GetLatestAutoNoSurat(LetterEnum.MedicalAcceptanceLetter.ToString(), request.Data.Account.ClinicID) + 1;
             request.Data.Year = DateTime.Now.Year;
 
             var response = new PersetujuanTindakanResponse { };

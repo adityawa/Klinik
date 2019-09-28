@@ -139,10 +139,10 @@ namespace Klinik.Features
 			}
 		}
 
-		public long GetLatestAutoNoSurat(string LetterType)
+		public long GetLatestAutoNoSurat(string LetterType, long clinic)
 		{
 			long _number = 0;
-			var result = _unitOfWork.LetterRepository.Get(x => x.LetterType == LetterType && x.Year == DateTime.Now.Year).OrderByDescending(x => x.AutoNumber).FirstOrDefault();
+			var result = _unitOfWork.LetterRepository.Get(x => x.LetterType == LetterType && x.Year == DateTime.Now.Year && x.ClinicID==clinic).OrderByDescending(x => x.AutoNumber).FirstOrDefault();
 			if (result != null)
 			{
 				_number = result.AutoNumber;
@@ -375,7 +375,10 @@ namespace Klinik.Features
             return _registationNo;
         }
 
-
+        public long GetClinicIDBasedFrmMed(long _formMedical)
+        {
+            return _unitOfWork.RegistrationRepository.GetFirstOrDefault(x => x.FormMedicalID == _formMedical) == null ? 0 : _unitOfWork.RegistrationRepository.GetFirstOrDefault(x => x.FormMedicalID == _formMedical).ClinicID;
+        }
 
        
     }

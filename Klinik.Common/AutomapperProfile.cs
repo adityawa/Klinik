@@ -67,7 +67,7 @@ namespace Klinik.Common
                 .ForMember(x => x.EmployeeName, map => map.MapFrom(p => p.Employee.EmpName))
                 .ForMember(x => x.OrganizationName, map => map.MapFrom(p => p.Organization.OrgName))
                 .ForMember(x => x.StatusDesc, map => map.MapFrom(p => p.Status == true ? "Active" : "Inactive"))
-                .ForMember(x=>x.OrgID, map=>map.MapFrom(p=>p.OrganizationID))
+                .ForMember(x => x.OrgID, map => map.MapFrom(p => p.OrganizationID))
                 .ForMember(x => x.ExpiredDateStr, map => map.MapFrom(p => p.ExpiredDate == null ? "" : p.ExpiredDate.Value.ToString("dd/MM/yyyy")));
             CreateMap<UserModel, User>()
                 .ForMember(x => x.OrganizationID, map => map.MapFrom(p => p.OrgID));
@@ -274,15 +274,19 @@ namespace Klinik.Common
 
             CreateMap<Letter, LabReferenceLetterModel>();
             CreateMap<LabReferenceLetterModel, Letter>()
-                .ForMember(m => m.CreatedBy, map => map.MapFrom(p => p.Account.UserName));
+                .ForMember(m => m.CreatedBy, map => map.MapFrom(p => p.Account.UserName))
+                .ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID)); ;
 
             CreateMap<SuratRujukanLabKeluar, SuratRujukanKeluarModel>();
-            CreateMap<SuratRujukanKeluarModel, SuratRujukanLabKeluar>();
+            CreateMap<SuratRujukanKeluarModel, SuratRujukanLabKeluar>() ;
 
-            CreateMap<HealthBodyLetterModel, Letter>();
+            CreateMap<HealthBodyLetterModel, Letter>()
+                .ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID)); ;
             CreateMap<Letter, HealthBodyLetterModel>();
 
-            CreateMap<RujukanBerobatModel, Letter>().ForMember(x => x.Pekerjaan, map => map.MapFrom(p => p.Perusahaan));
+            CreateMap<RujukanBerobatModel, Letter>()
+                .ForMember(x => x.Pekerjaan, map => map.MapFrom(p => p.Perusahaan))
+                .ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID));
             CreateMap<Letter, RujukanBerobatModel>().ForMember(x => x.Perusahaan, map => map.MapFrom(p => p.Pekerjaan));
 
             CreateMap<PersetujuanTindakanModel, Letter>();
@@ -363,7 +367,7 @@ namespace Klinik.Common
                 .ForMember(x => x.Patient, map => map.MapFrom(p => p.Patient.Name))
                 .ForMember(x => x.StrAppointmentDate, map => map.MapFrom(p => p.AppointmentDate.ToString("dd/MM/yyyy")))
                 .ForMember(x => x.StrAppointmentTime, map => map.MapFrom(p => p.Jam == null ? "" : p.Jam.Value.ToString("HH:mm")));
-                
+
 
             CreateMap<AppointmentModel, Appointment>();
 
@@ -383,7 +387,11 @@ namespace Klinik.Common
             CreateMap<PurchaseOrderPusatDetailModel, DeliveryOrderPusatDetailModel>();
 
             CreateMap<MCURegistrationInterface, MCURegistrationModel>()
-                .ForMember(x=>x.strReserveDate, map=>map.MapFrom(p=>Convert.ToDateTime( p.RESERVE_DATE).ToString("dd/MM/yyyy")));
+                .ForMember(x => x.strReserveDate, map => map.MapFrom(p => Convert.ToDateTime(p.RESERVE_DATE).ToString("dd/MM/yyyy")));
+
+            CreateMap<SuratIzinSakitModel, Letter>()
+                .ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID));
+
 
         }
     }

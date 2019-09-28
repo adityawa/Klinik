@@ -523,7 +523,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="inputDefault">Pemeriksaan Fisik</label>
                                 <div class="col-md-5">
-                                    
+
                                     <textarea class="form-control" disabled id="tbPreExamine_RB" style=" height:80px;width:100px; min-width: 100%"></textarea>
                                 </div>
                             </div>
@@ -543,28 +543,28 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="inputDefault">RS Rujukan</label>
                                 <div class="col-md-5">
-                                    <input type="text"  class="form-control" id="tbRsRujukan_RB" />
+                                    <input type="text" class="form-control" id="tbRsRujukan_RB" />
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="inputDefault">No Telepon</label>
                                 <div class="col-md-5">
-                                    <input type="text"  class="form-control" id="tbRsPhone_RB" />
+                                    <input type="text" class="form-control" id="tbRsPhone_RB" />
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="inputDefault">Nama Dokter</label>
                                 <div class="col-md-5">
-                                    <input type="text"  class="form-control" id="tbNmDokterRujukan_RB" />
+                                    <input type="text" class="form-control" id="tbNmDokterRujukan_RB" />
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="inputDefault">Hari Praktek</label>
                                 <div class="col-md-5">
-                                    <input type="text"  class="form-control" id="tbTimePraktekRujukan_RB" />
+                                    <input type="text" class="form-control" id="tbTimePraktekRujukan_RB" />
                                 </div>
                             </div>
 
@@ -575,6 +575,33 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" id="btnSaveAndPreview_RB" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pnlSuratIzinSakit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="text-align:center" class="modal-title" id="myModalLabel">Surat Keterangan Istirahat</h3>
+                <label style="text-align:center" class="control-label" for="lblHealthBdLetNo"></label>
+            </div>
+            <div class="modal-body col-md-12" style="margin-top:10px">
+
+                <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Pekerjaan</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="tbProfesi_SKI" />
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btnSavePreview_SKI" class="btn btn-primary">Save</button>
             </div>
         </div>
     </div>
@@ -620,9 +647,47 @@
             });
 
             $('#btnCreateSuratSakit').click(function (e) {
-                var FormMedicalID = $('#ddlFrmMedIds').val();
-                var full_uri = "http://" + location.host +'@Url.Action("ExportSuratIzinSakit2Pdf", "Letters")?FormMedId='+FormMedicalID;
+
+                e.preventDefault();
+                  $('#pnlSuratIzinSakit').modal({
+                                    backdrop: 'static'
+                                });
+            });
+
+            $('#btnSavePreview_SKI').click(function (e) {
+                e.preventDefault();
+                  if (window.FormData != undefined) {
+                    var form_data = new FormData();
+                    form_data.append("forPatient", _PatientId);
+                    form_data.append("FormMedicalID", $('#ddlFrmMedIds').val());
+                    FormMedId = $('#ddlFrmMedIds').val();
+                    form_data.append("TglPeriksa", $('#ddlFrmMedIds option:selected').text());
+                    $.ajax({
+                        url: '/Letters/SaveAndPreviewSuratIzinSakit',
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        dataType: 'JSON',
+                        data: form_data,
+                        async: "true",
+                        success: function (result) {
+                            if (result.Status) {
+                                 // var FormMedicalID = $('#ddlFrmMedIds').val();
+                var full_uri = "http://" + location.host +'@Url.Action("ExportSuratIzinSakit2Pdf", "Letters")?FormMedId='+FormMedId;
                 window.open(full_uri, "_blank");
+                                $('#pnlSuratIzinSakit').modal({
+                                    backdrop: 'static'
+                                });
+                            }
+                            else {
+                                toastr.error(result.Message);
+                            }
+                        }
+                    });
+                }
+                else {
+                    toastr.error("Your Browser is not support Form Data");
+                }
             });
 
             $('#btnSavePersTindakan').click(function (e) {
@@ -973,6 +1038,8 @@
                 }
 
             });
+
+
         });
 
         function bindTable() {

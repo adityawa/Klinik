@@ -319,6 +319,8 @@
           <Property Name="NeedSuratSakit" Type="bit" />
           <Property Name="JumHari" Type="int" />
           <Property Name="Sampai" Type="datetime" />
+          <Property Name="Caused" Type="int" />
+          <Property Name="Condition" Type="int" />
         </EntityType>
         <EntityType Name="FormExamineAttachment">
           <Key>
@@ -559,6 +561,7 @@
           <Property Name="Cekdate" Type="datetime" />
           <Property Name="Pekerjaan" Type="nvarchar" MaxLength="50" />
           <Property Name="OtherInfo" Type="nvarchar(max)" />
+          <Property Name="ClinicID" Type="int" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -3903,29 +3906,6 @@
           <NavigationProperty Name="LabItems" Relationship="Self.FK_LabItem_LabItemCategory" FromRole="LabItemCategory" ToRole="LabItem" />
           <NavigationProperty Name="Poli" Relationship="Self.FK_LabItemCategory_Poli" FromRole="LabItemCategory" ToRole="Poli" />
         </EntityType>
-        <EntityType Name="Letter">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LetterType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="AutoNumber" Type="Int64" Nullable="false" />
-          <Property Name="Year" Type="Int32" Nullable="false" />
-          <Property Name="Keperluan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Decision" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Treatment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ReferenceTo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ForPatient" Type="Int64" />
-          <Property Name="ResponsiblePerson" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PatientAge" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FormMedicalID" Type="Int64" />
-          <Property Name="Cekdate" Type="DateTime" Precision="3" />
-          <Property Name="Pekerjaan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OtherInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="Log">
           <Key>
             <PropertyRef Name="ID" />
@@ -6045,7 +6025,6 @@
           <EntitySet Name="ICDThemes" EntityType="Self.ICDTheme" />
           <EntitySet Name="LabItems" EntityType="Self.LabItem" />
           <EntitySet Name="LabItemCategories" EntityType="Self.LabItemCategory" />
-          <EntitySet Name="Letters" EntityType="Self.Letter" />
           <EntitySet Name="Logs" EntityType="Self.Log" />
           <EntitySet Name="MCUPackages" EntityType="Self.MCUPackage" />
           <EntitySet Name="Medicines" EntityType="Self.Medicine" />
@@ -6546,6 +6525,7 @@
             <End Role="Poli" EntitySet="Polis" />
             <End Role="Appointment" EntitySet="Appointments" />
           </AssociationSet>
+          <EntitySet Name="Letters" EntityType="KlinikDBModel.Letter" />
           <EntitySet Name="FormExamines" EntityType="KlinikDBModel.FormExamine" />
           <AssociationSet Name="FK_FormExamine_Doctor" Association="KlinikDBModel.FK_FormExamine_Doctor">
             <End Role="Doctor" EntitySet="Doctors" />
@@ -6732,6 +6712,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Letter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LetterType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AutoNumber" Type="Int64" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Keperluan" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Decision" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Treatment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReferenceTo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ForPatient" Type="Int64" />
+          <Property Name="ResponsiblePerson" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PatientAge" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FormMedicalID" Type="Int64" />
+          <Property Name="Cekdate" Type="DateTime" Precision="3" />
+          <Property Name="Pekerjaan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OtherInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClinicID" Type="Int32" />
+        </EntityType>
         <EntityType Name="FormExamine">
           <Key>
             <PropertyRef Name="ID" />
@@ -6755,6 +6759,8 @@
           <Property Name="NeedSuratSakit" Type="Boolean" />
           <Property Name="JumHari" Type="Int32" />
           <Property Name="Sampai" Type="DateTime" Precision="3" />
+          <Property Name="Caused" Type="Int32" />
+          <Property Name="Condition" Type="Int32" />
           <NavigationProperty Name="Doctor" Relationship="KlinikDBModel.FK_FormExamine_Doctor" FromRole="FormExamine" ToRole="Doctor" />
           <NavigationProperty Name="FormMedical" Relationship="KlinikDBModel.FK_FormExamine_FormMedical" FromRole="FormExamine" ToRole="FormMedical" />
           <NavigationProperty Name="Poli" Relationship="KlinikDBModel.FK_FormExamine_Poli" FromRole="FormExamine" ToRole="Poli" />
@@ -7352,30 +7358,6 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Letters">
-            <EntityTypeMapping TypeName="KlinikDBModel.Letter">
-              <MappingFragment StoreEntitySet="Letter">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="LetterType" ColumnName="LetterType" />
-                <ScalarProperty Name="AutoNumber" ColumnName="AutoNumber" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Keperluan" ColumnName="Keperluan" />
-                <ScalarProperty Name="Decision" ColumnName="Decision" />
-                <ScalarProperty Name="Treatment" ColumnName="Treatment" />
-                <ScalarProperty Name="Action" ColumnName="Action" />
-                <ScalarProperty Name="ReferenceTo" ColumnName="ReferenceTo" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ForPatient" ColumnName="ForPatient" />
-                <ScalarProperty Name="ResponsiblePerson" ColumnName="ResponsiblePerson" />
-                <ScalarProperty Name="PatientAge" ColumnName="PatientAge" />
-                <ScalarProperty Name="FormMedicalID" ColumnName="FormMedicalID" />
-                <ScalarProperty Name="Cekdate" ColumnName="Cekdate" />
-                <ScalarProperty Name="Pekerjaan" ColumnName="Pekerjaan" />
-                <ScalarProperty Name="OtherInfo" ColumnName="OtherInfo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -8261,9 +8243,36 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Letters">
+            <EntityTypeMapping TypeName="KlinikDBModel.Letter">
+              <MappingFragment StoreEntitySet="Letter">
+                <ScalarProperty Name="ClinicID" ColumnName="ClinicID" />
+                <ScalarProperty Name="OtherInfo" ColumnName="OtherInfo" />
+                <ScalarProperty Name="Pekerjaan" ColumnName="Pekerjaan" />
+                <ScalarProperty Name="Cekdate" ColumnName="Cekdate" />
+                <ScalarProperty Name="FormMedicalID" ColumnName="FormMedicalID" />
+                <ScalarProperty Name="PatientAge" ColumnName="PatientAge" />
+                <ScalarProperty Name="ResponsiblePerson" ColumnName="ResponsiblePerson" />
+                <ScalarProperty Name="ForPatient" ColumnName="ForPatient" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ReferenceTo" ColumnName="ReferenceTo" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Treatment" ColumnName="Treatment" />
+                <ScalarProperty Name="Decision" ColumnName="Decision" />
+                <ScalarProperty Name="Keperluan" ColumnName="Keperluan" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="AutoNumber" ColumnName="AutoNumber" />
+                <ScalarProperty Name="LetterType" ColumnName="LetterType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="FormExamines">
             <EntityTypeMapping TypeName="KlinikDBModel.FormExamine">
               <MappingFragment StoreEntitySet="FormExamine">
+                <ScalarProperty Name="Condition" ColumnName="Condition" />
+                <ScalarProperty Name="Caused" ColumnName="Caused" />
                 <ScalarProperty Name="Sampai" ColumnName="Sampai" />
                 <ScalarProperty Name="JumHari" ColumnName="JumHari" />
                 <ScalarProperty Name="NeedSuratSakit" ColumnName="NeedSuratSakit" />
