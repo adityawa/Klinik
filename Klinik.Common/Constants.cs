@@ -89,6 +89,8 @@
             public const string ADD_PRODCUTINGUDANG = "Add New Product In Gudang";
             public const string ADD_LOOKUP_CATEGORY = "Add New LookUp Category";
             public const string EDIT_LOOKUP_CATEGORY = "Edit Lookup Category";
+            public const string ADD_GENERAL_MASTER = "Add New General Master";
+            public const string EDIT_GENERAL_MASTER = "Edit General Master";
         }
 
         public static class MasterType

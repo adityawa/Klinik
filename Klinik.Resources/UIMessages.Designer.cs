@@ -1204,6 +1204,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to General Master List .
+        /// </summary>
+        public static string GeneralMasterList {
+            get {
+                return ResourceManager.GetString("GeneralMasterList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Generate.
         /// </summary>
         public static string Generate {
@@ -3531,6 +3540,15 @@ namespace Klinik.Resources {
         public static string ValidTo {
             get {
                 return ResourceManager.GetString("ValidTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        public static string Value {
+            get {
+                return ResourceManager.GetString("Value", resourceCulture);
             }
         }
         

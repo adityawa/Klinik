@@ -356,6 +356,9 @@ namespace Klinik.Common
             CreateMap<MCUPackage, MCUPackageModel>();
             CreateMap<MCUPackageModel, MCUPackage>();
 
+            CreateMap<GeneralMaster, MasterModel>();
+            CreateMap<MasterModel, GeneralMaster>();
+
             CreateMap<Appointment, AppointmentModel>()
                 .ForMember(x => x.ClinicName, map => map.MapFrom(p => p.Clinic.Name))
                 .ForMember(x => x.PoliName, map => map.MapFrom(p => p.Poli.Name))

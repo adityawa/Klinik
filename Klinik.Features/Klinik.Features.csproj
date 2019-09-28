@@ -118,6 +118,9 @@
     <Compile Include="HistoryProductInGudang\HistoryProductInGudangRequest.cs" />
     <Compile Include="HistoryProductInGudang\HistoryProductInGudangResponse.cs" />
     <Compile Include="ICDThemeFeatures\ICDThemeHandler.cs" />
+    <Compile Include="MasterData\GeneralMaster\MasterRequest.cs" />
+    <Compile Include="MasterData\GeneralMaster\MasterResponse.cs" />
+    <Compile Include="MasterData\GeneralMaster\MasterValidator.cs" />
     <Compile Include="MasterData\Gudang\GudangHandler.cs" />
     <Compile Include="MasterData\Gudang\GudangRequest.cs" />
     <Compile Include="MasterData\Gudang\GudangResponse.cs" />

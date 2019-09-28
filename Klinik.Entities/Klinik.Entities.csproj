@@ -89,6 +89,7 @@
     <Compile Include="MasterData\GudangModel.cs" />
     <Compile Include="MasterData\ICDThemeModel.cs" />
     <Compile Include="MasterData\LookUpCategoryModel.cs" />
+    <Compile Include="MasterData\MasterModel.cs" />
     <Compile Include="MasterData\VendorModel.cs" />
     <Compile Include="MCUPackageEntities\MCUPackageModel.cs" />
     <Compile Include="MCUPackageEntities\MCURegistrationModel.cs" />

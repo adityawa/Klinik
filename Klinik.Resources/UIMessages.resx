@@ -1293,4 +1293,10 @@
   <data name="TypeName" xml:space="preserve">
     <value>Type Name</value>
   </data>
+  <data name="GeneralMasterList" xml:space="preserve">
+    <value>General Master List </value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
 </root>

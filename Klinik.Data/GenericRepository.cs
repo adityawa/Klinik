@@ -147,5 +147,15 @@ namespace Klinik.Data
 
             return query;
         }
+
+        /// <summary>
+        /// Get All Entities 
+        /// </summary>
+        /// <returns></returns>
+        public List<TEntity> GetAll()
+        {
+            IQueryable<TEntity> query = dbSet;
+            return query.ToList();
+        }
     }
 }

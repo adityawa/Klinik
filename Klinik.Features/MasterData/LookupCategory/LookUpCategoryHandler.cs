@@ -127,6 +127,7 @@ namespace Klinik.Features.MasterData.LookupCategory
             return response;
         }
 
+
         /// <summary>
         /// Get List Data of Lookup Category
         /// </summary>
