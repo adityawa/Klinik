@@ -728,8 +728,45 @@
                                                             @Html.DropDownListFor(p => p.ExamineData.Result, (IEnumerable<SelectListItem>)ViewBag.FinalStateList, new { @class = "form-control", @id = "ddlfinalstate" })
                                                         </div>
                                                     </div>
+
+                                                    <div class="row text-right">
+                                                        <div class="form-group col-md-6">
+                                                            <label class="control-label">@Klinik.Resources.UIMessages.NeedSuratSakit</label>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            @Html.CheckBoxFor(p => p.ExamineData.NeedSuratSakit, new { @class = "form-control", @id = "cbNeedSurat" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="row text-right">
+                                                        <div class="form-group col-md-6">
+                                                            <label class="control-label">@Klinik.Resources.UIMessages.JumHari</label>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            @Html.TextBoxFor(p => p.ExamineData.JumHari, new { @class = "form-control", @id = "tbJumHari" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row text-right">
+                                                        <div class="form-group col-md-6">
+                                                            <label class="control-label">@Klinik.Resources.UIMessages.Caused</label>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            @Html.DropDownListFor(p => p.ExamineData.Caused, (IEnumerable<SelectListItem>)ViewBag.CausedList, new { @class = "form-control", @id = "ddlcaused" })
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                                 <div class="form-group col-md-6">
+
+                                                    <div class="row text-right">
+                                                        <div class="form-group col-md-6">
+                                                            <label class="control-label">@Klinik.Resources.UIMessages.Condition</label>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            @Html.DropDownListFor(p => p.ExamineData.Condition, (IEnumerable<SelectListItem>)ViewBag.ConditionList, new { @class = "form-control", @id = "ddlcondition" })
+                                                        </div>
+                                                    </div>
+
                                                     <div class="row text-right">
                                                         <div class="form-group col-md-6">
                                                             <label class="control-label">@Klinik.Resources.UIMessages.ForwardTo</label>
@@ -908,7 +945,9 @@
             if (!medicine.length) return;
         $('#ddlicd1').select2();
         $('#ddlicd2').select2();
-         $('#ddlicd3').select2();
+        $('#ddlicd3').select2();
+        $('#ddlcaused').select2();
+        $('#ddlcondition').select2();
             $("#medicineName").autocomplete({
                 source: function (request, response) {
                     $.ajax({
@@ -1378,6 +1417,8 @@
                 var icdinfo1 = $('#ddlicd1').val();
                 var icdinfo2 = $('#ddlicd2').val();
                 var icdinfo3 = $('#ddlicd3').val();
+                var needsuratsakit = $('#cbNeedSurat').val();
+                var jumhari = $('#tbJumHari').val();
 
                 var concoctionmedicineList = [];
                 $('#tblConcMedicine tbody tr').each(function () {
@@ -1435,7 +1476,9 @@
                     therapy: therapy,
                     receipt: receipt,
                     finalState: finalState,
-                    icdInformation:icdinfo1+'|'+icdinfo2+'|'+icdinfo3,
+                    icdInformation: icdinfo1 + '|' + icdinfo2 + '|' + icdinfo3,
+                    needSurat: needsuratsakit,
+                    jumHari:jumhari,
                     poliToID: poliToID,
                     doctorToID: doctorToID,
                     concoctionMedicineList: concoctionmedicineList,

@@ -1725,6 +1725,7 @@
     <Content Include="Views\Reports\Top10RequestReport.cshtml" />
     <Content Include="Views\MasterData\GeneralMasterList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditLookUpGeneralMaster.cshtml" />
+    <Content Include="Views\Letters\ExportSuratIzinSakit2Pdf.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

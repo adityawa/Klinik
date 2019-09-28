@@ -73,7 +73,7 @@ namespace Klinik.Features.SuratReferensi.SuratRujukanBerobat
         {
             int _resultAffected = 0;
             request.Data.LetterType = LetterEnum.MedicalReferenceLetter.ToString();
-            request.Data.AutoNumber = GetLatestAutoNoSurat(LetterEnum.MedicalReferenceLetter.ToString()) + 1;
+            request.Data.AutoNumber = GetLatestAutoNoSurat(LetterEnum.MedicalReferenceLetter.ToString(), request.Data.Account.ClinicID) + 1;
             request.Data.Year = DateTime.Now.Year;
 
             var response = new RujukanBerobatResponse { };

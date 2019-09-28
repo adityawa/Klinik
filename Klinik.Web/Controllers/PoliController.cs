@@ -247,6 +247,8 @@ namespace Klinik.Web.Controllers
             string receipt,
             string finalState,
             string icdInformation,
+            string needSurat,
+            string jumHari,
             string poliToID,
             string doctorToID,
             List<string> concoctionMedicineList,
@@ -269,9 +271,10 @@ namespace Klinik.Web.Controllers
             if (serviceList == null)
                 serviceList = new List<string>();
 
-            PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, icdInformation, poliToID, doctorToID, concoctionMedicineList, medicineList, injectionList, labList, radiologyList, serviceList);
+            int iJumHari = jumHari == null ? 0 : Convert.ToInt16(jumHari);
+            bool bNeedSuratSakit = needSurat == null ? false : Convert.ToBoolean(needSurat);
+            PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, icdInformation, poliToID, doctorToID, bNeedSuratSakit, iJumHari, concoctionMedicineList, medicineList, injectionList, labList, radiologyList, serviceList);
             model.Account = Account;
-
             var request = new FormExamineRequest { Data = model, };
 
             FormExamineResponse _response = new FormExamineValidator(_unitOfWork, _context).Validate(request);
@@ -390,6 +393,8 @@ namespace Klinik.Web.Controllers
                 ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
                 ViewBag.FinalStateList = BindDropDownFinalStateList();
                 ViewBag.ICDInfo = BindDropDownICDInfo();
+                ViewBag.CausedList = BindDropDownCaused();
+                ViewBag.ConditionList = BindDropDownCondition();
             }
             catch
             {
@@ -496,6 +501,36 @@ namespace Klinik.Web.Controllers
             return response;
         }
 
+        private List<SelectListItem> BindDropDownCaused()
+        {
+            var causedSelectList = GetGeneralMasterByType(Constants.MasterType.Caused);
+            var lists = new List<SelectListItem>();
+            foreach(var item in causedSelectList)
+            {
+                lists.Add(new SelectListItem
+                {
+                    Value=item.Value,
+                    Text=item.Text
+                });
+            }
+            return lists;
+        }
+
+        private List<SelectListItem> BindDropDownCondition()
+        {
+            var causedSelectList = GetGeneralMasterByType(Constants.MasterType.Condition);
+            var lists = new List<SelectListItem>();
+            foreach (var item in causedSelectList)
+            {
+                lists.Add(new SelectListItem
+                {
+                    Value = item.Value,
+                    Text = item.Text
+                });
+            }
+            return lists;
+        }
+
         [NonAction]
         private PoliExamineModel GeneratePoliExamineModel(
             string formExamineID,
@@ -508,6 +543,8 @@ namespace Klinik.Web.Controllers
             string icdInformation,
             string poliToID,
             string doctorToID,
+            bool needRestLetter,
+            int iJumHari,
             List<string> concoctionMedicineList,
             List<string> medicineList,
             List<string> injectionList,
@@ -537,7 +574,9 @@ namespace Klinik.Web.Controllers
             model.ExamineData.DoctorID = queue.DoctorID;
             model.ExamineData.FormMedicalID = queue.FormMedicalID;
             model.ExamineData.ICDInformation = icdInformation;
-
+            model.ExamineData.NeedSuratSakit = needRestLetter;
+            model.ExamineData.JumHari = iJumHari;
+            model.ExamineData.Sampai = DateTime.Now.AddDays(iJumHari);
             // FormExamineMedicine
             foreach (var item in medicineList)
             {

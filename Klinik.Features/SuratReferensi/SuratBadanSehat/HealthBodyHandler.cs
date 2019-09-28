@@ -56,7 +56,7 @@ namespace Klinik.Features.SuratReferensi.SuratBadanSehat
         {
             int _resultAffected = 0;
             request.Data.LetterType = LetterEnum.HealthBodyLetter.ToString();
-            request.Data.AutoNumber = GetLatestAutoNoSurat(LetterEnum.HealthBodyLetter.ToString()) + 1;
+            request.Data.AutoNumber = GetLatestAutoNoSurat(LetterEnum.HealthBodyLetter.ToString(), request.Data.Account.ClinicID) + 1;
             request.Data.Year = DateTime.Now.Year;
             
             var response = new HealthBodyResponse { };

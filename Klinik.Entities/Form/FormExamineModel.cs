@@ -17,5 +17,13 @@ namespace Klinik.Entities.Form
         public string IsAccident { get; set; }
         public string NeedRest { get; set; }
 
+        public bool NeedSuratSakit { get; set; }
+
+        public int JumHari { get; set; }
+        public DateTime? Sampai { get; set; }
+
+        public int Caused { get; set; }
+        public int Condition { get; set; }
+
     }
 }

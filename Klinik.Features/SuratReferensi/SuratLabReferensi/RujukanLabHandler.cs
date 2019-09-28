@@ -48,7 +48,7 @@ namespace Klinik.Features.SuratReferensi.SuratLabReferensi
         {
             int _resultAffected = 0;
             request.Data.LetterType = LetterEnum.LabReferenceLetter.ToString();
-            request.Data.AutoNumber = GetLatestAutoNoSurat(LetterEnum.LabReferenceLetter.ToString()) + 1;
+            request.Data.AutoNumber = GetLatestAutoNoSurat(LetterEnum.LabReferenceLetter.ToString(), request.Data.Account.ClinicID) + 1;
             request.Data.Year = DateTime.Now.Year;
 
             var _dob = _unitOfWork.PatientRepository.GetById(request.Data.ForPatient);

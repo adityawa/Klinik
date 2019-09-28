@@ -20,6 +20,7 @@ using Klinik.Features.SuratReferensi.SuratPersetujuanTindakan;
 using Klinik.Features.SuratReferensi.SuratRujukanBerobat;
 using Klinik.Entities.PreExamine;
 using System.Text;
+using Klinik.Features.SuratReferensi.SuratIzinSakit;
 
 namespace Klinik.Web.Controllers
 {
@@ -180,7 +181,11 @@ namespace Klinik.Web.Controllers
             if (Request.Form["LabItems"] != null)
                 _model.SuratRujukanLabKeluar.ListOfLabItemId = JsonConvert.DeserializeObject<List<int>>(Request.Form["LabItems"]);
             if (Session["UserLogon"] != null)
+            {
                 _model.Account = (AccountModel)Session["UserLogon"];
+                _model.ClinicID = ((AccountModel)Session["UserLogon"]).ClinicID;
+            }
+               
 
             var request = new RujukanLabRequest
             {
@@ -227,7 +232,11 @@ namespace Klinik.Web.Controllers
             if (Request.Form["forPatient"] != null)
                 _model.ForPatient = long.Parse(Request.Form["forPatient"].ToString());
             if (Session["UserLogon"] != null)
+            {
                 _model.Account = (AccountModel)Session["UserLogon"];
+                _model.ClinicID = ((AccountModel)Session["UserLogon"]).ClinicID;
+            }
+              
             if (_model.PenjaminData == null)
                 _model.PenjaminData = new PenjaminModel();
             _model.PenjaminData = _penjaminModel;
@@ -262,7 +271,11 @@ namespace Klinik.Web.Controllers
             if (Request.Form["Decision"] != null)
                 _model.Decision = Request.Form["Decision"] == null ? "" : Request.Form["Decision"].ToString();
             if (Session["UserLogon"] != null)
+            {
                 _model.Account = (AccountModel)Session["UserLogon"];
+                _model.ClinicID = ((AccountModel)Session["UserLogon"]).ClinicID;
+            }
+               
 
             var request = new HealthBodyRequest
             {
@@ -296,7 +309,11 @@ namespace Klinik.Web.Controllers
             if (Request.Form["HariPraktek"] != null)
                 _model.InfoRujukanData.HariPraktek = Request.Form["HariPraktek"] == null ? "" : Request.Form["HariPraktek"].ToString();
             if (Session["UserLogon"] != null)
+            {
                 _model.Account = (AccountModel)Session["UserLogon"];
+                _model.ClinicID = ((AccountModel)Session["UserLogon"]).ClinicID;
+            }
+               
 
             var request = new RujukanBerobatRequest
             {
@@ -307,6 +324,36 @@ namespace Klinik.Web.Controllers
             response = new RujukanBerobatValidator(_unitOfWork, _context).Validate(request);
 
             return Json(new { Status = response.Status, FormMedicalId = response.Entity.FormMedicalID, LetterId = response.Entity.Id }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult SaveAndPreviewSuratIzinSakit()
+        {
+            var _model = new SuratIzinSakitModel();
+            if (Request.Form["Pekerjaan"] != null)
+            {
+                _model.Pekerjaan= Request.Form["Pekerjaan"] == null ? "" : Request.Form["Pekerjaan"].ToString();
+            }
+            if (Request.Form["FormMedicalID"] != null)
+                _model.FormMedicalID = Convert.ToInt64(Request.Form["FormMedicalID"].ToString());
+            if (Request.Form["ForPatient"] != null)
+                _model.ForPatient = Request.Form["ForPatient"] == null ? 0 : long.Parse(Request.Form["ForPatient"].ToString());
+            if (Session["UserLogon"] != null)
+            {
+                _model.Account = (AccountModel)Session["UserLogon"];
+                _model.ClinicID = ((AccountModel)Session["UserLogon"]).ClinicID;
+            }
+             
+
+            var request = new SuratSakitRequest
+            {
+                Data = _model
+            };
+
+            var response = new SuratSakitResponse();
+            response = new SuratSakitHandler(_unitOfWork).SaveSuratSakit(request);
+
+            return Json(new { Status = response.Status, Message = response.Message }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -556,6 +603,19 @@ namespace Klinik.Web.Controllers
                 PageSize = Size.Folio,
 
                 FileName = "SuratRujukanBerobat.pdf"
+            };
+        }
+
+        public ActionResult ExportSuratIzinSakit2Pdf(string FormMedId)
+        {
+            var response = new SuratSakitHandler(_unitOfWork).GetSuratIzinSakitData(FormMedId==null?0:Convert.ToInt64(FormMedId));
+            //return View(response.Entity);
+            return new PartialViewAsPdf(response.Entity)
+            {
+                PageOrientation = Orientation.Portrait,
+                PageSize = Size.Folio,
+
+                FileName = "SuratIzinSakit.pdf"
             };
         }
     }

@@ -86,6 +86,7 @@
     <Compile Include="Document\DocumentModel.cs" />
     <Compile Include="Form\FormExamineMedicineDetailModel.cs" />
     <Compile Include="HistoryProductInGudang\HistoryProductInGudangModel.cs" />
+    <Compile Include="Letter\SuratIzinSakitModel.cs" />
     <Compile Include="MasterData\GudangModel.cs" />
     <Compile Include="MasterData\ICDThemeModel.cs" />
     <Compile Include="MasterData\LookUpCategoryModel.cs" />

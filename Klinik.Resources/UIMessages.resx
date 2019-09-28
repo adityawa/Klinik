@@ -1290,6 +1290,21 @@
   <data name="LetterType" xml:space="preserve">
     <value>Type of Letter</value>
   </data>
+  <data name="JumHari" xml:space="preserve">
+    <value>Jumlah Hari</value>
+  </data>
+  <data name="NeedSuratSakit" xml:space="preserve">
+    <value>Surat Sakit</value>
+  </data>
+  <data name="SuratIstirahat" xml:space="preserve">
+    <value>Surat Izin Sakit</value>
+  </data>
+  <data name="Caused" xml:space="preserve">
+    <value>Caused</value>
+  </data>
+  <data name="Condition" xml:space="preserve">
+    <value>Condition</value>
+  </data>
   <data name="TypeName" xml:space="preserve">
     <value>Type Name</value>
   </data>

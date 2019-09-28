@@ -21,6 +21,8 @@ namespace Klinik.Entities.Letter
         [Required]
         public long ForPatient { get; set; }
         public long FormMedicalID { get; set; }
+
+        public long ClinicID { get; set; }
         public DateTime? Cekdate { get; set; }
         public string strCekdate { get; set; }
         public PatientModel PatientData { get; set; }

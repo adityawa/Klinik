@@ -11,6 +11,7 @@ namespace Klinik.Common.Enumerations
         LabReferenceLetter,
         HealthBodyLetter,
         MedicalReferenceLetter,
-        MedicalAcceptanceLetter
+        MedicalAcceptanceLetter,
+        SuratIzinSakit
     }
 }

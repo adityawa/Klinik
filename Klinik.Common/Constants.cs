@@ -108,6 +108,8 @@
             public const string RELATION = "Relation";
             public const string NECESSITY_TYPE = "NecessityType";
             public const string PAYMENT_TYPE = "PaymentType";
+            public const string Caused = "Caused";
+            public const string Condition = "Condition";
         }
 
         public static class NameConstant

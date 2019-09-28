@@ -24,6 +24,7 @@ namespace Klinik.Entities.Letter
         public long FormMedicalID { get; set; }
         public string DokterPengirim { get; set; }
         public List<int> ListOfLabItemId { get; set; }
+
     }
     
 }
