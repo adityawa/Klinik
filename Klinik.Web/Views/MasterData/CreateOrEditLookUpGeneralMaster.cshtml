@@ -6,7 +6,7 @@
 }
 
 <section class="panel">
-    <form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditPrivilege">
+    <form class="form-horizontal form-bordered" method="post" action="/MasterData/CreateOrEditGeneralMaster">
         <header class="panel-heading">
             <div class="panel-actions">
                 <a href="#" class="fa fa-caret-down"></a>
@@ -54,7 +54,7 @@
             window.location.href = "/MasterData/GeneralMasterList";
         });
 
-        $('#ddlMenu').select2();
+        $('#ddlLooKUpCategory').select2();
 
         toastr.options = {
             "closeButton": false,

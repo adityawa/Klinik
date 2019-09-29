@@ -5,10 +5,12 @@ using Klinik.Data.DataRepository;
 using Klinik.Entities.MasterData;
 using Klinik.Features.MasterData;
 using Klinik.Features.MasterData.GeneralMaster;
+using Klinik.Features.MasterData.LookupCategory;
 using Klinik.Resources;
 using LinqKit;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 
 namespace Klinik.Features
@@ -98,6 +100,8 @@ namespace Klinik.Features
             int totalRequest = lists.Count();
             var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
 
+            data = data.OrderBy(x => x.CategoryId).ToList();
+
             var response = new MasterResponse
             {
                 Draw = request.Draw,
@@ -115,6 +119,7 @@ namespace Klinik.Features
 
             try
             {
+                request.Data.Type = _unitOfWork.LookUpCategoryRepository.GetFirstOrDefault(x => x.ID == request.Data.CategoryId).TypeName;
                 if (request.Data.Id > 0)
                 {
                     var qry = _unitOfWork.MasterRepository.GetById(request.Data.Id);
@@ -186,7 +191,7 @@ namespace Klinik.Features
                 if (request.Data != null && request.Data.Id > 0)
                     ErrorLog(ClinicEnums.Module.MASTER_GENERAL, Constants.Command.EDIT_GENERAL_MASTER, request.Data.Account, ex);
                 else
-                    ErrorLog(ClinicEnums.Module.MASTER_LOOKUPCATEGORY, Constants.Command.ADD_LOOKUP_CATEGORY, request.Data.Account, ex);
+                    ErrorLog(ClinicEnums.Module.MASTER_GENERAL, Constants.Command.ADD_GENERAL_MASTER, request.Data.Account, ex);
             }
 
             return response;

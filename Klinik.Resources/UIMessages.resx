@@ -1314,4 +1314,25 @@
   <data name="Value" xml:space="preserve">
     <value>Value</value>
   </data>
+  <data name="PeriodMonthEnd" xml:space="preserve">
+    <value>End Period Month </value>
+  </data>
+  <data name="PeriodMonthStart" xml:space="preserve">
+    <value>Start Period Month</value>
+  </data>
+  <data name="PeriodYearEnd" xml:space="preserve">
+    <value>End Period Year</value>
+  </data>
+  <data name="PeriodYearStart" xml:space="preserve">
+    <value>Start Period Year</value>
+  </data>
+  <data name="CategoryItem" xml:space="preserve">
+    <value>Category Item </value>
+  </data>
+  <data name="SelectOneCategory" xml:space="preserve">
+    <value>Select Category Type..</value>
+  </data>
+  <data name="SelectOneCategoryItem" xml:space="preserve">
+    <value>Select OneCategory Item ..</value>
+  </data>
 </root>

@@ -8,10 +8,14 @@ namespace Klinik.Entities.Reports
 {
     public class Top10ReferalParamModel:BaseModel
     {
-        public int Year { get; set; }
+        public int YearStart { get; set; }
 
-        public int Month { get; set; }
-        
+        public int MonthStart { get; set; }
+
+        public int YearEnd { get; set; }
+
+        public int MonthEnd { get; set; }
+
         public string HospitalDest { get; set; }
 
         public string Diagnose { get; set; }

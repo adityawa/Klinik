@@ -1,4 +1,5 @@
-﻿using DotNet.Highcharts;
+﻿using AutoMapper;
+using DotNet.Highcharts;
 using DotNet.Highcharts.Enums;
 using DotNet.Highcharts.Helpers;
 using DotNet.Highcharts.Options;
@@ -7,6 +8,7 @@ using Klinik.Common.Paging;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Account;
+using Klinik.Entities.MasterData;
 using Klinik.Entities.Reports;
 using Klinik.Features;
 using Klinik.Features.ICDThemeFeatures;
@@ -59,6 +61,28 @@ namespace Klinik.Web.Controllers
             }
 
             return _years;
+        }
+
+        private List<SelectListItem> BindMonths()
+        {
+            var _months = new List<SelectListItem>();
+            var _items = new List<GeneralMaster>();
+            var masterHandler = new MasterHandler(_unitOfWork);
+
+            _items = masterHandler.GetMasterDataByType(Constants.LookUpCategoryConstant.MONTH).ToList();
+
+            _months.Insert(0, new SelectListItem { Text = "All", Value = "0" });
+
+            foreach (var item in _items)
+            {
+                _months.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Value
+                });
+            }
+
+            return _months;
         }
 
         private List<SelectListItem> BindDropDownPatient()
@@ -168,58 +192,21 @@ namespace Klinik.Web.Controllers
             return rujukans;
         }
 
-        private List<SelectListItem> BindDropDownByName(string name)
+        private List<SelectListItem> BindLookUpCategoryType()
         {
             var _types = new List<SelectListItem>();
-            var items = new List<LookupCategory>();
-            var masterHandler = new MasterHandler(_unitOfWork);
 
-            switch (name)
+            var lookUpCategories = new MasterHandler(_unitOfWork).GetLookupCategories();
+
+            _types.Insert(0, new SelectListItem { Text = Klinik.Resources.UIMessages.SelectOneCategory, Value = "0" });
+
+            foreach (var item in lookUpCategories)
             {
-                case Constants.LookUpCategoryConstant.DEPARTMENT:
-                    items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.DEPARTMENT).ToList();
-                    break;
-                case Constants.LookUpCategoryConstant.AGE:
-                    items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.AGE).ToList();
-                    break;
-                case Constants.LookUpCategoryConstant.BUSINESSUNIT:
-                    items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.BUSINESSUNIT).ToList();
-                    break;
-                case Constants.LookUpCategoryConstant.NECESSITYTYPE:
-                    items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.NECESSITYTYPE).ToList();
-                    break;
-                case Constants.LookUpCategoryConstant.GENDER:
-                    items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.AGE).ToList();
-                    break;
-                case Constants.LookUpCategoryConstant.PAYMENTTYPE:
-                    items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.PAYMENTTYPE).ToList();
-                    break;
-                case Constants.LookUpCategoryConstant.NEEDREST:
-                    items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.NEEDREST).ToList();
-                    break;
-                case Constants.LookUpCategoryConstant.HOSPITAL:
-                    items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.HOSPITAL).ToList();
-                    break;
-                case Constants.LookUpCategoryConstant.MONTH:
-                    items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.MONTH).ToList();
-                    break;
-                case Constants.LookUpCategoryConstant.EXAMINETYPE:
-                    items = masterHandler.GetLookupCategoryByName(Constants.LookUpCategoryConstant.EXAMINETYPE).ToList();
-                    break;
+                _types.Add(new SelectListItem { Text = item.TypeName, Value = item.TypeName });
             }
-
-            _types.Insert(0, new SelectListItem { Text="All", Value = "0" });
-
-            foreach (var item in items)
-            {
-                _types.Add(new SelectListItem {
-                    Text = item.TypeName,
-                    Value = item.ID.ToString()
-                });
-            }
-
             return _types;
         }
+
 
         #endregion
                
@@ -236,21 +223,36 @@ namespace Klinik.Web.Controllers
         {
             var model = new Top10DiseasesParamModel();
 
-            ViewBag.Months = BindDropDownByName(Constants.LookUpCategoryConstant.MONTH);
+            ViewBag.Months = BindMonths();
             ViewBag.Years = BindYears();
             ViewBag.Clinics = BindDropDownClinic();
-            ViewBag.Departments = BindDropDownByName(Constants.LookUpCategoryConstant.DEPARTMENT);
-            ViewBag.BusinessUnits = BindDropDownByName(Constants.LookUpCategoryConstant.BUSINESSUNIT);
-            ViewBag.Genders = BindDropDownByName(Constants.LookUpCategoryConstant.GENDER);
-            ViewBag.Ages = BindDropDownByName(Constants.LookUpCategoryConstant.AGE);
-            ViewBag.EmpStatus = BindDropDownEmployeeStatus();
-            ViewBag.FamilyStatuses = BindDropDownFamilyStatus();
-            ViewBag.NecessityTypes = BindDropDownByName(Constants.LookUpCategoryConstant.NECESSITYTYPE);
-            ViewBag.NeedRests = BindDropDownByName(Constants.LookUpCategoryConstant.NEEDREST);
-            ViewBag.ExamineTypes = BindDropDownByName(Constants.LookUpCategoryConstant.EXAMINETYPE);
-            ViewBag.PaymentTypes = BindDropDownByName(Constants.LookUpCategoryConstant.PAYMENTTYPE);
+            ViewBag.LookUpCategories = BindLookUpCategoryType();
 
             return View(model);
+        }
+
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult GetGeneralMasterByType(string type)
+        {
+            var result = new List<MasterModel>();
+
+            if (string.IsNullOrEmpty(type)) throw new ArgumentNullException("Type");
+
+            if (type != "0")
+            {
+                var items = new MasterHandler(_unitOfWork).GetMasterDataByType(type).ToList();
+
+                foreach (var item in items)
+                {
+                    result.Add(Mapper.Map<GeneralMaster, MasterModel>(item));
+                }
+            }
+            else
+            {
+                result = null;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [CustomAuthorize("VIEW_TOP_10_DISEASES")]
@@ -336,7 +338,7 @@ namespace Klinik.Web.Controllers
         public ActionResult Top10Referals()
         {
             ViewBag.Years = BindYears();
-            ViewBag.Months = BindDropDownByName(Constants.LookUpCategoryConstant.MONTH);
+            ViewBag.Months = BindMonths();
             ViewBag.ICDThemes = BindICDThemes();
             ViewBag.Hospitals = BindRujukan();
             ViewBag.Patients = BindDropDownPatient();
@@ -365,9 +367,9 @@ namespace Klinik.Web.Controllers
         public ActionResult Top10Cost()
         {
             ViewBag.Years = BindYears();
-            ViewBag.Months = BindDropDownByName(Constants.LookUpCategoryConstant.MONTH);
-            ViewBag.BusinessUnits = BindDropDownByName(Constants.LookUpCategoryConstant.BUSINESSUNIT);
-            ViewBag.BusinessUnits = BindDropDownByName(Constants.LookUpCategoryConstant.DEPARTMENT);
+            //ViewBag.Months = BindDropDownByName(Constants.LookUpCategoryConstant.MONTH);
+            //ViewBag.BusinessUnits = BindDropDownByName(Constants.LookUpCategoryConstant.BUSINESSUNIT);
+            //ViewBag.BusinessUnits = BindDropDownByName(Constants.LookUpCategoryConstant.DEPARTMENT);
             ViewBag.Clinics = BindDropDownClinic();
             ViewBag.Patients = BindDropDownPatient();
 
@@ -386,9 +388,9 @@ namespace Klinik.Web.Controllers
         public ActionResult Top10Request()
         {
             ViewBag.Years = BindYears();
-            ViewBag.Months = BindDropDownByName(Constants.LookUpCategoryConstant.MONTH);
+            //ViewBag.Months = BindDropDownByName(Constants.LookUpCategoryConstant.MONTH);
             ViewBag.Clinics = BindDropDownClinic();
-            ViewBag.RequestTypes = BindDropDownByName(Constants.LookUpCategoryConstant.REQUESTTYPE);
+            //ViewBag.RequestTypes = BindDropDownByName(Constants.LookUpCategoryConstant.REQUESTTYPE);
 
             return View();
         }

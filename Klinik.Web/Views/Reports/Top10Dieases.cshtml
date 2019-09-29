@@ -16,15 +16,27 @@
         </header>
         <div class="panel-body">
             <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.ReportMonth</label>
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PeriodMonthStart</label>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.Month, (IEnumerable<SelectListItem>)ViewBag.Months, new { @class = "form-control", @id = "ddlMonth" })
+                    @Html.DropDownListFor(model => model.MonthStart, (IEnumerable<SelectListItem>)ViewBag.Months, new { @class = "form-control", @id = "ddlMonthStart" })
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Year</label>
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PeriodYearStart</label>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.Year, (IEnumerable<SelectListItem>)ViewBag.Years, new { @class = "form-control", @id = "ddlYear" })
+                    @Html.DropDownListFor(model => model.YearStart, (IEnumerable<SelectListItem>)ViewBag.Years, new { @class = "form-control", @id = "ddlStartYear" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PeriodMonthEnd</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.MonthEnd, (IEnumerable<SelectListItem>)ViewBag.Months, new { @class = "form-control", @id = "ddlMonthStart" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PeriodYearEnd</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.YearEnd, (IEnumerable<SelectListItem>)ViewBag.Years, new { @class = "form-control", @id = "ddlStartYear" })
                 </div>
             </div>
             <div class="form-group">
@@ -34,63 +46,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Department</label>
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Category</label>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.DeptName, (IEnumerable<SelectListItem>)ViewBag.Departments, new { @class = "form-control", @id = "ddlDept" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.BusinessUnit</label>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.BUName, (IEnumerable<SelectListItem>)ViewBag.BusinessUnits, new { @class = "form-control", @id = "ddlBusinessUnit" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Gender </label>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.GenderType, (IEnumerable<SelectListItem>)ViewBag.Genders, new { @class = "form-control", @id = "ddlGender" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Age</label>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.AgeCode, (IEnumerable<SelectListItem>)ViewBag.Ages, new { @class = "form-control", @id = "ddlBusinessUnit" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.EmployeeStatus </label>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.PatientCategory, (IEnumerable<SelectListItem>)ViewBag.EmpStatus, new { @class = "form-control", @id = "ddlEmpStatus" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.FamilyStatus </label>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.FamilyStatus, (IEnumerable<SelectListItem>)ViewBag.FamilyStatuses, new { @class = "form-control", @id = "ddlFamilyStatus" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.CategoryClinicStatus</label>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.CategoryClinicStatus, (IEnumerable<SelectListItem>)ViewBag.NecessityTypes, new { @class = "form-control", @id = "ddlNecessityType" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PaymentType </label>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.PaymentType, (IEnumerable<SelectListItem>)ViewBag.PaymentTypes, new { @class = "form-control", @id = "ddlPaymentType" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.NeedRest </label>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.NeedRest, (IEnumerable<SelectListItem>)ViewBag.NeedRests, new { @class = "form-control", @id = "ddlNeedRest" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.IsAccident </label>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.ExamineType, (IEnumerable<SelectListItem>)ViewBag.ExamineTypes, new { @class = "form-control", @id = "ddlExamineType" })
+                    @Html.DropDownListFor(model => model.SelectedCategory, (IEnumerable<SelectListItem>)ViewBag.Clinics, new { @class = "form-control", @id = "ddlClinic" })
                 </div>
             </div>
         </div>
@@ -105,8 +63,10 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            $('#ddlMonth').select2();
-            $('#ddlYear').select2();
+            $('#ddlMonthStart').select2();
+            $('#ddlYearStart').select2();
+            $('#ddlMonthEnd').select2();
+            $('#ddlYearEnd').select2();
             $('#ddlClinic').select2();
             $('#ddlDept').select2();
             $('#ddlBusinessUnit').select2();
