@@ -685,31 +685,37 @@
                                         </div>
                                         <div id="tabICD" class="tab-pane">
                                             <div class="row">
-                                                <div class="form-group col-md-6">
+                                                <div class="form-group col-md-12">
                                                     <div class="row text-right">
-                                                        <div class="form-group col-md-6">
+                                                        <div class="form-group col-md-4">
                                                             <label class="control-label">@Klinik.Resources.UIMessages.ICDInformation1</label>
                                                         </div>
-                                                        <div class="form-group col-md-6">
-                                                            @Html.DropDownListFor(p => p.ICDInformation1, (IEnumerable<SelectListItem>)ViewBag.ICDInfo, new { @class = "form-control", @id = "ddlicd1" })
+                                                        <div class="form-group col-md-8">
+                                                            @Html.HiddenFor(x => x.ICDInformation1, new { @id = "ddlicd1" })
+                                                            @Html.TextBoxFor(x=>x.ICDInformation1Desc, new {@class="form-control", @id="icd1" })
+                                                            @*<input type="text" class="form-control" id="icd1" />*@
                                                         </div>
                                                     </div>
 
                                                     <div class="row text-right">
-                                                        <div class="form-group col-md-6">
+                                                        <div class="form-group col-md-4">
                                                             <label class="control-label">@Klinik.Resources.UIMessages.ICDInformation2</label>
                                                         </div>
-                                                        <div class="form-group col-md-6">
-                                                            @Html.DropDownListFor(p => p.ICDInformation2, (IEnumerable<SelectListItem>)ViewBag.ICDInfo, new { @class = "form-control", @id = "ddlicd2" })
+                                                        <div class="form-group col-md-8">
+                                                            @Html.HiddenFor(x => x.ICDInformation2, new { @id = "ddlicd2" })
+                                                            @Html.TextBoxFor(x => x.ICDInformation2Desc, new { @class = "form-control", @id = "icd2" })
+                                                            @*<input type="text" class="form-control" id="icd2" />*@
                                                         </div>
                                                     </div>
 
                                                     <div class="row text-right">
-                                                        <div class="form-group col-md-6">
+                                                        <div class="form-group col-md-4">
                                                             <label class="control-label">@Klinik.Resources.UIMessages.ICDInformation3</label>
                                                         </div>
-                                                        <div class="form-group col-md-6">
-                                                            @Html.DropDownListFor(p => p.ICDInformation3, (IEnumerable<SelectListItem>)ViewBag.ICDInfo, new { @class = "form-control", @id = "ddlicd3" })
+                                                        <div class="form-group col-md-8">
+                                                            @Html.HiddenFor(x => x.ICDInformation3, new { @id = "ddlicd3" })
+                                                            @Html.TextBoxFor(x => x.ICDInformation3Desc, new { @class = "form-control", @id = "icd3" })
+                                                            @*<input type="text" class="form-control" id="icd3" />*@
                                                         </div>
                                                     </div>
 
@@ -943,11 +949,96 @@
             var _isViewOnly = getUrlVars()["IsViewOnly"];
             var medicine = $("#medicineName");
             if (!medicine.length) return;
-        $('#ddlicd1').select2();
-        $('#ddlicd2').select2();
-        $('#ddlicd3').select2();
+      
         $('#ddlcaused').select2();
         $('#ddlcondition').select2();
+
+         $("#icd1").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Poli/AutoCompleteICD/',
+                       data: "{ 'prefix': '" + request.term + "', 'id1': '" + $('#ddlicd2').val() + "', 'id2': '" + $('#ddlicd3').val() + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#ddlicd1").val(i.item.id);
+                   
+                },
+                minLength: 4
+         });
+
+        $("#icd2").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Poli/AutoCompleteICD/',
+                        data: "{ 'prefix': '" + request.term + "', 'id1': '" + $('#ddlicd1').val() + "', 'id2': '" + $('#ddlicd3').val() + "'}",
+                        
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#ddlicd2").val(i.item.id);
+                   
+                },
+                minLength: 4
+            });
+
+        $("#icd3").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Poli/AutoCompleteICD/',
+                        data: "{ 'prefix': '" + request.term + "', 'id1': '" + $('#ddlicd1').val() + "', 'id2': '" + $('#ddlicd2').val() + "'}",
+                        
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }));
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#ddlicd3").val(i.item.id);
+                   
+                },
+                minLength: 4
+            });
+
             $("#medicineName").autocomplete({
                 source: function (request, response) {
                     $.ajax({
@@ -1419,6 +1510,8 @@
                 var icdinfo3 = $('#ddlicd3').val();
                 var needsuratsakit = $('#cbNeedSurat').val();
                 var jumhari = $('#tbJumHari').val();
+                var caused = $('#ddlcaused').val();
+                var condition = $('#ddlcondition').val();
 
                 var concoctionmedicineList = [];
                 $('#tblConcMedicine tbody tr').each(function () {
@@ -1478,7 +1571,9 @@
                     finalState: finalState,
                     icdInformation: icdinfo1 + '|' + icdinfo2 + '|' + icdinfo3,
                     needSurat: needsuratsakit,
-                    jumHari:jumhari,
+                    jumHari: jumhari,
+                    caused: caused,
+                    condition:condition,
                     poliToID: poliToID,
                     doctorToID: doctorToID,
                     concoctionMedicineList: concoctionmedicineList,

@@ -250,5 +250,10 @@ namespace Klinik.Web
             return _dataList;
         }
         #endregion
+
+        protected string GetICDDescription(long id)
+        {
+            return _unitOfWork.ICDThemeRepository.GetById(id) == null ? "" : _unitOfWork.ICDThemeRepository.GetById(id).Name;
+        }
     }
 }
