@@ -1,38 +1,28 @@
-﻿using Klinik.Common;
-using Klinik.Data;
-using Klinik.Features.MasterData.LookupCategory;
-using Klinik.Resources;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Klinik.Common;
+using Klinik.Data;
+using Klinik.Resources;
 
-namespace Klinik.Features
+namespace Klinik.Features.MasterData.GeneralMaster
 {
-    public class LookUpCategoryValidator : BaseFeatures
+    public class MasterValidator : BaseFeatures
     {
-        private const string ADD_PRIVILEGE_NAME = "ADD_M_LOOKUP_CATEGORY";
-        private const string EDIT_PRIVILEGE_NAME = "EDIT_M_LOOKUP_CATEGORY";
-        private const string DELETE_PRIVILEGE_NAME = "DELETE_M_LOOKUP_CATEGORY";
+        private const string ADD_PRIVILEGE_NAME = "ADD_M_GENERAL_MASTER";
+        private const string EDIT_PRIVILEGE_NAME = "EDIT_M_GENERAL_MASTER";
+        private const string DELETE_PRIVILEGE_NAME = "DELETE_M_GENERAL_MASTER";
 
-        /// <summary>
-        /// Constructor of LookUp Category
-        /// </summary>
-        /// <param name="unitOfWork"></param>
-        public LookUpCategoryValidator(IUnitOfWork unitOfWork)
+        public MasterValidator(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        /// <summary>
-        /// Validate request
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="response"></param>
-        public void Validate(LookUpCategoryRequest request, out LookUpCategoryResponse response)
+        public void Validate(MasterRequest request, out MasterResponse response)
         {
-            response = new LookUpCategoryResponse();
+            response = new MasterResponse();
 
             if (request.Action != null && request.Action.Equals(ClinicEnums.Action.DELETE.ToString()))
             {
@@ -42,9 +32,9 @@ namespace Klinik.Features
             {
                 bool isHavePrivilege = true;
 
-                if (request.Data.TypeName == null || String.IsNullOrWhiteSpace(request.Data.TypeName))
+                if (request.Data.Name == null || String.IsNullOrWhiteSpace(request.Data.Name))
                 {
-                    errorFields.Add("LookupCategory Type Name");
+                    errorFields.Add("Master Name");
                 }
 
                 if (errorFields.Any())
@@ -71,19 +61,14 @@ namespace Klinik.Features
 
                 if (response.Status)
                 {
-                    response = new LookUpCategoryHandler(_unitOfWork).CreateOrEdit(request);
+                    response = new MasterHandler(_unitOfWork).CreateOrEdit(request);
                 }
             }
         }
 
-        /// <summary>
-        /// Delete validation
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="response"></param>
-        private void ValidateForDelete(LookUpCategoryRequest request, out LookUpCategoryResponse response)
+        public void ValidateForDelete(MasterRequest request, out MasterResponse response)
         {
-            response = new LookUpCategoryResponse();
+            response = new MasterResponse();
 
             if (request.Action == ClinicEnums.Action.DELETE.ToString())
             {
@@ -91,13 +76,13 @@ namespace Klinik.Features
                 if (!isHavePrivilege)
                 {
                     response.Status = false;
-                    response.Message = Messages.UnauthorizedAccess;
+                    response.Message = Resources.Messages.UnauthorizedAccess;
                 }
             }
 
             if (response.Status)
             {
-                response = new LookUpCategoryHandler(_unitOfWork).RemoveData(request);
+                response = new MasterHandler(_unitOfWork).RemoveData(request);
             }
         }
     }

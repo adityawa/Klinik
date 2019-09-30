@@ -1723,6 +1723,8 @@
     <Content Include="Views\Reports\Top10CostReport.cshtml" />
     <Content Include="Views\Reports\Top10DiseasesReport.cshtml" />
     <Content Include="Views\Reports\Top10RequestReport.cshtml" />
+    <Content Include="Views\MasterData\GeneralMasterList.cshtml" />
+    <Content Include="Views\MasterData\CreateOrEditLookUpGeneralMaster.cshtml" />
     <Content Include="Views\Letters\ExportSuratIzinSakit2Pdf.cshtml" />
   </ItemGroup>
   <ItemGroup>

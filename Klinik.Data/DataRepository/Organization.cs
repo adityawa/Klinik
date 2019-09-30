@@ -21,6 +21,7 @@ namespace Klinik.Data.DataRepository
             this.OrganizationRoles = new HashSet<OrganizationRole>();
             this.PasswordHistories = new HashSet<PasswordHistory>();
             this.Users = new HashSet<User>();
+            this.Gudangs = new HashSet<Gudang>();
         }
     
         public long ID { get; set; }
@@ -33,7 +34,6 @@ namespace Klinik.Data.DataRepository
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual Clinic Clinic { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrganizationPrivilege> OrganizationPrivileges { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -42,5 +42,8 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<PasswordHistory> PasswordHistories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
+        public virtual Clinic Clinic { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Gudang> Gudangs { get; set; }
     }
 }

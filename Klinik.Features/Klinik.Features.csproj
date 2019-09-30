@@ -39,6 +39,9 @@
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.2.0.4\lib\netstandard2.0\Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="DapperExtensions, Version=1.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DapperExtensions.1.6.3\lib\net45\DapperExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -115,6 +118,9 @@
     <Compile Include="HistoryProductInGudang\HistoryProductInGudangRequest.cs" />
     <Compile Include="HistoryProductInGudang\HistoryProductInGudangResponse.cs" />
     <Compile Include="ICDThemeFeatures\ICDThemeHandler.cs" />
+    <Compile Include="MasterData\GeneralMaster\MasterRequest.cs" />
+    <Compile Include="MasterData\GeneralMaster\MasterResponse.cs" />
+    <Compile Include="MasterData\GeneralMaster\MasterValidator.cs" />
     <Compile Include="MasterData\Gudang\GudangHandler.cs" />
     <Compile Include="MasterData\Gudang\GudangRequest.cs" />
     <Compile Include="MasterData\Gudang\GudangResponse.cs" />

@@ -89,6 +89,8 @@
             public const string ADD_PRODCUTINGUDANG = "Add New Product In Gudang";
             public const string ADD_LOOKUP_CATEGORY = "Add New LookUp Category";
             public const string EDIT_LOOKUP_CATEGORY = "Edit Lookup Category";
+            public const string ADD_GENERAL_MASTER = "Add New General Master";
+            public const string EDIT_GENERAL_MASTER = "Edit General Master";
         }
 
         public static class MasterType
@@ -152,7 +154,7 @@
             public const string SQL_TOP_10_DISEASE_REPORT = "select FormExamine.Id as FormExamineId,  ICDTheme.Id as ICDId, Clinic.Id as ClinicId,"
                                                             + " Clinic.Name as ClinicName, Patient.Name as PatientName, Employee.EmpName as EmpName, EmployeeAssignment.Department ,"
 	                                                        + " EmployeeAssignment.BusinessUnit, EmployeeAssignment.Region, EmployeeStatus.Name as StatusName,"
-	                                                        + " Patient.BirthDate, Patient.BPJSNumber, Patient.Gender as Gender, PatientAge.Age, FamilyRelationship.Code as FamCode, "
+	                                                        + " Patient.BirthDate, Patient.BPJSNumber, Patient.Gender as Gender, PatientAge.Age, PatientAge.AgeCode, FamilyRelationship.Code as FamCode, "
                                                             + " FamilyRelationship.Name as FamName,  FormExamine.TransDate, FormExamine.NeedRest,"
 	                                                        + " FormExamine.IsAccident,  FormExamine.Diagnose, FormMedical.Necessity,"
 	                                                        + " FormMedical.PaymentType, ICDTheme.Code as ICDCode"

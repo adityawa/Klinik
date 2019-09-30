@@ -65,26 +65,26 @@ namespace Klinik.Features.SuratReferensi.SuratIzinSakit
             {
                 long _doctorId = formExamineData.DoctorID ?? 0;
                 string _dokterName = _unitOfWork.DoctorRepository.GetFirstOrDefault(x => x.ID == _doctorId).Name;
-                if (formExamineData.NeedSuratSakit == true)
-                {
-                    //get data patient
-                    var loketData = _unitOfWork.RegistrationRepository.GetFirstOrDefault(x=>x.FormMedicalID==formMedID);
-                    if (loketData != null)
-                    {
-                        var qryPatient = _unitOfWork.PatientRepository.GetById(loketData.PatientID);
-                        response.Entity = new Entities.Letter.SuratIzinSakitModel
-                        {
-                            NamaDokter = _dokterName,
-                            ExamineData = Mapper.Map<FormExamine, FormExamineModel>(formExamineData),
-                            patientData = Mapper.Map<Patient, PatientModel>(qryPatient),
-                            NoSurat = letterData==null?"": $"{letterData.AutoNumber}/SKIS/{DateTime.Now.Month}/{DateTime.Now.Year}",
-                            strSelesaiIstirahat = formExamineData.Sampai.Value.ToString("dd/MM/yyyy"),
-                            strStartIstirahat = formExamineData.TransDate.Value.ToString("dd/MM/yyyy"),
-                            Pekerjaan=letterData==null?"":letterData.Pekerjaan,
+                //if (formExamineData.NeedSuratSakit == true)
+                //{
+                //    //get data patient
+                //    var loketData = _unitOfWork.RegistrationRepository.GetFirstOrDefault(x=>x.FormMedicalID==formMedID);
+                //    if (loketData != null)
+                //    {
+                //        var qryPatient = _unitOfWork.PatientRepository.GetById(loketData.PatientID);
+                //        response.Entity = new Entities.Letter.SuratIzinSakitModel
+                //        {
+                //            NamaDokter = _dokterName,
+                //            ExamineData = Mapper.Map<FormExamine, FormExamineModel>(formExamineData),
+                //            patientData = Mapper.Map<Patient, PatientModel>(qryPatient),
+                //            NoSurat = letterData==null?"": $"{letterData.AutoNumber}/SKIS/{DateTime.Now.Month}/{DateTime.Now.Year}",
+                //            strSelesaiIstirahat = formExamineData.Sampai.Value.ToString("dd/MM/yyyy"),
+                //            strStartIstirahat = formExamineData.TransDate.Value.ToString("dd/MM/yyyy"),
+                //            Pekerjaan=letterData==null?"":letterData.Pekerjaan,
                         
-                        };
-                    }
-                }
+                //        };
+                //    }
+                //}
             }
             return response;
         }

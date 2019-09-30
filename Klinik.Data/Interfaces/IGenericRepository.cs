@@ -11,6 +11,9 @@ namespace Klinik.Data
     /// <typeparam name="TEntity"></typeparam>
     public interface IGenericRepository<TEntity>
     {
+
+        List<TEntity> GetAll();
+
         List<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes);
 
         IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes);

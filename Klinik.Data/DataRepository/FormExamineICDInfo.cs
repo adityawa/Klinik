@@ -22,8 +22,5 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-    
-        public virtual FormExamine FormExamine { get; set; }
-        public virtual ICDTheme ICDTheme { get; set; }
     }
 }

@@ -274,19 +274,19 @@ namespace Klinik.Common
 
             CreateMap<Letter, LabReferenceLetterModel>();
             CreateMap<LabReferenceLetterModel, Letter>()
-                .ForMember(m => m.CreatedBy, map => map.MapFrom(p => p.Account.UserName))
-                .ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID)); ;
+                .ForMember(m => m.CreatedBy, map => map.MapFrom(p => p.Account.UserName));
+                //.ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID)); ;
 
             CreateMap<SuratRujukanLabKeluar, SuratRujukanKeluarModel>();
             CreateMap<SuratRujukanKeluarModel, SuratRujukanLabKeluar>() ;
 
-            CreateMap<HealthBodyLetterModel, Letter>()
-                .ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID)); ;
+            //CreateMap<HealthBodyLetterModel, Letter>()
+            //    .ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID)); ;
             CreateMap<Letter, HealthBodyLetterModel>();
 
             CreateMap<RujukanBerobatModel, Letter>()
-                .ForMember(x => x.Pekerjaan, map => map.MapFrom(p => p.Perusahaan))
-                .ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID));
+                .ForMember(x => x.Pekerjaan, map => map.MapFrom(p => p.Perusahaan));
+                //.ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID));
             CreateMap<Letter, RujukanBerobatModel>().ForMember(x => x.Perusahaan, map => map.MapFrom(p => p.Pekerjaan));
 
             CreateMap<PersetujuanTindakanModel, Letter>();
@@ -360,6 +360,9 @@ namespace Klinik.Common
             CreateMap<MCUPackage, MCUPackageModel>();
             CreateMap<MCUPackageModel, MCUPackage>();
 
+            CreateMap<GeneralMaster, MasterModel>();
+            CreateMap<MasterModel, GeneralMaster>();
+
             CreateMap<Appointment, AppointmentModel>()
                 .ForMember(x => x.ClinicName, map => map.MapFrom(p => p.Clinic.Name))
                 .ForMember(x => x.PoliName, map => map.MapFrom(p => p.Poli.Name))
@@ -389,8 +392,8 @@ namespace Klinik.Common
             CreateMap<MCURegistrationInterface, MCURegistrationModel>()
                 .ForMember(x => x.strReserveDate, map => map.MapFrom(p => Convert.ToDateTime(p.RESERVE_DATE).ToString("dd/MM/yyyy")));
 
-            CreateMap<SuratIzinSakitModel, Letter>()
-                .ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID));
+            //CreateMap<SuratIzinSakitModel, Letter>()
+            //    .ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID));
 
 
         }

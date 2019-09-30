@@ -101,6 +101,9 @@
     <Compile Include="DataRepository\FormExamineAttachment.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataRepository\FormExamineICDInfo.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataRepository\FormExamineLab.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>

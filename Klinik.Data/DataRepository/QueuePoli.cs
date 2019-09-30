@@ -35,11 +35,11 @@ namespace Klinik.Data.DataRepository
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual Clinic Clinic { get; set; }
         public virtual Doctor Doctor { get; set; }
         public virtual FormMedical FormMedical { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual Poli Poli { get; set; }
         public virtual Poli Poli1 { get; set; }
+        public virtual Clinic Clinic { get; set; }
     }
 }

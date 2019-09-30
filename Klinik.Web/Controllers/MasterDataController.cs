@@ -5,6 +5,8 @@ using Klinik.Entities.Account;
 using Klinik.Entities.MasterData;
 using Klinik.Entities.ProductInGudang;
 using Klinik.Features;
+using Klinik.Features.MasterData;
+using Klinik.Features.MasterData.GeneralMaster;
 using Klinik.Features.MasterData.LookupCategory;
 using System;
 using System.Collections.Generic;
@@ -407,6 +409,22 @@ namespace Klinik.Web.Controllers
             return politype;
         }
 
+        private List<SelectListItem> BindDropDownLookUpCategory()
+        {
+            List<SelectListItem> _lookupCategories = new List<SelectListItem>();
+
+            foreach (var item in new MasterHandler(_unitOfWork).GetLookupCategories())
+            {
+                _lookupCategories.Add(new SelectListItem {
+                    Text = item.TypeName,
+                    Value = item.ID.ToString()
+
+                });
+            }
+
+            return _lookupCategories;
+
+        }
 
         #endregion
 
@@ -2319,6 +2337,7 @@ namespace Klinik.Web.Controllers
                 GudangModel _model = resp.Entity;
                 ViewBag.Response = _response;
                 ViewBag.clinics = BindDropDownClinic();
+                ViewBag.Organisasi = BindDropDownOrganization();
                 ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }
@@ -2662,6 +2681,115 @@ namespace Klinik.Web.Controllers
 
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+        #region :: GENERAL MASTER ::
+        [CustomAuthorize("VIEW_M_GENERAL_MASTER")]
+        public ActionResult GeneralMasterList()
+        {
+            return View();
+        }
+
+        [CustomAuthorize("VIEW_M_GENERAL_MASTER")]
+        [HttpPost]
+        public ActionResult GetGeneralMasterData()
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+
+            var request = new MasterRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip
+            };
+
+            var response = new MasterHandler(_unitOfWork).GetListData(request);
+
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
+        [CustomAuthorize("ADD_M_GENERAL_MASTER", "EDIT_M_GENERAL_MASTER")]
+        public ActionResult CreateOrEditLookUpGeneralMaster()
+        {
+            MasterResponse _response = new MasterResponse();
+            if (Request.QueryString["id"] != null)
+            {
+                var request = new MasterRequest
+                {
+                    Data = new MasterModel
+                    {
+                        Id = long.Parse(Request.QueryString["id"].ToString())
+                    }
+                };
+
+                MasterResponse resp = new MasterHandler(_unitOfWork).GetDetail(request);
+                MasterModel _model = resp.Entity;
+                ViewBag.Response = _response;
+                ViewBag.LookUpCategories = BindDropDownLookUpCategory();
+                ViewBag.ActionType = ClinicEnums.Action.Edit;
+                return View(_model);
+            }
+            else
+            {
+                ViewBag.Response = _response;
+                ViewBag.LookUpCategories = BindDropDownLookUpCategory();
+                ViewBag.ActionType = ClinicEnums.Action.Add;
+                return View();
+            }
+        }
+
+        [CustomAuthorize("ADD_M_GENERAL_MASTER", "EDIT_M_GENERAL_MASTER")]
+        [HttpPost]
+        public ActionResult CreateOrEditGeneralMaster(MasterModel _model)
+        {
+            if (Session["UserLogon"] != null)
+                _model.Account = (AccountModel)Session["UserLogon"];
+
+            var request = new MasterRequest
+            {
+                Data = _model
+            };
+
+            MasterResponse _response = new MasterResponse();
+
+            ViewBag.LookUpCategories = BindDropDownLookUpCategory();
+
+            new MasterValidator(_unitOfWork).Validate(request, out _response);
+
+            return RedirectToAction("GeneralMasterList");
+        }
+
+        [CustomAuthorize("DELETE_M_GENERAL_MASTER")]
+        [HttpPost]
+        public JsonResult DeleteGeneralMaster(int id)
+        {
+            MasterResponse _response = new MasterResponse();
+            var request = new MasterRequest
+            {
+                Data = new MasterModel
+                {
+                    Id = id,
+                    Account = Session["UserLogon"] == null ? new AccountModel() : (AccountModel)Session["UserLogon"]
+                },
+                Action = ClinicEnums.Action.DELETE.ToString()
+            };
+
+            new MasterValidator(_unitOfWork).Validate(request, out _response);
+
+            return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
     }
 }

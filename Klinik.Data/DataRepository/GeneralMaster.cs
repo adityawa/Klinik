@@ -21,6 +21,7 @@ namespace Klinik.Data.DataRepository
         }
     
         public short ID { get; set; }
+        public Nullable<int> CategoryId { get; set; }
         public string Type { get; set; }
         public string Name { get; set; }
         public string Value { get; set; }
@@ -32,5 +33,6 @@ namespace Klinik.Data.DataRepository
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
+        public virtual LookupCategory LookupCategory { get; set; }
     }
 }

@@ -14,14 +14,21 @@ namespace Klinik.Data.DataRepository
     
     public partial class LookupCategory
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public LookupCategory()
+        {
+            this.GeneralMasters = new HashSet<GeneralMaster>();
+        }
+    
         public int ID { get; set; }
-        public string LookUpCode { get; set; }
-        public string LookUpName { get; set; }
-        public string LookupContent { get; set; }
+        public string TypeName { get; set; }
         public short RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GeneralMaster> GeneralMasters { get; set; }
     }
 }

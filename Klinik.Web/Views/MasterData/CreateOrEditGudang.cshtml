@@ -21,9 +21,9 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Clinic</label>
+				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Organization</label>
 				<div class="col-md-4">
-					@Html.DropDownListFor(p => p.ClinicId, (IEnumerable<SelectListItem>)ViewBag.clinics, new { @class = "form-control", @id = "ddlclinics" })
+					@Html.DropDownListFor(p => p.OrganizationId, (IEnumerable<SelectListItem>)ViewBag.Organisasi, new { @class = "form-control", @id = "ddlclinics" })
 				</div>
 			</div>
 		</div>

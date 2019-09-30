@@ -142,11 +142,11 @@ namespace Klinik.Features
 		public long GetLatestAutoNoSurat(string LetterType, long clinic)
 		{
 			long _number = 0;
-			var result = _unitOfWork.LetterRepository.Get(x => x.LetterType == LetterType && x.Year == DateTime.Now.Year && x.ClinicID==clinic).OrderByDescending(x => x.AutoNumber).FirstOrDefault();
-			if (result != null)
-			{
-				_number = result.AutoNumber;
-			}
+			//var result = _unitOfWork.LetterRepository.Get(x => x.LetterType == LetterType && x.Year == DateTime.Now.Year && x.ClinicID==clinic).OrderByDescending(x => x.AutoNumber).FirstOrDefault();
+			//if (result != null)
+			//{
+			//	_number = result.AutoNumber;
+			//}
 			return _number;
 		}
 

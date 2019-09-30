@@ -34,16 +34,16 @@ namespace Klinik.Features
                         var _oldentity = new Gudang
                         {
                             name = qry.name,
-                            ClinicId = qry.ClinicId,
                             ModifiedBy = request.Data.Account.UserCode,
                             ModifiedDate = DateTime.Now,
+
                         };
 
                         // update data
                         qry.name = request.Data.name;
-                        qry.ClinicId = request.Data.ClinicId;
                         qry.ModifiedBy = request.Data.Account.UserCode;
                         qry.ModifiedDate = DateTime.Now;
+                        qry.OrganizationId = request.Data.OrganizationId;
 
                         _unitOfWork.GudangRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
@@ -74,10 +74,10 @@ namespace Klinik.Features
                     var gudangEntity = new Gudang
                     {
                         name = request.Data.name,
-                        ClinicId = request.Data.ClinicId,
                         CreatedBy = request.Data.Account.UserCode,
                         RowStatus = 0,
                         CreatedDate = DateTime.Now,
+                        OrganizationId = request.Data.OrganizationId
                     };
 
                     _unitOfWork.GudangRepository.Insert(gudangEntity);
@@ -120,11 +120,12 @@ namespace Klinik.Features
             {
                 response.Entity = new GudangModel
                 {
-                    ClinicId = qry.FirstOrDefault().ClinicId,
+                    ClinicId = Convert.ToInt32(qry.FirstOrDefault().ClinicId),
                     Id = qry.FirstOrDefault().id,
                     name = qry.FirstOrDefault().name,
                     ClinicName = qry.FirstOrDefault().Clinic.Name,
-                    IsGudangPusat = qry.FirstOrDefault().IsGudangPusat
+                    IsGudangPusat = qry.FirstOrDefault().IsGudangPusat,
+                    OrganizationId = qry.FirstOrDefault().OrganizationId
                 };
             }
 

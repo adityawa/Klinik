@@ -14,6 +14,7 @@ namespace Klinik.Features
         private const string ADD_M_PURCHASEREQUESTPUSAT = "ADD_M_PURCHASEREQUESTPUSAT";
         private const string EDIT_M_PURCHASEREQUESTPUSAT = "EDIT_M_PURCHASEREQUESTPUSAT";
         private const string DELETE_M_PURCHASEREQUESTPUSAT = "DELETE_M_PURCHASEREQUESTPUSAT";
+        private const string VALIDATION_M_PURCHASEREQUESTPUSAT = "VALIDATION_M_PURCHASEREQUESTPUSAT";
 
         public PurchaseRequestPusatValidator(IUnitOfWork unitOfWork)
         {
@@ -123,7 +124,7 @@ namespace Klinik.Features
 
             if (request.Action == ClinicEnums.Action.VALIDASI.ToString())
             {
-                bool isHavePrivilege = IsHaveAuthorization(EDIT_M_PURCHASEREQUESTPUSAT, request.Data.Account.Privileges.PrivilegeIDs);
+                bool isHavePrivilege = IsHaveAuthorization(VALIDATION_M_PURCHASEREQUESTPUSAT, request.Data.Account.Privileges.PrivilegeIDs);
                 if (!isHavePrivilege)
                 {
                     response.Status = false;
