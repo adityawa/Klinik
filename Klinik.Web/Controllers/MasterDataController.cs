@@ -2337,6 +2337,7 @@ namespace Klinik.Web.Controllers
                 GudangModel _model = resp.Entity;
                 ViewBag.Response = _response;
                 ViewBag.clinics = BindDropDownClinic();
+                ViewBag.Organisasi = BindDropDownOrganization();
                 ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }

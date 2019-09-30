@@ -26,19 +26,20 @@ namespace Klinik.Data.DataRepository
             this.PurchaseOrders1 = new HashSet<PurchaseOrder>();
             this.PurchaseOrderPusats = new HashSet<PurchaseOrderPusat>();
             this.PurchaseRequests = new HashSet<PurchaseRequest>();
-            this.PurchaseRequestPusats = new HashSet<PurchaseRequestPusat>();
             this.PurchaseRequestConfigs = new HashSet<PurchaseRequestConfig>();
+            this.PurchaseRequestPusats = new HashSet<PurchaseRequestPusat>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
-        public long ClinicId { get; set; }
+        public Nullable<long> ClinicId { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<short> RowStatus { get; set; }
         public Nullable<bool> IsGudangPusat { get; set; }
+        public Nullable<long> OrganizationId { get; set; }
     
         public virtual Clinic Clinic { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -47,6 +48,7 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<DeliveryOrder> DeliveryOrders1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryOrderPusat> DeliveryOrderPusats { get; set; }
+        public virtual Organization Organization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HistoryProductInGudang> HistoryProductInGudangs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -60,8 +62,8 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseRequest> PurchaseRequests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseRequestPusat> PurchaseRequestPusats { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseRequestConfig> PurchaseRequestConfigs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseRequestPusat> PurchaseRequestPusats { get; set; }
     }
 }

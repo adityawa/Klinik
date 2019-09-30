@@ -36,10 +36,10 @@ namespace Klinik.Data.DataRepository
         public Nullable<int> Validasi { get; set; }
         public Nullable<int> GudangId { get; set; }
     
-        public virtual Gudang Gudang { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderPusat> PurchaseOrderPusats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseRequestPusatDetail> PurchaseRequestPusatDetails { get; set; }
+        public virtual Gudang Gudang { get; set; }
     }
 }

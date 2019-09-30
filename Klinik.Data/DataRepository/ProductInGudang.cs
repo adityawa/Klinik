@@ -24,7 +24,7 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> RowStatus { get; set; }
     
-        public virtual Gudang Gudang { get; set; }
         public virtual Product Product { get; set; }
+        public virtual Gudang Gudang { get; set; }
     }
 }

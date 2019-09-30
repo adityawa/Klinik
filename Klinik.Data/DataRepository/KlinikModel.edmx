@@ -486,13 +486,14 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="ClinicId" Type="bigint" Nullable="false" />
+          <Property Name="ClinicId" Type="bigint" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="RowStatus" Type="smallint" />
           <Property Name="IsGudangPusat" Type="bit" />
+          <Property Name="OrganizationId" Type="bigint" />
         </EntityType>
         <EntityType Name="HistoryProductInGudang">
           <Key>
@@ -1852,7 +1853,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Gudang_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
+          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
           <End Role="Gudang" Type="Self.Gudang" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Clinic">
@@ -1860,6 +1861,18 @@
             </Principal>
             <Dependent Role="Gudang">
               <PropertyRef Name="ClinicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gudang_Organization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="0..1" />
+          <End Role="Gudang" Type="Self.Gudang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Gudang">
+              <PropertyRef Name="OrganizationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3060,6 +3073,10 @@
             <End Role="Clinic" EntitySet="Clinic" />
             <End Role="Gudang" EntitySet="Gudang" />
           </AssociationSet>
+          <AssociationSet Name="FK_Gudang_Organization" Association="Self.FK_Gudang_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="Gudang" EntitySet="Gudang" />
+          </AssociationSet>
           <AssociationSet Name="FK_HistoryProductInGudang_Gudang" Association="Self.FK_HistoryProductInGudang_Gudang">
             <End Role="Gudang" EntitySet="Gudang" />
             <End Role="HistoryProductInGudang" EntitySet="HistoryProductInGudang" />
@@ -3396,47 +3413,9 @@
           <Property Name="Kecamatan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Clinics" Relationship="Self.FK_Clinic_City" FromRole="City" ToRole="Clinic" />
           <NavigationProperty Name="Patients" Relationship="Self.FK_Patient_City" FromRole="City" ToRole="Patient" />
           <NavigationProperty Name="PatientClinics" Relationship="Self.FK_PatientClinic_City" FromRole="City" ToRole="PatientClinic" />
-        </EntityType>
-        <EntityType Name="Clinic">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="LegalNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LegalDate" Type="DateTime" Precision="0" />
-          <Property Name="ContactNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Lat" Type="Double" />
-          <Property Name="Long" Type="Double" />
-          <Property Name="CityID" Type="Int32" />
-          <Property Name="ClinicType" Type="Int16" />
-          <Property Name="ReffID" Type="Int32" />
-          <Property Name="RowStatus" Type="Int16" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="City" Relationship="Self.FK_Clinic_City" FromRole="Clinic" ToRole="City" />
-          <NavigationProperty Name="DoctorClinics" Relationship="Self.FK_DoctorClinic_Clinic" FromRole="Clinic" ToRole="DoctorClinic" />
-          <NavigationProperty Name="FormMedicals" Relationship="Self.FK_FormMedical_Clinic" FromRole="Clinic" ToRole="FormMedical" />
-          <NavigationProperty Name="Gudangs" Relationship="Self.FK_Gudang_Clinic" FromRole="Clinic" ToRole="Gudang" />
-          <NavigationProperty Name="Organizations" Relationship="Self.FK_Organization_Clinic" FromRole="Clinic" ToRole="Organization" />
-          <NavigationProperty Name="PatientClinics" Relationship="Self.FK_PatientClinic_Clinic" FromRole="Clinic" ToRole="PatientClinic" />
-          <NavigationProperty Name="PoliClinics" Relationship="Self.FK_PoliClinic_Clinic" FromRole="Clinic" ToRole="PoliClinic" />
-          <NavigationProperty Name="PoliSchedules" Relationship="Self.FK_PoliSchedule_Clinic" FromRole="Clinic" ToRole="PoliSchedule" />
-          <NavigationProperty Name="PoliScheduleMasters" Relationship="Self.FK_PoliScheduleMaster_Clinic" FromRole="Clinic" ToRole="PoliScheduleMaster" />
-          <NavigationProperty Name="PoliServices" Relationship="Self.FK_PoliServices_Clinic" FromRole="Clinic" ToRole="PoliServices" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Product_Clinic" FromRole="Clinic" ToRole="Product" />
-          <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_Clinic" FromRole="Clinic" ToRole="QueuePoli" />
-          <NavigationProperty Name="stoks" Relationship="Self.FK_stok_m_Clinic" FromRole="Clinic" ToRole="stok" />
-          <NavigationProperty Name="stoks1" Relationship="Self.FK_stoks_m_Clinic" FromRole="Clinic" ToRole="stoks" />
-          <NavigationProperty Name="Appointments" Relationship="KlinikDBModel.FK_Appointment_Clinic" FromRole="Clinic" ToRole="Appointment" />
+          <NavigationProperty Name="Clinics" Relationship="KlinikDBModel.FK_Clinic_City" FromRole="City" ToRole="Clinic" />
         </EntityType>
         <EntityType Name="DeliveryOrder">
           <Key>
@@ -3458,10 +3437,10 @@
           <Property Name="GudangId" Type="Int32" />
           <Property Name="SendBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="SourceId" Type="Int32" />
-          <NavigationProperty Name="Gudang" Relationship="Self.FK_DeliveryOrder_Gudang" FromRole="DeliveryOrder" ToRole="Gudang" />
           <NavigationProperty Name="PurchaseOrder" Relationship="Self.FK_DeliveryOrder_PurchaseOrder" FromRole="DeliveryOrder" ToRole="PurchaseOrder" />
-          <NavigationProperty Name="Gudang1" Relationship="Self.FK_DeliveryOrder_Source" FromRole="DeliveryOrder" ToRole="Gudang" />
           <NavigationProperty Name="DeliveryOrderDetails" Relationship="Self.FK_DeliveryOrderDetail_DeliveryOrder" FromRole="DeliveryOrder" ToRole="DeliveryOrderDetail" />
+          <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_DeliveryOrder_Gudang" FromRole="DeliveryOrder" ToRole="Gudang" />
+          <NavigationProperty Name="Gudang1" Relationship="KlinikDBModel.FK_DeliveryOrder_Source" FromRole="DeliveryOrder" ToRole="Gudang" />
         </EntityType>
         <EntityType Name="DeliveryOrderDetail">
           <Key>
@@ -3507,9 +3486,9 @@
           <Property Name="GudangId" Type="Int32" />
           <Property Name="SendBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Validasi" Type="Int32" />
-          <NavigationProperty Name="Gudang" Relationship="Self.FK_DeliveryOrderPusat_Gudang" FromRole="DeliveryOrderPusat" ToRole="Gudang" />
           <NavigationProperty Name="PurchaseOrderPusat" Relationship="Self.FK_DeliveryOrderPusat_PurchaseOrderPusat" FromRole="DeliveryOrderPusat" ToRole="PurchaseOrderPusat" />
           <NavigationProperty Name="DeliveryOrderPusatDetails" Relationship="Self.FK_DeliveryOrderPusatDetail_DeliveryOrderPusat" FromRole="DeliveryOrderPusat" ToRole="DeliveryOrderPusatDetail" />
+          <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_DeliveryOrderPusat_Gudang" FromRole="DeliveryOrderPusat" ToRole="Gudang" />
         </EntityType>
         <EntityType Name="DeliveryOrderPusatDetail">
           <Key>
@@ -3595,9 +3574,9 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Clinic" Relationship="Self.FK_DoctorClinic_Clinic" FromRole="DoctorClinic" ToRole="Clinic" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK_DoctorClinic_Doctor" FromRole="DoctorClinic" ToRole="Doctor" />
           <NavigationProperty Name="FileArchieve" Relationship="Self.FK_DoctorClinic_FileArchieve" FromRole="DoctorClinic" ToRole="FileArchieve" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_DoctorClinic_Clinic" FromRole="DoctorClinic" ToRole="Clinic" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -3841,12 +3820,12 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Clinic" Relationship="Self.FK_FormMedical_Clinic" FromRole="FormMedical" ToRole="Clinic" />
           <NavigationProperty Name="FormExamines" Relationship="Self.FK_FormExamine_FormMedical" FromRole="FormMedical" ToRole="FormExamine" />
           <NavigationProperty Name="FormExamineLabs" Relationship="Self.FK_FormExamineLab_FormMedical" FromRole="FormMedical" ToRole="FormExamineLab" />
           <NavigationProperty Name="Patient" Relationship="Self.FK_FormMedical_Patient" FromRole="FormMedical" ToRole="Patient" />
           <NavigationProperty Name="FormPreExamines" Relationship="Self.FK_FormPreExamine_FormMedical" FromRole="FormMedical" ToRole="FormPreExamine" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_FormMedical" FromRole="FormMedical" ToRole="QueuePoli" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_FormMedical_Clinic" FromRole="FormMedical" ToRole="Clinic" />
         </EntityType>
         <EntityType Name="FormPreExamine">
           <Key>
@@ -3879,32 +3858,6 @@
           <NavigationProperty Name="Doctor" Relationship="Self.FK_FormPreExamine_Doctor" FromRole="FormPreExamine" ToRole="Doctor" />
           <NavigationProperty Name="FormMedical" Relationship="Self.FK_FormPreExamine_FormMedical" FromRole="FormPreExamine" ToRole="FormMedical" />
         </EntityType>
-        <EntityType Name="Gudang">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ClinicId" Type="Int64" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="RowStatus" Type="Int16" />
-          <NavigationProperty Name="Clinic" Relationship="Self.FK_Gudang_Clinic" FromRole="Gudang" ToRole="Clinic" />
-          <NavigationProperty Name="DeliveryOrders" Relationship="Self.FK_DeliveryOrder_Gudang" FromRole="Gudang" ToRole="DeliveryOrder" />
-          <NavigationProperty Name="DeliveryOrders1" Relationship="Self.FK_DeliveryOrder_Source" FromRole="Gudang" ToRole="DeliveryOrder" />
-          <NavigationProperty Name="DeliveryOrderPusats" Relationship="Self.FK_DeliveryOrderPusat_Gudang" FromRole="Gudang" ToRole="DeliveryOrderPusat" />
-          <NavigationProperty Name="HistoryProductInGudangs" Relationship="Self.FK_HistoryProductInGudang_Gudang" FromRole="Gudang" ToRole="HistoryProductInGudang" />
-          <NavigationProperty Name="ProductInGudangs" Relationship="Self.FK_ProductInGudang_Gudang" FromRole="Gudang" ToRole="ProductInGudang" />
-          <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_PurchaseOrder_Gudang" FromRole="Gudang" ToRole="PurchaseOrder" />
-          <NavigationProperty Name="PurchaseOrders1" Relationship="Self.FK_PurchaseOrder_Source" FromRole="Gudang" ToRole="PurchaseOrder" />
-          <NavigationProperty Name="PurchaseOrderPusats" Relationship="Self.FK_PurchaseOrderPusat_Gudang" FromRole="Gudang" ToRole="PurchaseOrderPusat" />
-          <NavigationProperty Name="PurchaseRequests" Relationship="Self.FK_PurchaseRequest_Gudang" FromRole="Gudang" ToRole="PurchaseRequest" />
-          <NavigationProperty Name="PurchaseRequestPusats" Relationship="Self.FK_PurchaseRequestPusat_Gudang" FromRole="Gudang" ToRole="PurchaseRequestPusat" />
-          <NavigationProperty Name="PurchaseRequestConfigs" Relationship="KlinikDBModel.FK_PurchaseRequestConfig_Gudang" FromRole="Gudang" ToRole="PurchaseRequestConfig" />
-          <Property Name="IsGudangPusat" Type="Boolean" />
-        </EntityType>
         <EntityType Name="HistoryProductInGudang">
           <Key>
             <PropertyRef Name="id" />
@@ -3915,8 +3868,8 @@
           <Property Name="value" Type="Int32" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Gudang" Relationship="Self.FK_HistoryProductInGudang_Gudang" FromRole="HistoryProductInGudang" ToRole="Gudang" />
           <NavigationProperty Name="Product" Relationship="Self.FK_HistoryProductInGudang_Product" FromRole="HistoryProductInGudang" ToRole="Product" />
+          <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_HistoryProductInGudang_Gudang" FromRole="HistoryProductInGudang" ToRole="Gudang" />
         </EntityType>
         <EntityType Name="ICDTheme">
           <Key>
@@ -4074,11 +4027,12 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Clinic" Relationship="Self.FK_Organization_Clinic" FromRole="Organization" ToRole="Clinic" />
           <NavigationProperty Name="OrganizationPrivileges" Relationship="Self.FK_OrganizationPrivilege_Organization" FromRole="Organization" ToRole="OrganizationPrivilege" />
           <NavigationProperty Name="OrganizationRoles" Relationship="Self.FK_OrganizationRole_Organization" FromRole="Organization" ToRole="OrganizationRole" />
           <NavigationProperty Name="PasswordHistories" Relationship="Self.FK_PasswordHistory_Organization" FromRole="Organization" ToRole="PasswordHistory" />
           <NavigationProperty Name="Users" Relationship="Self.FK_User_Organization" FromRole="Organization" ToRole="User" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_Organization_Clinic" FromRole="Organization" ToRole="Clinic" />
+          <NavigationProperty Name="Gudangs" Relationship="KlinikDBModel.FK_Gudang_Organization" FromRole="Organization" ToRole="Gudang" />
         </EntityType>
         <EntityType Name="OrganizationPrivilege">
           <Key>
@@ -4204,9 +4158,9 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="City" Relationship="Self.FK_PatientClinic_City" FromRole="PatientClinic" ToRole="City" />
-          <NavigationProperty Name="Clinic" Relationship="Self.FK_PatientClinic_Clinic" FromRole="PatientClinic" ToRole="Clinic" />
           <NavigationProperty Name="FileArchieve" Relationship="Self.FK_PatientClinic_FileArchieve" FromRole="PatientClinic" ToRole="FileArchieve" />
           <NavigationProperty Name="Patient" Relationship="Self.FK_PatientClinic_Patient" FromRole="PatientClinic" ToRole="Patient" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_PatientClinic_Clinic" FromRole="PatientClinic" ToRole="Clinic" />
         </EntityType>
         <EntityType Name="Poli">
           <Key>
@@ -4244,8 +4198,8 @@
           <Property Name="Createddate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Clinic" Relationship="Self.FK_PoliClinic_Clinic" FromRole="PoliClinic" ToRole="Clinic" />
           <NavigationProperty Name="Poli" Relationship="Self.FK_PoliClinic_Poli" FromRole="PoliClinic" ToRole="Poli" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_PoliClinic_Clinic" FromRole="PoliClinic" ToRole="Clinic" />
         </EntityType>
         <EntityType Name="PoliFlowTemplate">
           <Key>
@@ -4279,9 +4233,9 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Clinic" Relationship="Self.FK_PoliSchedule_Clinic" FromRole="PoliSchedule" ToRole="Clinic" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK_PoliSchedule_Doctor" FromRole="PoliSchedule" ToRole="Doctor" />
           <NavigationProperty Name="Poli" Relationship="Self.FK_PoliSchedule_Poli" FromRole="PoliSchedule" ToRole="Poli" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_PoliSchedule_Clinic" FromRole="PoliSchedule" ToRole="Clinic" />
         </EntityType>
         <EntityType Name="PoliScheduleMaster">
           <Key>
@@ -4299,9 +4253,9 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Clinic" Relationship="Self.FK_PoliScheduleMaster_Clinic" FromRole="PoliScheduleMaster" ToRole="Clinic" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK_PoliScheduleMaster_Doctor" FromRole="PoliScheduleMaster" ToRole="Doctor" />
           <NavigationProperty Name="Poli" Relationship="Self.FK_PoliScheduleMaster_Poli" FromRole="PoliScheduleMaster" ToRole="Poli" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_PoliScheduleMaster_Clinic" FromRole="PoliScheduleMaster" ToRole="Clinic" />
         </EntityType>
         <EntityType Name="PoliService">
           <Key>
@@ -4316,9 +4270,9 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Clinic" Relationship="Self.FK_PoliServices_Clinic" FromRole="PoliServices" ToRole="Clinic" />
           <NavigationProperty Name="Poli" Relationship="Self.FK_PoliServices_Poli" FromRole="PoliServices" ToRole="Poli" />
           <NavigationProperty Name="Service" Relationship="Self.FK_PoliServices_Services" FromRole="PoliServices" ToRole="Services" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_PoliServices_Clinic" FromRole="PoliService" ToRole="Clinic" />
         </EntityType>
         <EntityType Name="Privilege">
           <Key>
@@ -4354,7 +4308,6 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Clinic" Relationship="Self.FK_Product_Clinic" FromRole="Product" ToRole="Clinic" />
           <NavigationProperty Name="DeliveryOrderDetails" Relationship="Self.FK_DeliveryOrderDetail_Product" FromRole="Product" ToRole="DeliveryOrderDetail" />
           <NavigationProperty Name="DeliveryOrderPusatDetails" Relationship="Self.FK_DeliveryOrderPusatDetail_Product" FromRole="Product" ToRole="DeliveryOrderPusatDetail" />
           <NavigationProperty Name="FormExamineMedicines" Relationship="Self.FK_FormExamineMedicine_Product" FromRole="Product" ToRole="FormExamineMedicine" />
@@ -4370,6 +4323,7 @@
           <NavigationProperty Name="stoks" Relationship="Self.FK_stok_m_Product" FromRole="Product" ToRole="stok" />
           <NavigationProperty Name="stoks1" Relationship="Self.FK_stoks_m_Product" FromRole="Product" ToRole="stoks" />
           <NavigationProperty Name="substitutes" Relationship="Self.FK_substitute_Product" FromRole="Product" ToRole="substitute" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_Product_Clinic" FromRole="Product" ToRole="Clinic" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -4397,8 +4351,8 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="RowStatus" Type="Int32" />
-          <NavigationProperty Name="Gudang" Relationship="Self.FK_ProductInGudang_Gudang" FromRole="ProductInGudang" ToRole="Gudang" />
           <NavigationProperty Name="Product" Relationship="Self.FK_ProductInGudang_Product" FromRole="ProductInGudang" ToRole="Product" />
+          <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_ProductInGudang_Gudang" FromRole="ProductInGudang" ToRole="Gudang" />
         </EntityType>
         <EntityType Name="ProductMedicine">
           <Key>
@@ -4451,10 +4405,10 @@
           <Property Name="GudangId" Type="Int32" />
           <Property Name="SourceId" Type="Int32" />
           <NavigationProperty Name="DeliveryOrders" Relationship="Self.FK_DeliveryOrder_PurchaseOrder" FromRole="PurchaseOrder" ToRole="DeliveryOrder" />
-          <NavigationProperty Name="Gudang" Relationship="Self.FK_PurchaseOrder_Gudang" FromRole="PurchaseOrder" ToRole="Gudang" />
-          <NavigationProperty Name="Gudang1" Relationship="Self.FK_PurchaseOrder_Source" FromRole="PurchaseOrder" ToRole="Gudang" />
           <NavigationProperty Name="PurchaseRequest" Relationship="Self.FK_PurchaseOrder_PurchaseRequest" FromRole="PurchaseOrder" ToRole="PurchaseRequest" />
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="Self.FK_PurchaseOrderDetail_PurchaseOrder" FromRole="PurchaseOrder" ToRole="PurchaseOrderDetail" />
+          <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_PurchaseOrder_Gudang" FromRole="PurchaseOrder" ToRole="Gudang" />
+          <NavigationProperty Name="Gudang1" Relationship="KlinikDBModel.FK_PurchaseOrder_Source" FromRole="PurchaseOrder" ToRole="Gudang" />
         </EntityType>
         <EntityType Name="PurchaseOrderDetail">
           <Key>
@@ -4505,9 +4459,9 @@
           <Property Name="Validasi" Type="Int32" />
           <Property Name="GudangId" Type="Int32" />
           <NavigationProperty Name="DeliveryOrderPusats" Relationship="Self.FK_DeliveryOrderPusat_PurchaseOrderPusat" FromRole="PurchaseOrderPusat" ToRole="DeliveryOrderPusat" />
-          <NavigationProperty Name="Gudang" Relationship="Self.FK_PurchaseOrderPusat_Gudang" FromRole="PurchaseOrderPusat" ToRole="Gudang" />
           <NavigationProperty Name="PurchaseRequestPusat" Relationship="Self.FK_PurchaseOrderPusat_PurchaseRequestPusat" FromRole="PurchaseOrderPusat" ToRole="PurchaseRequestPusat" />
           <NavigationProperty Name="PurchaseOrderPusatDetails" Relationship="Self.FK_PurchaseOrderPusatDetail_PurchaseOrderPusat" FromRole="PurchaseOrderPusat" ToRole="PurchaseOrderPusatDetail" />
+          <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_PurchaseOrderPusat_Gudang" FromRole="PurchaseOrderPusat" ToRole="Gudang" />
         </EntityType>
         <EntityType Name="PurchaseOrderPusatDetail">
           <Key>
@@ -4563,9 +4517,9 @@
           <Property Name="statusop" Type="Int32" />
           <Property Name="Validasi" Type="Int32" />
           <Property Name="GudangId" Type="Int32" />
-          <NavigationProperty Name="Gudang" Relationship="Self.FK_PurchaseRequest_Gudang" FromRole="PurchaseRequest" ToRole="Gudang" />
           <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_PurchaseOrder_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseOrder" />
           <NavigationProperty Name="PurchaseRequestDetails" Relationship="Self.FK_PurchaseRequestDetail_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseRequestDetail" />
+          <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_PurchaseRequest_Gudang" FromRole="PurchaseRequest" ToRole="Gudang" />
         </EntityType>
         <EntityType Name="PurchaseRequestDetail">
           <Key>
@@ -4611,9 +4565,9 @@
           <Property Name="statusop" Type="Int32" />
           <Property Name="Validasi" Type="Int32" />
           <Property Name="GudangId" Type="Int32" />
-          <NavigationProperty Name="Gudang" Relationship="Self.FK_PurchaseRequestPusat_Gudang" FromRole="PurchaseRequestPusat" ToRole="Gudang" />
           <NavigationProperty Name="PurchaseOrderPusats" Relationship="Self.FK_PurchaseOrderPusat_PurchaseRequestPusat" FromRole="PurchaseRequestPusat" ToRole="PurchaseOrderPusat" />
           <NavigationProperty Name="PurchaseRequestPusatDetails" Relationship="Self.FK_PurchaseRequestPusatDetail_PurchaseRequestPusat" FromRole="PurchaseRequestPusat" ToRole="PurchaseRequestPusatDetail" />
+          <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_PurchaseRequestPusat_Gudang" FromRole="PurchaseRequestPusat" ToRole="Gudang" />
         </EntityType>
         <EntityType Name="PurchaseRequestPusatDetail">
           <Key>
@@ -4673,12 +4627,12 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Clinic" Relationship="Self.FK_QueuePoli_Clinic" FromRole="QueuePoli" ToRole="Clinic" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK_QueuePoli_Doctor" FromRole="QueuePoli" ToRole="Doctor" />
           <NavigationProperty Name="FormMedical" Relationship="Self.FK_QueuePoli_FormMedical" FromRole="QueuePoli" ToRole="FormMedical" />
           <NavigationProperty Name="Patient" Relationship="Self.FK_QueuePoli_Patient" FromRole="QueuePoli" ToRole="Patient" />
           <NavigationProperty Name="Poli" Relationship="Self.FK_QueuePoli_PoliFrom" FromRole="QueuePoli" ToRole="Poli" />
           <NavigationProperty Name="Poli1" Relationship="Self.FK_QueuePoli_PoliTo" FromRole="QueuePoli" ToRole="Poli" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_QueuePoli_Clinic" FromRole="QueuePoli" ToRole="Clinic" />
         </EntityType>
         <EntityType Name="RolePrivilege">
           <Key>
@@ -4729,8 +4683,8 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="RowStatus" Type="Int32" />
           <Property Name="statusop" Type="Int32" />
-          <NavigationProperty Name="Clinic" Relationship="Self.FK_stok_m_Clinic" FromRole="stok" ToRole="Clinic" />
           <NavigationProperty Name="Product" Relationship="Self.FK_stok_m_Product" FromRole="stok" ToRole="Product" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_stok_m_Clinic" FromRole="stok" ToRole="Clinic" />
         </EntityType>
         <EntityType Name="stok_bulanan">
           <Key>
@@ -4765,8 +4719,8 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="RowStatus" Type="Int32" />
           <Property Name="statusop" Type="Int32" />
-          <NavigationProperty Name="Clinic" Relationship="Self.FK_stoks_m_Clinic" FromRole="stoks" ToRole="Clinic" />
           <NavigationProperty Name="Product" Relationship="Self.FK_stoks_m_Product" FromRole="stoks" ToRole="Product" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_stoks_m_Clinic" FromRole="stok1" ToRole="Clinic" />
         </EntityType>
         <EntityType Name="substitute">
           <Key>
@@ -4844,18 +4798,6 @@
           <NavigationProperty Name="PurchaseOrderPusatDetails" Relationship="Self.FK_PurchaseOrderPusatDetail_Vendor" FromRole="Vendor" ToRole="PurchaseOrderPusatDetail" />
           <NavigationProperty Name="PurchaseRequestPusatDetails" Relationship="Self.FK_PurchaseRequestPusatDetail_Vendor" FromRole="Vendor" ToRole="PurchaseRequestPusatDetail" />
         </EntityType>
-        <Association Name="FK_Clinic_City">
-          <End Role="City" Type="Self.City" Multiplicity="0..1" />
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="City">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Clinic">
-              <PropertyRef Name="CityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Patient_City">
           <End Role="City" Type="Self.City" Multiplicity="0..1" />
           <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
@@ -4880,174 +4822,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DoctorClinic_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
-          <End Role="DoctorClinic" Type="Self.DoctorClinic" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DoctorClinic">
-              <PropertyRef Name="ClinicID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FormMedical_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
-          <End Role="FormMedical" Type="Self.FormMedical" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FormMedical">
-              <PropertyRef Name="ClinicID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Gudang_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
-          <End Role="Gudang" Type="Self.Gudang" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Gudang">
-              <PropertyRef Name="ClinicId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Organization_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
-          <End Role="Organization" Type="Self.Organization" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Organization">
-              <PropertyRef Name="KlinikID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PatientClinic_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
-          <End Role="PatientClinic" Type="Self.PatientClinic" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PatientClinic">
-              <PropertyRef Name="ClinicID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PoliClinic_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
-          <End Role="PoliClinic" Type="Self.PoliClinic" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PoliClinic">
-              <PropertyRef Name="ClinicID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PoliSchedule_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
-          <End Role="PoliSchedule" Type="Self.PoliSchedule" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PoliSchedule">
-              <PropertyRef Name="ClinicID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PoliScheduleMaster_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
-          <End Role="PoliScheduleMaster" Type="Self.PoliScheduleMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PoliScheduleMaster">
-              <PropertyRef Name="ClinicID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PoliServices_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
-          <End Role="PoliServices" Type="Self.PoliService" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PoliServices">
-              <PropertyRef Name="ClinicID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Product_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="0..1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="ClinicID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_QueuePoli_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
-          <End Role="QueuePoli" Type="Self.QueuePoli" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="QueuePoli">
-              <PropertyRef Name="ClinicID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_stok_m_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
-          <End Role="stok" Type="Self.stok" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="stok">
-              <PropertyRef Name="ClinicId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_stoks_m_Clinic">
-          <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
-          <End Role="stoks" Type="Self.stok1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="stoks">
-              <PropertyRef Name="ClinicId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DeliveryOrder_Gudang">
-          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
-          <End Role="DeliveryOrder" Type="Self.DeliveryOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gudang">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="DeliveryOrder">
-              <PropertyRef Name="GudangId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DeliveryOrder_PurchaseOrder">
           <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="1" />
           <End Role="DeliveryOrder" Type="Self.DeliveryOrder" Multiplicity="*" />
@@ -5057,18 +4831,6 @@
             </Principal>
             <Dependent Role="DeliveryOrder">
               <PropertyRef Name="poid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DeliveryOrder_Source">
-          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
-          <End Role="DeliveryOrder" Type="Self.DeliveryOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gudang">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="DeliveryOrder">
-              <PropertyRef Name="SourceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5093,18 +4855,6 @@
             </Principal>
             <Dependent Role="DeliveryOrderDetail">
               <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DeliveryOrderPusat_Gudang">
-          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
-          <End Role="DeliveryOrderPusat" Type="Self.DeliveryOrderPusat" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gudang">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="DeliveryOrderPusat">
-              <PropertyRef Name="GudangId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5501,90 +5251,6 @@
             </Principal>
             <Dependent Role="QueuePoli">
               <PropertyRef Name="FormMedicalID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HistoryProductInGudang_Gudang">
-          <End Role="Gudang" Type="Self.Gudang" Multiplicity="1" />
-          <End Role="HistoryProductInGudang" Type="Self.HistoryProductInGudang" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gudang">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HistoryProductInGudang">
-              <PropertyRef Name="GudangId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductInGudang_Gudang">
-          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
-          <End Role="ProductInGudang" Type="Self.ProductInGudang" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gudang">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ProductInGudang">
-              <PropertyRef Name="GudangId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseOrder_Gudang">
-          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
-          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gudang">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="PurchaseOrder">
-              <PropertyRef Name="GudangId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseOrder_Source">
-          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
-          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gudang">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="PurchaseOrder">
-              <PropertyRef Name="SourceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseOrderPusat_Gudang">
-          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
-          <End Role="PurchaseOrderPusat" Type="Self.PurchaseOrderPusat" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gudang">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="PurchaseOrderPusat">
-              <PropertyRef Name="GudangId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseRequest_Gudang">
-          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
-          <End Role="PurchaseRequest" Type="Self.PurchaseRequest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gudang">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="PurchaseRequest">
-              <PropertyRef Name="GudangId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseRequestPusat_Gudang">
-          <End Role="Gudang" Type="Self.Gudang" Multiplicity="0..1" />
-          <End Role="PurchaseRequestPusat" Type="Self.PurchaseRequestPusat" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gudang">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="PurchaseRequestPusat">
-              <PropertyRef Name="GudangId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6143,7 +5809,6 @@
         <EntityContainer Name="KlinikDBEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AppConfigs" EntityType="Self.AppConfig" />
           <EntitySet Name="Cities" EntityType="Self.City" />
-          <EntitySet Name="Clinics" EntityType="Self.Clinic" />
           <EntitySet Name="DeliveryOrders" EntityType="Self.DeliveryOrder" />
           <EntitySet Name="DeliveryOrderDetails" EntityType="Self.DeliveryOrderDetail" />
           <EntitySet Name="DeliveryOrderPusats" EntityType="Self.DeliveryOrderPusat" />
@@ -6163,7 +5828,6 @@
           <EntitySet Name="FormExamineServices" EntityType="Self.FormExamineService" />
           <EntitySet Name="FormMedicals" EntityType="Self.FormMedical" />
           <EntitySet Name="FormPreExamines" EntityType="Self.FormPreExamine" />
-          <EntitySet Name="Gudangs" EntityType="Self.Gudang" />
           <EntitySet Name="HistoryProductInGudangs" EntityType="Self.HistoryProductInGudang" />
           <EntitySet Name="ICDThemes" EntityType="Self.ICDTheme" />
           <EntitySet Name="LabItems" EntityType="Self.LabItem" />
@@ -6212,10 +5876,6 @@
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
           <EntitySet Name="Vendors" EntityType="Self.Vendor" />
-          <AssociationSet Name="FK_Clinic_City" Association="Self.FK_Clinic_City">
-            <End Role="City" EntitySet="Cities" />
-            <End Role="Clinic" EntitySet="Clinics" />
-          </AssociationSet>
           <AssociationSet Name="FK_Patient_City" Association="Self.FK_Patient_City">
             <End Role="City" EntitySet="Cities" />
             <End Role="Patient" EntitySet="Patients" />
@@ -6224,68 +5884,8 @@
             <End Role="City" EntitySet="Cities" />
             <End Role="PatientClinic" EntitySet="PatientClinics" />
           </AssociationSet>
-          <AssociationSet Name="FK_DoctorClinic_Clinic" Association="Self.FK_DoctorClinic_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="DoctorClinic" EntitySet="DoctorClinics" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FormMedical_Clinic" Association="Self.FK_FormMedical_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="FormMedical" EntitySet="FormMedicals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Gudang_Clinic" Association="Self.FK_Gudang_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="Gudang" EntitySet="Gudangs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Organization_Clinic" Association="Self.FK_Organization_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="Organization" EntitySet="Organizations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PatientClinic_Clinic" Association="Self.FK_PatientClinic_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="PatientClinic" EntitySet="PatientClinics" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PoliClinic_Clinic" Association="Self.FK_PoliClinic_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="PoliClinic" EntitySet="PoliClinics" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PoliSchedule_Clinic" Association="Self.FK_PoliSchedule_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="PoliSchedule" EntitySet="PoliSchedules" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PoliScheduleMaster_Clinic" Association="Self.FK_PoliScheduleMaster_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="PoliScheduleMaster" EntitySet="PoliScheduleMasters" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PoliServices_Clinic" Association="Self.FK_PoliServices_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="PoliServices" EntitySet="PoliServices" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Product_Clinic" Association="Self.FK_Product_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_QueuePoli_Clinic" Association="Self.FK_QueuePoli_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="QueuePoli" EntitySet="QueuePolis" />
-          </AssociationSet>
-          <AssociationSet Name="FK_stok_m_Clinic" Association="Self.FK_stok_m_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="stok" EntitySet="stoks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_stoks_m_Clinic" Association="Self.FK_stoks_m_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="stoks" EntitySet="stoks1" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DeliveryOrder_Gudang" Association="Self.FK_DeliveryOrder_Gudang">
-            <End Role="Gudang" EntitySet="Gudangs" />
-            <End Role="DeliveryOrder" EntitySet="DeliveryOrders" />
-          </AssociationSet>
           <AssociationSet Name="FK_DeliveryOrder_PurchaseOrder" Association="Self.FK_DeliveryOrder_PurchaseOrder">
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-            <End Role="DeliveryOrder" EntitySet="DeliveryOrders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DeliveryOrder_Source" Association="Self.FK_DeliveryOrder_Source">
-            <End Role="Gudang" EntitySet="Gudangs" />
             <End Role="DeliveryOrder" EntitySet="DeliveryOrders" />
           </AssociationSet>
           <AssociationSet Name="FK_DeliveryOrderDetail_DeliveryOrder" Association="Self.FK_DeliveryOrderDetail_DeliveryOrder">
@@ -6295,10 +5895,6 @@
           <AssociationSet Name="FK_DeliveryOrderDetail_Product" Association="Self.FK_DeliveryOrderDetail_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="DeliveryOrderDetail" EntitySet="DeliveryOrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DeliveryOrderPusat_Gudang" Association="Self.FK_DeliveryOrderPusat_Gudang">
-            <End Role="Gudang" EntitySet="Gudangs" />
-            <End Role="DeliveryOrderPusat" EntitySet="DeliveryOrderPusats" />
           </AssociationSet>
           <AssociationSet Name="FK_DeliveryOrderPusat_PurchaseOrderPusat" Association="Self.FK_DeliveryOrderPusat_PurchaseOrderPusat">
             <End Role="PurchaseOrderPusat" EntitySet="PurchaseOrderPusats" />
@@ -6431,34 +6027,6 @@
           <AssociationSet Name="FK_QueuePoli_FormMedical" Association="Self.FK_QueuePoli_FormMedical">
             <End Role="FormMedical" EntitySet="FormMedicals" />
             <End Role="QueuePoli" EntitySet="QueuePolis" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HistoryProductInGudang_Gudang" Association="Self.FK_HistoryProductInGudang_Gudang">
-            <End Role="Gudang" EntitySet="Gudangs" />
-            <End Role="HistoryProductInGudang" EntitySet="HistoryProductInGudangs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductInGudang_Gudang" Association="Self.FK_ProductInGudang_Gudang">
-            <End Role="Gudang" EntitySet="Gudangs" />
-            <End Role="ProductInGudang" EntitySet="ProductInGudangs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseOrder_Gudang" Association="Self.FK_PurchaseOrder_Gudang">
-            <End Role="Gudang" EntitySet="Gudangs" />
-            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseOrder_Source" Association="Self.FK_PurchaseOrder_Source">
-            <End Role="Gudang" EntitySet="Gudangs" />
-            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseOrderPusat_Gudang" Association="Self.FK_PurchaseOrderPusat_Gudang">
-            <End Role="Gudang" EntitySet="Gudangs" />
-            <End Role="PurchaseOrderPusat" EntitySet="PurchaseOrderPusats" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseRequest_Gudang" Association="Self.FK_PurchaseRequest_Gudang">
-            <End Role="Gudang" EntitySet="Gudangs" />
-            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseRequestPusat_Gudang" Association="Self.FK_PurchaseRequestPusat_Gudang">
-            <End Role="Gudang" EntitySet="Gudangs" />
-            <End Role="PurchaseRequestPusat" EntitySet="PurchaseRequestPusats" />
           </AssociationSet>
           <AssociationSet Name="FK_HistoryProductInGudang_Product" Association="Self.FK_HistoryProductInGudang_Product">
             <End Role="Product" EntitySet="Products" />
@@ -6662,16 +6230,8 @@
           <Parameter Name="RegNumber" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="PurchaseRequestConfigs" EntityType="KlinikDBModel.PurchaseRequestConfig" />
-          <AssociationSet Name="FK_PurchaseRequestConfig_Gudang" Association="KlinikDBModel.FK_PurchaseRequestConfig_Gudang">
-            <End Role="Gudang" EntitySet="Gudangs" />
-            <End Role="PurchaseRequestConfig" EntitySet="PurchaseRequestConfigs" />
-          </AssociationSet>
           <EntitySet Name="MCURegistrationInterfaces" EntityType="KlinikDBModel.MCURegistrationInterface" />
           <EntitySet Name="Appointments" EntityType="KlinikDBModel.Appointment" />
-          <AssociationSet Name="FK_Appointment_Clinic" Association="KlinikDBModel.FK_Appointment_Clinic">
-            <End Role="Clinic" EntitySet="Clinics" />
-            <End Role="Appointment" EntitySet="Appointments" />
-          </AssociationSet>
           <AssociationSet Name="FK_Appointment_Doctor" Association="KlinikDBModel.FK_Appointment_Doctor">
             <End Role="Doctor" EntitySet="Doctors" />
             <End Role="Appointment" EntitySet="Appointments" />
@@ -6724,6 +6284,116 @@
             <End Role="LookupCategory" EntitySet="LookupCategories" />
             <End Role="GeneralMaster" EntitySet="GeneralMasters" />
           </AssociationSet>
+          <EntitySet Name="Clinics" EntityType="KlinikDBModel.Clinic" />
+          <EntitySet Name="Gudangs" EntityType="KlinikDBModel.Gudang" />
+          <AssociationSet Name="FK_Appointment_Clinic" Association="KlinikDBModel.FK_Appointment_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="Appointment" EntitySet="Appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clinic_City" Association="KlinikDBModel.FK_Clinic_City">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Clinic" EntitySet="Clinics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DoctorClinic_Clinic" Association="KlinikDBModel.FK_DoctorClinic_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="DoctorClinic" EntitySet="DoctorClinics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormMedical_Clinic" Association="KlinikDBModel.FK_FormMedical_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="FormMedical" EntitySet="FormMedicals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gudang_Clinic" Association="KlinikDBModel.FK_Gudang_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="Gudang" EntitySet="Gudangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Organization_Clinic" Association="KlinikDBModel.FK_Organization_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="Organization" EntitySet="Organizations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PatientClinic_Clinic" Association="KlinikDBModel.FK_PatientClinic_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="PatientClinic" EntitySet="PatientClinics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PoliClinic_Clinic" Association="KlinikDBModel.FK_PoliClinic_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="PoliClinic" EntitySet="PoliClinics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PoliSchedule_Clinic" Association="KlinikDBModel.FK_PoliSchedule_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="PoliSchedule" EntitySet="PoliSchedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PoliScheduleMaster_Clinic" Association="KlinikDBModel.FK_PoliScheduleMaster_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="PoliScheduleMaster" EntitySet="PoliScheduleMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PoliServices_Clinic" Association="KlinikDBModel.FK_PoliServices_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="PoliService" EntitySet="PoliServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Clinic" Association="KlinikDBModel.FK_Product_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QueuePoli_Clinic" Association="KlinikDBModel.FK_QueuePoli_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="QueuePoli" EntitySet="QueuePolis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_stok_m_Clinic" Association="KlinikDBModel.FK_stok_m_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="stok" EntitySet="stoks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_stoks_m_Clinic" Association="KlinikDBModel.FK_stoks_m_Clinic">
+            <End Role="Clinic" EntitySet="Clinics" />
+            <End Role="stok1" EntitySet="stoks1" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOrder_Gudang" Association="KlinikDBModel.FK_DeliveryOrder_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="DeliveryOrder" EntitySet="DeliveryOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOrder_Source" Association="KlinikDBModel.FK_DeliveryOrder_Source">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="DeliveryOrder" EntitySet="DeliveryOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOrderPusat_Gudang" Association="KlinikDBModel.FK_DeliveryOrderPusat_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="DeliveryOrderPusat" EntitySet="DeliveryOrderPusats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gudang_Organization" Association="KlinikDBModel.FK_Gudang_Organization">
+            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="Gudang" EntitySet="Gudangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryProductInGudang_Gudang" Association="KlinikDBModel.FK_HistoryProductInGudang_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="HistoryProductInGudang" EntitySet="HistoryProductInGudangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductInGudang_Gudang" Association="KlinikDBModel.FK_ProductInGudang_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="ProductInGudang" EntitySet="ProductInGudangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrder_Gudang" Association="KlinikDBModel.FK_PurchaseOrder_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrder_Source" Association="KlinikDBModel.FK_PurchaseOrder_Source">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderPusat_Gudang" Association="KlinikDBModel.FK_PurchaseOrderPusat_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="PurchaseOrderPusat" EntitySet="PurchaseOrderPusats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequest_Gudang" Association="KlinikDBModel.FK_PurchaseRequest_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="PurchaseRequest" EntitySet="PurchaseRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestConfig_Gudang" Association="KlinikDBModel.FK_PurchaseRequestConfig_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="PurchaseRequestConfig" EntitySet="PurchaseRequestConfigs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequestPusat_Gudang" Association="KlinikDBModel.FK_PurchaseRequestPusat_Gudang">
+            <End Role="Gudang" EntitySet="Gudangs" />
+            <End Role="PurchaseRequestPusat" EntitySet="PurchaseRequestPusats" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="usp_registrations_get_by_status_Result">
           <Property Type="Int32" Name="REG_ID" Nullable="false" />
@@ -6756,18 +6426,6 @@
           <Property Name="Status" Type="Boolean" />
           <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_PurchaseRequestConfig_Gudang" FromRole="PurchaseRequestConfig" ToRole="Gudang" />
         </EntityType>
-        <Association Name="FK_PurchaseRequestConfig_Gudang">
-          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
-          <End Type="KlinikDBModel.PurchaseRequestConfig" Role="PurchaseRequestConfig" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Gudang">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="PurchaseRequestConfig">
-              <PropertyRef Name="GudangId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="MCURegistrationInterface">
           <Key>
             <PropertyRef Name="REG_ID" />
@@ -6805,24 +6463,12 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="Jam" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_Appointment_Clinic" FromRole="Appointment" ToRole="Clinic" />
           <NavigationProperty Name="Doctor" Relationship="KlinikDBModel.FK_Appointment_Doctor" FromRole="Appointment" ToRole="Doctor" />
           <NavigationProperty Name="MCUPackage" Relationship="KlinikDBModel.FK_Appointment_MCUPackage" FromRole="Appointment" ToRole="MCUPackage" />
           <NavigationProperty Name="Patient" Relationship="KlinikDBModel.FK_Appointment_Patient" FromRole="Appointment" ToRole="Patient" />
           <NavigationProperty Name="Poli" Relationship="KlinikDBModel.FK_Appointment_Poli" FromRole="Appointment" ToRole="Poli" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_Appointment_Clinic" FromRole="Appointment" ToRole="Clinic" />
         </EntityType>
-        <Association Name="FK_Appointment_Clinic">
-          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="1" />
-          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Clinic">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Appointment">
-              <PropertyRef Name="ClinicID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Appointment_Doctor">
           <End Type="KlinikDBModel.Doctor" Role="Doctor" Multiplicity="0..1" />
           <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
@@ -6938,6 +6584,396 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Clinic">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="LegalNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LegalDate" Type="DateTime" Precision="0" />
+          <Property Name="ContactNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lat" Type="Double" />
+          <Property Name="Long" Type="Double" />
+          <Property Name="CityID" Type="Int32" />
+          <Property Name="ClinicType" Type="Int16" />
+          <Property Name="ReffID" Type="Int32" />
+          <Property Name="RowStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Appointments" Relationship="KlinikDBModel.FK_Appointment_Clinic" FromRole="Clinic" ToRole="Appointment" />
+          <NavigationProperty Name="City" Relationship="KlinikDBModel.FK_Clinic_City" FromRole="Clinic" ToRole="City" />
+          <NavigationProperty Name="DoctorClinics" Relationship="KlinikDBModel.FK_DoctorClinic_Clinic" FromRole="Clinic" ToRole="DoctorClinic" />
+          <NavigationProperty Name="FormMedicals" Relationship="KlinikDBModel.FK_FormMedical_Clinic" FromRole="Clinic" ToRole="FormMedical" />
+          <NavigationProperty Name="Gudangs" Relationship="KlinikDBModel.FK_Gudang_Clinic" FromRole="Clinic" ToRole="Gudang" />
+          <NavigationProperty Name="Organizations" Relationship="KlinikDBModel.FK_Organization_Clinic" FromRole="Clinic" ToRole="Organization" />
+          <NavigationProperty Name="PatientClinics" Relationship="KlinikDBModel.FK_PatientClinic_Clinic" FromRole="Clinic" ToRole="PatientClinic" />
+          <NavigationProperty Name="PoliClinics" Relationship="KlinikDBModel.FK_PoliClinic_Clinic" FromRole="Clinic" ToRole="PoliClinic" />
+          <NavigationProperty Name="PoliSchedules" Relationship="KlinikDBModel.FK_PoliSchedule_Clinic" FromRole="Clinic" ToRole="PoliSchedule" />
+          <NavigationProperty Name="PoliScheduleMasters" Relationship="KlinikDBModel.FK_PoliScheduleMaster_Clinic" FromRole="Clinic" ToRole="PoliScheduleMaster" />
+          <NavigationProperty Name="PoliServices" Relationship="KlinikDBModel.FK_PoliServices_Clinic" FromRole="Clinic" ToRole="PoliService" />
+          <NavigationProperty Name="Products" Relationship="KlinikDBModel.FK_Product_Clinic" FromRole="Clinic" ToRole="Product" />
+          <NavigationProperty Name="QueuePolis" Relationship="KlinikDBModel.FK_QueuePoli_Clinic" FromRole="Clinic" ToRole="QueuePoli" />
+          <NavigationProperty Name="stoks" Relationship="KlinikDBModel.FK_stok_m_Clinic" FromRole="Clinic" ToRole="stok" />
+          <NavigationProperty Name="stoks1" Relationship="KlinikDBModel.FK_stoks_m_Clinic" FromRole="Clinic" ToRole="stok1" />
+        </EntityType>
+        <EntityType Name="Gudang">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ClinicId" Type="Int64" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowStatus" Type="Int16" />
+          <Property Name="IsGudangPusat" Type="Boolean" />
+          <Property Name="OrganizationId" Type="Int64" />
+          <NavigationProperty Name="Clinic" Relationship="KlinikDBModel.FK_Gudang_Clinic" FromRole="Gudang" ToRole="Clinic" />
+          <NavigationProperty Name="DeliveryOrders" Relationship="KlinikDBModel.FK_DeliveryOrder_Gudang" FromRole="Gudang" ToRole="DeliveryOrder" />
+          <NavigationProperty Name="DeliveryOrders1" Relationship="KlinikDBModel.FK_DeliveryOrder_Source" FromRole="Gudang" ToRole="DeliveryOrder" />
+          <NavigationProperty Name="DeliveryOrderPusats" Relationship="KlinikDBModel.FK_DeliveryOrderPusat_Gudang" FromRole="Gudang" ToRole="DeliveryOrderPusat" />
+          <NavigationProperty Name="Organization" Relationship="KlinikDBModel.FK_Gudang_Organization" FromRole="Gudang" ToRole="Organization" />
+          <NavigationProperty Name="HistoryProductInGudangs" Relationship="KlinikDBModel.FK_HistoryProductInGudang_Gudang" FromRole="Gudang" ToRole="HistoryProductInGudang" />
+          <NavigationProperty Name="ProductInGudangs" Relationship="KlinikDBModel.FK_ProductInGudang_Gudang" FromRole="Gudang" ToRole="ProductInGudang" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="KlinikDBModel.FK_PurchaseOrder_Gudang" FromRole="Gudang" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="PurchaseOrders1" Relationship="KlinikDBModel.FK_PurchaseOrder_Source" FromRole="Gudang" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="PurchaseOrderPusats" Relationship="KlinikDBModel.FK_PurchaseOrderPusat_Gudang" FromRole="Gudang" ToRole="PurchaseOrderPusat" />
+          <NavigationProperty Name="PurchaseRequests" Relationship="KlinikDBModel.FK_PurchaseRequest_Gudang" FromRole="Gudang" ToRole="PurchaseRequest" />
+          <NavigationProperty Name="PurchaseRequestConfigs" Relationship="KlinikDBModel.FK_PurchaseRequestConfig_Gudang" FromRole="Gudang" ToRole="PurchaseRequestConfig" />
+          <NavigationProperty Name="PurchaseRequestPusats" Relationship="KlinikDBModel.FK_PurchaseRequestPusat_Gudang" FromRole="Gudang" ToRole="PurchaseRequestPusat" />
+        </EntityType>
+        <Association Name="FK_Appointment_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="1" />
+          <End Type="KlinikDBModel.Appointment" Role="Appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Appointment">
+              <PropertyRef Name="ClinicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clinic_City">
+          <End Type="KlinikDBModel.City" Role="City" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clinic">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DoctorClinic_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="1" />
+          <End Type="KlinikDBModel.DoctorClinic" Role="DoctorClinic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DoctorClinic">
+              <PropertyRef Name="ClinicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormMedical_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.FormMedical" Role="FormMedical" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FormMedical">
+              <PropertyRef Name="ClinicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gudang_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Gudang">
+              <PropertyRef Name="ClinicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Organization_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.Organization" Role="Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="KlinikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PatientClinic_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="1" />
+          <End Type="KlinikDBModel.PatientClinic" Role="PatientClinic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PatientClinic">
+              <PropertyRef Name="ClinicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PoliClinic_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="1" />
+          <End Type="KlinikDBModel.PoliClinic" Role="PoliClinic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PoliClinic">
+              <PropertyRef Name="ClinicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PoliSchedule_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="1" />
+          <End Type="KlinikDBModel.PoliSchedule" Role="PoliSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PoliSchedule">
+              <PropertyRef Name="ClinicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PoliScheduleMaster_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="1" />
+          <End Type="KlinikDBModel.PoliScheduleMaster" Role="PoliScheduleMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PoliScheduleMaster">
+              <PropertyRef Name="ClinicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PoliServices_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="1" />
+          <End Type="KlinikDBModel.PoliService" Role="PoliService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PoliService">
+              <PropertyRef Name="ClinicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ClinicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QueuePoli_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="1" />
+          <End Type="KlinikDBModel.QueuePoli" Role="QueuePoli" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QueuePoli">
+              <PropertyRef Name="ClinicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_stok_m_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="1" />
+          <End Type="KlinikDBModel.stok" Role="stok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="stok">
+              <PropertyRef Name="ClinicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_stoks_m_Clinic">
+          <End Type="KlinikDBModel.Clinic" Role="Clinic" Multiplicity="1" />
+          <End Type="KlinikDBModel.stok1" Role="stok1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clinic">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="stok1">
+              <PropertyRef Name="ClinicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOrder_Gudang">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.DeliveryOrder" Role="DeliveryOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DeliveryOrder">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOrder_Source">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.DeliveryOrder" Role="DeliveryOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DeliveryOrder">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOrderPusat_Gudang">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.DeliveryOrderPusat" Role="DeliveryOrderPusat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DeliveryOrderPusat">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gudang_Organization">
+          <End Type="KlinikDBModel.Organization" Role="Organization" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Gudang">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryProductInGudang_Gudang">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="1" />
+          <End Type="KlinikDBModel.HistoryProductInGudang" Role="HistoryProductInGudang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HistoryProductInGudang">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductInGudang_Gudang">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.ProductInGudang" Role="ProductInGudang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductInGudang">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrder_Gudang">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrder_Source">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderPusat_Gudang">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.PurchaseOrderPusat" Role="PurchaseOrderPusat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseOrderPusat">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequest_Gudang">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.PurchaseRequest" Role="PurchaseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseRequest">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestConfig_Gudang">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.PurchaseRequestConfig" Role="PurchaseRequestConfig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestConfig">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequestPusat_Gudang">
+          <End Type="KlinikDBModel.Gudang" Role="Gudang" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.PurchaseRequestPusat" Role="PurchaseRequestPusat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gudang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PurchaseRequestPusat">
+              <PropertyRef Name="GudangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6968,30 +7004,6 @@
                 <ScalarProperty Name="Kecamatan" ColumnName="Kecamatan" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Clinics">
-            <EntityTypeMapping TypeName="KlinikDBModel.Clinic">
-              <MappingFragment StoreEntitySet="Clinic">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="LegalNumber" ColumnName="LegalNumber" />
-                <ScalarProperty Name="LegalDate" ColumnName="LegalDate" />
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Lat" ColumnName="Lat" />
-                <ScalarProperty Name="Long" ColumnName="Long" />
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-                <ScalarProperty Name="ClinicType" ColumnName="ClinicType" />
-                <ScalarProperty Name="ReffID" ColumnName="ReffID" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -7390,21 +7402,6 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Gudangs">
-            <EntityTypeMapping TypeName="KlinikDBModel.Gudang">
-              <MappingFragment StoreEntitySet="Gudang">
-                <ScalarProperty Name="IsGudangPusat" ColumnName="IsGudangPusat" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="ClinicId" ColumnName="ClinicId" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -8399,6 +8396,46 @@
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
                 <ScalarProperty Name="TypeName" ColumnName="TypeName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clinics">
+            <EntityTypeMapping TypeName="KlinikDBModel.Clinic">
+              <MappingFragment StoreEntitySet="Clinic">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="ReffID" ColumnName="ReffID" />
+                <ScalarProperty Name="ClinicType" ColumnName="ClinicType" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="LegalDate" ColumnName="LegalDate" />
+                <ScalarProperty Name="LegalNumber" ColumnName="LegalNumber" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gudangs">
+            <EntityTypeMapping TypeName="KlinikDBModel.Gudang">
+              <MappingFragment StoreEntitySet="Gudang">
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="IsGudangPusat" ColumnName="IsGudangPusat" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ClinicId" ColumnName="ClinicId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
