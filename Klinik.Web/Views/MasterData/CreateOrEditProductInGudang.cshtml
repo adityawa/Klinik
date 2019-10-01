@@ -17,19 +17,33 @@
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.ProductName</label>
                 <div class="col-md-4">
                     @Html.HiddenFor(x => x.Id)
-                    <select id="namabarang" class="form-control" name="ProductId"></select>
+                    @Html.DropDownListFor(p => p.ProductId, (IEnumerable<SelectListItem>)ViewBag.ProductList, new { @class = "form-control", @id = "ProductId" })
+                    @Html.ValidationMessageFor(m => m.ProductId, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.GudangName</label>
                 <div class="col-md-4">
-                    <select id="namagudang" class="form-control" name="GudangId"></select>
+                    @Html.DropDownListFor(p => p.GudangId, (IEnumerable<SelectListItem>)ViewBag.GudangList, new { @class = "form-control", @id = "ProductId" })
+                    @Html.ValidationMessageFor(m => m.ProductId, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Stock</label>
                 <div class="col-md-4">
                     @Html.TextBoxFor(x => x.stock, new { @class = "form-control", @id = "stock" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">Limit Stock</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.limited_stock, new { @class = "form-control", @id = "limited_stock" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">Retail Price</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.RetailPrice, new { @class = "form-control", @value = Convert.ToInt32(Model.RetailPrice), @id = "RetailPrice" })
                 </div>
             </div>
         </div>

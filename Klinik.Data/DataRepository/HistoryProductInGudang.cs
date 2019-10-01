@@ -21,7 +21,7 @@ namespace Klinik.Data.DataRepository
         public System.DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
     
-        public virtual Product Product { get; set; }
         public virtual Gudang Gudang { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

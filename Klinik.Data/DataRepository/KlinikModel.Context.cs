@@ -72,9 +72,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<PoliScheduleMaster> PoliScheduleMasters { get; set; }
         public virtual DbSet<PoliService> PoliServices { get; set; }
         public virtual DbSet<Privilege> Privileges { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }
-        public virtual DbSet<ProductInGudang> ProductInGudangs { get; set; }
         public virtual DbSet<ProductMedicine> ProductMedicines { get; set; }
         public virtual DbSet<ProductUnit> ProductUnits { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
@@ -104,6 +102,8 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<LookupCategory> LookupCategories { get; set; }
         public virtual DbSet<Clinic> Clinics { get; set; }
         public virtual DbSet<Gudang> Gudangs { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProductInGudang> ProductInGudangs { get; set; }
     
         [DbFunction("KlinikDBEntities1", "fusp_registrations_get_by_status")]
         public virtual IQueryable<fusp_registrations_get_by_status_Result> fusp_registrations_get_by_status(string documentStatus, string isTransferred)

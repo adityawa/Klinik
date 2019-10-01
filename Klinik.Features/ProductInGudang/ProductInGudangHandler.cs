@@ -39,6 +39,8 @@ namespace Klinik.Features
                     // update data
                     qry.ModifiedBy = request.Data.Account.UserCode;
                     qry.ModifiedDate = DateTime.Now;
+                    qry.RetailPrice = request.Data.RetailPrice;
+                    qry.limited_stock = request.Data.limited_stock;
                     qry.stock = qry.stock + request.Data.stock;
 
                     _unitOfWork.ProductInGudangRepository.Update(qry);
@@ -66,6 +68,8 @@ namespace Klinik.Features
                         stock = request.Data.stock,
                         CreatedBy = request.Data.Account.UserCode,
                         CreatedDate = DateTime.Now,
+                        RetailPrice = request.Data.RetailPrice,
+                        limited_stock = request.Data.limited_stock,
                         RowStatus = 0,
                     };
 
@@ -113,7 +117,9 @@ namespace Klinik.Features
                    GudangId = qry.GudangId,
                    ProductName = qry.Product.Name,
                    GudangName = qry.Gudang.name,
-                   stock = qry.stock
+                   stock = qry.stock,
+                   limited_stock = qry.limited_stock,
+                   RetailPrice = qry.RetailPrice
                 };
             }
 
@@ -176,7 +182,9 @@ namespace Klinik.Features
                     Id = item.id,
                     ProductName = item.Product.Name,
                     GudangName = item.Gudang.name,
-                    stock = item.stock
+                    stock = item.stock,
+                    limited_stock = item.limited_stock,
+                    RetailPrice = item.RetailPrice
                 };
 
                 lists.Add(prData);

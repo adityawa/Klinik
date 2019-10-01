@@ -11,6 +11,8 @@ namespace Klinik.Entities.ProductInGudang
 
         public string ProductName { get; set; }
         public string GudangName { get; set; }
+        public Nullable<int> limited_stock { get; set; }
+        public Nullable<decimal> RetailPrice { get; set; }
 
         public virtual GudangModel Gudang { get; set; }
         public virtual ProductModel Product { get; set; }
