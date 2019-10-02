@@ -32,5 +32,6 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> Cekdate { get; set; }
         public string Pekerjaan { get; set; }
         public string OtherInfo { get; set; }
+        public Nullable<int> ClinicID { get; set; }
     }
 }

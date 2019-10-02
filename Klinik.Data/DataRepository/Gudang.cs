@@ -21,13 +21,13 @@ namespace Klinik.Data.DataRepository
             this.DeliveryOrders1 = new HashSet<DeliveryOrder>();
             this.DeliveryOrderPusats = new HashSet<DeliveryOrderPusat>();
             this.HistoryProductInGudangs = new HashSet<HistoryProductInGudang>();
-            this.ProductInGudangs = new HashSet<ProductInGudang>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
             this.PurchaseOrders1 = new HashSet<PurchaseOrder>();
             this.PurchaseOrderPusats = new HashSet<PurchaseOrderPusat>();
             this.PurchaseRequests = new HashSet<PurchaseRequest>();
             this.PurchaseRequestConfigs = new HashSet<PurchaseRequestConfig>();
             this.PurchaseRequestPusats = new HashSet<PurchaseRequestPusat>();
+            this.ProductInGudangs = new HashSet<ProductInGudang>();
         }
     
         public int id { get; set; }
@@ -52,8 +52,6 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HistoryProductInGudang> HistoryProductInGudangs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductInGudang> ProductInGudangs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders1 { get; set; }
@@ -65,5 +63,7 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<PurchaseRequestConfig> PurchaseRequestConfigs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseRequestPusat> PurchaseRequestPusats { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductInGudang> ProductInGudangs { get; set; }
     }
 }

@@ -40,12 +40,15 @@ namespace Klinik.Data.DataRepository
         public int ProductCategoryID { get; set; }
         public int ProductUnitID { get; set; }
         public decimal RetailPrice { get; set; }
+        public Nullable<int> Unitvendor { get; set; }
+        public Nullable<int> Qtyconversion { get; set; }
         public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
+        public virtual Clinic Clinic { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -74,6 +77,5 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<stok1> stoks1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<substitute> substitutes { get; set; }
-        public virtual Clinic Clinic { get; set; }
     }
 }

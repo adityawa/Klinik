@@ -25,6 +25,8 @@
                         <th>@Klinik.Resources.UIMessages.ProductName</th>
                         <th>@Klinik.Resources.UIMessages.GudangName</th>
                         <th>@Klinik.Resources.UIMessages.Stock</th>
+                        <th>Limit Stock</th>
+                        <th>Retail Stock</th>
                         <th>@Klinik.Resources.UIMessages.Action</th>
                     </tr>
                 </thead>
@@ -75,6 +77,16 @@
                     "targets": [3],
                     "searchable": true,
                     "orderable": true
+                },
+                {
+                    "targets": [4],
+                    "searchable": true,
+                    "orderable": true
+                },
+                {
+                    "targets": [5],
+                    "searchable": true,
+                    "orderable": true
                 }
                 ],
 
@@ -83,6 +95,8 @@
                 { "data": "ProductName", "ProductName": "ProductName", "autoWidth": true },
                 { "data": "GudangName", "GudangName": "GudangName", "autoWidth": true },
                 { "data": "stock", "stock": "stock", "stock": true },
+                { "data": "limited_stock", "limited_stock": "limited_stock", "limited_stock": true },
+                { "data": "RetailPrice", "RetailPrice": "RetailPrice", "RetailPrice": true },
                 {
                     "render": function (data, type, full, meta) { return '<a class="btn btn-info btn-sm" href="/MasterData/CreateOrEditProductInGudang?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  '; }
                 }

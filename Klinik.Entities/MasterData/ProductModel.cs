@@ -1,4 +1,6 @@
-﻿namespace Klinik.Entities.MasterData
+﻿using System;
+
+namespace Klinik.Entities.MasterData
 {
     public class ProductModel : BaseModel
     {
@@ -10,5 +12,7 @@
         public string ProductUnitName { get; set; }
         public decimal RetailPrice { get; set; }
         public decimal stock { get; set; }
+        public Nullable<int> Unitvendor { get; set; }
+        public Nullable<int> Qtyconversion { get; set; }
     }
 }

@@ -39,6 +39,8 @@ namespace Klinik.Features
                     // update data
                     qry.ModifiedBy = request.Data.Account.UserCode;
                     qry.ModifiedDate = DateTime.Now;
+                    qry.RetailPrice = request.Data.RetailPrice;
+                    qry.limited_stock = request.Data.limited_stock;
                     qry.stock = qry.stock + request.Data.stock;
 
                     _unitOfWork.ProductInGudangRepository.Update(qry);
@@ -66,6 +68,8 @@ namespace Klinik.Features
                         stock = request.Data.stock,
                         CreatedBy = request.Data.Account.UserCode,
                         CreatedDate = DateTime.Now,
+                        RetailPrice = request.Data.RetailPrice,
+                        limited_stock = request.Data.limited_stock,
                         RowStatus = 0,
                     };
 
@@ -113,7 +117,9 @@ namespace Klinik.Features
                    GudangId = qry.GudangId,
                    ProductName = qry.Product.Name,
                    GudangName = qry.Gudang.name,
-                   stock = qry.stock
+                   stock = qry.stock,
+                   limited_stock = qry.limited_stock,
+                   RetailPrice = qry.RetailPrice
                 };
             }
 
@@ -176,7 +182,9 @@ namespace Klinik.Features
                     Id = item.id,
                     ProductName = item.Product.Name,
                     GudangName = item.Gudang.name,
-                    stock = item.stock
+                    stock = item.stock,
+                    limited_stock = item.limited_stock,
+                    RetailPrice = item.RetailPrice
                 };
 
                 lists.Add(prData);
@@ -199,6 +207,90 @@ namespace Klinik.Features
         public ProductInGudangResponse RemoveData(ProductInGudangRequest request)
         {
             throw new NotImplementedException();
+        }
+
+        public ProductInGudangResponse CreateOrEditManual(ProductInGudangRequest request)
+        {
+            ProductInGudangResponse response = new ProductInGudangResponse();
+
+            var get = _unitOfWork.ProductInGudangRepository.Query(x => x.ProductId == request.Data.ProductId && x.GudangId == request.Data.GudangId, null);
+
+            var qry = new Data.DataRepository.ProductInGudang();
+            if (get.Count() > 0)
+            {
+                qry = _unitOfWork.ProductInGudangRepository.GetById(get.FirstOrDefault().id);
+            }
+
+            try
+            {
+                if (qry.id > 0)
+                {
+                    // update data
+                    qry.ModifiedBy = request.Data.Account.UserCode;
+                    qry.ModifiedDate = DateTime.Now;
+                    qry.RetailPrice = request.Data.RetailPrice;
+                    qry.limited_stock = request.Data.limited_stock;
+                    qry.stock = request.Data.stock;
+
+                    _unitOfWork.ProductInGudangRepository.Update(qry);
+                    int resultAffected = _unitOfWork.Save();
+                    if (resultAffected > 0)
+                    {
+                        response.Message = string.Format(Messages.ObjectHasBeenUpdated, "ProductInGudang", qry.ProductId, qry.id);
+
+                        CommandLog(true, ClinicEnums.Module.MASTER_PRODUCTINGUDANG, Constants.Command.EDIT_PRODCUTINGUDANG, request.Data.Account, request.Data, "");
+                    }
+                    else
+                    {
+                        response.Status = false;
+                        response.Message = string.Format(Messages.UpdateObjectFailed, "ProductInGudang");
+
+                        CommandLog(false, ClinicEnums.Module.MASTER_PRODUCTINGUDANG, Constants.Command.EDIT_PRODCUTINGUDANG, request.Data.Account, request.Data, "");
+                    }
+                }
+                else
+                {
+                    var productingudangEntity = new Data.DataRepository.ProductInGudang
+                    {
+                        ProductId = request.Data.ProductId,
+                        GudangId = request.Data.GudangId,
+                        stock = request.Data.stock,
+                        CreatedBy = request.Data.Account.UserCode,
+                        CreatedDate = DateTime.Now,
+                        RetailPrice = request.Data.RetailPrice,
+                        limited_stock = request.Data.limited_stock,
+                        RowStatus = 0,
+                    };
+
+                    _unitOfWork.ProductInGudangRepository.Insert(productingudangEntity);
+                    int resultAffected = _unitOfWork.Save();
+                    if (resultAffected > 0)
+                    {
+                        response.Message = string.Format(Messages.ObjectHasBeenAdded, "ProductInGudang", productingudangEntity.ProductId, productingudangEntity.id);
+
+                        CommandLog(true, ClinicEnums.Module.MASTER_PRODUCTINGUDANG, Constants.Command.ADD_PRODCUTINGUDANG, request.Data.Account, request.Data);
+                    }
+                    else
+                    {
+                        response.Status = false;
+                        response.Message = string.Format(Messages.AddObjectFailed, "ProductInGudang");
+
+                        CommandLog(false, ClinicEnums.Module.MASTER_PRODUCTINGUDANG, Constants.Command.ADD_PRODCUTINGUDANG, request.Data.Account, request.Data);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = Messages.GeneralError;
+
+                if (request.Data != null && request.Data.Id > 0)
+                    ErrorLog(ClinicEnums.Module.MASTER_PRODUCTINGUDANG, Constants.Command.EDIT_PRODCUTINGUDANG, request.Data.Account, ex);
+                else
+                    ErrorLog(ClinicEnums.Module.MASTER_PRODUCTINGUDANG, Constants.Command.EDIT_PRODCUTINGUDANG, request.Data.Account, ex);
+            }
+
+            return response;
         }
     }
 }

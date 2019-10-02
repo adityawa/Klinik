@@ -61,7 +61,7 @@ namespace Klinik.Features
 
                 if (response.Status)
                 {
-                    response = new ProductInGudangHandler(_unitOfWork).CreateOrEdit(request);
+                    response = new ProductInGudangHandler(_unitOfWork).CreateOrEditManual(request);
                 }
             }
         }

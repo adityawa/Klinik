@@ -20,7 +20,7 @@ namespace Klinik.Data.DataRepository
         public Nullable<double> qty { get; set; }
         public Nullable<int> PurchaseOrderDetailId { get; set; }
     
-        public virtual Product Product { get; set; }
         public virtual PurchaseOrderDetail PurchaseOrderDetail { get; set; }
+        public virtual Product Product { get; set; }
     }
 }
