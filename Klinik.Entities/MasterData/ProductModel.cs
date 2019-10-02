@@ -12,7 +12,7 @@ namespace Klinik.Entities.MasterData
         public string ProductUnitName { get; set; }
         public decimal RetailPrice { get; set; }
         public decimal stock { get; set; }
-        public Nullable<int> SatuanTerbesar { get; set; }
-        public Nullable<int> QtyConvertion { get; set; }
+        public Nullable<int> Unitvendor { get; set; }
+        public Nullable<int> Qtyconversion { get; set; }
     }
 }

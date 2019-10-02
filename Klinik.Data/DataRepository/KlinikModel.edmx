@@ -918,8 +918,8 @@
           <Property Name="ProductCategoryID" Type="int" Nullable="false" />
           <Property Name="ProductUnitID" Type="int" Nullable="false" />
           <Property Name="RetailPrice" Type="decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="SatuanTerbesar" Type="int" />
-          <Property Name="QtyConvertion" Type="int" />
+          <Property Name="Unitvendor" Type="int" />
+          <Property Name="Qtyconversion" Type="int" />
           <Property Name="RowStatus" Type="smallint" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -6180,7 +6180,7 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="substitute" EntitySet="substitutes" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="usp_registrations_get_by_status_Result">
           <Property Type="Int32" Name="REG_ID" Nullable="false" />
           <Property Type="String" Name="REG_NUMBER" Nullable="true" MaxLength="20" />
@@ -6748,8 +6748,8 @@
           <Property Name="ProductCategoryID" Type="Int32" Nullable="false" />
           <Property Name="ProductUnitID" Type="Int32" Nullable="false" />
           <Property Name="RetailPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="SatuanTerbesar" Type="Int32" />
-          <Property Name="QtyConvertion" Type="Int32" />
+          <Property Name="Unitvendor" Type="Int32" />
+          <Property Name="Qtyconversion" Type="Int32" />
           <Property Name="RowStatus" Type="Int16" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
@@ -6994,7 +6994,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -8439,8 +8439,8 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
-                <ScalarProperty Name="QtyConvertion" ColumnName="QtyConvertion" />
-                <ScalarProperty Name="SatuanTerbesar" ColumnName="SatuanTerbesar" />
+                <ScalarProperty Name="Qtyconversion" ColumnName="Qtyconversion" />
+                <ScalarProperty Name="Unitvendor" ColumnName="Unitvendor" />
                 <ScalarProperty Name="RetailPrice" ColumnName="RetailPrice" />
                 <ScalarProperty Name="ProductUnitID" ColumnName="ProductUnitID" />
                 <ScalarProperty Name="ProductCategoryID" ColumnName="ProductCategoryID" />

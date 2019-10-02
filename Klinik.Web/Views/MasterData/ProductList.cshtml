@@ -26,6 +26,8 @@
                         <th>@Klinik.Resources.UIMessages.ProductCategory</th>
                         <th>@Klinik.Resources.UIMessages.ProductUnit</th>
                         <th>@Klinik.Resources.UIMessages.RetailPrice</th>
+                        <th>Unit Vendor</th>
+                        <th>Qty Konversi</th>
                         <th>@Klinik.Resources.UIMessages.Action</th>
                     </tr>
                 </thead>
@@ -90,6 +92,16 @@
                     "targets": [6],
                     "searchable": true,
                     "orderable": false
+                },
+                {
+                    "targets": [7],
+                    "searchable": true,
+                    "orderable": false
+                },
+                {
+                    "targets": [8],
+                    "searchable": true,
+                    "orderable": false
                 }
                 ],
 
@@ -100,6 +112,8 @@
                 { "data": "ProductCategoryName", "name": "ProductCategoryName", "autoWidth": true },
                 { "data": "ProductUnitName", "name": "ProductUnitName", "autoWidth": true },
                 { "data": "RetailPrice", "name": "RetailPrice", "autoWidth": true },
+                { "data": "Unitvendor", "Unitvendor": "Unitvendor", "autoWidth": true },
+                { "data": "Qtyconversion", "name": "Qtyconversion", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditProduct?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" }
                 }

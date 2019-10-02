@@ -51,6 +51,8 @@ namespace Klinik.Features
                         qry.ProductCategoryID = request.Data.ProductCategoryID;
                         qry.ProductUnitID = request.Data.ProductUnitID;
                         qry.RetailPrice = request.Data.RetailPrice;
+                        qry.Qtyconversion = request.Data.Qtyconversion;
+                        qry.Unitvendor = request.Data.Unitvendor;
 
                         _unitOfWork.ProductRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();

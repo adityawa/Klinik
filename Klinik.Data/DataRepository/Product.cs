@@ -40,8 +40,8 @@ namespace Klinik.Data.DataRepository
         public int ProductCategoryID { get; set; }
         public int ProductUnitID { get; set; }
         public decimal RetailPrice { get; set; }
-        public Nullable<int> SatuanTerbesar { get; set; }
-        public Nullable<int> QtyConvertion { get; set; }
+        public Nullable<int> Unitvendor { get; set; }
+        public Nullable<int> Qtyconversion { get; set; }
         public Nullable<short> RowStatus { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

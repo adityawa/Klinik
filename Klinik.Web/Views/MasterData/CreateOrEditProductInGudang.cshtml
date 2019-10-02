@@ -43,7 +43,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label" for="inputDefault">Retail Price</label>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(x => x.RetailPrice, new { @class = "form-control", @value = Convert.ToInt32(Model.RetailPrice), @id = "RetailPrice" })
+                    @Html.TextBoxFor(x => x.RetailPrice, new { @class = "form-control", @Value = string.Format("{0:0.##}", Model.RetailPrice), @id = "RetailPrice" })
                 </div>
             </div>
         </div>

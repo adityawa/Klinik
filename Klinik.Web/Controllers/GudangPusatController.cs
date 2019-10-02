@@ -767,6 +767,7 @@ namespace Klinik.Web.Controllers
             var purchaseRequestdetails = _context.PurchaseRequestDetails.Where(a => a.ProductId == productid);
             var deliveryorderdetails = _context.DeliveryOrderDetails.Where(a => a.ProductId == productid && a.Recived == true);
             var productingudangs = _context.ProductInGudangs.Where(a => a.ProductId == productid && a.GudangId == OneLoginSession.Account.GudangID);
+            var product = _context.Products.Where(a => a.ID ==  productid).FirstOrDefault();
             int? stock = 0;
             int? datapo = 0;
             int? datado = 0;
@@ -792,6 +793,8 @@ namespace Klinik.Web.Controllers
                                             { "datapo", datapo },
                                             { "datado", datado },
                                             { "sisastock", sisastock },
+                                            { "satuan", product.Qtyconversion },
+                                            { "harga", Convert.ToInt32(product.RetailPrice/product.Qtyconversion) }
                                         };
 
             return Json( new { data}, JsonRequestBehavior.AllowGet);
