@@ -6,9 +6,11 @@ using Klinik.Entities.Account;
 using Klinik.Entities.Form;
 using Klinik.Entities.Loket;
 using Klinik.Entities.MasterData;
+using Klinik.Entities.MedicalHistoryEntity;
 using Klinik.Entities.Poli;
 using Klinik.Entities.PreExamine;
 using Klinik.Features;
+using Klinik.Features.HistoryMedical;
 using Klinik.Features.ICDThemeFeatures;
 using Klinik.Web.Hubs;
 using LinqKit;
@@ -250,6 +252,23 @@ namespace Klinik.Web.Controllers
         }
 
 
+        public JsonResult GetHistoryMedicalPatient(string idPatient)
+        {
+            long _patientID = idPatient == null ? 0 : Convert.ToInt64(idPatient);
+            var _model = new MedicalHistoryForDoctorModel
+            {
+                IDPatient = _patientID
+            };
+
+            var request = new MedicalHistoryRequest
+            {
+                Data = _model
+            };
+            var response = new MedicalHistoryForDoctorResponse();
+            response = new MedicalHistoryHandler(_unitOfWork).GetHistoryPatient(request);
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
 
         [CustomAuthorize("VIEW_POLI_PATIENT_LIST")]
         public ActionResult PatientList()
@@ -434,7 +453,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.CausedList = BindDropDownCaused();
                 ViewBag.ConditionList = BindDropDownCondition();
             }
-            catch
+            catch(Exception ex)
             {
                 return BadRequestResponse;
             }

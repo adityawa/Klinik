@@ -111,6 +111,7 @@
     <Compile Include="DeliveryOrder\DeliveryOrderResponse.cs" />
     <Compile Include="DeliveryOrder\DeliveryOrderValidator.cs" />
     <Compile Include="General\GeneralHandler.cs" />
+    <Compile Include="HistoryMedical\MedicalHistoryForDoctorResponse.cs" />
     <Compile Include="HistoryMedical\MedicalHistoryHandler.cs" />
     <Compile Include="HistoryMedical\MedicalHistoryRequest.cs" />
     <Compile Include="HistoryMedical\MedicalHistoryResponse.cs" />

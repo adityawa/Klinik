@@ -145,6 +145,80 @@ namespace Klinik.Features.HistoryMedical
             return response;
         }
 
+        public MedicalHistoryForDoctorResponse GetHistoryPatient(MedicalHistoryRequest request)
+        {
+            List<MedicalHistoryForDoctorModel> histories = new List<MedicalHistoryForDoctorModel>();
+            var _patientData = _unitOfWork.PatientRepository.GetById(request.Data.IDPatient);
+            var _formMedicalID = _unitOfWork.RegistrationRepository.Get(x => x.PatientID == request.Data.IDPatient).Select(x => x.FormMedicalID).Distinct();
+            var _formExData = _unitOfWork.FormExamineRepository.Get(x => _formMedicalID.Contains(x.FormMedicalID));
+            foreach(var item in _formExData)
+            {
+                histories.Add(new MedicalHistoryForDoctorModel
+                {
+                    FormMedicalId=item.FormMedicalID??0,
+                    Tanggal=item.TransDate==null?"":item.TransDate.Value.ToString("dd/MM/yyyy"),
+                    PatientName=_patientData.Name,
+                    ClinicName=item.FormMedical.Clinic.Name,
+                    DoctorName=item.Doctor.Name,
+                    PoliName=item.Poli.Name,
+                    Anamnesa=item.Anamnesa,
+                    Diagnosa=item.Diagnose,
+                    Therapy=item.Therapy,
+                    Result=item.Result
+                });
+            }
+
+            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
+            {
+                histories = histories.Where(x => x.Anamnesa.Contains(request.SearchValue) || x.Diagnosa.Contains(request.SearchValue) || x.Therapy.Contains(request.SearchValue) || x.Result.Contains(request.SearchValue)).ToList();
+            }
+
+            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
+            {
+                if (request.SortColumnDir == "asc")
+                {
+                    switch (request.SortColumn.ToLower())
+                    {
+                        case "Tanggal":
+                            histories = histories.OrderBy(x=>x.Tanggal).ToList();
+                            break;
+                        
+
+                        default:
+                            histories = histories.OrderBy(x=>x.FormMedicalId).ToList();
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (request.SortColumn.ToLower())
+                    {
+                        case "Tanggal":
+                            histories = histories.OrderByDescending(x => x.Tanggal).ToList();
+                            break;
+
+
+                        default:
+                            histories = histories.OrderByDescending(x => x.FormMedicalId).ToList();
+                            break;
+                    }
+                }
+            }
+
+            int totalRequest = histories.Count();
+            var data = histories.Skip(request.Skip).Take(request.PageSize).ToList();
+
+            var response = new MedicalHistoryForDoctorResponse
+            {
+                Draw = request.Draw,
+                RecordsFiltered = totalRequest,
+                RecordsTotal = totalRequest,
+                Data = data
+            };
+
+            return response;
+        }
+
       
     }
 }
