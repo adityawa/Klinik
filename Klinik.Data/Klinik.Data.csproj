@@ -302,6 +302,9 @@
     <Compile Include="DataRepository\Vendor.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataRepository\VendorProduct.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GenericRepository.cs" />
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />

@@ -403,7 +403,8 @@ var General = {
                 url: '/GudangPusat/searchvendor/',
                 data: function (params) {
                     return {
-                        prefix: params.term
+                        prefix: params.term,
+                        productid: $("#ProductId").val()
                     };
                 },
                 dataType: 'json',

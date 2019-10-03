@@ -81,6 +81,7 @@ namespace Klinik.Data
         IGenericRepository<MCUPackage> MCUpackageRepository { get; }
 
         IGenericRepository<MCURegistrationInterface> MCURegistrationRepository { get; }
+        IGenericRepository<VendorProduct> VendorProductRepository { get; }
         int Save();
     }
 }

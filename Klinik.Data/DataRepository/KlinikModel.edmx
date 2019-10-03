@@ -1358,6 +1358,15 @@
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="VendorProduct">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="VendorId" Type="int" />
+          <Property Name="BoxPrice" Type="money" />
+        </EntityType>
         <Association Name="FK_Appointment_Clinic">
           <End Role="Clinic" Type="Self.Clinic" Multiplicity="1" />
           <End Role="Appointment" Type="Self.Appointment" Multiplicity="*" />
@@ -2762,6 +2771,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VendorProduct_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="VendorProduct" Type="Self.VendorProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VendorProduct">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VendorProduct_Vendor">
+          <End Role="Vendor" Type="Self.Vendor" Multiplicity="0..1" />
+          <End Role="VendorProduct" Type="Self.VendorProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="VendorProduct">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="fn_GenerateMRNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
           <Parameter Name="CreatedTime" Type="datetime" Mode="In" />
           <Parameter Name="seq" Type="int" Mode="In" />
@@ -2911,6 +2944,7 @@
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendor" EntityType="Self.Vendor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VendorProduct" EntityType="Self.VendorProduct" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Appointment_Clinic" Association="Self.FK_Appointment_Clinic">
             <End Role="Clinic" EntitySet="Clinic" />
             <End Role="Appointment" EntitySet="Appointment" />
@@ -3378,6 +3412,14 @@
           <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
             <End Role="User" EntitySet="User" />
             <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VendorProduct_Product" Association="Self.FK_VendorProduct_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="VendorProduct" EntitySet="VendorProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VendorProduct_Vendor" Association="Self.FK_VendorProduct_Vendor">
+            <End Role="Vendor" EntitySet="Vendor" />
+            <End Role="VendorProduct" EntitySet="VendorProduct" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -4763,6 +4805,7 @@
           <NavigationProperty Name="DeliveryOrderPusatDetails" Relationship="Self.FK_DeliveryOrderPusatDetail_Vendor" FromRole="Vendor" ToRole="DeliveryOrderPusatDetail" />
           <NavigationProperty Name="PurchaseOrderPusatDetails" Relationship="Self.FK_PurchaseOrderPusatDetail_Vendor" FromRole="Vendor" ToRole="PurchaseOrderPusatDetail" />
           <NavigationProperty Name="PurchaseRequestPusatDetails" Relationship="Self.FK_PurchaseRequestPusatDetail_Vendor" FromRole="Vendor" ToRole="PurchaseRequestPusatDetail" />
+          <NavigationProperty Name="VendorProducts" Relationship="KlinikDBModel.FK_VendorProduct_Vendor" FromRole="Vendor" ToRole="VendorProduct" />
         </EntityType>
         <Association Name="FK_Patient_City">
           <End Role="City" Type="Self.City" Multiplicity="0..1" />
@@ -6180,6 +6223,15 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="substitute" EntitySet="substitutes" />
           </AssociationSet>
+          <EntitySet Name="VendorProducts" EntityType="KlinikDBModel.VendorProduct" />
+          <AssociationSet Name="FK_VendorProduct_Product" Association="KlinikDBModel.FK_VendorProduct_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="VendorProduct" EntitySet="VendorProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VendorProduct_Vendor" Association="KlinikDBModel.FK_VendorProduct_Vendor">
+            <End Role="Vendor" EntitySet="Vendors" />
+            <End Role="VendorProduct" EntitySet="VendorProducts" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="usp_registrations_get_by_status_Result">
           <Property Type="Int32" Name="REG_ID" Nullable="false" />
@@ -6771,6 +6823,7 @@
           <NavigationProperty Name="stoks" Relationship="KlinikDBModel.FK_stok_m_Product" FromRole="Product" ToRole="stok" />
           <NavigationProperty Name="stoks1" Relationship="KlinikDBModel.FK_stoks_m_Product" FromRole="Product" ToRole="stok1" />
           <NavigationProperty Name="substitutes" Relationship="KlinikDBModel.FK_substitute_Product" FromRole="Product" ToRole="substitute" />
+          <NavigationProperty Name="VendorProducts" Relationship="KlinikDBModel.FK_VendorProduct_Product" FromRole="Product" ToRole="VendorProduct" />
         </EntityType>
         <EntityType Name="ProductInGudang">
           <Key>
@@ -6991,6 +7044,41 @@
             </Principal>
             <Dependent Role="substitute">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VendorProduct">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="VendorId" Type="Int32" />
+          <Property Name="BoxPrice" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Product" Relationship="KlinikDBModel.FK_VendorProduct_Product" FromRole="VendorProduct" ToRole="Product" />
+          <NavigationProperty Name="Vendor" Relationship="KlinikDBModel.FK_VendorProduct_Vendor" FromRole="VendorProduct" ToRole="Vendor" />
+        </EntityType>
+        <Association Name="FK_VendorProduct_Product">
+          <End Type="KlinikDBModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.VendorProduct" Role="VendorProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VendorProduct">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VendorProduct_Vendor">
+          <End Type="KlinikDBModel.Vendor" Role="Vendor" Multiplicity="0..1" />
+          <End Type="KlinikDBModel.VendorProduct" Role="VendorProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="VendorProduct">
+              <PropertyRef Name="VendorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8465,6 +8553,16 @@
                 <ScalarProperty Name="stock" ColumnName="stock" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="GudangId" ColumnName="GudangId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VendorProducts">
+            <EntityTypeMapping TypeName="KlinikDBModel.VendorProduct">
+              <MappingFragment StoreEntitySet="VendorProduct">
+                <ScalarProperty Name="BoxPrice" ColumnName="BoxPrice" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

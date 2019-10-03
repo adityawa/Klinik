@@ -249,5 +249,78 @@ namespace Klinik.Features
 
             return response;
         }
+
+        public VendorResponse SearchData(VendorRequest request, int? productid)
+        {
+            List<VendorModel> lists = new List<VendorModel>();
+            dynamic qry = null;
+            var searchPredicate = PredicateBuilder.New<VendorProduct>(true);
+
+            // add default filter to show the active data only
+            searchPredicate = searchPredicate.And(x => x.Vendor.RowStatus == 0);
+
+            if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
+            {
+                searchPredicate = searchPredicate.And(p => p.Vendor.namavendor.Contains(request.SearchValue) && p.ProductId == productid);
+            }
+
+            if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))
+            {
+                if (request.SortColumnDir == "asc")
+                {
+                    switch (request.SortColumn.ToLower())
+                    {
+                        case "namavendor":
+                            qry = _unitOfWork.VendorProductRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.Vendor.namavendor));
+                            break;
+
+                        default:
+                            qry = _unitOfWork.VendorProductRepository.Get(searchPredicate, orderBy: q => q.OrderBy(x => x.id));
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (request.SortColumn.ToLower())
+                    {
+                        case "namavendor":
+                            qry = _unitOfWork.VendorProductRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.Vendor.namavendor));
+                            break;
+
+                        default:
+                            qry = _unitOfWork.VendorProductRepository.Get(searchPredicate, orderBy: q => q.OrderByDescending(x => x.id));
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                qry = _unitOfWork.VendorProductRepository.Get(searchPredicate, null);
+            }
+
+            foreach (var item in qry)
+            {
+                var prData = new VendorModel
+                {
+                    Id = item.Vendor.id,
+                    namavendor = item.Vendor.namavendor,
+                };
+
+                lists.Add(prData);
+            }
+
+            int totalRequest = lists.Count();
+            var data = lists.Skip(request.Skip).Take(request.PageSize).ToList();
+
+            var response = new VendorResponse
+            {
+                Draw = request.Draw,
+                RecordsFiltered = totalRequest,
+                RecordsTotal = totalRequest,
+                Data = data
+            };
+
+            return response;
+        }
     }
 }
