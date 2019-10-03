@@ -36,6 +36,7 @@ namespace Klinik.Features
                         qry.StartDate = request.Data.StartDate;
                         qry.ModifiedDate = request.Data.ModifiedDate;
                         qry.ModifiedBy = OneLoginSession.Account.UserCode;
+                        qry.OrganisationCode = OneLoginSession.Account.Organization;
 
                         _unitOfWork.PurchaseRequestConfigRepository.Update(qry);
                         int resultAffected = _unitOfWork.Save();
@@ -57,6 +58,7 @@ namespace Klinik.Features
                     insertdata.GudangId = OneLoginSession.Account.GudangID;
                     insertdata.Status = true;
                     insertdata.request_by = OneLoginSession.Account.UserName;
+                    insertdata.OrganisationCode = OneLoginSession.Account.Organization;
 
                     _unitOfWork.PurchaseRequestConfigRepository.Insert(insertdata);
 

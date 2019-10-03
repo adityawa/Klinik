@@ -1107,6 +1107,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GudangId" Type="int" />
           <Property Name="StartDate" Type="datetime" />
+          <Property Name="OrganisationCode" Type="varchar" MaxLength="50" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="20" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
@@ -6263,6 +6264,7 @@
           <Property Name="request_by" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="Boolean" />
           <NavigationProperty Name="Gudang" Relationship="KlinikDBModel.FK_PurchaseRequestConfig_Gudang" FromRole="PurchaseRequestConfig" ToRole="Gudang" />
+          <Property Name="OrganisationCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="MCURegistrationInterface">
           <Key>
@@ -8381,6 +8383,7 @@
           <EntitySetMapping Name="PurchaseRequestConfigs">
             <EntityTypeMapping TypeName="KlinikDBModel.PurchaseRequestConfig">
               <MappingFragment StoreEntitySet="PurchaseRequestConfig">
+                <ScalarProperty Name="OrganisationCode" ColumnName="OrganisationCode" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="request_by" ColumnName="request_by" />
                 <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
