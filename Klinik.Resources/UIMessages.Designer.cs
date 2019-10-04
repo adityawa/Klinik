@@ -1393,6 +1393,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ICD Name.
+        /// </summary>
+        public static string ICDName {
+            get {
+                return ResourceManager.GetString("ICDName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Icon.
         /// </summary>
         public static string Icon {

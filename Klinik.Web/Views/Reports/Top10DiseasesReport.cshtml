@@ -25,29 +25,19 @@
                     <thead>
                         <tr>
                             <th align="center">@Klinik.Resources.UIMessages.ICDCode</th>
-                            <th align="center">@Klinik.Resources.UIMessages.ClinicName</th>
-                            <th align="center">@Klinik.Resources.UIMessages.PatientName</th>
-                            <th align="center">@Klinik.Resources.UIMessages.FamilyRelationship</th>
-                            <th align="center">@Klinik.Resources.UIMessages.Age</th>
-                            <th align="center">@Klinik.Resources.UIMessages.Gender</th>
-                            <th align="center">@Klinik.Resources.UIMessages.Department</th>
-                            <th align="center">@Klinik.Resources.UIMessages.TransactionDate</th>
-                            <th align="center">@Klinik.Resources.UIMessages.Diagnose</th>
+                            <th align="center">@Klinik.Resources.UIMessages.ICDName</th>
+                            <th align="center">@Klinik.Resources.UIMessages.Category</th>
+                            <th align="center">@Klinik.Resources.UIMessages.Total</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.DiseaseDataReports)
                         {
                             <tr>
-                                <td width="5%">@item.ICDCode</td>
-                                <td width="15%">@item.ClinicName</td>
-                                <td width="15%">@item.PatientName</td>
-                                <td width="10%">@item.FamName</td>
-                                <td width="5%" align="right">@item.Age.ToString()</td>
-                                <td width="5%" align="center">@item.Gender</td>
-                                <td width="10%" align="center">@item.Department</td>
-                                <td width="15%" align="right">@item.TransDate</td>
-                                <td width="20%" align="center">@item.Diagnose</td>
+                                <td width="15%">@item.ICDCode</td>
+                                <td width="45%">@item.ICDName </td>
+                                <td width="25%">@item.Category</td>
+                                <td width="15%">@item.Total</td>
                             </tr>
                         }
                     </tbody>

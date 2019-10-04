@@ -176,6 +176,10 @@
       <Project>{65643f8a-3935-4a27-aaf3-307dcbf8db60}</Project>
       <Name>Klinik.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Klinik.Resources\Klinik.Resources.csproj">
+      <Project>{3d1a8222-cc25-4bb0-8820-f26c53aa9e8d}</Project>
+      <Name>Klinik.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

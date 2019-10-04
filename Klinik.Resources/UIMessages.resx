@@ -1335,4 +1335,7 @@
   <data name="SelectOneCategoryItem" xml:space="preserve">
     <value>Select OneCategory Item ..</value>
   </data>
+  <data name="ICDName" xml:space="preserve">
+    <value>ICD Name</value>
+  </data>
 </root>

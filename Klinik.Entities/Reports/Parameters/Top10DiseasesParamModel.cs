@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,43 +10,29 @@ namespace Klinik.Entities.Reports
 {
     public class Top10DiseasesParamModel:BaseModel
     {
+        [Required(ErrorMessageResourceType = typeof(Resources.Messages), ErrorMessageResourceName = "MonthYearOfStartPeriodIsMandatory")]
         public int MonthStart { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Resources.Messages), ErrorMessageResourceName = "YearOfStartPeriodIsMandatory")]
         public int YearStart { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Resources.Messages), ErrorMessageResourceName = "MonthYearOfEndPeriodIsMandatory")]
         public int MonthEnd { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Resources.Messages), ErrorMessageResourceName = "YearOfEndPeriodIsMandatory")]
         public int YearEnd { get; set; }
 
         public int? ClinicId { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Resources.Messages), ErrorMessageResourceName = "CategoryIsMandatory")]
         public string SelectedCategory { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Resources.Messages), ErrorMessageResourceName = "CategoryItemIsMandatory")]
         public string SelectedCategoryItem { get; set; }
 
         public List<SelectListItem> Categories { get; set; }
 
         public List<SelectListItem> CategoryItems { get; set; }
-
-        //public string DeptName { get; set; }
-
-        //public string BUName { get; set; }
-
-        //public string GenderType { get; set; }
-
-        //public string AgeCode { get; set; }
-
-        //public string PatientCategory { get; set; }
-
-        //public string FamilyStatus { get; set; }
-
-        //public string CategoryClinicStatus { get; set; }
-
-        //public string PaymentType { get; set; }
-
-        //public string NeedRest { get; set; }
-
-        //public string ExamineType { get; set; }
 
     } 
 }

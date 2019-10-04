@@ -129,12 +129,12 @@
             public const string BUSINESSUNIT = "BusinessUnit";
             public const string GENDER = "Gender";
             public const string AGE = "Age";
-            public const string PATIENTCATEGORY = "PatientCategory";
+            public const string EMPLOYMENTTYPE = "EmploymentType";
             public const string FAMILYSTATUS = "FamilyStatus";
             public const string NECESSITYTYPE = "NecessityType";
             public const string PAYMENTTYPE = "PaymentType";
             public const string NEEDREST = "NeedRest";
-            public const string EXAMINETYPE = "Examine Type";
+            public const string EXAMINETYPE = "ExamineType";
             public const string HOSPITAL = "HOSPITAL";
             public const string MONTH = "Month";
             public const string REQUESTTYPE = "RequestType";
