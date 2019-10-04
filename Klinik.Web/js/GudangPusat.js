@@ -121,7 +121,7 @@
         var total = $('#total');
         qtyadd.keyup(function () {
             qty_final.val(parseInt(qtyadd.val()));
-            total.val(parseInt(qtyadd.val()) + parseInt(qty_final.val()));
+            total.val(parseInt(qty_final.val()));
         });
         reason_add.keyup(function () {
             remark.val(reason_add.val());
@@ -292,12 +292,12 @@
                 }
             }).prop('disabled', false);
 
-            getdata.find('td:eq(5) input').prop('disabled', false);
-            getdata.find('td:eq(6) input').prop('disabled', false);
+            //getdata.find('td:eq(5) input').prop('disabled', false);
+            //getdata.find('td:eq(6) input').prop('disabled', false);
             getdata.find('td:eq(12) input').prop('disabled', false);
             getdata.find('td:eq(13) input').prop('disabled', false);
-            getdata.find('td:eq(17) input').prop('disabled', false);
-            getdata.find('td:eq(18) input').prop('disabled', false);
+            //getdata.find('td:eq(17) input').prop('disabled', false);
+            //getdata.find('td:eq(18) input').prop('disabled', false);
             $(this).hide();
             getdata.find('.save-purchaserequestpusatdetail').show();
             PurchaseRequest.EditNamaBarang();
@@ -381,6 +381,12 @@ var General = {
                     $('#total_req').val(data.datapo);
                     $('#total_dist').val(data.datado);
                     $('#sisa_stok').val(data.sisastock);
+                    $('#satuan').val(data.satuan);
+                    $('#harga').val(data.harga);
+                    $('#satuan').val(data.satuan);
+                    $('#harga').val(data.harga);
+                    $('#qty_box').val(data.satuan);
+                    $('#qty_unit').val(data.harga);
                 }
             })
         });
@@ -397,7 +403,8 @@ var General = {
                 url: '/GudangPusat/searchvendor/',
                 data: function (params) {
                     return {
-                        prefix: params.term
+                        prefix: params.term,
+                        productid: $("#ProductId").val()
                     };
                 },
                 dataType: 'json',

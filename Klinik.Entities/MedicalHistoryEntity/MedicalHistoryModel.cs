@@ -22,4 +22,15 @@ namespace Klinik.Entities.MedicalHistoryEntity
         public long IDPatient { get; set; }
         public EmployeeModel EmployeeData { get; set; }
     }
+
+    public class MedicalHistoryForDoctorModel : MedicalHistoryModel
+    {
+        public string DoctorName { get; set; }
+        public string Anamnesa { get; set; }
+        public string Diagnosa { get; set; }
+        public string Therapy { get; set; }
+        public string ICDDescription { get; set; }
+
+        public string Result { get; set; }
+    }
 }

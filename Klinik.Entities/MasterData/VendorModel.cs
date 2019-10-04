@@ -9,5 +9,6 @@ namespace Klinik.Entities.MasterData
     public class VendorModel : BaseModel
     {
         public string namavendor { get; set; }
+        public int ProductId { get; set; }
     }
 }

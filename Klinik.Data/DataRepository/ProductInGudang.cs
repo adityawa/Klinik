@@ -18,6 +18,8 @@ namespace Klinik.Data.DataRepository
         public Nullable<int> GudangId { get; set; }
         public Nullable<int> ProductId { get; set; }
         public Nullable<int> stock { get; set; }
+        public Nullable<int> limited_stock { get; set; }
+        public Nullable<decimal> RetailPrice { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }

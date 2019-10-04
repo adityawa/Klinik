@@ -1338,4 +1338,7 @@
   <data name="ICDName" xml:space="preserve">
     <value>ICD Name</value>
   </data>
+  <data name="ViewHistoryPatient" xml:space="preserve">
+    <value>View History Patient</value>
+  </data>
 </root>

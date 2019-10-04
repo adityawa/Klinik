@@ -41,7 +41,7 @@ namespace Klinik.Features
 
             //get Org ID
             var _getOrganization = _unitOfWork.OrganizationRepository.GetFirstOrDefault(x => x.OrgCode == request.Data.Organization);
-            var gudangid = _unitOfWork.GudangRepository.GetFirstOrDefault(a => a.ClinicId == _getOrganization.KlinikID);
+            var gudangid = _unitOfWork.GudangRepository.GetFirstOrDefault(a => a.OrganizationId == _getOrganization.ID);
             if (_getOrganization != null)
             {
                 var _getByUname = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName == request.Data.UserName && x.Status == true && x.ExpiredDate > DateTime.Now && x.OrganizationID == _getOrganization.ID && x.RowStatus==0);

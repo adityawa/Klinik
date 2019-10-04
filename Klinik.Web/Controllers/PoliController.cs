@@ -6,9 +6,11 @@ using Klinik.Entities.Account;
 using Klinik.Entities.Form;
 using Klinik.Entities.Loket;
 using Klinik.Entities.MasterData;
+using Klinik.Entities.MedicalHistoryEntity;
 using Klinik.Entities.Poli;
 using Klinik.Entities.PreExamine;
 using Klinik.Features;
+using Klinik.Features.HistoryMedical;
 using Klinik.Features.ICDThemeFeatures;
 using Klinik.Web.Hubs;
 using LinqKit;
@@ -133,11 +135,40 @@ namespace Klinik.Web.Controllers
                     id = item.ID,
                     label = item.Name,
                     code = item.Code,
-                    stock = "911" // hardcoded for now
+                    stock = "100" // hardcoded for now
                 };
 
                 resultList.Add(temp);
             }
+
+            return Json(resultList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AutoCompleteICD(string prefix, string id1, string id2)
+        {
+            List<TempClass> resultList = new List<TempClass>();
+            long lId1 = 0, lId2 = 0;
+            if (!string.IsNullOrEmpty(id1))
+                lId1 = Convert.ToInt64(id1);
+            if (!String.IsNullOrEmpty(id2))
+                lId2 = Convert.ToInt64(id2);
+            var _qry = new ICDThemeHandler(_unitOfWork).Get(prefix, lId1, lId2);
+            foreach (var item in _qry)
+            {
+
+                TempClass temp = new TempClass
+                {
+                    id = (Int32)item.Id,
+                    label = item.Name,
+                    code = item.Code,
+
+                };
+
+                resultList.Add(temp);
+            }
+
+
 
             return Json(resultList, JsonRequestBehavior.AllowGet);
         }
@@ -151,7 +182,7 @@ namespace Klinik.Web.Controllers
 
             // add default filter to show the active data only
             searchPredicate = searchPredicate.And(x => x.RowStatus == 0 && x.Name.ToLower().Contains(prefix.ToLower()));
-           
+
             qry = _unitOfWork.ProductRepository.Get(searchPredicate, null);
 
             long clinicId = 0;
@@ -161,11 +192,12 @@ namespace Klinik.Web.Controllers
                 clinicId = tempData.ClinicID;
             }
 
-            
+
             var temp = (IEnumerable<Product>)qry;
             var productIdS = temp.Select(x => x.ID).Distinct().ToList();
             var gudangs = _unitOfWork.GudangRepository.Get(x => x.ClinicId == clinicId).Select(x => x.id).ToList();
-            var stockCollection = _unitOfWork.ProductInGudangRepository.Get(x => productIdS.Contains(x.ProductId ?? 0) && gudangs.Contains(x.GudangId ?? 0)).Select(x => new {
+            var stockCollection = _unitOfWork.ProductInGudangRepository.Get(x => productIdS.Contains(x.ProductId ?? 0) && gudangs.Contains(x.GudangId ?? 0)).Select(x => new
+            {
                 x.ProductId,
                 x.stock
             });
@@ -182,9 +214,9 @@ namespace Klinik.Web.Controllers
                     label = prData.Name,
                     code = prData.Code,
                     stock = stockCollection.SingleOrDefault(x => x.ProductId == prData.Id) == null ? "0" : stockCollection.SingleOrDefault(x => x.ProductId == prData.Id).stock.ToString(),
-                    category=prData.ProductCategoryName,
-                    unit=prData.ProductUnitName,
-                    price=prData.RetailPrice.ToString()
+                    category = prData.ProductCategoryName,
+                    unit = prData.ProductUnitName,
+                    price = prData.RetailPrice.ToString()
                 };
 
                 resultList.Add(tmp);
@@ -219,7 +251,39 @@ namespace Klinik.Web.Controllers
             return Json(resultList, JsonRequestBehavior.AllowGet);
         }
 
-       
+
+        public JsonResult GetHistoryMedicalPatient(string idPatient)
+        {
+            var _draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var _start = Request.Form.GetValues("start").FirstOrDefault();
+            var _length = Request.Form.GetValues("length").FirstOrDefault();
+            var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+            int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
+            int _skip = _start != null ? Convert.ToInt32(_start) : 0;
+            long _patientID = idPatient == null ? 0 : Convert.ToInt64(idPatient);
+            var _model = new MedicalHistoryForDoctorModel
+            {
+                IDPatient = _patientID
+            };
+
+            var request = new MedicalHistoryRequest
+            {
+                Draw = _draw,
+                SearchValue = _searchValue,
+                SortColumn = _sortColumn,
+                SortColumnDir = _sortColumnDir,
+                PageSize = _pageSize,
+                Skip = _skip,
+                Data = _model
+            };
+            var response = new MedicalHistoryForDoctorResponse();
+            response = new MedicalHistoryHandler(_unitOfWork).GetHistoryPatient(request);
+            return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
+        }
+
 
         [CustomAuthorize("VIEW_POLI_PATIENT_LIST")]
         public ActionResult PatientList()
@@ -249,6 +313,8 @@ namespace Klinik.Web.Controllers
             string icdInformation,
             string needSurat,
             string jumHari,
+            string caused,
+            string condition,
             string poliToID,
             string doctorToID,
             List<string> concoctionMedicineList,
@@ -273,7 +339,10 @@ namespace Klinik.Web.Controllers
 
             int iJumHari = jumHari == null ? 0 : Convert.ToInt16(jumHari);
             bool bNeedSuratSakit = needSurat == null ? false : Convert.ToBoolean(needSurat);
-            PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, icdInformation, poliToID, doctorToID, bNeedSuratSakit, iJumHari, concoctionMedicineList, medicineList, injectionList, labList, radiologyList, serviceList);
+            int iCaused = caused == null ? 0 : Convert.ToInt32(caused);
+            int iCondition = condition == null ? 0 : Convert.ToInt32(condition);
+
+            PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, icdInformation, poliToID, doctorToID, bNeedSuratSakit, iJumHari, iCaused, iCondition, concoctionMedicineList, medicineList, injectionList, labList, radiologyList, serviceList);
             model.Account = Account;
             var request = new FormExamineRequest { Data = model, };
 
@@ -348,8 +417,11 @@ namespace Klinik.Web.Controllers
                         if (arrIcds.Length > 0)
                         {
                             model.ICDInformation1 = arrIcds[0];
+                            model.ICDInformation1Desc = arrIcds[0] == "" ? "" : GetICDDescription(Convert.ToInt64(arrIcds[0]));
                             model.ICDInformation2 = arrIcds[1];
+                            model.ICDInformation2Desc = arrIcds[1] == "" ? "" : GetICDDescription(Convert.ToInt64(arrIcds[1]));
                             model.ICDInformation3 = arrIcds[2];
+                            model.ICDInformation3Desc = arrIcds[2] == "" ? "" : GetICDDescription(Convert.ToInt64(arrIcds[2]));
                         }
                     }
                     // get form examine medicine if any
@@ -396,7 +468,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.CausedList = BindDropDownCaused();
                 ViewBag.ConditionList = BindDropDownCondition();
             }
-            catch
+            catch(Exception ex)
             {
                 return BadRequestResponse;
             }
@@ -425,6 +497,8 @@ namespace Klinik.Web.Controllers
 
             return Json(new { data = filteredData, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw, Status = response.Status }, JsonRequestBehavior.AllowGet);
         }
+
+
         #endregion
 
         #region ::PRIVATE METHODS::
@@ -448,17 +522,17 @@ namespace Klinik.Web.Controllers
             List<SelectListItem> result = new List<SelectListItem>();
             result.Insert(0, new SelectListItem
             {
-                Value="0",
-                Text="-choose Icd-"
+                Value = "0",
+                Text = "-choose Icd-"
             });
             var _qry = new ICDThemeHandler(_unitOfWork).GetAll();
-            foreach(var item in _qry)
+            foreach (var item in _qry)
             {
                 result.Add(new SelectListItem
                 {
                     Value = item.Id.ToString(),
                     Text = $"{ item.Code}-{item.Name}"
-                }) ;
+                });
             }
             return result;
         }
@@ -505,12 +579,12 @@ namespace Klinik.Web.Controllers
         {
             var causedSelectList = GetGeneralMasterByType(Constants.MasterType.Caused);
             var lists = new List<SelectListItem>();
-            foreach(var item in causedSelectList)
+            foreach (var item in causedSelectList)
             {
                 lists.Add(new SelectListItem
                 {
-                    Value=item.Value,
-                    Text=item.Text
+                    Value = item.Value,
+                    Text = item.Text
                 });
             }
             return lists;
@@ -545,6 +619,8 @@ namespace Klinik.Web.Controllers
             string doctorToID,
             bool needRestLetter,
             int iJumHari,
+            int valiCaused,
+            int valiCondition,
             List<string> concoctionMedicineList,
             List<string> medicineList,
             List<string> injectionList,
@@ -577,6 +653,8 @@ namespace Klinik.Web.Controllers
             model.ExamineData.NeedSuratSakit = needRestLetter;
             model.ExamineData.JumHari = iJumHari;
             model.ExamineData.Sampai = DateTime.Now.AddDays(iJumHari);
+            model.ExamineData.Caused = valiCaused;
+            model.ExamineData.Condition = valiCondition;
             // FormExamineMedicine
             foreach (var item in medicineList)
             {
@@ -586,7 +664,7 @@ namespace Klinik.Web.Controllers
                     ProductID = int.Parse(values[0]),
                     FormExamineID = long.Parse(formExamineID),
                     Dose = values[1],
-                    Qty = int.Parse(values[2]),
+                    Qty = values[2] == "" ? 0 : int.Parse(values[2]),
                     RemarkUse = values[3],
                     TypeID = ((int)MedicineTypeEnum.Medicine).ToString()
                 };
@@ -605,7 +683,7 @@ namespace Klinik.Web.Controllers
                     Dose = values[1],
                     MedicineJenis = values[2],
                     RemarkUse = values[3],
-                    Qty = Convert.ToDouble(values[4]),
+                    Qty =values[4]==""?0: Convert.ToDouble(values[4]),
                     TypeID = ((int)MedicineTypeEnum.Concoction).ToString()
                 };
 

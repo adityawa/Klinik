@@ -31,5 +31,27 @@ namespace Klinik.Features.ICDThemeFeatures
             }
             return IcdThems;
         }
+
+        public List<ICDThemeModel> Get(string prefix, long id1, long id2)
+        {
+            List<ICDThemeModel> IcdThems = new List<ICDThemeModel>();
+            List<long> excludeID = new List<long>();
+            if (id1 > 0)
+                excludeID.Add(id1);
+            if (id2 > 0)
+                excludeID.Add(id2);
+
+            var _qry = _unitOfWork.ICDThemeRepository.Get(x => x.RowStatus == 0 && x.Name.Contains(prefix) && !excludeID.Contains(x.Id));
+            foreach (var item in _qry)
+            {
+                IcdThems.Add(new ICDThemeModel
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Code=item.Code
+                });
+            }
+            return IcdThems;
+        }
     }
 }

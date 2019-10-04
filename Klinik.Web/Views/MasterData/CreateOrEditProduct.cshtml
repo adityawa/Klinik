@@ -13,39 +13,51 @@
 			</div>
 			<h5 class="panel-title">Form @ViewBag.ActionType Product</h5>
 		</header>
-		<div class="panel-body">
-			<div class="form-group">
-				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Code</label>
-				<div class="col-md-4">
-					@Html.HiddenFor(x => x.Id)
-					@Html.TextBoxFor(x => x.Code, new { @class = "form-control", @id = "tbCode" })
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Name</label>
-				<div class="col-md-4">
-					@Html.TextBoxFor(x => x.Name, new { @class = "form-control", @id = "tbName" })
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.ProductCategory</label>
-				<div class="col-md-4">
-					@Html.DropDownListFor(p => p.ProductCategoryID, (IEnumerable<SelectListItem>)ViewBag.ProductCategoryList, new { @class = "form-control", @id = "ddlProductCategory" })
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.ProductUnit</label>
-				<div class="col-md-4">
-					@Html.DropDownListFor(p => p.ProductUnitID, (IEnumerable<SelectListItem>)ViewBag.ProductUnitList, new { @class = "form-control", @id = "ddlProductUnit" })
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.RetailPrice</label>
-				<div class="col-md-4">
-					@Html.TextBoxFor(x => x.RetailPrice, new { @class = "form-control", @id = "tbRetailPrice" })
-				</div>
-			</div>
-		</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Code</label>
+                <div class="col-md-4">
+                    @Html.HiddenFor(x => x.Id)
+                    @Html.TextBoxFor(x => x.Code, new { @class = "form-control", @id = "tbCode" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Name</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @id = "tbName" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.ProductCategory</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(p => p.ProductCategoryID, (IEnumerable<SelectListItem>)ViewBag.ProductCategoryList, new { @class = "form-control", @id = "ddlProductCategory" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.ProductUnit</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(p => p.ProductUnitID, (IEnumerable<SelectListItem>)ViewBag.ProductUnitList, new { @class = "form-control", @id = "ddlProductUnit" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.RetailPrice</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.RetailPrice, new { @class = "form-control", @id = "tbRetailPrice" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">Unit Vendor</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.Unitvendor, new { @class = "form-control", @id = "Unitvendor" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">Qty Konversi</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.Qtyconversion, new { @class = "form-control", @id = "Qtyconversion" })
+                </div>
+            </div>
+        </div>
 		<div class="panel-footer">
 			<button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Save</button>
 			<button type="reset" id="btnreset" class="btn btn-default">@Klinik.Resources.UIMessages.Back</button>

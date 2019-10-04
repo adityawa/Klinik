@@ -426,6 +426,23 @@ namespace Klinik.Web.Controllers
 
         }
 
+        private List<SelectListItem> BindDropDownGudang()
+        {
+            List<Gudang> gudanglist = _context.Gudangs.Where(x => x.RowStatus == 0).ToList();
+            List<SelectListItem> _gudanglist = new List<SelectListItem>();
+
+            foreach (var item in gudanglist)
+            {
+                _gudanglist.Add(new SelectListItem
+                {
+                    Text = item.name,
+                    Value = item.id.ToString()
+                });
+            }
+
+            return _gudanglist;
+        }
+
         #endregion
 
         // GET: MasterData
@@ -2337,6 +2354,7 @@ namespace Klinik.Web.Controllers
                 GudangModel _model = resp.Entity;
                 ViewBag.Response = _response;
                 ViewBag.clinics = BindDropDownClinic();
+                ViewBag.Organisasi = BindDropDownOrganization();
                 ViewBag.ActionType = ClinicEnums.Action.Edit;
                 return View(_model);
             }
@@ -2545,6 +2563,8 @@ namespace Klinik.Web.Controllers
                 ProductInGudangModel _model = resp.Entity;
                 ViewBag.Response = _response;
                 ViewBag.ActionType = ClinicEnums.Action.Edit;
+                ViewBag.ProductList = BindDropDownProduct();
+                ViewBag.GudangList = BindDropDownGudang();
                 return View(_model);
             }
             else

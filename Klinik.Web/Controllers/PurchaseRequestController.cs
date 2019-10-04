@@ -115,8 +115,8 @@ namespace Klinik.Web.Controllers
             if (Session["UserLogon"] != null)
                 _purchaserequest.Account = (AccountModel)Session["UserLogon"];
             _purchaserequest.Id = Convert.ToInt32(_purchaserequest.Id) > 0 ? _purchaserequest.Id : 0;
-            var gudangid = _unitOfWork.GudangRepository.Query(a => a.ClinicId == _purchaserequest.Account.ClinicID).Select(x => x.id).FirstOrDefault();
-            _purchaserequest.GudangId = gudangid > 0 ? gudangid : 0;
+            //var gudangid = _unitOfWork.GudangRepository.Query(a => a.ClinicId == _purchaserequest.Account.ClinicID).Select(x => x.id).FirstOrDefault();
+            _purchaserequest.GudangId = _purchaserequest.Account != null ? _purchaserequest.Account.GudangID : 0;
             var request = new PurchaseRequestRequest
             {
                 Data = _purchaserequest

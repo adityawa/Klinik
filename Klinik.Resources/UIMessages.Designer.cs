@@ -3679,6 +3679,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View History Patient.
+        /// </summary>
+        public static string ViewHistoryPatient {
+            get {
+                return ResourceManager.GetString("ViewHistoryPatient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Visus.
         /// </summary>
         public static string Visus {
