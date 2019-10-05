@@ -104,6 +104,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<Gudang> Gudangs { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductInGudang> ProductInGudangs { get; set; }
+        public virtual DbSet<VendorProduct> VendorProducts { get; set; }
     
         [DbFunction("KlinikDBEntities1", "fusp_registrations_get_by_status")]
         public virtual IQueryable<fusp_registrations_get_by_status_Result> fusp_registrations_get_by_status(string documentStatus, string isTransferred)

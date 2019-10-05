@@ -129,17 +129,15 @@
             public const string BUSINESSUNIT = "BusinessUnit";
             public const string GENDER = "Gender";
             public const string AGE = "Age";
-            public const string PATIENTCATEGORY = "Patient Category";
-            public const string FAMILYSTATUS = "Family Status";
-            public const string NECESSITYTYPE = "Necessity Type";
-            public const string PAYMENTTYPE = "Payment Type";
-            public const string NEEDREST = "Need Rest";
-
-
-            public const string EXAMINETYPE = "Examine Type";
+            public const string EMPLOYMENTTYPE = "EmploymentType";
+            public const string FAMILYSTATUS = "FamilyStatus";
+            public const string NECESSITYTYPE = "NecessityType";
+            public const string PAYMENTTYPE = "PaymentType";
+            public const string NEEDREST = "NeedRest";
+            public const string EXAMINETYPE = "ExamineType";
             public const string HOSPITAL = "HOSPITAL";
             public const string MONTH = "Month";
-            public const string REQUESTTYPE = "Request Type";
+            public const string REQUESTTYPE = "RequestType";
         }
 
         public static class ROLE_NAME

@@ -19,7 +19,7 @@ namespace Klinik.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Messages {
@@ -84,6 +84,24 @@ namespace Klinik.Resources {
         public static string CannotChangePasswordForInactiveUser {
             get {
                 return ResourceManager.GetString("CannotChangePasswordForInactiveUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category is Mandatory.
+        /// </summary>
+        public static string CategoryIsMandatory {
+            get {
+                return ResourceManager.GetString("CategoryIsMandatory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category Item is Mandatory.
+        /// </summary>
+        public static string CategoryItemIsMandatory {
+            get {
+                return ResourceManager.GetString("CategoryItemIsMandatory", resourceCulture);
             }
         }
         
@@ -307,6 +325,24 @@ namespace Klinik.Resources {
         public static string MenstrualDataProhibited {
             get {
                 return ResourceManager.GetString("MenstrualDataProhibited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Month of Year is Mandatory for End Period.
+        /// </summary>
+        public static string MonthYearOfEndPeriodIsMandatory {
+            get {
+                return ResourceManager.GetString("MonthYearOfEndPeriodIsMandatory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Month of Year is Mandatory for Start Period.
+        /// </summary>
+        public static string MonthYearOfStartPeriodIsMandatory {
+            get {
+                return ResourceManager.GetString("MonthYearOfStartPeriodIsMandatory", resourceCulture);
             }
         }
         
@@ -622,6 +658,24 @@ namespace Klinik.Resources {
         public static string ValidationUnrecognizedFields {
             get {
                 return ResourceManager.GetString("ValidationUnrecognizedFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Year is Mandatory for Start Period.
+        /// </summary>
+        public static string YearOfEndPeriodIsMandatory {
+            get {
+                return ResourceManager.GetString("YearOfEndPeriodIsMandatory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Year is Mandatory for Start Period.
+        /// </summary>
+        public static string YearOfStartPeriodIsMandatory {
+            get {
+                return ResourceManager.GetString("YearOfStartPeriodIsMandatory", resourceCulture);
             }
         }
     }

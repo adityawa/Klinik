@@ -310,4 +310,22 @@ Administrator</value>
   <data name="NoDataUpdated" xml:space="preserve">
     <value>No Data were updated</value>
   </data>
+  <data name="CategoryIsMandatory" xml:space="preserve">
+    <value>Category is Mandatory</value>
+  </data>
+  <data name="CategoryItemIsMandatory" xml:space="preserve">
+    <value>Category Item is Mandatory</value>
+  </data>
+  <data name="MonthYearOfEndPeriodIsMandatory" xml:space="preserve">
+    <value>Month of Year is Mandatory for End Period</value>
+  </data>
+  <data name="MonthYearOfStartPeriodIsMandatory" xml:space="preserve">
+    <value>Month of Year is Mandatory for Start Period</value>
+  </data>
+  <data name="YearOfEndPeriodIsMandatory" xml:space="preserve">
+    <value>Year is Mandatory for Start Period</value>
+  </data>
+  <data name="YearOfStartPeriodIsMandatory" xml:space="preserve">
+    <value>Year is Mandatory for Start Period</value>
+  </data>
 </root>

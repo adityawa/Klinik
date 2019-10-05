@@ -11,5 +11,6 @@ namespace Klinik.Entities.PurchaseRequestConfig
     {
         public Nullable<int> GudangId { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
+        public string OrganisationCode { get; set; }
     }
 }

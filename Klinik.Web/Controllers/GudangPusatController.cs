@@ -729,7 +729,7 @@ namespace Klinik.Web.Controllers
         #region :: GENERAL ::
         [CustomAuthorize("VIEW_M_PURCHASEREQUESTPUSAT")]
         [HttpGet]
-        public JsonResult searchvendor(string prefix)
+        public JsonResult searchvendor(string prefix, int? productid)
         {
             var _draw = "1";
             var _start = "0";
@@ -748,12 +748,12 @@ namespace Klinik.Web.Controllers
                 SortColumn = _sortColumn,
                 SortColumnDir = _sortColumnDir,
                 PageSize = _pageSize,
-                Skip = _skip
+                Skip = _skip,
             };
             var response = new VendorResponse();
             if (request.SearchValue != null)
             {
-                response = new VendorHandler(_unitOfWork).GetListData(request);
+                response = new VendorHandler(_unitOfWork).SearchData(request, productid);
             }
 
             return Json(new { data = response.Data, recordsFiltered = response.RecordsFiltered, recordsTotal = response.RecordsTotal, draw = response.Draw }, JsonRequestBehavior.AllowGet);
@@ -772,6 +772,7 @@ namespace Klinik.Web.Controllers
             int? datapo = 0;
             int? datado = 0;
             int? sisastock = 0;
+            decimal? productretail = 0;
             if(historyroductnGudangs.Count() > 0)
             {
                 stock = _context.HistoryProductInGudangs.Where(a => a.ProductId == productid && a.GudangId == OneLoginSession.Account.GudangID).Sum(a => a.value);
@@ -788,13 +789,14 @@ namespace Klinik.Web.Controllers
             {
                 sisastock = Convert.ToInt32(_context.ProductInGudangs.Where(a => a.ProductId == productid && a.GudangId == OneLoginSession.Account.GudangID).Sum(a => a.stock));
             }
+            productretail = product.VendorProducts != null ? product.VendorProducts.FirstOrDefault().BoxPrice : product.RetailPrice;
             Dictionary<string, int?> data = new Dictionary<string, int?> {
                                             { "stock", stock },
                                             { "datapo", datapo },
                                             { "datado", datado },
                                             { "sisastock", sisastock },
                                             { "satuan", product.Qtyconversion },
-                                            { "harga", Convert.ToInt32(product.RetailPrice/product.Qtyconversion) }
+                                            { "harga", Convert.ToInt32(productretail/product.Qtyconversion) }
                                         };
 
             return Json( new { data}, JsonRequestBehavior.AllowGet);

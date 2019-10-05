@@ -19,7 +19,7 @@ namespace Klinik.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class UIMessages {
@@ -363,6 +363,15 @@ namespace Klinik.Resources {
         public static string CategoryClinicStatus {
             get {
                 return ResourceManager.GetString("CategoryClinicStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category Item .
+        /// </summary>
+        public static string CategoryItem {
+            get {
+                return ResourceManager.GetString("CategoryItem", resourceCulture);
             }
         }
         
@@ -1384,6 +1393,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ICD Name.
+        /// </summary>
+        public static string ICDName {
+            get {
+                return ResourceManager.GetString("ICDName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Icon.
         /// </summary>
         public static string Icon {
@@ -2383,6 +2401,42 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End Period Month .
+        /// </summary>
+        public static string PeriodMonthEnd {
+            get {
+                return ResourceManager.GetString("PeriodMonthEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Period Month.
+        /// </summary>
+        public static string PeriodMonthStart {
+            get {
+                return ResourceManager.GetString("PeriodMonthStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End Period Year.
+        /// </summary>
+        public static string PeriodYearEnd {
+            get {
+                return ResourceManager.GetString("PeriodYearEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Period Year.
+        /// </summary>
+        public static string PeriodYearStart {
+            get {
+                return ResourceManager.GetString("PeriodYearStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Perusahaan.
         /// </summary>
         public static string Perusahaan {
@@ -3189,6 +3243,24 @@ namespace Klinik.Resources {
         public static string SelectFile {
             get {
                 return ResourceManager.GetString("SelectFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Category Type...
+        /// </summary>
+        public static string SelectOneCategory {
+            get {
+                return ResourceManager.GetString("SelectOneCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select OneCategory Item ...
+        /// </summary>
+        public static string SelectOneCategoryItem {
+            get {
+                return ResourceManager.GetString("SelectOneCategoryItem", resourceCulture);
             }
         }
         
