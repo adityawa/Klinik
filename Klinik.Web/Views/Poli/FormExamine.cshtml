@@ -857,7 +857,10 @@
                                         <th>@Klinik.Resources.UIMessages.Anamnesa</th>
                                         <th>@Klinik.Resources.UIMessages.Diagnose</th>
                                         <th>@Klinik.Resources.UIMessages.Theraphy</th>
+                                        <th>@Klinik.Resources.UIMessages.Caused</th>
+                                        <th>@Klinik.Resources.UIMessages.Condition</th>
                                         <th>@Klinik.Resources.UIMessages.Result</th>
+                                        <th>@Klinik.Resources.UIMessages.ICDInformation</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -912,6 +915,20 @@
             }
     };
 
+        function BuildListICD(icds) {
+            var arr = icds.split('|');
+
+            var html = "<html>"
+            html += "<ul>"
+            $.each(arr, function (index, value) {
+                if(value!="")
+                    html += "<li>"+value+" </li >"
+            });
+
+            html+=" </ul > "
+            html += " </html >";
+            return html;
+        }
     function RemoveConcMedicine(button) {
         //Determine the reference of the Row using the Button.
             var row = $(button).closest("TR");
@@ -1010,7 +1027,7 @@
                     "targets": [0],
                     "visible": false,
                     "searchable": false
-                   
+
                 },
                 {
                     "targets": [1],
@@ -1056,6 +1073,21 @@
                     "targets": [9],
                     "searchable": true,
                     "orderable": false
+                    },
+                {
+                    "targets": [10],
+                    "searchable": true,
+                    "orderable": false
+                    },
+                {
+                    "targets": [11],
+                    "searchable": true,
+                    "orderable": false
+                    },
+                {
+                    "targets": [12],
+                    "searchable": true,
+                    "orderable": false
                 }
                 ],
 
@@ -1069,7 +1101,11 @@
                 { "data": "Anamnesa", "name": "Anamnesa", "autoWidth": true },
                 { "data": "Diagnosa", "name": "Diagnosa", "autoWidth": true },
                 { "data": "Therapy", "name": "Therapy", "autoWidth": true },
+                { "data": "Caused", "name": "Caused", "autoWidth": true },
+                { "data": "Condition", "name": "Condition", "autoWidth": true },
                 { "data": "Result", "name": "Result", "autoWidth": true },
+                //{ "data": "ICDDescription", "name": "ICDDescription", "autoWidth": true },
+                { "data": "ICDDescription", "mRender": function (data, type, full) { return BuildListICD(data); } },
                 //{ "data": "DoctorName", "name": "DoctorName", "autoWidth": true },
                 @*{
                     "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditGudang?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" }
