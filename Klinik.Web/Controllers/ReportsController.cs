@@ -328,47 +328,51 @@ namespace Klinik.Web.Controllers
 
         private Highcharts ConstructSummaryByICDVsAge(List<DiseaseReportDataModel> diseaseReportDataModels)
         {
-            //var icds = diseaseReportDataModels.Distinct().Select(x => x.ICDCode);
-            //var ages = diseaseReportDataModels.Distinct().Select(x => x.Age);
-            //var xnames = icds.ToList();
+            var icds = diseaseReportDataModels.Select(x => x.ICDCode).Distinct().ToList();
+            var categories = diseaseReportDataModels.Select(x => x.Category).Distinct().ToList();
+            var xnames = categories.ToList();
 
-            //var series = new List<Series>();
+            var series = new List<Series>();
 
-            //foreach (var icd in icds)
-            //{
-            //    var objects = new List<object>();
 
-            //    foreach (var age in ages)
-            //    {
-            //        var result = diseaseReportDataModels.FindAll(x => x.ICDCode == icd && x.Age == age);
-            //        if (result.Count > 0)
-            //        {
-            //            objects.Add(result.Count);
-            //        }
-            //        else
-            //        {
-            //            objects.Add(0);
-            //        }
-            //    }
+            foreach (var cat in categories)
+            {
+                var objects = new List<object>();
+                foreach (var icd in icds)
+                {
+                    var result = diseaseReportDataModels.FindAll(x => x.ICDCode == icd && x.Category == cat);
+                    if (result.Count > 0)
+                    {
+                        var total = 0;
+                        foreach (var item in result)
+                        {
+                            total += item.Total;
+                        }
+                        objects.Add(total);
+                    }
+                    else
+                    {
+                        objects.Add(0);
+                    }
+                }
+                series.Add(new Series
+                {
+                    Name = cat,
+                    Data = new DotNet.Highcharts.Helpers.Data(objects.ToArray())
+                });
+            }
 
-            //    series.Add(new Series
-            //    {
-            //        Name = icd,
-            //        Data = new DotNet.Highcharts.Helpers.Data(objects.ToArray())
-            //    });
-            //}
-
-            Highcharts chart = new Highcharts("chart_by_age")
-                 .InitChart(new Chart { DefaultSeriesType = ChartTypes.Spline })
+            Highcharts chart = new Highcharts("chart_by_category")
+                 .InitChart(new Chart { DefaultSeriesType = ChartTypes.Bar })
                  .SetTitle(new Title { Text = "Total Pasien Berdasarkan tipe ICD" })
-                 // .SetXAxis(new XAxis { Categories = icds.ToArray() })
+                 .SetXAxis(new XAxis { Categories = icds.ToArray() })
                  .SetYAxis(new YAxis
                  {
                      Title = new YAxisTitle { Text = "Total Perawatan" },
                      Min = 0
                  })
-                 .SetTooltip(new Tooltip { Formatter = "function() { return '<b>'+ this.series.name +' : '+ this.y +' </b>'; }" });
-                // .SetSeries(series.ToArray());
+                 .SetTooltip(new Tooltip { Formatter = "function() { return '<b>'+ this.series.name +' : '+ this.y +' </b>'; }" })
+                 .SetSeries(series.ToArray());
 
             return chart;
 
