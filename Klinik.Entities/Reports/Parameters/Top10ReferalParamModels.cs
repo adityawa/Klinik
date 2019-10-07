@@ -1,25 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Klinik.Entities.Reports
 {
     public class Top10ReferalParamModel:BaseModel
     {
-        public int YearStart { get; set; }
-
+        [Required(ErrorMessageResourceType = typeof(Resources.Messages), ErrorMessageResourceName = "MonthYearOfStartPeriodIsMandatory")]
         public int MonthStart { get; set; }
 
-        public int YearEnd { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.Messages), ErrorMessageResourceName = "YearOfStartPeriodIsMandatory")]
+        public int YearStart { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Resources.Messages), ErrorMessageResourceName = "MonthYearOfEndPeriodIsMandatory")]
         public int MonthEnd { get; set; }
 
-        public string HospitalDest { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.Messages), ErrorMessageResourceName = "YearOfEndPeriodIsMandatory")]
+        public int YearEnd { get; set; }
 
-        public string Diagnose { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.Messages), ErrorMessageResourceName = "CategoryIsMandatory")]
+        public string SelectedCategory { get; set; }
 
-        public string PatientName { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.Messages), ErrorMessageResourceName = "CategoryItemIsMandatory")]
+        public string SelectedCategoryItem { get; set; }
+
+        public List<SelectListItem> Categories { get; set; }
+
+        public List<SelectListItem> CategoryItems { get; set; }
     }
 }

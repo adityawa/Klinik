@@ -157,8 +157,10 @@
     <Compile Include="PurchaseRequestPusatDetail\PurchaseRequestPusatDetailModel.cs" />
     <Compile Include="PurchaseRequestPusat\PurchaseRequestPusatModel.cs" />
     <Compile Include="PurchaseRequest\PurchaseRequestModel.cs" />
+    <Compile Include="Reports\DataModel\CostReportDataModel.cs" />
     <Compile Include="Reports\DataModel\DiseaseReportDataModel.cs" />
     <Compile Include="Reports\DataModel\ReferalReportDataModel.cs" />
+    <Compile Include="Reports\DataModel\RequestReportDataModel.cs" />
     <Compile Include="Reports\Parameters\Top10CostParamModel.cs" />
     <Compile Include="Reports\Top10CostReportModel.cs" />
     <Compile Include="Reports\Top10DiseaseReportModel.cs" />

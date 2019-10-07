@@ -328,6 +328,7 @@
     <Content Include="DB\DBKlinikDev_20190817.sql" />
     <Content Include="DB\DBKlinik_GenScripts_20190909.sql" />
     <Content Include="DB\AddLookupTable_10-9-2019.sql" />
+    <Content Include="DB\InsertGeneralMasterForTop10Referal.sql" />
     <Content Include="DB\ZainalArifinKlinik15-09-2019.sql" />
     <Content Include="DB\ZainalA_15092019_ClassifyAge.sql" />
     <Content Include="DB\ZainalA_15092019_GetAge.sql" />
