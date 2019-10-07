@@ -30,7 +30,8 @@ namespace Klinik.Entities.MedicalHistoryEntity
         public string Diagnosa { get; set; }
         public string Therapy { get; set; }
         public string ICDDescription { get; set; }
-
+        public string Caused { get; set; }
+        public string Condition { get; set; }
         public string Result { get; set; }
     }
 }

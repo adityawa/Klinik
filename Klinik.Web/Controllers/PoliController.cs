@@ -339,8 +339,8 @@ namespace Klinik.Web.Controllers
 
             int iJumHari = jumHari == null ? 0 : Convert.ToInt16(jumHari);
             bool bNeedSuratSakit = needSurat == null ? false : Convert.ToBoolean(needSurat);
-            int iCaused = caused == null ? 0 : Convert.ToInt32(caused);
-            int iCondition = condition == null ? 0 : Convert.ToInt32(condition);
+            int iCaused = caused == null ? 0 :caused==""?0: Convert.ToInt32(caused);
+            int iCondition = condition == null ? 0 : condition==""?0: Convert.ToInt32(condition);
 
             PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, icdInformation, poliToID, doctorToID, bNeedSuratSakit, iJumHari, iCaused, iCondition, concoctionMedicineList, medicineList, injectionList, labList, radiologyList, serviceList);
             model.Account = Account;
@@ -358,7 +358,7 @@ namespace Klinik.Web.Controllers
             ViewBag.PoliList = tempPoliList;
             ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
             ViewBag.FinalStateList = BindDropDownFinalStateList();
-            ViewBag.ICDInfo = BindDropDownICDInfo();
+           // ViewBag.ICDInfo = BindDropDownICDInfo();
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
 
@@ -464,7 +464,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.PoliList = tempPoliList;
                 ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
                 ViewBag.FinalStateList = BindDropDownFinalStateList();
-                ViewBag.ICDInfo = BindDropDownICDInfo();
+               // ViewBag.ICDInfo = BindDropDownICDInfo();
                 ViewBag.CausedList = BindDropDownCaused();
                 ViewBag.ConditionList = BindDropDownCondition();
             }

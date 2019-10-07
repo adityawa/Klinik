@@ -148,24 +148,30 @@ namespace Klinik.Features.HistoryMedical
         public MedicalHistoryForDoctorResponse GetHistoryPatient(MedicalHistoryRequest request)
         {
             List<MedicalHistoryForDoctorModel> histories = new List<MedicalHistoryForDoctorModel>();
+            var _generalMaster = _unitOfWork.MasterRepository.Get(x => x.Type == Constants.MasterType.Caused || x.Type == Constants.MasterType.Condition);
             var _patientData = _unitOfWork.PatientRepository.GetById(request.Data.IDPatient);
             var _formMedicalID = _unitOfWork.RegistrationRepository.Get(x => x.PatientID == request.Data.IDPatient).Select(x => x.FormMedicalID).Distinct();
             var _formExData = _unitOfWork.FormExamineRepository.Get(x => _formMedicalID.Contains(x.FormMedicalID));
             foreach(var item in _formExData)
             {
+                var _caused = item.Caused == null ? "0" : item.Caused.ToString();
+                var _condition = item.Condition == null ? "0" : item.Condition.ToString();
                 histories.Add(new MedicalHistoryForDoctorModel
                 {
-                    FormMedicalId=item.FormMedicalID??0,
-                    Tanggal=item.TransDate==null?"":item.TransDate.Value.ToString("dd/MM/yyyy"),
-                    PatientName=_patientData.Name,
-                    ClinicName=item.FormMedical.Clinic.Name,
-                    DoctorName=item.Doctor.Name,
-                    PoliName=item.Poli.Name,
-                    Anamnesa=item.Anamnesa,
-                    Diagnosa=item.Diagnose,
-                    Therapy=item.Therapy,
-                    Result=item.Result
-                });
+                    FormMedicalId = item.FormMedicalID ?? 0,
+                    Tanggal = item.TransDate == null ? "" : item.TransDate.Value.ToString("dd/MM/yyyy"),
+                    PatientName = _patientData.Name,
+                    ClinicName = item.FormMedical.Clinic.Name,
+                    DoctorName = item.Doctor.Name,
+                    PoliName = item.Poli.Name,
+                    Anamnesa = item.Anamnesa,
+                    Diagnosa = item.Diagnose,
+                    Therapy = item.Therapy,
+                    Result = item.Result,
+                    Caused = _generalMaster.Where(x => x.Value == _caused && x.Type == Constants.MasterType.Caused).FirstOrDefault()==null?"": _generalMaster.Where(x => x.Value == _caused && x.Type == Constants.MasterType.Caused).FirstOrDefault().Name,
+                    Condition = _generalMaster.Where(x => x.Value == _condition && x.Type == Constants.MasterType.Condition).FirstOrDefault() == null ? "" : _generalMaster.Where(x => x.Value == _condition && x.Type == Constants.MasterType.Condition).FirstOrDefault().Name,
+                    ICDDescription=BuildICDDescription(item.ICDInformation)
+                }); ;
             }
 
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
@@ -217,6 +223,34 @@ namespace Klinik.Features.HistoryMedical
             };
 
             return response;
+        }
+
+        private string BuildICDDescription(string Icd)
+        {
+            if(Icd==null || Icd=="" || Icd=="0|0|0" || Icd== "||")
+            {
+                return "";
+            }
+
+            StringBuilder sbIcd = new StringBuilder();
+            foreach(string item in Icd.Split('|').ToList())
+            {
+                if (!string.IsNullOrEmpty(item) && !string.IsNullOrWhiteSpace(item))
+                {
+                    long _id = Convert.ToInt64(item);
+                    var desc = _unitOfWork.ICDThemeRepository.GetById( _id)==null?"": _unitOfWork.ICDThemeRepository.GetById(_id).Name;
+                    if (sbIcd.Length == 0)
+                    {
+                        sbIcd.Append(desc);
+                    }
+                    else
+                    {
+                        sbIcd.Append(string.Format("|{0}", desc));
+                    }
+                }
+            }
+
+            return sbIcd.ToString();
         }
 
       
