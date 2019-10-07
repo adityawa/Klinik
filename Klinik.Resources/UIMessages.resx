@@ -1341,4 +1341,7 @@
   <data name="ViewHistoryPatient" xml:space="preserve">
     <value>View History Patient</value>
   </data>
+  <data name="GenerateImage" xml:space="preserve">
+    <value>Generate Image</value>
+  </data>
 </root>

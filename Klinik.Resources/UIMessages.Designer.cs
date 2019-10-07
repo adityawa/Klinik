@@ -1249,6 +1249,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generate Image.
+        /// </summary>
+        public static string GenerateImage {
+            get {
+                return ResourceManager.GetString("GenerateImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gudang LIst.
         /// </summary>
         public static string GudangList {

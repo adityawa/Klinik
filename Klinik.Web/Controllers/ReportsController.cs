@@ -231,12 +231,12 @@ namespace Klinik.Web.Controllers
             }
 
             Highcharts chart = new Highcharts("chart_by_category")
-                 .InitChart(new Chart { DefaultSeriesType = ChartTypes.Bar })
+                 .InitChart(new Chart { DefaultSeriesType = ChartTypes.Column })
                  .SetTitle(new Title { Text = "Total Pasien Berdasarkan tipe ICD" })
                  .SetXAxis(new XAxis { Categories = icds.ToArray() })
                  .SetYAxis(new YAxis
                  {
-                     Title = new YAxisTitle { Text = "Total Perawatan" },
+                     Title = new YAxisTitle { Text = "Total Pasien" },
                      Min = 0
                  })
                  .SetTooltip(new Tooltip { Formatter = "function() { return '<b>'+ this.series.name +' : '+ this.y +' </b>'; }" })
