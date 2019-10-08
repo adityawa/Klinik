@@ -13,9 +13,8 @@
     </ul>
 
     <!-- Tab panes -->
-    <form method="post" action="/Reports/GenerateOutput">
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="first">
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="first">.
                 <header class="panel-heading">
                     <h5 class="panel-title">
                         @Klinik.Resources.UIMessages.Top10DiseasesReport
@@ -48,25 +47,24 @@
                     </div>*@
                 </div>
                 <div class="panel-footer">
-                    <button type="submit" class="btn btn-primary" name="btnGenerateExcel">@Klinik.Resources.UIMessages.ExportToExcel</button>
+                    <a href="@Url.Action("ExportExcel","Reports", new { Id = Model.ProcessId })" class="btn btn-primary">@Klinik.Resources.UIMessages.ExportToExcel</a>
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="second">
+        </div>
+        <div role="tabpanel" class="tab-pane" id="second">
+            <form action="DownloadChart" method="post">
+                @Html.HiddenFor(model => model.Charts)
                 <div class="row">
-                    <div class="col-md-12"></div>
                     @foreach (DotNet.Highcharts.Highcharts chart in Model.Charts)
                     {
-                        <div>
+                        <div class="col-md-12">
                             @(chart)
                         </div>
-                        <div>
-                            <button type="submit" class="btn btn-primary" name="btnGenerateImage">@Klinik.Resources.UIMessages.GenerateImage</button>
+                        <div class="col-md-12">
+                            <a href="@Url.Action("DownloadChart", "Reports", new { Id = Model.ProcessId })" class="btn btn-primary">@Klinik.Resources.UIMessages.GenerateImage</a>
                         </div>
                     }
                 </div>
-            </div>
+            </form>
         </div>
-
-    </form>
-
+    </div>
 </div>

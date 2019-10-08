@@ -269,6 +269,9 @@
     <Compile Include="DataRepository\QueuePoli.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataRepository\ReportLog.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataRepository\RolePrivilege.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>

@@ -1215,6 +1215,19 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="ReportLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExcelResult" Type="varbinary(max)" />
+          <Property Name="ChartResult" Type="varbinary(max)" />
+          <Property Name="RowStatus" Type="smallint" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="RolePrivilege">
           <Key>
             <PropertyRef Name="ID" />
@@ -2935,6 +2948,7 @@
           <EntitySet Name="PurchaseRequestPusat" EntityType="Self.PurchaseRequestPusat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseRequestPusatDetail" EntityType="Self.PurchaseRequestPusatDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QueuePoli" EntityType="Self.QueuePoli" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReportLog" EntityType="Self.ReportLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolePrivilege" EntityType="Self.RolePrivilege" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="stok" EntityType="Self.stok" Schema="dbo" store:Type="Tables" />
@@ -6233,6 +6247,7 @@
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="VendorProduct" EntitySet="VendorProducts" />
           </AssociationSet>
+          <EntitySet Name="ReportLogs" EntityType="KlinikDBModel.ReportLog" />
           </EntityContainer>
         <ComplexType Name="usp_registrations_get_by_status_Result">
           <Property Type="Int32" Name="REG_ID" Nullable="false" />
@@ -7084,6 +7099,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ReportLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExcelResult" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ChartResult" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="RowStatus" Type="Int16" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8567,6 +8595,20 @@
                 <ScalarProperty Name="VendorId" ColumnName="VendorId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReportLogs">
+            <EntityTypeMapping TypeName="KlinikDBModel.ReportLog">
+              <MappingFragment StoreEntitySet="ReportLog">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RowStatus" ColumnName="RowStatus" />
+                <ScalarProperty Name="ChartResult" ColumnName="ChartResult" />
+                <ScalarProperty Name="ExcelResult" ColumnName="ExcelResult" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

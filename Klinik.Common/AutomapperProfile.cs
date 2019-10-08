@@ -30,7 +30,7 @@ using Klinik.Entities.AppointmentEntities;
 using Klinik.Entities.PurchaseOrderPusatDetail;
 using Klinik.Entities.DeliveryOrderPusatDetail;
 using Klinik.Entities.DeliveryOrderPusat;
-
+using Klinik.Entities;
 
 namespace Klinik.Common
 {
@@ -394,7 +394,8 @@ namespace Klinik.Common
 
             //CreateMap<SuratIzinSakitModel, Letter>()
             //    .ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID));
-
+            CreateMap<ReportLog, ReportLogModel>();
+            CreateMap<ReportLogModel, ReportLog>();
 
         }
     }

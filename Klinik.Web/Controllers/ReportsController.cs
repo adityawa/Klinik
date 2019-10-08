@@ -13,8 +13,11 @@ using Klinik.Entities.Reports;
 using Klinik.Features;
 using Klinik.Features.ICDThemeFeatures;
 using Klinik.Features.Reports;
+using Klinik.Features.Reports.ReportLog;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -149,6 +152,8 @@ namespace Klinik.Web.Controllers
         }
 
         #region Top 10 Dieaseas Report
+
+        #region Public Methods 
         [CustomAuthorize("VIEW_TOP_10_DISEASES")]
         public ActionResult Top10Dieases()
         {
@@ -166,7 +171,7 @@ namespace Klinik.Web.Controllers
 
             return View(model);
         }
-               
+
         [CustomAuthorize("VIEW_TOP_10_DISEASES")]
         [HttpPost]
         public ActionResult Top10DiseasesReport(Top10DiseasesParamModel model)
@@ -184,6 +189,8 @@ namespace Klinik.Web.Controllers
             var chartByAge = ConstructSummaryByICDForTop10Diseases(response.Entity.DiseaseDataReports);
             charts.Add(chartByAge);
             response.Entity.Charts = charts;
+            response.Entity.ProcessId = InsertReportLogTop10ICD(response.Entity, model.Account);
+
 
             return View(response.Entity);
         }
@@ -192,6 +199,100 @@ namespace Klinik.Web.Controllers
         {
             int currentPageIndex = page.HasValue ? page.Value - 1 : 0;
             return View(model.DiseaseDataReports.ToPagedList(currentPageIndex, DefaultPageSize));
+        }
+
+        [HttpGet]
+        public FileContentResult ExportExcel(int Id)
+        {
+            var reportLog = new ReportLogHandler(_unitOfWork).GetReportLogById(Id);
+            return File(reportLog.Data[0].ExcelResult, ExcelExportHelper.ExcelContentType, "Top10ICD.xlsx");
+        }
+
+        [HttpPost]
+        public ActionResult DownloadChart(int Id)
+        {
+            var reportLog = new ReportLogHandler(_unitOfWork).GetReportLogById(Id);
+            return File(reportLog.Data[0].ChartResult, "image/jpeg", "Chart.jpg");
+        }
+        #endregion
+
+        #region Private Methods 
+        private long InsertReportLogTop10ICD(Top10DiseaseReportModel model, AccountModel accountModel)
+        {
+            var handler = new ReportLogHandler(_unitOfWork);
+            var request = new ReportLogRequest();
+
+            var settings = new HighchartsSetting
+            {
+                ExportImageType = "jpg",
+                ScaleFactor = 4,
+                ImageWidth = 1500,
+                ServerAddress = Constants.HighCharts.HIGHCHART_SERVER
+            };
+
+
+            string[] columns = { "ICDId", "ICDCode", "ICDName", "Category", "Total" };
+
+            #region Chart Data 
+            var client = new HighchartsClient(settings);
+            var icds = model.DiseaseDataReports.Select(x => x.ICDCode).Distinct().ToList();
+            var categories = model.DiseaseDataReports.Select(x => x.Category).Distinct().ToList();
+            var xnames = categories.ToList();
+
+            var series = new List<Series>();
+
+            foreach (var cat in categories)
+            {
+                var objects = new List<object>();
+                foreach (var icd in icds)
+                {
+                    var output = model.DiseaseDataReports.FindAll(x => x.ICDCode == icd && x.Category == cat);
+                    if (output.Count > 0)
+                    {
+                        var total = 0;
+                        foreach (var item in output)
+                        {
+                            total += item.Total;
+                        }
+                        objects.Add(total);
+                    }
+                    else
+                    {
+                        objects.Add(0);
+                    }
+                }
+                series.Add(new Series
+                {
+                    Name = cat,
+                    Data = new DotNet.Highcharts.Helpers.Data(objects.ToArray())
+                });
+            }
+            #endregion
+
+
+            var options = new
+            {
+                xAxis = icds.ToArray(),
+                yAxis = new YAxis
+                {
+                    Title = new YAxisTitle { Text = "Total Pasien" },
+                    Min = 0
+                },
+                series = series.ToArray()
+            };
+
+            var excelReport = ExcelExportHelper.ExportExcel(model.DiseaseDataReports, "Top10ICD", true, columns);
+            var chart = client.GetChartImageLinkFromOptionsAsync(JsonConvert.SerializeObject(options));
+
+            request.Data = new Entities.ReportLogModel {
+                                                         ExcelResult = excelReport,
+                                                         //ChartResult = System.IO.File.WriteAllBytes($"__imageFromBytes_customSettings.{settings.ExportImageType}",chart),
+                                                         Account = accountModel ,
+                                                         CreatedDate = DateTime.Now,
+                                                         CreatedBy = accountModel.UserName
+                                                        };
+            
+            return handler.CreateReportLog(request);
         }
 
         private Highcharts ConstructSummaryByICDForTop10Diseases(List<DiseaseReportDataModel> diseaseReportDataModels)
@@ -245,7 +346,6 @@ namespace Klinik.Web.Controllers
             return chart;
 
         }
-
 
         private List<SelectListItem> BindLookUpCategoryTypesForTop10Diseases()
         {
@@ -304,7 +404,7 @@ namespace Klinik.Web.Controllers
 
             return _categories;
         }
-
+        #endregion
 
         #endregion
 
@@ -428,6 +528,11 @@ namespace Klinik.Web.Controllers
         #endregion 
 
         #region Common
+        /// <summary>
+        /// Construct General Master List
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         private List<SelectListItem> ConstructGeneralMasterList(string type)
         {
             var _items = new List<SelectListItem>();
@@ -453,6 +558,7 @@ namespace Klinik.Web.Controllers
 
             return _items;
         }
+
         #endregion 
     }
 }

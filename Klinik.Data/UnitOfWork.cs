@@ -76,6 +76,7 @@ namespace Klinik.Data
         private IGenericRepository<MCUPackage> _mcuPackageRepository;
         private IGenericRepository<MCURegistrationInterface> _mcuRegistrationRepository;
         private IGenericRepository<VendorProduct> _vendorproductRepository;
+        private IGenericRepository<ReportLog> _reportLogRepository;
 
         private bool disposed = false;
 
@@ -799,6 +800,17 @@ namespace Klinik.Data
                 return _vendorproductRepository;
             }
         }
+
+        public IGenericRepository<ReportLog> ReportLogRepository
+        {
+            get
+            {
+                if (_reportLogRepository == null)
+                    _reportLogRepository = new GenericRepository<ReportLog>(_context);
+                return _reportLogRepository;
+            }
+        }
+
 
         public virtual void Dispose(bool disposing)
         {

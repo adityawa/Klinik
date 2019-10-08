@@ -82,6 +82,7 @@ namespace Klinik.Data
 
         IGenericRepository<MCURegistrationInterface> MCURegistrationRepository { get; }
         IGenericRepository<VendorProduct> VendorProductRepository { get; }
+        IGenericRepository<ReportLog> ReportLogRepository { get; }
         int Save();
     }
 }

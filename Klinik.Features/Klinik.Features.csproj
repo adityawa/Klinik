@@ -311,6 +311,9 @@
     <Compile Include="Radiologi\RadiologiRequest.cs" />
     <Compile Include="Radiologi\RadiologiResponse.cs" />
     <Compile Include="Radiologi\RadiologiValidator.cs" />
+    <Compile Include="Reports\ReportLog\ReportLogHandler.cs" />
+    <Compile Include="Reports\ReportLog\ReportLogRequest.cs" />
+    <Compile Include="Reports\ReportLog\ReportLogResponse.cs" />
     <Compile Include="Reports\ReportsHandler.cs" />
     <Compile Include="Reports\ReportsValidator.cs" />
     <Compile Include="Reports\Top10DiseaseReportRequest.cs" />

@@ -202,6 +202,7 @@
         <EntityTypeShape EntityType="KlinikDBModel.VendorProduct" Width="1.5" PointX="21.5" PointY="85.375" />
         <AssociationConnector Association="KlinikDBModel.FK_VendorProduct_Product" />
         <AssociationConnector Association="KlinikDBModel.FK_VendorProduct_Vendor" />
+        <EntityTypeShape EntityType="KlinikDBModel.ReportLog" Width="1.5" PointX="5.375" PointY="8.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

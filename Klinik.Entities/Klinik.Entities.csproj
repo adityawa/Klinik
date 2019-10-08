@@ -162,6 +162,7 @@
     <Compile Include="Reports\DataModel\ReferalReportDataModel.cs" />
     <Compile Include="Reports\DataModel\RequestReportDataModel.cs" />
     <Compile Include="Reports\Parameters\Top10CostParamModel.cs" />
+    <Compile Include="Reports\ReportLogModel.cs" />
     <Compile Include="Reports\Top10CostReportModel.cs" />
     <Compile Include="Reports\Top10DiseaseReportModel.cs" />
     <Compile Include="Reports\Parameters\Top10DiseasesParamModel.cs" />
