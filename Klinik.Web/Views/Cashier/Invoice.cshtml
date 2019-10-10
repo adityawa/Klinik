@@ -2,8 +2,21 @@
 @{
     ViewBag.Title = "Invoice";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var list = (IEnumerable<Klinik.Entities.Cashier.CashierModel>)ViewBag.Detail;
+    var lab = list.Where(a => a.CategoryId == 1);
+    var service = list.Where(a => a.CategoryId == 2);
+    var product = list.Where(a => a.CategoryId == 3);
 }
 
+@section Styles{
+    <link href="~/Content/Custom/Custom.css" rel="stylesheet" />
+    <style>
+        .headertable{
+            background-color : #5bc0de !important;
+            text-align: left !important;
+        }
+    </style>
+}
 <section class="panel">
     <div class="panel-body">
         <div class="col-lg-6 bg-info">
@@ -26,12 +39,46 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in (IEnumerable<Klinik.Entities.Cashier.CashierModel>)ViewBag.Detail)
+                    @if (lab.Count() > 0)
                     {
                         <tr>
-                            <td>@item.ItemName</td>
-                            <td>RP. @string.Format("{0:N}", Convert.ToInt32(item.Price))</td>
+                            <th class="caption-table headertable" colspan="2" style="text-align:center">Lab Item</th>
                         </tr>
+                        foreach (var item in lab)
+                        {
+                            <tr>
+                                <td>@item.ItemName</td>
+                                <td>@item.Price</td>
+                            </tr>
+                        }
+                    }
+
+                    @if (service.Count() > 0)
+                    {
+                        <tr>
+                            <th class="caption-table headertable" colspan="2" style="text-align:center">Item Service</th>
+                        </tr>
+                        foreach (var item in service)
+                        {
+                            <tr>
+                                <td>@item.ItemName</td>
+                                <td>@item.Price</td>
+                            </tr>
+                        }
+                    }
+
+                    @if (product.Count() > 0)
+                    {
+                        <tr>
+                            <th class="caption-table headertable" colspan="2" style="text-align:center">Product Item</th>
+                        </tr>
+                        foreach (var item in product)
+                        {
+                            <tr>
+                                <td>@item.ItemName</td>
+                                <td>@item.Price</td>
+                            </tr>
+                        }
                     }
                 </tbody>
                 <tfoot>
