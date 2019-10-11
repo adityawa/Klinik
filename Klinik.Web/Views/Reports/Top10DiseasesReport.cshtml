@@ -51,20 +51,65 @@
                 </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="second">
-            <form action="DownloadChart" method="post">
-                @Html.HiddenFor(model => model.Charts)
-                <div class="row">
-                    @foreach (DotNet.Highcharts.Highcharts chart in Model.Charts)
-                    {
-                        <div class="col-md-12">
-                            @(chart)
-                        </div>
-                        <div class="col-md-12">
-                            <a href="@Url.Action("DownloadChart", "Reports", new { Id = Model.ProcessId })" class="btn btn-primary">@Klinik.Resources.UIMessages.GenerateImage</a>
-                        </div>
-                    }
-                </div>
-            </form>
+            @Html.HiddenFor(model => model.Charts)
+            <div class="row">
+                @foreach (DotNet.Highcharts.Highcharts chart in Model.Charts)
+                {
+                    <div class="col-md-12">
+                        @(chart)
+                    </div>
+                    <div class="col-md-12">
+                        <button id="downloadChart" class="btn btn-primary">@Klinik.Resources.UIMessages.GenerateImage</button>
+                    </div>
+                }
+            </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    EXPORT_WIDTH = 1000;
+
+    function save_chart(chart, filename) {
+        console.log(chart);
+        var render_width = EXPORT_WIDTH;
+        var render_height = render_width * chart.chartHeight / chart.chartWidth
+        console.log(chart);
+
+        var svg = chart.getSVG({
+            exporting: {
+                sourceWidth: chart.chartWidth,
+                sourceHeight: chart.chartHeight
+            }
+        });
+
+        var canvas = document.createElement('canvas');
+        canvas.height = render_height;
+        canvas.width = render_width;
+
+        var image = new Image;
+        image.onload = function () {
+            canvas.getContext('2d').drawImage(this, 0, 0, render_width, render_height);
+            var data = canvas.toDataURL("image/png")
+            download(data, filename + '.png');
+        };
+        image.src = 'data:image/svg+xml;base64,' + window.btoa(svg);
+    }
+
+    function download(data, filename) {
+        var a = document.createElement('a');
+        a.download = filename;
+        a.href = data
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    }
+
+    $(function () {
+
+        $('#downloadChart').click(function () {
+            save_chart($('#chart_by_category_container').highcharts(), 'ICDTop10Chart');
+        });
+
+    });
+
+</script>

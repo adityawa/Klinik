@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Klinik.Data;
 using Klinik.Entities;
+using Klinik.Entities.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +17,16 @@ namespace Klinik.Features.Reports.ReportLog
             _unitOfWork = unitOfWork;
         }
 
-        public ReportLogResponse GetReportLogById(int Id)
+        public ReportLogResponse GetReportLogById(int Id, AccountModel model)
         {
             ReportLogResponse response = new ReportLogResponse();
             var reportLog = _unitOfWork.ReportLogRepository.GetById(Id);
+            response.Data = new List<ReportLogModel>();
 
             if (reportLog != null)
             {
                 var reportLogModel = Mapper.Map<Klinik.Data.DataRepository.ReportLog, ReportLogModel>(reportLog);
+                reportLogModel.Account = model;
                 response.Data.Add(reportLogModel);
             }
             return response;
