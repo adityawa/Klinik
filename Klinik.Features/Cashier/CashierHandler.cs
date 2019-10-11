@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Klinik.Features.Account;
 
 namespace Klinik.Features.Cashier
 {
@@ -57,6 +58,7 @@ namespace Klinik.Features.Cashier
                     {
                         var labdata = new CashierModel
                         {
+                            CategoryId = 1,
                             ItemName = item.LabItem.Name,
                             Price = Convert.ToInt32(item.LabItem.Price)
                         };
@@ -71,6 +73,7 @@ namespace Klinik.Features.Cashier
                     {
                         var labdata = new CashierModel
                         {
+                            CategoryId = 2,
                             ItemName = item.Service.Name,
                             Price = Convert.ToInt32(item.Service.Price)
                         };
@@ -85,8 +88,9 @@ namespace Klinik.Features.Cashier
                     {
                         var labdata = new CashierModel
                         {
+                            CategoryId = 3,
                             ItemName = item.Product.Name,
-                            Price = Convert.ToInt32(item.Product.RetailPrice)
+                            Price = Convert.ToInt32(item.Product.ProductInGudangs.Where(a => a.GudangId == OneLoginSession.Account.GudangID).FirstOrDefault().RetailPrice)
                         };
 
                         lists.Add(labdata);
