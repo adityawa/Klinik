@@ -11,6 +11,8 @@ namespace Klinik.Entities.Reports
 {
     public class Top10ReferalReportModel:BaseReportModel
     {
+        public long ProcessId { get; set; }
+
         public List<ReferalReportDataModel> ReferalReportDataModels { get; set; }
 
         public List<Highcharts> Charts { get; set; }

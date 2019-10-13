@@ -110,5 +110,10 @@
             Type4 = 4
         }
 
+        public enum ReportType
+        {
+            Top10DiseaseReport = 1,
+            Top10ReferalReport = 2
+        }
     }
 }

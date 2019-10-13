@@ -38,7 +38,7 @@ namespace Klinik.Web.Controllers
         }
 
 
-        #region Genral Drop Down List
+        #region General Drop Down List
 
         private List<SelectListItem> BindYears()
         {
@@ -151,6 +151,18 @@ namespace Klinik.Web.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public FileContentResult ExportExcel(int Id, string fileName)
+        {
+            var accountModel = new AccountModel();
+
+            if (Session["UserLogon"] != null)
+                accountModel = (AccountModel)Session["UserLogon"];
+
+            var reportLog = new ReportLogHandler(_unitOfWork).GetReportLogById(Id, accountModel);
+            return File(reportLog.Data[0].ExcelResult, ExcelExportHelper.ExcelContentType, fileName);
+        }
+
         #region Top 10 Dieaseas Report
 
         #region Public Methods 
@@ -177,116 +189,23 @@ namespace Klinik.Web.Controllers
         public ActionResult Top10DiseasesReport(Top10DiseasesParamModel model)
         {
             var response = new Top10DiseaseReportResponse();
-
             if (Session["UserLogon"] != null)
                 model.Account = (AccountModel)Session["UserLogon"];
 
             var request = new Top10DiseaseReportRequest { Data = model };
-
             new ReportsValidator(_unitOfWork, _context).ValidateTop10DiseaseReport(request, out response);
 
             var charts = new List<Highcharts>();
-            var chartByAge = ConstructSummaryByICDForTop10Diseases(response.Entity.DiseaseDataReports);
+            var chartByAge = ReportLogHelper.GenerateChart(ClinicEnums.ReportType.Top10DiseaseReport, response.Entity);
             charts.Add(chartByAge);
             response.Entity.Charts = charts;
-            response.Entity.ProcessId = InsertReportLogTop10ICD(response.Entity, model.Account);
-
-
+            response.Entity.ProcessId = ReportLogHelper.GenerateExcel(ClinicEnums.ReportType.Top10DiseaseReport, response.Entity, _unitOfWork, model.Account);
             return View(response.Entity);
         }
-
-        public ActionResult Top10DiseasesReport(Top10DiseaseReportModel model, int? page)
-        {
-            int currentPageIndex = page.HasValue ? page.Value - 1 : 0;
-            return View(model.DiseaseDataReports.ToPagedList(currentPageIndex, DefaultPageSize));
-        }
-
-        [HttpGet]
-        public FileContentResult ExportExcel(int Id)
-        {
-            var accountModel = new AccountModel();
-
-            if (Session["UserLogon"] != null)
-                accountModel = (AccountModel)Session["UserLogon"];
-
-            var reportLog = new ReportLogHandler(_unitOfWork).GetReportLogById(Id, accountModel);
-            return File(reportLog.Data[0].ExcelResult, ExcelExportHelper.ExcelContentType, "Top10ICD.xlsx");
-        }
-
+        
         #endregion
 
         #region Private Methods 
-        private long InsertReportLogTop10ICD(Top10DiseaseReportModel model, AccountModel accountModel)
-        {
-            var handler = new ReportLogHandler(_unitOfWork);
-            var request = new ReportLogRequest();
-            string[] columns = { "ICDId", "ICDCode", "ICDName", "Category", "Total" };
-            var excelReport = ExcelExportHelper.ExportExcel(model.DiseaseDataReports, "Top10ICD", true, columns);
-
-            request.Data = new Entities.ReportLogModel {
-                                                         ExcelResult = excelReport,
-                                                         ChartResult = null,
-                                                         Account = accountModel ,
-                                                         CreatedDate = DateTime.Now,
-                                                         CreatedBy = accountModel.UserName
-                                                        };
-            
-            return handler.CreateReportLog(request);
-        }
-
-        private Highcharts ConstructSummaryByICDForTop10Diseases(List<DiseaseReportDataModel> diseaseReportDataModels)
-        {
-            var icds = diseaseReportDataModels.Select(x => x.ICDCode).Distinct().ToList();
-            var categories = diseaseReportDataModels.Select(x => x.Category).Distinct().ToList();
-            var xnames = categories.ToList();
-
-            var series = new List<Series>();
-
-
-            foreach (var cat in categories)
-            {
-                var objects = new List<object>();
-                foreach (var icd in icds)
-                {
-                    var result = diseaseReportDataModels.FindAll(x => x.ICDCode == icd && x.Category == cat);
-                    if (result.Count > 0)
-                    {
-                        var total = 0;
-                        foreach (var item in result)
-                        {
-                            total += item.Total;
-                        }
-                        objects.Add(total);
-                    }
-                    else
-                    {
-                        objects.Add(0);
-                    }
-                }
-                series.Add(new Series
-                {
-                    Name = cat,
-                    Data = new DotNet.Highcharts.Helpers.Data(objects.ToArray())
-                });
-            }
-
-            Highcharts chart = new Highcharts("chart_by_category")
-                 .InitChart(new Chart { DefaultSeriesType = ChartTypes.Column })
-                 .SetTitle(new Title { Text = "Total Pasien Berdasarkan tipe ICD" })
-                 .SetXAxis(new XAxis { Categories = icds.ToArray() })
-                 
-                 .SetYAxis(new YAxis
-                 {
-                     Title = new YAxisTitle { Text = "Total Pasien" },
-                     Min = 0
-                 })
-                 .SetTooltip(new Tooltip { Formatter = "function() { return '<b>'+ this.series.name +' : '+ this.y +' </b>'; }" })
-                 .SetSeries(series.ToArray());
-
-            return chart;
-
-        }
-
         private List<SelectListItem> BindLookUpCategoryTypesForTop10Diseases()
         {
             var _types = new List<SelectListItem>();
@@ -349,77 +268,88 @@ namespace Klinik.Web.Controllers
         #endregion
 
         #region Top 10 Referal Reports
-        [CustomAuthorize("VIEW_TOP_10_REFERALS")]
-        public ActionResult Top10Referals()
-        {
-            var model = new Top10ReferalParamModel();
-
-            if (Session["UserLogon"] != null)
-                model.Account = (AccountModel)Session["UserLogon"];
-
-            ViewBag.Years = BindYears();
-            ViewBag.Months = BindMonths();
-
-            model.Categories = BindLookUpCategoryTypeForTop10Referal();
-            model.CategoryItems = BindLookUpCategoriesForTop10Referals();
-
-            return View(model);
-        }
-
-        [CustomAuthorize("VIEW_TOP_10_REFERALS")]
-        [HttpPost]
-        public ActionResult Top10ReferalsReport(Top10ReferalParamModel model)
-        {
-            var response = new Top10ReferalReportResponse();
-
-            if (Session["UserLogon"] != null)
-                model.Account = (AccountModel)Session["UserLogon"];
-
-            var request = new Top10ReferalReportRequest { Data = model };
-
-            new ReportsValidator(_unitOfWork, _context).ValidateTop10ReferalReport(request, out response);
-
-            return View(response.Entity);
-        }
-
-
-        private List<SelectListItem> BindLookUpCategoryTypeForTop10Referal()
-        {
-            var _types = new List<SelectListItem>();
-            var lookUpCategories = new List<LookupCategory>();
-            var _masterHandler = new MasterHandler(_unitOfWork);
-
-            lookUpCategories = _masterHandler.GetLookupCategories().Where(x => x.TypeName.Contains(Constants.LookUpCategoryConstant.PATIENT) ||
-                                                                            x.TypeName.Contains(Constants.LookUpCategoryConstant.DOCTORANDHOSPITAL) ||
-                                                                            x.TypeName.Contains(Constants.LookUpCategoryConstant.ICDTHEME) 
-                                                                            ).ToList();
-
-            _types.Insert(0, new SelectListItem { Text = Klinik.Resources.UIMessages.SelectOneCategory, Value = "0" });
-
-            foreach (var item in lookUpCategories)
+        #region Public Methods 
+            [CustomAuthorize("VIEW_TOP_10_REFERALS")]
+            public ActionResult Top10Referals()
             {
-                if (item.RowStatus == 0)
-                    _types.Add(new SelectListItem { Text = item.TypeName, Value = item.TypeName });
+                var model = new Top10ReferalParamModel();
+
+                if (Session["UserLogon"] != null)
+                    model.Account = (AccountModel)Session["UserLogon"];
+
+                ViewBag.Years = BindYears();
+                ViewBag.Months = BindMonths();
+
+                model.Categories = BindLookUpCategoryTypeForTop10Referal();
+                model.CategoryItems = BindLookUpCategoriesForTop10Referals();
+
+                return View(model);
             }
-            return _types;
+
+            [CustomAuthorize("VIEW_TOP_10_REFERALS")]
+            [HttpPost]
+            public ActionResult Top10ReferalsReport(Top10ReferalParamModel model)
+            {
+                var response = new Top10ReferalReportResponse();
+
+                if (Session["UserLogon"] != null)
+                        model.Account = (AccountModel)Session["UserLogon"];
+
+                var request = new Top10ReferalReportRequest { Data = model };
+            
+                new ReportsValidator(_unitOfWork, _context).ValidateTop10ReferalReport(request, out response);
+
+                var charts = new List<Highcharts>();
+                var chartByAge = ReportLogHelper.GenerateChart(ClinicEnums.ReportType.Top10ReferalReport, response.Entity);
+                charts.Add(chartByAge);
+                response.Entity.Charts = charts;
+                response.Entity.ProcessId = ReportLogHelper.GenerateExcel(ClinicEnums.ReportType.Top10ReferalReport, response.Entity, _unitOfWork, model.Account);
+                return View(response.Entity);
         }
 
-        private List<SelectListItem> BindLookUpCategoriesForTop10Referals()
-        {
-            var _categories = new List<SelectListItem>();
-            var _masters = new List<GeneralMaster>();
+        #endregion
 
-            var patientCategories = ConstructGeneralMasterList(Constants.LookUpCategoryConstant.PATIENT);
-            var icdCategories = ConstructGeneralMasterList(Constants.LookUpCategoryConstant.ICDTHEME);
-            var rujukanCategories = ConstructGeneralMasterList(Constants.LookUpCategoryConstant.DOCTORANDHOSPITAL);
+        #region Private Methods 
+            private List<SelectListItem> BindLookUpCategoryTypeForTop10Referal()
+            {
+                var _types = new List<SelectListItem>();
+                var lookUpCategories = new List<LookupCategory>();
+                var _masterHandler = new MasterHandler(_unitOfWork);
 
-            _categories.AddRange(icdCategories);
-            _categories.AddRange(rujukanCategories);
-            _categories.AddRange(patientCategories);
+                lookUpCategories = _masterHandler.GetLookupCategories().Where(x => x.TypeName.Contains(Constants.LookUpCategoryConstant.PATIENT) ||
+                                                                                x.TypeName.Contains(Constants.LookUpCategoryConstant.DOCTORANDHOSPITAL) ||
+                                                                                x.TypeName.Contains(Constants.LookUpCategoryConstant.ICDTHEME)
+                                                                                ).ToList();
 
-            return _categories;
-        }
+                _types.Insert(0, new SelectListItem { Text = Klinik.Resources.UIMessages.SelectOneCategory, Value = "0" });
 
+                foreach (var item in lookUpCategories)
+                {
+                    if (item.RowStatus == 0)
+                        _types.Add(new SelectListItem { Text = item.TypeName, Value = item.TypeName });
+                }
+                return _types;
+            }
+
+            private List<SelectListItem> BindLookUpCategoriesForTop10Referals()
+            {
+                var _categories = new List<SelectListItem>();
+                var _masters = new List<GeneralMaster>();
+
+                var patientCategories = ConstructGeneralMasterList(Constants.LookUpCategoryConstant.PATIENT);
+                var icdCategories = ConstructGeneralMasterList(Constants.LookUpCategoryConstant.ICDTHEME);
+                var rujukanCategories = ConstructGeneralMasterList(Constants.LookUpCategoryConstant.DOCTORANDHOSPITAL);
+
+                _categories.Insert(0, new SelectListItem { Text = "All", Value = "0" });
+
+                _categories.AddRange(icdCategories);
+                _categories.AddRange(rujukanCategories);
+                _categories.AddRange(patientCategories);
+
+                return _categories;
+            }
+        
+        #endregion
 
         #endregion
 

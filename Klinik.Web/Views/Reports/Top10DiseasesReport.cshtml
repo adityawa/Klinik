@@ -47,7 +47,7 @@
                     </div>*@
                 </div>
                 <div class="panel-footer">
-                    <a href="@Url.Action("ExportExcel","Reports", new { Id = Model.ProcessId })" class="btn btn-primary">@Klinik.Resources.UIMessages.ExportToExcel</a>
+                    <a href="@Url.Action("ExportExcel","Reports", new { Id = Model.ProcessId, fileName = "Top10ICD.xlsx" })" class="btn btn-primary">@Klinik.Resources.UIMessages.ExportToExcel</a>
                 </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="second">

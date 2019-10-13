@@ -101,7 +101,6 @@
     <Compile Include="Enumerations\RegistrationTypeEnum.cs" />
     <Compile Include="ExcelReportHelper.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="HighchartsClient.cs" />
     <Compile Include="OrganizationData.cs" />
     <Compile Include="Paging\IPagedList.cs" />
     <Compile Include="Paging\PagedList.cs" />

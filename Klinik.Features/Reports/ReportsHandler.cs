@@ -66,13 +66,37 @@ namespace Klinik.Features
         {
             var response = new Top10ReferalReportResponse();
 
-            try
+            using (var connection = new SqlConnection(ConnectionStrings.ReportConnectionString))
             {
+                try
+                {
+                    var sql = "exec dbo.sp_generateTop10ReferalReport @monthStart, @yearStart, @monthEnd, @yearEnd, @category, @categoryItem";
 
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
+                    var paramValues = new
+                    {
+                        monthStart = request.Data.MonthStart,
+                        yearStart = request.Data.YearStart,
+                        monthEnd = request.Data.MonthEnd,
+                        yearEnd = request.Data.YearEnd,
+                        category = request.Data.SelectedCategory,
+                        categoryItem = request.Data.SelectedCategoryItem
+                    };
+
+                    connection.Open();
+
+                    var referalsData = connection.Query<ReferalReportDataModel>(sql, paramValues).ToList();
+
+                    var result = new Top10ReferalReportModel();
+                    result.ReferalReportDataModels = referalsData.ToList();
+                    result.Category = request.Data.SelectedCategory;
+                    result.ReportHeader = Resources.UIMessages.Top10DiseasesReport;
+                    result.TotalRecord = referalsData.Count();
+                    response.Entity = result;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
             }
 
             return response;

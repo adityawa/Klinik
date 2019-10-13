@@ -9,10 +9,10 @@ namespace Klinik.Entities.Reports
     public class ReferalReportDataModel
     {
         public int ClinicId { get; set; }
-
-        public string ClinicCode { get; set; }
-
+        
         public string ClinicName { get; set; }
+
+        public string LetterType { get; set; }
 
         public string Category { get; set; }
 

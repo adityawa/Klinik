@@ -1,10 +1,13 @@
 ﻿USE [KlinikDB]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_generateTop10DiseaseReport]    Script Date: 10/4/2019 5:03:36 AM ******/
+
+/****** Object:  StoredProcedure [dbo].[sp_generateTop10DiseaseReport]    Script Date: 10/13/2019 7:02:46 AM ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 CREATE procedure [dbo].[sp_generateTop10DiseaseReport] 
 				@monthStart int,
 				@yearStart int,
@@ -63,29 +66,56 @@ as
 				);
 		
 		-- insert temp table		
-		insert into #TmpDisease
-			select FormExamine.Id as FormExamineId,  ICDTheme.Id as ICDId, Clinic.Id as ClinicId,
-			Clinic.Name as ClinicName, Patient.Name as PatientName, Employee.EmpName as EmpName, EmployeeAssignment.Department ,
-			EmployeeAssignment.BusinessUnit, EmployeeAssignment.Region, EmployeeStatus.Name as StatusName,
-			Patient.BirthDate, Patient.BPJSNumber, Patient.Gender as Gender, PatientAge.Age, PatientAge.AgeCode, FamilyRelationship.Code as FamCode, 
-			FamilyRelationship.Name as FamName,  FormExamine.TransDate, FormExamine.NeedRest,
-			FormExamine.IsAccident as ExamineType,  FormExamine.Diagnose, FormMedical.Necessity,
-			FormMedical.PaymentType, ICDTheme.Code as ICDCode, ICDTheme.Name as ICDName
-			from FormExamine
-			left join FormMedical on FormExamine.FormMedicalID = FormMedical.Id
-			inner join FormExamineICDInfo on FormExamine.ID = FormExamineICDInfo.FormExamineId
-			inner join ICDTheme on ICDTheme.Id = FormExamineICDInfo.ICDId
-			inner join Patient on Patient.Id = FormMedical.PatientID
-			inner join FamilyRelationship on Patient.FamilyRelationshipID = FamilyRelationship.Id
-			inner join PatientAge on Patient.Id = PatientAge.PatientId
-			inner join Clinic on Clinic.Id = FormMedical.ClinicID
-			inner join Employee on Patient.EmployeeID = Employee.Id
-			left join EmployeeAssignment on Employee.Id = EmployeeAssignment.EmployeeID
-			left join EmployeeStatus on Employee.EmpType = EmployeeStatus.ID
-			order by FormExamine.Id, ICDTheme.Id
+		if @dateStart is not null and @dateEnd is not null 
+			begin 
+					insert into #TmpDisease
+					select FormExamine.Id as FormExamineId,  ICDTheme.Id as ICDId, Clinic.Id as ClinicId,
+					Clinic.Name as ClinicName, Patient.Name as PatientName, Employee.EmpName as EmpName, EmployeeAssignment.Department ,
+					EmployeeAssignment.BusinessUnit, EmployeeAssignment.Region, EmployeeStatus.Name as StatusName,
+					Patient.BirthDate, Patient.BPJSNumber, Patient.Gender as Gender, PatientAge.Age, PatientAge.AgeCode, FamilyRelationship.Code as FamCode, 
+					FamilyRelationship.Name as FamName,  FormExamine.TransDate, FormExamine.NeedRest,
+					FormExamine.IsAccident as ExamineType,  FormExamine.Diagnose, FormMedical.Necessity,
+					FormMedical.PaymentType, ICDTheme.Code as ICDCode, ICDTheme.Name as ICDName
+					from FormExamine
+					left join FormMedical on FormExamine.FormMedicalID = FormMedical.Id
+					inner join FormExamineICDInfo on FormExamine.ID = FormExamineICDInfo.FormExamineId
+					inner join ICDTheme on ICDTheme.Id = FormExamineICDInfo.ICDId
+					inner join Patient on Patient.Id = FormMedical.PatientID
+					inner join FamilyRelationship on Patient.FamilyRelationshipID = FamilyRelationship.Id
+					inner join PatientAge on Patient.Id = PatientAge.PatientId
+					inner join Clinic on Clinic.Id = FormMedical.ClinicID
+					inner join Employee on Patient.EmployeeID = Employee.Id
+					left join EmployeeAssignment on Employee.Id = EmployeeAssignment.EmployeeID
+					left join EmployeeStatus on Employee.EmpType = EmployeeStatus.ID
+					where FormExamine.TransDate between @dateStart and @dateEnd
+					order by FormExamine.Id, ICDTheme.Id
+			end 
+		else 
+			begin 
+					insert into #TmpDisease
+					select FormExamine.Id as FormExamineId,  ICDTheme.Id as ICDId, Clinic.Id as ClinicId,
+					Clinic.Name as ClinicName, Patient.Name as PatientName, Employee.EmpName as EmpName, EmployeeAssignment.Department ,
+					EmployeeAssignment.BusinessUnit, EmployeeAssignment.Region, EmployeeStatus.Name as StatusName,
+					Patient.BirthDate, Patient.BPJSNumber, Patient.Gender as Gender, PatientAge.Age, PatientAge.AgeCode, FamilyRelationship.Code as FamCode, 
+					FamilyRelationship.Name as FamName,  FormExamine.TransDate, FormExamine.NeedRest,
+					FormExamine.IsAccident as ExamineType,  FormExamine.Diagnose, FormMedical.Necessity,
+					FormMedical.PaymentType, ICDTheme.Code as ICDCode, ICDTheme.Name as ICDName
+					from FormExamine
+					left join FormMedical on FormExamine.FormMedicalID = FormMedical.Id
+					inner join FormExamineICDInfo on FormExamine.ID = FormExamineICDInfo.FormExamineId
+					inner join ICDTheme on ICDTheme.Id = FormExamineICDInfo.ICDId
+					inner join Patient on Patient.Id = FormMedical.PatientID
+					inner join FamilyRelationship on Patient.FamilyRelationshipID = FamilyRelationship.Id
+					inner join PatientAge on Patient.Id = PatientAge.PatientId
+					inner join Clinic on Clinic.Id = FormMedical.ClinicID
+					inner join Employee on Patient.EmployeeID = Employee.Id
+					left join EmployeeAssignment on Employee.Id = EmployeeAssignment.EmployeeID
+					left join EmployeeStatus on Employee.EmpType = EmployeeStatus.ID
+					order by FormExamine.Id, ICDTheme.Id
+			end 
 
 		
-		if @dateStart is not null and @dateEnd is not null and @clinicId is not null
+		if  @clinicId <> 0
 			begin 				
 				if @category = 'Department' 
 					begin 
@@ -191,9 +221,8 @@ as
 						select * from #TmpDisease
 					end
 			end 
-		else if @dateStart is not null and @dateEnd is not null and @clinicId is null
-			
-					if @category = 'Department' 
+		else if @clinicId = 0			
+				if @category = 'Department' 
 					begin 
 						if @categoryItem <> '0'
 							begin 
@@ -298,3 +327,6 @@ as
 					end
  
 	end
+GO
+
+
