@@ -21,36 +21,65 @@
                 </h5>
             </header>
             <div class="panel-body">
-                <table class="table-striped">
-                    <thead>
-                        <tr>
-                            <th align="center">@Klinik.Resources.UIMessages.ClinicName</th>
-                            <th align="center">@Klinik.Resources.UIMessages.LetterType</th>
-                            <th align="center">@Model.Category</th>
-                            <th align="center">@Klinik.Resources.UIMessages.Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.ReferalReportDataModels)
-                        {
+                @if (Model.ReferalReportDataModels.Count > 0)
+                {
+                    <table class="table-striped">
+                        <thead>
                             <tr>
-                                <td width="15%">@item.ClinicName </td>
-                                <td width="45%">@item.LetterType  </td>
-                                <td width="25%">@item.Category</td>
-                                <td width="15%">@item.Total</td>
+                                <th align="center">@Klinik.Resources.UIMessages.ClinicName</th>
+                                <th align="center">@Klinik.Resources.UIMessages.LetterType</th>
+                                <th align="center">@Model.Category</th>
+                                <th align="center">@Klinik.Resources.UIMessages.Total</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ReferalReportDataModels)
+                            {
+                                <tr>
+                                    <td width="15%">@item.ClinicName </td>
+                                    <td width="45%">@item.LetterType  </td>
+                                    <td width="25%">@item.Category</td>
+                                    <td width="15%">@item.Total</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-md-12">@Klinik.Resources.UIMessages.DataIsEmpty</div>
+                    </div>
+                }
                 @*<div class="pager">
-                    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalRecord)
-                </div>*@
+                     @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalRecord)
+                 </div>*@
             </div>
             <div class="panel-footer">
                 <a href="@Url.Action("ExportExcel","Reports", new { Id = Model.ProcessId, fileName = "Top10Referal.xlsx" })" class="btn btn-primary">@Klinik.Resources.UIMessages.ExportToExcel</a>
             </div>
         </div>
-
+        <div role="tabpanel" class="tab-pane" id="second">
+            @Html.HiddenFor(model => model.Charts)
+            <div class="row">
+                @if (Model.Charts.Count > 0)
+                {
+                    foreach (DotNet.Highcharts.Highcharts chart in Model.Charts)
+                    {
+                        <div class="col-md-12">
+                            @(chart)
+                        </div>
+                        <div class="col-md-12">
+                            <button id="downloadChart" class="btn btn-primary">@Klinik.Resources.UIMessages.GenerateImage</button>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-md-12">@Klinik.Resources.UIMessages.DataIsEmpty</div>
+                }
+            </div>
+        </div>
     </div>
 
 </div>

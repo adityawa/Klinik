@@ -619,6 +619,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data is Empty.
+        /// </summary>
+        public static string DataIsEmpty {
+            get {
+                return ResourceManager.GetString("DataIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string Date {

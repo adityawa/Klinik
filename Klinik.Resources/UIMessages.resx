@@ -1344,4 +1344,7 @@
   <data name="GenerateImage" xml:space="preserve">
     <value>Generate Image</value>
   </data>
+  <data name="DataIsEmpty" xml:space="preserve">
+    <value>Data is Empty</value>
+  </data>
 </root>

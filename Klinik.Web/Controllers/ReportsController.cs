@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 
 namespace Klinik.Web.Controllers
@@ -148,7 +149,11 @@ namespace Klinik.Web.Controllers
             {
                 result = null;
             }
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(
+                         result, 
+                        "application/json",
+                         Encoding.UTF8,
+                         JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -163,6 +168,17 @@ namespace Klinik.Web.Controllers
             return File(reportLog.Data[0].ExcelResult, ExcelExportHelper.ExcelContentType, fileName);
         }
 
+        protected override JsonResult Json(object data, string contentType, System.Text.Encoding contentEncoding, JsonRequestBehavior behavior)
+        {
+            return new JsonResult()
+            {
+                Data = data,
+                ContentType = contentType,
+                ContentEncoding = contentEncoding,
+                JsonRequestBehavior = behavior,
+                MaxJsonLength = Int32.MaxValue
+            };
+        }
         #region Top 10 Dieaseas Report
 
         #region Public Methods 
@@ -196,10 +212,19 @@ namespace Klinik.Web.Controllers
             new ReportsValidator(_unitOfWork, _context).ValidateTop10DiseaseReport(request, out response);
 
             var charts = new List<Highcharts>();
-            var chartByAge = ReportLogHelper.GenerateChart(ClinicEnums.ReportType.Top10DiseaseReport, response.Entity);
-            charts.Add(chartByAge);
-            response.Entity.Charts = charts;
-            response.Entity.ProcessId = ReportLogHelper.GenerateExcel(ClinicEnums.ReportType.Top10DiseaseReport, response.Entity, _unitOfWork, model.Account);
+
+            if (response.Entity.DiseaseDataReports.Count > 0)
+            {
+                var chartByAge = ReportLogHelper.GenerateChart(ClinicEnums.ReportType.Top10DiseaseReport, response.Entity);
+                charts.Add(chartByAge);
+                response.Entity.Charts = charts;
+                response.Entity.ProcessId = ReportLogHelper.GenerateExcel(ClinicEnums.ReportType.Top10DiseaseReport, response.Entity, _unitOfWork, model.Account);
+            }
+            else
+            {
+                response.Entity.Charts = charts;
+                response.Entity.ProcessId = 0;
+            }
             return View(response.Entity);
         }
         
@@ -300,12 +325,21 @@ namespace Klinik.Web.Controllers
                 new ReportsValidator(_unitOfWork, _context).ValidateTop10ReferalReport(request, out response);
 
                 var charts = new List<Highcharts>();
-                var chartByAge = ReportLogHelper.GenerateChart(ClinicEnums.ReportType.Top10ReferalReport, response.Entity);
-                charts.Add(chartByAge);
-                response.Entity.Charts = charts;
-                response.Entity.ProcessId = ReportLogHelper.GenerateExcel(ClinicEnums.ReportType.Top10ReferalReport, response.Entity, _unitOfWork, model.Account);
+                if (response.Entity.ReferalReportDataModels.Count > 0)
+                {
+                    var chartByAge = ReportLogHelper.GenerateChart(ClinicEnums.ReportType.Top10ReferalReport, response.Entity);
+                    charts.Add(chartByAge);
+                    response.Entity.Charts = charts;
+                    response.Entity.ProcessId = ReportLogHelper.GenerateExcel(ClinicEnums.ReportType.Top10ReferalReport, response.Entity, _unitOfWork, model.Account);
+                }
+                else
+                {
+                    response.Entity.Charts = charts;
+                    response.Entity.ProcessId = 0;
+                }
+                
                 return View(response.Entity);
-        }
+            }
 
         #endregion
 
@@ -313,13 +347,13 @@ namespace Klinik.Web.Controllers
             private List<SelectListItem> BindLookUpCategoryTypeForTop10Referal()
             {
                 var _types = new List<SelectListItem>();
-                var lookUpCategories = new List<LookupCategory>();
+             
                 var _masterHandler = new MasterHandler(_unitOfWork);
+                var patientCategory = _masterHandler.GetLookupCategories().FirstOrDefault(x => x.TypeName == Constants.LookUpCategoryConstant.PATIENT);
+                var icdCategory = _masterHandler.GetLookupCategories().FirstOrDefault(x => x.TypeName == Constants.LookUpCategoryConstant.ICDTHEME);
+                var doctorCategory = _masterHandler.GetLookupCategories().FirstOrDefault(x => x.TypeName == Constants.LookUpCategoryConstant.DOCTORANDHOSPITAL);
 
-                lookUpCategories = _masterHandler.GetLookupCategories().Where(x => x.TypeName.Contains(Constants.LookUpCategoryConstant.PATIENT) ||
-                                                                                x.TypeName.Contains(Constants.LookUpCategoryConstant.DOCTORANDHOSPITAL) ||
-                                                                                x.TypeName.Contains(Constants.LookUpCategoryConstant.ICDTHEME)
-                                                                                ).ToList();
+                var lookUpCategories = new List<LookupCategory>() { patientCategory, icdCategory, doctorCategory};
 
                 _types.Insert(0, new SelectListItem { Text = Klinik.Resources.UIMessages.SelectOneCategory, Value = "0" });
 

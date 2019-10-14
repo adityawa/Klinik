@@ -39,7 +39,7 @@ namespace Klinik.Features
 
         public List<LookupCategory> GetLookupCategories()
         {
-            return _unitOfWork.LookUpCategoryRepository.GetAll();
+            return _unitOfWork.LookUpCategoryRepository.GetAll().Where(x=> x.RowStatus == 0).ToList();
         }
 
         public MasterResponse GetListData(MasterRequest request)

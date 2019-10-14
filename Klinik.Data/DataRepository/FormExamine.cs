@@ -39,6 +39,8 @@ namespace Klinik.Data.DataRepository
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<bool> NeedSuratSakit { get; set; }
+        public string NeedRest { get; set; }
+        public string IsAccident { get; set; }
         public Nullable<int> JumHari { get; set; }
         public Nullable<System.DateTime> Sampai { get; set; }
         public Nullable<int> Caused { get; set; }

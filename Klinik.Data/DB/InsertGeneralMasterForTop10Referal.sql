@@ -31,11 +31,11 @@ if @countPatient > 0
 
 -- insert patientId 
 insert into dbo.GeneralMaster(CategoryId,[Type],[Name],[Value],RowStatus, CreatedBy, CreatedDate)
-select distinct @patientId, 'Patient', [Name], Convert(nvarchar(max),ID), 0, 'SYSTEM', GetDate() from Patient 
+select distinct @patientId, 'Patient', [Name], [Name], 0, 'SYSTEM', GetDate() from Patient 
 
 -- insert icd 
 insert into dbo.GeneralMaster(CategoryId,[Type],[Name],[Value],RowStatus, CreatedBy, CreatedDate)
-select distinct @icdId, 'ICDTheme', concat(Code,'-',[Name]),Id, 0, 'SYSTEM', GetDate() from ICDTheme where Id <> 0
+select distinct @icdId, 'ICDTheme', concat(Code,'-',[Name]),Code, 0, 'SYSTEM', GetDate() from ICDTheme where Id <> 0
 
 -- insert rujukan 
 insert into dbo.GeneralMaster(CategoryId,[Type],[Name],[Value],RowStatus, CreatedBy, CreatedDate)

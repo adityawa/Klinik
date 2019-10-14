@@ -1,9 +1,15 @@
+USE [KlinikDB]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_generateTop10ReferalReport]    Script Date: 10/15/2019 5:03:55 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 CREATE procedure [dbo].[sp_generateTop10ReferalReport] 
 				@monthStart int,
 				@yearStart int,
 				@monthEnd int,
 				@yearEnd int,
-				@clinicId int,
 				@category nvarchar(100),
 				@categoryItem nvarchar(200)
 as 
@@ -95,18 +101,18 @@ as
 					end 
 				else 
 					begin 
-						select top 10 ClinicId, ClinicName, LetterType, PatientName as 'Patient Name', count(PatientName) as Total from #TempReferal group by ClinicId,LetterType,ClinicName,PatientName
+						select top 10 ClinicId, ClinicName, LetterType, PatientName as Category, count(PatientName) as Total from #TempReferal group by ClinicId,LetterType,ClinicName,PatientName
 					end 
 			end 
 		else if @category = 'DoctorAndHospital'
 			begin 
 				if @categoryItem <> '0'
 					begin 
-						select top 10 ClinicId, ClinicName, LetterType, OtherInfo as 'Referal', count(OtherInfo) as Total from #TempReferal where OtherInfo = @categoryItem group by ClinicId,LetterType,ClinicName,OtherInfo
+						select top 10 ClinicId, ClinicName, LetterType, OtherInfo as Category, count(OtherInfo) as Total from #TempReferal where OtherInfo = @categoryItem group by ClinicId,LetterType,ClinicName,OtherInfo
 					end 
 				else 
 					begin 
-						select top 10 ClinicId, ClinicName, LetterType, OtherInfo as 'Referal', count(OtherInfo) as Total from #TempReferal group by ClinicId,LetterType,ClinicName,OtherInfo
+						select top 10 ClinicId, ClinicName, LetterType, OtherInfo as Category, count(OtherInfo) as Total from #TempReferal group by ClinicId,LetterType,ClinicName,OtherInfo
 					end 
 			end 
 	end
