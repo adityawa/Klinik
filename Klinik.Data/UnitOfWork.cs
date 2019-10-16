@@ -76,7 +76,12 @@ namespace Klinik.Data
         private IGenericRepository<MCUPackage> _mcuPackageRepository;
         private IGenericRepository<MCURegistrationInterface> _mcuRegistrationRepository;
         private IGenericRepository<VendorProduct> _vendorproductRepository;
+
         private IGenericRepository<Hospital> _hospitalRepository;
+
+        private IGenericRepository<ReportLog> _reportLogRepository;
+
+
         private bool disposed = false;
 
         public UnitOfWork(KlinikDBEntities context)
@@ -800,6 +805,7 @@ namespace Klinik.Data
             }
         }
 
+
         public IGenericRepository<Hospital> HospitalRepository
         {
             get
@@ -809,6 +815,19 @@ namespace Klinik.Data
                 return _hospitalRepository;
             }
         }
+
+
+        public IGenericRepository<ReportLog> ReportLogRepository
+        {
+            get
+            {
+                if (_reportLogRepository == null)
+                    _reportLogRepository = new GenericRepository<ReportLog>(_context);
+                return _reportLogRepository;
+            }
+        }
+
+
 
         public virtual void Dispose(bool disposing)
         {

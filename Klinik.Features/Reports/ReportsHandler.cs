@@ -19,32 +19,6 @@ namespace Klinik.Features
             _unitOfWork = unitOfWork;
         }
 
-        public IQueryable<LookupCategory> GetLookUpByName(string name)
-        {
-            return _unitOfWork.LookUpCategoryRepository.Query(x => x.TypeName.Equals(name, StringComparison.OrdinalIgnoreCase));
-        }
-
-        public IQueryable<ReferalReportDataModel> GetAllReferalData()
-        {
-            var referalsData = new List<ReferalReportDataModel>();
-
-            using (var connection = new SqlConnection(ConnectionStrings.ReportConnectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    referalsData = connection.Query<ReferalReportDataModel>(Constants.ReportQueries.SQL_TOP_10_REFERAL_REPORT).ToList();
-                }
-                catch(Exception ex)
-                {
-                    connection.Close();
-                    throw new Exception(ex.Message);
-                }
-            }
-
-            return referalsData.AsQueryable();
-        }
-        
         public Top10DiseaseReportResponse GenerateTop10DiseasesReport(Top10DiseaseReportRequest request)
         {
             var response = new Top10DiseaseReportResponse();
@@ -71,6 +45,7 @@ namespace Klinik.Features
 
                     var result = new Top10DiseaseReportModel();
                     result.DiseaseDataReports = diseasesData.ToList();
+                    result.Category = request.Data.SelectedCategory;
                     result.ReportHeader = Resources.UIMessages.Top10DiseasesReport;
                     result.TotalRecord = diseasesData.Count();
                     response.Entity = result;
@@ -91,28 +66,37 @@ namespace Klinik.Features
         {
             var response = new Top10ReferalReportResponse();
 
-            try
+            using (var connection = new SqlConnection(ConnectionStrings.ReportConnectionString))
             {
-                var referalsData = GetAllReferalData();
-
-                if (referalsData.Count() > 0)
+                try
                 {
-                    //if (request.Data.Year != 0) referalsData.Where(x => x.Year == request.Data.Year);
-                    //if (request.Data.Month != 0) referalsData.Where(x => x.Month == request.Data.Month);
-                    //if (!string.IsNullOrEmpty(request.Data.HospitalDest)) referalsData.Where(x => x.OtherInfo == request.Data.HospitalDest);
-                    //if (!string.IsNullOrEmpty(request.Data.Diagnose)) referalsData.Where(x => x.Diagnose == request.Data.Diagnose);
-                    //if (!string.IsNullOrEmpty(request.Data.PatientName)) referalsData.Where(x => x.PatientName == request.Data.PatientName);
+                    var sql = "exec dbo.sp_generateTop10ReferalReport @monthStart, @yearStart, @monthEnd, @yearEnd, @category, @categoryItem";
+
+                    var paramValues = new
+                    {
+                        monthStart = request.Data.MonthStart,
+                        yearStart = request.Data.YearStart,
+                        monthEnd = request.Data.MonthEnd,
+                        yearEnd = request.Data.YearEnd,
+                        category = request.Data.SelectedCategory,
+                        categoryItem = request.Data.SelectedCategoryItem
+                    };
+
+                    connection.Open();
+
+                    var referalsData = connection.Query<ReferalReportDataModel>(sql, paramValues).ToList();
 
                     var result = new Top10ReferalReportModel();
-                    result.ReferalReportsData = referalsData.ToList();
-                    result.ReportHeader = Resources.UIMessages.Top10ReferalReport;
+                    result.ReferalReportDataModels = referalsData.ToList();
+                    result.Category = request.Data.SelectedCategory;
+                    result.ReportHeader = Resources.UIMessages.Top10DiseasesReport;
                     result.TotalRecord = referalsData.Count();
                     response.Entity = result;
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
             }
 
             return response;

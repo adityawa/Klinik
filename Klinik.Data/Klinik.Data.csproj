@@ -62,6 +62,9 @@
     <Compile Include="DataRepository\Clinic.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataRepository\database_firewall_rules.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataRepository\DeliveryOrder.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
@@ -272,10 +275,16 @@
     <Compile Include="DataRepository\QueuePoli.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataRepository\ReportLog.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataRepository\RolePrivilege.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\Service.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataRepository\SP_EmployeeSync_Result.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\stok.cs">
@@ -317,8 +326,8 @@
   <ItemGroup>
     <Content Include="DataRepository\KlinikModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KlinikModel.edmx</DependentUpon>
       <LastGenOutput>KlinikModel.Context.cs</LastGenOutput>
+      <DependentUpon>KlinikModel.edmx</DependentUpon>
     </Content>
     <Content Include="DataRepository\KlinikModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -331,6 +340,7 @@
     <Content Include="DB\DBKlinikDev_20190817.sql" />
     <Content Include="DB\DBKlinik_GenScripts_20190909.sql" />
     <Content Include="DB\AddLookupTable_10-9-2019.sql" />
+    <Content Include="DB\InsertGeneralMasterForTop10Referal.sql" />
     <Content Include="DB\ZainalArifinKlinik15-09-2019.sql" />
     <Content Include="DB\ZainalA_15092019_ClassifyAge.sql" />
     <Content Include="DB\ZainalA_15092019_GetAge.sql" />
@@ -346,13 +356,13 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="App.Config">
-      <SubType>Designer</SubType>
-    </None>
     <EntityDeploy Include="DataRepository\KlinikModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>KlinikModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
     <None Include="DataRepository\KlinikModel.edmx.diagram">
       <DependentUpon>KlinikModel.edmx</DependentUpon>
     </None>

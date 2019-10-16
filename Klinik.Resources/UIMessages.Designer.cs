@@ -619,6 +619,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &gt;&gt;&gt;&gt;&gt;&gt;&gt; 041780384a4e3114a899467ec4bd14b9d8995386.
+        /// </summary>
+        public static string DataIsEmpty {
+            get {
+                return ResourceManager.GetString("DataIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string Date {
@@ -1245,6 +1254,15 @@ namespace Klinik.Resources {
         public static string Generate {
             get {
                 return ResourceManager.GetString("Generate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate Image.
+        /// </summary>
+        public static string GenerateImage {
+            get {
+                return ResourceManager.GetString("GenerateImage", resourceCulture);
             }
         }
         

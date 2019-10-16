@@ -135,7 +135,9 @@
             public const string PAYMENTTYPE = "PaymentType";
             public const string NEEDREST = "NeedRest";
             public const string EXAMINETYPE = "ExamineType";
-            public const string HOSPITAL = "HOSPITAL";
+            public const string DOCTORANDHOSPITAL = "DoctorAndHospital";
+            public const string ICDTHEME = "ICDTheme";
+            public const string PATIENT = "Patient";
             public const string MONTH = "Month";
             public const string REQUESTTYPE = "RequestType";
         }
@@ -144,50 +146,13 @@
         {
             public const string VIEW_APPOINTMENT_ALL = "VIEW_APPOINTMENT_ALL";
             public const string VIEW_MEDICAL_HISTORY_ALL = "VIEW_MEDICAL_HISTORY_ALL";
-
         }
-
-        public static class ReportQueries
-        {
-            public const string SQL_TOP_10_DISEASE_REPORT = "select FormExamine.Id as FormExamineId,  ICDTheme.Id as ICDId, Clinic.Id as ClinicId,"
-                                                            + " Clinic.Name as ClinicName, Patient.Name as PatientName, Employee.EmpName as EmpName, EmployeeAssignment.Department ,"
-	                                                        + " EmployeeAssignment.BusinessUnit, EmployeeAssignment.Region, EmployeeStatus.Name as StatusName,"
-	                                                        + " Patient.BirthDate, Patient.BPJSNumber, Patient.Gender as Gender, PatientAge.Age, PatientAge.AgeCode, FamilyRelationship.Code as FamCode, "
-                                                            + " FamilyRelationship.Name as FamName,  FormExamine.TransDate, FormExamine.NeedRest,"
-	                                                        + " FormExamine.IsAccident,  FormExamine.Diagnose, FormMedical.Necessity,"
-	                                                        + " FormMedical.PaymentType, ICDTheme.Code as ICDCode"
-                                                            + " from FormExamine"
-                                                            + " left join FormMedical on FormExamine.FormMedicalID = FormMedical.Id"
-                                                            + " inner join FormExamineICDInfo on FormExamine.ID = FormExamineICDInfo.FormExamineId"
-                                                            + " inner join ICDTheme on ICDTheme.Id = FormExamineICDInfo.ICDId"
-                                                            + " inner join Patient on Patient.Id = FormMedical.PatientID"
-                                                            + " inner join FamilyRelationship on Patient.FamilyRelationshipID = FamilyRelationship.Id"
-                                                            + " inner join PatientAge on Patient.Id = PatientAge.PatientId"
-                                                            + " inner join Clinic on Clinic.Id = FormMedical.ClinicID"
-                                                            + " inner join Employee on Patient.EmployeeID = Employee.Id"
-                                                            + " left join EmployeeAssignment on Employee.Id = EmployeeAssignment.EmployeeID"
-                                                            + " left join EmployeeStatus on Employee.EmpType = EmployeeStatus.ID"
-                                                            + " order by FormExamine.Id, ICDTheme.Id";
-
-            public const string SQL_TOP_10_REFERAL_REPORT = "select Letter.Id as LetterId, Clinic.Id as ClinicId, Clinic.Name as ClinicName, Letter.LetterType as LetterType,"
-	                                                        + " Letter.Keperluan, Letter.AutoNumber,Letter.[Action],FormExamine.Diagnose,"
-                                                            + " Patient.Name as PatientName, Letter.OtherInfo,	Letter.PatientAge,"
-	                                                        + " ICDTheme.Code as ICDCode, Month(Letter.CreatedDate) as [Month], Year(Letter.CreatedDate) as [Year]"
-                                                            + " from  Letter"
-                                                            + " inner join FormMedical on Letter.FormMedicalID = FormMedical.ID"
-                                                            + " inner join Patient on FormMedical.PatientID = Patient.ID"
-                                                            + " inner join Clinic on Clinic.ID = FormMedical.ClinicID"
-                                                            + " inner join FormExamine on FormMedical.Id = FormExamine.FormMedicalID"
-                                                            + " inner join FormExamineICDInfo on FormExamineICDInfo.FormExamineId = FormExamine.Id"
-                                                            + " inner join ICDTheme on ICDTheme.Id = FormExamineICDInfo.ICDId"
-                                                            + " order by Letter.Id, ICDTheme.Id";
-        }
-
 
         public static class ConnectionStringName
         {
             public const string KlinikDBConnString = "KlinikDB";
             public const string ReportDBConnString = "ReportConnection";
         }
+
     }
 }

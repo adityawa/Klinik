@@ -34,6 +34,8 @@ namespace Klinik.Data.DataRepository
         public string ICDInformation { get; set; }
         public string Result { get; set; }
         public Nullable<bool> NeedSuratSakit { get; set; }
+        public string NeedRest { get; set; }
+        public string IsAccident { get; set; }
         public Nullable<int> JumHari { get; set; }
         public Nullable<System.DateTime> Sampai { get; set; }
         public Nullable<int> Caused { get; set; }

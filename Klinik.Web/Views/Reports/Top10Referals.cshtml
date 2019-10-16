@@ -39,6 +39,20 @@
                     @Html.DropDownListFor(model => model.YearEnd, (IEnumerable<SelectListItem>)ViewBag.Years, new { @class = "form-control", @id = "ddlStartYear" })
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Category</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.SelectedCategory, Model.Categories, new { @class = "form-control", @id = "ddlCategory" })
+                    @Html.ValidationMessageFor(model => model.SelectedCategory)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.CategoryItem</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.SelectedCategoryItem, Model.CategoryItems, new { @class = "form-control", @id = "ddlCategoryItem" })
+                    @Html.ValidationMessageFor(model => model.SelectedCategoryItem)
+                </div>
+            </div>
         </div>
         <div class="panel-footer">
             <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Generate</button>
@@ -49,11 +63,10 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            $('#ddlMonth').select2();
-            $('#ddlYear').select2();
-            $('#ddlHospitalDest').select2();
-            $('#ddlDiagnose').select2();
-            $('#ddlPatient').select2();
+            $('#ddlMonthStart').select2();
+            $('#ddlYearStart').select2();
+            $('#ddlMonthEnd').select2();
+            $('#ddlYearEnd').select2();
 
             toastr.options = {
                 "closeButton": false,
@@ -64,7 +77,36 @@
                 "timeOut": "2000",
                 "showMethod": "fadeIn"
             };
-        })
+
+            
+            $(function () {
+                $("#ddlCategory").change(function () {
+                        var selectedItem = $(this).val();
+                        var ddlCategoryItems = $("#ddlCategoryItem");
+                        var versionsProgress = $("#states-loading-progress");
+                        versionsProgress.show();
+                        $.ajax({
+                            cache: false,
+                            type: "GET",
+                            url: "@(Url.Action("GetGeneralMasterByType"))",
+                            data: { "type": selectedItem },
+                            success: function (data) {
+                                ddlCategoryItems.html('');
+                                ddlCategoryItems.append($('<option></option>').val('0').html('All'));
+                                $.each(data, function (id, option) {
+                                    ddlCategoryItems.append($('<option></option>').val(option.Value).html(option.Name));
+                                });
+                                versionsProgress.hide();
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                alert('Failed to retrieve versions.');
+                                versionsProgress.hide();
+                            }
+                        });
+                    });
+                });
+          });
+
     </script>
     }
 

@@ -21,7 +21,7 @@ namespace Klinik.Features
         {
             _unitOfWork = unitOfWork;
         }
-
+        
         /// <summary>
         /// Get orginazation data
         /// </summary>

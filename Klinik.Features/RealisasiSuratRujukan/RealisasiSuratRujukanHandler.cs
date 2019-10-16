@@ -29,7 +29,7 @@ namespace Klinik.Features.RealisasiSuratRujukan
         {
             
             List<RealisasiSuratRujukanModel> letters = new List<RealisasiSuratRujukanModel>();
-            dynamic qry = null;
+           
             IQueryable<Letter> temp = _context.Letters.Where(x => x.LetterType == LetterEnum.MedicalReferenceLetter.ToString() && x.Action == null);
 
             foreach (var item in temp)

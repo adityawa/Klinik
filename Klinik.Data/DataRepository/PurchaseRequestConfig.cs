@@ -17,6 +17,7 @@ namespace Klinik.Data.DataRepository
         public int id { get; set; }
         public Nullable<int> GudangId { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
+        public string OrganisationCode { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
@@ -24,7 +25,6 @@ namespace Klinik.Data.DataRepository
         public Nullable<int> RowStatus { get; set; }
         public string request_by { get; set; }
         public Nullable<bool> Status { get; set; }
-        public string OrganisationCode { get; set; }
     
         public virtual Gudang Gudang { get; set; }
     }

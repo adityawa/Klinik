@@ -432,7 +432,7 @@ namespace Klinik.Web.Controllers
                 ViewBag.CausedList = BindDropDownCaused();
                 ViewBag.ConditionList = BindDropDownCondition();
             }
-            catch(Exception ex)
+            catch(Exception )
             {
                 return BadRequestResponse;
             }

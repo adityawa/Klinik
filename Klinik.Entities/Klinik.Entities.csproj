@@ -73,6 +73,8 @@
     <Compile Include="Account\ResetPasswordModel.cs" />
     <Compile Include="Administration\LogModel.cs" />
     <Compile Include="AppointmentEntities\AppointmentModel.cs" />
+    <Compile Include="BaseChartModel.cs" />
+    <Compile Include="BaseReportLogModel.cs" />
     <Compile Include="BaseReportModel.cs" />
     <Compile Include="BaseRequest.cs" />
     <Compile Include="BaseModel.cs" />
@@ -158,10 +160,20 @@
     <Compile Include="PurchaseRequestPusatDetail\PurchaseRequestPusatDetailModel.cs" />
     <Compile Include="PurchaseRequestPusat\PurchaseRequestPusatModel.cs" />
     <Compile Include="PurchaseRequest\PurchaseRequestModel.cs" />
+
     <Compile Include="RealisasiSuratRujukanEntities\RealisasiSuratRujukanModel.cs" />
+
+    <Compile Include="Reports\DataModel\CostReportDataModel.cs" />
+
     <Compile Include="Reports\DataModel\DiseaseReportDataModel.cs" />
     <Compile Include="Reports\DataModel\ReferalReportDataModel.cs" />
+    <Compile Include="Reports\DataModel\RequestReportDataModel.cs" />
     <Compile Include="Reports\Parameters\Top10CostParamModel.cs" />
+    <Compile Include="Reports\ReportLogModel.cs" />
+    <Compile Include="Reports\ReportLog\Top10DiseaseChartModel.cs" />
+    <Compile Include="Reports\ReportLog\Top10DiseaseLogParam.cs" />
+    <Compile Include="Reports\ReportLog\Top10ReferalChartModel.cs" />
+    <Compile Include="Reports\ReportLog\Top10ReferalLogParam.cs" />
     <Compile Include="Reports\Top10CostReportModel.cs" />
     <Compile Include="Reports\Top10DiseaseReportModel.cs" />
     <Compile Include="Reports\Parameters\Top10DiseasesParamModel.cs" />

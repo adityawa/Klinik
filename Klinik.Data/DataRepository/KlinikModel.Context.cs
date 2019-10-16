@@ -54,7 +54,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<GeneralMaster> GeneralMasters { get; set; }
         public virtual DbSet<Gudang> Gudangs { get; set; }
         public virtual DbSet<HistoryProductInGudang> HistoryProductInGudangs { get; set; }
-        public virtual DbSet<Hospital> Hospitals { get; set; }
         public virtual DbSet<ICDTheme> ICDThemes { get; set; }
         public virtual DbSet<LabItem> LabItems { get; set; }
         public virtual DbSet<LabItemCategory> LabItemCategories { get; set; }
@@ -95,6 +94,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<PurchaseRequestPusat> PurchaseRequestPusats { get; set; }
         public virtual DbSet<PurchaseRequestPusatDetail> PurchaseRequestPusatDetails { get; set; }
         public virtual DbSet<QueuePoli> QueuePolis { get; set; }
+        public virtual DbSet<ReportLog> ReportLogs { get; set; }
         public virtual DbSet<RolePrivilege> RolePrivileges { get; set; }
         public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<stok> stoks { get; set; }
@@ -106,8 +106,10 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<VendorProduct> VendorProducts { get; set; }
+        public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
+        public virtual DbSet<Hospital> Hospitals { get; set; }
     
-        [DbFunction("KlinikDBEntities1", "fusp_registrations_get_by_status")]
+        [DbFunction("KlinikDBEntities", "fusp_registrations_get_by_status")]
         public virtual IQueryable<fusp_registrations_get_by_status_Result> fusp_registrations_get_by_status(string documentStatus, string isTransferred)
         {
             var documentStatusParameter = documentStatus != null ?
@@ -118,51 +120,7 @@ namespace Klinik.Data.DataRepository
                 new ObjectParameter("IsTransferred", isTransferred) :
                 new ObjectParameter("IsTransferred", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fusp_registrations_get_by_status_Result>("[KlinikDBEntities1].[fusp_registrations_get_by_status](@DocumentStatus, @IsTransferred)", documentStatusParameter, isTransferredParameter);
-        }
-    
-        public virtual int SP_EmployeeSync(Nullable<System.DateTime> lastUpdateTime, Nullable<int> rangeMinute, string lastupdateby)
-        {
-            var lastUpdateTimeParameter = lastUpdateTime.HasValue ?
-                new ObjectParameter("LastUpdateTime", lastUpdateTime) :
-                new ObjectParameter("LastUpdateTime", typeof(System.DateTime));
-    
-            var rangeMinuteParameter = rangeMinute.HasValue ?
-                new ObjectParameter("RangeMinute", rangeMinute) :
-                new ObjectParameter("RangeMinute", typeof(int));
-    
-            var lastupdatebyParameter = lastupdateby != null ?
-                new ObjectParameter("lastupdateby", lastupdateby) :
-                new ObjectParameter("lastupdateby", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_EmployeeSync", lastUpdateTimeParameter, rangeMinuteParameter, lastupdatebyParameter);
-        }
-    
-        public virtual ObjectResult<string> usp_MCU_registration()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("usp_MCU_registration");
-        }
-    
-        public virtual ObjectResult<usp_registrations_get_by_status_Result> usp_registrations_get_by_status(string documentStatus, string isTransferred)
-        {
-            var documentStatusParameter = documentStatus != null ?
-                new ObjectParameter("DocumentStatus", documentStatus) :
-                new ObjectParameter("DocumentStatus", typeof(string));
-    
-            var isTransferredParameter = isTransferred != null ?
-                new ObjectParameter("IsTransferred", isTransferred) :
-                new ObjectParameter("IsTransferred", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_registrations_get_by_status_Result>("usp_registrations_get_by_status", documentStatusParameter, isTransferredParameter);
-        }
-    
-        public virtual int usp_registrations_update_by_regnumber(string regNumber)
-        {
-            var regNumberParameter = regNumber != null ?
-                new ObjectParameter("RegNumber", regNumber) :
-                new ObjectParameter("RegNumber", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_registrations_update_by_regnumber", regNumberParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fusp_registrations_get_by_status_Result>("[KlinikDBEntities].[fusp_registrations_get_by_status](@DocumentStatus, @IsTransferred)", documentStatusParameter, isTransferredParameter);
         }
     
         public virtual ObjectResult<Nullable<int>> SP_EmployeeInsert(string empID, string empName, Nullable<System.DateTime> birthDate, string gender, string empType, string kTPNumber, string hPNumber, string email, string lastEmpID, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, string department, string businessUnit, string region, string grade, string empStatus, Nullable<System.DateTime> lastUpdateTime, string lastupdateby)
@@ -242,6 +200,23 @@ namespace Klinik.Data.DataRepository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SP_EmployeeInsert", empIDParameter, empNameParameter, birthDateParameter, genderParameter, empTypeParameter, kTPNumberParameter, hPNumberParameter, emailParameter, lastEmpIDParameter, startDateParameter, endDateParameter, departmentParameter, businessUnitParameter, regionParameter, gradeParameter, empStatusParameter, lastUpdateTimeParameter, lastupdatebyParameter);
         }
     
+        public virtual ObjectResult<SP_EmployeeSync_Result> SP_EmployeeSync(Nullable<System.DateTime> lastUpdateTime, Nullable<int> rangeMinute, string lastupdateby)
+        {
+            var lastUpdateTimeParameter = lastUpdateTime.HasValue ?
+                new ObjectParameter("LastUpdateTime", lastUpdateTime) :
+                new ObjectParameter("LastUpdateTime", typeof(System.DateTime));
+    
+            var rangeMinuteParameter = rangeMinute.HasValue ?
+                new ObjectParameter("RangeMinute", rangeMinute) :
+                new ObjectParameter("RangeMinute", typeof(int));
+    
+            var lastupdatebyParameter = lastupdateby != null ?
+                new ObjectParameter("lastupdateby", lastupdateby) :
+                new ObjectParameter("lastupdateby", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_EmployeeSync_Result>("SP_EmployeeSync", lastUpdateTimeParameter, rangeMinuteParameter, lastupdatebyParameter);
+        }
+    
         public virtual int SP_GeneratePoliSchedule(Nullable<System.DateTime> startDate, Nullable<int> range, string lastupdateby)
         {
             var startDateParameter = startDate.HasValue ?
@@ -257,6 +232,95 @@ namespace Klinik.Data.DataRepository
                 new ObjectParameter("lastupdateby", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_GeneratePoliSchedule", startDateParameter, rangeParameter, lastupdatebyParameter);
+        }
+    
+        public virtual int sp_generateTop10DiseaseReport(Nullable<int> monthStart, Nullable<int> yearStart, Nullable<int> monthEnd, Nullable<int> yearEnd, Nullable<int> clinicId, string category, string categoryItem)
+        {
+            var monthStartParameter = monthStart.HasValue ?
+                new ObjectParameter("monthStart", monthStart) :
+                new ObjectParameter("monthStart", typeof(int));
+    
+            var yearStartParameter = yearStart.HasValue ?
+                new ObjectParameter("yearStart", yearStart) :
+                new ObjectParameter("yearStart", typeof(int));
+    
+            var monthEndParameter = monthEnd.HasValue ?
+                new ObjectParameter("monthEnd", monthEnd) :
+                new ObjectParameter("monthEnd", typeof(int));
+    
+            var yearEndParameter = yearEnd.HasValue ?
+                new ObjectParameter("yearEnd", yearEnd) :
+                new ObjectParameter("yearEnd", typeof(int));
+    
+            var clinicIdParameter = clinicId.HasValue ?
+                new ObjectParameter("clinicId", clinicId) :
+                new ObjectParameter("clinicId", typeof(int));
+    
+            var categoryParameter = category != null ?
+                new ObjectParameter("category", category) :
+                new ObjectParameter("category", typeof(string));
+    
+            var categoryItemParameter = categoryItem != null ?
+                new ObjectParameter("categoryItem", categoryItem) :
+                new ObjectParameter("categoryItem", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_generateTop10DiseaseReport", monthStartParameter, yearStartParameter, monthEndParameter, yearEndParameter, clinicIdParameter, categoryParameter, categoryItemParameter);
+        }
+    
+        public virtual int sp_generateTop10ReferalReport(Nullable<int> monthStart, Nullable<int> yearStart, Nullable<int> monthEnd, Nullable<int> yearEnd, string category, string categoryItem)
+        {
+            var monthStartParameter = monthStart.HasValue ?
+                new ObjectParameter("monthStart", monthStart) :
+                new ObjectParameter("monthStart", typeof(int));
+    
+            var yearStartParameter = yearStart.HasValue ?
+                new ObjectParameter("yearStart", yearStart) :
+                new ObjectParameter("yearStart", typeof(int));
+    
+            var monthEndParameter = monthEnd.HasValue ?
+                new ObjectParameter("monthEnd", monthEnd) :
+                new ObjectParameter("monthEnd", typeof(int));
+    
+            var yearEndParameter = yearEnd.HasValue ?
+                new ObjectParameter("yearEnd", yearEnd) :
+                new ObjectParameter("yearEnd", typeof(int));
+    
+            var categoryParameter = category != null ?
+                new ObjectParameter("category", category) :
+                new ObjectParameter("category", typeof(string));
+    
+            var categoryItemParameter = categoryItem != null ?
+                new ObjectParameter("categoryItem", categoryItem) :
+                new ObjectParameter("categoryItem", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_generateTop10ReferalReport", monthStartParameter, yearStartParameter, monthEndParameter, yearEndParameter, categoryParameter, categoryItemParameter);
+        }
+    
+        public virtual ObjectResult<string> usp_MCU_registration()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("usp_MCU_registration");
+        }
+    
+        public virtual ObjectResult<usp_registrations_get_by_status_Result> usp_registrations_get_by_status(string documentStatus, string isTransferred)
+        {
+            var documentStatusParameter = documentStatus != null ?
+                new ObjectParameter("DocumentStatus", documentStatus) :
+                new ObjectParameter("DocumentStatus", typeof(string));
+    
+            var isTransferredParameter = isTransferred != null ?
+                new ObjectParameter("IsTransferred", isTransferred) :
+                new ObjectParameter("IsTransferred", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_registrations_get_by_status_Result>("usp_registrations_get_by_status", documentStatusParameter, isTransferredParameter);
+        }
+    
+        public virtual int usp_registrations_update_by_regnumber(string regNumber)
+        {
+            var regNumberParameter = regNumber != null ?
+                new ObjectParameter("RegNumber", regNumber) :
+                new ObjectParameter("RegNumber", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_registrations_update_by_regnumber", regNumberParameter);
         }
     }
 }

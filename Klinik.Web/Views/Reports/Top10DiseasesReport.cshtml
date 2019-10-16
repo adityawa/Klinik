@@ -14,53 +14,118 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="first">
-            <header class="panel-heading">
-                <h5 class="panel-title">
-                    @Klinik.Resources.UIMessages.Top10DiseasesReport
-                </h5>
-            </header>
-            <div class="panel-body">
-                <table class="table-striped">
-                    <thead>
-                        <tr>
-                            <th align="center">@Klinik.Resources.UIMessages.ICDCode</th>
-                            <th align="center">@Klinik.Resources.UIMessages.ICDName</th>
-                            <th align="center">@Klinik.Resources.UIMessages.Category</th>
-                            <th align="center">@Klinik.Resources.UIMessages.Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.DiseaseDataReports)
-                        {
-                            <tr>
-                                <td width="15%">@item.ICDCode</td>
-                                <td width="45%">@item.ICDName </td>
-                                <td width="25%">@item.Category</td>
-                                <td width="15%">@item.Total</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                @*<div class="pager">
+        <div role="tabpanel" class="tab-pane active" id="first">.
+                <header class="panel-heading">
+                    <h5 class="panel-title">
+                        @Klinik.Resources.UIMessages.Top10DiseasesReport
+                    </h5>
+                </header>
+                <div class="panel-body">
+                    @if (Model.DiseaseDataReports.Count > 0)
+                    {
+                          <table class="table-striped">
+                            <thead>
+                                <tr>
+                                    <th align="center">@Klinik.Resources.UIMessages.ICDCode</th>
+                                    <th align="center">@Klinik.Resources.UIMessages.ICDName</th>
+                                    <th align="center">@Model.Category</th>
+                                    <th align="center">@Klinik.Resources.UIMessages.Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.DiseaseDataReports)
+                                {
+                                    <tr>
+                                        <td width="15%">@item.ICDCode</td>
+                                        <td width="45%">@item.ICDName </td>
+                                        <td width="25%">@item.Category</td>
+                                        <td width="15%">@item.Total</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-md-12">@Klinik.Resources.UIMessages.DataIsEmpty</div>
+                        </div>
+                    }
+                    @*<div class="pager">
                         @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalRecord)
                     </div>*@
-            </div>
-            <div class="panel-footer">
-                <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.ExportToExcel</button>
-            </div>
+                </div>
+                <div class="panel-footer">
+                    <a href="@Url.Action("ExportExcel","Reports", new { Id = Model.ProcessId, fileName = "Top10ICD.xlsx" })" class="btn btn-primary">@Klinik.Resources.UIMessages.ExportToExcel</a>
+                </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="second">
+            @Html.HiddenFor(model => model.Charts)
             <div class="row">
-                <div class="col-md-12"></div>
-                @foreach (DotNet.Highcharts.Highcharts chart in Model.Charts)
+                @if (Model.Charts.Count > 0)
                 {
-                    <div class="col-md-12 col-md-6">
-                        @(chart)
-                    </div>
+                    foreach (DotNet.Highcharts.Highcharts chart in Model.Charts)
+                    {
+                        <div class="col-md-12">
+                            @(chart)
+                        </div>
+                        <div class="col-md-12">
+                            <button id="downloadChart" class="btn btn-primary">@Klinik.Resources.UIMessages.GenerateImage</button>
+                        </div>
+                    }
+                }
+                else
+                {
+                   <div class="col-md-12">@Klinik.Resources.UIMessages.DataIsEmpty</div>
                 }
             </div>
         </div>
     </div>
-
 </div>
+<script type="text/javascript">
+    EXPORT_WIDTH = 1000;
+
+    function save_chart(chart, filename) {
+        console.log(chart);
+        var render_width = EXPORT_WIDTH;
+        var render_height = render_width * chart.chartHeight / chart.chartWidth
+        console.log(chart);
+
+        var svg = chart.getSVG({
+            exporting: {
+                sourceWidth: chart.chartWidth,
+                sourceHeight: chart.chartHeight
+            }
+        });
+
+        var canvas = document.createElement('canvas');
+        canvas.height = render_height;
+        canvas.width = render_width;
+
+        var image = new Image;
+        image.onload = function () {
+            canvas.getContext('2d').drawImage(this, 0, 0, render_width, render_height);
+            var data = canvas.toDataURL("image/png")
+            download(data, filename + '.png');
+        };
+        image.src = 'data:image/svg+xml;base64,' + window.btoa(svg);
+    }
+
+    function download(data, filename) {
+        var a = document.createElement('a');
+        a.download = filename;
+        a.href = data
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    }
+
+    $(function () {
+
+        $('#downloadChart').click(function () {
+            save_chart($('#chart_by_category_container').highcharts(), 'ICDTop10Chart');
+        });
+
+    });
+
+</script>
