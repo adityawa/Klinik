@@ -42,9 +42,9 @@ namespace Klinik.Data.DataRepository
         public Nullable<int> OrderNumber { get; set; }
         public Nullable<bool> Verified { get; set; }
     
+        public virtual Product Product { get; set; }
         public virtual PurchaseOrder PurchaseOrder { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<substitute> substitutes { get; set; }
-        public virtual Product Product { get; set; }
     }
 }

@@ -21,6 +21,7 @@ using Klinik.Features.SuratReferensi.SuratRujukanBerobat;
 using Klinik.Entities.PreExamine;
 using System.Text;
 using Klinik.Features.SuratReferensi.SuratIzinSakit;
+using Klinik.Features.MasterData.Hospital;
 
 namespace Klinik.Web.Controllers
 {
@@ -36,6 +37,21 @@ namespace Klinik.Web.Controllers
         }
 
         #region ::MISC::
+        [HttpGet]
+        public JsonResult BindDropdownRs()
+        {
+            List<SelectListItem> rsList = new List<SelectListItem>();
+            var qryRs = new HospitalHandler(_unitOfWork).GetHospital();
+            foreach(var item in qryRs.Data)
+            {
+                rsList.Add(new SelectListItem
+                {
+                    Value=item.Id.ToString(),
+                    Text=$"{item.Name} - {item.Phone}"
+                });
+            }
+            return Json( rsList, JsonRequestBehavior.AllowGet);
+        }
         private List<SelectListItem> BindDropDownFormMedicalID()
         {
             List<SelectListItem> listFormMedId = new List<SelectListItem>();

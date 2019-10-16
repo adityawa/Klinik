@@ -122,7 +122,7 @@
                 { "data": "IsMenu", "name": "IsMenu", "autoWidth": true },
                 { "data": "PageLink", "name": "PageLink", "autoWidth": true },
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditMenu?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" }
+                    "render": function (data, type, full, meta) { return '<a class="btn" title="Edit" href="/MasterData/CreateOrEditMenu?id=' + full.Id + '"><i class="fa fa-pencil" aria-hidden="true"></i></a>  ' + " | <button title='Remove' onclick='Delete(" + full['Id'] + ")' ><i class='fa fa-trash' aria-hidden='true'></i></button>" }
                 }
 
             ]

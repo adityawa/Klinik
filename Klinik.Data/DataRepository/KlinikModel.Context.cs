@@ -28,7 +28,9 @@ namespace Klinik.Data.DataRepository
         }
     
         public virtual DbSet<AppConfig> AppConfigs { get; set; }
+        public virtual DbSet<Appointment> Appointments { get; set; }
         public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Clinic> Clinics { get; set; }
         public virtual DbSet<DeliveryOrder> DeliveryOrders { get; set; }
         public virtual DbSet<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
         public virtual DbSet<DeliveryOrderPusat> DeliveryOrderPusats { get; set; }
@@ -42,19 +44,25 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<FileArchieve> FileArchieves { get; set; }
         public virtual DbSet<FormExamine> FormExamines { get; set; }
         public virtual DbSet<FormExamineAttachment> FormExamineAttachments { get; set; }
+        public virtual DbSet<FormExamineICDInfo> FormExamineICDInfoes { get; set; }
         public virtual DbSet<FormExamineLab> FormExamineLabs { get; set; }
         public virtual DbSet<FormExamineMedicine> FormExamineMedicines { get; set; }
         public virtual DbSet<FormExamineMedicineDetail> FormExamineMedicineDetails { get; set; }
         public virtual DbSet<FormExamineService> FormExamineServices { get; set; }
         public virtual DbSet<FormMedical> FormMedicals { get; set; }
         public virtual DbSet<FormPreExamine> FormPreExamines { get; set; }
+        public virtual DbSet<GeneralMaster> GeneralMasters { get; set; }
+        public virtual DbSet<Gudang> Gudangs { get; set; }
         public virtual DbSet<HistoryProductInGudang> HistoryProductInGudangs { get; set; }
+        public virtual DbSet<Hospital> Hospitals { get; set; }
         public virtual DbSet<ICDTheme> ICDThemes { get; set; }
         public virtual DbSet<LabItem> LabItems { get; set; }
         public virtual DbSet<LabItemCategory> LabItemCategories { get; set; }
         public virtual DbSet<Letter> Letters { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
+        public virtual DbSet<LookupCategory> LookupCategories { get; set; }
         public virtual DbSet<MCUPackage> MCUPackages { get; set; }
+        public virtual DbSet<MCURegistrationInterface> MCURegistrationInterfaces { get; set; }
         public virtual DbSet<Medicine> Medicines { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<Organization> Organizations { get; set; }
@@ -72,7 +80,9 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<PoliScheduleMaster> PoliScheduleMasters { get; set; }
         public virtual DbSet<PoliService> PoliServices { get; set; }
         public virtual DbSet<Privilege> Privileges { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }
+        public virtual DbSet<ProductInGudang> ProductInGudangs { get; set; }
         public virtual DbSet<ProductMedicine> ProductMedicines { get; set; }
         public virtual DbSet<ProductUnit> ProductUnits { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
@@ -80,6 +90,7 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<PurchaseOrderPusat> PurchaseOrderPusats { get; set; }
         public virtual DbSet<PurchaseOrderPusatDetail> PurchaseOrderPusatDetails { get; set; }
         public virtual DbSet<PurchaseRequest> PurchaseRequests { get; set; }
+        public virtual DbSet<PurchaseRequestConfig> PurchaseRequestConfigs { get; set; }
         public virtual DbSet<PurchaseRequestDetail> PurchaseRequestDetails { get; set; }
         public virtual DbSet<PurchaseRequestPusat> PurchaseRequestPusats { get; set; }
         public virtual DbSet<PurchaseRequestPusatDetail> PurchaseRequestPusatDetails { get; set; }
@@ -94,16 +105,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
-        public virtual DbSet<PurchaseRequestConfig> PurchaseRequestConfigs { get; set; }
-        public virtual DbSet<MCURegistrationInterface> MCURegistrationInterfaces { get; set; }
-        public virtual DbSet<Appointment> Appointments { get; set; }
-        public virtual DbSet<FormExamineICDInfo> FormExamineICDInfoes { get; set; }
-        public virtual DbSet<GeneralMaster> GeneralMasters { get; set; }
-        public virtual DbSet<LookupCategory> LookupCategories { get; set; }
-        public virtual DbSet<Clinic> Clinics { get; set; }
-        public virtual DbSet<Gudang> Gudangs { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<ProductInGudang> ProductInGudangs { get; set; }
         public virtual DbSet<VendorProduct> VendorProducts { get; set; }
     
         [DbFunction("KlinikDBEntities1", "fusp_registrations_get_by_status")]

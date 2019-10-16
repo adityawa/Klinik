@@ -43,8 +43,8 @@ namespace Klinik.Data.DataRepository
         public Nullable<int> OrderNumber { get; set; }
         public Nullable<bool> Verified { get; set; }
     
+        public virtual Product Product { get; set; }
         public virtual PurchaseOrderPusat PurchaseOrderPusat { get; set; }
         public virtual Vendor Vendor { get; set; }
-        public virtual Product Product { get; set; }
     }
 }

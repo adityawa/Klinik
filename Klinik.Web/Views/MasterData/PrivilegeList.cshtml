@@ -88,7 +88,7 @@
                 { "data": "Privilege_Desc", "name": "Privilege_Desc", "autoWidth": true },
                 { "data": "MenuDesc", "name": "MenuDesc", "autoWidth": true },
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditPrivilege?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>"; }
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" title="Edit" href="/MasterData/CreateOrEditPrivilege?id=' + full.Id + '"><i class="fa fa-pencil" aria-hidden="true"></i></a>  ' + " | <button class='btn btn-danger' title='Remove' onclick='Delete(" + full['Id'] + ")' ><i class='fa fa-trash' aria-hidden='true'></i></button>"; }
                 }
             ]
         });

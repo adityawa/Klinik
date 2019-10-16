@@ -1341,4 +1341,13 @@
   <data name="ViewHistoryPatient" xml:space="preserve">
     <value>View History Patient</value>
   </data>
+  <data name="ListSuratRujukan" xml:space="preserve">
+    <value>List Surat Rujukan</value>
+  </data>
+  <data name="NoSurat" xml:space="preserve">
+    <value>No Surat</value>
+  </data>
+  <data name="RS Rujukan" xml:space="preserve">
+    <value>RS Rujukan</value>
+  </data>
 </root>

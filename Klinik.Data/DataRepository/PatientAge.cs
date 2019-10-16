@@ -15,7 +15,7 @@ namespace Klinik.Data.DataRepository
     public partial class PatientAge
     {
         public int Id { get; set; }
-        public Nullable<int> PatientId { get; set; }
+        public Nullable<long> PatientId { get; set; }
         public int Age { get; set; }
         public string AgeCode { get; set; }
         public string CreatedBy { get; set; }

@@ -32,6 +32,8 @@ namespace Klinik.Entities.Poli
         public string ICDInformation3 { get; set; }
         public string ICDInformation3Desc { get; set; }
 
+        public string NoSurat { get; set; }
+
         public PoliExamineModel()
         {
             LoketData = new LoketModel();

@@ -277,6 +277,7 @@
     <Compile Include="Controllers\MasterDataController.cs" />
     <Compile Include="Controllers\PasswordHistoryController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
+    <Compile Include="Controllers\PoliClaimController.cs" />
     <Compile Include="Controllers\PoliController.cs" />
     <Compile Include="Controllers\PoliScheduleController.cs" />
     <Compile Include="Controllers\AdministrationController.cs" />
@@ -288,6 +289,7 @@
     <Compile Include="Controllers\PurchaseRequestController.cs" />
     <Compile Include="Controllers\PurchaseRequestPusatController.cs" />
     <Compile Include="Controllers\RadiologiController.cs" />
+    <Compile Include="Controllers\RealisasiSuratRujukanController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\UnauthorizedController.cs" />
     <Compile Include="Datalist\PatientDataList.cs" />
@@ -1726,6 +1728,8 @@
     <Content Include="Views\MasterData\GeneralMasterList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditLookUpGeneralMaster.cshtml" />
     <Content Include="Views\Letters\ExportSuratIzinSakit2Pdf.cshtml" />
+    <Content Include="Views\RealisasiSuratRujukan\ListSurat.cshtml" />
+    <Content Include="Views\PoliClaim\FormExamine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

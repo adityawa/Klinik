@@ -5,5 +5,6 @@ namespace Klinik.Features
 {
     public class FormExamineRequest : BaseRequest<PoliExamineModel>
     {
+      
     }
 }

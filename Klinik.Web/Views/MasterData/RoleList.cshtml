@@ -81,7 +81,7 @@
                 { "data": "OrganizationName", "name": "OrganizationName", "autoWidth": true },
                 { "data": "RoleName", "name": "RoleName", "autoWidth": true },
                 {
-                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/MasterData/CreateOrEditRole?id=' + full.Id + '">@Klinik.Resources.UIMessages.Edit</a>  ' + " | <button class='btn btn-danger' onclick='Delete(" + full['Id'] + ")' >@Klinik.Resources.UIMessages.Delete</button>" + ' | <a class="btn btn-info" href="/MappingMaster/RolePrivilegeList?roleid=' + full.Id + '">@Klinik.Resources.UIMessages.SetRolePrivilege</a>'; }
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" title="Edit" href="/MasterData/CreateOrEditRole?id=' + full.Id + '"><i class="fa fa-pencil" aria-hidden="true"></i></a>  ' + " | <button class='btn btn-danger' title='Remove' onclick='Delete(" + full['Id'] + ")' ><i class='fa fa-trash' aria-hidden='true'></i></button>" + ' | <a class="btn btn-info" title="Set Privilege" href="/MappingMaster/RolePrivilegeList?roleid=' + full.Id + '"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>'; }
                 }
 
             ]

@@ -19,7 +19,7 @@ namespace Klinik.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class UIMessages {
@@ -1762,6 +1762,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List Surat Rujukan.
+        /// </summary>
+        public static string ListSuratRujukan {
+            get {
+                return ResourceManager.GetString("ListSuratRujukan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Locket Out....
         /// </summary>
         public static string LockedOut {
@@ -2154,6 +2163,15 @@ namespace Klinik.Resources {
         public static string Normal {
             get {
                 return ResourceManager.GetString("Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Surat.
+        /// </summary>
+        public static string NoSurat {
+            get {
+                return ResourceManager.GetString("NoSurat", resourceCulture);
             }
         }
         
@@ -3171,6 +3189,15 @@ namespace Klinik.Resources {
         public static string RR {
             get {
                 return ResourceManager.GetString("RR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RS Rujukan.
+        /// </summary>
+        public static string RS_Rujukan {
+            get {
+                return ResourceManager.GetString("RS Rujukan", resourceCulture);
             }
         }
         

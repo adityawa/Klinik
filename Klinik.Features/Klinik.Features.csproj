@@ -126,6 +126,8 @@
     <Compile Include="MasterData\Gudang\GudangRequest.cs" />
     <Compile Include="MasterData\Gudang\GudangResponse.cs" />
     <Compile Include="MasterData\Gudang\GudangValidator.cs" />
+    <Compile Include="MasterData\Hospital\HospitalHandler.cs" />
+    <Compile Include="MasterData\Hospital\HospitalResponse.cs" />
     <Compile Include="MasterData\LookupCategory\LookUpCategoryHandler.cs" />
     <Compile Include="MasterData\LookupCategory\LookupCategoryRequest.cs" />
     <Compile Include="MasterData\LookupCategory\LookUpCategoryResponse.cs" />
@@ -311,6 +313,10 @@
     <Compile Include="Radiologi\RadiologiRequest.cs" />
     <Compile Include="Radiologi\RadiologiResponse.cs" />
     <Compile Include="Radiologi\RadiologiValidator.cs" />
+    <Compile Include="RealisasiSuratRujukan\RealisasiSuratRujukanHandler.cs" />
+    <Compile Include="RealisasiSuratRujukan\RealisasiSuratRujukanRequest.cs" />
+    <Compile Include="RealisasiSuratRujukan\RealisasiSuratRujukanResponse.cs" />
+    <Compile Include="RealisasiSuratRujukan\RealisasiSuratRujukanValidator.cs" />
     <Compile Include="Reports\ReportsHandler.cs" />
     <Compile Include="Reports\ReportsValidator.cs" />
     <Compile Include="Reports\Top10DiseaseReportRequest.cs" />
