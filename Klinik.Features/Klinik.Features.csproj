@@ -121,6 +121,7 @@
     <Compile Include="HistoryProductInGudang\HistoryProductInGudangHandler.cs" />
     <Compile Include="HistoryProductInGudang\HistoryProductInGudangRequest.cs" />
     <Compile Include="HistoryProductInGudang\HistoryProductInGudangResponse.cs" />
+    <Compile Include="HospitalFeatures\HospitalHandler.cs" />
     <Compile Include="ICDThemeFeatures\ICDThemeHandler.cs" />
     <Compile Include="MasterData\GeneralMaster\MasterRequest.cs" />
     <Compile Include="MasterData\GeneralMaster\MasterResponse.cs" />
@@ -316,17 +317,14 @@
     <Compile Include="Radiologi\RadiologiRequest.cs" />
     <Compile Include="Radiologi\RadiologiResponse.cs" />
     <Compile Include="Radiologi\RadiologiValidator.cs" />
-
     <Compile Include="RealisasiSuratRujukan\RealisasiSuratRujukanHandler.cs" />
     <Compile Include="RealisasiSuratRujukan\RealisasiSuratRujukanRequest.cs" />
     <Compile Include="RealisasiSuratRujukan\RealisasiSuratRujukanResponse.cs" />
     <Compile Include="RealisasiSuratRujukan\RealisasiSuratRujukanValidator.cs" />
-
     <Compile Include="Reports\Helper\ReportLogHelper.cs" />
     <Compile Include="Reports\ReportLog\ReportLogHandler.cs" />
     <Compile Include="Reports\ReportLog\ReportLogRequest.cs" />
     <Compile Include="Reports\ReportLog\ReportLogResponse.cs" />
-
     <Compile Include="Reports\ReportsHandler.cs" />
     <Compile Include="Reports\ReportsValidator.cs" />
     <Compile Include="Reports\Top10DiseaseReportRequest.cs" />

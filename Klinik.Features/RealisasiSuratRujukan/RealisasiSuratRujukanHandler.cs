@@ -6,6 +6,7 @@ using Klinik.Data.DataRepository;
 using Klinik.Entities.Form;
 using Klinik.Entities.Letter;
 using Klinik.Entities.RealisasiSuratRujukanEntities;
+using Klinik.Features.HospitalFeatures;
 using Klinik.Resources;
 using LinqKit;
 using Newtonsoft.Json;
@@ -40,7 +41,7 @@ namespace Klinik.Features.RealisasiSuratRujukan
                     NoSurat = item.NoSurat,
                     PatientID=item.ForPatient??0,
                     PatientName=item.ForPatient==null?"":_unitOfWork.PatientRepository.GetById(item.ForPatient).Name,
-                    RSRujukan= JsonConvert.DeserializeObject<InfoRujukan>(item.OtherInfo).RSRujukan,
+                    RSRujukan= new HospitalHandler(_unitOfWork).GetHospitalName( JsonConvert.DeserializeObject<InfoRujukan>(item.OtherInfo).RSRujukan),
                     DoctorName = JsonConvert.DeserializeObject<InfoRujukan>(item.OtherInfo).NamaDokter,
                     FormMedicalID=item.FormMedicalID??0
                 });

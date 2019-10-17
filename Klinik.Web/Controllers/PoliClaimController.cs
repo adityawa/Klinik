@@ -256,7 +256,7 @@ namespace Klinik.Web.Controllers
         
 
 
-        [CustomAuthorize("VIEW_POLI_PATIENT_LIST")]
+        [CustomAuthorize("REALISASI_SURAT_RUJUKAN")]
         public ActionResult PatientList()
         {
             var poliEnum = PoliEnum.PoliUmum;
@@ -323,6 +323,7 @@ namespace Klinik.Web.Controllers
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
 
+        [CustomAuthorize("REALISASI_SURAT_RUJUKAN")]
         public ActionResult FormExamine()
         {
             var idPatient = Request.QueryString["idPatient"];
