@@ -1347,4 +1347,10 @@
   <data name="DataIsEmpty" xml:space="preserve">
     <value>Data is Empty</value>
   </data>
+  <data name="Top10CostReport" xml:space="preserve">
+    <value>Top 10 Cost Report</value>
+  </data>
+  <data name="Top10RequestReport" xml:space="preserve">
+    <value>Top 10 Request Report</value>
+  </data>
 </root>

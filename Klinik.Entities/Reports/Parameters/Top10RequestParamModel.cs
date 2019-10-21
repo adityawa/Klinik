@@ -22,6 +22,8 @@ namespace Klinik.Entities.Reports
         [Required(ErrorMessageResourceType = typeof(Resources.Messages), ErrorMessageResourceName = "YearOfEndPeriodIsMandatory")]
         public int YearEnd { get; set; }
 
+        public int? ClinicId { get; set; }
+
         [Required(ErrorMessageResourceType = typeof(Resources.Messages), ErrorMessageResourceName = "CategoryIsMandatory")]
         public string SelectedCategory { get; set; }
 

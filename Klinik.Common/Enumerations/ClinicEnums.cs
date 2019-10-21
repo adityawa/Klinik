@@ -113,7 +113,12 @@
         public enum ReportType
         {
             Top10DiseaseReport = 1,
-            Top10ReferalReport = 2
+            Top10ReferalReport = 2,
+            Top10CostReport = 3,
+            Top10RequestReport = 4, 
+            DeceaseEnviroReport = 5,
+            MedicineUsageReport = 6,
+            MCUDetailReport = 7
         }
     }
 }

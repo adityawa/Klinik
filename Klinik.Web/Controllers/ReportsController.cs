@@ -382,23 +382,30 @@ namespace Klinik.Web.Controllers
 
                 return _categories;
             }
-        
+
         #endregion
 
         #endregion
 
         #region Top 10 Cost Report
+
+        #region Public Methods 
         [CustomAuthorize("VIEW_TOP_10_COST")]
         public ActionResult Top10Cost()
         {
-            ViewBag.Years = BindYears();
-            //ViewBag.Months = BindDropDownByName(Constants.LookUpCategoryConstant.MONTH);
-            //ViewBag.BusinessUnits = BindDropDownByName(Constants.LookUpCategoryConstant.BUSINESSUNIT);
-            //ViewBag.BusinessUnits = BindDropDownByName(Constants.LookUpCategoryConstant.DEPARTMENT);
-            //ViewBag.Clinics = BindDropDownClinic();
-            //ViewBag.Patients = BindDropDownPatient();
+            var model = new Top10CostParamModel();
+            
+            if (Session["UserLogon"] != null)
+                model.Account = (AccountModel)Session["UserLogon"];
 
-            return View();
+            ViewBag.Months = BindMonths();
+            ViewBag.Years = BindYears();
+            ViewBag.Clinics = BindDropDownClinic(model.Account.Organization);
+
+            model.Categories = BindLookUpCategoryTypeForTop10Cost();
+            model.CategoryItems = BindLookUpCategoriesForTop10Cost();
+
+            return View(model);
         }
 
 
@@ -410,16 +417,68 @@ namespace Klinik.Web.Controllers
         }
         #endregion
 
+        #region Private Methods 
+        private List<SelectListItem> BindLookUpCategoryTypeForTop10Cost()
+        {
+            var _types = new List<SelectListItem>();
+            var lookUpCategories = new List<LookupCategory>();
+            var _masterHandler = new MasterHandler(_unitOfWork);
+
+            lookUpCategories = _masterHandler.GetLookupCategories().Where(x => x.TypeName.Contains(Constants.LookUpCategoryConstant.DEPARTMENT) ||
+                                                                            x.TypeName.Contains(Constants.LookUpCategoryConstant.BUSINESSUNIT) ||
+                                                                            x.TypeName.Contains(Constants.LookUpCategoryConstant.PATIENT) 
+                                                                            ).ToList();
+
+            _types.Insert(0, new SelectListItem { Text = Klinik.Resources.UIMessages.SelectOneCategory, Value = "0" });
+
+            foreach (var item in lookUpCategories)
+            {
+                if (item.RowStatus == 0)
+                    _types.Add(new SelectListItem { Text = item.TypeName, Value = item.TypeName });
+            }
+            return _types;
+        }
+
+        private List<SelectListItem> BindLookUpCategoriesForTop10Cost()
+        {
+            var _categories = new List<SelectListItem>();
+            var _masters = new List<GeneralMaster>();
+
+            var deptCategories = ConstructGeneralMasterList(Constants.LookUpCategoryConstant.DEPARTMENT);
+            var patientCategories = ConstructGeneralMasterList(Constants.LookUpCategoryConstant.PATIENT);
+            var buCategories = ConstructGeneralMasterList(Constants.LookUpCategoryConstant.BUSINESSUNIT);
+
+            _categories.Insert(0, new SelectListItem { Text = "All", Value = "0" });
+
+            _categories.AddRange(deptCategories);
+            _categories.AddRange(buCategories);
+            _categories.AddRange(patientCategories);
+
+            return _categories;
+        }
+        #endregion
+
+        #endregion
+
         #region Top 10 Request Report
+
+        #region Public Methods 
         [CustomAuthorize("VIEW_TOP_10_REQUEST")]
         public ActionResult Top10Request()
         {
-            ViewBag.Years = BindYears();
-            //ViewBag.Months = BindDropDownByName(Constants.LookUpCategoryConstant.MONTH);
-            //ViewBag.Clinics = BindDropDownClinic();
-            //ViewBag.RequestTypes = BindDropDownByName(Constants.LookUpCategoryConstant.REQUESTTYPE);
+            var model = new Top10RequestParamModel();
 
-            return View();
+            if (Session["UserLogon"] != null)
+                model.Account = (AccountModel)Session["UserLogon"];
+
+            ViewBag.Months = BindMonths();
+            ViewBag.Years = BindYears();
+            ViewBag.Clinics = BindDropDownClinic(model.Account.Organization);
+
+            model.Categories = BindLookUpCategoryTypeForTop10Request();
+            model.CategoryItems = BindLookUpCategoriesForTop10Request();
+
+            return View(model);
         }
 
         [CustomAuthorize("VIEW_TOP_10_REQUEST")]
@@ -429,7 +488,42 @@ namespace Klinik.Web.Controllers
 
             return View();
         }
+        #endregion
+
+        #region Private Methods 
+        private List<SelectListItem> BindLookUpCategoryTypeForTop10Request()
+        {
+            var _types = new List<SelectListItem>();
+            var lookUpCategories = new List<LookupCategory>();
+            var _masterHandler = new MasterHandler(_unitOfWork);
+
+            lookUpCategories = _masterHandler.GetLookupCategories().Where(x => x.TypeName.Contains(Constants.LookUpCategoryConstant.REQUESTTYPE)).ToList();
+
+            _types.Insert(0, new SelectListItem { Text = Klinik.Resources.UIMessages.SelectOneCategory, Value = "0" });
+
+            foreach (var item in lookUpCategories)
+            {
+                if (item.RowStatus == 0)
+                    _types.Add(new SelectListItem { Text = item.TypeName, Value = item.TypeName });
+            }
+            return _types;
+        }
+
+        private List<SelectListItem> BindLookUpCategoriesForTop10Request()
+        {
+            var _categories = new List<SelectListItem>();
+            var _masters = new List<GeneralMaster>();
+
+            var reqTypeCategories = ConstructGeneralMasterList(Constants.LookUpCategoryConstant.REQUESTTYPE);
+
+            _categories.Insert(0, new SelectListItem { Text = "All", Value = "0" });
+
+            _categories.AddRange(reqTypeCategories);
+            
+            return _categories;
+        }
         #endregion 
+        #endregion
 
         #region Common
         /// <summary>
