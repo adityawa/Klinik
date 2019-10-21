@@ -40,10 +40,10 @@ namespace Klinik.Data.DataRepository
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryOrder> DeliveryOrders { get; set; }
+        public virtual Gudang Gudang { get; set; }
+        public virtual Gudang Gudang1 { get; set; }
         public virtual PurchaseRequest PurchaseRequest { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
-        public virtual Gudang Gudang { get; set; }
-        public virtual Gudang Gudang1 { get; set; }
     }
 }

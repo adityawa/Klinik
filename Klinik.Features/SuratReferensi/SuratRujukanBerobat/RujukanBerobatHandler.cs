@@ -82,6 +82,7 @@ namespace Klinik.Features.SuratReferensi.SuratRujukanBerobat
             {
 
                 var _entity = Mapper.Map<RujukanBerobatModel, Letter>(request.Data);
+                _entity.NoSurat = $"{request.Data.AutoNumber}/Klinik/{DateTime.Now.Year}/{DateTime.Now.Month}";
                 _entity.OtherInfo = JsonConvert.SerializeObject(request.Data.InfoRujukanData);
                 _entity.CreatedBy = request.Data.Account.UserName;
                 _entity.CreatedDate = DateTime.Now;
@@ -106,7 +107,7 @@ namespace Klinik.Features.SuratReferensi.SuratRujukanBerobat
                 if (_preExamineData != null)
                     response.Entity.PreExamineData = Mapper.Map<FormPreExamine, PreExamineModel>(_preExamineData);
 
-                response.Entity.NoSurat = $"{_entity.AutoNumber}/klinik/{DateTime.Now.Year}/{DateTime.Now.Month}";
+                response.Entity.NoSurat = _entity.NoSurat;
                 response.Entity.FormMedicalID = _entity.FormMedicalID ?? 0;
                 response.Entity.Id = letterId;
                 response.Status = true;
@@ -138,11 +139,13 @@ namespace Klinik.Features.SuratReferensi.SuratRujukanBerobat
 
                 response.Entity = new RujukanBerobatModel();
                 response.Entity.FormMedicalID = formMedicalId;
+                response.Entity.NoSurat = _letterData.NoSurat;
                 response.Entity.Perusahaan = _letterData.Pekerjaan;
                 response.Entity.PatientData = new PatientModel();
                 response.Entity.InfoRujukanData = JsonConvert.DeserializeObject<InfoRujukan>(_letterData.OtherInfo);
                 response.Entity.PreExamineData = new PreExamineModel();
                 response.Entity.FormExamineData = new FormExamineModel();
+                
                 if (_patientData != null)
                 {
 

@@ -121,6 +121,7 @@
     <Compile Include="HistoryProductInGudang\HistoryProductInGudangHandler.cs" />
     <Compile Include="HistoryProductInGudang\HistoryProductInGudangRequest.cs" />
     <Compile Include="HistoryProductInGudang\HistoryProductInGudangResponse.cs" />
+    <Compile Include="HospitalFeatures\HospitalHandler.cs" />
     <Compile Include="ICDThemeFeatures\ICDThemeHandler.cs" />
     <Compile Include="MasterData\GeneralMaster\MasterRequest.cs" />
     <Compile Include="MasterData\GeneralMaster\MasterResponse.cs" />
@@ -129,6 +130,8 @@
     <Compile Include="MasterData\Gudang\GudangRequest.cs" />
     <Compile Include="MasterData\Gudang\GudangResponse.cs" />
     <Compile Include="MasterData\Gudang\GudangValidator.cs" />
+    <Compile Include="MasterData\Hospital\HospitalHandler.cs" />
+    <Compile Include="MasterData\Hospital\HospitalResponse.cs" />
     <Compile Include="MasterData\LookupCategory\LookUpCategoryHandler.cs" />
     <Compile Include="MasterData\LookupCategory\LookupCategoryRequest.cs" />
     <Compile Include="MasterData\LookupCategory\LookUpCategoryResponse.cs" />
@@ -314,6 +317,10 @@
     <Compile Include="Radiologi\RadiologiRequest.cs" />
     <Compile Include="Radiologi\RadiologiResponse.cs" />
     <Compile Include="Radiologi\RadiologiValidator.cs" />
+    <Compile Include="RealisasiSuratRujukan\RealisasiSuratRujukanHandler.cs" />
+    <Compile Include="RealisasiSuratRujukan\RealisasiSuratRujukanRequest.cs" />
+    <Compile Include="RealisasiSuratRujukan\RealisasiSuratRujukanResponse.cs" />
+    <Compile Include="RealisasiSuratRujukan\RealisasiSuratRujukanValidator.cs" />
     <Compile Include="Reports\Helper\ReportHelperOptions.cs" />
     <Compile Include="Reports\Helper\ReportLogHelper.cs" />
     <Compile Include="Reports\Helper\Top10CostHelper.cs" />

@@ -1341,11 +1341,22 @@
   <data name="ViewHistoryPatient" xml:space="preserve">
     <value>View History Patient</value>
   </data>
+
+  <data name="ListSuratRujukan" xml:space="preserve">
+    <value>List Surat Rujukan</value>
+  </data>
+  <data name="NoSurat" xml:space="preserve">
+    <value>No Surat</value>
+  </data>
+  <data name="RS Rujukan" xml:space="preserve">
+    <value>RS Rujukan</value>
+</data>
   <data name="GenerateImage" xml:space="preserve">
     <value>Generate Image</value>
   </data>
   <data name="DataIsEmpty" xml:space="preserve">
     <value>Data is Empty</value>
+>>>>>>> 041780384a4e3114a899467ec4bd14b9d8995386
   </data>
   <data name="Top10CostReport" xml:space="preserve">
     <value>Top 10 Cost Report</value>

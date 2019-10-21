@@ -88,7 +88,7 @@ namespace Klinik.Features
                     queueEntity.Status = (int)RegistrationStatusEnum.New;
                     queueEntity.ClinicID = GetClinicID(request.Data.Account.Organization);
                     queueEntity.PoliFrom = 1;
-                    queueEntity.SortNumber = GenerateSortNumber(request.Data.PoliToID, request.Data.DoctorID);
+                    queueEntity.SortNumber = GenerateSortNo(request.Data.PoliToID, request.Data.DoctorID);
                     queueEntity.DoctorID = request.Data.DoctorID == 0 ? (int?)null : request.Data.DoctorID;
 
                     // create form medical
@@ -194,7 +194,7 @@ namespace Klinik.Features
         /// </summary>
         /// <param name="poliID"></param>
         /// <returns></returns>
-        private int GenerateSortNumber(int poliID, int doctorID)
+        private int GenerateSortNo(int poliID, int doctorID)
         {
             List<QueuePoli> currentQueueList = _unitOfWork.RegistrationRepository.Get(x => x.PoliTo == poliID &&
             x.TransactionDate.Year == DateTime.Today.Year &&

@@ -46,7 +46,7 @@ namespace Klinik.Data.DataRepository
         public Nullable<int> statusop { get; set; }
     
         public virtual DeliveryOrderPusat DeliveryOrderPusat { get; set; }
-        public virtual Vendor Vendor { get; set; }
         public virtual Product Product { get; set; }
+        public virtual Vendor Vendor { get; set; }
     }
 }

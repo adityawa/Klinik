@@ -90,6 +90,7 @@
     <Compile Include="HistoryProductInGudang\HistoryProductInGudangModel.cs" />
     <Compile Include="Letter\SuratIzinSakitModel.cs" />
     <Compile Include="MasterData\GudangModel.cs" />
+    <Compile Include="MasterData\HospitalModel.cs" />
     <Compile Include="MasterData\ICDThemeModel.cs" />
     <Compile Include="MasterData\LookUpCategoryModel.cs" />
     <Compile Include="MasterData\MasterModel.cs" />
@@ -159,7 +160,11 @@
     <Compile Include="PurchaseRequestPusatDetail\PurchaseRequestPusatDetailModel.cs" />
     <Compile Include="PurchaseRequestPusat\PurchaseRequestPusatModel.cs" />
     <Compile Include="PurchaseRequest\PurchaseRequestModel.cs" />
+
+    <Compile Include="RealisasiSuratRujukanEntities\RealisasiSuratRujukanModel.cs" />
+
     <Compile Include="Reports\DataModel\CostReportDataModel.cs" />
+
     <Compile Include="Reports\DataModel\DiseaseReportDataModel.cs" />
     <Compile Include="Reports\DataModel\ReferalReportDataModel.cs" />
     <Compile Include="Reports\DataModel\RequestReportDataModel.cs" />

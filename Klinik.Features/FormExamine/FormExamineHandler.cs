@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Klinik.Common;
+using Klinik.Common.Enumerations;
 using Klinik.Data;
 using Klinik.Data.DataRepository;
 using Klinik.Entities.Form;
@@ -133,7 +134,7 @@ namespace Klinik.Features
                         queue.CreatedDate = DateTime.Now;
                         queue.TransactionDate = DateTime.Now;
                         queue.Status = (int)RegistrationStatusEnum.New;
-                        queue.SortNumber = GenerateSortNumber(request.Data.PoliToID, request.Data.DoctorToID);
+                        queue.SortNumber = GenerateSortNo(request.Data.PoliToID, request.Data.DoctorToID);
 
                         _context.QueuePolis.Add(queue);
                         _context.SaveChanges();
@@ -148,6 +149,7 @@ namespace Klinik.Features
                         _context.FormExamines.Add(formExamine);
                         _context.SaveChanges();
 
+                      
                         transaction.Commit();
 
                         response.Message = Messages.DataSaved;
@@ -175,7 +177,7 @@ namespace Klinik.Features
         /// </summary>
         /// <param name="poliID"></param>
         /// <returns></returns>
-        private int GenerateSortNumber(int poliID, int doctorID)
+        private int GenerateSortNo(int poliID, int doctorID)
         {
             List<QueuePoli> currentQueueList = _unitOfWork.RegistrationRepository.Get(x => x.PoliTo == poliID &&
             x.TransactionDate.Year == DateTime.Today.Year &&

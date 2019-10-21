@@ -17,10 +17,10 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Patient()
         {
+            this.Appointments = new HashSet<Appointment>();
             this.FormMedicals = new HashSet<FormMedical>();
             this.PatientClinics = new HashSet<PatientClinic>();
             this.QueuePolis = new HashSet<QueuePoli>();
-            this.Appointments = new HashSet<Appointment>();
         }
     
         public long ID { get; set; }
@@ -45,6 +45,8 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string PatientKey { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Appointment> Appointments { get; set; }
         public virtual City City { get; set; }
         public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -53,7 +55,5 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<PatientClinic> PatientClinics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QueuePoli> QueuePolis { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Appointment> Appointments { get; set; }
     }
 }

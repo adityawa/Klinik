@@ -542,8 +542,9 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="inputDefault">RS Rujukan</label>
-                                <div class="col-md-5">
-                                    <input type="text" class="form-control" id="tbRsRujukan_RB" />
+                                <div class="col-md-9">
+                                   
+                                    <select id="tbRsRujukan_RB" class="form-control col-md-9"></select>
                                 </div>
                             </div>
 
@@ -644,6 +645,25 @@
                 format: "dd/mm/yyyy",
                 changeMonth: true,
                 changeYear: true
+            });
+
+            
+             $.get("/Letters/BindDropdownRs",  function (data) {
+                $.each(data, function (index, row) {
+                    $("#tbRsRujukan_RB").append('<option value="' + row.Value + '">' + row.Text + '</option>');
+                });
+            });
+
+            $('#tbRsRujukan_RB').select2();
+
+            $("#tbRsRujukan_RB").change(function () {
+
+                var selected = $('#tbRsRujukan_RB option:selected').text();
+                var split =selected.split('-');
+                if (split.length > 1) {
+                    if (split[1] != '' || split[1] != ' ')
+                        $('#tbRsPhone_RB').val(split[1]);
+                }
             });
 
             $('#btnCreateSuratSakit').click(function (e) {

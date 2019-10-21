@@ -23,10 +23,8 @@ using Klinik.Entities.PurchaseRequestConfig;
 using Klinik.Entities.PurchaseRequestPusat;
 using Klinik.Entities.PurchaseOrderPusat;
 using Klinik.Entities.PurchaseRequestPusatDetail;
-
 using Klinik.Entities.MCUPackageEntities;
 using Klinik.Entities.AppointmentEntities;
-
 using Klinik.Entities.PurchaseOrderPusatDetail;
 using Klinik.Entities.DeliveryOrderPusatDetail;
 using Klinik.Entities.DeliveryOrderPusat;
@@ -392,10 +390,16 @@ namespace Klinik.Common
             CreateMap<MCURegistrationInterface, MCURegistrationModel>()
                 .ForMember(x => x.strReserveDate, map => map.MapFrom(p => Convert.ToDateTime(p.RESERVE_DATE).ToString("dd/MM/yyyy")));
 
+
+            CreateMap<Hospital, HospitalModel>();
+            CreateMap<HospitalModel, Hospital>();
+
+
             //CreateMap<SuratIzinSakitModel, Letter>()
             //    .ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID));
             CreateMap<ReportLog, ReportLogModel>();
             CreateMap<ReportLogModel, ReportLog>();
+
 
         }
     }

@@ -33,11 +33,6 @@ namespace Klinik.Data.DataRepository
         public string Remark { get; set; }
         public string ICDInformation { get; set; }
         public string Result { get; set; }
-        public Nullable<short> RowStatus { get; set; }
-        public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public string ModifiedBy { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<bool> NeedSuratSakit { get; set; }
         public string NeedRest { get; set; }
         public string IsAccident { get; set; }
@@ -45,6 +40,11 @@ namespace Klinik.Data.DataRepository
         public Nullable<System.DateTime> Sampai { get; set; }
         public Nullable<int> Caused { get; set; }
         public Nullable<int> Condition { get; set; }
+        public Nullable<short> RowStatus { get; set; }
+        public string CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual Doctor Doctor { get; set; }
         public virtual FormMedical FormMedical { get; set; }

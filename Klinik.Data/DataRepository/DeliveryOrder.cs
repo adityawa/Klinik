@@ -37,10 +37,10 @@ namespace Klinik.Data.DataRepository
         public string SendBy { get; set; }
         public Nullable<int> SourceId { get; set; }
     
+        public virtual Gudang Gudang { get; set; }
         public virtual PurchaseOrder PurchaseOrder { get; set; }
+        public virtual Gudang Gudang1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DeliveryOrderDetail> DeliveryOrderDetails { get; set; }
-        public virtual Gudang Gudang { get; set; }
-        public virtual Gudang Gudang1 { get; set; }
     }
 }
