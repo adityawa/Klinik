@@ -1358,4 +1358,10 @@
     <value>Data is Empty</value>
 >>>>>>> 041780384a4e3114a899467ec4bd14b9d8995386
   </data>
+  <data name="Top10CostReport" xml:space="preserve">
+    <value>Top 10 Cost Report</value>
+  </data>
+  <data name="Top10RequestReport" xml:space="preserve">
+    <value>Top 10 Request Report</value>
+  </data>
 </root>

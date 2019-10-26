@@ -1,7 +1,126 @@
-﻿
+﻿@model Klinik.Entities.Reports.Top10RequestParamModel
 @{
-    ViewBag.Title = "Top10Request";
+    ViewBag.Title = "Top10Diseases";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Top10Request</h2>
+<section class="panel">
+    <form class="form-horizontal form-bordered" method="post" action="/Reports/Top10DiseasesReport">
+        <header class="panel-heading">
+            <div class="panel-actions">
+                <a href="#" class="fa fa-caret-down"></a>
+            </div>
+            <h5 class="panel-title">
+                @Klinik.Resources.UIMessages.Top10RequestReport
+            </h5>
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PeriodMonthStart</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.MonthStart, (IEnumerable<SelectListItem>)ViewBag.Months, new { @class = "form-control", @id = "ddlMonthStart" })
+                    @Html.ValidationMessageFor(model => model.MonthStart)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PeriodYearStart</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.YearStart, (IEnumerable<SelectListItem>)ViewBag.Years, new { @class = "form-control", @id = "ddlStartYear" })
+                    @Html.ValidationMessageFor(model => model.YearStart)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PeriodMonthEnd</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.MonthEnd, (IEnumerable<SelectListItem>)ViewBag.Months, new { @class = "form-control", @id = "ddlMonthStart" })
+                    @Html.ValidationMessageFor(model => model.MonthEnd)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.PeriodYearEnd</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.YearEnd, (IEnumerable<SelectListItem>)ViewBag.Years, new { @class = "form-control", @id = "ddlStartYear" })
+                    @Html.ValidationMessageFor(model => model.YearEnd)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Clinic</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.ClinicId, (IEnumerable<SelectListItem>)ViewBag.Clinics, new { @class = "form-control", @id = "ddlClinic" })
+                    @Html.ValidationMessageFor(model => model.ClinicId)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.Category</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.SelectedCategory, Model.Categories, new { @class = "form-control", @id = "ddlCategory" })
+                    @Html.ValidationMessageFor(model => model.SelectedCategory)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.CategoryItem</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.SelectedCategoryItem, Model.CategoryItems, new { @class = "form-control", @id = "ddlCategoryItem" })
+                    @Html.ValidationMessageFor(model => model.SelectedCategoryItem)
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-primary">@Klinik.Resources.UIMessages.Generate</button>
+        </div>
+    </form>
+
+</section>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#ddlMonthStart').select2();
+            $('#ddlYearStart').select2();
+            $('#ddlMonthEnd').select2();
+            $('#ddlYearEnd').select2();
+            $('#ddlClinic').select2();
+
+            toastr.options = {
+                "closeButton": false,
+                "positionClass": "toast-top-full-width",
+                "onclick": null,
+                "showDuration": "0",
+                "hideDuration": "0",
+                "timeOut": "2000",
+                "showMethod": "fadeIn"
+            };
+
+
+            $(function () {
+                $("#ddlCategory").change(function () {
+                        var selectedItem = $(this).val();
+                        var ddlCategoryItems = $("#ddlCategoryItem");
+                        var versionsProgress = $("#states-loading-progress");
+                        versionsProgress.show();
+                        $.ajax({
+                            cache: false,
+                            type: "GET",
+                            url: "@(Url.Action("GetGeneralMasterByType"))",
+                            data: { "type": selectedItem },
+                            success: function (data) {
+                                ddlCategoryItems.html('');
+                                ddlCategoryItems.append($('<option></option>').val('0').html('All'));
+                                $.each(data, function (id, option) {
+                                    ddlCategoryItems.append($('<option></option>').val(option.Value).html(option.Name));
+                                });
+                                versionsProgress.hide();
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                alert('Failed to retrieve versions.');
+                                versionsProgress.hide();
+                            }
+                        });
+                    });
+                });
+          });
+
+    </script>
+}
 

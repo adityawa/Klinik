@@ -321,7 +321,12 @@
     <Compile Include="RealisasiSuratRujukan\RealisasiSuratRujukanRequest.cs" />
     <Compile Include="RealisasiSuratRujukan\RealisasiSuratRujukanResponse.cs" />
     <Compile Include="RealisasiSuratRujukan\RealisasiSuratRujukanValidator.cs" />
+    <Compile Include="Reports\Helper\ReportHelperOptions.cs" />
     <Compile Include="Reports\Helper\ReportLogHelper.cs" />
+    <Compile Include="Reports\Helper\Top10CostHelper.cs" />
+    <Compile Include="Reports\Helper\Top10DiseaseHelper.cs" />
+    <Compile Include="Reports\Helper\Top10ReferalHelper.cs" />
+    <Compile Include="Reports\Helper\Top10RequestHelper.cs" />
     <Compile Include="Reports\ReportLog\ReportLogHandler.cs" />
     <Compile Include="Reports\ReportLog\ReportLogRequest.cs" />
     <Compile Include="Reports\ReportLog\ReportLogResponse.cs" />
