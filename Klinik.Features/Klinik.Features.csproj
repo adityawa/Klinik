@@ -82,6 +82,9 @@
     <Compile Include="Account\PasswordHistory\PasswordHistoryRequest.cs" />
     <Compile Include="Account\PasswordHistory\PasswordHistoryResponse.cs" />
     <Compile Include="Account\PasswordHistory\PasswordHistoryValidator.cs" />
+    <Compile Include="Administration\LogonUsers\LogonUserHandler.cs" />
+    <Compile Include="Administration\LogonUsers\LogonUserRequest.cs" />
+    <Compile Include="Administration\LogonUsers\LogonUserResponse.cs" />
     <Compile Include="Administration\Log\LogHandler.cs" />
     <Compile Include="Administration\Log\LogRequest.cs" />
     <Compile Include="Administration\Log\LogResponse.cs" />

@@ -1770,12 +1770,10 @@
     <Content Include="Views\MasterData\GeneralMasterList.cshtml" />
     <Content Include="Views\MasterData\CreateOrEditLookUpGeneralMaster.cshtml" />
     <Content Include="Views\Letters\ExportSuratIzinSakit2Pdf.cshtml" />
-
     <Content Include="Views\RealisasiSuratRujukan\ListSurat.cshtml" />
     <Content Include="Views\PoliClaim\FormExamine.cshtml" />
-
     <Content Include="Views\Shared\HighCharts\_HighChart.cshtml" />
-
+    <Content Include="Views\Administration\ViewActiveUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

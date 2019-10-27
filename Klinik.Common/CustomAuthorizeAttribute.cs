@@ -33,7 +33,9 @@ namespace Klinik.Common
         /// <param name="filterContext"></param>
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
+            bool isSessionActive = true;
             var account = (AccountModel)filterContext.HttpContext.Session["UserLogon"];
+            var sessionID= filterContext.HttpContext.Session["CurrSession"].ToString();
             if (account == null)
             {
                 // redirect to login page if user not logged in  
@@ -51,11 +53,18 @@ namespace Klinik.Common
                     IsAuthorized = true;
                 }
 
-             
-
+                string _userName = account.UserName;
+                isSessionActive = _context.LogonUsers.Any(x => x.UserName == _userName && x.SessionID == sessionID && x.Status==true);
+            
+              
                 if (!IsAuthorized)
                 {
                     this.HandleUnauthorizedRequest(filterContext);
+                }
+
+                if (!isSessionActive)
+                {
+                    this.HandleInactiveSession(filterContext);
                 }
             }
         }
@@ -67,6 +76,12 @@ namespace Klinik.Common
         {
             filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary { { "action", "Index" }, { "controller", "Unauthorized" } });
         }
+
+        protected void HandleInactiveSession(AuthorizationContext filterContext)
+        {
+            filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary { { "action", "Login" }, { "controller", "Account" } });
+        }
+
     }
 }
 
