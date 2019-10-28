@@ -55,7 +55,8 @@
 
                     <div class="wrap-inputMMS validate-input m-b-18" data-validate="Organization is required">
                         <span class="label-inputMMS">@Klinik.Resources.UIMessages.Organization</span>
-                        @Html.TextBoxFor(x => x.Organization, null, new { @class = "inputMMS", @id = "tbOrganization", @placeholder = @Klinik.Resources.UIMessages.EnterOrganizationCode, @Value = "M008" })
+                      
+                        @Html.DropDownListFor(x => x.Organization, (IEnumerable<SelectListItem>)ViewBag.Organization, new {@class="form-control", @id="tbOrganization", @placeholder = @Klinik.Resources.UIMessages.EnterOrganizationCode })
                         <span class="focus-inputMMS"></span>
                     </div>
 

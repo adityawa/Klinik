@@ -29,6 +29,7 @@ namespace Klinik.Web.Controllers
 
 		public ActionResult Login()
 		{
+            ViewBag.Organization = GetOrganizationList();
 			return View();
 		}
 
@@ -266,5 +267,22 @@ namespace Klinik.Web.Controllers
 				throw;
 			}
 		}
+
+        [NonAction]
+        private List<SelectListItem> GetOrganizationList()
+        {
+            List<SelectListItem> ls = new List<SelectListItem>();
+            var _organizations = _unitOfWork.OrganizationRepository.Get(x => x.RowStatus == 0);
+            foreach(var item in _organizations)
+            {
+                ls.Add(new SelectListItem
+                {
+                    Text=item.OrgName,
+                    Value=item.OrgCode
+                });
+            }
+
+            return ls;
+        }
 	}
 }
