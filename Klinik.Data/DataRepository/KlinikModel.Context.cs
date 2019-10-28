@@ -106,8 +106,8 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<VendorProduct> VendorProducts { get; set; }
-        public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
         public virtual DbSet<Hospital> Hospitals { get; set; }
+        public virtual DbSet<LogonUser> LogonUsers { get; set; }
     
         [DbFunction("KlinikDBEntities", "fusp_registrations_get_by_status")]
         public virtual IQueryable<fusp_registrations_get_by_status_Result> fusp_registrations_get_by_status(string documentStatus, string isTransferred)

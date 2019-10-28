@@ -10,7 +10,7 @@ namespace Klinik.Entities.PurchaseRequest
     public class PurchaseRequestModel : BaseModel
     {
         public string prnumber { get; set; }
-        public Nullable<System.DateTime> prdate { get; set; }
+        public Nullable<DateTime> prdate { get; set; }
         public string request_by { get; set; }
         public string approve_by { get; set; }
         public Nullable<int> approve { get; set; }

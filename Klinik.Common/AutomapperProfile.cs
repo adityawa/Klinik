@@ -400,7 +400,7 @@ namespace Klinik.Common
             CreateMap<ReportLog, ReportLogModel>();
             CreateMap<ReportLogModel, ReportLog>();
 
-
+            CreateMap<LogonUser, LogonUserModel>();
         }
     }
 }

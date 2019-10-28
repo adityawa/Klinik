@@ -38,44 +38,86 @@ namespace Klinik.Features
         public AccountResponse AuthenticateUser(AccountRequest request)
         {
             AccountResponse response = new AccountResponse();
-
-            //get Org ID
-            var _getOrganization = _unitOfWork.OrganizationRepository.GetFirstOrDefault(x => x.OrgCode == request.Data.Organization);
-            var gudangid = _unitOfWork.GudangRepository.GetFirstOrDefault(a => a.OrganizationId == _getOrganization.ID);
-            if (_getOrganization != null)
+            try
             {
-                var _getByUname = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName == request.Data.UserName && x.Status == true && x.ExpiredDate > DateTime.Now && x.OrganizationID == _getOrganization.ID && x.RowStatus==0);
-                if (_getByUname != null)
+                //get Org ID
+                var _getOrganization = _unitOfWork.OrganizationRepository.GetFirstOrDefault(x => x.OrgCode == request.Data.Organization);
+                var gudangid = _unitOfWork.GudangRepository.GetFirstOrDefault(a => a.OrganizationId == _getOrganization.ID);
+                if (_getOrganization != null)
                 {
-                    var _decryptedPassword = CommonUtils.Decryptor(_getByUname.Password, CommonUtils.KeyEncryptor);
-                    if (_decryptedPassword == request.Data.Password)
+                    var _getByUname = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.UserName == request.Data.UserName && x.Status == true && x.ExpiredDate > DateTime.Now && x.OrganizationID == _getOrganization.ID && x.RowStatus == 0);
+                    if (_getByUname != null)
                     {
-                        response.Entity.UserName = _getByUname.UserName;
-                        response.Entity.UserID = _getByUname.ID;
-                        response.Entity.EmployeeID = _getByUname.EmployeeID ?? 0;
-                        response.Entity.Organization = _getOrganization.OrgCode;
-                        response.Entity.ClinicID = _getOrganization.KlinikID ?? 0;
-                        response.Entity.GudangID =   gudangid != null ? gudangid.id : 0;
-                        var _getRoles = _unitOfWork.UserRoleRepository.Get(x => x.UserID == response.Entity.UserID);
-
-                        foreach (var role in _getRoles)
+                        var _decryptedPassword = CommonUtils.Decryptor(_getByUname.Password, CommonUtils.KeyEncryptor);
+                        if (_decryptedPassword == request.Data.Password)
                         {
-                            response.Entity.Roles.Add(role.RoleID);
+                            response.Entity.UserName = _getByUname.UserName;
+                            response.Entity.UserID = _getByUname.ID;
+                            response.Entity.EmployeeID = _getByUname.EmployeeID ?? 0;
+                            response.Entity.Organization = _getOrganization.OrgCode;
+                            response.Entity.ClinicID = _getOrganization.KlinikID ?? 0;
+                            response.Entity.GudangID = gudangid != null ? gudangid.id : 0;
+                            var _getRoles = _unitOfWork.UserRoleRepository.Get(x => x.UserID == response.Entity.UserID);
+
+                            foreach (var role in _getRoles)
+                            {
+                                response.Entity.Roles.Add(role.RoleID);
+                            }
+
+                            var _getRolePrivileges = _unitOfWork.RolePrivRepository.Get(x => response.Entity.Roles.Contains(x.RoleID));
+
+                            foreach (var rp in _getRolePrivileges)
+                            {
+                                response.Entity.Privileges.PrivilegeIDs.Add(rp.PrivilegeID);
+                            }
+
+                            //additional feature, Record Logon User To table
+                            var logonUserEntity = new LogonUser
+                            {
+                                CreatedDate = DateTime.Now,
+                                IPAddress = request.IPAddress,
+                                PCName = request.PCName,
+                                Status = true,
+                                SessionID = request.SessionID,
+                                CreatedBy = "SYSTEM",
+                                UserName = request.Data.UserName,
+                                Browser=request.BrowserName
+                            };
+                            try
+                            {
+                                _unitOfWork.LogonUserRepository.Insert(logonUserEntity);
+                                int _tempRes = _unitOfWork.Save();
+                                long _id = logonUserEntity.Id;
+                                if(_tempRes>0)
+                                {
+                                    var temData = _unitOfWork.LogonUserRepository.Get(x => x.Id != _id && x.UserName==request.Data.UserName);
+                                    foreach(var item in temData)
+                                    {
+                                        item.Status = false;
+                                        _unitOfWork.LogonUserRepository.Update(item);
+                                    }
+                                    _unitOfWork.Save();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+
+                            CommandLog(true, ClinicEnums.Module.LOGIN, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
                         }
-
-                        var _getRolePrivileges = _unitOfWork.RolePrivRepository.Get(x => response.Entity.Roles.Contains(x.RoleID));
-
-                        foreach (var rp in _getRolePrivileges)
+                        else
                         {
-                            response.Entity.Privileges.PrivilegeIDs.Add(rp.PrivilegeID);
-                        }
+                            response.Status = false;
+                            response.Message = Messages.InvalidPassword;
 
-                        CommandLog(true, ClinicEnums.Module.LOGIN, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
+                            CommandLog(false, ClinicEnums.Module.LOGIN, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
+                        }
                     }
                     else
                     {
                         response.Status = false;
-                        response.Message = Messages.InvalidPassword;
+                        response.Message = Messages.InvalidUsernamePassword;
 
                         CommandLog(false, ClinicEnums.Module.LOGIN, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
                     }
@@ -83,18 +125,17 @@ namespace Klinik.Features
                 else
                 {
                     response.Status = false;
-                    response.Message = Messages.InvalidUsernamePassword;
+                    response.Message = Messages.InvalidOrganizationCode;
 
                     CommandLog(false, ClinicEnums.Module.LOGIN, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
                 }
             }
-            else
+            catch (Exception ex)
             {
                 response.Status = false;
-                response.Message = Messages.InvalidOrganizationCode;
-
-                CommandLog(false, ClinicEnums.Module.LOGIN, Constants.Command.LOGIN_TO_SYSTEM, request.Data);
+                response.Message = ex.Message;
             }
+
 
             return response;
         }

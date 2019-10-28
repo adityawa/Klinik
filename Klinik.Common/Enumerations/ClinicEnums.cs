@@ -9,7 +9,9 @@
         {
             SUCCESS,
             ERROR,
-            UNRECOGNIZED
+            UNRECOGNIZED,
+            ACTIVE,
+            INACTIVE
         }
 
         public enum MasterTypes

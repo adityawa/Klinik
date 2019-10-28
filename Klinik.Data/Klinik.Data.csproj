@@ -62,9 +62,6 @@
     <Compile Include="DataRepository\Clinic.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataRepository\database_firewall_rules.cs">
-      <DependentUpon>KlinikModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataRepository\DeliveryOrder.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
@@ -168,6 +165,9 @@
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\Log.cs">
+      <DependentUpon>KlinikModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataRepository\LogonUser.cs">
       <DependentUpon>KlinikModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataRepository\LookupCategory.cs">
@@ -334,13 +334,9 @@
       <DependentUpon>KlinikModel.edmx</DependentUpon>
       <LastGenOutput>KlinikModel.cs</LastGenOutput>
     </Content>
-    <Content Include="DB\19 agustus 2019.sql" />
-    <Content Include="DB\20 agustus 2019.sql" />
-    <Content Include="DB\28 agustus 2019.sql" />
-    <Content Include="DB\DBKlinikDev_20190817.sql" />
-    <Content Include="DB\DBKlinik_GenScripts_20190909.sql" />
     <Content Include="DB\AddLookupTable_10-9-2019.sql" />
     <Content Include="DB\InsertGeneralMasterForTop10Referal.sql" />
+    <Content Include="DB\KlinikDB_20191027.sql" />
     <Content Include="DB\ZainalArifinKlinik15-09-2019.sql" />
     <Content Include="DB\ZainalA_15092019_ClassifyAge.sql" />
     <Content Include="DB\ZainalA_15092019_GetAge.sql" />
