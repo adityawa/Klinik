@@ -3258,9 +3258,9 @@ namespace Klinik.Resources {
         /// <summary>
         ///   Looks up a localized string similar to RS Rujukan.
         /// </summary>
-        public static string RS_Rujukan {
+        public static string RSRujukan {
             get {
-                return ResourceManager.GetString("RS Rujukan", resourceCulture);
+                return ResourceManager.GetString("RSRujukan", resourceCulture);
             }
         }
         
