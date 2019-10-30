@@ -14,6 +14,8 @@ namespace Klinik.Features.Reports
         private const string DISPLAY_REPORTS = "VIEW_REPORTS";
         private const string DISPLAY_TOP_10_DISEASES_REPORT = "VIEW_TOP_10_DISEASES";
         private const string DISPLAY_TOP_10_REFERAL_REPORT = "VIEW_TOP_10_REFERALS";
+        private const string DISPLAY_TOP_10_COST_REPORT = "VIEW_TOP_10_COST";
+        private const string DISPLAY_TOP_10_REQUEST_REPORT = "VIEW_TOP_10_REQUEST";
 
         public ReportsValidator(IUnitOfWork unitOfWork, KlinikDBEntities context)
         {
@@ -69,6 +71,58 @@ namespace Klinik.Features.Reports
             if (response.Status)
             {
                 response = new ReportsHandler(_unitOfWork).GenerateTop10ReferalReport(request);
+            }
+        }
+
+        public void ValidateTop10CostReport(Top10CostReportRequest request, out Top10CostReportResponse response)
+        {
+            bool isHavePrivilege = true;
+            response = new Top10CostReportResponse();
+
+            try
+            {
+                isHavePrivilege = IsHaveAuthorization(DISPLAY_TOP_10_COST_REPORT, request.Data.Account.Privileges.PrivilegeIDs);
+                if (!isHavePrivilege)
+                {
+                    response.Status = false;
+                    response.Message = Messages.UnauthorizedAccess;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = ex.Message;
+            }
+
+            if (response.Status)
+            {
+                response = new ReportsHandler(_unitOfWork).GenerateTop10CostReport(request);
+            }
+        }
+
+        public void ValidateTop10RequestReport(Top10RequestReportRequest request, out Top10RequestReportResponse response)
+        {
+            bool isHavePrivilege = true;
+            response = new Top10RequestReportResponse();
+
+            try
+            {
+                isHavePrivilege = IsHaveAuthorization(DISPLAY_TOP_10_REQUEST_REPORT, request.Data.Account.Privileges.PrivilegeIDs);
+                if (!isHavePrivilege)
+                {
+                    response.Status = false;
+                    response.Message = Messages.UnauthorizedAccess;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = ex.Message;
+            }
+
+            if (response.Status)
+            {
+                response = new ReportsHandler(_unitOfWork).GenerateTop10RequestReport(request);
             }
         }
     }

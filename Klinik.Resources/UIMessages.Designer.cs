@@ -19,7 +19,7 @@ namespace Klinik.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class UIMessages {
@@ -381,6 +381,15 @@ namespace Klinik.Resources {
         public static string Caused {
             get {
                 return ResourceManager.GetString("Caused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gudang Pusat.
+        /// </summary>
+        public static string CentralWarehouse {
+            get {
+                return ResourceManager.GetString("CentralWarehouse", resourceCulture);
             }
         }
         
@@ -3765,6 +3774,24 @@ namespace Klinik.Resources {
         public static string Volume {
             get {
                 return ResourceManager.GetString("Volume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gudang.
+        /// </summary>
+        public static string Warehouse {
+            get {
+                return ResourceManager.GetString("Warehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tipe Gudang .
+        /// </summary>
+        public static string WarehouseType {
+            get {
+                return ResourceManager.GetString("WarehouseType", resourceCulture);
             }
         }
         

@@ -140,6 +140,7 @@
             public const string PATIENT = "Patient";
             public const string MONTH = "Month";
             public const string REQUESTTYPE = "RequestType";
+            public const string GUDANGTYPE = "WareHouseType";
         }
 
         public static class ROLE_NAME
@@ -154,5 +155,10 @@
             public const string ReportDBConnString = "ReportConnection";
         }
 
+        public static class WareHouseTypes
+        {
+            public const string Warehouse = "Gudang";
+            public const string CentralWarehouse = "Pusat";
+        }
     }
 }

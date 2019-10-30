@@ -24,6 +24,8 @@ namespace Klinik.Entities.Reports
 
         public int? ClinicId { get; set; }
 
+        public string WarehouseType { get; set; }
+
         [Required(ErrorMessageResourceType = typeof(Resources.Messages), ErrorMessageResourceName = "CategoryIsMandatory")]
         public string SelectedCategory { get; set; }
 

@@ -332,10 +332,14 @@
     <Compile Include="Reports\ReportLog\ReportLogResponse.cs" />
     <Compile Include="Reports\ReportsHandler.cs" />
     <Compile Include="Reports\ReportsValidator.cs" />
+    <Compile Include="Reports\Top10CostReportRequest.cs" />
+    <Compile Include="Reports\Top10CostReportResponse.cs" />
     <Compile Include="Reports\Top10DiseaseReportRequest.cs" />
     <Compile Include="Reports\Top10DiseaseReportResponse.cs" />
     <Compile Include="Reports\Top10ReferalReportResponse.cs" />
     <Compile Include="Reports\Top10ReferalReportRequest.cs" />
+    <Compile Include="Reports\Top10RequestReportRequest.cs" />
+    <Compile Include="Reports\Top10RequestReportResponse.cs" />
     <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyHandler.cs" />
     <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyRequest.cs" />
     <Compile Include="SuratReferensi\SuratBadanSehat\HealthBodyResponse.cs" />

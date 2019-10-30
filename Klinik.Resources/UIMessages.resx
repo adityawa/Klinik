@@ -1341,7 +1341,6 @@
   <data name="ViewHistoryPatient" xml:space="preserve">
     <value>View History Patient</value>
   </data>
-
   <data name="ListSuratRujukan" xml:space="preserve">
     <value>List Surat Rujukan</value>
   </data>
@@ -1350,18 +1349,26 @@
   </data>
   <data name="RS Rujukan" xml:space="preserve">
     <value>RS Rujukan</value>
-</data>
+  </data>
   <data name="GenerateImage" xml:space="preserve">
     <value>Generate Image</value>
   </data>
   <data name="DataIsEmpty" xml:space="preserve">
-    <value>Data is Empty</value>
->>>>>>> 041780384a4e3114a899467ec4bd14b9d8995386
+    <value>&gt;&gt;&gt;&gt;&gt;&gt;&gt; 041780384a4e3114a899467ec4bd14b9d8995386</value>
   </data>
   <data name="Top10CostReport" xml:space="preserve">
     <value>Top 10 Cost Report</value>
   </data>
   <data name="Top10RequestReport" xml:space="preserve">
     <value>Top 10 Request Report</value>
+  </data>
+  <data name="CentralWarehouse" xml:space="preserve">
+    <value>Gudang Pusat</value>
+  </data>
+  <data name="Warehouse" xml:space="preserve">
+    <value>Gudang</value>
+  </data>
+  <data name="WarehouseType" xml:space="preserve">
+    <value>Tipe Gudang </value>
   </data>
 </root>
