@@ -29,6 +29,7 @@ namespace Klinik.Web.Controllers
 
 		public ActionResult Login()
 		{
+            ViewBag.Organization = GetOrganizationList();
 			return View();
 		}
 
@@ -149,12 +150,22 @@ namespace Klinik.Web.Controllers
 				}
 			};
 
-			AccountResponse response = new AccountResponse();
+            string ipaddr = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (string.IsNullOrEmpty(ipaddr))
+            {
+                ipaddr = Request.ServerVariables["REMOTE_ADDR"];
+            }
+            request.IPAddress = ipaddr;
+            request.PCName = System.Net.Dns.GetHostEntry(Request.ServerVariables["REMOTE_ADDR"]).HostName;
+            request.BrowserName = Request.Browser.Browser;
+            request.SessionID= System.Web.HttpContext.Current.Session.SessionID;
+            AccountResponse response = new AccountResponse();
+
 			new AccountValidator(_unitOfWork).Validate(request, out response);
 			if (response.Status)
 			{
 				Session["UserLogon"] = response.Entity;
-
+                Session["CurrSession"] = request.SessionID;
 				if (response.Entity.Privileges.PrivilegeIDs != null)
 				{
                     OneLoginSession.Account = response.Entity;
@@ -256,5 +267,22 @@ namespace Klinik.Web.Controllers
 				throw;
 			}
 		}
+
+        [NonAction]
+        private List<SelectListItem> GetOrganizationList()
+        {
+            List<SelectListItem> ls = new List<SelectListItem>();
+            var _organizations = _unitOfWork.OrganizationRepository.Get(x => x.RowStatus == 0);
+            foreach(var item in _organizations)
+            {
+                ls.Add(new SelectListItem
+                {
+                    Text=item.OrgName,
+                    Value=item.OrgCode
+                });
+            }
+
+            return ls;
+        }
 	}
 }

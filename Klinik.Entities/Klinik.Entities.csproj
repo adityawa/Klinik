@@ -72,6 +72,7 @@
     <Compile Include="Account\PasswordHistoryModel.cs" />
     <Compile Include="Account\ResetPasswordModel.cs" />
     <Compile Include="Administration\LogModel.cs" />
+    <Compile Include="Administration\LogonUserModel.cs" />
     <Compile Include="AppointmentEntities\AppointmentModel.cs" />
     <Compile Include="BaseChartModel.cs" />
     <Compile Include="BaseReportLogModel.cs" />

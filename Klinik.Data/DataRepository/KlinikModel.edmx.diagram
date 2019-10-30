@@ -84,7 +84,6 @@
         <EntityTypeShape EntityType="KlinikDBModel.UserRole" Width="1.5" PointX="12.75" PointY="118.5" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.Vendor" Width="1.5" PointX="11.25" PointY="70.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KlinikDBModel.VendorProduct" Width="1.5" PointX="13.5" PointY="98.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlinikDBModel.database_firewall_rules" Width="1.5" PointX="6.75" PointY="8.75" IsExpanded="true" />
         <AssociationConnector Association="KlinikDBModel.FK_Appointment_Clinic" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_Appointment_Doctor" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_Appointment_MCUPackage" ManuallyRouted="false" />
@@ -205,6 +204,7 @@
         <AssociationConnector Association="KlinikDBModel.FK_UserRole_User" ManuallyRouted="false" />
         <AssociationConnector Association="KlinikDBModel.FK_VendorProduct_Vendor" ManuallyRouted="false" />
         <EntityTypeShape EntityType="KlinikDBModel.Hospital" Width="1.5" PointX="3.375" PointY="9.75" />
+        <EntityTypeShape EntityType="KlinikDBModel.LogonUser" Width="1.5" PointX="9.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

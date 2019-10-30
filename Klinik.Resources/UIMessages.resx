@@ -1356,6 +1356,21 @@
   <data name="DataIsEmpty" xml:space="preserve">
     <value>&gt;&gt;&gt;&gt;&gt;&gt;&gt; 041780384a4e3114a899467ec4bd14b9d8995386</value>
   </data>
+  <data name="Browser" xml:space="preserve">
+    <value>Browser</value>
+  </data>
+  <data name="DisableConfirmation" xml:space="preserve">
+    <value>Are you sure to Disable this user Status?</value>
+  </data>
+  <data name="IPAddress" xml:space="preserve">
+    <value>IP Address</value>
+  </data>
+  <data name="PCName" xml:space="preserve">
+    <value>PC Name</value>
+  </data>
+  <data name="SessionID" xml:space="preserve">
+    <value>Session ID</value>
+  </data>
   <data name="Top10CostReport" xml:space="preserve">
     <value>Top 10 Cost Report</value>
   </data>

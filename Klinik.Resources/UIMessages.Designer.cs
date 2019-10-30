@@ -322,6 +322,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browser.
+        /// </summary>
+        public static string Browser {
+            get {
+                return ResourceManager.GetString("Browser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Business Unit.
         /// </summary>
         public static string BusinessUnit {
@@ -768,6 +777,15 @@ namespace Klinik.Resources {
         public static string Dinyatakan {
             get {
                 return ResourceManager.GetString("Dinyatakan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure to Disable this user Status?.
+        /// </summary>
+        public static string DisableConfirmation {
+            get {
+                return ResourceManager.GetString("DisableConfirmation", resourceCulture);
             }
         }
         
@@ -1497,6 +1515,15 @@ namespace Klinik.Resources {
         public static string Invoice {
             get {
                 return ResourceManager.GetString("Invoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP Address.
+        /// </summary>
+        public static string IPAddress {
+            get {
+                return ResourceManager.GetString("IPAddress", resourceCulture);
             }
         }
         
@@ -2437,6 +2464,15 @@ namespace Klinik.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PC Name.
+        /// </summary>
+        public static string PCName {
+            get {
+                return ResourceManager.GetString("PCName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pekerjaan.
         /// </summary>
         public static string Pekerjaan {
@@ -3333,6 +3369,15 @@ namespace Klinik.Resources {
         public static string ServiceList {
             get {
                 return ResourceManager.GetString("ServiceList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Session ID.
+        /// </summary>
+        public static string SessionID {
+            get {
+                return ResourceManager.GetString("SessionID", resourceCulture);
             }
         }
         
