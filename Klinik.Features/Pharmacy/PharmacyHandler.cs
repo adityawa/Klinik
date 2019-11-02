@@ -41,6 +41,9 @@ namespace Klinik.Features.Pharmacy
                 _farmasiID = _qry2.ID;
             PharmacyResponse response = new PharmacyResponse();
 
+            var _orgID = _unitOfWork.OrganizationRepository.GetFirstOrDefault(x => x.OrgCode == request.Account.Organization) == null ? 0 : _unitOfWork.OrganizationRepository.GetFirstOrDefault(x => x.OrgCode == request.Account.Organization).ID;
+            var _gudangID = _unitOfWork.GudangRepository.GetFirstOrDefault(x => x.OrganizationId == _orgID) == null ? 0 : _unitOfWork.GudangRepository.GetFirstOrDefault(x => x.OrganizationId == _orgID).id;
+
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
@@ -53,12 +56,10 @@ namespace Klinik.Features.Pharmacy
                     queue.Status = 1;
                     _context.SaveChanges();
 
-
-
                     #region :: INSERT To PRODUCT::
                     // unit & category ini sementara hardcode dulu, nantinya bakal dipilih dari screen farmasi
-                    var _prdCatIdOral = _unitOfWork.ProductCategoryRepository.Get(x => x.Name.ToLower() == ORAL).FirstOrDefault() == null ? 0 : _unitOfWork.ProductCategoryRepository.Get(x => x.Name.ToLower() == ORAL).FirstOrDefault().ID;
-                    var _prdCatIdRacikan = _unitOfWork.ProductCategoryRepository.Get(x => x.Name.ToLower() == CONCOCTION).FirstOrDefault() == null ? 0 : _unitOfWork.ProductCategoryRepository.Get(x => x.Name.ToLower() == CONCOCTION).FirstOrDefault().ID;
+                    var _prdCatIdOral = _unitOfWork.ProductCategoryRepository.Get(x => x.Name.ToLower() == ORAL && x.RowStatus == 0).FirstOrDefault() == null ? 0 : _unitOfWork.ProductCategoryRepository.Get(x => x.Name.ToLower() == ORAL && x.RowStatus == 0).FirstOrDefault().ID;
+                    var _prdCatIdRacikan = _unitOfWork.ProductCategoryRepository.Get(x => x.Name.ToLower() == CONCOCTION && x.RowStatus == 0).FirstOrDefault() == null ? 0 : _unitOfWork.ProductCategoryRepository.Get(x => x.Name.ToLower() == CONCOCTION && x.RowStatus == 0).FirstOrDefault().ID;
 
                     var _prdUnitId = _unitOfWork.ProductUnitRepository.Get(x => x.Name.ToLower() == PIECE).FirstOrDefault() == null ? 0 : _unitOfWork.ProductUnitRepository.Get(x => x.Name.ToLower() == PIECE).FirstOrDefault().ID;
 
@@ -74,10 +75,11 @@ namespace Klinik.Features.Pharmacy
                                 Name = tobeInsert.Detail.ProductName,
                                 ProductCategoryID = tobeInsert.Detail.ProcessType.ToLower() == MedicineTypeEnum.REQUEST.ToString().ToLower() ? _prdCatIdOral : _prdCatIdRacikan,
                                 ProductUnitID = _prdUnitId,
-                                RetailPrice = 0,
+                                RetailPrice = CountRetailPriceForRacikan(request.Data.ObatRacikanKomponens, tobeInsert.Id) / Convert.ToDecimal(tobeInsert.Qty ?? 1),
                                 RowStatus = 0,
                                 CreatedBy = request.Account.UserName,
                                 CreatedDate = DateTime.Now
+
                             };
 
                             _context.Products.Add(entity);
@@ -123,11 +125,13 @@ namespace Klinik.Features.Pharmacy
 
                                 entity = new Klinik.Data.DataRepository.ProductInGudang
                                 {
+                                    GudangId = _gudangID,
                                     stock = Convert.ToInt32(Math.Round(tobeInsert.Detail.Qty ?? 0)),
                                     ProductId = (Int32)tobeInsert.Detail.Id,
                                     CreatedBy = request.Account.UserName,
                                     CreatedDate = DateTime.Now,
-                                    RowStatus = 0
+                                    RetailPrice = CountRetailPriceForRacikan(request.Data.ObatRacikanKomponens, tobeInsert.Id) / Convert.ToDecimal(tobeInsert.Qty ?? 1),
+                                    RowStatus = 0,
                                 };
 
 
@@ -147,24 +151,24 @@ namespace Klinik.Features.Pharmacy
 
 
                             }
+                            _context.ProductInGudangs.Add(entity);
+                            _context.SaveChanges();
                         }
 
 
                         else
                         {
-                            entity = new Klinik.Data.DataRepository.ProductInGudang
+              
+                            //just update stock
+                            var tobeUpdate = _unitOfWork.ProductInGudangRepository.GetFirstOrDefault(x => x.ProductId == tobeInsert.Detail.ProductID && x.GudangId == _gudangID);
+                            if (tobeUpdate != null)
                             {
-                                stock = -Convert.ToInt32(Math.Round(tobeInsert.Detail.Qty ?? 0)),
-                                ProductId = tobeInsert.Detail.ProductID,
-                                CreatedBy = request.Account.UserName,
-                                CreatedDate = DateTime.Now,
-                                RowStatus = 0
-                            };
-
+                                tobeUpdate.stock = tobeUpdate.stock - Convert.ToInt32(Math.Round(tobeInsert.Detail.Qty ?? 0));
+                                _context.SaveChanges();
+                            }
                         }
 
-                        _context.ProductInGudangs.Add(entity);
-                        _context.SaveChanges();
+
 
                     }
 
@@ -177,21 +181,16 @@ namespace Klinik.Features.Pharmacy
                         CollOfRacikanKomponen = JsonConvert.DeserializeObject<List<KomponenObatRacikan>>(request.Data.ObatRacikanKomponens);
                         foreach (var itemDet in CollOfRacikanKomponen)
                         {
-                            var _convAmt = Convert.ToDecimal(itemDet.Amount.Replace('.', ','));
-                            var entDetil = new Klinik.Data.DataRepository.ProductInGudang
+                            int id_komponen = Convert.ToInt32(itemDet.Id);
+                            var tobeUpdate2 = _unitOfWork.ProductInGudangRepository.GetFirstOrDefault(x => x.ProductId == id_komponen && x.GudangId == _gudangID);
+                            if (tobeUpdate2 != null)
                             {
-                                stock = -Convert.ToInt32(Math.Round(_convAmt)),
-                                ProductId = itemDet.Id == null ? 0 : Convert.ToInt32(itemDet.Id),
-                                CreatedBy = request.Account.UserName,
-                                CreatedDate = DateTime.Now,
-                                RowStatus = 0
-                            };
-
-                            _context.ProductInGudangs.Add(entDetil);
-                            _context.SaveChanges();
+                                tobeUpdate2.stock = tobeUpdate2.stock - Convert.ToInt32(Math.Round(Convert.ToDecimal( itemDet.Amount??"0")));
+                                _context.SaveChanges();
+                            }
                         }
                     }
-                   
+
                     #endregion
 
                     #region ::INSERT TO PR for new Medicine::
@@ -202,6 +201,7 @@ namespace Klinik.Features.Pharmacy
                     {
                         var entityPrHdr = new Persistence.PurchaseRequest
                         {
+                            FormMedicalID = request.Data.FormMedicalID,
                             prnumber = $"PR-{DateTime.Now.ToString("yyyyMMddhhmmss")}",//will be changed with autogenerate PR No
                             prdate = DateTime.Now,
                             RowStatus = 0,
@@ -233,18 +233,18 @@ namespace Klinik.Features.Pharmacy
                     #endregion
 
                     #region ::CEK IN QUEUE POLI WHETHER PATIENT already go to cashier
-                
+
 
                     if (_cashierID > 0)
                     {
-                        var _qryHistoryPoli = _unitOfWork.RegistrationRepository.Get(x => x.PoliTo == _cashierID && x.FormMedicalID==request.Data.FormMedicalID);
+                        var _qryHistoryPoli = _unitOfWork.RegistrationRepository.Get(x => x.PoliTo == _cashierID && x.FormMedicalID == request.Data.FormMedicalID);
                         if (_qryHistoryPoli.Count <= 0)
                         {
 
                             // create a new registration
                             QueuePoli queuePoli = new QueuePoli();
                             queuePoli.FormMedicalID = request.Data.FormMedicalID;
-                            queuePoli.PoliFrom =(Int32) _farmasiID;
+                            queuePoli.PoliFrom = (Int32)_farmasiID;
                             queuePoli.PoliTo = (Int32)_cashierID;
                             queuePoli.CreatedBy = request.Account.UserCode;
                             queuePoli.CreatedDate = DateTime.Now;
@@ -278,6 +278,24 @@ namespace Klinik.Features.Pharmacy
             return response;
         }
 
+        private decimal CountRetailPriceForRacikan(string jsonRacikan, long headerID)
+        {
+            decimal decResult = 0;
+            if (!string.IsNullOrEmpty(jsonRacikan))
+            {
+                List<KomponenObatRacikan> components = new List<KomponenObatRacikan>();
+                components = JsonConvert.DeserializeObject<List<KomponenObatRacikan>>(jsonRacikan);
+
+
+                var _q1 = components.Where(x => x.Id_ObatRacik == headerID.ToString());
+                foreach (var item in _q1)
+                {
+                    decResult += (Convert.ToDecimal(item.Price) * Convert.ToDecimal(item.Amount));
+                }
+            }
+
+            return decResult;
+        }
         public static List<Int32> GetSelectedPharmacyItem(long IdQueue)
         {
             List<Int32> PharmacyItemIds = new List<Int32>();
@@ -446,7 +464,7 @@ namespace Klinik.Features.Pharmacy
                     response.Status = true;
                     response.Message = Messages.DataHasBeenUpdated;
                 }
-                catch (Exception )
+                catch (Exception)
                 {
                     transaction.Rollback();
                     response.Status = false;
@@ -463,7 +481,7 @@ namespace Klinik.Features.Pharmacy
             return response;
         }
 
-       
+
 
     }
 }

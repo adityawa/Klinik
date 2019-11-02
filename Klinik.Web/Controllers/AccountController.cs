@@ -187,7 +187,8 @@ namespace Klinik.Web.Controllers
 			{
 				ViewBag.Status = response.Status.ToString();
 				ViewBag.Message = response.Message.ToString();
-				return View("Login");
+                ViewBag.Organization = GetOrganizationList();
+                return View("Login");
 			}
 		}
 

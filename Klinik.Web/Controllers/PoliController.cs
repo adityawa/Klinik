@@ -123,25 +123,81 @@ namespace Klinik.Web.Controllers
         [HttpPost]
         public JsonResult AutoCompleteMedicine(string prefix)
         {
-            List<Product> productList = _unitOfWork.ProductRepository.Get(x => x.ProductCategoryID == 1 && x.RowStatus == 0).ToList();
+            #region OLD
+            //List<Product> productList = _unitOfWork.ProductRepository.Get(x => x.ProductCategoryID == 1 && x.RowStatus == 0).ToList();
 
-            var filteredList = productList.Where(t => t.Name.ToLower().Contains(prefix.ToLower()));
+            //var filteredList = productList.Where(t => t.Name.ToLower().Contains(prefix.ToLower()));
 
-            List<TempClass> resultList = new List<TempClass>();
-            foreach (var item in filteredList)
+            //List<TempClass> resultList = new List<TempClass>();
+            //foreach (var item in filteredList)
+            //{
+            //    TempClass temp = new TempClass
+            //    {
+            //        id = item.ID,
+            //        label = item.Name,
+            //        code = item.Code,
+            //        stock = "100" // hardcoded for now
+            //    };
+
+            //    resultList.Add(temp);
+            //}
+
+            //return Json(resultList, JsonRequestBehavior.AllowGet);
+            #endregion
+
+            List<ProductModel> lists = new List<ProductModel>();
+            dynamic qry = null;
+            var searchPredicate = PredicateBuilder.New<Product>(true);
+
+            // add default filter to show the active data only
+            searchPredicate = searchPredicate.And(x => x.RowStatus == 0 && x.Name.ToLower().Contains(prefix.ToLower()));
+
+            qry = _unitOfWork.ProductRepository.Get(searchPredicate, null);
+
+            long clinicId = 0;
+            if (Session["UserLogon"] != null)
             {
-                TempClass temp = new TempClass
+                var tempData = (AccountModel)Session["UserLogon"];
+                clinicId = tempData.ClinicID;
+            }
+
+
+            var temp = (IEnumerable<Product>)qry;
+            var productIdS = temp.Select(x => x.ID).Distinct().ToList();
+            var gudangs = _unitOfWork.GudangRepository.Get(x => x.ClinicId == clinicId).Select(x => x.id).ToList();
+            var stockCollection = _unitOfWork.ProductInGudangRepository.Get(x => productIdS.Contains(x.ProductId ?? 0) && gudangs.Contains(x.GudangId ?? 0)).Select(x => new
+            {
+                x.ProductId,
+                x.stock
+            });
+
+            var stockRepo = stockCollection.GroupBy(x => x.ProductId).Select(c => new
+            {
+                ProductID = c.First().ProductId,
+                CurrStock = c.Sum(x => x.stock)
+            });
+            List<TempClass> resultList = new List<TempClass>();
+            foreach (var item in qry)
+            {
+                var prData = new ProductModel();
+                prData = Mapper.Map<Product, ProductModel>(item);
+
+                TempClass tmp = new TempClass
                 {
-                    id = item.ID,
-                    label = item.Name,
-                    code = item.Code,
-                    stock = "100" // hardcoded for now
+                    id = (Int32)prData.Id,
+                    label = prData.Name,
+                    code = prData.Code,
+                    stock = stockRepo.FirstOrDefault(x => x.ProductID == prData.Id) == null ? "0" : stockRepo.FirstOrDefault(x => x.ProductID == prData.Id).CurrStock.ToString(),//stockCollection.SingleOrDefault(x => x.ProductId == prData.Id) == null ? "0" : stockCollection.SingleOrDefault(x => x.ProductId == prData.Id).stock.ToString(),
+                    category = prData.ProductCategoryName,
+                    unit = prData.ProductUnitName,
+                    price = prData.RetailPrice.ToString()
                 };
 
-                resultList.Add(temp);
+                resultList.Add(tmp);
             }
 
             return Json(resultList, JsonRequestBehavior.AllowGet);
+
         }
 
         [HttpPost]
@@ -201,19 +257,24 @@ namespace Klinik.Web.Controllers
                 x.ProductId,
                 x.stock
             });
+
+            var stockRepo = stockCollection.GroupBy(x => x.ProductId).Select(c => new
+            {
+                ProductID = c.First().ProductId,
+                CurrStock = c.Sum(x => x.stock)
+            });
             List<TempClass> resultList = new List<TempClass>();
             foreach (var item in qry)
             {
                 var prData = new ProductModel();
                 prData = Mapper.Map<Product, ProductModel>(item);
-                //prData.stock = Convert.ToDecimal(stockCollection.SingleOrDefault(x => x.ProductId == prData.Id) == null ? 0 : stockCollection.SingleOrDefault(x => x.ProductId == prData.Id).stock);
-                //lists.Add(prData);
+
                 TempClass tmp = new TempClass
                 {
                     id = (Int32)prData.Id,
                     label = prData.Name,
                     code = prData.Code,
-                    stock = stockCollection.SingleOrDefault(x => x.ProductId == prData.Id) == null ? "0" : stockCollection.SingleOrDefault(x => x.ProductId == prData.Id).stock.ToString(),
+                    stock = stockRepo.FirstOrDefault(x => x.ProductID == prData.Id) == null ? "0" : stockRepo.FirstOrDefault(x => x.ProductID == prData.Id).CurrStock.ToString(),//stockCollection.SingleOrDefault(x => x.ProductId == prData.Id) == null ? "0" : stockCollection.SingleOrDefault(x => x.ProductId == prData.Id).stock.ToString(),
                     category = prData.ProductCategoryName,
                     unit = prData.ProductUnitName,
                     price = prData.RetailPrice.ToString()
@@ -339,8 +400,8 @@ namespace Klinik.Web.Controllers
 
             int iJumHari = jumHari == null ? 0 : Convert.ToInt16(jumHari);
             bool bNeedSuratSakit = needSurat == null ? false : Convert.ToBoolean(needSurat);
-            int iCaused = caused == null ? 0 :caused==""?0: Convert.ToInt32(caused);
-            int iCondition = condition == null ? 0 : condition==""?0: Convert.ToInt32(condition);
+            int iCaused = caused == null ? 0 : caused == "" ? 0 : Convert.ToInt32(caused);
+            int iCondition = condition == null ? 0 : condition == "" ? 0 : Convert.ToInt32(condition);
 
             PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, icdInformation, poliToID, doctorToID, bNeedSuratSakit, iJumHari, iCaused, iCondition, concoctionMedicineList, medicineList, injectionList, labList, radiologyList, serviceList);
             model.Account = Account;
@@ -358,7 +419,7 @@ namespace Klinik.Web.Controllers
             ViewBag.PoliList = tempPoliList;
             ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
             ViewBag.FinalStateList = BindDropDownFinalStateList();
-           // ViewBag.ICDInfo = BindDropDownICDInfo();
+            // ViewBag.ICDInfo = BindDropDownICDInfo();
             return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
         }
 
@@ -464,11 +525,11 @@ namespace Klinik.Web.Controllers
                 ViewBag.PoliList = tempPoliList;
                 ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
                 ViewBag.FinalStateList = BindDropDownFinalStateList();
-               // ViewBag.ICDInfo = BindDropDownICDInfo();
+                // ViewBag.ICDInfo = BindDropDownICDInfo();
                 ViewBag.CausedList = BindDropDownCaused();
                 ViewBag.ConditionList = BindDropDownCondition();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return BadRequestResponse;
             }
@@ -683,7 +744,7 @@ namespace Klinik.Web.Controllers
                     Dose = values[1],
                     MedicineJenis = values[2],
                     RemarkUse = values[3],
-                    Qty =values[4]==""?0: Convert.ToDouble(values[4]),
+                    Qty = values[4] == "" ? 0 : Convert.ToDouble(values[4]),
                     TypeID = ((int)MedicineTypeEnum.Concoction).ToString()
                 };
 

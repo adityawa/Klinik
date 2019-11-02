@@ -555,6 +555,10 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="BB_Male" Type="float" />
+          <Property Name="BB_Female" Type="float" />
+          <Property Name="BA_Male" Type="float" />
+          <Property Name="BA_Female" Type="float" />
         </EntityType>
         <EntityType Name="LabItemCategory">
           <Key>
@@ -1130,6 +1134,7 @@
           <Property Name="statusop" Type="int" />
           <Property Name="Validasi" Type="int" />
           <Property Name="GudangId" Type="int" />
+          <Property Name="FormMedicalID" Type="bigint" />
         </EntityType>
         <EntityType Name="PurchaseRequestConfig">
           <Key>
@@ -4147,6 +4152,10 @@
           <NavigationProperty Name="FormExamineLabs" Relationship="Self.FK_FormExamineLab_LabItem" FromRole="LabItem" ToRole="FormExamineLab" />
           <NavigationProperty Name="LabItemCategory" Relationship="Self.FK_LabItem_LabItemCategory" FromRole="LabItem" ToRole="LabItemCategory" />
           <NavigationProperty Name="SuratRujukanLabKeluars" Relationship="Self.FK_SuratRujukanLabKeluar_LabItem" FromRole="LabItem" ToRole="SuratRujukanLabKeluar" />
+          <Property Name="BB_Male" Type="Double" />
+          <Property Name="BB_Female" Type="Double" />
+          <Property Name="BA_Male" Type="Double" />
+          <Property Name="BA_Female" Type="Double" />
         </EntityType>
         <EntityType Name="LabItemCategory">
           <Key>
@@ -4803,6 +4812,7 @@
           <NavigationProperty Name="Gudang" Relationship="Self.FK_PurchaseRequest_Gudang" FromRole="PurchaseRequest" ToRole="Gudang" />
           <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_PurchaseOrder_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseOrder" />
           <NavigationProperty Name="PurchaseRequestDetails" Relationship="Self.FK_PurchaseRequestDetail_PurchaseRequest" FromRole="PurchaseRequest" ToRole="PurchaseRequestDetail" />
+          <Property Name="FormMedicalID" Type="Int64" />
         </EntityType>
         <EntityType Name="PurchaseRequestConfig">
           <Key>
@@ -7792,6 +7802,10 @@
           <EntitySetMapping Name="LabItems">
             <EntityTypeMapping TypeName="KlinikDBModel.LabItem">
               <MappingFragment StoreEntitySet="LabItem">
+                <ScalarProperty Name="BA_Female" ColumnName="BA_Female" />
+                <ScalarProperty Name="BA_Male" ColumnName="BA_Male" />
+                <ScalarProperty Name="BB_Female" ColumnName="BB_Female" />
+                <ScalarProperty Name="BB_Male" ColumnName="BB_Male" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -8383,6 +8397,7 @@
           <EntitySetMapping Name="PurchaseRequests">
             <EntityTypeMapping TypeName="KlinikDBModel.PurchaseRequest">
               <MappingFragment StoreEntitySet="PurchaseRequest">
+                <ScalarProperty Name="FormMedicalID" ColumnName="FormMedicalID" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="prnumber" ColumnName="prnumber" />
                 <ScalarProperty Name="prdate" ColumnName="prdate" />

@@ -97,7 +97,7 @@
                                                 }
                                                 else if (item.Detail.ProcessType.ToLower() == "racik")
                                                 {
-                                                    <a class="fa fa-adjust fa-lg modal-with-form" data-rowno="@(counter - 1)" href="#modalFormRacikan"></a>
+                                                    <a class="fa fa-adjust fa-lg modal-with-form" data-idrow="@item.Id" data-namaobat="@item.ProductName" data-rowno="@(counter - 1)" href="#modalFormRacikan"></a>
                                                 }
                                             }
 
@@ -182,6 +182,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Nama Obat Racikan</label>
                                 <input type="hidden" id="rowno_racikan" name="rowno_racikan" />
+                                <input type="hidden" id="id_parent" name="id_parent" />
                                 <div class="col-md-5">
                                     <input type="text" class="form-control" id="tbRacikanName" name="tbRacikanName" />
                                 </div>
@@ -370,7 +371,7 @@
                 var medicineAmt = $("#Conc_amount");
                 //Get the reference of the Table's TBODY element.
                 var tBody = $("#tblConcMedicine > TBODY")[0];
-                
+
                 //Add Row.
                 var row = tBody.insertRow(-1);
 
@@ -387,7 +388,7 @@
                  cell = $(row.insertCell(-1));
                  cell.html(medicineCode.val());
 
-              
+
                 //add price 3
                  cell = $(row.insertCell(-1));
                  cell.html(medicinePrice.val());
@@ -594,8 +595,10 @@
 
             $('.modal-with-form').click(function () {
                 $('#rowno').val($(this).data('rowno'));
+                $('#id_parent').val($(this).data('idrow'));
                 $('#rowno_racikan').val($(this).data('rowno'));
-                $('#tbRacikanName').val('');
+                var racikan_name = $(this).data('namaobat');
+                $('#tbRacikanName').val(racikan_name);
                 currSelIdx = $('#rowno').val();
                 var _parentId=$('#rowno_racikan').val()+"_"+"Racikan"
                 var filter =  $.grep(arrOfObatRacik, function(e){ return e.ParentID == _parentId; });
@@ -629,8 +632,8 @@
 
                 var rowNum_racikan = $('#rowno_racikan').val();
                 var _parentId = rowNum_racikan + "_" + "Racikan";
+                var id_obatRacikan = $('#id_parent').val();
 
-               
                 $('#tblConcMedicine tbody tr').each(function (index) {
                     obatRacik = new Object();
                     obatRacik.Amount = $(this).find('td').eq(7).text().trim();
@@ -638,7 +641,8 @@
                     obatRacik.Id = $(this).find('td').eq(0).text().trim();
                     obatRacik.Code = $(this).find('td').eq(2).text().trim();
                     obatRacik.Name = $(this).find('td').eq(1).text().trim();
-                  //obatRacik.Idx = rows_selected[i];
+                    obatRacik.Price = $(this).find('td').eq(3).text().trim();
+                    obatRacik.Id_ObatRacik = id_obatRacikan;
                     obatRacik.ParentID = _parentId;
                     arrOfObatRacik.push(obatRacik);
                 });
@@ -647,7 +651,7 @@
 
                  var tBody = $("#tblConcMedicine > TBODY")[0];
                 $('#tblConcMedicine tbody tr').each(function (index) {
-                   
+
                     tBody.deleteRow(index-1);
                 });
 

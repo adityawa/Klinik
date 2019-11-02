@@ -203,11 +203,17 @@ namespace Klinik.Features
                 x.ProductId,
                 x.stock
             });
+
+            var stockRepo = stockCollection.GroupBy(x => x.ProductId).Select(c => new
+            {
+                ProductID = c.First().ProductId,
+                CurrStock = c.Sum(x => x.stock)
+            });
             foreach (var item in qry)
             {
                 var prData = new ProductModel();
                 prData = Mapper.Map<Product, ProductModel>(item);
-                prData.stock =Convert.ToDecimal( stockCollection.SingleOrDefault(x => x.ProductId == prData.Id)==null?0: stockCollection.SingleOrDefault(x => x.ProductId == prData.Id).stock);
+                prData.stock =Convert.ToDecimal(stockRepo.FirstOrDefault(x => x.ProductID == prData.Id) == null ? "0" : stockRepo.FirstOrDefault(x => x.ProductID == prData.Id).CurrStock.ToString());
                 lists.Add(prData);
             }
 

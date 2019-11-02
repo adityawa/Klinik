@@ -24,5 +24,7 @@ namespace Klinik.Entities.Form
         public string Idx { get; set; }
         public string ParentID { get; set; }
         public string Stock { get; set; }
+        public string Price { get; set; }
+        public string Id_ObatRacik { get; set; }
     }
 }
