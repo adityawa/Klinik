@@ -60,8 +60,7 @@ namespace Klinik.Features
 
             return response;
         }
-
-
+        
         public Top10ReferalReportResponse GenerateTop10ReferalReport(Top10ReferalReportRequest request)
         {
             var response = new Top10ReferalReportResponse();
@@ -102,8 +101,45 @@ namespace Klinik.Features
             return response;
         }
 
+        public Top10CostReportResponse GenerateTop10CostReport(Top10CostReportRequest request)
+        {
+            var response = new Top10CostReportResponse();
+
+            using (var connection = new SqlConnection(ConnectionStrings.ReportConnectionString))
+            {
+                try
+                {
 
 
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
 
+            return response;
+        }
+
+        public Top10RequestReportResponse GenerateTop10RequestReport(Top10RequestReportRequest request)
+        {
+            var response = new Top10RequestReportResponse();
+
+            using (var connection = new SqlConnection(ConnectionStrings.ReportConnectionString))
+            {
+                try
+                {
+
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+
+
+            return response;
+        }
+        
     }
 }

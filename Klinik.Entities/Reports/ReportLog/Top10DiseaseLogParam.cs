@@ -1,7 +1,7 @@
 ﻿using Klinik.Entities;
 using Klinik.Entities.Reports;
 
-namespace Klinik.Features.Reports.Helper
+namespace Klinik.Entities.Reports
 {
     public class Top10DiseaseLogParam:BaseReportLogModel
     {

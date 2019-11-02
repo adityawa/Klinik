@@ -168,10 +168,14 @@
     <Compile Include="Reports\DataModel\RequestReportDataModel.cs" />
     <Compile Include="Reports\Parameters\Top10CostParamModel.cs" />
     <Compile Include="Reports\ReportLogModel.cs" />
+    <Compile Include="Reports\ReportLog\Top10CostChartModel.cs" />
+    <Compile Include="Reports\ReportLog\Top10CostLogParam.cs" />
     <Compile Include="Reports\ReportLog\Top10DiseaseChartModel.cs" />
     <Compile Include="Reports\ReportLog\Top10DiseaseLogParam.cs" />
     <Compile Include="Reports\ReportLog\Top10ReferalChartModel.cs" />
     <Compile Include="Reports\ReportLog\Top10ReferalLogParam.cs" />
+    <Compile Include="Reports\ReportLog\Top10RequestChartModel.cs" />
+    <Compile Include="Reports\ReportLog\Top10RequestLogParam.cs" />
     <Compile Include="Reports\Top10CostReportModel.cs" />
     <Compile Include="Reports\Top10DiseaseReportModel.cs" />
     <Compile Include="Reports\Parameters\Top10DiseasesParamModel.cs" />

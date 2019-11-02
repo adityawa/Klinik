@@ -120,6 +120,19 @@ namespace Klinik.Web.Controllers
             return _clinics;
         }
 
+        private List<SelectListItem> BindDropDownGudang()
+        {
+            var _gudangs = new List<SelectListItem>();
+
+            _gudangs.Insert(0, new SelectListItem { Text = "All", Value = "0"});
+            _gudangs.Insert(1, new SelectListItem { Text = Resources.UIMessages.Warehouse, Value = Constants.WareHouseTypes.Warehouse });
+            _gudangs.Insert(2, new SelectListItem { Text = Resources.UIMessages.CentralWarehouse, Value = Constants.WareHouseTypes.CentralWarehouse });
+
+            return _gudangs;
+        }
+
+
+
         #endregion
                
         // GET: Reports
@@ -193,6 +206,7 @@ namespace Klinik.Web.Controllers
             ViewBag.Months = BindMonths();
             ViewBag.Years = BindYears();
             ViewBag.Clinics = BindDropDownClinic(model.Account.Organization);
+            
 
             model.Categories = BindLookUpCategoryTypesForTop10Diseases();
             model.CategoryItems = BindLookUpCategoriesForTop10Diseases();
@@ -401,6 +415,7 @@ namespace Klinik.Web.Controllers
             ViewBag.Months = BindMonths();
             ViewBag.Years = BindYears();
             ViewBag.Clinics = BindDropDownClinic(model.Account.Organization);
+            ViewBag.WareHouses = BindDropDownGudang();
 
             model.Categories = BindLookUpCategoryTypeForTop10Cost();
             model.CategoryItems = BindLookUpCategoriesForTop10Cost();
@@ -426,7 +441,7 @@ namespace Klinik.Web.Controllers
 
             lookUpCategories = _masterHandler.GetLookupCategories().Where(x => x.TypeName.Contains(Constants.LookUpCategoryConstant.DEPARTMENT) ||
                                                                             x.TypeName.Contains(Constants.LookUpCategoryConstant.BUSINESSUNIT) ||
-                                                                            x.TypeName.Contains(Constants.LookUpCategoryConstant.PATIENT) 
+                                                                            x.TypeName.Contains(Constants.LookUpCategoryConstant.PATIENT)
                                                                             ).ToList();
 
             _types.Insert(0, new SelectListItem { Text = Klinik.Resources.UIMessages.SelectOneCategory, Value = "0" });
@@ -474,6 +489,7 @@ namespace Klinik.Web.Controllers
             ViewBag.Months = BindMonths();
             ViewBag.Years = BindYears();
             ViewBag.Clinics = BindDropDownClinic(model.Account.Organization);
+            ViewBag.WareHouses = BindDropDownGudang();
 
             model.Categories = BindLookUpCategoryTypeForTop10Request();
             model.CategoryItems = BindLookUpCategoriesForTop10Request();
@@ -515,10 +531,12 @@ namespace Klinik.Web.Controllers
             var _masters = new List<GeneralMaster>();
 
             var reqTypeCategories = ConstructGeneralMasterList(Constants.LookUpCategoryConstant.REQUESTTYPE);
+            var wareHouseCategories = ConstructGeneralMasterList(Constants.LookUpCategoryConstant.GUDANGTYPE);
 
             _categories.Insert(0, new SelectListItem { Text = "All", Value = "0" });
 
             _categories.AddRange(reqTypeCategories);
+            _categories.AddRange(wareHouseCategories);
             
             return _categories;
         }

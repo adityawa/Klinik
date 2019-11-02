@@ -1347,7 +1347,7 @@
   <data name="NoSurat" xml:space="preserve">
     <value>No Surat</value>
   </data>
-  <data name="RS Rujukan" xml:space="preserve">
+  <data name="RSRujukan" xml:space="preserve">
     <value>RS Rujukan</value>
   </data>
   <data name="GenerateImage" xml:space="preserve">
@@ -1376,5 +1376,14 @@
   </data>
   <data name="Top10RequestReport" xml:space="preserve">
     <value>Top 10 Request Report</value>
+  </data>
+  <data name="CentralWarehouse" xml:space="preserve">
+    <value>Gudang Pusat</value>
+  </data>
+  <data name="Warehouse" xml:space="preserve">
+    <value>Gudang</value>
+  </data>
+  <data name="WarehouseType" xml:space="preserve">
+    <value>Tipe Gudang </value>
   </data>
 </root>
