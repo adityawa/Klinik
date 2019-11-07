@@ -152,7 +152,7 @@ namespace Klinik.Web.Controllers
             // add default filter to show the active data only
             searchPredicate = searchPredicate.And(x => x.RowStatus == 0 && x.Name.ToLower().Contains(prefix.ToLower()));
 
-            qry = _unitOfWork.ProductRepository.Get(searchPredicate, null);
+           qry = _unitOfWork.ProductRepository.Get(searchPredicate, null);
 
             long clinicId = 0;
             if (Session["UserLogon"] != null)

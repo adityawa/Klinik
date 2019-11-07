@@ -13,6 +13,8 @@ using Klinik.Entities.Form;
 using AutoMapper;
 using Klinik.Entities.Pharmacy;
 using Newtonsoft.Json;
+using Klinik.Entities.MasterData;
+using LinqKit;
 
 namespace Klinik.Web.Controllers
 {
@@ -65,6 +67,7 @@ namespace Klinik.Web.Controllers
         }
 
         // GET: Prescription details
+        [CustomAuthorize("VIEW_FARMASI")]
         public ActionResult Prescription()
         {
             string id = Request.QueryString["id"];
@@ -81,7 +84,7 @@ namespace Klinik.Web.Controllers
             foreach (var item in medicinelist)
             {
                 FormExamineMedicineModel medicineModel = Mapper.Map<FormExamineMedicine, FormExamineMedicineModel>(item);
-               
+
                 FormExamineMedicineDetail detail = _unitOfWork.FormExamineMedicineDetailRepository.Get(x => x.FormExamineMedicineID.Value == item.ID && x.RowStatus == 0).FirstOrDefault();
                 if (detail != null)
                 {
@@ -122,7 +125,7 @@ namespace Klinik.Web.Controllers
 
             _response = new PharmacyValidator(_unitOfWork, _context).Validate(request);
 
-            ViewBag.Response =$" {_response.Status.ToString().Trim()};{_response.Message}".TrimStart();
+            ViewBag.Response = $" {_response.Status.ToString().Trim()};{_response.Message}".TrimStart();
             return View(model);
         }
 
@@ -157,7 +160,7 @@ namespace Klinik.Web.Controllers
             int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
             int _skip = _start != null ? Convert.ToInt32(_start) : 0;
 
-           
+
 
             var request = new ProductRequest
             {
@@ -167,7 +170,7 @@ namespace Klinik.Web.Controllers
                 SortColumnDir = _sortColumnDir,
                 PageSize = _pageSize,
                 Skip = _skip,
-                IsForShowInFarmasi=true
+                IsForShowInFarmasi = true
             };
             request.Data = new Entities.MasterData.ProductModel();
             if (Session["UserLogon"] != null)
@@ -230,7 +233,7 @@ namespace Klinik.Web.Controllers
                 SortColumnDir = _sortColumnDir,
                 PageSize = _pageSize,
                 Skip = _skip,
-                
+
             };
 
             if (Session["UserLogon"] != null)
@@ -253,7 +256,7 @@ namespace Klinik.Web.Controllers
             {
 
             };
-            _model.IdDetailsChecked = new PharmacyHandler(_unitOfWork).GetMedicineWasReceivedByPatient(_formMedId);
+            _model.IdDetailsChecked = new List<long>();//new PharmacyHandler(_unitOfWork).GetMedicineWasReceivedByPatient(_formMedId);
             var _pasien = new PharmacyHandler(_unitOfWork).GetPatientDataBasedOnFrmMedical(_formMedId);
             ViewBag.NamaPatient = _pasien.Name;
             ViewBag.Birthdate = _pasien.BirthDateStr;
@@ -266,8 +269,7 @@ namespace Klinik.Web.Controllers
             var _draw = Request.Form.GetValues("draw").FirstOrDefault();
             var _start = Request.Form.GetValues("start").FirstOrDefault();
             var _length = Request.Form.GetValues("length").FirstOrDefault();
-         //   var _sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
-          //  var _sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+       
             var _searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
 
             int _pageSize = _length != null ? Convert.ToInt32(_length) : 0;
@@ -277,7 +279,7 @@ namespace Klinik.Web.Controllers
             {
                 Draw = _draw,
                 SearchValue = _searchValue,
-              
+
                 PageSize = _pageSize,
                 Skip = _skip,
 
@@ -305,7 +307,7 @@ namespace Klinik.Web.Controllers
             var response = new PharmacyResponse();
             var request = new PharmacyRequest
             {
-                
+
             };
             if (Request.Form["idFrmMedDetail"] != null)
                 request.idSelectedobat = JsonConvert.DeserializeObject<List<long>>(Request.Form["idFrmMedDetail"]);
@@ -313,7 +315,53 @@ namespace Klinik.Web.Controllers
                 request.Account = (AccountModel)Session["UserLogon"];
 
             response = new PharmacyHandler(_unitOfWork, _context).UpdateStatusObat(request);
-            return Json(new { Status = response.Status.ToString().TrimStart(), Message = response.Message }, JsonRequestBehavior.AllowGet);
+            return Json(new { Status = response.Status.ToString().TrimStart(), Message = response.Message, Notes=response.AdditionalMessages }, JsonRequestBehavior.AllowGet);
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult GetDetailObat(string codeObat)
+        {
+            
+            var qry = _unitOfWork.ProductRepository.GetFirstOrDefault(x=>x.RowStatus==0 && x.Code==codeObat);
+
+            long clinicId = 0;
+            if (Session["UserLogon"] != null)
+            {
+                var tempData = (AccountModel)Session["UserLogon"];
+                clinicId = tempData.ClinicID;
+            }
+
+
+
+            var productIdS = qry.ID;
+            var gudangs = _unitOfWork.GudangRepository.Get(x => x.ClinicId == clinicId).Select(x => x.id).ToList();
+            var stockCollection = _unitOfWork.ProductInGudangRepository.Get(x => x.ProductId==productIdS && gudangs.Contains(x.GudangId ?? 0)).Select(x => new
+            {
+                x.ProductId,
+                x.stock
+            });
+
+            var stockRepo = stockCollection.GroupBy(x => x.ProductId).Select(c => new
+            {
+                ProductID = c.First().ProductId,
+                CurrStock = c.Sum(x => x.stock)
+            });
+
+
+
+            var prData = new ProductModel();
+            prData = Mapper.Map<Product, ProductModel>(qry);
+
+            return Json(new
+            {
+                id = (Int32)prData.Id,
+                label = prData.Name,
+                code = prData.Code,
+                stock = stockRepo.FirstOrDefault(x => x.ProductID == prData.Id) == null ? "0" : stockRepo.FirstOrDefault(x => x.ProductID == prData.Id).CurrStock.ToString(),
+                category = prData.ProductCategoryName,
+                unit = prData.ProductUnitName,
+                price = prData.RetailPrice.ToString()
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

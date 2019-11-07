@@ -35,38 +35,46 @@ namespace Klinik.Common
         {
             bool isSessionActive = true;
             var account = (AccountModel)filterContext.HttpContext.Session["UserLogon"];
-            var sessionID= filterContext.HttpContext.Session["CurrSession"].ToString();
-            if (account == null)
+            if (filterContext.HttpContext.Session["CurrSession"] == null)
             {
-                // redirect to login page if user not logged in  
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary { { "action", "Login" }, { "controller", "Account" } });
+                this.HandleInactiveSession(filterContext);
             }
             else
             {
-                bool IsAuthorized = false;
-                List<long> PrivilegeIds = account.Privileges.PrivilegeIDs;
-                var _getPrivilegeName = _context.Privileges.Where(x => PrivilegeIds.Contains(x.ID)).Select(x => x.Privilege_Name);
-
-                var cek_authorizes = _getPrivilegeName.Where(p => _privilege_names.Contains(p.ToString()));
-                if (cek_authorizes.Any())
+                var sessionID = filterContext.HttpContext.Session["CurrSession"].ToString();
+                if (account == null)
                 {
-                    IsAuthorized = true;
+                    // redirect to login page if user not logged in  
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary { { "action", "Login" }, { "controller", "Account" } });
                 }
-
-                string _userName = account.UserName;
-                isSessionActive = _context.LogonUsers.Any(x => x.UserName == _userName && x.SessionID == sessionID && x.Status==true);
-            
-              
-                if (!IsAuthorized)
+                else
                 {
-                    this.HandleUnauthorizedRequest(filterContext);
-                }
+                    bool IsAuthorized = false;
+                    List<long> PrivilegeIds = account.Privileges.PrivilegeIDs;
+                    var _getPrivilegeName = _context.Privileges.Where(x => PrivilegeIds.Contains(x.ID)).Select(x => x.Privilege_Name);
 
-                if (!isSessionActive)
-                {
-                    this.HandleInactiveSession(filterContext);
+                    var cek_authorizes = _getPrivilegeName.Where(p => _privilege_names.Contains(p.ToString()));
+                    if (cek_authorizes.Any())
+                    {
+                        IsAuthorized = true;
+                    }
+
+                    string _userName = account.UserName;
+                    isSessionActive = _context.LogonUsers.Any(x => x.UserName == _userName && x.SessionID == sessionID && x.Status == true);
+
+
+                    if (!IsAuthorized)
+                    {
+                        this.HandleUnauthorizedRequest(filterContext);
+                    }
+
+                    if (!isSessionActive)
+                    {
+                        this.HandleInactiveSession(filterContext);
+                    }
                 }
             }
+           
         }
         /// <summary>
         /// Override the Handle of unauthorized request

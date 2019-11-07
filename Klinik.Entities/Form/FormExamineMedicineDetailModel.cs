@@ -13,6 +13,8 @@ namespace Klinik.Entities.Form
         public string Dosis { get; set; }
         public string RemarksUse { get; set; }
 
+        public string Code { get; set; }
+
         public List<long> IdDetailsChecked { get; set; }
 	}
 

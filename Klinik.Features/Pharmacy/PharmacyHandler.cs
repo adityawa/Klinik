@@ -143,6 +143,7 @@ namespace Klinik.Features.Pharmacy
                                 entity = new Klinik.Data.DataRepository.ProductInGudang
                                 {
                                     stock = 0,
+                                    GudangId = _gudangID,
                                     ProductId = (Int32)tobeInsert.Detail.Id,
                                     CreatedBy = request.Account.UserName,
                                     CreatedDate = DateTime.Now,
@@ -158,7 +159,7 @@ namespace Klinik.Features.Pharmacy
 
                         else
                         {
-              
+
                             //just update stock
                             var tobeUpdate = _unitOfWork.ProductInGudangRepository.GetFirstOrDefault(x => x.ProductId == tobeInsert.Detail.ProductID && x.GudangId == _gudangID);
                             if (tobeUpdate != null)
@@ -185,7 +186,7 @@ namespace Klinik.Features.Pharmacy
                             var tobeUpdate2 = _unitOfWork.ProductInGudangRepository.GetFirstOrDefault(x => x.ProductId == id_komponen && x.GudangId == _gudangID);
                             if (tobeUpdate2 != null)
                             {
-                                tobeUpdate2.stock = tobeUpdate2.stock - Convert.ToInt32(Math.Round(Convert.ToDecimal( itemDet.Amount??"0")));
+                                tobeUpdate2.stock = tobeUpdate2.stock - Convert.ToInt32(Math.Round(Convert.ToDecimal(itemDet.Amount ?? "0")));
                                 _context.SaveChanges();
                             }
                         }
@@ -406,7 +407,7 @@ namespace Klinik.Features.Pharmacy
             var _hdr = _unitOfWork.FormExamineMedicineRepository.Get(x => _get_frmExId.Contains(x.FormExamineID ?? 0));
             List<long> FrmExMedHdrIds = new List<long>();
             FrmExMedHdrIds = _hdr.Select(x => x.ID).ToList();
-            var _detail = _unitOfWork.FormExamineMedicineDetailRepository.Get(x => FrmExMedHdrIds.Contains(x.FormExamineMedicineID ?? 0));
+            var _detail = _unitOfWork.FormExamineMedicineDetailRepository.Get(x => FrmExMedHdrIds.Contains(x.FormExamineMedicineID ?? 0) && x.Status == null);
             foreach (var item in _detail)
             {
                 var temp = new FormExamineMedicineDetailModel
@@ -419,9 +420,6 @@ namespace Klinik.Features.Pharmacy
                 };
                 details.Add(temp);
             }
-
-
-
 
             int totalRequest = details.Count();
             var data = details.Skip(request.Skip).Take(request.PageSize).ToList();
@@ -441,7 +439,8 @@ namespace Klinik.Features.Pharmacy
         public PharmacyResponse UpdateStatusObat(PharmacyRequest request)
         {
             var response = new PharmacyResponse();
-
+            int result_affected = 0;
+            List<string> additionalMesg = new List<string>();
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
@@ -451,18 +450,50 @@ namespace Klinik.Features.Pharmacy
                         var _existing = _context.FormExamineMedicineDetails.SingleOrDefault(x => x.ID == _id);
                         if (_existing != null)
                         {
-                            _existing.Status = StatusAmbilObat.R.ToString();
-                            _existing.ModifiedBy = request.Account.UserName;
-                            _existing.ModifiedDate = DateTime.Now;
-                            _existing.TanggalAmbilObat = DateTime.Now;
+                            //cek apakah stok nya >= dr request
+                            var _getCurrStock = _unitOfWork.ProductInGudangRepository.GetFirstOrDefault(x => x.ProductId == _id);
+                            var _getQtyNeed = _existing.Qty;
 
-                            _context.SaveChanges();
+                            var _currStock = _getCurrStock == null ? 0 : _getCurrStock.stock;
+                            if (_currStock < _getQtyNeed && _existing.ProcessType == "Request")
+                            {
+                                //ga bisa ambil obat
+                                additionalMesg.Add(_existing.ProductName);
+                            }
+                            else //if (_currStock >= _getQtyNeed)
+                            {
+                                //bisa ambil, kurangi stoknya utk yg request
+                                if (_existing.ProcessType == "Request")
+                                {
+                                    //ga bisa ambil obat
+                                    var exist = _unitOfWork.ProductInGudangRepository.GetFirstOrDefault(x => x.ProductId == _id);
+                                    if (exist != null)
+                                    {
+                                        exist.stock = Convert.ToInt32(Convert.ToDouble(exist.stock) - _existing.Qty);
+                                        exist.ModifiedDate = DateTime.Now;
+                                        exist.ModifiedBy = request.Account.UserName;
+                                    }
+                                }
+                                _existing.Status = StatusAmbilObat.R.ToString();
+                                _existing.ModifiedBy = request.Account.UserName;
+                                _existing.ModifiedDate = DateTime.Now;
+                                _existing.TanggalAmbilObat = DateTime.Now;
+
+                                result_affected += _context.SaveChanges();
+                            }
+
                         }
 
                     }
                     transaction.Commit();
-                    response.Status = true;
-                    response.Message = Messages.DataHasBeenUpdated;
+                    if (result_affected > 0)
+                    {
+                        response.Status = true;
+                        response.Message = Messages.DataHasBeenUpdated;
+                    }
+
+                    response.AdditionalMessages = additionalMesg;
+
                 }
                 catch (Exception)
                 {
@@ -470,13 +501,7 @@ namespace Klinik.Features.Pharmacy
                     response.Status = false;
                     response.Message = Messages.GeneralError.ToString();
                 }
-
-
-
             }
-
-
-
 
             return response;
         }

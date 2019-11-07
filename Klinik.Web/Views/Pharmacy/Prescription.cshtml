@@ -31,7 +31,7 @@
             Prescription Validation
         </h5>
     </header>
-    @using (Html.BeginForm("Prescription", "Pharmacy", FormMethod.Post))
+    @using (Html.BeginForm("Prescription", "Pharmacy", FormMethod.Post, new { onkeypress = "return event.keyCode!=13" }))
     {
         <div class="panel-body">
             <div style="width:100%; margin:0 auto">
@@ -40,7 +40,7 @@
                     <thead>
                         <tr>
                             <th colspan="5"><center>@Klinik.Resources.UIMessages.MedicineList</center></th>
-                            <th colspan="5"><center>@Klinik.Resources.UIMessages.Validation</center></th>
+                            <th colspan="6"><center>@Klinik.Resources.UIMessages.Validation</center></th>
                         </tr>
                         <tr>
                             <th style="width:20px;">NO</th>
@@ -49,6 +49,7 @@
                             <th style="width:30px;">@Klinik.Resources.UIMessages.Amount</th>
                             <th>@Klinik.Resources.UIMessages.RemarkUse</th>
                             <th>@Klinik.Resources.UIMessages.MedicineName</th>
+                            <th>@Klinik.Resources.UIMessages.Code</th>
                             <th>@Klinik.Resources.UIMessages.Stock</th>
                             <th>@Klinik.Resources.UIMessages.Amount</th>
                             <th>@Klinik.Resources.UIMessages.Note</th>
@@ -104,7 +105,18 @@
                                         </div>
                                     </td>
                                     <td>
-
+                                        @{
+                                            if (item.Detail.ProcessType == null)
+                                            {
+                                                @Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.Code, new { @class = "form-control", @style = "width:60px;", @id = "code_" + (counter - 1), @onkeypress = "GetObatMasterByCode(event, this);" })
+                                            }
+                                            else
+                                            {
+                                                @Html.TextBoxFor(m => m.Medicines[counter - 2].Detail.Code, new { @class = "form-control", @readonly = true, @style = "width:60px;", @id = "code_" + (counter - 1), @onkeypress = "GetObatMasterByCode(event, this);" })
+                                            }
+                                        }
+                                    </td>
+                                    <td>
                                         @Html.TextBoxFor(m => m.Medicines[counter - 2].Stock, new { @class = "form-control", @readonly = true, @id = "stock" + (counter - 1) })&nbsp;
                                     </td>
                                     <td>
@@ -284,14 +296,51 @@
         }
     }
 
-        function OnSelectProduct(Id, Name, stock) {
+        function OnSelectProduct(Id, Name, stock, code) {
             var rowNum = $('#rowno').val();
 			$('#idMedicine' + rowNum).val(Id);
             $('#medicineName' + rowNum).val(Name);
             $('#stock' + rowNum).val(stock);
+             $('#code_' + rowNum).val(code);
             var arrIds = Id.split('_');
             if(arrIds.length<=1)
                 onMedChange();
+        }
+
+        function GetObatMasterByCode(evt, elem) {
+
+             var keycode = (evt.keyCode ? evt.keyCode : evt.which);
+            if (keycode == '13') {
+                var temp = elem.id.split('_');
+                if (temp.length > 1) {
+                    var rowno = temp[1];
+                     var inputId = $(elem).val();
+                    GetObatNonRacikPropertyByCode(inputId, rowno);
+                }
+
+                }
+        }
+
+        function GetObatByCode(code) {
+            $.get("/Pharmacy/GetDetailObat", { codeObat: code }, function (data) {
+                $('#Conc_medicineName').val(data.label);
+                $('#Conc_idMedicine').val(data.id);
+                $('#Conc_medicinePrice').val(data.price);
+                $('#Conc_medicinecategory').val(data.category);
+                $('#Conc_medicineUnit').val(data.unit);
+                $('#Conc_medicineStock').val(data.stock);
+            });
+        }
+
+        function GetObatNonRacikPropertyByCode(code, rowpos) {
+            $.get("/Pharmacy/GetDetailObat", { codeObat: code }, function (data) {
+                $('#idMedicine'+rowpos).val(data.id);
+                $('#medicineName'+rowpos).val(data.label);
+                //$('#Conc_medicinePrice').val(data.price);
+                //$('#Conc_medicinecategory').val(data.category);
+                //$('#Conc_medicineUnit').val(data.unit);
+                $('#stock'+rowpos).val(data.stock);
+            });
         }
 
         function OnSelectProductRacikan(Name) {
@@ -358,6 +407,16 @@
             $('#btnreset').click(function (e) {
                 window.location.href = "/Pharmacy/PatientList";
             });
+
+            $('#Conc_CodeMedicine').keypress(function (event) {
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == '13') {
+                    var valTemp = $(this).val();
+                    GetObatByCode(valTemp);
+                }
+            });
+
+
 
              $("#btnAdd_ConcMedicine").click(function () {
 
@@ -497,9 +556,9 @@
                         "render": function (data, type, full, meta) {
                             var name = full['Name'];
                             var id = full['Id'];
-
+                            var code=full['Code']
                             var stock = full['stock'];
-                            return '<button class="btn btn-info modal-dismiss" onclick="OnSelectProduct(\'' + id + '\',\'' + name + '\', \''+stock+'\')" >@Klinik.Resources.UIMessages.Select</button>';
+                            return '<button class="btn btn-info modal-dismiss" onclick="OnSelectProduct(\'' + id + '\',\'' + name + '\', \''+stock+'\',\''+code+'\')" >@Klinik.Resources.UIMessages.Select</button>';
                         }
                     }
                 ]

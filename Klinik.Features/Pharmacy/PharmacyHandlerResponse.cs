@@ -7,7 +7,7 @@ namespace Klinik.Features.Pharmacy
 {
 	public class PharmacyResponse : BaseResponse<PrescriptionModel>
     {        
-        
+        public List<string> AdditionalMessages { get; set; }
     }
 
     public class ListObatResponse : BaseResponse<FormExamineMedicineDetailModel> { }
