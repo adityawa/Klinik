@@ -187,7 +187,8 @@ namespace Klinik.Common
 
             CreateMap<DoctorModel, User>();
             CreateMap<DoctorModel, Employee>()
-                .ForMember(m => m.EmpName, map => map.MapFrom(p => p.Name));
+                .ForMember(m => m.EmpName, map => map.MapFrom(p => p.Name))
+                .ForMember(m => m.EmpID, map => map.MapFrom(p => p.Code));
 
             CreateMap<City, CityModel>()
                 .ForMember(x => x.City, map => map.MapFrom(p => p.City1));
@@ -273,10 +274,10 @@ namespace Klinik.Common
             CreateMap<Letter, LabReferenceLetterModel>();
             CreateMap<LabReferenceLetterModel, Letter>()
                 .ForMember(m => m.CreatedBy, map => map.MapFrom(p => p.Account.UserName));
-                //.ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID)); ;
+            //.ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID)); ;
 
             CreateMap<SuratRujukanLabKeluar, SuratRujukanKeluarModel>();
-            CreateMap<SuratRujukanKeluarModel, SuratRujukanLabKeluar>() ;
+            CreateMap<SuratRujukanKeluarModel, SuratRujukanLabKeluar>();
 
             //CreateMap<HealthBodyLetterModel, Letter>()
             //    .ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID)); ;
@@ -284,7 +285,7 @@ namespace Klinik.Common
 
             CreateMap<RujukanBerobatModel, Letter>()
                 .ForMember(x => x.Pekerjaan, map => map.MapFrom(p => p.Perusahaan));
-                //.ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID));
+            //.ForMember(x => x.ClinicID, map => map.MapFrom(p => p.ClinicID));
             CreateMap<Letter, RujukanBerobatModel>().ForMember(x => x.Perusahaan, map => map.MapFrom(p => p.Pekerjaan));
 
             CreateMap<PersetujuanTindakanModel, Letter>();

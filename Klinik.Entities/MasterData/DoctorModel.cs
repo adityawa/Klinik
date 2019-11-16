@@ -22,6 +22,8 @@ namespace Klinik.Entities.MasterData
         public string Email { get; set; }
         public string Remark { get; set; }
         public int OrganizationID { get; set; }
+
+        public int[] OrganizationIDs { get; set; }
         public string Gender { get; set; }
         public DateTime Birthdate { get; set; }
         public string UserName { get; set; }

@@ -36,7 +36,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label" for="w4-organization">@Klinik.Resources.UIMessages.Organization</label>
                                 <div class="col-sm-6">
-                                    @Html.DropDownListFor(x => x.OrganizationID, (IEnumerable<SelectListItem>)ViewBag.OrganizationList, new { @class = "form-control", @id = "ddlOrganization" })
+                                    @Html.DropDownListFor(x => x.OrganizationIDs, (IEnumerable<SelectListItem>)ViewBag.OrganizationList, new { @class = "form-control", @id = "ddlOrganization", @multiple="multiple" })
                                 </div>
                             </div>
                             <div class="form-group">
@@ -116,6 +116,16 @@
                                     @Html.TextBoxFor(x => x.STRNumber, new { @class = "form-control", @id = "tbstrnumber" })
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="inputDefault">
+                                    @Klinik.Resources.UIMessages.Code
+                                </label>
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(x => x.Code, new { @class = "form-control", @id = "tbDoctorCode" })
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="inputDefault">
                                     @Klinik.Resources.UIMessages.ValidFrom

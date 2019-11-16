@@ -131,26 +131,35 @@ namespace Klinik.Features
                 int _resultAffected = 0;
                 try
                 {
+                    
                     // create employee
                     Employee employeeEntity = Mapper.Map<DoctorModel, Employee>(requestData);
                     employeeEntity.CreatedBy = requestData.Account.UserCode;
                     employeeEntity.CreatedDate = DateTime.Now;
-
+                    _context.Employees.Add(employeeEntity);
+                    _context.SaveChanges();
+                    requestData.EmployeeID = employeeEntity.ID;
                     // create user
-                    User userEntity = Mapper.Map<DoctorModel, User>(requestData);
-                    userEntity.Password = CommonUtils.Encryptor(requestData.Password, CommonUtils.KeyEncryptor);
-                    userEntity.Status = true;
-                    userEntity.Employee = employeeEntity;
-                    userEntity.CreatedBy = requestData.Account.UserCode;
-                    userEntity.CreatedDate = DateTime.Now;
-                    userEntity.ExpiredDate = DateTime.Now.AddDays(100);
+                    foreach (int orgid in requestData.OrganizationIDs)
+                    {
+                        requestData.OrganizationID = orgid;
+                        User userEntity = Mapper.Map<DoctorModel, User>(requestData);
+                        userEntity.Password = CommonUtils.Encryptor(requestData.Password, CommonUtils.KeyEncryptor);
+                        userEntity.Status = true;
+                        userEntity.Employee = employeeEntity;
+                        userEntity.CreatedBy = requestData.Account.UserCode;
+                        userEntity.CreatedDate = DateTime.Now;
+                        userEntity.ExpiredDate = DateTime.Now.AddDays(100);
+                        _context.Users.Add(userEntity);
+                    }
+                   
 
                     Doctor doctorEntity = Mapper.Map<DoctorModel, Doctor>(requestData);
                     doctorEntity.Employee = employeeEntity;
                     doctorEntity.CreatedBy = requestData.Account.UserCode;
                     doctorEntity.CreatedDate = DateTime.Now;
 
-                    _context.Users.Add(userEntity);
+                    
                     _context.Doctors.Add(doctorEntity);
 
                     _resultAffected = _context.SaveChanges();
