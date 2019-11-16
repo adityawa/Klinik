@@ -1386,4 +1386,7 @@
   <data name="WarehouseType" xml:space="preserve">
     <value>Tipe Gudang </value>
   </data>
+  <data name="Birthplace" xml:space="preserve">
+    <value>Birthplace</value>
+  </data>
 </root>

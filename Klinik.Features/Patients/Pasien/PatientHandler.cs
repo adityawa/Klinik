@@ -135,7 +135,7 @@ namespace Klinik.Features
                                 willBeEdit.BloodType = request.Data.BloodType;
                                 willBeEdit.ModifiedBy = request.Data.Account.UserName;
                                 willBeEdit.ModifiedDate = DateTime.Now;
-
+                                willBeEdit.Birthplace = request.Data.Birthplace;
                                 resultUpdated = _context.SaveChanges();
                             }
 
@@ -337,7 +337,7 @@ namespace Klinik.Features
             if (!String.IsNullOrEmpty(request.SearchValue) && !String.IsNullOrWhiteSpace(request.SearchValue))
             {
                 searchPredicate = searchPredicate.And(p => p.Name.Contains(request.SearchValue) ||
-                p.Employee.EmpName.Contains(request.SearchValue) || p.KTPNumber.Contains(request.SearchValue) || p.Address.Contains(request.SearchValue));
+                p.Employee.EmpName.Contains(request.SearchValue) || p.KTPNumber.Contains(request.SearchValue) || p.Address.Contains(request.SearchValue) || p.Birthplace.Contains(request.SearchValue));
             }
 
             if (!(string.IsNullOrEmpty(request.SortColumn) && string.IsNullOrEmpty(request.SortColumnDir)))

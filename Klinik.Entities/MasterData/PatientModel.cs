@@ -42,5 +42,7 @@ namespace Klinik.Entities.MasterData
 
         public string SAP { get; set; }
         public string Umur { get; set; }
+
+        public string Birthplace { get; set; }
     }
 }

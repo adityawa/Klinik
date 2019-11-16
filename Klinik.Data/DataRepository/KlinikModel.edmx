@@ -802,6 +802,7 @@
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="PatientKey" Type="nvarchar" MaxLength="100" />
+          <Property Name="Birthplace" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="PatientAge">
           <Key>
@@ -4411,6 +4412,7 @@
           <NavigationProperty Name="FormMedicals" Relationship="Self.FK_FormMedical_Patient" FromRole="Patient" ToRole="FormMedical" />
           <NavigationProperty Name="PatientClinics" Relationship="Self.FK_PatientClinic_Patient" FromRole="Patient" ToRole="PatientClinic" />
           <NavigationProperty Name="QueuePolis" Relationship="Self.FK_QueuePoli_Patient" FromRole="Patient" ToRole="QueuePoli" />
+          <Property Name="Birthplace" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PatientAge">
           <Key>
@@ -8039,6 +8041,7 @@
           <EntitySetMapping Name="Patients">
             <EntityTypeMapping TypeName="KlinikDBModel.Patient">
               <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="Birthplace" ColumnName="Birthplace" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
                 <ScalarProperty Name="FamilyRelationshipID" ColumnName="FamilyRelationshipID" />

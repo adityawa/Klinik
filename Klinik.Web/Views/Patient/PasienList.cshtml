@@ -24,6 +24,7 @@
                         <th>@Klinik.Resources.UIMessages.Gender</th>
                         <th>@Klinik.Resources.UIMessages.Employee</th>
                         <th>@Klinik.Resources.UIMessages.FamilyRelationship</th>
+                        <th>@Klinik.Resources.UIMessages.Birthplace</th>
                         <th>@Klinik.Resources.UIMessages.Birthdate</th>
                         <th>@Klinik.Resources.UIMessages.City</th>
                         <th>@Klinik.Resources.UIMessages.Type</th>
@@ -80,19 +81,24 @@
                     "targets": [4],
                     "searchable": false,
                     "orderable": false
-                },
+                    },
                 {
                     "targets": [5],
+                    "searchable": true,
+                    "orderable": false
+                },
+                {
+                    "targets": [6],
                     "searchable": true,
                     "orderable": true
                 },
                 {
-                    "targets": [6],
+                    "targets": [7],
                     "searchable": false,
                     "orderable": false
                 },
                 {
-                    "targets": [7],
+                    "targets": [8],
                     "searchable": false,
                     "orderable": false
                 }
@@ -103,6 +109,7 @@
                 { "data": "Gender", "name": "Gender", "autoWidth": true },
                 { "data": "EmployeeName", "name": "EmployeeName", "autoWidth": true },
                 { "data": "familyRelationshipDesc", "name": "familyRelationshipDesc", "autoWidth": true },
+                { "data": "Birthplace", "name": "Birthplace", "autoWidth": true },
                 { "data": "BirthDateStr", "name": "BirthDateStr", "autoWidth": true },
                 { "data": "CityNm", "name": "CityNm", "autoWidth": true },
                 { "data": "TypeDesc", "name": "TypeDesc", "autoWidth": true },
