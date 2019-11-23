@@ -164,7 +164,9 @@ namespace Klinik.Common
                 .ForMember(m => m.STRValidFromStr, map => map.MapFrom(p => p.STRValidFrom.HasValue ? p.STRValidFrom.Value.ToString("dd/MM/yyyy") : string.Empty))
                 .ForMember(m => m.STRValidToStr, map => map.MapFrom(p => p.STRValidTo.HasValue ? p.STRValidTo.Value.ToString("dd/MM/yyyy") : string.Empty));
 
-            CreateMap<PoliScheduleModel, PoliSchedule>();
+            CreateMap<PoliScheduleModel, PoliSchedule>()
+                .ForMember(m => m.StartDate, map => map.MapFrom(p => CommonUtils.ConvertStringDate2Datetime(p.StartDateStr)))
+                .ForMember(m => m.EndDate, map => map.MapFrom(p => CommonUtils.ConvertStringDate2Datetime(p.EndDateStr)));
             CreateMap<PoliSchedule, PoliScheduleModel>()
                 .ForMember(m => m.StartDateStr, map => map.MapFrom(p => p.StartDate.ToString("dd/MM/yyyy HH:mm:ss")))
                 .ForMember(m => m.EndDateStr, map => map.MapFrom(p => p.EndDate.ToString("dd/MM/yyyy HH:mm:ss")))

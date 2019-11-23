@@ -9,6 +9,7 @@ using Klinik.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
 namespace Klinik.Features
 {
@@ -149,8 +150,29 @@ namespace Klinik.Features
                         _context.FormExamines.Add(formExamine);
                         _context.SaveChanges();
 
-                      
+                        
+
+                        foreach (var item in request.Data.fileData)
+                        {
+                            var filearchive = new FileArchieve
+                            {
+                                CreatedBy = request.Data.Account.UserCode,
+                                CreatedDate = DateTime.Now,
+                                SourceTable = item.SourceTable,
+                                ActualName = item.ActualName,
+                                ActualPath = item.ActualPath,
+                                TypeDoc = item.TypeDoc,
+                                RowStatus = 0,
+                                SourceTableID=formExamine.ID
+                            };
+                            _context.FileArchieves.Add(filearchive);
+                        }
+
+                        _context.SaveChanges();
+
                         transaction.Commit();
+
+                      
 
                         response.Message = Messages.DataSaved;
                     }

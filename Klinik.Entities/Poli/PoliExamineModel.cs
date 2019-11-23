@@ -1,4 +1,5 @@
-﻿using Klinik.Entities.Form;
+﻿using Klinik.Entities.Document;
+using Klinik.Entities.Form;
 using Klinik.Entities.Loket;
 using Klinik.Entities.MasterData;
 using Klinik.Entities.PreExamine;
@@ -24,14 +25,13 @@ namespace Klinik.Entities.Poli
         public string ConcoctionMedicine { get; set; }
         public int PoliToID { get; set; }
         public int DoctorToID { get; set; }
-
         public string ICDInformation1 { get; set; }
         public string ICDInformation1Desc { get; set; }
         public string ICDInformation2 { get; set; }
         public string ICDInformation2Desc { get; set; }
         public string ICDInformation3 { get; set; }
         public string ICDInformation3Desc { get; set; }
-
+        public List<DocumentModel> fileData { get; set; }
         public string NoSurat { get; set; }
 
         public PoliExamineModel()
@@ -45,6 +45,7 @@ namespace Klinik.Entities.Poli
             InjectionDataList = new List<FormExamineMedicineModel>();
             ServiceDataList = new List<FormExamineServiceModel>();
             DefaultServiceList = new List<ServiceModel>();
+            fileData = new List<DocumentModel>();
         }
     }
 }

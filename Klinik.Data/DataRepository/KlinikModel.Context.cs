@@ -41,8 +41,6 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<EmployeeAssignment> EmployeeAssignments { get; set; }
         public virtual DbSet<EmployeeStatu> EmployeeStatus { get; set; }
         public virtual DbSet<FamilyRelationship> FamilyRelationships { get; set; }
-        public virtual DbSet<FileArchieve> FileArchieves { get; set; }
-        public virtual DbSet<FormExamine> FormExamines { get; set; }
         public virtual DbSet<FormExamineAttachment> FormExamineAttachments { get; set; }
         public virtual DbSet<FormExamineICDInfo> FormExamineICDInfoes { get; set; }
         public virtual DbSet<FormExamineLab> FormExamineLabs { get; set; }
@@ -108,6 +106,8 @@ namespace Klinik.Data.DataRepository
         public virtual DbSet<VendorProduct> VendorProducts { get; set; }
         public virtual DbSet<Hospital> Hospitals { get; set; }
         public virtual DbSet<LogonUser> LogonUsers { get; set; }
+        public virtual DbSet<FileArchieve> FileArchieves { get; set; }
+        public virtual DbSet<FormExamine> FormExamines { get; set; }
     
         [DbFunction("KlinikDBEntities", "fusp_registrations_get_by_status")]
         public virtual IQueryable<fusp_registrations_get_by_status_Result> fusp_registrations_get_by_status(string documentStatus, string isTransferred)

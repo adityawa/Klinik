@@ -1775,6 +1775,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="fileDoc\Document\" />
     <Folder Include="Views\General\" />
     <Folder Include="Views\Vendor\" />
   </ItemGroup>

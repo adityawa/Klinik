@@ -175,6 +175,15 @@ namespace Klinik.Features
             return organization.KlinikID;
         }
 
+        public long GetPoliId(long doctorID, long clinicID)
+        {
+            long poliID = 0;
+            var _qry = _unitOfWork.PoliScheduleRepository.GetFirstOrDefault(x => x.DoctorID == doctorID && x.ClinicID==clinicID);
+            if (_qry != null)
+                poliID = _qry.PoliID;
+            return poliID;
+        }
+
         /// <summary>
         /// Get all PoliSchedule
         /// </summary>

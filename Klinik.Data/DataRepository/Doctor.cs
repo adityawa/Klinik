@@ -19,11 +19,11 @@ namespace Klinik.Data.DataRepository
         {
             this.Appointments = new HashSet<Appointment>();
             this.DoctorClinics = new HashSet<DoctorClinic>();
-            this.FormExamines = new HashSet<FormExamine>();
             this.FormPreExamines = new HashSet<FormPreExamine>();
             this.PoliSchedules = new HashSet<PoliSchedule>();
             this.PoliScheduleMasters = new HashSet<PoliScheduleMaster>();
             this.QueuePolis = new HashSet<QueuePoli>();
+            this.FormExamines = new HashSet<FormExamine>();
         }
     
         public int ID { get; set; }
@@ -52,8 +52,6 @@ namespace Klinik.Data.DataRepository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DoctorClinic> DoctorClinics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FormExamine> FormExamines { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormPreExamine> FormPreExamines { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PoliSchedule> PoliSchedules { get; set; }
@@ -61,5 +59,7 @@ namespace Klinik.Data.DataRepository
         public virtual ICollection<PoliScheduleMaster> PoliScheduleMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QueuePoli> QueuePolis { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FormExamine> FormExamines { get; set; }
     }
 }

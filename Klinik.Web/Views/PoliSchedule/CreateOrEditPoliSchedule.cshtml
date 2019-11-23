@@ -59,7 +59,7 @@
 			<div class="form-group">
 				<label class="col-md-2 control-label" for="inputDefault">@Klinik.Resources.UIMessages.StartDate</label>
 				<div class="col-md-4">
-					@Html.TextBoxFor(x => x.StartDate, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "tbStartDate" })
+					@Html.TextBoxFor(x => x.StartDateStr, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "tbStartDate" })
 				</div>
 			</div>
 			<div class="form-group">
@@ -67,7 +67,7 @@
 					@Klinik.Resources.UIMessages.EndDate
 				</label>
 				<div class="col-md-4">
-					@Html.TextBoxFor(x => x.EndDate, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "tbEndDate" })
+					@Html.TextBoxFor(x => x.EndDateStr, "{0:dd/MM/yyyy}", new { @class = "form-control", @id = "tbEndDate" })
 				</div>
 			</div>
 			<div class="form-group">

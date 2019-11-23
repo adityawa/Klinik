@@ -14,8 +14,10 @@ using Klinik.Features.HistoryMedical;
 using Klinik.Features.ICDThemeFeatures;
 using Klinik.Web.Hubs;
 using LinqKit;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
@@ -152,7 +154,7 @@ namespace Klinik.Web.Controllers
             // add default filter to show the active data only
             searchPredicate = searchPredicate.And(x => x.RowStatus == 0 && x.Name.ToLower().Contains(prefix.ToLower()));
 
-           qry = _unitOfWork.ProductRepository.Get(searchPredicate, null);
+            qry = _unitOfWork.ProductRepository.Get(searchPredicate, null);
 
             long clinicId = 0;
             if (Session["UserLogon"] != null)
@@ -349,7 +351,19 @@ namespace Klinik.Web.Controllers
         [CustomAuthorize("VIEW_POLI_PATIENT_LIST")]
         public ActionResult PatientList()
         {
-            var poliEnum = PoliEnum.PoliUmum;
+            long _poliID = 0;
+
+            if (Session["UserLogon"] != null)
+            {
+                var tempData = (AccountModel)Session["UserLogon"];
+                long doctorId = new DoctorHandler(_unitOfWork).GetDoctorIDBasedOnEmployee(tempData.EmployeeID);
+
+                long clinicId = tempData.ClinicID;
+                _poliID = new PoliScheduleHandler(_unitOfWork).GetPoliId(doctorId, clinicId);
+
+            }
+
+            var poliEnum = _poliID;//PoliEnum.PoliUmum;
             var poliName = Regex.Replace(poliEnum.ToString(), "([A-Z])", " $1").Trim();
 
             var model = new PatientListModel
@@ -362,54 +376,309 @@ namespace Klinik.Web.Controllers
             return View("PatientList", model);
         }
 
+        //[HttpPost]
+        //public ActionResult FormExamine(
+        //    string formExamineID,
+        //    string loketID,
+        //    string anamnesa,
+        //    string diagnose,
+        //    string therapy,
+        //    string receipt,
+        //    string finalState,
+        //    string icdInformation,
+        //    string needSurat,
+        //    string jumHari,
+        //    string caused,
+        //    string condition,
+        //    string poliToID,
+        //    string doctorToID,
+        //    List<string> concoctionMedicineList,
+        //    List<string> medicineList,
+        //    List<string> injectionList,
+        //    List<string> labList,
+        //    List<string> radiologyList,
+        //    List<string> serviceList
+
+        //   )
+        //{
+        //    if (concoctionMedicineList == null)
+        //        concoctionMedicineList = new List<string>();
+        //    if (medicineList == null)
+        //        medicineList = new List<string>();
+        //    if (injectionList == null)
+        //        injectionList = new List<string>();
+        //    if (labList == null)
+        //        labList = new List<string>();
+        //    if (radiologyList == null)
+        //        radiologyList = new List<string>();
+        //    if (serviceList == null)
+        //        serviceList = new List<string>();
+
+        //    int iJumHari = jumHari == null ? 0 : Convert.ToInt16(jumHari);
+        //    bool bNeedSuratSakit = needSurat == null ? false : Convert.ToBoolean(needSurat);
+        //    int iCaused = caused == null ? 0 : caused == "" ? 0 : Convert.ToInt32(caused);
+        //    int iCondition = condition == null ? 0 : condition == "" ? 0 : Convert.ToInt32(condition);
+
+
+
+        //    PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, icdInformation, poliToID, doctorToID, bNeedSuratSakit, iJumHari, iCaused, iCondition, concoctionMedicineList, medicineList, injectionList, labList, radiologyList, serviceList);
+        //    model.Account = Account;
+        //    var request = new FormExamineRequest { Data = model, };
+
+        //    FormExamineResponse _response = new FormExamineValidator(_unitOfWork, _context).Validate(request);
+        //    if (_response.Status)
+        //    {
+        //        // Notify to all
+        //        RegistrationHub.BroadcastDataToAllClients();
+        //    }
+
+        //    ViewBag.Response = $"{_response.Status};{_response.Message}";
+        //    var tempPoliList = BindDropDownPoliList(model.LoketData.PoliToID);
+        //    ViewBag.PoliList = tempPoliList;
+        //    ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
+        //    ViewBag.FinalStateList = BindDropDownFinalStateList();
+        //    // ViewBag.ICDInfo = BindDropDownICDInfo();
+        //    return Json(new { Status = _response.Status, Message = _response.Message }, JsonRequestBehavior.AllowGet);
+        //}
+
+        //public ActionResult FormExamine()
+        //{
+        //    var id = Request.QueryString["id"];
+        //    if (id == null)
+        //        return View("Index", "Home", null);
+
+        //    var request = new LoketRequest
+        //    {
+        //        Data = new LoketModel
+        //        {
+        //            Id = long.Parse(id.ToString())
+        //        }
+        //    };
+
+        //    LoketResponse resp = new LoketHandler(_unitOfWork).GetDetail(request);
+
+        //    PoliExamineModel model = new PoliExamineModel();
+
+        //    try
+        //    {
+        //        model.LoketData = resp.Entity;
+        //        model.PatientAge = CommonUtils.GetPatientAge(model.LoketData.PatientBirthDateStr);
+
+        //        var necessityTypeList = GetGeneralMasterByType(Constants.MasterType.NECESSITY_TYPE);
+        //        var paymentTypeList = GetGeneralMasterByType(Constants.MasterType.PAYMENT_TYPE);
+
+        //        model.NecessityTypeStr = necessityTypeList.FirstOrDefault(x => x.Value == model.LoketData.NecessityType.ToString()).Text;
+        //        model.PaymentTypeStr = paymentTypeList.FirstOrDefault(x => x.Value == model.LoketData.PaymentType.ToString()).Text;
+
+        //        // get default services
+        //        List<PoliService> poliServicelist = _unitOfWork.PoliServicesRepository.Get(x => x.PoliID == model.LoketData.PoliToID && x.RowStatus == 0).ToList();
+        //        foreach (var item in poliServicelist)
+        //        {
+        //            ServiceModel servModel = Mapper.Map<Service, ServiceModel>(item.Service);
+        //            model.DefaultServiceList.Add(servModel);
+        //        }
+
+        //        // get form examine if any
+        //        FormPreExamine formPreExamine = _unitOfWork.FormPreExamineRepository.GetFirstOrDefault(x => x.FormMedicalID == model.LoketData.FormMedicalID);
+        //        if (formPreExamine != null)
+        //        {
+        //            model.PreExamineData = Mapper.Map<FormPreExamine, PreExamineModel>(formPreExamine);
+        //        }
+
+        //        // get form examine if any
+        //        FormExamine formExamine = _unitOfWork.FormExamineRepository.GetFirstOrDefault(x => x.FormMedicalID == model.LoketData.FormMedicalID);
+        //        if (formExamine != null)
+        //        {
+        //            model.ExamineData = Mapper.Map<FormExamine, FormExamineModel>(formExamine);
+        //            if (model.ExamineData.ICDInformation != null)
+        //            {
+        //                string[] arrIcds = model.ExamineData.ICDInformation.Split('|');
+        //                if (arrIcds.Length > 0)
+        //                {
+        //                    model.ICDInformation1 = arrIcds[0];
+        //                    model.ICDInformation1Desc = arrIcds[0] == "" ? "" : GetICDDescription(Convert.ToInt64(arrIcds[0]));
+        //                    model.ICDInformation2 = arrIcds[1];
+        //                    model.ICDInformation2Desc = arrIcds[1] == "" ? "" : GetICDDescription(Convert.ToInt64(arrIcds[1]));
+        //                    model.ICDInformation3 = arrIcds[2];
+        //                    model.ICDInformation3Desc = arrIcds[2] == "" ? "" : GetICDDescription(Convert.ToInt64(arrIcds[2]));
+        //                }
+        //            }
+        //            // get form examine medicine if any
+        //            List<FormExamineMedicine> formExamineMedicines = _unitOfWork.FormExamineMedicineRepository.Get(x => x.FormExamineID == formExamine.ID);
+        //            foreach (var formExamineMedicine in formExamineMedicines)
+        //            {
+        //                if (formExamineMedicine.TypeID == ((int)MedicineTypeEnum.Medicine).ToString() || formExamineMedicine.TypeID == ((int)MedicineTypeEnum.Concoction).ToString())
+        //                    model.MedicineDataList.Add(Mapper.Map<FormExamineMedicine, FormExamineMedicineModel>(formExamineMedicine));
+        //                else if (formExamineMedicine.TypeID == ((int)MedicineTypeEnum.Injection).ToString())
+        //                    model.InjectionDataList.Add(Mapper.Map<FormExamineMedicine, FormExamineMedicineModel>(formExamineMedicine));
+        //                //else if (formExamineMedicine.TypeID == ((int)MedicineTypeEnum.Concoction).ToString())
+        //                //    model.ConcoctionMedicine = formExamineMedicine.ConcoctionMedicine;
+        //            }
+
+        //            // get form examine lab and radiology if any
+        //            List<FormExamineLab> formExamineLabs = _unitOfWork.FormExamineLabRepository.Get(x => x.FormMedicalID == formExamine.FormMedicalID);
+        //            foreach (var formExamineLab in formExamineLabs)
+        //            {
+        //                if (formExamineLab.LabType == ((int)LabTypeEnum.Laboratorium).ToString())
+        //                    model.LabDataList.Add(Mapper.Map<FormExamineLab, FormExamineLabModel>(formExamineLab));
+        //                else if (formExamineLab.LabType == ((int)LabTypeEnum.Radiology).ToString())
+        //                    model.RadiologyDataList.Add(Mapper.Map<FormExamineLab, FormExamineLabModel>(formExamineLab));
+        //            }
+
+        //            // get form examine service if any
+        //            List<FormExamineService> formExamineServices = _unitOfWork.FormExamineServiceRepository.Get(x => x.FormExamineID == formExamine.ID);
+        //            foreach (var formExamineService in formExamineServices)
+        //            {
+        //                if (!model.DefaultServiceList.Any(x => x.Id == formExamineService.ServiceID))
+        //                    model.ServiceDataList.Add(Mapper.Map<FormExamineService, FormExamineServiceModel>(formExamineService));
+        //            }
+        //        }
+        //        else
+        //        {
+        //            model.ExamineData.DoctorID = model.LoketData.DoctorID;
+        //            model.ExamineData.PoliID = model.LoketData.PoliToID;
+        //        }
+
+        //        var tempPoliList = BindDropDownPoliList(model.LoketData.PoliToID);
+        //        ViewBag.PoliList = tempPoliList;
+        //        ViewBag.DoctorList = BindDropDownDoctorList(int.Parse(tempPoliList[0].Value));
+        //        ViewBag.FinalStateList = BindDropDownFinalStateList();
+        //        // ViewBag.ICDInfo = BindDropDownICDInfo();
+        //        ViewBag.CausedList = BindDropDownCaused();
+        //        ViewBag.ConditionList = BindDropDownCondition();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return BadRequestResponse;
+        //    }
+
+        //    return View(model);
+        //}
+
         [HttpPost]
-        public ActionResult FormExamine(
-            string formExamineID,
-            string loketID,
-            string anamnesa,
-            string diagnose,
-            string therapy,
-            string receipt,
-            string finalState,
-            string icdInformation,
-            string needSurat,
-            string jumHari,
-            string caused,
-            string condition,
-            string poliToID,
-            string doctorToID,
-            List<string> concoctionMedicineList,
-            List<string> medicineList,
-            List<string> injectionList,
-            List<string> labList,
-            List<string> radiologyList,
-            List<string> serviceList)
+        public ActionResult FormExaminePost()
         {
-            if (concoctionMedicineList == null)
+            List<string> concoctionMedicineList = new List<string>();
+            List<string> medicineList = new List<string>();
+            List<string> injectionList = new List<string>();
+            List<string> labList = new List<string>();
+            List<string> radiologyList = new List<string>();
+            List<string> serviceList = new List<string>();
+
+            if (Request.Form["concoctionMedicineList"] == null)
+            {
                 concoctionMedicineList = new List<string>();
-            if (medicineList == null)
+            }
+            else
+            {
+                concoctionMedicineList = JsonConvert.DeserializeObject<List<string>>(Request.Form["concoctionMedicineList"]); 
+            }
+                
+            if (Request.Form["medicineList"] == null)
+            {
                 medicineList = new List<string>();
-            if (injectionList == null)
+            }
+            else
+            {
+                medicineList= JsonConvert.DeserializeObject<List<string>>(Request.Form["medicineList"]);
+            }
+                
+            if (Request.Form["injectionList"] == null)
+            {
                 injectionList = new List<string>();
-            if (labList == null)
+            }
+            else
+            {
+                injectionList= JsonConvert.DeserializeObject<List<string>>(Request.Form["injectionList"]);
+            }
+                
+            if (Request.Form["labList"] == null)
+            {
                 labList = new List<string>();
-            if (radiologyList == null)
+            }
+            else
+            {
+                labList= JsonConvert.DeserializeObject<List<string>>(Request.Form["labList"]);
+            }
+            if (Request.Form["radiologyList"] == null)
+            {
                 radiologyList = new List<string>();
-            if (serviceList == null)
+            }
+            else
+            {
+                radiologyList= JsonConvert.DeserializeObject<List<string>>(Request.Form["radiologyList"]);
+            }
+                
+            if (Request.Form["serviceList"] == null)
+            {
                 serviceList = new List<string>();
+            }
+            else
+            {
+                serviceList= JsonConvert.DeserializeObject<List<string>>(Request.Form["serviceList"]);
+            }
+
+            string jumHari = Request.Form["jumhari"] == null ? "0" : Request.Form["jumhari"].ToString();
+            string needSurat = Request.Form["needsuratsakit"] == null ? "false" : Request.Form["needsuratsakit"].ToString();
+            string caused = Request.Form["caused"] == null ? "0" : Request.Form["caused"].ToString();
+            string condition = Request.Form["condition"] == null ? "0" : Request.Form["condition"].ToString();
+            string formExamineID = Request.Form["formExamineID"] == null ? "0" : Request.Form["formExamineID"].ToString();
+            string loketID = Request.Form["loketID"] == null ? "0" : Request.Form["loketID"].ToString();
+            string anamnesa = Request.Form["anamnesa"] == null ? "" : Request.Form["anamnesa"].ToString();
+            string diagnose = Request.Form["diagnose"] == null ? "" : Request.Form["diagnose"].ToString();
+            string therapy = Request.Form["therapy"] == null ? "" : Request.Form["therapy"].ToString();
+            string receipt = Request.Form["receipt"] == null ? "" : Request.Form["receipt"].ToString();
+            string finalState = Request.Form["finalState"] == null ? "" : Request.Form["finalState"].ToString();
+            string icdInformation = Request.Form["icdInformation"] == null ? "" : Request.Form["icdInformation"].ToString();
+            string poliToID = Request.Form["poliToID"] == null ? "" : Request.Form["poliToID"].ToString();
+            string doctorToID = Request.Form["doctorToID"] == null ? "" : Request.Form["doctorToID"].ToString();
 
             int iJumHari = jumHari == null ? 0 : Convert.ToInt16(jumHari);
             bool bNeedSuratSakit = needSurat == null ? false : Convert.ToBoolean(needSurat);
-            int iCaused = caused == null ? 0 : caused == "" ? 0 : Convert.ToInt32(caused);
-            int iCondition = condition == null ? 0 : condition == "" ? 0 : Convert.ToInt32(condition);
+            int iCaused = caused == null ? 0 : caused == "null" ? 0 : Convert.ToInt32(caused);
+            int iCondition = condition == null ? 0 : condition == "null" ? 0 : Convert.ToInt32(condition);
+            int iDoctor= doctorToID == null ? 0 : doctorToID == "null" ? 0 : Convert.ToInt32(doctorToID);
 
-            PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, icdInformation, poliToID, doctorToID, bNeedSuratSakit, iJumHari, iCaused, iCondition, concoctionMedicineList, medicineList, injectionList, labList, radiologyList, serviceList);
+            PoliExamineModel model = GeneratePoliExamineModel(formExamineID, loketID, anamnesa, diagnose, therapy, receipt, finalState, icdInformation, poliToID, iDoctor, bNeedSuratSakit, iJumHari, iCaused, iCondition, concoctionMedicineList, medicineList, injectionList, labList, radiologyList, serviceList);
             model.Account = Account;
+            if (Request.Files.Count > 0)
+            {
+                System.Web.HttpFileCollectionBase files = Request.Files;
+                for (int i = 0; i < files.Count; i++)
+                {
+                    System.Web.HttpPostedFileBase file = files[i];
+                    string fName = file.FileName;
+
+                    var uploadDir = "~/fileDoc/Document";
+                    string fullPath = Path.Combine(System.Web.HttpContext.Current.Server.MapPath(uploadDir), fName);
+                    model.fileData.Add(new Entities.Document.DocumentModel
+                    {
+                        SourceTable = ClinicEnums.SourceTable.FORMEXAMINE.ToString(),
+                        ActualName = fName,
+                        ActualPath=fullPath,
+                        TypeDoc=file.ContentType
+                    });
+                }
+            }
             var request = new FormExamineRequest { Data = model, };
 
             FormExamineResponse _response = new FormExamineValidator(_unitOfWork, _context).Validate(request);
             if (_response.Status)
             {
+                //Save to folder
+                if (Request.Files.Count > 0)
+                {
+                    System.Web.HttpFileCollectionBase files = Request.Files;
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        System.Web.HttpPostedFileBase file = files[i];
+                        string fName = file.FileName;
+
+                        var uploadDir = "~/fileDoc/Document";
+                        string fullPath = Path.Combine(System.Web.HttpContext.Current.Server.MapPath(uploadDir), fName);
+                        file.SaveAs(fullPath);
+                    }
+                }
                 // Notify to all
                 RegistrationHub.BroadcastDataToAllClients();
             }
@@ -677,7 +946,7 @@ namespace Klinik.Web.Controllers
             string finalState,
             string icdInformation,
             string poliToID,
-            string doctorToID,
+            int doctorToID,
             bool needRestLetter,
             int iJumHari,
             int valiCaused,
@@ -694,8 +963,8 @@ namespace Klinik.Web.Controllers
             PoliExamineModel model = new PoliExamineModel();
 
             // For new registration data
-            if (!string.IsNullOrEmpty(doctorToID))
-                model.DoctorToID = int.Parse(doctorToID);
+          //  if (!string.IsNullOrEmpty(doctorToID))
+                model.DoctorToID =doctorToID;
 
             model.PoliToID = int.Parse(poliToID);
 

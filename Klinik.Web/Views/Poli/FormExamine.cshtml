@@ -354,10 +354,14 @@
                                         <li>
                                             <a href="#tabICD" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.ICDInformation</a>
                                         </li>
-
+                                        <li>
+                                            <a href="#tabDocument" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Document</a>
+                                        </li>
                                         <li>
                                             <a href="#tabResult" data-toggle="tab" class="text-center">@Klinik.Resources.UIMessages.Result</a>
                                         </li>
+
+
                                     </ul>
                                     <div class="tab-content">
                                         <div id="tabBasicExamine" class="tab-pane active">
@@ -725,6 +729,24 @@
                                             </div>
 
                                         </div>
+                                        <div id="tabDocument" class="tab-pane">
+                                            <div class="row">
+                                                <div class="form-group col-md-10">
+                                                    <div class="row text-left">
+                                                        <div class="form-group col-md-2">
+                                                            <label class="control-label">@Klinik.Resources.UIMessages.FileUpload</label>
+                                                        </div>
+                                                        <div class="form-group col-md-7">
+                                                            <input class="form-control" id="fuAttachment" name="fuAttachment" type="file" multiple="multiple" placeholder="Attachment.." onchange="uploadChange(event)">
+                                                        </div>
+                                                    </div>
+                                                    <div id="fileselected">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                         <div id="tabResult" class="tab-pane">
                                             <div class="row">
                                                 <div class="form-group col-md-6">
@@ -902,6 +924,7 @@
     <script src="~/Scripts/medica/jquery-ui.js"></script>
     <script src="~/Content/Octopus/assets/vendor/select2/select2.js"></script>
     <script type="text/javascript" lang="en">
+        var list;
         function Remove(button) {
             //Determine the reference of the Row using the Button.
             var row = $(button).closest("TR");
@@ -994,7 +1017,7 @@
             }
     };
 
-    function getUrlVars() {
+        function getUrlVars() {
             var vars = [], hash;
             var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
             for (var i = 0; i < hashes.length; i++) {
@@ -1005,6 +1028,14 @@
             return vars;
     }
 
+        function uploadChange(event) {
+         var file_upload = $('#fuAttachment').get(0);
+            var files = file_upload.files;
+            for (var i = 0; i < files.length; i++) {
+                list.append('<li>'+files[i].name+'</li>');
+            }
+
+    }
 
         function bindHistoricalData() {
             var _patientId = $('#hdnPatientId').val();
@@ -1118,8 +1149,9 @@
     $(document).ready(function () {
             var _isViewOnly = getUrlVars()["IsViewOnly"];
             var medicine = $("#medicineName");
-            if (!medicine.length) return;
+        if (!medicine.length) return;
 
+        list  = $("#fileselected").append('<ul></ul>').find('ul');
         $('#ddlcaused').select2();
         $('#ddlcondition').select2();
 
@@ -1672,26 +1704,28 @@
         }
 
 			$('#btnSave').click(function () {
-				$('#btnSave').attr('disabled', 'disabled');
-                var formExamineID = $('#formExamineID').val();
-                var loketID = $('#loketID').val();
-                var anamnesa = $('#txtAnamnesa').val();
-                var diagnose = $('#txtDiagnose').val();
-                var therapy = $('#txtTherapy').val();
-                var receipt = $('#txtConcoction').val();
-                var finalState = $('#ddlfinalstate').val();
-                var poliToID = $('#ddlpolito').val();
-                var doctorToID = $('#ddldoctor').val();
-                var icdinfo1 = $('#ddlicd1').val();
-                var icdinfo2 = $('#ddlicd2').val();
-                var icdinfo3 = $('#ddlicd3').val();
-                var needsuratsakit = $('#cbNeedSurat').val();
-                var jumhari = $('#tbJumHari').val();
-                var caused = $('#ddlcaused').val();
-                var condition = $('#ddlcondition').val();
+                $('#btnSave').attr('disabled', 'disabled');
+   
+                if (window.FormData != undefined) {
+                    var dataModel = new FormData();
+                    dataModel.append("formExamineID", $('#formExamineID').val());
+                    dataModel.append("loketID", $('#loketID').val());
+                    dataModel.append("anamnesa", $('#txtAnamnesa').val());
+                    dataModel.append("diagnose", $('#txtDiagnose').val());
+                    dataModel.append("therapy", $('#txtTherapy').val());
+                    dataModel.append("receipt", $('#txtConcoction').val());
+                    dataModel.append("finalState", $('#ddlfinalstate').val());
+                    dataModel.append("poliToID", $('#ddlpolito').val());
+                    dataModel.append("doctorToID", $('#ddldoctor').val());
+                    dataModel.append("icdInformation", $('#ddlicd1').val()+'|'+$('#ddlicd2').val()+'|'+$('#ddlicd3').val());
+                   
+                    dataModel.append("needsuratsakit", $('#cbNeedSurat').val());
+                    dataModel.append("jumhari", $('#tbJumHari').val());
+                    dataModel.append("caused", $('#ddlcaused').val());
+                    dataModel.append("condition", $('#ddlcondition').val());
 
-                var concoctionmedicineList = [];
-                $('#tblConcMedicine tbody tr').each(function () {
+                   var concoctionmedicineList = [];
+                   $('#tblConcMedicine tbody tr').each(function () {
                     var name = $(this).find('td').eq(1).text().trim();
                     var jenis = $(this).find('td').eq(2).text().trim();
                     var dose = $(this).find('td').eq(3).text().trim();
@@ -1699,9 +1733,9 @@
 					var remark = $(this).find('td').eq(5).text().trim();
 					var row = name + "|" + dose + "|" + jenis + "|" + remark+"|"+amount;
                     concoctionmedicineList.push(row);
-                });
+                   });
 
-                var medicineList = [];
+                   var medicineList = [];
                 $('#table-medicine tbody tr').each(function () {
                     var id = $(this).find('td').eq(0).text().trim();
                     var dose = $(this).find('td').eq(3).text().trim();
@@ -1738,33 +1772,26 @@
                     serviceIdList.push(id);
                 });
 
-                var DataModel = {
-                    formExamineID: formExamineID,
-                    loketID: loketID,
-                    anamnesa: anamnesa,
-                    diagnose: diagnose,
-                    therapy: therapy,
-                    receipt: receipt,
-                    finalState: finalState,
-                    icdInformation: icdinfo1 + '|' + icdinfo2 + '|' + icdinfo3,
-                    needSurat: needsuratsakit,
-                    jumHari: jumhari,
-                    caused: caused,
-                    condition:condition,
-                    poliToID: poliToID,
-                    doctorToID: doctorToID,
-                    concoctionMedicineList: concoctionmedicineList,
-                    medicineList: medicineList,
-                    injectionList: injectionList,
-                    labList: labIdList,
-                    radiologyList: radiologyIdList,
-                    serviceList: serviceIdList
-                };
+                    dataModel.append("concoctionMedicineList", JSON.stringify(concoctionmedicineList));
+                    dataModel.append("medicineList", JSON.stringify(medicineList));
+                    dataModel.append("injectionList", JSON.stringify(injectionList));
+                    dataModel.append("labList", JSON.stringify(labIdList));
+                    dataModel.append("radiologyList", JSON.stringify(radiologyIdList));
+                    dataModel.append("serviceList", JSON.stringify(serviceIdList));
 
-                $.ajax({
-                    url: '@Url.Action("FormExamine","Poli")',
-                    type: 'POST',
-                    data: DataModel,
+                        var file_upload = $('#fuAttachment').get(0);
+                        var files = file_upload.files;
+                        
+                    for (var i = 0; i < files.length; i++) {
+                     dataModel.append(files[i].name, files[i]);
+                    }
+
+                    $.ajax({
+                    url: '@Url.Action("FormExaminePost","Poli")',
+                    type: 'POST',    
+                    data: dataModel,
+                    contentType: false,
+                    processData: false,
                     success: function (result) {
                         if (result.Status) {
                             toastr.options.closeButton = false;
@@ -1775,7 +1802,15 @@
                             toastr.error(result.Message);
                         }
                     }
-                });
+                     });
+
+                }
+                else {
+                    alert('your browser is not supported with form data');
+                }
+  
+
+               
             });
         });
     </script>

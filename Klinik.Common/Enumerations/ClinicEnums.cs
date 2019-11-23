@@ -101,7 +101,8 @@
 
         public enum SourceTable
         {
-            PATIENT
+            PATIENT,
+            FORMEXAMINE
         }
 
         public enum polyType

@@ -69,6 +69,7 @@ namespace Klinik.Features
                         _entityPatient.MRNumber = $"{_month}{DateTime.Now.Year.ToString().Substring(2, 2)}{ProvideMRNo()}";
                         _entityPatient.CreatedBy = request.Data.Account.UserName;
                         _entityPatient.CreatedDate = DateTime.Now;
+
                         _context.Patients.Add(_entityPatient);
                         result = _context.SaveChanges();
 

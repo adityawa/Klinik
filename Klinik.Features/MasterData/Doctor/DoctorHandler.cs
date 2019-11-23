@@ -366,5 +366,14 @@ namespace Klinik.Features
 
             return response;
         }
+
+        public long GetDoctorIDBasedOnEmployee(long emplID)
+        {
+            long _doctorID = 0;
+            var _qry = _unitOfWork.DoctorRepository.GetFirstOrDefault(x => x.EmployeeID == emplID);
+            if (_qry != null)
+                _doctorID = _qry.ID;
+            return _doctorID;
+        }
     }
 }
